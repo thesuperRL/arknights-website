@@ -102,15 +102,16 @@ const TrashOperatorsPage: React.FC = () => {
                   {operator ? (
                     <>
                       <img
-                        src={operator.profileImage}
+                        src={operator.profileImage || '/images/operators/default.png'}
                         alt={operator.name}
                         className="operator-image"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          if (target) {
+                          if (target && target.src !== '/images/operators/default.png') {
                             target.src = '/images/operators/default.png';
                           }
                         }}
+                        loading="lazy"
                       />
                       <div className="operator-name">{operator.name}</div>
                       <div className="operator-class">
@@ -135,4 +136,5 @@ const TrashOperatorsPage: React.FC = () => {
 };
 
 export default TrashOperatorsPage;
+
 

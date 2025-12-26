@@ -15,20 +15,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Serve images and other assets
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
-// Serve React app for all non-API routes (SPA routing)
-app.get('*', (req, res, next) => {
-  // Skip API routes
-  if (req.path.startsWith('/api')) {
-    return next();
-  }
-  // Skip static assets
-  if (req.path.startsWith('/images') || req.path.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico)$/)) {
-    return next();
-  }
-  // Serve React app
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
-
 // API route to get all tier lists (niches)
 app.get('/api/tier-lists', (_req, res) => {
   try {
@@ -130,6 +116,17 @@ app.get('/api/trash-operators', (_req, res) => {
     console.error('Error loading trash operators:', error);
     res.status(500).json({ error: 'Failed to load trash operators' });
   }
+});
+
+// Serve React app for all non-API routes (SPA routing) - must be last
+// Use a catch-all middleware instead of a route pattern for Express 5
+app.use((req, res, next) => {
+  // Skip API routes and static assets (already handled above)
+  if (req.path.startsWith('/api') || req.path.startsWith('/images') || req.path.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/)) {
+    return next();
+  }
+  // Serve React app for all other routes
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 // Start the server

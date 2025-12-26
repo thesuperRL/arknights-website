@@ -98,15 +98,16 @@ const TierListPage: React.FC = () => {
                       {op.operator ? (
                         <>
                           <img
-                            src={op.operator.profileImage}
+                            src={op.operator.profileImage || '/images/operators/default.png'}
                             alt={op.operator.name}
                             className="operator-image"
                             onError={(e) => {
                               const target = e.target as HTMLImageElement;
-                              if (target) {
+                              if (target && target.src !== '/images/operators/default.png') {
                                 target.src = '/images/operators/default.png';
                               }
                             }}
+                            loading="lazy"
                           />
                           <div className="operator-name">{op.operator.name}</div>
                           <div className="operator-class">

@@ -8,6 +8,14 @@ import * as cheerio from 'cheerio';
 import * as fs from 'fs';
 import * as path from 'path';
 
+// Optional Puppeteer import for Cloudflare bypass
+let puppeteer: any = null;
+try {
+  puppeteer = require('puppeteer');
+} catch (e) {
+  // Puppeteer not installed, will use axios only
+}
+
 interface OperatorData {
   id: string;
   name: string;
@@ -40,20 +48,125 @@ class ArknightsScraper {
   }
 
   /**
+   * Fetches HTML content using Puppeteer (bypasses Cloudflare)
+   */
+  private async fetchHtmlWithPuppeteer(url: string): Promise<string> {
+    console.log(`Using Puppeteer to fetch: ${url}`);
+    let browser;
+    
+    try {
+      // Try to launch with various configurations
+      const launchOptions: any = {
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--disable-gpu',
+          '--disable-web-security'
+        ]
+      };
+
+      // Try to use system Chrome if available (more reliable than bundled Chrome)
+      const systemChromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+      if (fs.existsSync(systemChromePath)) {
+        console.log('Using system Chrome...');
+        browser = await puppeteer.launch({
+          ...launchOptions,
+          executablePath: systemChromePath
+        });
+      } else {
+        // Fall back to bundled Chrome
+        console.log('Using bundled Chrome...');
+        browser = await puppeteer.launch(launchOptions);
+      }
+      
+      const page = await browser.newPage();
+      await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+      
+      // Wait for page to load and Cloudflare challenge to complete
+      await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+      
+      // Wait a bit more for any dynamic content (using Promise instead of deprecated waitForTimeout)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const html = await page.content();
+      await browser.close();
+      console.log('✅ Successfully fetched with Puppeteer');
+      return html;
+    } catch (error: any) {
+      if (browser) {
+        await browser.close().catch(() => {});
+      }
+      
+      // If Chrome launch fails, suggest reinstalling
+      if (error.message && error.message.includes('Failed to launch')) {
+        console.error('\n❌ Puppeteer Chrome launch failed!');
+        console.error('Try reinstalling Puppeteer:');
+        console.error('  rm -rf node_modules/puppeteer .cache/puppeteer');
+        console.error('  npm install puppeteer --save-dev');
+        console.error('\nOr use system Chrome by installing Google Chrome browser.');
+      }
+      throw error;
+    }
+  }
+
+  /**
    * Fetches HTML content from a URL
+   * Note: Cloudflare protection may block requests. If you get 403 errors,
+   * the scraper will automatically try Puppeteer if available.
    */
   private async fetchHtml(url: string): Promise<string> {
     try {
       console.log(`Fetching: ${url}`);
       const response = await axios.get(url, {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Accept-Encoding': 'gzip, compress, deflate, br'
-        }
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'Referer': 'https://arknights.wiki.gg/',
+          'Sec-Fetch-Dest': 'document',
+          'Sec-Fetch-Mode': 'navigate',
+          'Sec-Fetch-Site': 'same-origin',
+          'Sec-Fetch-User': '?1',
+          'Upgrade-Insecure-Requests': '1',
+          'Connection': 'keep-alive',
+          'Cache-Control': 'max-age=0'
+        },
+        timeout: 30000,
+        maxRedirects: 5,
+        validateStatus: (status) => status < 500 // Don't throw on 403, we'll handle it
       });
+      
+      // Check if we got a Cloudflare challenge page
+      if (response.status === 403 || (typeof response.data === 'string' && response.data.includes('Just a second'))) {
+        // Try Puppeteer if available
+        if (puppeteer) {
+          console.log('\n⚠️  Cloudflare protection detected, using Puppeteer to bypass...');
+          return await this.fetchHtmlWithPuppeteer(url);
+        } else {
+          console.error('\n❌ Cloudflare protection detected!');
+          console.error('The website is blocking automated requests.');
+          console.error('\nTo fix this, install Puppeteer:');
+          console.error('  npm install puppeteer @types/puppeteer --save-dev');
+          console.error('\nOr try again in a few minutes.');
+          throw new Error('Cloudflare challenge detected - request blocked');
+        }
+      }
+      
       return response.data;
-    } catch (error) {
-      console.error(`Error fetching ${url}:`, error);
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        console.error('\n❌ Cloudflare protection detected!');
+        console.error('The website is blocking automated requests.');
+        console.error('\nPossible solutions:');
+        console.error('1. Wait a few minutes and try again');
+        console.error('2. Use a headless browser (Puppeteer/Playwright) to bypass Cloudflare');
+        console.error('3. Manually download the HTML page and save it for testing');
+      }
+      console.error(`Error fetching ${url}:`, error.message || error);
       throw error;
     }
   }
@@ -81,9 +194,17 @@ class ArknightsScraper {
       const response = await axios.get(fullUrl, {
         responseType: 'arraybuffer',
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Accept-Encoding': 'gzip, compress, deflate, br'
-        }
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'Referer': 'https://arknights.wiki.gg/',
+          'Sec-Fetch-Dest': 'image',
+          'Sec-Fetch-Mode': 'no-cors',
+          'Sec-Fetch-Site': 'same-origin',
+          'Connection': 'keep-alive'
+        },
+        timeout: 30000
       });
 
       // Ensure images directory exists
