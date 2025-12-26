@@ -1,0 +1,40 @@
+{
+  "name": "arknights-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "watch": "nodemon --watch src --exec ts-node src/index.ts",
+    "clean": "rm -rf dist",
+    "scrape": "ts-node src/scraper.ts",
+    "scrape:all": "ts-node src/scrape-all.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thesuperRL/arknights-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/thesuperRL/arknights-website/issues"
+  },
+  "homepage": "https://github.com/thesuperRL/arknights-website#readme",
+  "devDependencies": {
+    "@types/cheerio": "^0.22.35",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.3",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "cheerio": "^1.1.2",
+    "express": "^5.2.1"
+  }
+}
