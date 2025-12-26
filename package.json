@@ -4,13 +4,18 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run update:ranked && vite build",
+    "build:backend": "tsc",
+    "build:frontend": "vite build",
+    "update:ranked": "ts-node src/update-ranked-status.ts",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
+    "dev:frontend": "vite",
     "watch": "nodemon --watch src --exec ts-node src/index.ts",
     "clean": "rm -rf dist",
     "scrape": "ts-node src/scraper.ts",
-    "scrape:all": "ts-node src/scrape-all.ts"
+    "scrape:all": "ts-node src/scrape-all.ts",
+    "validate:tiers": "ts-node src/validate-tier-lists.ts"
   },
   "repository": {
     "type": "git",
@@ -28,13 +33,21 @@
     "@types/cheerio": "^0.22.35",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^5.1.2",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0"
   },
   "dependencies": {
     "axios": "^1.13.2",
     "cheerio": "^1.1.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.11.0"
   }
 }

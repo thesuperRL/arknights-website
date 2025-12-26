@@ -7,6 +7,9 @@ build/
 
 # Scraped data
 data/
+# But keep tier lists and unranked operators log
+!data/tier-lists/
+!data/unranked-operators.txt
 
 # Public assets (if you want to track them, remove this line)
 # public/
@@ -36,3 +39,7 @@ yarn-error.log*
 
 # TypeScript
 *.tsbuildinfo
+
+# Vite
+.vite/
+dist-frontend/

@@ -18,12 +18,24 @@ npm install
 
 ### Starting the Server
 
-Run the development server:
+**Option 1: Full Stack Development (Recommended)**
+Run both backend and frontend together:
+```bash
+# Terminal 1: Backend server
+npm run dev
+
+# Terminal 2: Frontend (React with Vite)
+npm run dev:frontend
+```
+
+**Option 2: Backend Only**
+Run just the backend server:
 ```bash
 npm run dev
 ```
 
-Or use watch mode for automatic recompilation on file changes:
+**Option 3: Watch Mode**
+Backend with automatic recompilation:
 ```bash
 npm run watch
 ```
@@ -38,12 +50,18 @@ The server will display a message in the terminal showing the exact URL to visit
 
 ## Building
 
-Compile TypeScript to JavaScript:
+**Build Everything (Backend + Frontend):**
 ```bash
 npm run build
 ```
 
-Run the compiled code:
+**Build Separately:**
+```bash
+npm run build:backend  # Compile TypeScript backend
+npm run build:frontend # Build React frontend with Vite
+```
+
+**Run Production Server:**
 ```bash
 npm start
 ```
@@ -111,10 +129,122 @@ Each operator entry includes:
 - `class`: Operator class
 - `profileImage`: Local path to downloaded image
 
+## Tier Lists
+
+The project includes a tier list system where operators are ranked by niche (e.g., DPS, Tank, Healing, etc.).
+
+### Structure
+
+Tier lists are stored in `data/tier-lists/` as JSON files. Each file represents one niche and contains operators ranked from S tier (best) to F tier (worst).
+
+### Creating/Editing Tier Lists
+
+1. **Create a new tier list file** in `data/tier-lists/`:
+   ```json
+   {
+     "niche": "YourNiche",
+     "description": "Description of what this niche represents",
+     "lastUpdated": "2024-01-01",
+     "tiers": {
+       "EX": [],
+       "S": [
+         {
+           "operatorId": "operator_id",
+           "notes": "Optional notes"
+         }
+       ],
+       "A": [],
+       "B": [],
+       "C": [],
+       "D": [],
+       "F": []
+     }
+   }
+   ```
+
+2. **Use operator IDs** from your `operators-{rarity}star.json` files
+3. **Not all operators need to be included** - only add operators relevant to that niche
+4. **Empty tiers are fine** - you can leave tiers empty if no operators fit
+5. **Automatic detection** - New tier list files are automatically detected and appear on the homepage. Just add a new JSON file and restart the server!
+
+### Example Tier Lists
+
+- `dps.json` - Damage per second operators
+- `tank.json` - Defensive/blocking operators
+- `healing.json` - HP restoration operators
+- `support.json` - Buff/debuff/utility operators
+- `crowd-control.json` - Stun/freeze/bind operators
+
+### Trash Operators
+
+A special page lists operators with no optimal use. Edit `data/tier-lists/trash-operators.json` to add or remove operators from this list.
+
+**Structure:**
+```json
+{
+  "title": "Trash Operators",
+  "description": "Operators that have no optimal use",
+  "lastUpdated": "2025-12-25",
+  "operators": [
+    {
+      "operatorId": "operator_id",
+      "notes": "Optional explanation"
+    }
+  ]
+}
+```
+
+Access the trash operators page at `/trash-operators` or via the link on the homepage.
+
+### Validation
+
+Validate your tier lists against operator data:
+```bash
+npm run validate:tiers
+```
+
+### Operator Niche Tracking
+
+Each operator has a `niches` array attribute that lists all tier list niches where they appear. This is automatically updated during the build process.
+
+**Update niche tracking:**
+```bash
+npm run update:ranked
+```
+
+This script:
+- Checks all tier lists for operator IDs
+- Updates the `niches` array in all operator JSON files with the list of niches where each operator appears
+- Creates `data/unranked-operators.txt` listing all operators not in any tier list (empty niches array)
+
+**Example:**
+```json
+{
+  "id": "aak",
+  "name": "Aak",
+  "niches": ["Attack Buffing", "Support"]
+}
+```
+
+The niche tracking is automatically updated when you run `npm run build`.
+
+This will check that all operator IDs in tier lists exist in your operator data files.
+
+### Utilities
+
+The `src/tier-list-utils.ts` file provides helper functions:
+- `loadAllTierLists()` - Load all tier lists
+- `loadTierList(niche)` - Load a specific tier list
+- `saveTierList(tierList)` - Save a tier list
+- `validateTierList(tierList, operatorsData)` - Validate a tier list
+- `getOperatorsInTier(niche, tier)` - Get operators in a specific tier
+- `getNichesForOperator(operatorId)` - Find which niches include an operator
+
 ## Next Steps
 
 1. Add more routes and API endpoints
-2. Set up a database connection
-3. Add authentication
-4. Configure environment variables
-5. Add CSS frameworks or build tools
+2. Create frontend to display tier lists
+3. Set up a database connection
+4. Add authentication
+5. Configure environment variables
+6. Add CSS frameworks or build tools

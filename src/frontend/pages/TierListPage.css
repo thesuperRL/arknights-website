@@ -1,0 +1,132 @@
+.tier-list-page {
+    width: 100%;
+}
+
+.tier-list-header {
+    margin-bottom: 2rem;
+}
+
+.back-button {
+    display: inline-block;
+    color: var(--text-light);
+    text-decoration: none;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.back-button:hover {
+    opacity: 1;
+}
+
+.tier-list-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tier-list-header p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.tier-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.tier-section {
+    background: rgba(22, 33, 62, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.tier-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.tier-badge {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.tier-badge.ex { background: var(--tier-ex); }
+.tier-badge.s { background: var(--tier-s); }
+.tier-badge.a { background: var(--tier-a); }
+.tier-badge.b { background: var(--tier-b); }
+.tier-badge.c { background: var(--tier-c); }
+.tier-badge.d { background: var(--tier-d); }
+.tier-badge.f { background: var(--tier-f); }
+
+.tier-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.operators-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.operator-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: background 0.3s;
+    text-align: center;
+}
+
+.operator-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.operator-image {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.operator-name {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.operator-class {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.operator-notes {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.empty-tier {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .operators-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+

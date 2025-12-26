@@ -1,0 +1,192 @@
+/**
+ * Script to update the "niches" array of operators based on tier lists
+ * Checks which tier lists each operator appears in and updates the niches array
+ */
+
+import { loadAllTierLists } from './tier-list-utils';
+import * as fs from 'fs';
+import * as path from 'path';
+
+interface OperatorData {
+  id: string;
+  name: string;
+  rarity: number;
+  class: string;
+  global: boolean;
+  profileImage: string;
+  niches?: string[];
+}
+
+function getTrashOperators(): Set<string> {
+  const trashFilePath = path.join(__dirname, '../data/tier-lists', 'trash-operators.json');
+  const trashOperators = new Set<string>();
+
+  if (fs.existsSync(trashFilePath)) {
+    try {
+      const content = fs.readFileSync(trashFilePath, 'utf-8');
+      const trashData = JSON.parse(content);
+      if (trashData.operators && Array.isArray(trashData.operators)) {
+        for (const op of trashData.operators) {
+          if (op.operatorId) {
+            trashOperators.add(op.operatorId);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error loading trash operators:', error);
+    }
+  }
+
+  return trashOperators;
+}
+
+function getOperatorNiches(): Map<string, string[]> {
+  const tierLists = loadAllTierLists();
+  const operatorNiches = new Map<string, string[]>();
+
+  const tierRanks = ['EX', 'S', 'A', 'B', 'C', 'D', 'F'] as const;
+  
+  for (const [niche, tierList] of Object.entries(tierLists)) {
+    // Skip if tierList doesn't have tiers structure (e.g., trash-operators.json)
+    if (!tierList.tiers) {
+      continue;
+    }
+    
+    for (const rank of tierRanks) {
+      const operators = tierList.tiers[rank] || [];
+      for (const op of operators) {
+        if (!operatorNiches.has(op.operatorId)) {
+          operatorNiches.set(op.operatorId, []);
+        }
+        const niches = operatorNiches.get(op.operatorId)!;
+        if (!niches.includes(niche)) {
+          niches.push(niche);
+        }
+      }
+    }
+  }
+
+  // Add trash operators to niches
+  const trashOperators = getTrashOperators();
+  for (const operatorId of trashOperators) {
+    if (!operatorNiches.has(operatorId)) {
+      operatorNiches.set(operatorId, []);
+    }
+    const niches = operatorNiches.get(operatorId)!;
+    if (!niches.includes('Trash Operators')) {
+      niches.push('Trash Operators');
+    }
+  }
+
+  return operatorNiches;
+}
+
+function updateOperatorFiles(operatorNiches: Map<string, string[]>): {
+  updated: number;
+  unranked: string[];
+} {
+  const dataDir = path.join(__dirname, '../data');
+  const rarities = [1, 2, 3, 4, 5, 6];
+  const unrankedOperators: string[] = [];
+  let totalUpdated = 0;
+
+  for (const rarity of rarities) {
+    const filePath = path.join(dataDir, `operators-${rarity}star.json`);
+    
+    if (!fs.existsSync(filePath)) {
+      continue;
+    }
+
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const operators: Record<string, OperatorData> = JSON.parse(content);
+    let fileUpdated = false;
+
+    for (const [id, operator] of Object.entries(operators)) {
+      const niches = operatorNiches.get(id) || [];
+      // Handle migration from old 'ranked' field
+      const currentNiches = operator.niches || [];
+      
+      // Sort arrays for comparison
+      const sortedNewNiches = [...niches].sort();
+      const sortedCurrentNiches = [...currentNiches].sort();
+      
+      // Check if arrays are different
+      const arraysEqual = sortedNewNiches.length === sortedCurrentNiches.length &&
+        sortedNewNiches.every((val, idx) => val === sortedCurrentNiches[idx]);
+      
+      // Also check if we need to remove old 'ranked' field
+      const hasOldRankedField = 'ranked' in operator;
+      
+      if (!arraysEqual || hasOldRankedField) {
+        const updatedOperator: any = {
+          ...operator,
+          niches: sortedNewNiches
+        };
+        // Remove old 'ranked' field if it exists
+        if (hasOldRankedField) {
+          delete updatedOperator.ranked;
+        }
+        operators[id] = updatedOperator;
+        fileUpdated = true;
+        totalUpdated++;
+      }
+
+      // Only add to unranked if not in any niche (including trash)
+      if (niches.length === 0) {
+        unrankedOperators.push(`${id} (${operator.name})`);
+      }
+    }
+
+    if (fileUpdated) {
+      fs.writeFileSync(filePath, JSON.stringify(operators, null, 2));
+      console.log(`✅ Updated operators-${rarity}star.json`);
+    }
+  }
+
+  return {
+    updated: totalUpdated,
+    unranked: unrankedOperators.sort()
+  };
+}
+
+function writeUnrankedLog(unrankedOperators: string[]): void {
+  const logPath = path.join(__dirname, '../data/unranked-operators.txt');
+  const content = unrankedOperators.length > 0
+    ? `Unranked Operators (${unrankedOperators.length} total)\n` +
+      `Generated: ${new Date().toISOString()}\n\n` +
+      unrankedOperators.join('\n')
+    : `All operators are ranked!\nGenerated: ${new Date().toISOString()}`;
+
+  fs.writeFileSync(logPath, content);
+  console.log(`📝 Wrote unranked operators log to: ${logPath}`);
+}
+
+async function main() {
+  console.log('🔍 Checking operator niches...\n');
+
+  // Get all operator IDs and their niches
+  const operatorNiches = getOperatorNiches();
+  const trashOperators = getTrashOperators();
+  const rankedCount = operatorNiches.size;
+  console.log(`Found ${rankedCount} unique operators in tier lists`);
+  console.log(`Found ${trashOperators.size} operators in trash list\n`);
+
+  // Update operator files
+  const { updated, unranked } = updateOperatorFiles(operatorNiches);
+
+  console.log(`\n📊 Summary:`);
+  console.log(`   Updated operators: ${updated}`);
+  console.log(`   Unranked operators: ${unranked.length}`);
+
+  // Write unranked operators to log file
+  writeUnrankedLog(unranked);
+
+  if (unranked.length > 0) {
+    console.log(`\n⚠️  ${unranked.length} operators are not in any tier list`);
+    console.log(`   See data/unranked-operators.txt for details`);
+  } else {
+    console.log(`\n✅ All operators are ranked in at least one tier list!`);
+  }
+}
+
+main().catch(console.error);

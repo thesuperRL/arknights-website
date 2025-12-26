@@ -15,6 +15,7 @@ interface OperatorData {
   class: string;
   global: boolean; // Whether operator is available in global
   profileImage: string; // Local path after download
+  niches?: string[]; // Array of tier list niches where this operator appears
 }
 
 interface ScraperConfig {
@@ -46,7 +47,8 @@ class ArknightsScraper {
       console.log(`Fetching: ${url}`);
       const response = await axios.get(url, {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Accept-Encoding': 'gzip, compress, deflate, br'
         }
       });
       return response.data;
@@ -67,24 +69,36 @@ class ArknightsScraper {
         fullUrl = 'https:' + imageUrl;
       } else if (imageUrl.startsWith('/')) {
         fullUrl = 'https://arknights.wiki.gg' + imageUrl;
+      } else if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
+        // If it's a relative path without leading slash, add base URL
+        fullUrl = 'https://arknights.wiki.gg/' + imageUrl;
       }
 
-      console.log(`Downloading image: ${fullUrl}`);
+      // Ensure filename is safe
+      const safeFilename = this.sanitizeFilename(filename.split('.')[0]) + path.extname(filename);
+      
+      console.log(`Downloading image: ${fullUrl} -> ${safeFilename}`);
       const response = await axios.get(fullUrl, {
         responseType: 'arraybuffer',
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Accept-Encoding': 'gzip, compress, deflate, br'
         }
       });
 
-      const filePath = path.join(this.config.imagesDir, filename);
+      // Ensure images directory exists
+      if (!fs.existsSync(this.config.imagesDir)) {
+        fs.mkdirSync(this.config.imagesDir, { recursive: true });
+      }
+
+      const filePath = path.join(this.config.imagesDir, safeFilename);
       fs.writeFileSync(filePath, response.data);
-      console.log(`Saved image: ${filePath}`);
+      console.log(`✅ Saved image: ${filePath}`);
       
       // Return relative path from public directory
-      return `/images/operators/${filename}`;
+      return `/images/operators/${safeFilename}`;
     } catch (error) {
-      console.error(`Error downloading image ${imageUrl}:`, error);
+      console.error(`❌ Error downloading image ${imageUrl}:`, error);
       // Return original URL if download fails
       return imageUrl;
     }
@@ -126,12 +140,17 @@ class ArknightsScraper {
     const headerRow = table.find('tr').first();
     const headerCells = headerRow.find('th, td');
     let globalColumnIndex = -1;
+    let classColumnIndex = -1;
     
     headerCells.each((index, cell) => {
       const headerText = $(cell).text().toLowerCase().trim();
       if (headerText.includes('global') || headerText === 'global') {
         globalColumnIndex = index;
         console.log(`Found global column at index: ${globalColumnIndex}`);
+      }
+      if (headerText.includes('class') || headerText === 'class') {
+        classColumnIndex = index;
+        console.log(`Found class column at index: ${classColumnIndex}`);
       }
     });
 
@@ -160,9 +179,37 @@ class ArknightsScraper {
         const nameLink = nameCell.find('a').first();
         const name = nameLink.text().trim() || nameCell.text().trim();
 
-        // Extract class (usually in third cell or can be derived)
-        const classCell = cells.eq(2);
-        const operatorClass = classCell.text().trim() || 'Unknown';
+        // Extract class from image (e.g., Sniper.png -> Sniper)
+        let operatorClass = 'Unknown';
+        if (classColumnIndex >= 0 && cells.length > classColumnIndex) {
+          const classCell = cells.eq(classColumnIndex);
+          const classImg = classCell.find('img').first();
+          const classImgSrc = classImg.attr('src') || classImg.attr('data-src') || '';
+          
+          // Extract class name from image filename (e.g., "Sniper.png" -> "Sniper")
+          if (classImgSrc) {
+            const match = classImgSrc.match(/([A-Za-z]+)\.png/i);
+            if (match && match[1]) {
+              operatorClass = match[1];
+            }
+          }
+        } else {
+          // Try to find a cell with class image (fallback)
+          const classNames = ['Guard', 'Caster', 'Defender', 'Sniper', 'Support', 'Specialist', 'Vanguard', 'Medic'];
+          cells.each((_cellIndex, cell) => {
+            if (operatorClass !== 'Unknown') return; // Already found
+            const $cell = $(cell);
+            const img = $cell.find('img').first();
+            const imgSrc = img.attr('src') || img.attr('data-src') || '';
+            // Check if this looks like a class image (contains class names)
+            for (const className of classNames) {
+              if (imgSrc.includes(`${className}.png`)) {
+                operatorClass = className;
+                return;
+              }
+            }
+          });
+        }
 
         // Extract global value from image (Cross.png = false, Tick.png = true)
         let globalValue = false;
@@ -198,7 +245,8 @@ class ArknightsScraper {
             rarity: rarity,
             class: operatorClass,
             global: globalValue,
-            profileImage: imageUrl // Temporarily store URL, will be replaced with local path after download
+            profileImage: imageUrl, // Temporarily store URL, will be replaced with local path after download
+            niches: [] // Will be updated by update-ranked-status script
           });
         }
       } catch (error) {
@@ -222,7 +270,21 @@ class ArknightsScraper {
       const imageUrl = img.attr('src') || img.attr('data-src') || '';
       const nameLink = $el.find('a').first();
       const name = nameLink.text().trim() || $el.find('strong, .name').first().text().trim();
-      const operatorClass = $el.find('.class, .type').first().text().trim() || 'Unknown';
+      
+      // Extract class from image
+      let operatorClass = 'Unknown';
+      const classImg = $el.find('.class img, .type img, img[src*=".png"]').filter((_i, el) => {
+        const src = $(el).attr('src') || $(el).attr('data-src') || '';
+        return /(Guard|Caster|Defender|Sniper|Support|Specialist|Vanguard|Medic)\.png/i.test(src);
+      }).first();
+      
+      if (classImg.length > 0) {
+        const classImgSrc = classImg.attr('src') || classImg.attr('data-src') || '';
+        const match = classImgSrc.match(/([A-Za-z]+)\.png/i);
+        if (match && match[1]) {
+          operatorClass = match[1];
+        }
+      }
 
       // Try to extract global value from alternative layout (check for Tick/Cross images)
       let globalValue = false;
@@ -243,7 +305,8 @@ class ArknightsScraper {
           rarity: rarity,
           class: operatorClass,
           global: globalValue,
-          profileImage: imageUrl // Temporarily store URL, will be replaced with local path after download
+          profileImage: imageUrl, // Temporarily store URL, will be replaced with local path after download
+          niches: [] // Will be updated by update-ranked-status script
         });
       }
     });
@@ -376,10 +439,18 @@ class ArknightsScraper {
         
         // profileImage contains the URL from scraping, extract extension and download
         const imageUrl = operator.profileImage;
-        const filename = this.sanitizeFilename(operator.name) + 
-          (path.extname(imageUrl.split('?')[0]) || '.png');
+        
+        // Extract file extension from URL (remove query parameters first)
+        const urlWithoutQuery = imageUrl.split('?')[0].split('#')[0];
+        const extension = path.extname(urlWithoutQuery) || '.png';
+        const filename = this.sanitizeFilename(operator.name) + extension;
         const imagePath = path.join(this.config.imagesDir, filename);
         const relativeImagePath = `/images/operators/${filename}`;
+        
+        // Ensure images directory exists
+        if (!fs.existsSync(this.config.imagesDir)) {
+          fs.mkdirSync(this.config.imagesDir, { recursive: true });
+        }
         
         // Check if image already exists
         if (fs.existsSync(imagePath)) {
