@@ -63,14 +63,14 @@
     margin: 0;
 }
 
-.tier-lists-grid {
+.niche-lists-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
 
-.tier-list-card {
+.niche-list-card {
     background: rgba(22, 33, 62, 0.8);
     backdrop-filter: blur(10px);
     border-radius: 15px;
@@ -83,23 +83,23 @@
     display: block;
 }
 
-.tier-list-card:hover {
+.niche-list-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
-.tier-list-card h2 {
+.niche-list-card h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     color: var(--text-light);
 }
 
-.tier-list-card p {
+.niche-list-card p {
     color: var(--text-muted);
     margin-bottom: 1rem;
 }
 
-.tier-list-card .meta {
+.niche-list-card .meta {
     font-size: 0.9rem;
     color: var(--text-muted);
 }
@@ -109,7 +109,7 @@
         font-size: 2rem;
     }
 
-    .tier-lists-grid {
+    .niche-lists-grid {
         grid-template-columns: 1fr;
     }
 }

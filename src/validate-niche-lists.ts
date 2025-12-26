@@ -1,14 +1,14 @@
 /**
- * Script to validate tier lists against operator data
+ * Script to validate operator lists against operator data
  */
 
-import { loadAllTierLists, validateTierList } from './tier-list-utils';
+import { loadAllNicheLists, validateNicheList } from './niche-list-utils';
 import * as fs from 'fs';
 import * as path from 'path';
 
 async function main() {
   const dataDir = path.join(__dirname, '../data');
-  const tierListsDir = path.join(dataDir, 'tier-lists');
+  const operatorListsDir = path.join(dataDir, 'niche-lists');
   
   // Load all operator data
   const operatorsData: Record<string, any> = {};
@@ -25,25 +25,21 @@ async function main() {
 
   console.log(`Loaded ${Object.keys(operatorsData).length} operators\n`);
 
-  // Load all tier lists
-  const tierLists = loadAllTierLists(tierListsDir);
-  const niches = Object.keys(tierLists);
+  // Load all niche lists
+  const nicheLists = loadAllNicheLists(operatorListsDir);
+  const niches = Object.keys(nicheLists);
   
-  console.log(`Found ${niches.length} tier lists:\n`);
+  console.log(`Found ${niches.length} niche lists:\n`);
 
   let totalErrors = 0;
   let totalOperators = 0;
 
   for (const niche of niches) {
-    const tierList = tierLists[niche];
-    const validation = validateTierList(tierList, operatorsData);
+    const operatorList = nicheLists[niche];
+    const validation = validateNicheList(operatorList, operatorsData);
     
-    // Count operators in this tier list
-    const tierRanks = ['EX', 'S', 'A', 'B', 'C', 'D', 'F'] as const;
-    let operatorCount = 0;
-    for (const rank of tierRanks) {
-      operatorCount += (tierList.tiers[rank] || []).length;
-    }
+    // Count operators in this operator list
+    const operatorCount = operatorList.operators ? operatorList.operators.length : 0;
     totalOperators += operatorCount;
 
     console.log(`📊 ${niche}:`);
@@ -62,11 +58,11 @@ async function main() {
 
   console.log(`\n📈 Summary:`);
   console.log(`   Total niches: ${niches.length}`);
-  console.log(`   Total operators in tier lists: ${totalOperators}`);
+  console.log(`   Total operators in operator lists: ${totalOperators}`);
   console.log(`   Total errors: ${totalErrors}`);
   
   if (totalErrors === 0) {
-    console.log(`\n✅ All tier lists are valid!`);
+    console.log(`\n✅ All operator lists are valid!`);
     process.exit(0);
   } else {
     console.log(`\n❌ Please fix the errors above.`);

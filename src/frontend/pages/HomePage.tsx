@@ -2,38 +2,38 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
 
-interface TierListInfo {
+interface NicheListInfo {
   niche: string;
   description: string;
   lastUpdated: string;
 }
 
 const HomePage: React.FC = () => {
-  const [tierLists, setTierLists] = useState<TierListInfo[]>([]);
+  const [nicheLists, setNicheLists] = useState<NicheListInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadTierLists();
+    loadNicheLists();
   }, []);
 
-  const loadTierLists = async () => {
+  const loadNicheLists = async () => {
     try {
-      const response = await fetch('/api/tier-lists');
+      const response = await fetch('/api/niche-lists');
       if (!response.ok) {
-        throw new Error('Failed to load tier lists');
+        throw new Error('Failed to load niche lists');
       }
-      const data = await response.json() as TierListInfo[];
-      setTierLists(data);
+      const data = await response.json() as NicheListInfo[];
+      setNicheLists(data);
       setLoading(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load tier lists');
+      setError(err instanceof Error ? err.message : 'Failed to load niche lists');
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <div className="loading">Loading tier lists...</div>;
+    return <div className="loading">Loading niche lists...</div>;
   }
 
   if (error) {
@@ -43,24 +43,24 @@ const HomePage: React.FC = () => {
   return (
     <div className="home-page">
       <div className="hero">
-        <h1>Arknights Operator Tier Lists</h1>
-        <p>Browse tier lists for different operator niches</p>
+        <h1>Arknights Operator Niche Lists</h1>
+        <p>Browse niche lists for different operator roles</p>
       </div>
 
-      <div className="tier-lists-grid">
-        {tierLists.length === 0 ? (
-          <div className="error">No tier lists found</div>
+      <div className="niche-lists-grid">
+        {nicheLists.length === 0 ? (
+          <div className="error">No niche lists found</div>
         ) : (
-          tierLists.map((tierList) => (
+          nicheLists.map((nicheList) => (
             <Link
-              key={tierList.niche}
-              to={`/tier-list/${encodeURIComponent(tierList.niche)}`}
-              className="tier-list-card"
+              key={nicheList.niche}
+              to={`/niche-list/${encodeURIComponent(nicheList.niche)}`}
+              className="niche-list-card"
             >
-              <h2>{tierList.niche}</h2>
-              <p>{tierList.description || 'No description available'}</p>
+              <h2>{nicheList.niche}</h2>
+              <p>{nicheList.description || 'No description available'}</p>
               <div className="meta">
-                {tierList.lastUpdated && `Last updated: ${tierList.lastUpdated}`}
+                {nicheList.lastUpdated && `Last updated: ${nicheList.lastUpdated}`}
               </div>
             </Link>
           ))

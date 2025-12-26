@@ -135,11 +135,11 @@ The project includes a tier list system where operators are ranked by niche (e.g
 
 ### Structure
 
-Tier lists are stored in `data/tier-lists/` as JSON files. Each file represents one niche and contains operators ranked from S tier (best) to F tier (worst).
+Niche lists are stored in `data/niche-lists/` as JSON files. Each file represents one niche and contains a list of operators that can perform that role.
 
 ### Creating/Editing Tier Lists
 
-1. **Create a new tier list file** in `data/tier-lists/`:
+1. **Create a new niche list file** in `data/niche-lists/`:
    ```json
    {
      "niche": "YourNiche",
@@ -177,7 +177,7 @@ Tier lists are stored in `data/tier-lists/` as JSON files. Each file represents 
 
 ### Trash Operators
 
-A special page lists operators with no optimal use. Edit `data/tier-lists/trash-operators.json` to add or remove operators from this list.
+A special page lists operators with no optimal use. Edit `data/niche-lists/trash-operators.json` to add or remove operators from this list.
 
 **Structure:**
 ```json

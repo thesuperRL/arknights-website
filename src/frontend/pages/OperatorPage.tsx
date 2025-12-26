@@ -24,16 +24,7 @@ interface OperatorData {
   rankings: Ranking[];
 }
 
-const tierColors: Record<string, string> = {
-  EX: 'var(--tier-ex)',
-  S: 'var(--tier-s)',
-  A: 'var(--tier-a)',
-  B: 'var(--tier-b)',
-  C: 'var(--tier-c)',
-  D: 'var(--tier-d)',
-  F: 'var(--tier-f)',
-  'N/A': '#808080',
-};
+// No tier colors needed anymore since we removed the tier system
 
 const OperatorPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -108,17 +99,13 @@ const OperatorPage: React.FC = () => {
 
       {rankings.length > 0 ? (
         <div className="rankings-section">
-          <h2>Rankings</h2>
+          <h2>Niches</h2>
           <div className="rankings-grid">
             {rankings.map((ranking, index) => (
               <div key={index} className="ranking-card">
-                <div className="ranking-niche">{ranking.niche}</div>
-                <div
-                  className="ranking-tier"
-                  style={{ backgroundColor: tierColors[ranking.tier] || '#808080' }}
-                >
-                  {ranking.tier}
-                </div>
+                <Link to={`/niche-list/${encodeURIComponent(ranking.niche)}`} className="ranking-niche-link">
+                  <div className="ranking-niche">{ranking.niche}</div>
+                </Link>
                 {ranking.notes && (
                   <div className="ranking-notes">{ranking.notes}</div>
                 )}
@@ -128,7 +115,7 @@ const OperatorPage: React.FC = () => {
         </div>
       ) : (
         <div className="no-rankings">
-          <p>This operator is not ranked in any niche.</p>
+          <p>This operator is not listed in any niche.</p>
         </div>
       )}
     </div>

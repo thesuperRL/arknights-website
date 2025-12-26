@@ -15,7 +15,7 @@
     "clean": "rm -rf dist",
     "scrape": "ts-node src/scraper.ts",
     "scrape:all": "ts-node src/scrape-all.ts",
-    "validate:tiers": "ts-node src/validate-tier-lists.ts"
+    "validate:niches": "ts-node src/validate-niche-lists.ts"
   },
   "repository": {
     "type": "git",

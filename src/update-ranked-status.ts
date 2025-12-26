@@ -3,7 +3,7 @@
  * Checks which tier lists each operator appears in and updates the niches array
  */
 
-import { loadAllTierLists } from './tier-list-utils';
+import { loadAllNicheLists } from './niche-list-utils';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -18,7 +18,7 @@ interface OperatorData {
 }
 
 function getTrashOperators(): Set<string> {
-  const trashFilePath = path.join(__dirname, '../data/tier-lists', 'trash-operators.json');
+  const trashFilePath = path.join(__dirname, '../data/niche-lists', 'trash-operators.json');
   const trashOperators = new Set<string>();
 
   if (fs.existsSync(trashFilePath)) {
@@ -41,27 +41,22 @@ function getTrashOperators(): Set<string> {
 }
 
 function getOperatorNiches(): Map<string, string[]> {
-  const tierLists = loadAllTierLists();
+  const operatorLists = loadAllNicheLists();
   const operatorNiches = new Map<string, string[]>();
-
-  const tierRanks = ['EX', 'S', 'A', 'B', 'C', 'D', 'F'] as const;
   
-  for (const [niche, tierList] of Object.entries(tierLists)) {
-    // Skip if tierList doesn't have tiers structure (e.g., trash-operators.json)
-    if (!tierList.tiers) {
+  for (const [niche, operatorList] of Object.entries(operatorLists)) {
+    // Skip if operatorList doesn't have operators array
+    if (!operatorList.operators || !Array.isArray(operatorList.operators)) {
       continue;
     }
     
-    for (const rank of tierRanks) {
-      const operators = tierList.tiers[rank] || [];
-      for (const op of operators) {
-        if (!operatorNiches.has(op.operatorId)) {
-          operatorNiches.set(op.operatorId, []);
-        }
-        const niches = operatorNiches.get(op.operatorId)!;
-        if (!niches.includes(niche)) {
-          niches.push(niche);
-        }
+    for (const operatorId of operatorList.operators) {
+      if (!operatorNiches.has(operatorId)) {
+        operatorNiches.set(operatorId, []);
+      }
+      const niches = operatorNiches.get(operatorId)!;
+      if (!niches.includes(niche)) {
+        niches.push(niche);
       }
     }
   }
@@ -168,7 +163,7 @@ async function main() {
   const operatorNiches = getOperatorNiches();
   const trashOperators = getTrashOperators();
   const rankedCount = operatorNiches.size;
-  console.log(`Found ${rankedCount} unique operators in tier lists`);
+  console.log(`Found ${rankedCount} unique operators in operator lists`);
   console.log(`Found ${trashOperators.size} operators in trash list\n`);
 
   // Update operator files
@@ -182,10 +177,10 @@ async function main() {
   writeUnrankedLog(unranked);
 
   if (unranked.length > 0) {
-    console.log(`\n⚠️  ${unranked.length} operators are not in any tier list`);
+    console.log(`\n⚠️  ${unranked.length} operators are not in any operator list`);
     console.log(`   See data/unranked-operators.txt for details`);
   } else {
-    console.log(`\n✅ All operators are ranked in at least one tier list!`);
+    console.log(`\n✅ All operators are listed in at least one operator list!`);
   }
 }
 

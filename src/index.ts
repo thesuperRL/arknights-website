@@ -4,7 +4,7 @@
 
 import express from 'express';
 import path from 'path';
-import { loadAllTierLists, loadTierList } from './tier-list-utils';
+import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
 import * as fs from 'fs';
 
 const app = express();
@@ -15,34 +15,34 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Serve images and other assets
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
-// API route to get all tier lists (niches)
-app.get('/api/tier-lists', (_req, res) => {
+// API route to get all niche lists
+app.get('/api/niche-lists', (_req, res) => {
   try {
-    const tierLists = loadAllTierLists();
-    const niches = Object.keys(tierLists).map(niche => ({
+    const nicheLists = loadAllNicheLists();
+    const niches = Object.keys(nicheLists).map(niche => ({
       niche,
-      description: tierLists[niche].description || '',
-      lastUpdated: tierLists[niche].lastUpdated || ''
+      description: nicheLists[niche].description || '',
+      lastUpdated: nicheLists[niche].lastUpdated || ''
     }));
     res.json(niches);
   } catch (error) {
-    console.error('Error loading tier lists:', error);
-    res.status(500).json({ error: 'Failed to load tier lists' });
+    console.error('Error loading niche lists:', error);
+    res.status(500).json({ error: 'Failed to load niche lists' });
   }
 });
 
-// API route to get a specific tier list
-app.get('/api/tier-lists/:niche', (req, res) => {
+// API route to get a specific niche list
+app.get('/api/niche-lists/:niche', (req, res) => {
   try {
     const niche = req.params.niche;
-    const tierList = loadTierList(niche);
+    const operatorList = loadNicheList(niche);
     
-    if (!tierList) {
-      res.status(404).json({ error: 'Tier list not found' });
+    if (!operatorList) {
+      res.status(404).json({ error: 'Operator list not found' });
       return;
     }
 
-    // Load operator data to enrich the tier list
+    // Load operator data to enrich the operator list
     const operatorsData: Record<string, any> = {};
     const rarities = [1, 2, 3, 4, 5, 6];
     
@@ -55,31 +55,26 @@ app.get('/api/tier-lists/:niche', (req, res) => {
       }
     }
 
-    // Enrich tier list with operator data
-    const enrichedTierList = {
-      ...tierList,
-      tiers: {} as Record<string, any[]>
+    // Enrich operator list with operator data
+    const enrichedOperatorList = {
+      ...operatorList,
+      operators: operatorList.operators.map(operatorId => ({
+        operatorId,
+        operator: operatorsData[operatorId] || null
+      }))
     };
 
-    const tierRanks = ['EX', 'S', 'A', 'B', 'C', 'D', 'F'] as const;
-    for (const rank of tierRanks) {
-      enrichedTierList.tiers[rank] = (tierList.tiers[rank] || []).map(op => ({
-        ...op,
-        operator: operatorsData[op.operatorId] || null
-      }));
-    }
-
-    res.json(enrichedTierList);
+    res.json(enrichedOperatorList);
   } catch (error) {
-    console.error('Error loading tier list:', error);
-    res.status(500).json({ error: 'Failed to load tier list' });
+    console.error('Error loading operator list:', error);
+    res.status(500).json({ error: 'Failed to load operator list' });
   }
 });
 
 // API route to get trash operators
 app.get('/api/trash-operators', (_req, res) => {
   try {
-    const filePath = path.join(__dirname, '../data/tier-lists', 'trash-operators.json');
+    const filePath = path.join(__dirname, '../data/niche-lists', 'trash-operators.json');
     if (!fs.existsSync(filePath)) {
       res.status(404).json({ error: 'Trash operators not found' });
       return;
@@ -119,28 +114,22 @@ app.get('/api/operators/:id', (req, res) => {
       return;
     }
 
-    // Load all tier lists to find where this operator is ranked
-    const tierLists = loadAllTierLists();
+    // Load all niche lists to find where this operator is listed
+    const operatorLists = loadAllNicheLists();
     const rankings: Array<{ niche: string; tier: string; notes?: string }> = [];
 
-    for (const [niche, tierList] of Object.entries(tierLists)) {
-      const tierRanks = ['EX', 'S', 'A', 'B', 'C', 'D', 'F'] as const;
-      for (const rank of tierRanks) {
-        const operatorsInTier = tierList.tiers[rank] || [];
-        const found = operatorsInTier.find(op => op.operatorId === operatorId);
-        if (found) {
-          rankings.push({
-            niche: tierList.niche || niche,
-            tier: rank,
-            notes: found.notes
-          });
-          break; // Operator can only be in one tier per niche
-        }
+    for (const [niche, operatorList] of Object.entries(operatorLists)) {
+      if (operatorList.operators && operatorList.operators.includes(operatorId)) {
+        rankings.push({
+          niche: operatorList.niche || niche,
+          tier: 'N/A',
+          notes: undefined
+        });
       }
     }
 
     // Check if operator is in trash list
-    const trashFilePath = path.join(__dirname, '../data/tier-lists', 'trash-operators.json');
+    const trashFilePath = path.join(__dirname, '../data/niche-lists', 'trash-operators.json');
     if (fs.existsSync(trashFilePath)) {
       const trashContent = fs.readFileSync(trashFilePath, 'utf-8');
       const trashData = JSON.parse(trashContent);
