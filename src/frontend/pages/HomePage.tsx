@@ -47,13 +47,6 @@ const HomePage: React.FC = () => {
         <p>Browse tier lists for different operator niches</p>
       </div>
 
-      <div className="special-links">
-        <Link to="/trash-operators" className="special-card trash-card">
-          <h2>🗑️ Trash Operators</h2>
-          <p>Operators with no optimal use</p>
-        </Link>
-      </div>
-
       <div className="tier-lists-grid">
         {tierLists.length === 0 ? (
           <div className="error">No tier lists found</div>
@@ -72,6 +65,13 @@ const HomePage: React.FC = () => {
             </Link>
           ))
         )}
+      </div>
+
+      <div className="special-links">
+        <Link to="/trash-operators" className="special-card trash-card">
+          <h2>🗑️ Trash Operators</h2>
+          <p>Operators with no optimal use</p>
+        </Link>
       </div>
     </div>
   );

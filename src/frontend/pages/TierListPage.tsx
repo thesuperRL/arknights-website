@@ -101,21 +101,25 @@ const TierListPage: React.FC = () => {
                   <div key={`${op.operatorId}-${index}`} className="operator-card">
                     {op.operator ? (
                       <>
-                        <img
-                          src={op.operator.profileImage || `/images/operators/${op.operator.id || op.operatorId}.png`}
-                          alt={op.operator.name}
-                          className="operator-image"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            if (target && !target.src.includes('data:image')) {
-                              // Show a placeholder SVG if image doesn't exist
-                              target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
-                              target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                            }
-                          }}
-                          loading="lazy"
-                        />
-                        <div className="operator-name">{op.operator.name}</div>
+                        <Link to={`/operator/${op.operator.id}`} className="operator-image-link">
+                          <img
+                            src={op.operator.profileImage || `/images/operators/${op.operator.id || op.operatorId}.png`}
+                            alt={op.operator.name}
+                            className="operator-image"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              if (target && !target.src.includes('data:image')) {
+                                // Show a placeholder SVG if image doesn't exist
+                                target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                                target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                              }
+                            }}
+                            loading="lazy"
+                          />
+                        </Link>
+                        <Link to={`/operator/${op.operator.id}`} className="operator-name-link">
+                          <div className="operator-name">{op.operator.name}</div>
+                        </Link>
                         <div className="operator-class">
                           {op.operator.class} • {op.operator.rarity}★
                         </div>

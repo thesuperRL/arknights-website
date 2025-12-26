@@ -54,7 +54,7 @@ const TrashOperatorsPage: React.FC = () => {
       const allOperators: Record<string, Operator> = {};
 
       for (const rarity of rarities) {
-        const response = await fetch(`/api/operators/${rarity}`);
+        const response = await fetch(`/api/operators/rarity/${rarity}`);
         if (response.ok) {
           const operators = await response.json() as Record<string, Operator>;
           Object.assign(allOperators, operators);
@@ -101,19 +101,23 @@ const TrashOperatorsPage: React.FC = () => {
                 <div key={`${op.operatorId}-${index}`} className="operator-card trash">
                   {operator ? (
                     <>
-                      <img
-                        src={operator.profileImage || '/images/operators/default.png'}
-                        alt={operator.name}
-                        className="operator-image"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target && target.src !== '/images/operators/default.png') {
-                            target.src = '/images/operators/default.png';
-                          }
-                        }}
-                        loading="lazy"
-                      />
-                      <div className="operator-name">{operator.name}</div>
+                      <Link to={`/operator/${operator.id}`} className="operator-image-link">
+                        <img
+                          src={operator.profileImage || '/images/operators/default.png'}
+                          alt={operator.name}
+                          className="operator-image"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            if (target && target.src !== '/images/operators/default.png') {
+                              target.src = '/images/operators/default.png';
+                            }
+                          }}
+                          loading="lazy"
+                        />
+                      </Link>
+                      <Link to={`/operator/${operator.id}`} className="operator-name-link">
+                        <div className="operator-name">{operator.name}</div>
+                      </Link>
                       <div className="operator-class">
                         {operator.class} • {operator.rarity}★
                       </div>

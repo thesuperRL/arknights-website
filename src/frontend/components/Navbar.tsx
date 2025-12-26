@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
         </Link>
         <div className="nav-links">
           <Link to="/">Home</Link>
-          <Link to="/trash-operators">Trash Operators</Link>
+          <Link to="/all-operators">All Operators</Link>
         </div>
       </div>
     </nav>

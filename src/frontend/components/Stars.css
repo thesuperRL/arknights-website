@@ -1,0 +1,39 @@
+.stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.stars-small {
+    font-size: 0.9rem;
+    gap: 0.1rem;
+}
+
+.stars-medium {
+    font-size: 1.2rem;
+}
+
+.stars-large {
+    font-size: 1.8rem;
+    gap: 0.3rem;
+}
+
+.star {
+    color: #ffd700;
+    text-shadow: 0 0 4px rgba(255, 215, 0, 0.5);
+    transition: transform 0.2s;
+}
+
+.star-filled {
+    opacity: 1;
+}
+
+.star-empty {
+    opacity: 0.3;
+    color: #666;
+}
+
+.stars:hover .star-filled {
+    transform: scale(1.1);
+}
+

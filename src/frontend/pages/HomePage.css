@@ -20,7 +20,8 @@
 }
 
 .special-links {
-    margin-bottom: 3rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
     display: flex;
     justify-content: center;
     gap: 2rem;

@@ -3,6 +3,8 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import TierListPage from './pages/TierListPage';
 import TrashOperatorsPage from './pages/TrashOperatorsPage';
+import OperatorPage from './pages/OperatorPage';
+import AllOperatorsPage from './pages/AllOperatorsPage';
 import './App.css';
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/tier-list/:niche" element={<TierListPage />} />
             <Route path="/trash-operators" element={<TrashOperatorsPage />} />
+            <Route path="/operator/:id" element={<OperatorPage />} />
+            <Route path="/all-operators" element={<AllOperatorsPage />} />
           </Routes>
         </main>
       </div>

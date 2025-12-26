@@ -76,8 +76,96 @@ app.get('/api/tier-lists/:niche', (req, res) => {
   }
 });
 
+// API route to get trash operators
+app.get('/api/trash-operators', (_req, res) => {
+  try {
+    const filePath = path.join(__dirname, '../data/tier-lists', 'trash-operators.json');
+    if (!fs.existsSync(filePath)) {
+      res.status(404).json({ error: 'Trash operators not found' });
+      return;
+    }
+
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const trashData = JSON.parse(content);
+    res.json(trashData);
+  } catch (error) {
+    console.error('Error loading trash operators:', error);
+    res.status(500).json({ error: 'Failed to load trash operators' });
+  }
+});
+
+// API route to get a specific operator by ID with their rankings
+// This must come BEFORE the rarity route to avoid conflicts
+app.get('/api/operators/:id', (req, res) => {
+  try {
+    const operatorId = req.params.id;
+    
+    // Load all operators
+    const operatorsData: Record<string, any> = {};
+    const rarities = [1, 2, 3, 4, 5, 6];
+    
+    for (const rarity of rarities) {
+      const filePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        const operators = JSON.parse(content);
+        Object.assign(operatorsData, operators);
+      }
+    }
+
+    const operator = operatorsData[operatorId];
+    if (!operator) {
+      res.status(404).json({ error: 'Operator not found' });
+      return;
+    }
+
+    // Load all tier lists to find where this operator is ranked
+    const tierLists = loadAllTierLists();
+    const rankings: Array<{ niche: string; tier: string; notes?: string }> = [];
+
+    for (const [niche, tierList] of Object.entries(tierLists)) {
+      const tierRanks = ['EX', 'S', 'A', 'B', 'C', 'D', 'F'] as const;
+      for (const rank of tierRanks) {
+        const operatorsInTier = tierList.tiers[rank] || [];
+        const found = operatorsInTier.find(op => op.operatorId === operatorId);
+        if (found) {
+          rankings.push({
+            niche: tierList.niche || niche,
+            tier: rank,
+            notes: found.notes
+          });
+          break; // Operator can only be in one tier per niche
+        }
+      }
+    }
+
+    // Check if operator is in trash list
+    const trashFilePath = path.join(__dirname, '../data/tier-lists', 'trash-operators.json');
+    if (fs.existsSync(trashFilePath)) {
+      const trashContent = fs.readFileSync(trashFilePath, 'utf-8');
+      const trashData = JSON.parse(trashContent);
+      if (trashData.operators && trashData.operators.some((op: any) => op.operatorId === operatorId)) {
+        rankings.push({
+          niche: 'Trash Operators',
+          tier: 'N/A',
+          notes: 'No optimal use'
+        });
+      }
+    }
+
+    res.json({
+      operator,
+      rankings
+    });
+  } catch (error) {
+    console.error('Error loading operator:', error);
+    res.status(500).json({ error: 'Failed to load operator' });
+  }
+});
+
 // API route to get operators by rarity
-app.get('/api/operators/:rarity', (req, res) => {
+// This must come AFTER the operator ID route
+app.get('/api/operators/rarity/:rarity', (req, res) => {
   try {
     const rarity = parseInt(req.params.rarity);
     if (isNaN(rarity) || rarity < 1 || rarity > 6) {
@@ -97,24 +185,6 @@ app.get('/api/operators/:rarity', (req, res) => {
   } catch (error) {
     console.error('Error loading operators:', error);
     res.status(500).json({ error: 'Failed to load operators' });
-  }
-});
-
-// API route to get trash operators
-app.get('/api/trash-operators', (_req, res) => {
-  try {
-    const filePath = path.join(__dirname, '../data/tier-lists', 'trash-operators.json');
-    if (!fs.existsSync(filePath)) {
-      res.status(404).json({ error: 'Trash operators not found' });
-      return;
-    }
-
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const trashData = JSON.parse(content);
-    res.json(trashData);
-  } catch (error) {
-    console.error('Error loading trash operators:', error);
-    res.status(500).json({ error: 'Failed to load trash operators' });
   }
 });
 
