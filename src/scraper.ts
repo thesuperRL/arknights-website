@@ -83,32 +83,61 @@ class ArknightsScraper {
       }
       
       const page = await browser.newPage();
-      await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
       
-      // Navigate to the page
-      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+      // Set more realistic browser headers and viewport
+      await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+      await page.setViewport({ width: 1920, height: 1080 });
+      
+      // Set additional headers to appear more browser-like
+      await page.setExtraHTTPHeaders({
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+      });
+      
+      // Navigate to the page with longer timeout
+      console.log('Navigating to page...');
+      await page.goto(url, { waitUntil: 'networkidle0', timeout: 120000 });
       
       // Wait for Cloudflare challenge to complete - check if we're past the challenge
       let attempts = 0;
-      const maxAttempts = 30; // 30 seconds max wait
+      const maxAttempts = 90; // 90 seconds max wait
       while (attempts < maxAttempts) {
-        const html = await page.content();
-        // Check if we're past the Cloudflare challenge
-        if (!html.includes('Just a moment') && !html.includes('Just a second') && !html.includes('cf-challenge')) {
-          // Page has loaded, wait a bit more for dynamic content
-          await new Promise(resolve => setTimeout(resolve, 2000));
-          return await page.content();
+        // Try to wait for navigation or specific elements
+        try {
+          // Wait for tables to appear (indicates page has loaded)
+          await page.waitForSelector('table.wikitable, .mw-parser-output table, table', { timeout: 2000 }).catch(() => null);
+        } catch (e) {
+          // Ignore timeout errors
         }
-        // Still on challenge page, wait and retry
+        
+        const html = await page.content();
+        // Check if we're past the Cloudflare challenge - look for actual content
+        const hasChallenge = html.includes('Just a moment') || html.includes('Just a second') || html.includes('cf-challenge');
+        const hasContent = html.includes('<table') || html.includes('wikitable') || html.includes('mw-parser-output');
+        
+        if (!hasChallenge && hasContent) {
+          // Page has loaded with actual content, wait a bit more for dynamic content
+          await new Promise(resolve => setTimeout(resolve, 3000));
+          const finalHtml = await page.content();
+          await browser.close();
+          console.log('✅ Successfully fetched with Puppeteer (Cloudflare challenge passed)');
+          return finalHtml;
+        }
+        // Still on challenge page or no content yet, wait and retry
+        if (attempts % 5 === 0) {
+          console.log(`⏳ Waiting for Cloudflare challenge to complete... (${attempts}s)`);
+        }
         await new Promise(resolve => setTimeout(resolve, 1000));
         attempts++;
       }
       
       // If we get here, challenge might still be active, but return the HTML anyway
-      console.log('⚠️  Cloudflare challenge may still be active, but proceeding...');
+      console.log('⚠️  Cloudflare challenge may still be active after 90s, but proceeding...');
       const html = await page.content();
       await browser.close();
-      console.log('✅ Successfully fetched with Puppeteer');
       return html;
     } catch (error: any) {
       if (browser) {
