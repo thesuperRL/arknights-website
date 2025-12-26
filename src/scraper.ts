@@ -766,12 +766,8 @@ class ArknightsScraper {
  */
 async function main() {
   const rarity = parseInt(process.argv[2]) || 6;
-  // Try different URL formats for 4-star (might be 4_star instead of 4-star)
+  // Use standard URL format for all rarities
   let baseUrl = `https://arknights.wiki.gg/wiki/Operator/${rarity}-star`;
-  if (rarity === 4) {
-    // Try alternative format for 4-star
-    baseUrl = `https://arknights.wiki.gg/wiki/Operator/4_star`;
-  }
 
   const scraper = new ArknightsScraper({
     baseUrl: baseUrl,
@@ -786,26 +782,7 @@ async function main() {
     console.log(`\n🎉 Successfully scraped ${operatorCount} ${rarity}-star operators!`);
   } catch (error) {
     console.error('Scraping failed:', error);
-    // For 4-star, try the hyphenated version if underscore fails
-    if (rarity === 4 && baseUrl.includes('_star')) {
-      console.log('\n⚠️  Trying alternative URL format for 4-star...');
-      const altScraper = new ArknightsScraper({
-        baseUrl: 'https://arknights.wiki.gg/wiki/Operator/4-star',
-        rarity: rarity,
-        outputDir: path.join(__dirname, '../data'),
-        imagesDir: path.join(__dirname, '../public/images/operators')
-      });
-      try {
-        const operatorsDict = await altScraper.scrape();
-        const operatorCount = Object.keys(operatorsDict).length;
-        console.log(`\n🎉 Successfully scraped ${operatorCount} ${rarity}-star operators!`);
-      } catch (altError) {
-        console.error('Alternative URL also failed:', altError);
-        process.exit(1);
-      }
-    } else {
-      process.exit(1);
-    }
+    process.exit(1);
   }
 }
 

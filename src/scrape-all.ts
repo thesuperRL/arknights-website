@@ -14,11 +14,8 @@ async function scrapeAllRarities() {
     console.log(`Scraping ${rarity}-star operators...`);
     console.log(`${'='.repeat(50)}\n`);
 
-    // Try different URL formats for 4-star
+    // Use standard URL format for all rarities
     let baseUrl = `https://arknights.wiki.gg/wiki/Operator/${rarity}-star`;
-    if (rarity === 4) {
-      baseUrl = `https://arknights.wiki.gg/wiki/Operator/4_star`;
-    }
     
     const scraper = new ArknightsScraper({
       baseUrl: baseUrl,
@@ -39,22 +36,6 @@ async function scrapeAllRarities() {
       }
     } catch (error) {
       console.error(`Failed to scrape ${rarity}-star operators:`, error);
-      // For 4-star, try alternative URL
-      if (rarity === 4 && baseUrl.includes('_star')) {
-        console.log('Trying alternative URL format for 4-star...');
-        const altScraper = new ArknightsScraper({
-          baseUrl: 'https://arknights.wiki.gg/wiki/Operator/4-star',
-          rarity: rarity,
-          outputDir: path.join(__dirname, '../data'),
-          imagesDir: path.join(__dirname, '../public/images/operators')
-        });
-        try {
-          const operatorsDict = await altScraper.scrape();
-          Object.assign(allOperators, operatorsDict);
-        } catch (altError) {
-          console.error('Alternative URL also failed:', altError);
-        }
-      }
       // Continue with next rarity
     }
   }

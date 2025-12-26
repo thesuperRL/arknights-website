@@ -121,7 +121,7 @@
     border-radius: 15px;
     padding: 1rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
     text-decoration: none;
     color: var(--text-light);
     display: flex;
@@ -133,6 +133,26 @@
 .operator-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.operator-card.non-global {
+    filter: blur(8px);
+    opacity: 0.5;
+}
+
+.operator-card.non-global .operator-name {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.operator-card.non-global:hover {
+    filter: blur(0px);
+    opacity: 1;
+}
+
+.operator-card.non-global:hover .operator-name {
+    opacity: 1;
+    visibility: visible;
 }
 
 .operator-image {
@@ -155,6 +175,7 @@
     font-weight: bold;
     margin-bottom: 0.5rem;
     color: var(--text-light);
+    transition: opacity 0.3s, visibility 0.3s;
 }
 
 .operator-meta {

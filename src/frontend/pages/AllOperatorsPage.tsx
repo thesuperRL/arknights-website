@@ -52,10 +52,14 @@ const AllOperatorsPage: React.FC = () => {
       if (searchTerm && !op.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
       return true;
     });
-    // Sort by rarity (6-star first, then 5, 4, 3, 2, 1), then by name
+    // Sort by rarity (6-star first, then 5, 4, 3, 2, 1), then by global status (global first), then by name
     return filtered.sort((a, b) => {
       if (a.rarity !== b.rarity) {
         return b.rarity - a.rarity; // Higher rarity first
+      }
+      // Within same rarity, global operators come first
+      if (a.global !== b.global) {
+        return a.global ? -1 : 1; // Global (true) comes before non-global (false)
       }
       return a.name.localeCompare(b.name); // Then alphabetically
     });
@@ -146,7 +150,7 @@ const AllOperatorsPage: React.FC = () => {
             <Link
               key={operator.id}
               to={`/operator/${operator.id}`}
-              className="operator-card"
+              className={`operator-card ${!operator.global ? 'non-global' : ''}`}
             >
               <img
                 src={operator.profileImage || `/images/operators/${operator.id}.png`}
