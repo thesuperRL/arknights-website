@@ -41,21 +41,37 @@ export function loadAllTierLists(dataDir: string = path.join(__dirname, '../data
 
 /**
  * Loads a specific tier list by niche name
+ * First tries to find by exact niche name match, then falls back to filename matching
  */
 export function loadTierList(niche: string, dataDir: string = path.join(__dirname, '../data/tier-lists')): TierList | null {
-  const filePath = path.join(dataDir, `${niche.toLowerCase().replace(/\s+/g, '-')}.json`);
+  // Decode URL-encoded niche name
+  const decodedNiche = decodeURIComponent(niche);
   
-  if (!fs.existsSync(filePath)) {
-    return null;
+  // First, try to load all tier lists and find by niche name (most reliable)
+  const allTierLists = loadAllTierLists(dataDir);
+  for (const [nicheName, tierList] of Object.entries(allTierLists)) {
+    if (nicheName === decodedNiche || nicheName.toLowerCase() === decodedNiche.toLowerCase()) {
+      return tierList;
+    }
   }
-
-  try {
-    const content = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(content);
-  } catch (error) {
-    console.error(`Error loading tier list for ${niche}:`, error);
-    return null;
+  
+  // Fallback: try filename matching
+  const filePath = path.join(dataDir, `${decodedNiche.toLowerCase().replace(/\s+/g, '-')}.json`);
+  
+  if (fs.existsSync(filePath)) {
+    try {
+      const content = fs.readFileSync(filePath, 'utf-8');
+      const tierList = JSON.parse(content);
+      // Only return if it has the tier list structure
+      if (tierList.tiers && tierList.niche) {
+        return tierList;
+      }
+    } catch (error) {
+      console.error(`Error loading tier list from ${filePath}:`, error);
+    }
   }
+  
+  return null;
 }
 
 /**
