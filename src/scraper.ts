@@ -85,12 +85,27 @@ class ArknightsScraper {
       const page = await browser.newPage();
       await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
       
-      // Wait for page to load and Cloudflare challenge to complete
-      await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+      // Navigate to the page
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
       
-      // Wait a bit more for any dynamic content (using Promise instead of deprecated waitForTimeout)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Wait for Cloudflare challenge to complete - check if we're past the challenge
+      let attempts = 0;
+      const maxAttempts = 30; // 30 seconds max wait
+      while (attempts < maxAttempts) {
+        const html = await page.content();
+        // Check if we're past the Cloudflare challenge
+        if (!html.includes('Just a moment') && !html.includes('Just a second') && !html.includes('cf-challenge')) {
+          // Page has loaded, wait a bit more for dynamic content
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          return await page.content();
+        }
+        // Still on challenge page, wait and retry
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        attempts++;
+      }
       
+      // If we get here, challenge might still be active, but return the HTML anyway
+      console.log('⚠️  Cloudflare challenge may still be active, but proceeding...');
       const html = await page.content();
       await browser.close();
       console.log('✅ Successfully fetched with Puppeteer');
@@ -230,7 +245,6 @@ class ArknightsScraper {
    */
   private extractOperators(html: string, rarity: number): OperatorData[] {
     const $ = cheerio.load(html);
-    const operators: OperatorData[] = [];
 
     // Try to find the operator table
     // Common table selectors for wiki tables
@@ -238,32 +252,97 @@ class ArknightsScraper {
       'table.wikitable',
       'table.sortable',
       'table.article-table',
+      '.mw-parser-output table.wikitable',
+      '.mw-parser-output table.sortable',
+      '.mw-parser-output table',
+      'table[class*="wikitable"]',
+      'table[class*="sortable"]',
       'table',
-      '.mw-parser-output table'
+      '.mw-parser-output table',
+      'main table',
+      'article table',
+      '#mw-content-text table'
     ];
 
-    let table = null;
+    let table: cheerio.Cheerio<any> | null = null;
+    let foundSelector = '';
+    
+    // Try all selectors
     for (const selector of tableSelectors) {
-      table = $(selector).first();
-      if (table.length > 0) {
-        console.log(`Found table with selector: ${selector}`);
-        break;
+      const tables = $(selector);
+      if (tables.length > 0) {
+        // Find the table that likely contains operator data
+        // Look for tables with multiple rows and cells
+        for (let i = 0; i < tables.length; i++) {
+          const $t = $(tables[i]);
+          const rows = $t.find('tr');
+          if (rows.length >= 2) { // At least header + 1 data row
+            const firstRowCells = $(rows[0]).find('th, td');
+            if (firstRowCells.length >= 2) { // At least 2 columns
+              table = $t;
+              foundSelector = selector;
+              break;
+            }
+          }
+        }
+        if (table && table.length > 0) {
+          console.log(`Found table with selector: ${foundSelector} (${table.find('tr').length} rows)`);
+          break;
+        }
       }
     }
 
     if (!table || table.length === 0) {
-      console.warn('No table found. Trying alternative parsing...');
+      console.warn('⚠️  No table found with standard selectors. Trying alternative parsing...');
       // Try to find operator cards or list items
-      return this.extractOperatorsAlternative($, rarity);
+      const altResults = this.extractOperatorsAlternative($, rarity);
+      if (altResults.length > 0) {
+        console.log(`✅ Alternative parsing found ${altResults.length} operators`);
+        return altResults;
+      }
+      
+      // Last resort: try to find ANY table and see if it has operator-like data
+      console.warn('⚠️  Trying last resort: finding any table with operator-like data...');
+      const allTables = $('table');
+      if (allTables.length > 0) {
+        console.log(`Found ${allTables.length} total tables on page, checking each...`);
+        for (let i = 0; i < allTables.length; i++) {
+          const $t = $(allTables[i]);
+          const rows = $t.find('tr');
+          if (rows.length >= 3) { // At least header + 2 data rows
+            const testResult = this.tryParseTable($t, rarity);
+            if (testResult.length > 0) {
+              console.log(`✅ Found valid operator table with ${testResult.length} operators`);
+              return testResult;
+            }
+          }
+        }
+      }
+      
+      console.error('❌ Could not find any operator table. Saving HTML for inspection...');
+      return [];
     }
+
+    // Parse table rows using the found table
+    return this.tryParseTable(table, rarity);
+  }
+
+  /**
+   * Attempts to parse a table for operator data
+   */
+  private tryParseTable(table: cheerio.Cheerio<any>, rarity: number): OperatorData[] {
+    const $ = cheerio.load('');
+    const operators: OperatorData[] = [];
 
     // First, find the header row to identify column indices
     const headerRow = table.find('tr').first();
     const headerCells = headerRow.find('th, td');
     let globalColumnIndex = -1;
     let classColumnIndex = -1;
+    let imageColumnIndex = 0; // Default to first column
+    let nameColumnIndex = 1; // Default to second column
     
-    headerCells.each((index, cell) => {
+    headerCells.each((index: number, cell: any) => {
       const headerText = $(cell).text().toLowerCase().trim();
       if (headerText.includes('global') || headerText === 'global') {
         globalColumnIndex = index;
@@ -272,6 +351,12 @@ class ArknightsScraper {
       if (headerText.includes('class') || headerText === 'class') {
         classColumnIndex = index;
         console.log(`Found class column at index: ${classColumnIndex}`);
+      }
+      if (headerText.includes('operator') || headerText.includes('name') || headerText === '') {
+        // Likely the name column
+        if (nameColumnIndex === 1 && index > 0) {
+          nameColumnIndex = index;
+        }
       }
     });
 
@@ -285,20 +370,48 @@ class ArknightsScraper {
       if (cells.length < 2) return; // Skip rows without enough data
 
       try {
-        // Extract image (usually in first cell)
-        const imageCell = cells.eq(0);
-        const img = imageCell.find('img').first();
-        let imageUrl = img.attr('src') || img.attr('data-src') || '';
+        // Extract image (try first cell, or any cell with an image)
+        let imageUrl = '';
+        let imageCell = cells.eq(imageColumnIndex);
         
-        // Handle lazy loading images
-        if (!imageUrl || imageUrl.includes('data:image')) {
-          imageUrl = img.attr('data-src') || img.attr('data-lazy-src') || imageUrl;
+        // If first cell doesn't have image, search all cells
+        if (imageCell.find('img').length === 0) {
+          for (let cellIdx = 0; cellIdx < cells.length; cellIdx++) {
+            const $cell = cells.eq(cellIdx);
+            const img = $cell.find('img').first();
+            if (img.length > 0) {
+              imageCell = $cell;
+              break;
+            }
+          }
         }
-
-        // Extract name (usually in second cell or link)
-        const nameCell = cells.eq(1);
+        
+        const img = imageCell.find('img').first();
+        imageUrl = img.attr('src') || img.attr('data-src') || img.attr('data-lazy-src') || '';
+        
+        // Handle relative URLs and lazy loading
+        if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('//') && !imageUrl.startsWith('/')) {
+          imageUrl = '/' + imageUrl;
+        }
+        
+        // Extract name (try name column, or any cell with a link)
+        let name = '';
+        const nameCell = cells.eq(nameColumnIndex);
         const nameLink = nameCell.find('a').first();
-        const name = nameLink.text().trim() || nameCell.text().trim();
+        name = nameLink.text().trim() || nameCell.text().trim();
+        
+        // If no name found, try all cells for links
+        if (!name || name.length === 0) {
+          for (let cellIdx = 0; cellIdx < cells.length; cellIdx++) {
+            const $cell = cells.eq(cellIdx);
+            const link = $cell.find('a').first();
+            const linkText = link.text().trim();
+            if (linkText && linkText.length > 0 && linkText.length < 50) { // Reasonable name length
+              name = linkText;
+              break;
+            }
+          }
+        }
 
         // Extract class from image (e.g., Sniper.png -> Sniper)
         let operatorClass = 'Unknown';
@@ -317,19 +430,18 @@ class ArknightsScraper {
         } else {
           // Try to find a cell with class image (fallback)
           const classNames = ['Guard', 'Caster', 'Defender', 'Sniper', 'Support', 'Specialist', 'Vanguard', 'Medic'];
-          cells.each((_cellIndex, cell) => {
-            if (operatorClass !== 'Unknown') return; // Already found
-            const $cell = $(cell);
+          for (let cellIdx = 0; cellIdx < cells.length && operatorClass === 'Unknown'; cellIdx++) {
+            const $cell = cells.eq(cellIdx);
             const img = $cell.find('img').first();
             const imgSrc = img.attr('src') || img.attr('data-src') || '';
             // Check if this looks like a class image (contains class names)
             for (const className of classNames) {
               if (imgSrc.includes(`${className}.png`)) {
                 operatorClass = className;
-                return;
+                break;
               }
             }
-          });
+          }
         }
 
         // Extract global value from image (Cross.png = false, Tick.png = true)
@@ -347,16 +459,18 @@ class ArknightsScraper {
           }
         } else {
           // Try to find a cell with Tick or Cross image
-          cells.each((_cellIndex, cell) => {
-            const $cell = $(cell);
+          for (let cellIdx = 0; cellIdx < cells.length; cellIdx++) {
+            const $cell = cells.eq(cellIdx);
             const img = $cell.find('img').first();
             const imgSrc = img.attr('src') || img.attr('data-src') || '';
             if (imgSrc.includes('Tick.png')) {
               globalValue = true;
+              break;
             } else if (imgSrc.includes('Cross.png')) {
               globalValue = false;
+              break;
             }
-          });
+          }
         }
 
         if (name && imageUrl) {
@@ -552,14 +666,26 @@ class ArknightsScraper {
         if (operator.profileImage && operator.profileImage.startsWith('/images/operators/')) {
           const imagePath = path.join(__dirname, '../public', operator.profileImage);
           if (fs.existsSync(imagePath)) {
-            console.log(`⏭️  Skipping download for ${operator.name} (already has local path: ${operator.profileImage})`);
+            console.log(`⏭️  Skipping download for ${operator.name} (image already exists: ${operator.profileImage})`);
             skippedCount++;
             continue; // Keep the existing profileImage path
+          } else {
+            // Local path specified but file doesn't exist - skip download attempt
+            console.log(`⚠️  Image not found at ${operator.profileImage} for ${operator.name}, keeping path as-is`);
+            skippedCount++;
+            continue; // Keep the path even if file doesn't exist yet
           }
         }
         
         // profileImage contains the URL from scraping, extract extension and download
         const imageUrl = operator.profileImage;
+        
+        // Skip if it's already a local path (shouldn't happen here, but safety check)
+        if (!imageUrl || imageUrl.startsWith('/images/operators/')) {
+          console.log(`⏭️  Skipping download for ${operator.name} (already has local path)`);
+          skippedCount++;
+          continue;
+        }
         
         // Extract file extension from URL (remove query parameters first)
         const urlWithoutQuery = imageUrl.split('?')[0].split('#')[0];
