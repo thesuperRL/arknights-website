@@ -43,3 +43,4 @@ yarn-error.log*
 # Vite
 .vite/
 dist-frontend/
+.images-backup
