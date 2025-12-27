@@ -23,7 +23,12 @@
       "enmity-healing",
       "healing-operators",
       "stalling"
-    ]
+    ],
+    "cnName": "安洁莉娜",
+    "twName": "安潔莉娜",
+    "jpName": "アンジェリーナ",
+    "krName": "안젤리나",
+    "internalName": "char_291_aglina"
   },
   "archetto": {
     "id": "archetto",
@@ -32,7 +37,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/archetto.png",
-    "niches": []
+    "niches": [],
+    "cnName": "空弦",
+    "jpName": "アルケット",
+    "krName": "아르케토",
+    "internalName": "char_332_archet"
   },
   "ascalon": {
     "id": "ascalon",
@@ -45,7 +54,12 @@
       "aoe-physical-dps",
       "physical-dps",
       "stalling"
-    ]
+    ],
+    "cnName": "阿斯卡纶",
+    "twName": "阿斯卡綸",
+    "jpName": "アスカロン",
+    "krName": "아스카론",
+    "internalName": "char_4132_ascln"
   },
   "ash": {
     "id": "ash",
@@ -54,7 +68,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/ash.png",
-    "niches": []
+    "niches": [],
+    "cnName": "灰烬",
+    "twName": "灰燼",
+    "jpName": "アッシュ",
+    "krName": "애쉬",
+    "internalName": "char_456_ash"
   },
   "astgenne_the_lightchaser": {
     "id": "astgenne_the_lightchaser",
@@ -63,7 +82,9 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/astgenne_the_lightchaser.png",
-    "niches": []
+    "niches": [],
+    "cnName": "溯光星源",
+    "internalName": "char_1047_halo2"
   },
   "bagpipe": {
     "id": "bagpipe",
@@ -76,7 +97,12 @@
       "dp-generation",
       "early-laneholder",
       "sp-battery"
-    ]
+    ],
+    "cnName": "风笛",
+    "twName": "風笛",
+    "jpName": "バグパイプ",
+    "krName": "백파이프",
+    "internalName": "char_222_bpipe"
   },
   "blaze": {
     "id": "blaze",
@@ -89,7 +115,11 @@
       "afk",
       "late-laneholder",
       "tanking-blocking-operators"
-    ]
+    ],
+    "cnName": "煌",
+    "jpName": "ブレイズ",
+    "krName": "블레이즈",
+    "internalName": "char_017_huang"
   },
   "blaze_the_igniting_spark": {
     "id": "blaze_the_igniting_spark",
@@ -100,7 +130,12 @@
     "profileImage": "/images/operators/blaze_the_igniting_spark.png",
     "niches": [
       "elemental-damage"
-    ]
+    ],
+    "cnName": "烛煌",
+    "twName": "燭煌",
+    "jpName": "熾炎しえんブレイズ",
+    "krName": "블레이즈 디 이그나이팅 스파크",
+    "internalName": "char_1040_blaze2"
   },
   "blemishine": {
     "id": "blemishine",
@@ -109,7 +144,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/blemishine.png",
-    "niches": []
+    "niches": [],
+    "cnName": "瑕光",
+    "jpName": "ブレミシャイン",
+    "krName": "블레미샤인",
+    "internalName": "char_423_blemsh"
   },
   "carnelian": {
     "id": "carnelian",
@@ -120,7 +159,11 @@
     "profileImage": "/images/operators/carnelian.png",
     "niches": [
       "trash-operators"
-    ]
+    ],
+    "cnName": "卡涅利安",
+    "jpName": "カーネリアン",
+    "krName": "카넬리안",
+    "internalName": "char_426_billro"
   },
   "ceobe": {
     "id": "ceobe",
@@ -136,7 +179,11 @@
       "silence",
       "stalling",
       "unconventional-niches"
-    ]
+    ],
+    "cnName": "刻俄柏",
+    "jpName": "ケオベ",
+    "krName": "케오베",
+    "internalName": "char_2013_cerber"
   },
   "ch_en": {
     "id": "ch_en",
@@ -149,7 +196,12 @@
       "trash-operators",
       "dual-dps",
       "sp-battery"
-    ]
+    ],
+    "cnName": "陈",
+    "twName": "陳",
+    "jpName": "チェン",
+    "krName": "첸",
+    "internalName": "char_010_chen"
   },
   "ch_en_the_holungday": {
     "id": "ch_en_the_holungday",
@@ -158,7 +210,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/ch_en_the_holungday.png",
-    "niches": []
+    "niches": [],
+    "cnName": "假日威龙陈",
+    "twName": "假日威龍陳",
+    "jpName": "遊ゆう龍りゅうチェン",
+    "krName": "첸 더 홀룽데이",
+    "internalName": "char_1013_chen2"
   },
   "chongyue": {
     "id": "chongyue",
@@ -167,7 +224,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/chongyue.png",
-    "niches": []
+    "niches": [],
+    "cnName": "重岳",
+    "jpName": "チョンユエ",
+    "krName": "총웨",
+    "internalName": "char_2024_chyue"
   },
   "civilight_eterna": {
     "id": "civilight_eterna",
@@ -178,7 +239,11 @@
     "profileImage": "/images/operators/civilight_eterna.png",
     "niches": [
       "enmity-healing"
-    ]
+    ],
+    "cnName": "魔王",
+    "jpName": "シヴィライト・エテルナ\n魔王",
+    "krName": "시빌라이트 에테르나",
+    "internalName": "char_4134_cetsyr"
   },
   "crownslayer": {
     "id": "crownslayer",
@@ -190,7 +255,11 @@
     "niches": [
       "fast-redeploy-operators",
       "stalling"
-    ]
+    ],
+    "cnName": "弑君者",
+    "jpName": "クラウンスレイヤー",
+    "krName": "크라운슬레이어",
+    "internalName": "char_1502_crosly"
   },
   "degenbrecher": {
     "id": "degenbrecher",
@@ -199,7 +268,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/degenbrecher.png",
-    "niches": []
+    "niches": [],
+    "cnName": "锏",
+    "twName": "鐧",
+    "jpName": "デーゲンブレヒャー",
+    "krName": "데겐블레허",
+    "internalName": "char_4116_blkkgt"
   },
   "dorothy": {
     "id": "dorothy",
@@ -208,7 +282,12 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/dorothy.png",
-    "niches": []
+    "niches": [],
+    "cnName": "多萝西",
+    "twName": "多蘿西",
+    "jpName": "ドロシー",
+    "krName": "도로시",
+    "internalName": "char_4048_doroth"
   },
   "dusk": {
     "id": "dusk",
@@ -217,7 +296,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/dusk.png",
-    "niches": []
+    "niches": [],
+    "cnName": "夕",
+    "jpName": "シー",
+    "krName": "시",
+    "internalName": "char_2015_dusk"
   },
   "ebenholz": {
     "id": "ebenholz",
@@ -226,7 +309,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/ebenholz.png",
-    "niches": []
+    "niches": [],
+    "cnName": "黑键",
+    "twName": "黑鍵",
+    "jpName": "エーベンホルツ",
+    "krName": "에벤홀츠",
+    "internalName": "char_4046_ebnhlz"
   },
   "ela": {
     "id": "ela",
@@ -235,7 +323,11 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/ela.png",
-    "niches": []
+    "niches": [],
+    "cnName": "艾拉",
+    "jpName": "エラ",
+    "krName": "엘라",
+    "internalName": "char_4123_ela"
   },
   "entelechia": {
     "id": "entelechia",
@@ -244,7 +336,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/entelechia.png",
-    "niches": []
+    "niches": [],
+    "cnName": "隐德来希",
+    "jpName": "エンテレケイア",
+    "krName": "엔텔레키아",
+    "internalName": "char_4010_etlchi"
   },
   "eunectes": {
     "id": "eunectes",
@@ -255,7 +351,11 @@
     "profileImage": "/images/operators/eunectes.png",
     "niches": [
       "boss-killing"
-    ]
+    ],
+    "cnName": "森蚺",
+    "jpName": "ユーネクテス",
+    "krName": "유넥티스",
+    "internalName": "char_416_zumama"
   },
   "executor_the_ex_foedere": {
     "id": "executor_the_ex_foedere",
@@ -266,7 +366,12 @@
     "profileImage": "/images/operators/executor_the_ex_foedere.png",
     "niches": [
       "late-laneholder"
-    ]
+    ],
+    "cnName": "圣约送葬人",
+    "twName": "聖約送葬人",
+    "jpName": "聖約せいやくイグゼキュター",
+    "krName": "이그제큐터 디 엑스 포에데레",
+    "internalName": "char_1032_excu2"
   },
   "exusiai": {
     "id": "exusiai",
@@ -278,7 +383,11 @@
     "niches": [
       "anti-air-operators",
       "physical-dps"
-    ]
+    ],
+    "cnName": "能天使",
+    "jpName": "エクシア",
+    "krName": "엑시아",
+    "internalName": "char_103_angel"
   },
   "exusiai_the_new_covenant": {
     "id": "exusiai_the_new_covenant",
@@ -290,7 +399,11 @@
     "niches": [
       "physical-dps",
       "unconventional-niches"
-    ]
+    ],
+    "cnName": "新约能天使",
+    "jpName": "新約しんやくエクシア",
+    "krName": "엑시아 더 뉴 커버넌트",
+    "internalName": "char_1041_angel2"
   },
   "eyjafjalla": {
     "id": "eyjafjalla",
@@ -305,7 +418,11 @@
       "arts-dps",
       "boss-killing",
       "res-shred"
-    ]
+    ],
+    "cnName": "艾雅法拉",
+    "jpName": "エイヤフィヤトラ",
+    "krName": "에이야퍄들라",
+    "internalName": "char_180_amgoat"
   },
   "eyjafjalla_the_hv_t_aska": {
     "id": "eyjafjalla_the_hv_t_aska",
@@ -314,7 +431,12 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/eyjafjalla_the_hv_t_aska.png",
-    "niches": []
+    "niches": [],
+    "cnName": "纯烬艾雅法拉",
+    "twName": "純燼艾雅法拉",
+    "jpName": "純じゅん燼じんエイヤフィヤトラ",
+    "krName": "에이야퍄들라 더 크비트 아스카",
+    "internalName": "char_1016_agoat2"
   },
   "fartooth": {
     "id": "fartooth",
@@ -323,7 +445,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/fartooth.png",
-    "niches": []
+    "niches": [],
+    "cnName": "远牙",
+    "twName": "遠牙",
+    "jpName": "ファートゥース",
+    "krName": "파투스",
+    "internalName": "char_430_fartth"
   },
   "fiammetta": {
     "id": "fiammetta",
@@ -332,7 +459,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/fiammetta.png",
-    "niches": []
+    "niches": [],
+    "cnName": "菲亚梅塔",
+    "twName": "菲亞梅塔",
+    "jpName": "フィアメッタ",
+    "krName": "피아메타",
+    "internalName": "char_300_phenxi"
   },
   "flametail": {
     "id": "flametail",
@@ -341,7 +473,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/flametail.png",
-    "niches": []
+    "niches": [],
+    "cnName": "焰尾",
+    "jpName": "フレイムテイル",
+    "krName": "플레임테일",
+    "internalName": "char_420_flamtl"
   },
   "gavial_the_invincible": {
     "id": "gavial_the_invincible",
@@ -350,7 +486,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/gavial_the_invincible.png",
-    "niches": []
+    "niches": [],
+    "cnName": "百炼嘉维尔",
+    "twName": "百鍊嘉維爾",
+    "jpName": "百ひゃく錬れんガヴィル",
+    "krName": "가비알 디 인빈서블",
+    "internalName": "char_1026_gvial2"
   },
   "gladiia": {
     "id": "gladiia",
@@ -363,7 +504,12 @@
       "free",
       "shift",
       "unconventional-niches"
-    ]
+    ],
+    "cnName": "歌蕾蒂娅",
+    "twName": "歌蕾蒂婭",
+    "jpName": "グレイディーア",
+    "krName": "글래디아",
+    "internalName": "char_474_glady"
   },
   "gnosis": {
     "id": "gnosis",
@@ -372,7 +518,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/gnosis.png",
-    "niches": []
+    "niches": [],
+    "cnName": "灵知",
+    "twName": "靈知",
+    "jpName": "ノーシス",
+    "krName": "노시스",
+    "internalName": "char_206_gnosis"
   },
   "goldenglow": {
     "id": "goldenglow",
@@ -381,7 +532,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/goldenglow.png",
-    "niches": []
+    "niches": [],
+    "cnName": "澄闪",
+    "twName": "澄閃",
+    "jpName": "ゴールデングロー",
+    "krName": "골든글로우",
+    "internalName": "char_377_gdglow"
   },
   "haruka": {
     "id": "haruka",
@@ -390,7 +546,10 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/haruka.png",
-    "niches": []
+    "niches": [],
+    "cnName": "遥",
+    "jpName": "ハルカ",
+    "internalName": "char_4202_haruka"
   },
   "hellagur": {
     "id": "hellagur",
@@ -403,7 +562,11 @@
       "trash-operators",
       "late-laneholder",
       "tanking-blocking-operators"
-    ]
+    ],
+    "cnName": "赫拉格",
+    "jpName": "ヘラグ",
+    "krName": "헬라그",
+    "internalName": "char_188_helage"
   },
   "ho_olheyak": {
     "id": "ho_olheyak",
@@ -412,7 +575,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/ho_olheyak.png",
-    "niches": []
+    "niches": [],
+    "cnName": "霍尔海雅",
+    "twName": "霍爾海雅",
+    "jpName": "ホルハイヤ",
+    "krName": "오올헤약",
+    "internalName": "char_4027_heyak"
   },
   "hoederer": {
     "id": "hoederer",
@@ -421,7 +589,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/hoederer.png",
-    "niches": []
+    "niches": [],
+    "cnName": "赫德雷",
+    "jpName": "へドリー",
+    "krName": "외드레르",
+    "internalName": "char_4088_hodrer"
   },
   "horn": {
     "id": "horn",
@@ -430,7 +602,12 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/horn.png",
-    "niches": []
+    "niches": [],
+    "cnName": "号角",
+    "twName": "號角",
+    "jpName": "ホルン",
+    "krName": "혼",
+    "internalName": "char_4039_horn"
   },
   "hoshiguma": {
     "id": "hoshiguma",
@@ -443,7 +620,11 @@
       "afk",
       "late-laneholder",
       "tanking-blocking-operators"
-    ]
+    ],
+    "cnName": "星熊",
+    "jpName": "ホシグマ",
+    "krName": "호시구마",
+    "internalName": "char_136_hsguma"
   },
   "hoshiguma_the_breacher": {
     "id": "hoshiguma_the_breacher",
@@ -452,7 +633,9 @@
     "class": "Defender",
     "global": false,
     "profileImage": "/images/operators/hoshiguma_the_breacher.png",
-    "niches": []
+    "niches": [],
+    "cnName": "斩业星熊",
+    "internalName": "char_1044_hsgma2"
   },
   "ifrit": {
     "id": "ifrit",
@@ -466,7 +649,11 @@
       "aoe-arts-dps",
       "arts-dps",
       "res-shred"
-    ]
+    ],
+    "cnName": "伊芙利特",
+    "jpName": "イフリータ",
+    "krName": "이프리트",
+    "internalName": "char_134_ifrit"
   },
   "ines": {
     "id": "ines",
@@ -475,7 +662,12 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/ines.png",
-    "niches": []
+    "niches": [],
+    "cnName": "伊内丝",
+    "twName": "伊內絲",
+    "jpName": "イネス",
+    "krName": "이네스",
+    "internalName": "char_4087_ines"
   },
   "irene": {
     "id": "irene",
@@ -484,7 +676,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/irene.png",
-    "niches": []
+    "niches": [],
+    "cnName": "艾丽妮",
+    "twName": "艾麗妮",
+    "jpName": "アイリーニ",
+    "krName": "아이린",
+    "internalName": "char_4009_irene"
   },
   "jessica_the_liberated": {
     "id": "jessica_the_liberated",
@@ -493,7 +690,12 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/jessica_the_liberated.png",
-    "niches": []
+    "niches": [],
+    "cnName": "涤火杰西卡",
+    "twName": "滌火潔西卡",
+    "jpName": "滌じょう火かジェシカ",
+    "krName": "제시카 더 리버레이티드",
+    "internalName": "char_1034_jesca2"
   },
   "kal_tsit": {
     "id": "kal_tsit",
@@ -502,7 +704,12 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/kal_tsit.png",
-    "niches": []
+    "niches": [],
+    "cnName": "凯尔希",
+    "twName": "凱爾希",
+    "jpName": "ケルシー",
+    "krName": "켈시",
+    "internalName": "char_003_kalts"
   },
   "kirin_r_yato": {
     "id": "kirin_r_yato",
@@ -511,7 +718,11 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/kirin_r_yato.png",
-    "niches": []
+    "niches": [],
+    "cnName": "麒麟R夜刀",
+    "jpName": "キリンRヤトウ",
+    "krName": "키린R 야토",
+    "internalName": "char_1029_yato2"
   },
   "lappland_the_decadenza": {
     "id": "lappland_the_decadenza",
@@ -520,7 +731,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/lappland_the_decadenza.png",
-    "niches": []
+    "niches": [],
+    "cnName": "荒芜拉普兰德",
+    "jpName": "荒蕪こうぶラップランド",
+    "krName": "라플란드 더 데카덴차",
+    "internalName": "char_1038_whitw2"
   },
   "lee": {
     "id": "lee",
@@ -529,7 +744,12 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/lee.png",
-    "niches": []
+    "niches": [],
+    "cnName": "老鲤",
+    "twName": "老鯉",
+    "jpName": "リー",
+    "krName": "리",
+    "internalName": "char_322_lmlee"
   },
   "leizi_the_thunderbringer": {
     "id": "leizi_the_thunderbringer",
@@ -538,7 +758,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/leizi_the_thunderbringer.png",
-    "niches": []
+    "niches": [],
+    "cnName": "司霆惊蛰",
+    "jpName": "司霆レイズ",
+    "krName": "레이즈 더 썬더브링어",
+    "internalName": "char_1043_leizi2"
   },
   "lemuen": {
     "id": "lemuen",
@@ -547,7 +771,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/lemuen.png",
-    "niches": []
+    "niches": [],
+    "cnName": "蕾缪安",
+    "twName": "蕾繆安",
+    "jpName": "レミュアン",
+    "krName": "르무엔",
+    "internalName": "char_4193_lemuen"
   },
   "lessing": {
     "id": "lessing",
@@ -556,7 +785,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/lessing.png",
-    "niches": []
+    "niches": [],
+    "cnName": "止颂",
+    "twName": "止頌",
+    "jpName": "レッシング",
+    "krName": "레싱",
+    "internalName": "char_4011_lessng"
   },
   "lin": {
     "id": "lin",
@@ -565,7 +799,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/lin.png",
-    "niches": []
+    "niches": [],
+    "cnName": "林",
+    "jpName": "リン",
+    "krName": "린",
+    "internalName": "char_4080_lin"
   },
   "ling": {
     "id": "ling",
@@ -574,7 +812,11 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/ling.png",
-    "niches": []
+    "niches": [],
+    "cnName": "令",
+    "jpName": "リィン",
+    "krName": "링",
+    "internalName": "char_2023_ling"
   },
   "logos": {
     "id": "logos",
@@ -583,7 +825,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/logos.png",
-    "niches": []
+    "niches": [],
+    "cnName": "逻各斯",
+    "twName": "邏各斯",
+    "jpName": "ロゴス",
+    "krName": "로고스",
+    "internalName": "char_4133_logos"
   },
   "lumen": {
     "id": "lumen",
@@ -592,7 +839,11 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/lumen.png",
-    "niches": []
+    "niches": [],
+    "cnName": "流明",
+    "jpName": "ルーメン",
+    "krName": "루멘",
+    "internalName": "char_4042_lumen"
   },
   "magallan": {
     "id": "magallan",
@@ -604,7 +855,12 @@
     "niches": [
       "trash-operators",
       "soloist"
-    ]
+    ],
+    "cnName": "麦哲伦",
+    "twName": "麥哲倫",
+    "jpName": "マゼラン",
+    "krName": "마젤란",
+    "internalName": "char_248_mgllan"
   },
   "mantra": {
     "id": "mantra",
@@ -613,7 +869,10 @@
     "class": "Caster",
     "global": false,
     "profileImage": "/images/operators/mantra.png",
-    "niches": []
+    "niches": [],
+    "cnName": "真言",
+    "krName": "만트라",
+    "internalName": "char_4204_mantra"
   },
   "marcille": {
     "id": "marcille",
@@ -622,7 +881,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/marcille.png",
-    "niches": []
+    "niches": [],
+    "cnName": "玛露西尔",
+    "twName": "瑪露希爾",
+    "jpName": "マルシル",
+    "krName": "마르실",
+    "internalName": "char_4141_marcil"
   },
   "mizuki": {
     "id": "mizuki",
@@ -631,7 +895,11 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/mizuki.png",
-    "niches": []
+    "niches": [],
+    "cnName": "水月",
+    "jpName": "ミヅキ",
+    "krName": "미즈키",
+    "internalName": "char_437_mizuki"
   },
   "mon3tr": {
     "id": "mon3tr",
@@ -640,7 +908,8 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/mon3tr.png",
-    "niches": []
+    "niches": [],
+    "internalName": "char_4179_monstr"
   },
   "mostima": {
     "id": "mostima",
@@ -653,7 +922,12 @@
       "trash-operators",
       "aoe-arts-dps",
       "stalling"
-    ]
+    ],
+    "cnName": "莫斯提马",
+    "twName": "莫斯提馬",
+    "jpName": "モスティマ",
+    "krName": "모스티마",
+    "internalName": "char_213_mostma"
   },
   "mountain": {
     "id": "mountain",
@@ -662,7 +936,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/mountain.png",
-    "niches": []
+    "niches": [],
+    "cnName": "山",
+    "jpName": "マウンテン",
+    "krName": "마운틴",
+    "internalName": "char_264_f12yin"
   },
   "mudrock": {
     "id": "mudrock",
@@ -671,7 +949,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/mudrock.png",
-    "niches": []
+    "niches": [],
+    "cnName": "泥岩",
+    "jpName": "マドロック",
+    "krName": "머드락",
+    "internalName": "char_311_mudrok"
   },
   "muelsyse": {
     "id": "muelsyse",
@@ -680,7 +962,12 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/muelsyse.png",
-    "niches": []
+    "niches": [],
+    "cnName": "缪尔赛思",
+    "twName": "繆爾賽思",
+    "jpName": "ミュルジス",
+    "krName": "뮤엘시스",
+    "internalName": "char_249_mlyss"
   },
   "m_ynar": {
     "id": "m_ynar",
@@ -689,7 +976,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/m_ynar.png",
-    "niches": []
+    "niches": [],
+    "cnName": "玛恩纳",
+    "twName": "瑪恩納",
+    "jpName": "ムリナール",
+    "krName": "무에나",
+    "internalName": "char_4064_mlynar"
   },
   "narantuya": {
     "id": "narantuya",
@@ -698,7 +990,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/narantuya.png",
-    "niches": []
+    "niches": [],
+    "cnName": "娜仁图亚",
+    "jpName": "ナラントゥヤ",
+    "krName": "나란투야",
+    "internalName": "char_4138_narant"
   },
   "nasti": {
     "id": "nasti",
@@ -707,7 +1003,11 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/nasti.png",
-    "niches": []
+    "niches": [],
+    "cnName": "娜斯提",
+    "jpName": "ナスティ",
+    "krName": "내스티",
+    "internalName": "char_4212_nasti"
   },
   "nearl_the_radiant_knight": {
     "id": "nearl_the_radiant_knight",
@@ -716,7 +1016,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/nearl_the_radiant_knight.png",
-    "niches": []
+    "niches": [],
+    "cnName": "耀骑士临光",
+    "twName": "耀騎士臨光",
+    "jpName": "耀よう騎き士しニアール",
+    "krName": "니어 더 래디언트 나이트",
+    "internalName": "char_1014_nearl2"
   },
   "necrass": {
     "id": "necrass",
@@ -725,7 +1030,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/necrass.png",
-    "niches": []
+    "niches": [],
+    "cnName": "死芒",
+    "jpName": "ネクラス",
+    "krName": "네크라스",
+    "internalName": "char_450_necras"
   },
   "nian": {
     "id": "nian",
@@ -739,7 +1048,11 @@
       "late-laneholder",
       "tanking-blocking-operators",
       "unconventional-niches"
-    ]
+    ],
+    "cnName": "年",
+    "jpName": "ニェン",
+    "krName": "니엔",
+    "internalName": "char_2014_nian"
   },
   "nightingale": {
     "id": "nightingale",
@@ -752,7 +1065,12 @@
       "healing-operators",
       "res-buff",
       "tanking-blocking-operators"
-    ]
+    ],
+    "cnName": "夜莺",
+    "twName": "夜鶯",
+    "jpName": "ナイチンゲール",
+    "krName": "나이팅게일",
+    "internalName": "char_179_cgbird"
   },
   "nymph": {
     "id": "nymph",
@@ -761,7 +1079,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/nymph.png",
-    "niches": []
+    "niches": [],
+    "cnName": "妮芙",
+    "jpName": "ニンフ",
+    "krName": "님프",
+    "internalName": "char_4146_nymph"
   },
   "pallas": {
     "id": "pallas",
@@ -770,7 +1092,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/pallas.png",
-    "niches": []
+    "niches": [],
+    "cnName": "帕拉斯",
+    "jpName": "パラス",
+    "krName": "팔라스",
+    "internalName": "char_485_pallas"
   },
   "passenger": {
     "id": "passenger",
@@ -779,7 +1105,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/passenger.png",
-    "niches": []
+    "niches": [],
+    "cnName": "异客",
+    "twName": "異客",
+    "jpName": "パッセンジャー",
+    "krName": "패신저",
+    "internalName": "char_472_pasngr"
   },
   "penance": {
     "id": "penance",
@@ -788,7 +1119,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/penance.png",
-    "niches": []
+    "niches": [],
+    "cnName": "斥罪",
+    "jpName": "ペナンス",
+    "krName": "페넌스",
+    "internalName": "char_4065_judge"
   },
   "pepe": {
     "id": "pepe",
@@ -797,7 +1132,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/pepe.png",
-    "niches": []
+    "niches": [],
+    "cnName": "佩佩",
+    "jpName": "ペペ",
+    "krName": "페페",
+    "internalName": "char_4058_pepe"
   },
   "phantom": {
     "id": "phantom",
@@ -808,7 +1147,11 @@
     "profileImage": "/images/operators/phantom.png",
     "niches": [
       "fast-redeploy-operators"
-    ]
+    ],
+    "cnName": "傀影",
+    "jpName": "ファントム",
+    "krName": "팬텀",
+    "internalName": "char_250_phatom"
   },
   "poz_mka": {
     "id": "poz_mka",
@@ -817,7 +1160,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/poz_mka.png",
-    "niches": []
+    "niches": [],
+    "cnName": "鸿雪",
+    "twName": "鴻雪",
+    "jpName": "パゼオンカ",
+    "krName": "파죰카",
+    "internalName": "char_4055_bgsnow"
   },
   "pramanix_the_prerita": {
     "id": "pramanix_the_prerita",
@@ -826,7 +1174,9 @@
     "class": "Caster",
     "global": false,
     "profileImage": "/images/operators/pramanix_the_prerita.png",
-    "niches": []
+    "niches": [],
+    "cnName": "圣聆初雪",
+    "internalName": "char_1046_sbell2"
   },
   "qiubai": {
     "id": "qiubai",
@@ -835,7 +1185,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/qiubai.png",
-    "niches": []
+    "niches": [],
+    "cnName": "仇白",
+    "jpName": "チューバイ",
+    "krName": "치우바이",
+    "internalName": "char_4082_qiubai"
   },
   "raidian": {
     "id": "raidian",
@@ -844,7 +1198,11 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/raidian.png",
-    "niches": []
+    "niches": [],
+    "cnName": "电弧",
+    "jpName": "レイディアン",
+    "krName": "라이디언",
+    "internalName": "char_4195_radian"
   },
   "ray": {
     "id": "ray",
@@ -853,7 +1211,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/ray.png",
-    "niches": []
+    "niches": [],
+    "cnName": "莱伊",
+    "twName": "萊伊",
+    "jpName": "レイ",
+    "krName": "레이",
+    "internalName": "char_4117_ray"
   },
   "reed_the_flame_shadow": {
     "id": "reed_the_flame_shadow",
@@ -862,7 +1225,12 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/reed_the_flame_shadow.png",
-    "niches": []
+    "niches": [],
+    "cnName": "焰影苇草",
+    "twName": "焰影葦草",
+    "jpName": "焔えん影えいリード",
+    "krName": "리드 더 플레임 섀도우",
+    "internalName": "char_1020_reed2"
   },
   "rosa": {
     "id": "rosa",
@@ -871,7 +1239,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/rosa.png",
-    "niches": []
+    "niches": [],
+    "cnName": "早露",
+    "jpName": "ロサ",
+    "krName": "로사",
+    "internalName": "char_197_poca"
   },
   "rosmontis": {
     "id": "rosmontis",
@@ -880,7 +1252,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/rosmontis.png",
-    "niches": []
+    "niches": [],
+    "cnName": "迷迭香",
+    "jpName": "ロスモンティス",
+    "krName": "로즈몬티스",
+    "internalName": "char_391_rosmon"
   },
   "saga": {
     "id": "saga",
@@ -889,7 +1265,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/saga.png",
-    "niches": []
+    "niches": [],
+    "cnName": "嵯峨",
+    "jpName": "サガ",
+    "krName": "사가",
+    "internalName": "char_362_saga"
   },
   "saileach": {
     "id": "saileach",
@@ -898,7 +1278,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/saileach.png",
-    "niches": []
+    "niches": [],
+    "cnName": "琴柳",
+    "jpName": "サイラッハ",
+    "krName": "사일라흐",
+    "internalName": "char_479_sleach"
   },
   "sankta_miksaparato": {
     "id": "sankta_miksaparato",
@@ -907,7 +1291,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/sankta_miksaparato.png",
-    "niches": []
+    "niches": [],
+    "cnName": "信仰搅拌机",
+    "jpName": "サンクタ・ミキサー",
+    "krName": "산크타 믹사파라토",
+    "internalName": "char_4194_rmixer"
   },
   "saria": {
     "id": "saria",
@@ -922,7 +1310,12 @@
       "late-laneholder",
       "sp-battery",
       "tanking-blocking-operators"
-    ]
+    ],
+    "cnName": "塞雷娅",
+    "twName": "塞雷婭",
+    "jpName": "サリア",
+    "krName": "사리아",
+    "internalName": "char_202_demkni"
   },
   "schwarz": {
     "id": "schwarz",
@@ -934,7 +1327,11 @@
     "niches": [
       "boss-killing",
       "physical-dps"
-    ]
+    ],
+    "cnName": "黑",
+    "jpName": "シュヴァルツ",
+    "krName": "슈바르츠",
+    "internalName": "char_340_shwaz"
   },
   "shining": {
     "id": "shining",
@@ -947,7 +1344,12 @@
       "trash-operators",
       "def-buff",
       "healing-operators"
-    ]
+    ],
+    "cnName": "闪灵",
+    "twName": "閃靈",
+    "jpName": "シャイニング",
+    "krName": "샤이닝",
+    "internalName": "char_147_shining"
   },
   "shu": {
     "id": "shu",
@@ -956,7 +1358,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/shu.png",
-    "niches": []
+    "niches": [],
+    "cnName": "黍",
+    "jpName": "シュウ",
+    "krName": "슈",
+    "internalName": "char_2025_shu"
   },
   "siege": {
     "id": "siege",
@@ -970,7 +1376,12 @@
       "afk",
       "dp-generation",
       "early-laneholder"
-    ]
+    ],
+    "cnName": "推进之王",
+    "twName": "推進之王",
+    "jpName": "シージ",
+    "krName": "시즈",
+    "internalName": "char_112_siege"
   },
   "silence_the_paradigmatic": {
     "id": "silence_the_paradigmatic",
@@ -979,7 +1390,11 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/silence_the_paradigmatic.png",
-    "niches": []
+    "niches": [],
+    "cnName": "淬羽赫默",
+    "jpName": "淬さい羽うサイレンス",
+    "krName": "사일런스 더 패러디그매틱",
+    "internalName": "char_1031_slent2"
   },
   "silverash": {
     "id": "silverash",
@@ -994,7 +1409,12 @@
       "boss-killing",
       "late-laneholder",
       "physical-dps"
-    ]
+    ],
+    "cnName": "银灰",
+    "twName": "銀灰",
+    "jpName": "シルバーアッシュ",
+    "krName": "실버애쉬",
+    "internalName": "char_172_svrash"
   },
   "silverash_the_reignfrost": {
     "id": "silverash_the_reignfrost",
@@ -1003,7 +1423,9 @@
     "class": "Vanguard",
     "global": false,
     "profileImage": "/images/operators/silverash_the_reignfrost.png",
-    "niches": []
+    "niches": [],
+    "cnName": "凛御银灰",
+    "internalName": "char_1045_svash2"
   },
   "skadi": {
     "id": "skadi",
@@ -1014,7 +1436,11 @@
     "profileImage": "/images/operators/skadi.png",
     "niches": [
       "trash-operators"
-    ]
+    ],
+    "cnName": "斯卡蒂",
+    "jpName": "スカジ",
+    "krName": "스카디",
+    "internalName": "char_263_skadi"
   },
   "skadi_the_corrupting_heart": {
     "id": "skadi_the_corrupting_heart",
@@ -1023,7 +1449,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/skadi_the_corrupting_heart.png",
-    "niches": []
+    "niches": [],
+    "cnName": "浊心斯卡蒂",
+    "twName": "濁心斯卡蒂",
+    "jpName": "濁だく心しんスカジ",
+    "krName": "스카디 더 커럽팅 하트",
+    "internalName": "char_1012_skadi2"
   },
   "specter_the_unchained": {
     "id": "specter_the_unchained",
@@ -1032,7 +1463,12 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/specter_the_unchained.png",
-    "niches": []
+    "niches": [],
+    "cnName": "归溟幽灵鲨",
+    "twName": "歸溟幽靈鯊",
+    "jpName": "帰き溟めいスペクター",
+    "krName": "스펙터 디 언체인드",
+    "internalName": "char_1023_ghost2"
   },
   "stainless": {
     "id": "stainless",
@@ -1041,7 +1477,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/stainless.png",
-    "niches": []
+    "niches": [],
+    "cnName": "白铁",
+    "twName": "白鐵",
+    "jpName": "ステインレス",
+    "krName": "스테인리스",
+    "internalName": "char_4072_ironmn"
   },
   "surtr": {
     "id": "surtr",
@@ -1050,7 +1491,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/surtr.png",
-    "niches": []
+    "niches": [],
+    "cnName": "史尔特尔",
+    "twName": "史爾特爾",
+    "jpName": "スルト",
+    "krName": "수르트",
+    "internalName": "char_350_surtr"
   },
   "suzuran": {
     "id": "suzuran",
@@ -1059,7 +1505,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/suzuran.png",
-    "niches": []
+    "niches": [],
+    "cnName": "铃兰",
+    "twName": "鈴蘭",
+    "jpName": "スズラン",
+    "krName": "스즈란",
+    "internalName": "char_358_lisa"
   },
   "swire_the_elegant_wit": {
     "id": "swire_the_elegant_wit",
@@ -1068,7 +1519,12 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/swire_the_elegant_wit.png",
-    "niches": []
+    "niches": [],
+    "cnName": "琳琅诗怀雅",
+    "twName": "琳瑯詩懷雅",
+    "jpName": "琳りん琅ろうスワイヤー",
+    "krName": "스와이어 디 엘리건트 위트",
+    "internalName": "char_1033_swire2"
   },
   "texas_the_omertosa": {
     "id": "texas_the_omertosa",
@@ -1077,7 +1533,11 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/texas_the_omertosa.png",
-    "niches": []
+    "niches": [],
+    "cnName": "缄默德克萨斯",
+    "jpName": "血けつ掟じょうテキサス",
+    "krName": "텍사스 디 오메르토사",
+    "internalName": "char_1028_texas2"
   },
   "thorns": {
     "id": "thorns",
@@ -1086,7 +1546,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/thorns.png",
-    "niches": []
+    "niches": [],
+    "cnName": "棘刺",
+    "jpName": "ソーンズ",
+    "krName": "쏜즈",
+    "internalName": "char_293_thorns"
   },
   "thorns_the_lodestar": {
     "id": "thorns_the_lodestar",
@@ -1095,7 +1559,11 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/thorns_the_lodestar.png",
-    "niches": []
+    "niches": [],
+    "cnName": "引星棘刺",
+    "jpName": "引星いんせいソーンズ",
+    "krName": "쏜즈 더 로드스타",
+    "internalName": "char_1039_thorn2"
   },
   "togawa_sakiko": {
     "id": "togawa_sakiko",
@@ -1104,7 +1572,12 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/togawa_sakiko.png",
-    "niches": []
+    "niches": [],
+    "cnName": "丰川祥子",
+    "twName": "豐川祥子",
+    "jpName": "豊川とがわ 祥子さきこ",
+    "krName": "토가와 사키코",
+    "internalName": "char_4182_oblvns"
   },
   "tragodia": {
     "id": "tragodia",
@@ -1113,7 +1586,11 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/tragodia.png",
-    "niches": []
+    "niches": [],
+    "cnName": "酒神",
+    "jpName": "トラゴディア",
+    "krName": "트라고디아",
+    "internalName": "char_1042_phatm2"
   },
   "typhon": {
     "id": "typhon",
@@ -1122,7 +1599,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/typhon.png",
-    "niches": []
+    "niches": [],
+    "cnName": "提丰",
+    "twName": "提豐",
+    "jpName": "ティフォン",
+    "krName": "티폰",
+    "internalName": "char_2012_typhon"
   },
   "ulpianus": {
     "id": "ulpianus",
@@ -1131,7 +1613,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/ulpianus.png",
-    "niches": []
+    "niches": [],
+    "cnName": "乌尔比安",
+    "twName": "烏爾比安",
+    "jpName": "ウルピアヌス",
+    "krName": "울피아누스",
+    "internalName": "char_4145_ulpia"
   },
   "vigil": {
     "id": "vigil",
@@ -1140,7 +1627,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/vigil.png",
-    "niches": []
+    "niches": [],
+    "cnName": "伺夜",
+    "jpName": "ヴィジェル",
+    "krName": "비질",
+    "internalName": "char_427_vigil"
   },
   "vina_victoria": {
     "id": "vina_victoria",
@@ -1149,7 +1640,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/vina_victoria.png",
-    "niches": []
+    "niches": [],
+    "cnName": "维娜·维多利亚",
+    "twName": "維娜·維多利亞",
+    "jpName": "ヴィーナ・ヴィクトリア",
+    "krName": "비나 빅토리아",
+    "internalName": "char_1019_siege2"
   },
   "virtuosa": {
     "id": "virtuosa",
@@ -1158,7 +1654,11 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/virtuosa.png",
-    "niches": []
+    "niches": [],
+    "cnName": "塑心",
+    "jpName": "ヴィルトゥオーサ",
+    "krName": "비르투오사",
+    "internalName": "char_245_cello"
   },
   "viviana": {
     "id": "viviana",
@@ -1167,7 +1667,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/viviana.png",
-    "niches": []
+    "niches": [],
+    "cnName": "薇薇安娜",
+    "jpName": "ヴィヴィアナ",
+    "krName": "비비아나",
+    "internalName": "char_4098_vvana"
   },
   "vulpisfoglia": {
     "id": "vulpisfoglia",
@@ -1176,7 +1680,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/vulpisfoglia.png",
-    "niches": []
+    "niches": [],
+    "cnName": "忍冬",
+    "jpName": "ウルピスフォリア",
+    "krName": "불피스폴리아",
+    "internalName": "char_4026_vulpis"
   },
   "w": {
     "id": "w",
@@ -1189,7 +1697,8 @@
       "aoe-physical-dps",
       "physical-dps",
       "stalling"
-    ]
+    ],
+    "internalName": "char_113_cqbw"
   },
   "weedy": {
     "id": "weedy",
@@ -1203,7 +1712,12 @@
       "shift",
       "stalling",
       "true_damage"
-    ]
+    ],
+    "cnName": "温蒂",
+    "twName": "溫蒂",
+    "jpName": "ウィーディ",
+    "krName": "위디",
+    "internalName": "char_400_weedy"
   },
   "wi_adel": {
     "id": "wi_adel",
@@ -1212,7 +1726,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/wi_adel.png",
-    "niches": []
+    "niches": [],
+    "cnName": "维什戴尔",
+    "twName": "維什戴爾",
+    "jpName": "ウィシャデル",
+    "krName": "위셔델",
+    "internalName": "char_1035_wisdel"
   },
   "yu": {
     "id": "yu",
@@ -1221,7 +1740,12 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/yu.png",
-    "niches": []
+    "niches": [],
+    "cnName": "余",
+    "twName": "餘",
+    "jpName": "ユー",
+    "krName": "위",
+    "internalName": "char_2026_yu"
   },
   "zuo_le": {
     "id": "zuo_le",
@@ -1230,6 +1754,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/zuo_le.png",
-    "niches": []
+    "niches": [],
+    "cnName": "左乐",
+    "twName": "左樂",
+    "jpName": "ズオ・ラウ",
+    "krName": "좌락",
+    "internalName": "char_4121_zuole"
   }
 }
