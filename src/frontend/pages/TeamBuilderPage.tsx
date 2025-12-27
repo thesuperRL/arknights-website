@@ -170,11 +170,11 @@ const TeamBuilderPage: React.FC = () => {
   // Migrate preferences when nicheFilenameMap is loaded
   useEffect(() => {
     if (preferences && Object.keys(nicheFilenameMap).length > 0) {
-      // Check if migration is needed (has display names instead of filenames)
+      // Check if migration is needed (has display names instead of filenames, or numbers instead of ranges)
       const needsMigration = Object.keys(preferences.requiredNiches).some(key => 
-        key.includes(' ') || key.includes('/')
+        key.includes(' ') || key.includes('/') || typeof preferences.requiredNiches[key] === 'number'
       ) || Object.keys(preferences.preferredNiches).some(key => 
-        key.includes(' ') || key.includes('/')
+        key.includes(' ') || key.includes('/') || typeof preferences.preferredNiches[key] === 'number'
       );
       
       if (needsMigration) {
@@ -352,43 +352,83 @@ const TeamBuilderPage: React.FC = () => {
 
         <div className="niche-selection">
           <h3>Required Niches</h3>
-          <p className="help-text">Specify how many operators from each niche are required in your team</p>
+          <p className="help-text">Specify the range of operators from each niche required in your team (e.g., 1 to 2 healers)</p>
           <div className="niche-list">
-            {allNiches.map(niche => (
-              <div key={niche.filename} className="niche-input-row">
-                <label className="niche-label">{niche.displayName}</label>
-                <input
-                  type="number"
-                  min="0"
-                  max="12"
-                  value={preferences.requiredNiches[niche.filename] || 0}
-                  onChange={(e) => updateRequiredNicheCount(niche.filename, parseInt(e.target.value) || 0)}
-                  className="niche-count-input"
-                />
-                <span className="niche-count-label">operators</span>
-              </div>
-            ))}
+            {allNiches.map(niche => {
+              const range = preferences.requiredNiches[niche.filename] || { min: 0, max: 0 };
+              return (
+                <div key={niche.filename} className="niche-input-row">
+                  <label className="niche-label">{niche.displayName}</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="12"
+                    value={range.min || 0}
+                    onChange={(e) => {
+                      const newMin = parseInt(e.target.value) || 0;
+                      updateRequiredNicheRange(niche.filename, newMin, Math.max(newMin, range.max || 0));
+                    }}
+                    className="niche-count-input"
+                    placeholder="Min"
+                  />
+                  <span className="niche-range-separator">to</span>
+                  <input
+                    type="number"
+                    min={range.min || 0}
+                    max="12"
+                    value={range.max || 0}
+                    onChange={(e) => {
+                      const newMax = parseInt(e.target.value) || 0;
+                      updateRequiredNicheRange(niche.filename, range.min || 0, newMax);
+                    }}
+                    className="niche-count-input"
+                    placeholder="Max"
+                  />
+                  <span className="niche-count-label">operators</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         <div className="niche-selection">
           <h3>Preferred Niches</h3>
-          <p className="help-text">Specify how many operators from each niche are preferred (but not required)</p>
+          <p className="help-text">Specify the range of operators from each niche preferred (but not required) in your team</p>
           <div className="niche-list">
-            {allNiches.map(niche => (
-              <div key={niche.filename} className="niche-input-row">
-                <label className="niche-label">{niche.displayName}</label>
-                <input
-                  type="number"
-                  min="0"
-                  max="12"
-                  value={preferences.preferredNiches[niche.filename] || 0}
-                  onChange={(e) => updatePreferredNicheCount(niche.filename, parseInt(e.target.value) || 0)}
-                  className="niche-count-input"
-                />
-                <span className="niche-count-label">operators</span>
-              </div>
-            ))}
+            {allNiches.map(niche => {
+              const range = preferences.preferredNiches[niche.filename] || { min: 0, max: 0 };
+              return (
+                <div key={niche.filename} className="niche-input-row">
+                  <label className="niche-label">{niche.displayName}</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="12"
+                    value={range.min || 0}
+                    onChange={(e) => {
+                      const newMin = parseInt(e.target.value) || 0;
+                      updatePreferredNicheRange(niche.filename, newMin, Math.max(newMin, range.max || 0));
+                    }}
+                    className="niche-count-input"
+                    placeholder="Min"
+                  />
+                  <span className="niche-range-separator">to</span>
+                  <input
+                    type="number"
+                    min={range.min || 0}
+                    max="12"
+                    value={range.max || 0}
+                    onChange={(e) => {
+                      const newMax = parseInt(e.target.value) || 0;
+                      updatePreferredNicheRange(niche.filename, range.min || 0, newMax);
+                    }}
+                    className="niche-count-input"
+                    placeholder="Max"
+                  />
+                  <span className="niche-count-label">operators</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 

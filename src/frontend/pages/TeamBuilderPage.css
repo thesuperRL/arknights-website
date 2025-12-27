@@ -125,6 +125,12 @@
   min-width: 70px;
 }
 
+.niche-range-separator {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0 0.5rem;
+}
+
 .action-buttons {
   display: flex;
   gap: 1rem;
