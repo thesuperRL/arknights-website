@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <Link to="/local-login">Login</Link>
+                  <Link to="/login">Login</Link>
                   <Link to="/register">Register</Link>
                 </>
               )}

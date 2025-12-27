@@ -150,6 +150,27 @@
     gap: 1.5rem;
 }
 
+/* Import blur styles for non-global operators */
+.operator-card.non-global {
+    filter: blur(8px);
+    opacity: 0.5;
+}
+
+.operator-card.non-global .operator-name {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.operator-card.non-global:hover {
+    filter: blur(0px);
+    opacity: 1;
+}
+
+.operator-card.non-global:hover .operator-name {
+    opacity: 1;
+    visibility: visible;
+}
+
 .operator-card {
     background: rgba(22, 33, 62, 0.8);
     backdrop-filter: blur(10px);

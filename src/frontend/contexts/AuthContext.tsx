@@ -3,8 +3,6 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 interface UserInfo {
   nickname: string;
   email: string;
-  server?: string;
-  accountType?: 'arknights' | 'local';
 }
 
 interface AuthContextType {
@@ -41,9 +39,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const data = await response.json();
         setUser({ 
           nickname: data.nickname, 
-          email: data.email,
-          server: data.server,
-          accountType: data.accountType
+          email: data.email
         });
       } else {
         setUser(null);

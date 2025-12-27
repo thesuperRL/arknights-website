@@ -24,6 +24,11 @@ interface OperatorData {
   global: boolean; // Whether operator is available in global
   profileImage: string; // Local path after download
   niches?: string[]; // Array of tier list niches where this operator appears
+  cnName?: string; // Simplified Chinese name
+  twName?: string; // Traditional Chinese name
+  jpName?: string; // Japanese name
+  krName?: string; // Korean name
+  characters?: string; // Internal name/filename
 }
 
 interface ScraperConfig {
@@ -267,6 +272,73 @@ class ArknightsScraper {
       // Return original URL if download fails
       return imageUrl;
     }
+  }
+
+  /**
+   * Fetches an individual operator page and extracts name data
+   */
+  private async fetchOperatorNames(operatorName: string): Promise<{
+    cnName?: string;
+    twName?: string;
+    jpName?: string;
+    krName?: string;
+    characters?: string;
+  }> {
+    const names: {
+      cnName?: string;
+      twName?: string;
+      jpName?: string;
+      krName?: string;
+      characters?: string;
+    } = {};
+
+    try {
+      // Construct the operator page URL
+      // The name might need URL encoding (e.g., "Wiś'adel" becomes "Wi%C5%9B%27adel")
+      const encodedName = encodeURIComponent(operatorName);
+      const operatorUrl = `https://arknights.wiki.gg/wiki/${encodedName}`;
+      
+      console.log(`  Fetching names from: ${operatorUrl}`);
+      
+      // Fetch the operator page
+      const html = await this.fetchHtml(operatorUrl);
+      const $ = cheerio.load(html);
+
+      // Extract names from the druid-data elements
+      const cnElement = $('.druid-data-cnname.druid-data-nonempty').first();
+      if (cnElement.length > 0) {
+        names.cnName = cnElement.text().trim();
+      }
+
+      const twElement = $('.druid-data-twname.druid-data-nonempty').first();
+      if (twElement.length > 0) {
+        names.twName = twElement.text().trim();
+      }
+
+      const jpElement = $('.druid-data-jpname.druid-data-nonempty').first();
+      if (jpElement.length > 0) {
+        names.jpName = jpElement.text().trim();
+      }
+
+      const krElement = $('.druid-data-krname.druid-data-nonempty').first();
+      if (krElement.length > 0) {
+        names.krName = krElement.text().trim();
+      }
+
+      // Extract internal name/filename
+      const filenameElement = $('.druid-data-filename.druid-data-nonempty').first();
+      if (filenameElement.length > 0) {
+        names.characters = filenameElement.text().trim();
+      }
+
+      // Add delay to be respectful to the server
+      await new Promise(resolve => setTimeout(resolve, 500));
+    } catch (error: any) {
+      console.warn(`  ⚠️  Failed to fetch names for ${operatorName}: ${error.message}`);
+      // Return empty object on error - don't fail the whole scrape
+    }
+
+    return names;
   }
 
   /**
@@ -596,6 +668,41 @@ class ArknightsScraper {
   }
 
   /**
+   * Loads existing operators from the JSON file (if it exists)
+   * Returns a map of operator ID to operator data
+   */
+  private loadExistingOperators(): Map<string, OperatorData> {
+    const existingFile = path.join(this.config.outputDir, `operators-${this.config.rarity}star.json`);
+    const operatorsMap = new Map<string, OperatorData>();
+    
+    if (fs.existsSync(existingFile)) {
+      try {
+        const content = fs.readFileSync(existingFile, 'utf-8');
+        const parsed = JSON.parse(content);
+        
+        // Handle dictionary format
+        if (!Array.isArray(parsed) && typeof parsed === 'object') {
+          for (const [id, operator] of Object.entries(parsed)) {
+            operatorsMap.set(id, operator as OperatorData);
+          }
+          console.log(`📋 Loaded ${operatorsMap.size} existing operators from JSON file`);
+        }
+      } catch (error) {
+        console.warn(`Warning: Could not load existing operators file: ${error}`);
+      }
+    }
+    
+    return operatorsMap;
+  }
+
+  /**
+   * Checks if an operator has all name fields populated
+   */
+  private hasAllNames(operator: OperatorData): boolean {
+    return !!(operator.cnName && operator.twName && operator.jpName && operator.krName);
+  }
+
+  /**
    * Loads always-include operators for a specific rarity
    * Supports both array and dictionary formats for backwards compatibility
    */
@@ -744,6 +851,75 @@ class ArknightsScraper {
       }
       
       console.log(`\n📊 Image processing complete: ${downloadedCount} downloaded, ${skippedCount} skipped`);
+
+      // Load existing operators to check for existing name data
+      const existingOperators = this.loadExistingOperators();
+      
+      // Fetch name data for each operator (skip if already exists)
+      console.log(`\n🌐 Fetching name data for ${operators.length} operators...`);
+      let namesFetched = 0;
+      let namesSkipped = 0;
+      let namesAlreadyExist = 0;
+      
+      for (let i = 0; i < operators.length; i++) {
+        const operator = operators[i];
+        const existingOperator = existingOperators.get(operator.id);
+        
+        // Check if operator already exists with all names and characters
+        if (existingOperator && this.hasAllNames(existingOperator) && existingOperator.characters) {
+          // Copy existing names and characters to current operator
+          operator.cnName = existingOperator.cnName;
+          operator.twName = existingOperator.twName;
+          operator.jpName = existingOperator.jpName;
+          operator.krName = existingOperator.krName;
+          operator.characters = existingOperator.characters;
+          namesAlreadyExist++;
+          console.log(`[${i + 1}/${operators.length}] ⏭️  Skipping ${operator.name} (names and characters already exist)`);
+          continue;
+        }
+        
+        // Check if operator exists but is missing some names - merge what we have
+        if (existingOperator) {
+          operator.cnName = existingOperator.cnName || operator.cnName;
+          operator.twName = existingOperator.twName || operator.twName;
+          operator.jpName = existingOperator.jpName || operator.jpName;
+          operator.krName = existingOperator.krName || operator.krName;
+          operator.characters = existingOperator.characters || operator.characters;
+        }
+        
+        // Check if we need to fetch (missing names or characters)
+        const needsFetch = !this.hasAllNames(operator) || !operator.characters;
+        
+        if (needsFetch) {
+          console.log(`[${i + 1}/${operators.length}] Fetching names for ${operator.name}...`);
+          
+          try {
+            const names = await this.fetchOperatorNames(operator.name);
+            
+            if (names.cnName || names.twName || names.jpName || names.krName || names.characters) {
+              // Merge fetched names with existing ones (fetched takes precedence)
+              operator.cnName = names.cnName || operator.cnName;
+              operator.twName = names.twName || operator.twName;
+              operator.jpName = names.jpName || operator.jpName;
+              operator.krName = names.krName || operator.krName;
+              operator.characters = names.characters || operator.characters;
+              namesFetched++;
+              console.log(`  ✅ Found names: CN=${names.cnName || operator.cnName || 'N/A'}, TW=${names.twName || operator.twName || 'N/A'}, JP=${names.jpName || operator.jpName || 'N/A'}, KR=${names.krName || operator.krName || 'N/A'}, Internal=${names.characters || operator.characters || 'N/A'}`);
+            } else {
+              namesSkipped++;
+              console.log(`  ⚠️  No name data found for ${operator.name}`);
+            }
+          } catch (error: any) {
+            namesSkipped++;
+            console.warn(`  ⚠️  Error fetching names for ${operator.name}: ${error.message}`);
+          }
+        } else {
+          namesAlreadyExist++;
+          console.log(`[${i + 1}/${operators.length}] ⏭️  Skipping ${operator.name} (already has all names and characters)`);
+        }
+      }
+      
+      console.log(`\n📊 Name fetching complete: ${namesFetched} fetched, ${namesAlreadyExist} already exist, ${namesSkipped} skipped/failed`);
 
       // Convert to dictionary format
       const operatorsDict = this.operatorsToDictionary(operators);

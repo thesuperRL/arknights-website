@@ -6,7 +6,6 @@ import NicheListPage from './pages/NicheListPage';
 import TrashOperatorsPage from './pages/TrashOperatorsPage';
 import OperatorPage from './pages/OperatorPage';
 import AllOperatorsPage from './pages/AllOperatorsPage';
-import LoginPage from './pages/LoginPage';
 import LocalLoginPage from './pages/LocalLoginPage';
 import RegisterPage from './pages/RegisterPage';
 import UserProfilePage from './pages/UserProfilePage';
@@ -25,8 +24,7 @@ function App() {
             <Route path="/trash-operators" element={<TrashOperatorsPage />} />
             <Route path="/operator/:id" element={<OperatorPage />} />
             <Route path="/all-operators" element={<AllOperatorsPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/local-login" element={<LocalLoginPage />} />
+            <Route path="/login" element={<LocalLoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/profile" element={<UserProfilePage />} />
             </Routes>

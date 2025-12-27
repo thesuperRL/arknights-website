@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { getRarityClass } from '../utils/rarityUtils';
 import './NicheListPage.css';
 
 interface Operator {
@@ -100,10 +101,12 @@ const NicheListPage: React.FC = () => {
 
       <div className="niche-list-container">
         <div className="operators-grid">
-          {sortedOperators.map((entry, index) => (
+          {sortedOperators.map((entry, index) => {
+            const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
+            return (
             <div 
               key={`${entry.operatorId}-${index}`} 
-              className="operator-card"
+              className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''}`}
               title={entry.note || undefined}
             >
               {entry.operator ? (
@@ -141,7 +144,8 @@ const NicheListPage: React.FC = () => {
                 </>
               )}
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

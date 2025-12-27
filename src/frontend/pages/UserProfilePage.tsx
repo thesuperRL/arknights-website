@@ -2,19 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Stars from '../components/Stars';
+import { getRarityClass } from '../utils/rarityUtils';
 import './UserProfilePage.css';
 
 interface UserData {
   email: string;
-  server?: string;
   nickname: string;
-  accountType?: 'arknights' | 'local';
   ownedOperators: string[];
-  userData?: {
-    level?: number;
-    charCnt?: number;
-    uid?: string;
-  };
 }
 
 interface Operator {
@@ -157,10 +151,6 @@ const UserProfilePage: React.FC = () => {
   };
 
   const handleRemoveOperator = async (operatorId: string) => {
-    if (!confirm('Remove this operator from your collection?')) {
-      return;
-    }
-
     try {
       const response = await fetch('/api/auth/remove-operator', {
         method: 'POST',
@@ -222,16 +212,6 @@ const UserProfilePage: React.FC = () => {
         <div className="profile-info">
           <h1>{user.nickname}</h1>
           <div className="profile-details">
-            {user.accountType === 'arknights' && user.server && (
-              <span className="profile-detail">
-                <strong>Server:</strong> {user.server.toUpperCase()}
-              </span>
-            )}
-            {user.userData?.level && (
-              <span className="profile-detail">
-                <strong>Level:</strong> {user.userData.level}
-              </span>
-            )}
             <span className="profile-detail">
               <strong>Operators:</strong> {user.ownedOperators.length}
             </span>
@@ -290,28 +270,26 @@ const UserProfilePage: React.FC = () => {
             Clear Filters
           </button>
         )}
-        {user.accountType === 'local' && (
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="add-operator-button"
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: 'rgba(90, 238, 144, 0.2)',
-              border: '2px solid rgba(90, 238, 144, 0.4)',
-              borderRadius: '8px',
-              color: '#5aee90',
-              fontSize: '1rem',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.3s'
-            }}
-          >
-            + Add Operators
-          </button>
-        )}
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="add-operator-button"
+          style={{
+            padding: '0.75rem 1.5rem',
+            background: 'rgba(90, 238, 144, 0.2)',
+            border: '2px solid rgba(90, 238, 144, 0.4)',
+            borderRadius: '8px',
+            color: '#5aee90',
+            fontSize: '1rem',
+            fontWeight: '600',
+            cursor: 'pointer',
+            transition: 'all 0.3s'
+          }}
+        >
+          + Add Operators
+        </button>
       </div>
 
-      {user.accountType === 'arknights' || user.ownedOperators.length > 0 ? (
+      {user.ownedOperators.length > 0 ? (
         <>
           <div className="operators-count">
             Showing {filteredOperators.length} of {user.ownedOperators.length} operators
@@ -321,8 +299,10 @@ const UserProfilePage: React.FC = () => {
             {filteredOperators.length === 0 ? (
               <div className="no-results">No operators found matching your filters.</div>
             ) : (
-              filteredOperators.map((operator) => (
-                <div key={operator.id} className="operator-card" style={{ position: 'relative' }}>
+              filteredOperators.map((operator) => {
+                const rarityClass = getRarityClass(operator.rarity);
+                return (
+                <div key={operator.id} className={`operator-card ${rarityClass}`} style={{ position: 'relative' }}>
                   <Link
                     to={`/operator/${operator.id}`}
                     style={{ textDecoration: 'none', color: 'inherit' }}
@@ -347,37 +327,36 @@ const UserProfilePage: React.FC = () => {
                       </div>
                     </div>
                   </Link>
-                  {user.accountType === 'local' && (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleRemoveOperator(operator.id);
-                      }}
-                      className="remove-operator-button"
-                      style={{
-                        position: 'absolute',
-                        top: '0.5rem',
-                        right: '0.5rem',
-                        background: 'rgba(255, 107, 107, 0.8)',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '24px',
-                        height: '24px',
-                        color: 'white',
-                        cursor: 'pointer',
-                        fontSize: '16px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 10
-                      }}
-                      title="Remove operator"
-                    >
-                      ×
-                    </button>
-                  )}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleRemoveOperator(operator.id);
+                    }}
+                    className="remove-operator-button"
+                    style={{
+                      position: 'absolute',
+                      top: '0.5rem',
+                      right: '0.5rem',
+                      background: 'rgba(255, 107, 107, 0.8)',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '24px',
+                      height: '24px',
+                      color: 'white',
+                      cursor: 'pointer',
+                      fontSize: '16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 10
+                    }}
+                    title="Remove operator"
+                  >
+                    ×
+                  </button>
                 </div>
-              ))
+                );
+              })
             )}
           </div>
         </>
@@ -499,8 +478,14 @@ const UserProfilePage: React.FC = () => {
               {getAvailableOperators().length === 0 ? (
                 <div className="no-results">No operators found.</div>
               ) : (
-                getAvailableOperators().map((operator) => (
-                  <div key={operator.id} className="operator-card" style={{ position: 'relative' }}>
+                getAvailableOperators().map((operator) => {
+                  const rarityClass = getRarityClass(operator.rarity);
+                  return (
+                  <div 
+                    key={operator.id} 
+                    className={`operator-card ${!operator.global ? 'non-global' : ''} ${rarityClass}`} 
+                    style={{ position: 'relative' }}
+                  >
                     <img
                       src={operator.profileImage || `/images/operators/${operator.id}.png`}
                       alt={operator.name}
@@ -547,7 +532,8 @@ const UserProfilePage: React.FC = () => {
                       +
                     </button>
                   </div>
-                ))
+                  );
+                })
               )}
             </div>
           </div>

@@ -121,13 +121,56 @@
     border-radius: 15px;
     padding: 1rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s, filter 0.3s, opacity 0.3s;
     text-decoration: none;
     color: var(--text-light);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    border: 2px solid transparent;
+}
+
+/* Rarity colors - more solid for better visibility */
+.operator-card.rarity-6 {
+    border-color: rgba(255, 150, 0, 0.9);
+    background: rgba(255, 165, 0, 0.35);
+}
+
+.operator-card.rarity-5 {
+    border-color: rgba(255, 215, 0, 0.9);
+    background: rgba(255, 215, 0, 0.35);
+}
+
+.operator-card.rarity-4 {
+    border-color: rgba(230, 230, 250, 0.9);
+    background: rgba(230, 230, 250, 0.35);
+}
+
+.operator-card.rarity-3 {
+    border-color: rgba(0, 191, 255, 0.9);
+    background: rgba(0, 191, 255, 0.35);
+}
+
+.operator-card.rarity-2 {
+    border-color: rgba(154, 205, 50, 0.9);
+    background: rgba(154, 205, 50, 0.35);
+}
+
+.operator-card.rarity-1 {
+    border-color: rgba(128, 128, 128, 0.9);
+    background: rgba(128, 128, 128, 0.35);
+}
+
+/* Darken unowned operators */
+.operator-card.unowned {
+    opacity: 0.6;
+    filter: brightness(0.7);
+}
+
+.operator-card.unowned:hover {
+    opacity: 0.85;
+    filter: brightness(0.85);
 }
 
 .operator-card:hover {

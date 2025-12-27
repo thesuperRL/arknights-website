@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Stars from '../components/Stars';
+import { useAuth } from '../contexts/AuthContext';
+import { getRarityClass } from '../utils/rarityUtils';
 import './AllOperatorsPage.css';
 
 interface Operator {
@@ -14,16 +16,23 @@ interface Operator {
 }
 
 const AllOperatorsPage: React.FC = () => {
+  const { user } = useAuth();
   const [operators, setOperators] = useState<Record<string, Operator>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filterRarity, setFilterRarity] = useState<number | null>(null);
   const [filterClass, setFilterClass] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadAllOperators();
+    loadOwnedOperators();
   }, []);
+
+  useEffect(() => {
+    loadOwnedOperators();
+  }, [user]);
 
   const loadAllOperators = async () => {
     try {
@@ -45,6 +54,26 @@ const AllOperatorsPage: React.FC = () => {
       setLoading(false);
     }
   };
+
+  const loadOwnedOperators = async () => {
+    if (!user) {
+      setOwnedOperators(new Set());
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/user', {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setOwnedOperators(new Set(data.ownedOperators || []));
+      }
+    } catch (err) {
+      console.error('Error loading owned operators:', err);
+    }
+  };
+
 
   const getFilteredOperators = () => {
     const filtered = Object.values(operators).filter(op => {
@@ -148,11 +177,14 @@ const AllOperatorsPage: React.FC = () => {
         {filteredOperators.length === 0 ? (
           <div className="no-results">No operators found matching your filters.</div>
         ) : (
-          filteredOperators.map((operator) => (
+          filteredOperators.map((operator) => {
+            const isOwned = ownedOperators.has(operator.id);
+            const rarityClass = getRarityClass(operator.rarity);
+            return (
             <Link
               key={operator.id}
               to={`/operator/${operator.id}`}
-              className={`operator-card ${!operator.global ? 'non-global' : ''}`}
+              className={`operator-card ${!operator.global ? 'non-global' : ''} ${rarityClass} ${!isOwned ? 'unowned' : ''}`}
             >
               <img
                 src={operator.profileImage || `/images/operators/${operator.id}.png`}
@@ -180,7 +212,8 @@ const AllOperatorsPage: React.FC = () => {
                 )}
               </div>
             </Link>
-          ))
+            );
+          })
         )}
       </div>
     </div>

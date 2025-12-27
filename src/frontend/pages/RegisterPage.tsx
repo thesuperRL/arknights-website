@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import './LoginPage.css';
+import './AuthPage.css';
 
 const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -119,10 +119,7 @@ const RegisterPage: React.FC = () => {
         </form>
 
         <p className="login-info" style={{ marginTop: '1.5rem' }}>
-          Already have an account? <Link to="/local-login" style={{ color: '#5aee90' }}>Login here</Link>
-        </p>
-        <p className="login-info">
-          Or <Link to="/login" style={{ color: '#5aee90' }}>login with your Arknights account</Link>
+          Already have an account? <Link to="/login" style={{ color: '#5aee90' }}>Login here</Link>
         </p>
       </div>
     </div>

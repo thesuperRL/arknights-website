@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getRarityClass } from '../utils/rarityUtils';
 import './TrashOperatorsPage.css';
 
 interface TrashOperatorEntry {
@@ -75,10 +76,12 @@ const TrashOperatorsPage: React.FC = () => {
           </div>
         ) : (
           <div className="operators-grid">
-            {data.operators.map((entry, index) => (
+            {data.operators.map((entry, index) => {
+              const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
+              return (
               <div 
                 key={`${entry.operatorId}-${index}`} 
-                className="operator-card trash"
+                className={`operator-card trash ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''}`}
                 title={entry.note || undefined}
               >
                 {entry.operator ? (
@@ -115,7 +118,8 @@ const TrashOperatorsPage: React.FC = () => {
                   </>
                 )}
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
