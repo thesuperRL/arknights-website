@@ -39,7 +39,7 @@ async function main() {
     const validation = validateNicheList(operatorList, operatorsData);
     
     // Count operators in this operator list
-    const operatorCount = operatorList.operators ? operatorList.operators.length : 0;
+    const operatorCount = operatorList.operators ? Object.keys(operatorList.operators).length : 0;
     totalOperators += operatorCount;
 
     console.log(`📊 ${niche}:`);

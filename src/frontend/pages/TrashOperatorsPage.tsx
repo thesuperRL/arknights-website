@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './TrashOperatorsPage.css';
 
-interface TrashOperator {
+interface TrashOperatorEntry {
   operatorId: string;
-  notes?: string;
+  note: string;
+  operator: Operator | null;
 }
 
 interface TrashOperatorsData {
-  title: string;
+  niche: string;
   description: string;
   lastUpdated: string;
-  operators: TrashOperator[];
+  operators: TrashOperatorEntry[];
 }
 
 interface Operator {
@@ -24,13 +25,11 @@ interface Operator {
 
 const TrashOperatorsPage: React.FC = () => {
   const [data, setData] = useState<TrashOperatorsData | null>(null);
-  const [operatorsData, setOperatorsData] = useState<Record<string, Operator>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadTrashOperators();
-    loadAllOperators();
   }, []);
 
   const loadTrashOperators = async () => {
@@ -48,25 +47,6 @@ const TrashOperatorsPage: React.FC = () => {
     }
   };
 
-  const loadAllOperators = async () => {
-    try {
-      const rarities = [1, 2, 3, 4, 5, 6];
-      const allOperators: Record<string, Operator> = {};
-
-      for (const rarity of rarities) {
-        const response = await fetch(`/api/operators/rarity/${rarity}`);
-        if (response.ok) {
-          const operators = await response.json() as Record<string, Operator>;
-          Object.assign(allOperators, operators);
-        }
-      }
-
-      setOperatorsData(allOperators);
-    } catch (err) {
-      console.error('Error loading operators:', err);
-    }
-  };
-
   if (loading) {
     return <div className="loading">Loading trash operators...</div>;
   }
@@ -81,7 +61,7 @@ const TrashOperatorsPage: React.FC = () => {
         <Link to="/" className="back-button">
           ← Back to Home
         </Link>
-        <h1>🗑️ {data.title}</h1>
+        <h1>🗑️ {data.niche}</h1>
         <p>{data.description}</p>
         <div className="meta">
           Last updated: {data.lastUpdated} • {data.operators.length} operators
@@ -95,43 +75,47 @@ const TrashOperatorsPage: React.FC = () => {
           </div>
         ) : (
           <div className="operators-grid">
-            {data.operators.map((op, index) => {
-              const operator = operatorsData[op.operatorId];
-              return (
-                <div key={`${op.operatorId}-${index}`} className="operator-card trash">
-                  {operator ? (
-                    <>
-                      <Link to={`/operator/${operator.id}`} className="operator-image-link">
-                        <img
-                          src={operator.profileImage || '/images/operators/default.png'}
-                          alt={operator.name}
-                          className="operator-image"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            if (target && target.src !== '/images/operators/default.png') {
-                              target.src = '/images/operators/default.png';
-                            }
-                          }}
-                          loading="lazy"
-                        />
-                      </Link>
-                      <Link to={`/operator/${operator.id}`} className="operator-name-link">
-                        <div className="operator-name">{operator.name}</div>
-                      </Link>
-                      <div className="operator-class">
-                        {operator.class} • {operator.rarity}★
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="operator-name">{op.operatorId}</div>
-                      <div className="operator-class">Operator not found</div>
-                    </>
-                  )}
-                  {op.notes && <div className="operator-notes">{op.notes}</div>}
-                </div>
-              );
-            })}
+            {data.operators.map((entry, index) => (
+              <div 
+                key={`${entry.operatorId}-${index}`} 
+                className="operator-card trash"
+                title={entry.note || undefined}
+              >
+                {entry.operator ? (
+                  <>
+                    <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
+                      <img
+                        src={entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`}
+                        alt={entry.operator.name}
+                        className="operator-image"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (target && !target.src.includes('data:image')) {
+                            target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                            target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                          }
+                        }}
+                        loading="lazy"
+                      />
+                    </Link>
+                    <Link to={`/operator/${entry.operator.id}`} className="operator-name-link">
+                      <div className="operator-name">{entry.operator.name}</div>
+                    </Link>
+                    <div className="operator-class">
+                      {entry.operator.class} • {entry.operator.rarity}★
+                    </div>
+                    {entry.note && (
+                      <div className="operator-note-tooltip">{entry.note}</div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <div className="operator-name">{entry.operatorId}</div>
+                    <div className="operator-class">Operator not found</div>
+                  </>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>

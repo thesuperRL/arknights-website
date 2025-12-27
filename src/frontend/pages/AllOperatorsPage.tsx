@@ -10,6 +10,7 @@ interface Operator {
   class: string;
   global: boolean;
   profileImage: string;
+  niches?: string[];
 }
 
 const AllOperatorsPage: React.FC = () => {
@@ -52,14 +53,15 @@ const AllOperatorsPage: React.FC = () => {
       if (searchTerm && !op.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
       return true;
     });
-    // Sort by rarity (6-star first, then 5, 4, 3, 2, 1), then by global status (global first), then by name
+    // Sort: first by global status (global first), then by rarity (6-star first), then by name
     return filtered.sort((a, b) => {
-      if (a.rarity !== b.rarity) {
-        return b.rarity - a.rarity; // Higher rarity first
-      }
-      // Within same rarity, global operators come first
+      // Global operators come before non-global operators
       if (a.global !== b.global) {
         return a.global ? -1 : 1; // Global (true) comes before non-global (false)
+      }
+      // Within same global status, sort by rarity (higher first)
+      if (a.rarity !== b.rarity) {
+        return b.rarity - a.rarity; // Higher rarity first
       }
       return a.name.localeCompare(b.name); // Then alphabetically
     });
@@ -170,9 +172,12 @@ const AllOperatorsPage: React.FC = () => {
                   <Stars rarity={operator.rarity} size="small" />
                   <span className="operator-class">{operator.class}</span>
                 </div>
-                <div className={`operator-global ${operator.global ? 'global-available' : 'global-unavailable'}`}>
-                  {operator.global ? '✓ Global' : '✗ Not Global'}
-                </div>
+                {operator.niches && operator.niches.length > 0 && (
+                  <div className="ranked-badge">Ranked</div>
+                )}
+                {(!operator.niches || operator.niches.length === 0) && (
+                  <div className="unranked-badge">Unranked</div>
+                )}
               </div>
             </Link>
           ))

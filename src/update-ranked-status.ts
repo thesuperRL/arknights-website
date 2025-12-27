@@ -25,9 +25,17 @@ function getTrashOperators(): Set<string> {
     try {
       const content = fs.readFileSync(trashFilePath, 'utf-8');
       const trashData = JSON.parse(content);
-      if (trashData.operators && Array.isArray(trashData.operators)) {
+      if (trashData.operators && typeof trashData.operators === 'object' && !Array.isArray(trashData.operators)) {
+        // Dictionary format
+        for (const operatorId of Object.keys(trashData.operators)) {
+          trashOperators.add(operatorId);
+        }
+      } else if (trashData.operators && Array.isArray(trashData.operators)) {
+        // Legacy array format (for backwards compatibility)
         for (const op of trashData.operators) {
-          if (op.operatorId) {
+          if (typeof op === 'string') {
+            trashOperators.add(op);
+          } else if (op.operatorId) {
             trashOperators.add(op.operatorId);
           }
         }
@@ -45,12 +53,12 @@ function getOperatorNiches(): Map<string, string[]> {
   const operatorNiches = new Map<string, string[]>();
   
   for (const [niche, operatorList] of Object.entries(operatorLists)) {
-    // Skip if operatorList doesn't have operators array
-    if (!operatorList.operators || !Array.isArray(operatorList.operators)) {
+    // Skip if operatorList doesn't have operators dictionary
+    if (!operatorList.operators || typeof operatorList.operators !== 'object') {
       continue;
     }
     
-    for (const operatorId of operatorList.operators) {
+    for (const operatorId of Object.keys(operatorList.operators)) {
       if (!operatorNiches.has(operatorId)) {
         operatorNiches.set(operatorId, []);
       }

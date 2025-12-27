@@ -97,7 +97,7 @@ export function saveNicheList(operatorList: OperatorList, dataDir: string = path
 export function validateNicheList(operatorList: OperatorList, operatorsData: Record<string, any>): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
 
-  for (const operatorId of operatorList.operators) {
+  for (const operatorId of Object.keys(operatorList.operators)) {
     if (!operatorsData[operatorId]) {
       errors.push(`Operator ${operatorId} in ${operatorList.niche} not found in operators data`);
     }
@@ -117,7 +117,7 @@ export function getNichesForOperator(operatorId: string, dataDir: string = path.
   const niches: string[] = [];
 
   for (const [niche, operatorList] of Object.entries(collection)) {
-    if (operatorList.operators.includes(operatorId)) {
+    if (operatorId in operatorList.operators) {
       niches.push(niche);
     }
   }

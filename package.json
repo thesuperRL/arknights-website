@@ -45,8 +45,12 @@
     "vite": "^7.3.0"
   },
   "dependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
     "axios": "^1.13.2",
+    "bcrypt": "^6.0.0",
     "cheerio": "^1.1.2",
+    "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",

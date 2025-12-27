@@ -8,10 +8,12 @@ interface Operator {
   rarity: number;
   class: string;
   profileImage: string;
+  global: boolean;
 }
 
 interface OperatorListEntry {
   operatorId: string;
+  note: string;
   operator: Operator | null;
 }
 
@@ -19,6 +21,7 @@ interface OperatorList {
   niche: string;
   description: string;
   operators: OperatorListEntry[];
+  relatedNiches?: string[];
 }
 
 const NicheListPage: React.FC = () => {
@@ -56,6 +59,18 @@ const NicheListPage: React.FC = () => {
     return <div className="error">{error || 'Operator list not found'}</div>;
   }
 
+  // Sort operators: global operators first, then non-global operators
+  const sortedOperators = [...operatorList.operators].sort((a, b) => {
+    const aGlobal = a.operator?.global ?? false;
+    const bGlobal = b.operator?.global ?? false;
+    // Global operators (true) come before non-global (false)
+    if (aGlobal !== bGlobal) {
+      return aGlobal ? -1 : 1;
+    }
+    // If both have same global status, maintain original order
+    return 0;
+  });
+
   return (
     <div className="niche-list-page">
       <div className="niche-list-header">
@@ -66,10 +81,31 @@ const NicheListPage: React.FC = () => {
         <p>{operatorList.description || ''}</p>
       </div>
 
+      {operatorList.relatedNiches && operatorList.relatedNiches.length > 0 && (
+        <div className="related-niches-section">
+          <h2>Related Niches</h2>
+          <div className="related-niches-list">
+            {operatorList.relatedNiches.map((relatedNiche) => (
+              <Link
+                key={relatedNiche}
+                to={`/niche-list/${encodeURIComponent(relatedNiche)}`}
+                className="related-niche-link"
+              >
+                {relatedNiche}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="niche-list-container">
         <div className="operators-grid">
-          {operatorList.operators.map((entry, index) => (
-            <div key={`${entry.operatorId}-${index}`} className="operator-card">
+          {sortedOperators.map((entry, index) => (
+            <div 
+              key={`${entry.operatorId}-${index}`} 
+              className="operator-card"
+              title={entry.note || undefined}
+            >
               {entry.operator ? (
                 <>
                   <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
@@ -94,6 +130,9 @@ const NicheListPage: React.FC = () => {
                   <div className="operator-class">
                     {entry.operator.class} • {entry.operator.rarity}★
                   </div>
+                  {entry.note && (
+                    <div className="operator-note-tooltip">{entry.note}</div>
+                  )}
                 </>
               ) : (
                 <>
