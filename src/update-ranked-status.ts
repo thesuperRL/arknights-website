@@ -71,15 +71,15 @@ function getOperatorNiches(): Map<string, string[]> {
     }
   }
 
-  // Add trash operators to niches (using display name "Trash Operators" as it's a special case)
+  // Add trash operators to niches (using internal code "trash-operators")
   const trashOperators = getTrashOperators();
   for (const operatorId of trashOperators) {
     if (!operatorNiches.has(operatorId)) {
       operatorNiches.set(operatorId, []);
     }
     const niches = operatorNiches.get(operatorId)!;
-    if (!niches.includes('Trash Operators')) {
-      niches.push('Trash Operators');
+    if (!niches.includes('trash-operators')) {
+      niches.push('trash-operators');
     }
   }
 

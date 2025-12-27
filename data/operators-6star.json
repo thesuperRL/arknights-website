@@ -115,7 +115,7 @@
     "global": true,
     "profileImage": "/images/operators/carnelian.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ]
   },
   "ceobe": {
@@ -142,7 +142,7 @@
     "global": true,
     "profileImage": "/images/operators/ch_en.png",
     "niches": [
-      "Trash Operators",
+      "trash-operators",
       "dual-dps",
       "sp-battery"
     ]
@@ -396,7 +396,7 @@
     "global": true,
     "profileImage": "/images/operators/hellagur.png",
     "niches": [
-      "Trash Operators",
+      "trash-operators",
       "late-laneholder",
       "tanking-blocking-operators"
     ]
@@ -598,7 +598,7 @@
     "global": true,
     "profileImage": "/images/operators/magallan.png",
     "niches": [
-      "Trash Operators",
+      "trash-operators",
       "soloist"
     ]
   },
@@ -646,7 +646,7 @@
     "global": true,
     "profileImage": "/images/operators/mostima.png",
     "niches": [
-      "Trash Operators",
+      "trash-operators",
       "aoe-arts-dps",
       "stalling"
     ]
@@ -940,7 +940,7 @@
     "global": true,
     "profileImage": "/images/operators/shining.png",
     "niches": [
-      "Trash Operators",
+      "trash-operators",
       "def-buff",
       "healing-operators"
     ]
@@ -962,7 +962,7 @@
     "global": true,
     "profileImage": "/images/operators/siege.png",
     "niches": [
-      "Trash Operators",
+      "trash-operators",
       "afk",
       "dp-generation",
       "early-laneholder"
@@ -1009,7 +1009,7 @@
     "global": true,
     "profileImage": "/images/operators/skadi.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ]
   },
   "skadi_the_corrupting_heart": {

@@ -179,7 +179,7 @@ app.get('/api/operators/:id', async (req, res) => {
       const trashData = JSON.parse(trashContent);
       if (trashData.operators && operatorId in trashData.operators) {
         rankings.push({
-          niche: trashData.niche || 'Trash Operators',
+          niche: trashData.niche || 'trash-operators',
           tier: 'N/A',
           notes: trashData.operators[operatorId] || 'No optimal use'
         });

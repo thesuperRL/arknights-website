@@ -7,7 +7,7 @@
     "global": true,
     "profileImage": "/images/operators/adnachiel.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ],
     "cnName": "安德切尔",
     "twName": "安德切爾",
@@ -40,7 +40,7 @@
     "global": true,
     "profileImage": "/images/operators/beagle.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ],
     "cnName": "米格鲁",
     "twName": "米格魯",
@@ -102,7 +102,7 @@
     "global": true,
     "profileImage": "/images/operators/hibiscus.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ],
     "cnName": "芙蓉",
     "jpName": "ハイビスカス",
@@ -135,7 +135,7 @@
     "global": true,
     "profileImage": "/images/operators/lava.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ],
     "cnName": "炎熔",
     "jpName": "ラヴァ",
@@ -167,7 +167,7 @@
     "global": true,
     "profileImage": "/images/operators/midnight.png",
     "niches": [
-      "Trash Operators",
+      "trash-operators",
       "dual-dps"
     ],
     "cnName": "月见夜",
@@ -200,7 +200,7 @@
     "global": true,
     "profileImage": "/images/operators/plume.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ],
     "cnName": "翎羽",
     "jpName": "プリュム",
@@ -231,7 +231,7 @@
     "global": true,
     "profileImage": "/images/operators/spot.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ],
     "cnName": "斑点",
     "twName": "斑點",
@@ -247,7 +247,7 @@
     "global": true,
     "profileImage": "/images/operators/steward.png",
     "niches": [
-      "Trash Operators",
+      "trash-operators",
       "low-rarity"
     ],
     "cnName": "史都华德",

@@ -19,7 +19,7 @@
     "global": true,
     "profileImage": "/images/operators/durin.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ],
     "cnName": "杜林",
     "jpName": "ドゥリン",
@@ -34,7 +34,7 @@
     "global": true,
     "profileImage": "/images/operators/noir_corne.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ],
     "cnName": "黑角",
     "jpName": "ノイルホーン",
@@ -49,7 +49,7 @@
     "global": true,
     "profileImage": "/images/operators/rangers.png",
     "niches": [
-      "Trash Operators"
+      "trash-operators"
     ],
     "cnName": "巡林者",
     "jpName": "レンジャー",

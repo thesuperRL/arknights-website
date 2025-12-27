@@ -2040,7 +2040,11 @@
     "niches": [
       "Healing Operators",
       "Unconventional Niches"
-    ]
+    ],
+    "cnName": "赫默",
+    "jpName": "サイレンス",
+    "krName": "사일런스",
+    "internalName": "char_108_silent"
   },
   "skybox": {
     "id": "skybox",
@@ -2049,7 +2053,9 @@
     "class": "Sniper",
     "global": false,
     "profileImage": "/images/operators/skybox.png",
-    "niches": []
+    "niches": [],
+    "cnName": "天空盒",
+    "internalName": "char_4213_skybx"
   },
   "skyfire": {
     "id": "skyfire",
@@ -2060,7 +2066,11 @@
     "profileImage": "/images/operators/skyfire.png",
     "niches": [
       "Trash Operators"
-    ]
+    ],
+    "cnName": "天火",
+    "jpName": "スカイフレア",
+    "krName": "스카이파이어",
+    "internalName": "char_166_skfire"
   },
   "snow_hunter": {
     "id": "snow_hunter",
@@ -2069,7 +2079,9 @@
     "class": "Sniper",
     "global": false,
     "profileImage": "/images/operators/snow_hunter.png",
-    "niches": []
+    "niches": [],
+    "cnName": "雪猎",
+    "internalName": "char_4211_snhunt"
   },
   "snowsant": {
     "id": "snowsant",
@@ -2080,7 +2092,11 @@
     "profileImage": "/images/operators/snowsant.png",
     "niches": [
       "Shift Operators"
-    ]
+    ],
+    "cnName": "雪雉",
+    "jpName": "スノーズント",
+    "krName": "스노우상트",
+    "internalName": "char_383_snsant"
   },
   "sora": {
     "id": "sora",
@@ -2092,7 +2108,11 @@
     "niches": [
       "Enmity Healing",
       "Sleep"
-    ]
+    ],
+    "cnName": "空",
+    "jpName": "ソラ",
+    "krName": "소라",
+    "internalName": "char_101_sora"
   },
   "specter": {
     "id": "specter",
@@ -2104,7 +2124,12 @@
     "niches": [
       "Late Laneholder",
       "Tanking/Blocking Operators"
-    ]
+    ],
+    "cnName": "幽灵鲨",
+    "twName": "幽靈鯊",
+    "jpName": "スペクター",
+    "krName": "스펙터",
+    "internalName": "char_143_ghost"
   },
   "spuria": {
     "id": "spuria",
@@ -2113,7 +2138,12 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/spuria.png",
-    "niches": []
+    "niches": [],
+    "cnName": "空构",
+    "twName": "空構",
+    "jpName": "スプリア",
+    "krName": "스푸리아",
+    "internalName": "char_4015_spuria"
   },
   "surfer": {
     "id": "surfer",

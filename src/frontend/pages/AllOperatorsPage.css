@@ -3,6 +3,7 @@
     max-width: 1800px;
     margin: 0 auto;
     padding: 2rem;
+    box-sizing: border-box;
 }
 
 .page-header {
@@ -111,12 +112,18 @@
 
 .operators-grid {
     display: grid;
-    grid-template-columns: repeat(6, minmax(150px, 1fr));
+    grid-template-columns: repeat(6, calc((100% - 5 * 1.5rem) / 6));
     gap: 1.5rem;
     width: 100%;
     max-width: 100%;
     grid-auto-flow: row;
     grid-auto-columns: 0;
+    grid-auto-rows: auto;
+}
+
+.operators-grid > * {
+    min-width: 0;
+    max-width: 100%;
 }
 
 .operator-card {
@@ -379,7 +386,7 @@
 
 @media (max-width: 1024px) {
     .operators-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, calc((100% - 3 * 1.5rem) / 4));
     }
 }
 
@@ -395,7 +402,7 @@
     }
 
     .operators-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, calc((100% - 1 * 1.5rem) / 2));
     }
 }
 
