@@ -822,7 +822,10 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/sussurro.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "low-rarity"
+    ],
     "cnName": "苏苏洛",
     "twName": "蘇蘇洛",
     "jpName": "ススーロ",

@@ -65,7 +65,7 @@
     "global": true,
     "profileImage": "/images/operators/almond.png",
     "niches": [
-      "Shift Operators"
+      "shift"
     ],
     "cnName": "杏仁",
     "jpName": "アーモンド",
@@ -80,7 +80,7 @@
     "global": true,
     "profileImage": "/images/operators/amiya.png",
     "niches": [
-      "True Damage Operators"
+      "true_damage"
     ],
     "cnName": "阿米娅",
     "twName": "阿米婭",
@@ -176,8 +176,8 @@
     "global": true,
     "profileImage": "/images/operators/astesia.png",
     "niches": [
-      "Arts DPS",
-      "Late Laneholder"
+      "arts-dps",
+      "late-laneholder"
     ],
     "cnName": "星极",
     "twName": "星極",
@@ -275,7 +275,8 @@
     "global": true,
     "profileImage": "/images/operators/bibeak.png",
     "niches": [
-      "Stalling"
+      "Trash Operators",
+      "stalling"
     ],
     "cnName": "柏喙",
     "jpName": "バイビーク",
@@ -290,9 +291,8 @@
     "global": true,
     "profileImage": "/images/operators/bison.png",
     "niches": [
-      "Free Operators",
-      "Tanking/Blocking Operators",
-      "Trash Operators"
+      "free",
+      "tanking-blocking-operators"
     ],
     "cnName": "拜松",
     "jpName": "バイソン",
@@ -334,8 +334,8 @@
     "global": true,
     "profileImage": "/images/operators/blue_poison.png",
     "niches": [
-      "Anti-Air Operators",
-      "Dual-DPS Operators"
+      "anti-air-operators",
+      "dual-dps"
     ],
     "cnName": "蓝毒",
     "twName": "藍毒",
@@ -468,8 +468,8 @@
     "global": true,
     "profileImage": "/images/operators/ceylon.png",
     "niches": [
-      "Free Operators",
-      "Trash Operators"
+      "Trash Operators",
+      "free"
     ]
   },
   "chiave": {
@@ -503,8 +503,8 @@
     "global": true,
     "profileImage": "/images/operators/cliffheart.png",
     "niches": [
-      "Free Operators",
-      "Shift Operators"
+      "free",
+      "shift"
     ],
     "cnName": "崖心",
     "jpName": "クリフハート",
@@ -547,10 +547,10 @@
     "global": true,
     "profileImage": "/images/operators/croissant.png",
     "niches": [
-      "Defense/Survival Buffing",
-      "Resistance Buff",
-      "Shift Operators",
-      "Tanking/Blocking Operators"
+      "def-buff",
+      "res-buff",
+      "shift",
+      "tanking-blocking-operators"
     ],
     "cnName": "可颂",
     "twName": "可頌",
@@ -634,9 +634,8 @@
     "global": true,
     "profileImage": "/images/operators/elysium.png",
     "niches": [
-      "Attack Buffing",
-      "DP Generation",
-      "Defense Shred"
+      "def-shred",
+      "dp-generation"
     ],
     "cnName": "极境",
     "twName": "極境",
@@ -679,8 +678,8 @@
     "global": true,
     "profileImage": "/images/operators/executor.png",
     "niches": [
-      "AOE Physical DPS",
-      "Trash Operators"
+      "Trash Operators",
+      "aoe-physical-dps"
     ],
     "cnName": "送葬人",
     "jpName": "イグゼキュター",
@@ -709,7 +708,7 @@
     "global": true,
     "profileImage": "/images/operators/feater.png",
     "niches": [
-      "Shift Operators"
+      "shift"
     ],
     "cnName": "食铁兽",
     "twName": "食鐵獸",
@@ -738,7 +737,8 @@
     "global": true,
     "profileImage": "/images/operators/firewatch.png",
     "niches": [
-      "Physical DPS"
+      "Trash Operators",
+      "physical-dps"
     ],
     "cnName": "守林人",
     "jpName": "ファイヤーウォッチ",
@@ -766,8 +766,8 @@
     "global": true,
     "profileImage": "/images/operators/flamebringer.png",
     "niches": [
-      "Free Operators",
-      "Trash Operators"
+      "Trash Operators",
+      "free"
     ],
     "cnName": "炎客",
     "jpName": "エンカク",
@@ -809,7 +809,8 @@
     "global": true,
     "profileImage": "/images/operators/franka.png",
     "niches": [
-      "True Damage Operators"
+      "Trash Operators",
+      "true_damage"
     ],
     "cnName": "芙兰卡",
     "twName": "芙蘭卡",
@@ -853,7 +854,8 @@
     "global": true,
     "profileImage": "/images/operators/glaucus.png",
     "niches": [
-      "Anti-Air Operators"
+      "Trash Operators",
+      "anti-air-operators"
     ],
     "cnName": "格劳克斯",
     "twName": "格勞克斯",
@@ -896,8 +898,9 @@
     "global": true,
     "profileImage": "/images/operators/grani.png",
     "niches": [
-      "Early Laneholder",
-      "Free Operators"
+      "Trash Operators",
+      "early-laneholder",
+      "free"
     ],
     "cnName": "格拉尼",
     "jpName": "グラニ",
@@ -912,8 +915,8 @@
     "global": true,
     "profileImage": "/images/operators/greythroat.png",
     "niches": [
-      "Anti-Air Operators",
-      "Physical DPS"
+      "anti-air-operators",
+      "physical-dps"
     ],
     "cnName": "灰喉",
     "jpName": "グレースロート",
@@ -1117,7 +1120,8 @@
     "global": true,
     "profileImage": "/images/operators/istina.png",
     "niches": [
-      "Stalling"
+      "Trash Operators",
+      "stalling"
     ],
     "cnName": "真理",
     "jpName": "イースチナ",
@@ -1263,9 +1267,9 @@
     "global": true,
     "profileImage": "/images/operators/lappland.png",
     "niches": [
-      "AFK Operators",
-      "Dual-DPS Operators",
-      "Silence"
+      "afk",
+      "dual-dps",
+      "silence"
     ],
     "cnName": "拉普兰德",
     "twName": "拉普蘭德",
@@ -1338,8 +1342,8 @@
     "global": true,
     "profileImage": "/images/operators/liskarm.png",
     "niches": [
-      "SP Batteries",
-      "Tanking/Blocking Operators"
+      "sp-battery",
+      "tanking-blocking-operators"
     ],
     "cnName": "雷蛇",
     "jpName": "リスカム",
@@ -1379,7 +1383,7 @@
     "global": true,
     "profileImage": "/images/operators/manticore.png",
     "niches": [
-      "Stalling"
+      "stalling"
     ],
     "cnName": "狮蝎",
     "twName": "獅蠍",
@@ -1407,7 +1411,8 @@
     "global": true,
     "profileImage": "/images/operators/mayer.png",
     "niches": [
-      "Solo Operators"
+      "Trash Operators",
+      "soloist"
     ],
     "cnName": "梅尔",
     "twName": "梅爾",
@@ -1558,8 +1563,8 @@
     "global": true,
     "profileImage": "/images/operators/nearl.png",
     "niches": [
-      "Healing Operators",
-      "Tanking/Blocking Operators"
+      "healing-operators",
+      "tanking-blocking-operators"
     ],
     "cnName": "临光",
     "twName": "臨光",
@@ -1575,8 +1580,8 @@
     "global": true,
     "profileImage": "/images/operators/nightmare.png",
     "niches": [
-      "Healing Operators",
-      "Trash Operators"
+      "Trash Operators",
+      "healing-operators"
     ],
     "cnName": "夜魔",
     "jpName": "ナイトメア",
@@ -1667,9 +1672,9 @@
     "global": true,
     "profileImage": "/images/operators/platinum.png",
     "niches": [
-      "AFK Operators",
-      "Anti-Air Operators",
-      "Physical DPS"
+      "afk",
+      "anti-air-operators",
+      "physical-dps"
     ],
     "cnName": "白金",
     "jpName": "プラチナ",
@@ -1697,8 +1702,8 @@
     "global": true,
     "profileImage": "/images/operators/pramanix.png",
     "niches": [
-      "Defense Shred",
-      "Resistance Shred"
+      "def-shred",
+      "res-shred"
     ],
     "cnName": "初雪",
     "jpName": "プラマニクス",
@@ -1713,7 +1718,7 @@
     "global": true,
     "profileImage": "/images/operators/projekt_red.png",
     "niches": [
-      "Fast-Redeploy Operators"
+      "fast-redeploy-operators"
     ],
     "cnName": "红",
     "twName": "紅",
@@ -1759,8 +1764,8 @@
     "global": true,
     "profileImage": "/images/operators/ptilopsis.png",
     "niches": [
-      "Healing Operators",
-      "SP Batteries"
+      "healing-operators",
+      "sp-battery"
     ],
     "cnName": "白面鸮",
     "twName": "白面鴞",
@@ -1803,7 +1808,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/quercus.png",
-    "niches": []
+    "niches": [],
+    "cnName": "夏栎",
+    "twName": "夏櫟",
+    "jpName": "クエルクス",
+    "krName": "퀘르쿠스",
+    "internalName": "char_492_quercu"
   },
   "rathalos_s_noir_corne": {
     "id": "rathalos_s_noir_corne",
@@ -1812,7 +1822,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/rathalos_s_noir_corne.png",
-    "niches": []
+    "niches": [],
+    "cnName": "火龙S黑角",
+    "twName": "火龍S黑角",
+    "jpName": "レウスSノイルホーン",
+    "krName": "레우스S 느와르 코르네",
+    "internalName": "char_1030_noirc2"
   },
   "record_keeper": {
     "id": "record_keeper",
@@ -1821,7 +1836,12 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/record_keeper.png",
-    "niches": []
+    "niches": [],
+    "cnName": "录武官",
+    "twName": "錄武官",
+    "jpName": "レコードキーパー",
+    "krName": "레코드키퍼",
+    "internalName": "char_4196_reckpr"
   },
   "reed": {
     "id": "reed",
@@ -1831,10 +1851,15 @@
     "global": true,
     "profileImage": "/images/operators/reed.png",
     "niches": [
-      "DP Generation",
-      "Dual-DPS Operators",
-      "Trash Operators"
-    ]
+      "Trash Operators",
+      "dp-generation",
+      "dual-dps"
+    ],
+    "cnName": "苇草",
+    "twName": "葦草",
+    "jpName": "リード",
+    "krName": "리드",
+    "internalName": "char_261_sddrag"
   },
   "robin": {
     "id": "robin",
@@ -1843,7 +1868,12 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/robin.png",
-    "niches": []
+    "niches": [],
+    "cnName": "罗宾",
+    "twName": "羅賓",
+    "jpName": "ロビン",
+    "krName": "로빈",
+    "internalName": "char_451_robin"
   },
   "rockrock": {
     "id": "rockrock",
@@ -1852,7 +1882,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/rockrock.png",
-    "niches": []
+    "niches": [],
+    "cnName": "洛洛",
+    "jpName": "ロックロック",
+    "krName": "락락",
+    "internalName": "char_4040_rockr"
   },
   "rose_salt": {
     "id": "rose_salt",
@@ -1861,7 +1895,11 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/rose_salt.png",
-    "niches": []
+    "niches": [],
+    "cnName": "瑰盐",
+    "jpName": "ローズソルト",
+    "krName": "로즈솔트",
+    "internalName": "char_4163_rosesa"
   },
   "sand_reckoner": {
     "id": "sand_reckoner",
@@ -1870,7 +1908,11 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/sand_reckoner.png",
-    "niches": []
+    "niches": [],
+    "cnName": "衡沙",
+    "jpName": "サンドレコナー",
+    "krName": "샌드레코너",
+    "internalName": "char_4140_lasher"
   },
   "santalla": {
     "id": "santalla",
@@ -1919,7 +1961,7 @@
     "profileImage": "/images/operators/sesa.png",
     "niches": [
       "Trash Operators",
-      "Unconventional Niches"
+      "unconventional-niches"
     ]
   },
   "shalem": {
@@ -1939,10 +1981,10 @@
     "global": true,
     "profileImage": "/images/operators/shamare.png",
     "niches": [
-      "Attack Debuffing",
-      "Defense Shred",
-      "Global Range Operators",
-      "Resistance Shred"
+      "atk-debuff",
+      "def-shred",
+      "global-range",
+      "res-shred"
     ]
   },
   "sideroca": {
@@ -1953,9 +1995,9 @@
     "global": true,
     "profileImage": "/images/operators/sideroca.png",
     "niches": [
-      "Free Operators",
-      "Tanking/Blocking Operators",
-      "Trash Operators"
+      "Trash Operators",
+      "free",
+      "tanking-blocking-operators"
     ]
   },
   "silence": {
@@ -1966,8 +2008,8 @@
     "global": true,
     "profileImage": "/images/operators/silence.png",
     "niches": [
-      "Healing Operators",
-      "Unconventional Niches"
+      "healing-operators",
+      "unconventional-niches"
     ]
   },
   "skybox": {
@@ -2007,7 +2049,7 @@
     "global": true,
     "profileImage": "/images/operators/snowsant.png",
     "niches": [
-      "Shift Operators"
+      "shift"
     ]
   },
   "sora": {
@@ -2018,8 +2060,9 @@
     "global": true,
     "profileImage": "/images/operators/sora.png",
     "niches": [
-      "Enmity Healing",
-      "Sleep"
+      "Trash Operators",
+      "enmity-healing",
+      "sleep"
     ]
   },
   "specter": {
@@ -2030,8 +2073,8 @@
     "global": true,
     "profileImage": "/images/operators/specter.png",
     "niches": [
-      "Late Laneholder",
-      "Tanking/Blocking Operators"
+      "late-laneholder",
+      "tanking-blocking-operators"
     ]
   },
   "spuria": {
@@ -2060,7 +2103,8 @@
     "global": true,
     "profileImage": "/images/operators/swire.png",
     "niches": [
-      "Trash Operators"
+      "Trash Operators",
+      "atk-buff"
     ]
   },
   "tachanka": {
@@ -2098,8 +2142,8 @@
     "global": true,
     "profileImage": "/images/operators/texas.png",
     "niches": [
-      "DP Generation",
-      "Early Laneholder"
+      "dp-generation",
+      "early-laneholder"
     ]
   },
   "tin_man": {
@@ -2211,8 +2255,9 @@
     "global": true,
     "profileImage": "/images/operators/waai_fu.png",
     "niches": [
-      "Fast-Redeploy Operators",
-      "Silence"
+      "Trash Operators",
+      "fast-redeploy-operators",
+      "silence"
     ]
   },
   "wakaba_mutsumi": {
@@ -2241,9 +2286,8 @@
     "global": true,
     "profileImage": "/images/operators/warfarin.png",
     "niches": [
-      "Attack Buffing",
-      "Healing Operators",
-      "SP Batteries"
+      "healing-operators",
+      "sp-battery"
     ]
   },
   "warmy": {
@@ -2344,10 +2388,9 @@
     "global": true,
     "profileImage": "/images/operators/zima.png",
     "niches": [
-      "Attack Buffing",
-      "DP Generation",
-      "Defense/Survival Buffing",
-      "Early Laneholder"
+      "def-buff",
+      "dp-generation",
+      "early-laneholder"
     ]
   }
 }

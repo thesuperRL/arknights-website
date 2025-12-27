@@ -1,83 +1,96 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import './HomePage.css';
 
-interface NicheListInfo {
-  niche?: string;
-  filename: string;
-  displayName: string;
-  description: string;
-  lastUpdated: string;
-}
-
 const HomePage: React.FC = () => {
-  const [nicheLists, setNicheLists] = useState<NicheListInfo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    loadNicheLists();
-  }, []);
-
-  const loadNicheLists = async () => {
-    try {
-      const response = await fetch('/api/niche-lists');
-      if (!response.ok) {
-        throw new Error('Failed to load niche lists');
-      }
-      const data = await response.json() as NicheListInfo[];
-      setNicheLists(data);
-      setLoading(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load niche lists');
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return <div className="loading">Loading niche lists...</div>;
-  }
-
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
+  const { user } = useAuth();
 
   return (
     <div className="home-page">
-      <div className="hero">
-        <h1>Arknights Operator Niche Lists</h1>
-        <p>Browse niche lists for different operator roles</p>
-      </div>
-
-      <div className="niche-lists-grid">
-        {nicheLists.length === 0 ? (
-          <div className="error">No niche lists found</div>
-        ) : (
-          nicheLists.map((nicheList) => (
-            <Link
-              key={nicheList.filename || nicheList.niche}
-              to={`/niche-list/${encodeURIComponent(nicheList.filename || nicheList.displayName || nicheList.niche || '')}`}
-              className="niche-list-card"
-            >
-              <h2>{nicheList.displayName || nicheList.niche}</h2>
-              <p>{nicheList.description || 'No description available'}</p>
-              <div className="meta">
-                {nicheList.lastUpdated && `Last updated: ${nicheList.lastUpdated}`}
-              </div>
+      <div className="hero-section">
+        <div className="hero-content">
+          <h1 className="hero-title">Build Your Perfect Arknights Team</h1>
+          <p className="hero-subtitle">
+            Create optimized 12-operator teams based on your raised operators and preferences.
+            Get intelligent team recommendations that cover all your niche requirements.
+          </p>
+          {user ? (
+            <Link to="/team-builder" className="cta-button primary">
+              Go to Team Builder
             </Link>
-          ))
-        )}
+          ) : (
+            <div className="cta-buttons">
+              <Link to="/register" className="cta-button primary">
+                Get Started
+              </Link>
+              <Link to="/login" className="cta-button secondary">
+                Login
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="special-links">
-        <Link to="/trash-operators" className="special-card trash-card">
-          <h2>Trash Operators</h2>
-          <p>Operators with no optimal use</p>
-        </Link>
+      <div className="features-section">
+        <h2 className="section-title">Why Use Our Team Builder?</h2>
+        <div className="features-grid">
+          <div className="feature-card">
+            <div className="feature-icon">🎯</div>
+            <h3>Smart Recommendations</h3>
+            <p>
+              Our algorithm analyzes your raised operators and generates teams that
+              optimally cover required niches and roles.
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">⚙️</div>
+            <h3>Customizable Preferences</h3>
+            <p>
+              Set your rarity preferences, required niches, and preferred roles to
+              build teams that match your playstyle.
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">📊</div>
+            <h3>Niche Coverage Tracking</h3>
+            <p>
+              See exactly which niches your team covers and identify any gaps
+              that need to be filled.
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">🔄</div>
+            <h3>Easy Customization</h3>
+            <p>
+              Swap operators, adjust your team, and see real-time coverage updates
+              as you make changes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="quick-links-section">
+        <h2 className="section-title">Explore More</h2>
+        <div className="quick-links-grid">
+          <Link to="/tier-lists" className="quick-link-card">
+            <h3>Tier Lists</h3>
+            <p>Browse operator niche lists and rankings</p>
+          </Link>
+          <Link to="/all-operators" className="quick-link-card">
+            <h3>All Operators</h3>
+            <p>View and search all Arknights operators</p>
+          </Link>
+          {user && (
+            <Link to="/profile" className="quick-link-card">
+              <h3>Your Profile</h3>
+              <p>Manage your account and operator collection</p>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 export default HomePage;
-

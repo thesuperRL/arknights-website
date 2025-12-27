@@ -20,6 +20,7 @@ const Navbar: React.FC = () => {
         </Link>
         <div className="nav-links">
           <Link to="/">Home</Link>
+          <Link to="/tier-lists">Tier Lists</Link>
           <Link to="/all-operators">All Operators</Link>
           {!loading && (
             <>
@@ -32,11 +33,11 @@ const Navbar: React.FC = () => {
                   </button>
                 </>
               ) : (
-                <>
-                  <Link to="/login">Login</Link>
-                  <Link to="/register">Register</Link>
-                </>
-              )}
+                  <>
+                    <Link to="/login">Login</Link>
+                    <Link to="/register">Register</Link>
+                  </>
+                )}
             </>
           )}
         </div>

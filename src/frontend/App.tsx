@@ -4,6 +4,7 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import Navbar from './components/Navbar';
 import LanguageSelector from './components/LanguageSelector';
 import HomePage from './pages/HomePage';
+import TierListsPage from './pages/TierListsPage';
 import NicheListPage from './pages/NicheListPage';
 import TrashOperatorsPage from './pages/TrashOperatorsPage';
 import OperatorPage from './pages/OperatorPage';
@@ -24,6 +25,7 @@ function App() {
             <main className="main-content">
               <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/tier-lists" element={<TierListsPage />} />
               <Route path="/niche-list/:niche" element={<NicheListPage />} />
               <Route path="/trash-operators" element={<TrashOperatorsPage />} />
               <Route path="/operator/:id" element={<OperatorPage />} />

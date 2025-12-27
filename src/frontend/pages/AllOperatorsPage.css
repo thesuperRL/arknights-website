@@ -1,6 +1,6 @@
 .all-operators-page {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1800px;
     margin: 0 auto;
     padding: 2rem;
 }
@@ -111,8 +111,12 @@
 
 .operators-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6, minmax(150px, 1fr));
     gap: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    grid-auto-flow: row;
+    grid-auto-columns: 0;
 }
 
 .operator-card {
@@ -373,7 +377,7 @@
     font-size: 1.2rem;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
     .operators-grid {
         grid-template-columns: repeat(4, 1fr);
     }
