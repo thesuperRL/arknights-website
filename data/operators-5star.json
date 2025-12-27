@@ -2024,7 +2024,11 @@
       "Free Operators",
       "Tanking/Blocking Operators",
       "Trash Operators"
-    ]
+    ],
+    "cnName": "铸铁",
+    "jpName": "シデロカ",
+    "krName": "시데로카",
+    "internalName": "char_333_sidero"
   },
   "silence": {
     "id": "silence",

@@ -6,7 +6,7 @@ dist/
 build/
 
 # Scraped data
-data/debug-*star.html
+data/debug-*.html
 # But keep tier lists and unranked operators log
 !data/tier-lists/
 !data/unranked-operators.txt
