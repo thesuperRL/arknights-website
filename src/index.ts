@@ -7,7 +7,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
-import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount } from './account-storage';
+import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse } from './account-storage';
 import * as fs from 'fs';
 
 const app = express();
@@ -229,11 +229,13 @@ app.get('/api/auth/user', async (req, res) => {
 
     const account = findAccountByEmail(session.email);
     const ownedOperators = account?.ownedOperators || [];
+    const wantToUse = account?.wantToUse || [];
     
     res.json({
       email: session.email,
       nickname: session.email.split('@')[0],
-      ownedOperators
+      ownedOperators,
+      wantToUse
     });
   } catch (error: any) {
     console.error('Error getting user data:', error);
@@ -432,6 +434,50 @@ app.post('/api/auth/remove-operator', (req, res) => {
   } catch (error: any) {
     console.error('Error removing operator:', error);
     res.status(500).json({ error: error.message || 'Failed to remove operator' });
+  }
+});
+
+// POST /api/auth/toggle-want-to-use - Toggle want to use status for an operator
+app.post('/api/auth/toggle-want-to-use', (req, res) => {
+  try {
+    console.log('Toggle want to use endpoint hit');
+    const sessionId = req.cookies.sessionId;
+    
+    if (!sessionId) {
+      console.log('No session ID found');
+      res.status(401).json({ error: 'Not authenticated' });
+      return;
+    }
+
+    const session = getSession(sessionId);
+    if (!session) {
+      console.log('Invalid session');
+      res.status(401).json({ error: 'Invalid session' });
+      return;
+    }
+
+    const { operatorId } = req.body;
+    if (!operatorId) {
+      console.log('No operator ID provided');
+      res.status(400).json({ error: 'Operator ID is required' });
+      return;
+    }
+
+    console.log(`Toggling want to use for operator: ${operatorId}, user: ${session.email}`);
+    const success = toggleWantToUse(session.email, operatorId);
+    if (success) {
+      const account = findAccountByEmail(session.email);
+      const wantToUse = account?.wantToUse || [];
+      const isWantToUse = wantToUse.includes(operatorId);
+      console.log(`Successfully toggled. Want to use: ${isWantToUse}`);
+      res.json({ success: true, operatorId, wantToUse: isWantToUse });
+    } else {
+      console.log('Failed to toggle');
+      res.status(400).json({ error: 'Failed to toggle want to use' });
+    }
+  } catch (error: any) {
+    console.error('Error toggling want to use:', error);
+    res.status(500).json({ error: error.message || 'Failed to toggle want to use' });
   }
 });
 

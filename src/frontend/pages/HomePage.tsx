@@ -69,7 +69,7 @@ const HomePage: React.FC = () => {
 
       <div className="special-links">
         <Link to="/trash-operators" className="special-card trash-card">
-          <h2>🗑️ Trash Operators</h2>
+          <h2>Trash Operators</h2>
           <p>Operators with no optimal use</p>
         </Link>
       </div>

@@ -13,6 +13,7 @@ export interface LocalAccount {
   createdAt: string; // ISO date string
   lastLogin?: string; // ISO date string
   ownedOperators?: string[]; // Array of operator IDs
+  wantToUse?: string[]; // Array of operator IDs the user wants to use
 }
 
 interface AccountStorage {
@@ -163,6 +164,42 @@ export function removeOperatorFromAccount(email: string, operatorId: string): bo
 export function getOwnedOperators(email: string): string[] {
   const account = findAccountByEmail(email);
   return account?.ownedOperators || [];
+}
+
+/**
+ * Toggle want to use status for an operator
+ */
+export function toggleWantToUse(email: string, operatorId: string): boolean {
+  const accounts = loadAccounts();
+  const normalizedEmail = email.toLowerCase().trim();
+  
+  if (accounts[normalizedEmail]) {
+    if (!accounts[normalizedEmail].wantToUse) {
+      accounts[normalizedEmail].wantToUse = [];
+    }
+    const wantToUse = accounts[normalizedEmail].wantToUse!;
+    const index = wantToUse.indexOf(operatorId);
+    
+    if (index > -1) {
+      // Remove from want to use
+      wantToUse.splice(index, 1);
+    } else {
+      // Add to want to use
+      wantToUse.push(operatorId);
+    }
+    saveAccounts(accounts);
+    return true;
+  }
+  
+  return false;
+}
+
+/**
+ * Get want to use operators for an account
+ */
+export function getWantToUse(email: string): string[] {
+  const account = findAccountByEmail(email);
+  return account?.wantToUse || [];
 }
 
 /**

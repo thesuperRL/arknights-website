@@ -162,15 +162,26 @@
     background: rgba(128, 128, 128, 0.35);
 }
 
+/* Override rarity colors for non-global operators - make them fully black */
+.operator-card.non-global.rarity-6,
+.operator-card.non-global.rarity-5,
+.operator-card.non-global.rarity-4,
+.operator-card.non-global.rarity-3,
+.operator-card.non-global.rarity-2,
+.operator-card.non-global.rarity-1 {
+    border-color: #000000 !important;
+    background: #000000 !important;
+}
+
 /* Darken unowned operators */
 .operator-card.unowned {
-    opacity: 0.6;
-    filter: brightness(0.7);
+    opacity: 0.75;
+    filter: brightness(0.85);
 }
 
 .operator-card.unowned:hover {
-    opacity: 0.85;
-    filter: brightness(0.85);
+    opacity: 0.9;
+    filter: brightness(0.95);
 }
 
 .operator-card:hover {

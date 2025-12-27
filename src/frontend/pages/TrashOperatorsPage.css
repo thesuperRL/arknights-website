@@ -22,7 +22,7 @@
 .trash-operators-header h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    color: var(--tier-f);
+    color: var(--text-light);
 }
 
 .trash-operators-header p {
@@ -60,21 +60,22 @@
     align-items: stretch;
 }
 
-.operator-card.trash {
+.operator-card {
     position: relative;
-    background: rgba(128, 128, 128, 0.2);
-    border: 2px solid rgba(128, 128, 128, 0.4);
-    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 0.75rem;
+    transition: background 0.3s;
+    text-align: center;
+    isolation: isolate;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0.75rem;
 }
 
-.operator-card.trash:hover {
-    background: rgba(128, 128, 128, 0.3);
-    border-color: rgba(128, 128, 128, 0.6);
+.operator-card:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .operator-image {
@@ -85,16 +86,15 @@
     border-radius: 8px;
     margin: 0 auto;
     display: block;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(128, 128, 128, 0.4);
-    filter: grayscale(0.5);
-    transition: transform 0.3s, border-color 0.3s, filter 0.3s;
+    background: #1a1a2e;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s, border-color 0.3s;
+    isolation: isolate;
 }
 
-.operator-card.trash:hover .operator-image {
+.operator-card:hover .operator-image {
     transform: scale(1.05);
-    border-color: rgba(128, 128, 128, 0.6);
-    filter: grayscale(0.3);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .operator-image-link {
@@ -171,6 +171,17 @@
 
 .operator-card:hover .operator-note-tooltip {
     opacity: 1;
+}
+
+/* Darken unowned operators */
+.operator-card.unowned {
+    opacity: 0.75;
+    filter: brightness(0.85);
+}
+
+.operator-card.unowned:hover {
+    opacity: 0.9;
+    filter: brightness(0.95);
 }
 
 @media (max-width: 768px) {

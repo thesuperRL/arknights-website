@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Stars from '../components/Stars';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { getRarityClass } from '../utils/rarityUtils';
+import { getOperatorName } from '../utils/operatorNameUtils';
 import './AllOperatorsPage.css';
 
 interface Operator {
@@ -13,10 +15,15 @@ interface Operator {
   global: boolean;
   profileImage: string;
   niches?: string[];
+  cnName?: string;
+  twName?: string;
+  jpName?: string;
+  krName?: string;
 }
 
 const AllOperatorsPage: React.FC = () => {
   const { user } = useAuth();
+  const { language } = useLanguage();
   const [operators, setOperators] = useState<Record<string, Operator>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -79,7 +86,21 @@ const AllOperatorsPage: React.FC = () => {
     const filtered = Object.values(operators).filter(op => {
       if (filterRarity !== null && op.rarity !== filterRarity) return false;
       if (filterClass !== null && op.class !== filterClass) return false;
-      if (searchTerm && !op.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+      if (searchTerm) {
+        const displayName = getOperatorName(op, language);
+        // Also search in all available name fields for better results
+        const allNames = [
+          op.name,
+          op.cnName,
+          op.twName,
+          op.jpName,
+          op.krName
+        ].filter(Boolean).map(n => n!.toLowerCase());
+        const searchLower = searchTerm.toLowerCase();
+        const matchesDisplayName = displayName.toLowerCase().includes(searchLower);
+        const matchesAnyName = allNames.some(name => name.includes(searchLower));
+        if (!matchesDisplayName && !matchesAnyName) return false;
+      }
       return true;
     });
     // Sort: first by global status (global first), then by rarity (6-star first), then by name
@@ -199,7 +220,7 @@ const AllOperatorsPage: React.FC = () => {
                 loading="lazy"
               />
               <div className="operator-info">
-                <div className="operator-name">{operator.name}</div>
+                <div className="operator-name">{getOperatorName(operator, language)}</div>
                 <div className="operator-meta">
                   <Stars rarity={operator.rarity} size="small" />
                   <span className="operator-class">{operator.class}</span>

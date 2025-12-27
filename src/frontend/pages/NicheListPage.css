@@ -240,6 +240,17 @@
     font-style: italic;
 }
 
+/* Darken unowned operators */
+.operator-card.unowned {
+    opacity: 0.75;
+    filter: brightness(0.85);
+}
+
+.operator-card.unowned:hover {
+    opacity: 0.9;
+    filter: brightness(0.95);
+}
+
 @media (max-width: 768px) {
     .operators-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));

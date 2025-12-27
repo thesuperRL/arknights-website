@@ -28,7 +28,7 @@ interface OperatorData {
   twName?: string; // Traditional Chinese name
   jpName?: string; // Japanese name
   krName?: string; // Korean name
-  characters?: string; // Internal name/filename
+  internalName?: string; // Internal name/filename
 }
 
 interface ScraperConfig {
@@ -277,19 +277,53 @@ class ArknightsScraper {
   /**
    * Fetches an individual operator page and extracts name data
    */
+  /**
+   * Fetches HTML with retry logic for network errors
+   */
+  private async fetchHtmlWithRetry(url: string, maxRetries: number = 3): Promise<string> {
+    let lastError: any;
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        return await this.fetchHtml(url);
+      } catch (error: any) {
+        lastError = error;
+        
+        // Check if it's a network error that might be transient
+        const isNetworkError = error.code === 'ENOTFOUND' || 
+                              error.code === 'ECONNREFUSED' || 
+                              error.code === 'ETIMEDOUT' ||
+                              error.code === 'ECONNRESET' ||
+                              error.message?.includes('getaddrinfo');
+        
+        if (isNetworkError && attempt < maxRetries) {
+          const delay = Math.min(1000 * Math.pow(2, attempt - 1), 10000); // Exponential backoff, max 10s
+          console.log(`  ⚠️  Network error (attempt ${attempt}/${maxRetries}), retrying in ${delay}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+        
+        // If not a network error or we've exhausted retries, throw
+        throw error;
+      }
+    }
+    
+    throw lastError;
+  }
+
   private async fetchOperatorNames(operatorName: string): Promise<{
     cnName?: string;
     twName?: string;
     jpName?: string;
     krName?: string;
-    characters?: string;
+    internalName?: string;
   }> {
     const names: {
       cnName?: string;
       twName?: string;
       jpName?: string;
       krName?: string;
-      characters?: string;
+      internalName?: string;
     } = {};
 
     try {
@@ -300,8 +334,8 @@ class ArknightsScraper {
       
       console.log(`  Fetching names from: ${operatorUrl}`);
       
-      // Fetch the operator page
-      const html = await this.fetchHtml(operatorUrl);
+      // Fetch the operator page with retry logic
+      const html = await this.fetchHtmlWithRetry(operatorUrl);
       const $ = cheerio.load(html);
 
       // Extract names from the druid-data elements
@@ -328,7 +362,7 @@ class ArknightsScraper {
       // Extract internal name/filename
       const filenameElement = $('.druid-data-filename.druid-data-nonempty').first();
       if (filenameElement.length > 0) {
-        names.characters = filenameElement.text().trim();
+        names.internalName = filenameElement.text().trim();
       }
 
       // Add delay to be respectful to the server
@@ -574,6 +608,11 @@ class ArknightsScraper {
           }
         }
 
+        // 1, 2, and 3-star operators are always globally available
+        if (rarity === 1 || rarity === 2 || rarity === 3) {
+          globalValue = true;
+        }
+
         if (name && imageUrl) {
           operators.push({
             id: this.generateId(name),
@@ -632,6 +671,11 @@ class ArknightsScraper {
         } else if (imgSrc.includes('Cross.png')) {
           globalValue = false;
         }
+      }
+
+      // 1, 2, and 3-star operators are always globally available
+      if (rarity === 1 || rarity === 2 || rarity === 3) {
+        globalValue = true;
       }
 
       if (name && imageUrl) {
@@ -703,6 +747,14 @@ class ArknightsScraper {
   }
 
   /**
+   * Checks if an operator has any localized name (cnName, jpName, or krName)
+   * Used to determine if we should skip crawling the individual operator page
+   */
+  private hasAnyLocalizedName(operator: OperatorData): boolean {
+    return !!(operator.cnName || operator.jpName || operator.krName);
+  }
+
+  /**
    * Loads always-include operators for a specific rarity
    * Supports both array and dictionary formats for backwards compatibility
    */
@@ -748,6 +800,15 @@ class ArknightsScraper {
   }
 
   /**
+   * Saves operators to JSON file (incremental save)
+   */
+  private saveOperators(operators: OperatorData[]): void {
+    const operatorsDict = this.operatorsToDictionary(operators);
+    const outputFile = path.join(this.config.outputDir, `operators-${this.config.rarity}star.json`);
+    fs.writeFileSync(outputFile, JSON.stringify(operatorsDict, null, 2));
+  }
+
+  /**
    * Main scraping function
    */
   async scrape(): Promise<Record<string, OperatorData>> {
@@ -755,6 +816,9 @@ class ArknightsScraper {
     console.log(`Rarity: ${this.config.rarity}★`);
 
     try {
+      // Load existing operators first to check what we already have
+      const existingOperators = this.loadExistingOperators();
+      
       // Load always-include operators
       const alwaysInclude = this.loadAlwaysIncludeOperators();
 
@@ -762,9 +826,9 @@ class ArknightsScraper {
       const html = await this.fetchHtml(this.config.baseUrl);
 
       // Extract operators from the page
-      let operators = this.extractOperators(html, this.config.rarity);
+      let scrapedOperators = this.extractOperators(html, this.config.rarity);
 
-      if (operators.length === 0) {
+      if (scrapedOperators.length === 0) {
         console.warn('No operators found. The page structure might be different.');
         console.log('Saving raw HTML for inspection...');
         fs.writeFileSync(
@@ -773,108 +837,151 @@ class ArknightsScraper {
         );
       }
 
-      // Merge with always-include operators (scraped operators take precedence if ID matches)
-      const operatorMap = new Map<string, OperatorData>();
-      const scrapedCount = operators.length;
+      // Filter out operators that already exist in the JSON file
+      const newOperators: OperatorData[] = [];
+      const skippedOperators: OperatorData[] = [];
       
-      // First add always-include operators
+      for (const op of scrapedOperators) {
+        if (existingOperators.has(op.id)) {
+          skippedOperators.push(op);
+          console.log(`⏭️  Skipping ${op.name} (already exists in JSON)`);
+        } else {
+          newOperators.push(op);
+        }
+      }
+      
+      console.log(`📊 Scraped ${scrapedOperators.length} operators: ${newOperators.length} new, ${skippedOperators.length} already exist`);
+
+      // Merge with always-include operators and existing operators
+      const operatorMap = new Map<string, OperatorData>();
+      
+      // First add existing operators (preserve what we already have)
+      for (const [id, op] of existingOperators.entries()) {
+        operatorMap.set(id, op);
+      }
+      
+      // Then add always-include operators (overwrite existing if needed)
       for (const op of alwaysInclude) {
         operatorMap.set(op.id, op);
       }
       
-      // Then add/overwrite with scraped operators (scraped takes precedence)
-      for (const op of operators) {
+      // Finally add new scraped operators (overwrite existing if needed)
+      for (const op of newOperators) {
         operatorMap.set(op.id, op);
       }
 
-      operators = Array.from(operatorMap.values());
+      let operators = Array.from(operatorMap.values());
       const alwaysIncludeCount = alwaysInclude.length;
+      const existingCount = existingOperators.size;
       const totalCount = operators.length;
-      console.log(`📊 Total operators after merge: ${totalCount} (${alwaysIncludeCount} always-include, ${scrapedCount} scraped)`);
+      console.log(`📊 Total operators after merge: ${totalCount} (${existingCount} existing, ${alwaysIncludeCount} always-include, ${newOperators.length} new scraped)`);
+
+      // Save initial state (before image downloads)
+      this.saveOperators(operators);
+      console.log(`💾 Saved initial operator data`);
 
       // Download images for each operator (skip if already exists)
-      console.log(`\nProcessing ${operators.length} operator images...`);
+      // Only process new operators and those that need image updates
+      const operatorsToProcess = operators.filter(op => {
+        // Process if it's a new operator or if it doesn't have a valid local image path
+        const isNew = newOperators.some(newOp => newOp.id === op.id);
+        const hasValidImage = op.profileImage && 
+                              op.profileImage.startsWith('/images/operators/') &&
+                              fs.existsSync(path.join(__dirname, '../public', op.profileImage));
+        return isNew || !hasValidImage;
+      });
+      
+      console.log(`\nProcessing ${operatorsToProcess.length} operator images (${operators.length - operatorsToProcess.length} already have images)...`);
       let downloadedCount = 0;
       let skippedCount = 0;
       
-      for (const operator of operators) {
+      for (let i = 0; i < operatorsToProcess.length; i++) {
+        const operator = operatorsToProcess[i];
         // Check if profileImage is already a local path (from always-include)
         if (operator.profileImage && operator.profileImage.startsWith('/images/operators/')) {
           const imagePath = path.join(__dirname, '../public', operator.profileImage);
           if (fs.existsSync(imagePath)) {
             console.log(`⏭️  Skipping download for ${operator.name} (image already exists: ${operator.profileImage})`);
             skippedCount++;
-            continue; // Keep the existing profileImage path
           } else {
             // Local path specified but file doesn't exist - skip download attempt
             console.log(`⚠️  Image not found at ${operator.profileImage} for ${operator.name}, keeping path as-is`);
             skippedCount++;
-            continue; // Keep the path even if file doesn't exist yet
+          }
+        } else {
+          // profileImage contains the URL from scraping, extract extension and download
+          const imageUrl = operator.profileImage;
+          
+          // Skip if it's already a local path (shouldn't happen here, but safety check)
+          if (!imageUrl || imageUrl.startsWith('/images/operators/')) {
+            console.log(`⏭️  Skipping download for ${operator.name} (already has local path)`);
+            skippedCount++;
+          } else {
+            // Extract file extension from URL (remove query parameters first)
+            const urlWithoutQuery = imageUrl.split('?')[0].split('#')[0];
+            const extension = path.extname(urlWithoutQuery) || '.png';
+            const filename = this.sanitizeFilename(operator.name) + extension;
+            const imagePath = path.join(this.config.imagesDir, filename);
+            const relativeImagePath = `/images/operators/${filename}`;
+            
+            // Ensure images directory exists
+            if (!fs.existsSync(this.config.imagesDir)) {
+              fs.mkdirSync(this.config.imagesDir, { recursive: true });
+            }
+            
+            // Check if image already exists
+            if (fs.existsSync(imagePath)) {
+              console.log(`⏭️  Skipping download for ${operator.name} (image already exists: ${filename})`);
+              operator.profileImage = relativeImagePath;
+              skippedCount++;
+            } else {
+              // Download the image (imageUrl is stored in profileImage temporarily)
+              operator.profileImage = await this.downloadImage(imageUrl, filename);
+              downloadedCount++;
+              
+              // Add small delay to be respectful to the server
+              await new Promise(resolve => setTimeout(resolve, 500));
+            }
           }
         }
         
-        // profileImage contains the URL from scraping, extract extension and download
-        const imageUrl = operator.profileImage;
-        
-        // Skip if it's already a local path (shouldn't happen here, but safety check)
-        if (!imageUrl || imageUrl.startsWith('/images/operators/')) {
-          console.log(`⏭️  Skipping download for ${operator.name} (already has local path)`);
-          skippedCount++;
-          continue;
-        }
-        
-        // Extract file extension from URL (remove query parameters first)
-        const urlWithoutQuery = imageUrl.split('?')[0].split('#')[0];
-        const extension = path.extname(urlWithoutQuery) || '.png';
-        const filename = this.sanitizeFilename(operator.name) + extension;
-        const imagePath = path.join(this.config.imagesDir, filename);
-        const relativeImagePath = `/images/operators/${filename}`;
-        
-        // Ensure images directory exists
-        if (!fs.existsSync(this.config.imagesDir)) {
-          fs.mkdirSync(this.config.imagesDir, { recursive: true });
-        }
-        
-        // Check if image already exists
-        if (fs.existsSync(imagePath)) {
-          console.log(`⏭️  Skipping download for ${operator.name} (image already exists: ${filename})`);
-          operator.profileImage = relativeImagePath;
-          skippedCount++;
-        } else {
-          // Download the image (imageUrl is stored in profileImage temporarily)
-          operator.profileImage = await this.downloadImage(imageUrl, filename);
-          downloadedCount++;
-          
-          // Add small delay to be respectful to the server
-          await new Promise(resolve => setTimeout(resolve, 500));
-        }
+        // Save after each operator's image is processed
+        this.saveOperators(operators);
       }
       
       console.log(`\n📊 Image processing complete: ${downloadedCount} downloaded, ${skippedCount} skipped`);
 
-      // Load existing operators to check for existing name data
-      const existingOperators = this.loadExistingOperators();
-      
       // Fetch name data for each operator (skip if already exists)
-      console.log(`\n🌐 Fetching name data for ${operators.length} operators...`);
+      // Only process operators that need name data
+      // Skip if operator has any localized name (cnName, jpName, or krName) to avoid recrawling
+      const operatorsNeedingNames = operators.filter(op => {
+        // Skip if operator already has any localized name
+        if (this.hasAnyLocalizedName(op)) {
+          return false;
+        }
+        // Otherwise, process if missing names or internalName
+        return !this.hasAllNames(op) || !op.internalName;
+      });
+      
+      console.log(`\n🌐 Fetching name data for ${operatorsNeedingNames.length} operators (${operators.length - operatorsNeedingNames.length} already have all names)...`);
       let namesFetched = 0;
       let namesSkipped = 0;
       let namesAlreadyExist = 0;
       
-      for (let i = 0; i < operators.length; i++) {
-        const operator = operators[i];
+      for (let i = 0; i < operatorsNeedingNames.length; i++) {
+        const operator = operatorsNeedingNames[i];
         const existingOperator = existingOperators.get(operator.id);
         
-        // Check if operator already exists with all names and characters
-        if (existingOperator && this.hasAllNames(existingOperator) && existingOperator.characters) {
-          // Copy existing names and characters to current operator
+        // Check if operator already exists with all names and internalName
+        if (existingOperator && this.hasAllNames(existingOperator) && existingOperator.internalName) {
+          // Copy existing names and internalName to current operator
           operator.cnName = existingOperator.cnName;
           operator.twName = existingOperator.twName;
           operator.jpName = existingOperator.jpName;
           operator.krName = existingOperator.krName;
-          operator.characters = existingOperator.characters;
+          operator.internalName = existingOperator.internalName;
           namesAlreadyExist++;
-          console.log(`[${i + 1}/${operators.length}] ⏭️  Skipping ${operator.name} (names and characters already exist)`);
+          console.log(`[${i + 1}/${operators.length}] ⏭️  Skipping ${operator.name} (names and internalName already exist)`);
           continue;
         }
         
@@ -884,27 +991,34 @@ class ArknightsScraper {
           operator.twName = existingOperator.twName || operator.twName;
           operator.jpName = existingOperator.jpName || operator.jpName;
           operator.krName = existingOperator.krName || operator.krName;
-          operator.characters = existingOperator.characters || operator.characters;
+          operator.internalName = existingOperator.internalName || operator.internalName;
         }
         
-        // Check if we need to fetch (missing names or characters)
-        const needsFetch = !this.hasAllNames(operator) || !operator.characters;
+        // Skip if internalName is already present (no need to crawl the page)
+        if (operator.internalName) {
+          namesAlreadyExist++;
+          console.log(`[${i + 1}/${operatorsNeedingNames.length}] ⏭️  Skipping ${operator.name} (internalName already exists: ${operator.internalName})`);
+          continue;
+        }
+        
+        // Check if we need to fetch (missing names or internalName)
+        const needsFetch = !this.hasAllNames(operator) || !operator.internalName;
         
         if (needsFetch) {
-          console.log(`[${i + 1}/${operators.length}] Fetching names for ${operator.name}...`);
+          console.log(`[${i + 1}/${operatorsNeedingNames.length}] Fetching names for ${operator.name}...`);
           
           try {
             const names = await this.fetchOperatorNames(operator.name);
             
-            if (names.cnName || names.twName || names.jpName || names.krName || names.characters) {
+            if (names.cnName || names.twName || names.jpName || names.krName || names.internalName) {
               // Merge fetched names with existing ones (fetched takes precedence)
               operator.cnName = names.cnName || operator.cnName;
               operator.twName = names.twName || operator.twName;
               operator.jpName = names.jpName || operator.jpName;
               operator.krName = names.krName || operator.krName;
-              operator.characters = names.characters || operator.characters;
+              operator.internalName = names.internalName || operator.internalName;
               namesFetched++;
-              console.log(`  ✅ Found names: CN=${names.cnName || operator.cnName || 'N/A'}, TW=${names.twName || operator.twName || 'N/A'}, JP=${names.jpName || operator.jpName || 'N/A'}, KR=${names.krName || operator.krName || 'N/A'}, Internal=${names.characters || operator.characters || 'N/A'}`);
+              console.log(`  ✅ Found names: CN=${names.cnName || operator.cnName || 'N/A'}, TW=${names.twName || operator.twName || 'N/A'}, JP=${names.jpName || operator.jpName || 'N/A'}, KR=${names.krName || operator.krName || 'N/A'}, Internal=${names.internalName || operator.internalName || 'N/A'}`);
             } else {
               namesSkipped++;
               console.log(`  ⚠️  No name data found for ${operator.name}`);
@@ -915,19 +1029,22 @@ class ArknightsScraper {
           }
         } else {
           namesAlreadyExist++;
-          console.log(`[${i + 1}/${operators.length}] ⏭️  Skipping ${operator.name} (already has all names and characters)`);
+          console.log(`[${i + 1}/${operators.length}] ⏭️  Skipping ${operator.name} (already has all names and internalName)`);
         }
+        
+        // Save after each operator's name data is processed
+        this.saveOperators(operators);
       }
       
       console.log(`\n📊 Name fetching complete: ${namesFetched} fetched, ${namesAlreadyExist} already exist, ${namesSkipped} skipped/failed`);
 
-      // Convert to dictionary format
+      // Final save (already saved incrementally, but ensure final state is saved)
+      this.saveOperators(operators);
+      
+      // Convert to dictionary format for return
       const operatorsDict = this.operatorsToDictionary(operators);
-
-      // Save operators data to JSON as dictionary
       const outputFile = path.join(this.config.outputDir, `operators-${this.config.rarity}star.json`);
-      fs.writeFileSync(outputFile, JSON.stringify(operatorsDict, null, 2));
-      console.log(`\n✅ Saved ${operators.length} operators to ${outputFile} (as dictionary)`);
+      console.log(`\n✅ Final save complete: ${operators.length} operators saved to ${outputFile} (as dictionary)`);
 
       return operatorsDict;
     } catch (error) {

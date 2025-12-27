@@ -6,6 +6,10 @@
 
 .main-content {
     flex: 1;
+}
+
+.main-content {
+    flex: 1;
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;

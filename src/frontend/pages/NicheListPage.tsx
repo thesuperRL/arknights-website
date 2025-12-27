@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useAuth } from '../contexts/AuthContext';
 import { getRarityClass } from '../utils/rarityUtils';
+import { getOperatorName } from '../utils/operatorNameUtils';
 import './NicheListPage.css';
 
 interface Operator {
@@ -27,15 +30,38 @@ interface OperatorList {
 
 const NicheListPage: React.FC = () => {
   const { niche } = useParams<{ niche: string }>();
+  const { language } = useLanguage();
+  const { user } = useAuth();
   const [operatorList, setOperatorList] = useState<OperatorList | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (niche) {
       loadOperatorList(niche);
     }
+    loadOwnedOperators();
   }, [niche]);
+
+  const loadOwnedOperators = async () => {
+    if (!user) {
+      setOwnedOperators(new Set());
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/user', {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setOwnedOperators(new Set(data.ownedOperators || []));
+      }
+    } catch (err) {
+      console.error('Error loading owned operators:', err);
+    }
+  };
 
   const loadOperatorList = async (nicheName: string) => {
     try {
@@ -60,16 +86,24 @@ const NicheListPage: React.FC = () => {
     return <div className="error">{error || 'Operator list not found'}</div>;
   }
 
-  // Sort operators: global operators first, then non-global operators
+  // Sort operators: by rarity (higher first), then by global status, then by name
   const sortedOperators = [...operatorList.operators].sort((a, b) => {
+    const aRarity = a.operator?.rarity ?? 0;
+    const bRarity = b.operator?.rarity ?? 0;
+    // Sort by rarity (higher first)
+    if (aRarity !== bRarity) {
+      return bRarity - aRarity;
+    }
+    // Then by global status (global operators first)
     const aGlobal = a.operator?.global ?? false;
     const bGlobal = b.operator?.global ?? false;
-    // Global operators (true) come before non-global (false)
     if (aGlobal !== bGlobal) {
       return aGlobal ? -1 : 1;
     }
-    // If both have same global status, maintain original order
-    return 0;
+    // Finally by name
+    const aName = a.operator?.name ?? a.operatorId;
+    const bName = b.operator?.name ?? b.operatorId;
+    return aName.localeCompare(bName);
   });
 
   return (
@@ -103,10 +137,11 @@ const NicheListPage: React.FC = () => {
         <div className="operators-grid">
           {sortedOperators.map((entry, index) => {
             const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
+            const isOwned = entry.operator ? ownedOperators.has(entry.operator.id) : false;
             return (
             <div 
               key={`${entry.operatorId}-${index}`} 
-              className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''}`}
+              className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
               title={entry.note || undefined}
             >
               {entry.operator ? (
@@ -128,7 +163,7 @@ const NicheListPage: React.FC = () => {
                     />
                   </Link>
                   <Link to={`/operator/${entry.operator.id}`} className="operator-name-link">
-                    <div className="operator-name">{entry.operator.name}</div>
+                    <div className="operator-name">{getOperatorName(entry.operator, language)}</div>
                   </Link>
                   <div className="operator-class">
                     {entry.operator.class} • {entry.operator.rarity}★

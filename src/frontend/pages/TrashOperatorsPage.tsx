@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useAuth } from '../contexts/AuthContext';
 import { getRarityClass } from '../utils/rarityUtils';
+import { getOperatorName } from '../utils/operatorNameUtils';
 import './TrashOperatorsPage.css';
 
 interface TrashOperatorEntry {
@@ -22,16 +25,43 @@ interface Operator {
   rarity: number;
   class: string;
   profileImage: string;
+  cnName?: string;
+  twName?: string;
+  jpName?: string;
+  krName?: string;
 }
 
 const TrashOperatorsPage: React.FC = () => {
+  const { language } = useLanguage();
+  const { user } = useAuth();
   const [data, setData] = useState<TrashOperatorsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadTrashOperators();
+    loadOwnedOperators();
   }, []);
+
+  const loadOwnedOperators = async () => {
+    if (!user) {
+      setOwnedOperators(new Set());
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/user', {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setOwnedOperators(new Set(data.ownedOperators || []));
+      }
+    } catch (err) {
+      console.error('Error loading owned operators:', err);
+    }
+  };
 
   const loadTrashOperators = async () => {
     try {
@@ -56,13 +86,33 @@ const TrashOperatorsPage: React.FC = () => {
     return <div className="error">{error || 'Trash operators data not found'}</div>;
   }
 
+  // Sort operators: by rarity (higher first), then by global status, then by name
+  const sortedOperators = [...data.operators].sort((a, b) => {
+    const aRarity = a.operator?.rarity ?? 0;
+    const bRarity = b.operator?.rarity ?? 0;
+    // Sort by rarity (higher first)
+    if (aRarity !== bRarity) {
+      return bRarity - aRarity;
+    }
+    // Then by global status (global operators first)
+    const aGlobal = a.operator?.global ?? false;
+    const bGlobal = b.operator?.global ?? false;
+    if (aGlobal !== bGlobal) {
+      return aGlobal ? -1 : 1;
+    }
+    // Finally by name
+    const aName = a.operator?.name ?? a.operatorId;
+    const bName = b.operator?.name ?? b.operatorId;
+    return aName.localeCompare(bName);
+  });
+
   return (
     <div className="trash-operators-page">
       <div className="trash-operators-header">
         <Link to="/" className="back-button">
           ← Back to Home
         </Link>
-        <h1>🗑️ {data.niche}</h1>
+        <h1>{data.niche}</h1>
         <p>{data.description}</p>
         <div className="meta">
           Last updated: {data.lastUpdated} • {data.operators.length} operators
@@ -76,12 +126,13 @@ const TrashOperatorsPage: React.FC = () => {
           </div>
         ) : (
           <div className="operators-grid">
-            {data.operators.map((entry, index) => {
+            {sortedOperators.map((entry, index) => {
               const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
+              const isOwned = entry.operator ? ownedOperators.has(entry.operator.id) : false;
               return (
               <div 
                 key={`${entry.operatorId}-${index}`} 
-                className={`operator-card trash ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''}`}
+                className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
                 title={entry.note || undefined}
               >
                 {entry.operator ? (
@@ -102,7 +153,7 @@ const TrashOperatorsPage: React.FC = () => {
                       />
                     </Link>
                     <Link to={`/operator/${entry.operator.id}`} className="operator-name-link">
-                      <div className="operator-name">{entry.operator.name}</div>
+                      <div className="operator-name">{getOperatorName(entry.operator, language)}</div>
                     </Link>
                     <div className="operator-class">
                       {entry.operator.class} • {entry.operator.rarity}★

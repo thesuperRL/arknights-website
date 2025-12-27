@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 import Stars from '../components/Stars';
+import { getOperatorName } from '../utils/operatorNameUtils';
 import './OperatorPage.css';
 
 interface Operator {
@@ -11,6 +13,10 @@ interface Operator {
   global: boolean;
   profileImage: string;
   niches?: string[];
+  cnName?: string;
+  twName?: string;
+  jpName?: string;
+  krName?: string;
 }
 
 interface Ranking {
@@ -28,6 +34,7 @@ interface OperatorData {
 
 const OperatorPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { language } = useLanguage();
   const [data, setData] = useState<OperatorData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -84,7 +91,7 @@ const OperatorPage: React.FC = () => {
           />
         </div>
         <div className="operator-info">
-          <h1 className="operator-name">{operator.name}</h1>
+          <h1 className="operator-name">{getOperatorName(operator, language)}</h1>
           <div className="operator-meta">
             <div className="operator-rarity">
               <Stars rarity={operator.rarity} size="large" />

@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import Navbar from './components/Navbar';
+import LanguageSelector from './components/LanguageSelector';
 import HomePage from './pages/HomePage';
 import NicheListPage from './pages/NicheListPage';
 import TrashOperatorsPage from './pages/TrashOperatorsPage';
@@ -15,21 +17,24 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div className="app">
-          <Navbar />
-          <main className="main-content">
-            <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/niche-list/:niche" element={<NicheListPage />} />
-            <Route path="/trash-operators" element={<TrashOperatorsPage />} />
-            <Route path="/operator/:id" element={<OperatorPage />} />
-            <Route path="/all-operators" element={<AllOperatorsPage />} />
-            <Route path="/login" element={<LocalLoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/profile" element={<UserProfilePage />} />
-            </Routes>
-          </main>
-        </div>
+        <LanguageProvider>
+          <div className="app">
+            <Navbar />
+            <main className="main-content">
+              <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/niche-list/:niche" element={<NicheListPage />} />
+              <Route path="/trash-operators" element={<TrashOperatorsPage />} />
+              <Route path="/operator/:id" element={<OperatorPage />} />
+              <Route path="/all-operators" element={<AllOperatorsPage />} />
+              <Route path="/login" element={<LocalLoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/profile" element={<UserProfilePage />} />
+              </Routes>
+            </main>
+            <LanguageSelector />
+          </div>
+        </LanguageProvider>
       </AuthProvider>
     </BrowserRouter>
   );

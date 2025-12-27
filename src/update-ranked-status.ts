@@ -120,7 +120,10 @@ function updateOperatorFiles(operatorNiches: Map<string, string[]>): {
       // Also check if we need to remove old 'ranked' field
       const hasOldRankedField = 'ranked' in operator;
       
-      if (!arraysEqual || hasOldRankedField) {
+      // 1, 2, and 3-star operators are always globally available
+      const needsGlobalFix = (rarity === 1 || rarity === 2 || rarity === 3) && operator.global === false;
+      
+      if (!arraysEqual || hasOldRankedField || needsGlobalFix) {
         const updatedOperator: any = {
           ...operator,
           niches: sortedNewNiches
@@ -128,6 +131,10 @@ function updateOperatorFiles(operatorNiches: Map<string, string[]>): {
         // Remove old 'ranked' field if it exists
         if (hasOldRankedField) {
           delete updatedOperator.ranked;
+        }
+        // Fix global status for 1, 2, and 3-star operators
+        if (needsGlobalFix) {
+          updatedOperator.global = true;
         }
         operators[id] = updatedOperator;
         fileUpdated = true;
