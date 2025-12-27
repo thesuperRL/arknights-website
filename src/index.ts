@@ -5,7 +5,7 @@
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
+import { loadAllNicheLists, loadNicheList, getNicheFilenameMap } from './niche-list-utils';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
 import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse } from './account-storage';
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
@@ -27,11 +27,16 @@ app.use('/images', express.static(path.join(__dirname, '../public/images')));
 app.get('/api/niche-lists', (_req, res) => {
   try {
     const nicheLists = loadAllNicheLists();
-    const niches = Object.keys(nicheLists).map(niche => ({
-      niche,
-      description: nicheLists[niche].description || '',
-      lastUpdated: nicheLists[niche].lastUpdated || ''
-    }));
+    const filenameMap = getNicheFilenameMap();
+    const niches = Object.keys(nicheLists).map(displayName => {
+      const filename = Object.keys(filenameMap).find(f => filenameMap[f] === displayName) || displayName.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_');
+      return {
+        filename,
+        displayName,
+        description: nicheLists[displayName].description || '',
+        lastUpdated: nicheLists[displayName].lastUpdated || ''
+      };
+    });
     res.json(niches);
   } catch (error) {
     console.error('Error loading niche lists:', error);

@@ -6,11 +6,14 @@ import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
 import './TeamBuilderPage.css';
 
+interface NicheRange {
+  min: number;
+  max: number;
+}
+
 interface TeamPreferences {
-  requiredNiches: string[];
-  preferredNiches: string[];
-  minOperatorsPerNiche?: number;
-  maxOperatorsPerNiche?: number;
+  requiredNiches: Record<string, NicheRange>; // Niche filename -> range of operators
+  preferredNiches: Record<string, NicheRange>; // Niche filename -> range of operators
   prioritizeRarity?: boolean;
   allowDuplicates?: boolean;
 }
@@ -46,7 +49,8 @@ const TeamBuilderPage: React.FC = () => {
   const { user } = useAuth();
   const { language } = useLanguage();
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
-  const [allNiches, setAllNiches] = useState<string[]>([]);
+  const [allNiches, setAllNiches] = useState<Array<{filename: string; displayName: string}>>([]);
+  const [nicheFilenameMap, setNicheFilenameMap] = useState<Record<string, string>>({});
   const [teamResult, setTeamResult] = useState<TeamResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -59,6 +63,72 @@ const TeamBuilderPage: React.FC = () => {
     }
   }, [user]);
 
+  const migratePreferences = (prefs: any): TeamPreferences => {
+    // Migrate from old format (arrays or single numbers) to new format (ranges with filenames)
+    if (Array.isArray(prefs.requiredNiches)) {
+      const requiredNiches: Record<string, NicheRange> = {};
+      for (const niche of prefs.requiredNiches) {
+        // Convert display name to filename
+        const filename = Object.keys(nicheFilenameMap).find(f => nicheFilenameMap[f] === niche) 
+          || niche.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_');
+        requiredNiches[filename] = { min: 1, max: 1 }; // Default to 1 operator per niche
+      }
+      prefs.requiredNiches = requiredNiches;
+    } else if (prefs.requiredNiches && typeof prefs.requiredNiches === 'object') {
+      // Migrate from display names to filenames and from numbers to ranges
+      const requiredNiches: Record<string, NicheRange> = {};
+      for (const [key, value] of Object.entries(prefs.requiredNiches)) {
+        // Check if key is a display name (contains spaces or slashes) or already a filename
+        const filename = Object.keys(nicheFilenameMap).find(f => nicheFilenameMap[f] === key)
+          || (key.includes(' ') || key.includes('/') ? key.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_') : key);
+        
+        // Convert number to range if needed
+        if (typeof value === 'number') {
+          requiredNiches[filename] = { min: value, max: value };
+        } else if (value && typeof value === 'object' && 'min' in value && 'max' in value) {
+          requiredNiches[filename] = value as NicheRange;
+        } else {
+          requiredNiches[filename] = { min: 1, max: 1 };
+        }
+      }
+      prefs.requiredNiches = requiredNiches;
+    }
+    
+    if (Array.isArray(prefs.preferredNiches)) {
+      const preferredNiches: Record<string, NicheRange> = {};
+      for (const niche of prefs.preferredNiches) {
+        // Convert display name to filename
+        const filename = Object.keys(nicheFilenameMap).find(f => nicheFilenameMap[f] === niche)
+          || niche.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_');
+        preferredNiches[filename] = { min: 1, max: 1 }; // Default to 1 operator per niche
+      }
+      prefs.preferredNiches = preferredNiches;
+    } else if (prefs.preferredNiches && typeof prefs.preferredNiches === 'object') {
+      // Migrate from display names to filenames and from numbers to ranges
+      const preferredNiches: Record<string, NicheRange> = {};
+      for (const [key, value] of Object.entries(prefs.preferredNiches)) {
+        // Check if key is a display name (contains spaces or slashes) or already a filename
+        const filename = Object.keys(nicheFilenameMap).find(f => nicheFilenameMap[f] === key)
+          || (key.includes(' ') || key.includes('/') ? key.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_') : key);
+        
+        // Convert number to range if needed
+        if (typeof value === 'number') {
+          preferredNiches[filename] = { min: value, max: value };
+        } else if (value && typeof value === 'object' && 'min' in value && 'max' in value) {
+          preferredNiches[filename] = value as NicheRange;
+        } else {
+          preferredNiches[filename] = { min: 1, max: 1 };
+        }
+      }
+      prefs.preferredNiches = preferredNiches;
+    }
+    
+    // Remove old properties
+    delete prefs.minOperatorsPerNiche;
+    delete prefs.maxOperatorsPerNiche;
+    return prefs as TeamPreferences;
+  };
+
   const loadPreferences = async () => {
     try {
       const response = await fetch('/api/team/preferences', {
@@ -66,7 +136,14 @@ const TeamBuilderPage: React.FC = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        setPreferences(data);
+        // Wait for nicheFilenameMap to be loaded before migrating
+        if (Object.keys(nicheFilenameMap).length > 0) {
+          const migrated = migratePreferences(data);
+          setPreferences(migrated);
+        } else {
+          // If map not loaded yet, set preferences directly (will be migrated on next render)
+          setPreferences(data);
+        }
       } else {
         // Load defaults if no saved preferences
         const defaultResponse = await fetch('/api/team/preferences/default');
@@ -89,13 +166,41 @@ const TeamBuilderPage: React.FC = () => {
       }
     }
   };
+  
+  // Migrate preferences when nicheFilenameMap is loaded
+  useEffect(() => {
+    if (preferences && Object.keys(nicheFilenameMap).length > 0) {
+      // Check if migration is needed (has display names instead of filenames)
+      const needsMigration = Object.keys(preferences.requiredNiches).some(key => 
+        key.includes(' ') || key.includes('/')
+      ) || Object.keys(preferences.preferredNiches).some(key => 
+        key.includes(' ') || key.includes('/')
+      );
+      
+      if (needsMigration) {
+        const migrated = migratePreferences(preferences);
+        setPreferences(migrated);
+      }
+    }
+  }, [nicheFilenameMap]);
 
   const loadNicheLists = async () => {
     try {
       const response = await fetch('/api/niche-lists');
       if (response.ok) {
         const data = await response.json();
-        setAllNiches(data.map((n: any) => n.niche));
+        const niches = data.map((n: any) => ({
+          filename: n.filename || n.niche?.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_'),
+          displayName: n.displayName || n.niche
+        }));
+        setAllNiches(niches);
+        
+        // Build filename map
+        const map: Record<string, string> = {};
+        niches.forEach((n: any) => {
+          map[n.filename] = n.displayName;
+        });
+        setNicheFilenameMap(map);
       }
     } catch (err) {
       console.error('Error loading niche lists:', err);
@@ -153,31 +258,51 @@ const TeamBuilderPage: React.FC = () => {
     }
   };
 
-  const updateRequiredNiches = (niche: string, add: boolean) => {
+  const updateRequiredNicheRange = (niche: string, min: number, max: number) => {
     if (!preferences) return;
     
-    const newRequired = add
-      ? [...preferences.requiredNiches, niche]
-      : preferences.requiredNiches.filter(n => n !== niche);
+    const newRequired = { ...preferences.requiredNiches };
+    const newPreferred = { ...preferences.preferredNiches };
+    
+    // Remove from preferred if adding to required
+    if ((min > 0 || max > 0) && newPreferred[niche] !== undefined) {
+      delete newPreferred[niche];
+    }
+    
+    if (min > 0 || max > 0) {
+      newRequired[niche] = { min: Math.max(0, min), max: Math.max(min, max) };
+    } else {
+      delete newRequired[niche];
+    }
     
     setPreferences({
       ...preferences,
       requiredNiches: newRequired,
-      preferredNiches: preferences.preferredNiches.filter(n => n !== niche)
+      preferredNiches: newPreferred
     });
   };
 
-  const updatePreferredNiches = (niche: string, add: boolean) => {
+  const updatePreferredNicheRange = (niche: string, min: number, max: number) => {
     if (!preferences) return;
     
-    const newPreferred = add
-      ? [...preferences.preferredNiches, niche]
-      : preferences.preferredNiches.filter(n => n !== niche);
+    const newRequired = { ...preferences.requiredNiches };
+    const newPreferred = { ...preferences.preferredNiches };
+    
+    // Remove from required if adding to preferred
+    if ((min > 0 || max > 0) && newRequired[niche] !== undefined) {
+      delete newRequired[niche];
+    }
+    
+    if (min > 0 || max > 0) {
+      newPreferred[niche] = { min: Math.max(0, min), max: Math.max(min, max) };
+    } else {
+      delete newPreferred[niche];
+    }
     
     setPreferences({
       ...preferences,
-      preferredNiches: newPreferred,
-      requiredNiches: preferences.requiredNiches.filter(n => n !== niche)
+      requiredNiches: newRequired,
+      preferredNiches: newPreferred
     });
   };
 
@@ -225,62 +350,44 @@ const TeamBuilderPage: React.FC = () => {
           </label>
         </div>
 
-        <div className="preference-group">
-          <label>
-            Min operators per niche:
-            <input
-              type="number"
-              min="1"
-              max="5"
-              value={preferences.minOperatorsPerNiche || 1}
-              onChange={(e) => setPreferences({ ...preferences, minOperatorsPerNiche: parseInt(e.target.value) || 1 })}
-            />
-          </label>
-        </div>
-
-        <div className="preference-group">
-          <label>
-            Max operators per niche:
-            <input
-              type="number"
-              min="1"
-              max="5"
-              value={preferences.maxOperatorsPerNiche || 3}
-              onChange={(e) => setPreferences({ ...preferences, maxOperatorsPerNiche: parseInt(e.target.value) || 3 })}
-            />
-          </label>
-        </div>
-
         <div className="niche-selection">
           <h3>Required Niches</h3>
-          <p className="help-text">These niches must be filled in the team</p>
+          <p className="help-text">Specify how many operators from each niche are required in your team</p>
           <div className="niche-list">
             {allNiches.map(niche => (
-              <label key={niche} className="niche-checkbox">
+              <div key={niche.filename} className="niche-input-row">
+                <label className="niche-label">{niche.displayName}</label>
                 <input
-                  type="checkbox"
-                  checked={preferences.requiredNiches.includes(niche)}
-                  onChange={(e) => updateRequiredNiches(niche, e.target.checked)}
+                  type="number"
+                  min="0"
+                  max="12"
+                  value={preferences.requiredNiches[niche.filename] || 0}
+                  onChange={(e) => updateRequiredNicheCount(niche.filename, parseInt(e.target.value) || 0)}
+                  className="niche-count-input"
                 />
-                {niche}
-              </label>
+                <span className="niche-count-label">operators</span>
+              </div>
             ))}
           </div>
         </div>
 
         <div className="niche-selection">
           <h3>Preferred Niches</h3>
-          <p className="help-text">These niches are preferred but not required</p>
+          <p className="help-text">Specify how many operators from each niche are preferred (but not required)</p>
           <div className="niche-list">
             {allNiches.map(niche => (
-              <label key={niche} className="niche-checkbox">
+              <div key={niche.filename} className="niche-input-row">
+                <label className="niche-label">{niche.displayName}</label>
                 <input
-                  type="checkbox"
-                  checked={preferences.preferredNiches.includes(niche)}
-                  onChange={(e) => updatePreferredNiches(niche, e.target.checked)}
+                  type="number"
+                  min="0"
+                  max="12"
+                  value={preferences.preferredNiches[niche.filename] || 0}
+                  onChange={(e) => updatePreferredNicheCount(niche.filename, parseInt(e.target.value) || 0)}
+                  className="niche-count-input"
                 />
-                {niche}
-              </label>
+                <span className="niche-count-label">operators</span>
+              </div>
             ))}
           </div>
         </div>
@@ -304,7 +411,11 @@ const TeamBuilderPage: React.FC = () => {
             </div>
             {teamResult.missingNiches.length > 0 && (
               <div className="stat warning">
-                <strong>Missing Niches:</strong> {teamResult.missingNiches.join(', ')}
+                <strong>Missing Niches:</strong> {teamResult.missingNiches.map(niche => {
+                  // Handle format like "niche (1/2)" or just "niche"
+                  const [nicheName] = niche.split(' (');
+                  return nicheFilenameMap[nicheName] || niche;
+                }).join(', ')}
               </div>
             )}
           </div>
@@ -323,11 +434,11 @@ const TeamBuilderPage: React.FC = () => {
                     <Stars rarity={member.operator.rarity} />
                     <div className="operator-class">{member.operator.class}</div>
                     {member.primaryNiche && (
-                      <div className="primary-niche">Primary: {member.primaryNiche}</div>
+                      <div className="primary-niche">Primary: {nicheFilenameMap[member.primaryNiche] || member.primaryNiche}</div>
                     )}
                     <div className="operator-niches">
                       {member.niches.slice(0, 3).map(niche => (
-                        <span key={niche} className="niche-tag">{niche}</span>
+                        <span key={niche} className="niche-tag">{nicheFilenameMap[niche] || niche}</span>
                       ))}
                     </div>
                   </div>
@@ -339,12 +450,15 @@ const TeamBuilderPage: React.FC = () => {
           <div className="coverage-section">
             <h3>Niche Coverage</h3>
             <div className="coverage-list">
-              {Object.entries(teamResult.coverage).map(([niche, count]) => (
-                <div key={niche} className="coverage-item">
-                  <span className="niche-name">{niche}</span>
-                  <span className="coverage-count">{count}</span>
-                </div>
-              ))}
+              {Object.entries(teamResult.coverage).map(([niche, count]) => {
+                const displayName = nicheFilenameMap[niche] || niche;
+                return (
+                  <div key={niche} className="coverage-item">
+                    <span className="niche-name">{displayName}</span>
+                    <span className="coverage-count">{count}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

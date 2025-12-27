@@ -311,6 +311,9 @@ const UserProfilePage: React.FC = () => {
             <span className="profile-detail">
               <strong>Operators:</strong> {user.ownedOperators.length}
             </span>
+            <Link to="/team-builder" className="team-builder-link">
+              🎯 Team Builder
+            </Link>
           </div>
         </div>
         <button onClick={handleLogout} className="logout-button">

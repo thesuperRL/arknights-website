@@ -7,11 +7,14 @@ import * as path from 'path';
 import { getNichesForOperator } from './niche-list-utils';
 import { getWantToUse } from './account-storage';
 
+export interface NicheRange {
+  min: number;
+  max: number;
+}
+
 export interface TeamPreferences {
-  requiredNiches: string[]; // Niches that must be filled (e.g., ["Healing", "Tanking/Blocking Operators"])
-  preferredNiches: string[]; // Niches that are preferred but not required
-  minOperatorsPerNiche?: number; // Minimum operators per niche (default: 1)
-  maxOperatorsPerNiche?: number; // Maximum operators per niche (default: 3)
+  requiredNiches: Record<string, NicheRange>; // Niche filename -> range of operators needed (e.g., {"healing": {min: 1, max: 2}})
+  preferredNiches: Record<string, NicheRange>; // Niche filename -> range of operators preferred (e.g., {"arts_dps": {min: 1, max: 3}})
   prioritizeRarity?: boolean; // Prioritize higher rarity operators
   allowDuplicates?: boolean; // Allow multiple operators from same niche
 }
@@ -111,7 +114,15 @@ function scoreOperator(
     
     for (const niche of niches) {
       const existingCount = existingNicheCounts[niche] || 0;
-      const maxCount = preferences.maxOperatorsPerNiche || 3;
+      // Check against required/preferred ranges
+      const requiredRange = preferences.requiredNiches[niche];
+      const preferredRange = preferences.preferredNiches[niche];
+      const maxCount = Math.max(
+        requiredRange?.max || 0,
+        preferredRange?.max || 0,
+        3 // Default to 3 if not specified
+      );
+      
       if (existingCount >= maxCount) {
         score -= 50; // Penalty for exceeding max per niche
       }
@@ -172,25 +183,26 @@ export function buildTeam(
     return {
       team: [],
       coverage: {},
-      missingNiches: preferences.requiredNiches,
+      missingNiches: Object.keys(preferences.requiredNiches),
       score: 0
     };
   }
   
   // Convert to sets for faster lookup
-  const requiredNiches = new Set(preferences.requiredNiches);
-  const preferredNiches = new Set(preferences.preferredNiches);
+  const requiredNiches = new Set(Object.keys(preferences.requiredNiches));
+  const preferredNiches = new Set(Object.keys(preferences.preferredNiches));
   
   const team: TeamMember[] = [];
   const usedOperatorIds = new Set<string>();
   const nicheCounts: Record<string, number> = {};
   
-  // First pass: Fill required niches
-  for (const niche of preferences.requiredNiches) {
-    const minCount = preferences.minOperatorsPerNiche || 1;
+  // First pass: Fill required niches to minimum
+  for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
     const currentCount = nicheCounts[niche] || 0;
+    const minCount = range.min;
     
-    if (currentCount < minCount && team.length < 12) {
+    // Fill up to minimum
+    while (currentCount < minCount && team.length < 12) {
       const candidate = findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
@@ -214,18 +226,25 @@ export function buildTeam(
         for (const opNiche of candidate.niches) {
           nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
         }
+        
+        // Update currentCount for this niche
+        const newCurrentCount = nicheCounts[niche] || 0;
+        if (newCurrentCount >= minCount) break;
+      } else {
+        break; // No more operators available for this niche
       }
     }
   }
   
-  // Second pass: Fill preferred niches
-  for (const niche of preferences.preferredNiches) {
+  // Second pass: Fill required niches up to maximum (optional)
+  for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
     if (team.length >= 12) break;
     
-    const maxCount = preferences.maxOperatorsPerNiche || 3;
     const currentCount = nicheCounts[niche] || 0;
+    const maxCount = range.max;
     
-    if (currentCount < maxCount) {
+    // Fill up to maximum if we have space
+    while (currentCount < maxCount && team.length < 12) {
       const candidate = findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
@@ -249,11 +268,101 @@ export function buildTeam(
         for (const opNiche of candidate.niches) {
           nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
         }
+        
+        // Update currentCount for this niche
+        const newCurrentCount = nicheCounts[niche] || 0;
+        if (newCurrentCount >= maxCount) break;
+      } else {
+        break; // No more operators available for this niche
       }
     }
   }
   
-  // Third pass: Fill remaining slots with best available operators
+  // Third pass: Fill preferred niches to minimum
+  for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
+    if (team.length >= 12) break;
+    
+    const currentCount = nicheCounts[niche] || 0;
+    const minCount = range.min;
+    
+    // Fill up to minimum
+    while (currentCount < minCount && team.length < 12) {
+      const candidate = findBestOperatorForNiche(
+        niche,
+        availableOperators.filter(id => !usedOperatorIds.has(id)),
+        allOperators,
+        team,
+        preferences,
+        requiredNiches,
+        preferredNiches
+      );
+      
+      if (candidate) {
+        team.push({
+          operatorId: candidate.operatorId,
+          operator: candidate.operator,
+          niches: candidate.niches,
+          primaryNiche: niche
+        });
+        usedOperatorIds.add(candidate.operatorId);
+        
+        // Update niche counts
+        for (const opNiche of candidate.niches) {
+          nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
+        }
+        
+        // Update currentCount for this niche
+        const newCurrentCount = nicheCounts[niche] || 0;
+        if (newCurrentCount >= minCount) break;
+      } else {
+        break; // No more operators available for this niche
+      }
+    }
+  }
+  
+  // Fourth pass: Fill preferred niches up to maximum (optional)
+  for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
+    if (team.length >= 12) break;
+    
+    const currentCount = nicheCounts[niche] || 0;
+    const maxCount = range.max;
+    
+    // Fill up to maximum if we have space
+    while (currentCount < maxCount && team.length < 12) {
+      const candidate = findBestOperatorForNiche(
+        niche,
+        availableOperators.filter(id => !usedOperatorIds.has(id)),
+        allOperators,
+        team,
+        preferences,
+        requiredNiches,
+        preferredNiches
+      );
+      
+      if (candidate) {
+        team.push({
+          operatorId: candidate.operatorId,
+          operator: candidate.operator,
+          niches: candidate.niches,
+          primaryNiche: niche
+        });
+        usedOperatorIds.add(candidate.operatorId);
+        
+        // Update niche counts
+        for (const opNiche of candidate.niches) {
+          nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
+        }
+        
+        // Update currentCount for this niche
+        const newCurrentCount = nicheCounts[niche] || 0;
+        if (newCurrentCount >= maxCount) break;
+      } else {
+        break; // No more operators available for this niche
+      }
+    }
+  }
+  
+  // Fifth pass: Fill remaining slots with best available operators
   while (team.length < 12 && availableOperators.length > usedOperatorIds.size) {
     let bestCandidate: { operatorId: string; operator: any; niches: string[]; score: number } | null = null;
     
@@ -290,23 +399,40 @@ export function buildTeam(
   
   // Calculate missing niches
   const missingNiches: string[] = [];
-  for (const niche of preferences.requiredNiches) {
-    const minCount = preferences.minOperatorsPerNiche || 1;
-    if ((nicheCounts[niche] || 0) < minCount) {
-      missingNiches.push(niche);
+  for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
+    const currentCount = nicheCounts[niche] || 0;
+    if (currentCount < range.min) {
+      missingNiches.push(`${niche} (${currentCount}/${range.min}-${range.max})`);
     }
   }
   
   // Calculate team score
   let score = 0;
-  for (const niche of preferences.requiredNiches) {
-    if (nicheCounts[niche] && nicheCounts[niche] >= (preferences.minOperatorsPerNiche || 1)) {
+  for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
+    const currentCount = nicheCounts[niche] || 0;
+    if (currentCount >= range.min) {
+      // Full points for meeting minimum requirement
       score += 100;
+      // Bonus if we're within the ideal range
+      if (currentCount <= range.max) {
+        score += 20; // Bonus for being in ideal range
+      }
+    } else {
+      // Partial points based on how close we are to minimum
+      score += (currentCount / range.min) * 100;
     }
   }
-  for (const niche of preferences.preferredNiches) {
-    if (nicheCounts[niche]) {
-      score += 50;
+  for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
+    const currentCount = nicheCounts[niche] || 0;
+    if (currentCount > 0) {
+      // Score based on how well we meet the preferred range
+      if (currentCount >= range.min && currentCount <= range.max) {
+        score += 50; // Full points for being in preferred range
+      } else if (currentCount < range.min) {
+        score += (currentCount / range.min) * 50; // Partial points
+      } else {
+        score += 30; // Some points for exceeding (but less than ideal)
+      }
     }
   }
   score += team.length * 10; // Bonus for filling more slots
@@ -324,10 +450,16 @@ export function buildTeam(
  */
 export function getDefaultPreferences(): TeamPreferences {
   return {
-    requiredNiches: ['Healing', 'Tanking/Blocking Operators'],
-    preferredNiches: ['Arts DPS', 'Phys DPS', 'DP Generator', 'Fast-Redeploy'],
-    minOperatorsPerNiche: 1,
-    maxOperatorsPerNiche: 3,
+    requiredNiches: {
+      'healing': { min: 1, max: 2 },
+      'tanking_blocking': { min: 1, max: 2 }
+    },
+    preferredNiches: {
+      'arts_dps': { min: 1, max: 3 },
+      'phys_dps': { min: 1, max: 3 },
+      'dp_generator': { min: 1, max: 2 },
+      'fast-redeploy': { min: 1, max: 2 }
+    },
     prioritizeRarity: true,
     allowDuplicates: false
   };

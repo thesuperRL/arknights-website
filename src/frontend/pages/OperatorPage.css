@@ -37,11 +37,16 @@
 .operator-profile-image {
     width: 250px;
     height: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
+    object-position: center;
     border-radius: 15px;
     border: 3px solid rgba(255, 255, 255, 0.2);
     background: #1a1a2e;
     isolation: isolate;
+    flex-shrink: 0;
 }
 
 .operator-info {

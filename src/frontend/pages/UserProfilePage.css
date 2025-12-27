@@ -39,6 +39,32 @@
     margin-right: 0.5rem;
 }
 
+.team-builder-link {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(100, 181, 246, 0.2);
+    border: 2px solid rgba(100, 181, 246, 0.4);
+    border-radius: 8px;
+    color: #64b5f6;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.team-builder-link:hover {
+    background: rgba(100, 181, 246, 0.3);
+    border-color: rgba(100, 181, 246, 0.6);
+    color: #90caf9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(100, 181, 246, 0.3);
+}
+
 .logout-button {
     padding: 0.75rem 1.5rem;
     background: rgba(255, 107, 107, 0.2);
@@ -195,6 +221,9 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .operator-card:hover {
@@ -205,12 +234,17 @@
 .operator-image {
     width: 120px;
     height: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
+    object-position: center;
     border-radius: 8px;
     border: 2px solid rgba(255, 255, 255, 0.2);
     background: #1a1a2e;
     margin-bottom: 0.75rem;
     isolation: isolate;
+    flex-shrink: 0;
 }
 
 .operator-info {

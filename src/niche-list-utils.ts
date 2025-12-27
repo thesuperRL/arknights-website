@@ -110,18 +110,93 @@ export function validateNicheList(operatorList: OperatorList, operatorsData: Rec
 }
 
 /**
- * Gets all niches that include a specific operator
+ * Gets the filename (without .json) for a niche display name
+ */
+export function getNicheFilename(nicheDisplayName: string, dataDir: string = path.join(__dirname, '../data/niche-lists')): string | null {
+  const collection = loadAllNicheLists(dataDir);
+  for (const [displayName] of Object.entries(collection)) {
+    if (displayName === nicheDisplayName) {
+      // Find the filename by checking all files
+      const files = fs.readdirSync(dataDir);
+      for (const file of files) {
+        if (file.endsWith('.json') && file !== 'trash-operators.json' && file !== 'README.md') {
+          const filePath = path.join(dataDir, file);
+          try {
+            const content = fs.readFileSync(filePath, 'utf-8');
+            const parsed = JSON.parse(content);
+            if (parsed.niche === displayName) {
+              return file.replace('.json', '');
+            }
+          } catch (error) {
+            // Skip invalid files
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Gets the display name for a niche filename
+ */
+export function getNicheDisplayName(nicheFilename: string, dataDir: string = path.join(__dirname, '../data/niche-lists')): string | null {
+  const filePath = path.join(dataDir, `${nicheFilename}.json`);
+  if (fs.existsSync(filePath)) {
+    try {
+      const content = fs.readFileSync(filePath, 'utf-8');
+      const parsed = JSON.parse(content);
+      return parsed.niche || null;
+    } catch (error) {
+      return null;
+    }
+  }
+  return null;
+}
+
+/**
+ * Gets all niches (as filenames) that include a specific operator
  */
 export function getNichesForOperator(operatorId: string, dataDir: string = path.join(__dirname, '../data/niche-lists')): string[] {
   const collection = loadAllNicheLists(dataDir);
   const niches: string[] = [];
 
-  for (const [niche, operatorList] of Object.entries(collection)) {
+  for (const [displayName, operatorList] of Object.entries(collection)) {
     if (operatorId in operatorList.operators) {
-      niches.push(niche);
+      // Get the filename for this niche
+      const filename = getNicheFilename(displayName, dataDir);
+      if (filename) {
+        niches.push(filename);
+      }
     }
   }
 
   return niches;
+}
+
+/**
+ * Gets a map of all niche filenames to their display names
+ */
+export function getNicheFilenameMap(dataDir: string = path.join(__dirname, '../data/niche-lists')): Record<string, string> {
+  const map: Record<string, string> = {};
+  const files = fs.readdirSync(dataDir);
+  
+  for (const file of files) {
+    if (file.endsWith('.json') && file !== 'trash-operators.json' && file !== 'README.md') {
+      const filePath = path.join(dataDir, file);
+      try {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        const parsed = JSON.parse(content);
+        if (parsed.niche) {
+          const filename = file.replace('.json', '');
+          map[filename] = parsed.niche;
+        }
+      } catch (error) {
+        // Skip invalid files
+      }
+    }
+  }
+  
+  return map;
 }
 
