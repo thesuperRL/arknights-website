@@ -11,6 +11,7 @@ import AllOperatorsPage from './pages/AllOperatorsPage';
 import LocalLoginPage from './pages/LocalLoginPage';
 import RegisterPage from './pages/RegisterPage';
 import UserProfilePage from './pages/UserProfilePage';
+import TeamBuilderPage from './pages/TeamBuilderPage';
 import './App.css';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
               <Route path="/login" element={<LocalLoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/profile" element={<UserProfilePage />} />
+              <Route path="/team-builder" element={<TeamBuilderPage />} />
               </Routes>
             </main>
             <LanguageSelector />

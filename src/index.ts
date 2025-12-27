@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
 import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse } from './account-storage';
+import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
 import * as fs from 'fs';
 
 const app = express();
@@ -550,6 +551,128 @@ app.post('/api/auth/remove-operator', (req, res) => {
   }
 });
 
+// POST /api/team/build - Build a team based on preferences
+app.post('/api/team/build', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      res.status(401).json({ error: 'Not authenticated' });
+      return;
+    }
+
+    const session = getSession(sessionId);
+    if (!session) {
+      res.status(401).json({ error: 'Invalid session' });
+      return;
+    }
+
+    const preferences: TeamPreferences = req.body.preferences || getDefaultPreferences();
+    const result = buildTeam(session.email, preferences);
+    
+    res.json(result);
+  } catch (error: any) {
+    console.error('Error building team:', error);
+    res.status(500).json({ error: error.message || 'Failed to build team' });
+  }
+});
+
+// GET /api/team/preferences/default - Get default team preferences
+app.get('/api/team/preferences/default', (_req, res) => {
+  try {
+    res.json(getDefaultPreferences());
+  } catch (error: any) {
+    console.error('Error getting default preferences:', error);
+    res.status(500).json({ error: error.message || 'Failed to get default preferences' });
+  }
+});
+
+// GET /api/team/preferences - Get user's saved team preferences
+app.get('/api/team/preferences', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      res.status(401).json({ error: 'Not authenticated' });
+      return;
+    }
+
+    const session = getSession(sessionId);
+    if (!session) {
+      res.status(401).json({ error: 'Invalid session' });
+      return;
+    }
+
+    // Load preferences from file (per-user preferences)
+    const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
+    let preferences: Record<string, TeamPreferences> = {};
+    
+    if (fs.existsSync(preferencesFile)) {
+      try {
+        const content = fs.readFileSync(preferencesFile, 'utf-8');
+        preferences = JSON.parse(content);
+      } catch (error) {
+        console.error('Error loading preferences:', error);
+      }
+    }
+    
+    const userPreferences = preferences[session.email] || getDefaultPreferences();
+    res.json(userPreferences);
+  } catch (error: any) {
+    console.error('Error getting preferences:', error);
+    res.status(500).json({ error: error.message || 'Failed to get preferences' });
+  }
+});
+
+// POST /api/team/preferences - Save user's team preferences
+app.post('/api/team/preferences', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      res.status(401).json({ error: 'Not authenticated' });
+      return;
+    }
+
+    const session = getSession(sessionId);
+    if (!session) {
+      res.status(401).json({ error: 'Invalid session' });
+      return;
+    }
+
+    const preferences: TeamPreferences = req.body.preferences;
+    if (!preferences) {
+      res.status(400).json({ error: 'Preferences are required' });
+      return;
+    }
+
+    // Load existing preferences
+    const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
+    let allPreferences: Record<string, TeamPreferences> = {};
+    
+    if (fs.existsSync(preferencesFile)) {
+      try {
+        const content = fs.readFileSync(preferencesFile, 'utf-8');
+        allPreferences = JSON.parse(content);
+      } catch (error) {
+        console.error('Error loading preferences:', error);
+      }
+    }
+    
+    // Save user's preferences
+    allPreferences[session.email] = preferences;
+    
+    // Ensure directory exists
+    const dir = path.dirname(preferencesFile);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    fs.writeFileSync(preferencesFile, JSON.stringify(allPreferences, null, 2));
+    
+    res.json({ success: true, preferences });
+  } catch (error: any) {
+    console.error('Error saving preferences:', error);
+    res.status(500).json({ error: error.message || 'Failed to save preferences' });
+  }
+});
 
 // Serve React app for all non-API routes (SPA routing) - must be last
 // Use a catch-all middleware instead of a route pattern for Express 5
