@@ -273,6 +273,31 @@ const TeamBuilderPage: React.FC = () => {
     }
   }, [nicheFilenameMap, preferences]);
 
+  // Ensure coverage is always recalculated when team or empty slots change
+  useEffect(() => {
+    if (!teamResult || !preferences || !allOperators || Object.keys(allOperators).length === 0) return;
+    
+    const currentTeam = modifiedTeam || teamResult.team;
+    const { coverage, missingNiches } = recalculateCoverageWithEmptySlots(currentTeam, selectedEmptySlots);
+    
+    // Only update if coverage has actually changed to avoid infinite loops
+    const currentCoverageStr = JSON.stringify(teamResult.coverage);
+    const currentMissingStr = JSON.stringify(teamResult.missingNiches);
+    const newCoverageStr = JSON.stringify(coverage);
+    const newMissingStr = JSON.stringify(missingNiches);
+    
+    if (currentCoverageStr !== newCoverageStr || currentMissingStr !== newMissingStr) {
+      setTeamResult(prev => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          coverage: coverage,
+          missingNiches: missingNiches
+        };
+      });
+    }
+  }, [modifiedTeam, selectedEmptySlots, teamResult?.team, preferences, allOperators]);
+
   const loadNicheLists = async () => {
     try {
       const response = await fetch('/api/niche-lists');

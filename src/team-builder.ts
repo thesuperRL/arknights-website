@@ -5,7 +5,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { getNichesForOperator } from './niche-list-utils';
-import { getWantToUse } from './account-storage';
+import { getOwnedOperators, getWantToUse } from './account-storage';
 
 export interface NicheRange {
   min: number;
@@ -128,12 +128,13 @@ function getOperatorNiches(operatorId: string): string[] {
  */
 function scoreOperator(
   operator: any,
-  _operatorId: string,
+  operatorId: string,
   niches: string[],
   preferences: TeamPreferences,
   existingTeam: TeamMember[],
   requiredNiches: Set<string>,
-  preferredNiches: Set<string>
+  preferredNiches: Set<string>,
+  wantToUseSet?: Set<string>
 ): number {
   let score = 0;
   
@@ -168,6 +169,11 @@ function scoreOperator(
   
   // Niches that should not contribute to scoring (using filenames)
   const excludedNiches = new Set(['free', 'soloists', 'enmity_healers', 'unconventional_niches', 'dual-dps']);
+  
+  // Boost score for operators in want-to-use list
+  if (wantToUseSet && wantToUseSet.has(operatorId)) {
+    score += 50; // Significant boost for operators user wants to use
+  }
   
   // Track which normalized niches we've already scored to avoid double counting
   const scoredNiches = new Set<string>();
@@ -297,7 +303,8 @@ function findBestOperatorForNiche(
   preferences: TeamPreferences,
   requiredNiches: Set<string>,
   preferredNiches: Set<string>,
-  trashOperators?: Set<string>
+  trashOperators?: Set<string>,
+  wantToUseSet?: Set<string>
 ): { operatorId: string; operator: any; niches: string[] } | null {
   let bestOperator: { operatorId: string; operator: any; niches: string[] } | null = null;
   let bestScore = -Infinity;
@@ -316,7 +323,7 @@ function findBestOperatorForNiche(
                       (niche === 'phys_dps' && niches.includes('phys_aoe'));
     if (!fillsNiche) continue;
     
-    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches);
+    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet);
     
     if (score > bestScore) {
       bestScore = score;
@@ -339,7 +346,7 @@ function findBestOperatorForNiche(
                         (niche === 'phys_dps' && niches.includes('phys_aoe'));
       if (!fillsNiche) continue;
       
-      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches);
+      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet);
       
       if (score > bestScore) {
         bestScore = score;
@@ -364,9 +371,14 @@ export async function buildTeam(
   // Load trash operators to apply penalty (but not exclude them)
   const trashOperators = loadTrashOperators();
   
-  // Get user's raised operators (including trash operators)
-  const raisedOperatorIds = await getWantToUse(email);
-  const availableOperators = raisedOperatorIds.filter(id => allOperators[id]);
+  // Get user's owned operators and want-to-use operators from SQL database
+  const ownedOperatorIds = await getOwnedOperators(email);
+  const wantToUseOperatorIds = await getWantToUse(email);
+  
+  // Use owned operators as the available pool
+  // Want-to-use operators will be given priority/preference in scoring
+  const availableOperators = ownedOperatorIds.filter(id => allOperators[id]);
+  const wantToUseSet = new Set(wantToUseOperatorIds);
   
   if (availableOperators.length === 0) {
     return {
@@ -401,7 +413,8 @@ export async function buildTeam(
         preferences,
         requiredNiches,
         preferredNiches,
-        trashOperators
+        trashOperators,
+        wantToUseSet
       );
       
       if (candidate) {
@@ -445,7 +458,8 @@ export async function buildTeam(
         preferences,
         requiredNiches,
         preferredNiches,
-        trashOperators
+        trashOperators,
+        wantToUseSet
       );
       
       if (candidate) {
@@ -489,7 +503,8 @@ export async function buildTeam(
         preferences,
         requiredNiches,
         preferredNiches,
-        trashOperators
+        trashOperators,
+        wantToUseSet
       );
       
       if (candidate) {
@@ -533,7 +548,8 @@ export async function buildTeam(
         preferences,
         requiredNiches,
         preferredNiches,
-        trashOperators
+        trashOperators,
+        wantToUseSet
       );
       
       if (candidate) {
@@ -591,7 +607,7 @@ export async function buildTeam(
       if (!operator) continue;
       
       const niches = getOperatorNiches(operatorId);
-      const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches);
+      const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet);
       
       if (!bestCandidate || score > bestCandidate.score) {
         bestCandidate = { operatorId, operator, niches, score };
@@ -608,7 +624,7 @@ export async function buildTeam(
         if (!operator) continue;
         
         const niches = getOperatorNiches(operatorId);
-        const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches);
+        const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet);
         
         if (!bestCandidate || score > bestCandidate.score) {
           bestCandidate = { operatorId, operator, niches, score };

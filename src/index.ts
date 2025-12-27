@@ -395,7 +395,7 @@ app.post('/api/auth/logout', (req, res) => {
 });
 
 // POST /api/auth/add-operator - Add operator to user's collection
-app.post('/api/auth/add-operator', (req, res) => {
+app.post('/api/auth/add-operator', async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
     
@@ -417,7 +417,7 @@ app.post('/api/auth/add-operator', (req, res) => {
       return;
     }
 
-    const success = addOperatorToAccount(session.email, operatorId);
+    const success = await addOperatorToAccount(session.email, operatorId);
     if (success) {
       res.json({ success: true, operatorId });
     } else {
@@ -430,7 +430,7 @@ app.post('/api/auth/add-operator', (req, res) => {
 });
 
 // POST /api/auth/remove-operator - Remove operator from user's collection
-app.post('/api/auth/remove-operator', (req, res) => {
+app.post('/api/auth/remove-operator', async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
     
@@ -451,7 +451,7 @@ app.post('/api/auth/remove-operator', (req, res) => {
       return;
     }
 
-    const success = removeOperatorFromAccount(session.email, operatorId);
+    const success = await removeOperatorFromAccount(session.email, operatorId);
     if (success) {
       res.json({ success: true, operatorId });
     } else {
@@ -504,75 +504,6 @@ app.post('/api/auth/toggle-want-to-use', async (req, res) => {
   } catch (error: any) {
     console.error('Error toggling want to use:', error);
     res.status(500).json({ error: error.message || 'Failed to toggle want to use' });
-  }
-});
-
-// POST /api/auth/add-operator - Add operator to user's collection
-app.post('/api/auth/add-operator', (req, res) => {
-  try {
-    const sessionId = req.cookies.sessionId;
-    
-    if (!sessionId) {
-      res.status(401).json({ error: 'Not authenticated' });
-      return;
-    }
-
-    const session = getSession(sessionId);
-    if (!session) {
-      res.status(401).json({ error: 'Invalid session' });
-      return;
-    }
-
-
-    const { operatorId } = req.body;
-    if (!operatorId) {
-      res.status(400).json({ error: 'Operator ID is required' });
-      return;
-    }
-
-    const success = addOperatorToAccount(session.email, operatorId);
-    if (success) {
-      res.json({ success: true, operatorId });
-    } else {
-      res.status(400).json({ error: 'Failed to add operator (may already be added)' });
-    }
-  } catch (error: any) {
-    console.error('Error adding operator:', error);
-    res.status(500).json({ error: error.message || 'Failed to add operator' });
-  }
-});
-
-// POST /api/auth/remove-operator - Remove operator from user's collection
-app.post('/api/auth/remove-operator', (req, res) => {
-  try {
-    const sessionId = req.cookies.sessionId;
-    
-    if (!sessionId) {
-      res.status(401).json({ error: 'Not authenticated' });
-      return;
-    }
-
-    const session = getSession(sessionId);
-    if (!session) {
-      res.status(401).json({ error: 'Invalid session' });
-      return;
-    }
-
-    const { operatorId } = req.body;
-    if (!operatorId) {
-      res.status(400).json({ error: 'Operator ID is required' });
-      return;
-    }
-
-    const success = removeOperatorFromAccount(session.email, operatorId);
-    if (success) {
-      res.json({ success: true, operatorId });
-    } else {
-      res.status(400).json({ error: 'Failed to remove operator' });
-    }
-  } catch (error: any) {
-    console.error('Error removing operator:', error);
-    res.status(500).json({ error: error.message || 'Failed to remove operator' });
   }
 });
 
