@@ -497,7 +497,12 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/chiave.png",
-    "niches": []
+    "niches": [],
+    "cnName": "贾维",
+    "twName": "賈維",
+    "jpName": "キアーベ",
+    "krName": "키아베",
+    "internalName": "char_349_chiave"
   },
   "chilchuck": {
     "id": "chilchuck",
@@ -1243,7 +1248,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/kroos_the_keen_glint.png",
-    "niches": []
+    "niches": [],
+    "cnName": "寒芒克洛丝",
+    "twName": "寒芒克洛絲",
+    "jpName": "寒かん芒ぼうクルース",
+    "krName": "크루스 더 킨 글린트",
+    "internalName": "char_1021_kroos2"
   },
   "la_pluma": {
     "id": "la_pluma",
