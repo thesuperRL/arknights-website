@@ -1,0 +1,74 @@
+{
+  "12f": {
+    "id": "12f",
+    "name": "12F",
+    "rarity": 2,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/12f.png",
+    "niches": [
+      "tanking-blocking-operators"
+    ],
+    "internalName": "char_009_12fce"
+  },
+  "durin": {
+    "id": "durin",
+    "name": "Durin",
+    "rarity": 2,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/durin.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "杜林",
+    "jpName": "ドゥリン",
+    "krName": "두린",
+    "internalName": "char_501_durin"
+  },
+  "noir_corne": {
+    "id": "noir_corne",
+    "name": "Noir Corne",
+    "rarity": 2,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/noir_corne.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "黑角",
+    "jpName": "ノイルホーン",
+    "krName": "느와르 코르네",
+    "internalName": "char_500_noirc"
+  },
+  "rangers": {
+    "id": "rangers",
+    "name": "Rangers",
+    "rarity": 2,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/rangers.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "巡林者",
+    "jpName": "レンジャー",
+    "krName": "레인저",
+    "internalName": "char_503_rang"
+  },
+  "yato": {
+    "id": "yato",
+    "name": "Yato",
+    "rarity": 2,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/yato.png",
+    "niches": [
+      "fast-redeploy-operators"
+    ],
+    "cnName": "夜刀",
+    "jpName": "ヤトウ",
+    "krName": "야토",
+    "internalName": "char_502_nblade"
+  }
+}

@@ -28,14 +28,16 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
 // API route to get all niche lists
-app.get('/api/niche-lists', async (_req, res) => {
+app.get('/api/niche-lists', (_req, res) => {
   try {
-    const nicheLists = await loadAllNicheLists();
-    const niches = Object.keys(nicheLists).map(displayName => {
+    const nicheLists = loadAllNicheLists();
+    // Collection is now keyed by filename
+    const niches = Object.entries(nicheLists).map(([filename, operatorList]) => {
       return {
-        displayName,
-        description: nicheLists[displayName].description || '',
-        lastUpdated: nicheLists[displayName].lastUpdated || ''
+        filename,
+        displayName: operatorList.niche,
+        description: operatorList.description || '',
+        lastUpdated: operatorList.lastUpdated || ''
       };
     });
     res.json(niches);
@@ -46,12 +48,12 @@ app.get('/api/niche-lists', async (_req, res) => {
 });
 
 // API route to get a specific niche list
-app.get('/api/niche-lists/:niche', async (req, res) => {
+app.get('/api/niche-lists/:niche', (req, res) => {
   try {
     const niche = decodeURIComponent(req.params.niche);
     
-    // Load by display name (case-insensitive match in SQL)
-    const operatorList = await loadNicheList(niche);
+    // Load by filename (the parameter should be a filename code)
+    const operatorList = loadNicheList(niche);
     
     if (!operatorList) {
       res.status(404).json({ error: 'Operator list not found' });
@@ -156,13 +158,14 @@ app.get('/api/operators/:id', async (req, res) => {
     }
 
     // Load all niche lists to find where this operator is listed
-    const operatorLists = await loadAllNicheLists();
+    const operatorLists = loadAllNicheLists();
     const rankings: Array<{ niche: string; tier: string; notes?: string }> = [];
 
-    for (const [niche, operatorList] of Object.entries(operatorLists)) {
+    // Collection is now keyed by filename
+    for (const [_filename, operatorList] of Object.entries(operatorLists)) {
       if (operatorList.operators && operatorId in operatorList.operators) {
         rankings.push({
-          niche: operatorList.niche || niche,
+          niche: operatorList.niche, // Use display name for the ranking
           tier: 'N/A',
           notes: operatorList.operators[operatorId] || undefined
         });

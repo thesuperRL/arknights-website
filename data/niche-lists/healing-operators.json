@@ -1,0 +1,22 @@
+{
+  "niche": "Healing Operators",
+  "description": "Operators that restore health to allies",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "angelina": "Global passive healing when skill inactive",
+    "ansel": "",
+    "cardigan": "",
+    "gavial": "",
+    "gummy": "",
+    "nearl": "",
+    "nightingale": "",
+    "nightmare": "Don't use her because of this",
+    "perfumer": "Global passive healing",
+    "ptilopsis": "",
+    "saria": "",
+    "shining": "",
+    "silence": "",
+    "susurro": "Incredibly good heal-per-second at the cost of limited skill uses",
+    "warfarin": ""
+  }
+}

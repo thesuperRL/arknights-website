@@ -1,0 +1,2298 @@
+{
+  "amiya_guard": {
+    "id": "amiya_guard",
+    "name": "Amiya (Guard)",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/amiya_guard.png",
+    "internalName": "char_1001_amiya2"
+  },
+  "amiya_medic": {
+    "id": "amiya_medic",
+    "name": "Amiya (Medic)",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/amiya_medic.png",
+    "internalName": "char_1037_amiya3"
+  },
+  "absinthe": {
+    "id": "absinthe",
+    "name": "Absinthe",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/absinthe.png",
+    "niches": [],
+    "cnName": "苦艾",
+    "jpName": "アブサント",
+    "krName": "압생트",
+    "internalName": "char_405_absin"
+  },
+  "akafuyu": {
+    "id": "akafuyu",
+    "name": "Akafuyu",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/akafuyu.png",
+    "niches": [],
+    "cnName": "赤冬",
+    "jpName": "アカフユ",
+    "krName": "아카후유",
+    "internalName": "char_475_akafyu"
+  },
+  "alanna": {
+    "id": "alanna",
+    "name": "Alanna",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/alanna.png",
+    "niches": [],
+    "cnName": "阿兰娜",
+    "twName": "阿蘭娜",
+    "jpName": "アランナ",
+    "krName": "알라나",
+    "internalName": "char_4178_alanna"
+  },
+  "almond": {
+    "id": "almond",
+    "name": "Almond",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/almond.png",
+    "niches": [
+      "Shift Operators"
+    ],
+    "cnName": "杏仁",
+    "jpName": "アーモンド",
+    "krName": "아몬드",
+    "internalName": "char_4105_almond"
+  },
+  "amiya": {
+    "id": "amiya",
+    "name": "Amiya",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/amiya.png",
+    "niches": [
+      "True Damage Operators"
+    ],
+    "cnName": "阿米娅",
+    "twName": "阿米婭",
+    "jpName": "アーミヤ",
+    "krName": "아미야",
+    "internalName": "char_002_amiya"
+  },
+  "andreana": {
+    "id": "andreana",
+    "name": "Andreana",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/andreana.png",
+    "niches": [],
+    "cnName": "安哲拉",
+    "jpName": "アンドレアナ",
+    "krName": "안드레아나",
+    "internalName": "char_218_cuttle"
+  },
+  "aosta": {
+    "id": "aosta",
+    "name": "Aosta",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/aosta.png",
+    "niches": [],
+    "cnName": "奥斯塔",
+    "twName": "奧斯塔",
+    "jpName": "アオスタ",
+    "krName": "아오스타",
+    "internalName": "char_346_aosta"
+  },
+  "april": {
+    "id": "april",
+    "name": "April",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/april.png",
+    "niches": [],
+    "cnName": "四月",
+    "jpName": "エイプリル",
+    "krName": "에이프릴",
+    "internalName": "char_365_aprl"
+  },
+  "aroma": {
+    "id": "aroma",
+    "name": "Aroma",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/aroma.png",
+    "niches": [],
+    "cnName": "阿罗玛",
+    "twName": "阿羅瑪",
+    "jpName": "アロマ",
+    "krName": "아로마",
+    "internalName": "char_446_aroma"
+  },
+  "asbestos": {
+    "id": "asbestos",
+    "name": "Asbestos",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/asbestos.png",
+    "niches": [],
+    "cnName": "石棉",
+    "jpName": "アスベストス",
+    "krName": "아스베스토스",
+    "internalName": "char_378_asbest"
+  },
+  "ashlock": {
+    "id": "ashlock",
+    "name": "Ashlock",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/ashlock.png",
+    "niches": [],
+    "cnName": "灰毫",
+    "jpName": "アッシュロック",
+    "krName": "애쉬락",
+    "internalName": "char_431_ashlok"
+  },
+  "astesia": {
+    "id": "astesia",
+    "name": "Astesia",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/astesia.png",
+    "niches": [
+      "Arts DPS",
+      "Late Laneholder"
+    ],
+    "cnName": "星极",
+    "twName": "星極",
+    "jpName": "アステシア",
+    "krName": "아스테시아",
+    "internalName": "char_274_astesi"
+  },
+  "astgenne": {
+    "id": "astgenne",
+    "name": "Astgenne",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/astgenne.png",
+    "niches": [],
+    "cnName": "星源",
+    "jpName": "アステジーニ",
+    "krName": "아스트젠",
+    "internalName": "char_135_halo"
+  },
+  "aurora": {
+    "id": "aurora",
+    "name": "Aurora",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/aurora.png",
+    "niches": [],
+    "cnName": "极光",
+    "twName": "極光",
+    "jpName": "オーロラ",
+    "krName": "오로라",
+    "internalName": "char_422_aurora"
+  },
+  "ayerscarpe": {
+    "id": "ayerscarpe",
+    "name": "Ayerscarpe",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/ayerscarpe.png",
+    "niches": [],
+    "cnName": "断崖",
+    "twName": "斷崖",
+    "jpName": "エアースカーペ",
+    "krName": "에이어스카르페",
+    "internalName": "char_294_ayer"
+  },
+  "bassline": {
+    "id": "bassline",
+    "name": "Bassline",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/bassline.png",
+    "niches": [],
+    "cnName": "深律",
+    "jpName": "ベースライン",
+    "krName": "베이스라인",
+    "internalName": "char_4109_baslin"
+  },
+  "beeswax": {
+    "id": "beeswax",
+    "name": "Beeswax",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/beeswax.png",
+    "niches": [],
+    "cnName": "蜜蜡",
+    "twName": "蜜蠟",
+    "jpName": "ビーズワクス",
+    "krName": "비즈왁스",
+    "internalName": "char_344_beewax"
+  },
+  "bena": {
+    "id": "bena",
+    "name": "Bena",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/bena.png",
+    "niches": [],
+    "cnName": "贝娜",
+    "twName": "貝娜",
+    "jpName": "ベナ",
+    "krName": "베나",
+    "internalName": "char_369_bena"
+  },
+  "bibeak": {
+    "id": "bibeak",
+    "name": "Bibeak",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/bibeak.png",
+    "niches": [
+      "Stalling"
+    ],
+    "cnName": "柏喙",
+    "jpName": "バイビーク",
+    "krName": "바이비크",
+    "internalName": "char_252_bibeak"
+  },
+  "bison": {
+    "id": "bison",
+    "name": "Bison",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/bison.png",
+    "niches": [
+      "Free Operators",
+      "Tanking/Blocking Operators",
+      "Trash Operators"
+    ],
+    "cnName": "拜松",
+    "jpName": "バイソン",
+    "krName": "바이슨",
+    "internalName": "char_325_bison"
+  },
+  "blacknight": {
+    "id": "blacknight",
+    "name": "Blacknight",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/blacknight.png",
+    "niches": [],
+    "cnName": "夜半",
+    "jpName": "ブラックナイト",
+    "krName": "블랙나이트",
+    "internalName": "char_476_blkngt"
+  },
+  "blitz": {
+    "id": "blitz",
+    "name": "Blitz",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/blitz.png",
+    "niches": [],
+    "cnName": "闪击",
+    "twName": "閃擊",
+    "jpName": "ブリッツ",
+    "krName": "블리츠",
+    "internalName": "char_457_blitz"
+  },
+  "blue_poison": {
+    "id": "blue_poison",
+    "name": "Blue Poison",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/blue_poison.png",
+    "niches": [
+      "Anti-Air Operators",
+      "Dual-DPS Operators"
+    ],
+    "cnName": "蓝毒",
+    "twName": "藍毒",
+    "jpName": "アズリウス",
+    "krName": "블루포이즌",
+    "internalName": "char_129_bluep"
+  },
+  "bobbing": {
+    "id": "bobbing",
+    "name": "Bobbing",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/bobbing.png",
+    "niches": [],
+    "cnName": "波卜",
+    "jpName": "ボビング",
+    "krName": "보빙",
+    "internalName": "char_487_bobb"
+  },
+  "breeze": {
+    "id": "breeze",
+    "name": "Breeze",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/breeze.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "微风",
+    "twName": "微風",
+    "jpName": "ブリーズ",
+    "krName": "브리즈",
+    "internalName": "char_275_breeze"
+  },
+  "brigid": {
+    "id": "brigid",
+    "name": "Brigid",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/brigid.png",
+    "niches": [],
+    "cnName": "水灯心",
+    "jpName": "ブリギッド",
+    "internalName": "char_4177_brigid"
+  },
+  "broca": {
+    "id": "broca",
+    "name": "Broca",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/broca.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "布洛卡",
+    "jpName": "ブローカ",
+    "krName": "브로카",
+    "internalName": "char_356_broca"
+  },
+  "bryophyta": {
+    "id": "bryophyta",
+    "name": "Bryophyta",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/bryophyta.png",
+    "niches": [],
+    "cnName": "苍苔",
+    "twName": "蒼苔",
+    "jpName": "ブライオフャイタ",
+    "krName": "브라이오피타",
+    "internalName": "char_4106_bryota"
+  },
+  "cairn": {
+    "id": "cairn",
+    "name": "Cairn",
+    "rarity": 5,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/cairn.png",
+    "niches": [],
+    "cnName": "响石",
+    "internalName": "char_4214_cairn"
+  },
+  "cantabile": {
+    "id": "cantabile",
+    "name": "Cantabile",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/cantabile.png",
+    "niches": []
+  },
+  "catherine": {
+    "id": "catherine",
+    "name": "Catherine",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/catherine.png",
+    "niches": [],
+    "cnName": "凯瑟琳",
+    "twName": "凱瑟琳",
+    "jpName": "キャサリン",
+    "krName": "캐서린",
+    "internalName": "char_4162_cathy"
+  },
+  "cement": {
+    "id": "cement",
+    "name": "Cement",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/cement.png",
+    "niches": [],
+    "cnName": "洋灰",
+    "jpName": "セメント",
+    "krName": "시멘트",
+    "internalName": "char_464_cement"
+  },
+  "ceylon": {
+    "id": "ceylon",
+    "name": "Ceylon",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/ceylon.png",
+    "niches": [
+      "Free Operators",
+      "Trash Operators"
+    ]
+  },
+  "chiave": {
+    "id": "chiave",
+    "name": "Chiave",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/chiave.png",
+    "niches": []
+  },
+  "chilchuck": {
+    "id": "chilchuck",
+    "name": "Chilchuck",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/chilchuck.png",
+    "niches": [],
+    "cnName": "齐尔查克",
+    "twName": "奇爾查克",
+    "jpName": "チルチャック",
+    "krName": "칠책",
+    "internalName": "char_4144_chilc"
+  },
+  "cliffheart": {
+    "id": "cliffheart",
+    "name": "Cliffheart",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/cliffheart.png",
+    "niches": [
+      "Free Operators",
+      "Shift Operators"
+    ],
+    "cnName": "崖心",
+    "jpName": "クリフハート",
+    "krName": "클리프하트",
+    "internalName": "char_173_slchan"
+  },
+  "coldshot": {
+    "id": "coldshot",
+    "name": "Coldshot",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/coldshot.png",
+    "niches": [],
+    "cnName": "冰酿",
+    "twName": "冰釀",
+    "jpName": "コールドショット",
+    "krName": "콜드샷",
+    "internalName": "char_4104_coldst"
+  },
+  "corroserum": {
+    "id": "corroserum",
+    "name": "Corroserum",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/corroserum.png",
+    "niches": [],
+    "cnName": "蚀清",
+    "twName": "蝕清",
+    "jpName": "コロセラム",
+    "krName": "코로세럼",
+    "internalName": "char_489_serum"
+  },
+  "croissant": {
+    "id": "croissant",
+    "name": "Croissant",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/croissant.png",
+    "niches": [
+      "Defense/Survival Buffing",
+      "Resistance Buff",
+      "Shift Operators",
+      "Tanking/Blocking Operators"
+    ],
+    "cnName": "可颂",
+    "twName": "可頌",
+    "jpName": "クロワッサン",
+    "krName": "크루아상",
+    "internalName": "char_201_moeshd"
+  },
+  "czerny": {
+    "id": "czerny",
+    "name": "Czerny",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/czerny.png",
+    "niches": [],
+    "cnName": "车尔尼",
+    "twName": "車爾尼",
+    "jpName": "ツェルニー",
+    "krName": "체르니",
+    "internalName": "char_4047_pianst"
+  },
+  "dagda": {
+    "id": "dagda",
+    "name": "Dagda",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/dagda.png",
+    "niches": [],
+    "cnName": "达格达",
+    "twName": "達格達",
+    "jpName": "ダグザ",
+    "krName": "다그다",
+    "internalName": "char_157_dagda"
+  },
+  "delphine": {
+    "id": "delphine",
+    "name": "Delphine",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/delphine.png",
+    "niches": [],
+    "cnName": "戴菲恩",
+    "jpName": "デルフィーン",
+    "krName": "델핀",
+    "internalName": "char_4110_delphn"
+  },
+  "diamante": {
+    "id": "diamante",
+    "name": "Diamante",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/diamante.png",
+    "niches": [],
+    "cnName": "折光",
+    "jpName": "ディアマンテ",
+    "krName": "디아만테",
+    "internalName": "char_499_kaitou"
+  },
+  "doc": {
+    "id": "doc",
+    "name": "Doc",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/doc.png",
+    "niches": [],
+    "cnName": "医生",
+    "twName": "醫生",
+    "jpName": "ドック",
+    "krName": "닥",
+    "internalName": "char_4125_rdoc"
+  },
+  "elysium": {
+    "id": "elysium",
+    "name": "Elysium",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/elysium.png",
+    "niches": [
+      "Attack Buffing",
+      "DP Generation",
+      "Defense Shred"
+    ],
+    "cnName": "极境",
+    "twName": "極境",
+    "jpName": "エリジウム",
+    "krName": "엘리시움",
+    "internalName": "char_401_elysm"
+  },
+  "enforcer": {
+    "id": "enforcer",
+    "name": "Enforcer",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/enforcer.png",
+    "niches": [],
+    "cnName": "见行者",
+    "twName": "見行者",
+    "jpName": "エンフォーサー",
+    "krName": "인포서",
+    "internalName": "char_4036_forcer"
+  },
+  "erato": {
+    "id": "erato",
+    "name": "Erato",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/erato.png",
+    "niches": [],
+    "cnName": "埃拉托",
+    "jpName": "エラト",
+    "krName": "에라토",
+    "internalName": "char_4043_erato"
+  },
+  "executor": {
+    "id": "executor",
+    "name": "Executor",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/executor.png",
+    "niches": [
+      "AOE Physical DPS",
+      "Trash Operators"
+    ],
+    "cnName": "送葬人",
+    "jpName": "イグゼキュター",
+    "krName": "이그제큐터",
+    "internalName": "char_279_excu"
+  },
+  "fang_the_fire_sharpened": {
+    "id": "fang_the_fire_sharpened",
+    "name": "Fang the Fire-Sharpened",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/fang_the_fire_sharpened.png",
+    "niches": [],
+    "cnName": "历阵锐枪芬",
+    "twName": "歷陣銳槍芬",
+    "jpName": "歴陣鋭槍れきじんえいそうフェン",
+    "krName": "팽 더 파이어 샤픈드",
+    "internalName": "char_1036_fang2"
+  },
+  "feater": {
+    "id": "feater",
+    "name": "FEater",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/feater.png",
+    "niches": [
+      "Shift Operators"
+    ],
+    "cnName": "食铁兽",
+    "twName": "食鐵獸",
+    "jpName": "エフイーター",
+    "krName": "에프이터",
+    "internalName": "char_241_panda"
+  },
+  "figurino": {
+    "id": "figurino",
+    "name": "Figurino",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/figurino.png",
+    "niches": [],
+    "cnName": "裁度",
+    "jpName": "フィグリーノ",
+    "krName": "피구리노",
+    "internalName": "char_4155_talr"
+  },
+  "firewatch": {
+    "id": "firewatch",
+    "name": "Firewatch",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/firewatch.png",
+    "niches": [
+      "Physical DPS"
+    ],
+    "cnName": "守林人",
+    "jpName": "ファイヤーウォッチ",
+    "krName": "파이어워치",
+    "internalName": "char_158_milu"
+  },
+  "firewhistle": {
+    "id": "firewhistle",
+    "name": "Firewhistle",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/firewhistle.png",
+    "niches": [],
+    "cnName": "火哨",
+    "jpName": "ファイヤーホイッスル",
+    "krName": "파이어휘슬",
+    "internalName": "char_493_firwhl"
+  },
+  "flamebringer": {
+    "id": "flamebringer",
+    "name": "Flamebringer",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/flamebringer.png",
+    "niches": [
+      "Free Operators",
+      "Trash Operators"
+    ],
+    "cnName": "炎客",
+    "jpName": "エンカク",
+    "krName": "플레임브링어",
+    "internalName": "char_131_flameb"
+  },
+  "flint": {
+    "id": "flint",
+    "name": "Flint",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/flint.png",
+    "niches": [],
+    "cnName": "燧石",
+    "jpName": "フリント",
+    "krName": "플린트",
+    "internalName": "char_415_flint"
+  },
+  "folinic": {
+    "id": "folinic",
+    "name": "Folinic",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/folinic.png",
+    "niches": [],
+    "cnName": "亚叶",
+    "twName": "亞葉",
+    "jpName": "フォリニック",
+    "krName": "폴리닉",
+    "internalName": "char_345_folnic"
+  },
+  "franka": {
+    "id": "franka",
+    "name": "Franka",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/franka.png",
+    "niches": [
+      "True Damage Operators"
+    ],
+    "cnName": "芙兰卡",
+    "twName": "芙蘭卡",
+    "jpName": "フランカ",
+    "krName": "프란카",
+    "internalName": "char_106_franka"
+  },
+  "frost": {
+    "id": "frost",
+    "name": "Frost",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/frost.png",
+    "niches": [],
+    "cnName": "霜华",
+    "twName": "霜華",
+    "jpName": "フロスト",
+    "krName": "프로스트",
+    "internalName": "char_458_rfrost"
+  },
+  "fuze": {
+    "id": "fuze",
+    "name": "Fuze",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/fuze.png",
+    "niches": [],
+    "cnName": "导火索",
+    "twName": "導火索",
+    "jpName": "フューズ",
+    "krName": "퓨즈",
+    "internalName": "char_4126_fuze"
+  },
+  "glaucus": {
+    "id": "glaucus",
+    "name": "Glaucus",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/glaucus.png",
+    "niches": [
+      "Anti-Air Operators"
+    ],
+    "cnName": "格劳克斯",
+    "twName": "格勞克斯",
+    "jpName": "グラウコス",
+    "krName": "글라우쿠스",
+    "internalName": "char_326_glacus"
+  },
+  "gracebearer": {
+    "id": "gracebearer",
+    "name": "Gracebearer",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/gracebearer.png",
+    "niches": [],
+    "cnName": "聆音",
+    "jpName": "グレースベアラー",
+    "krName": "그레이스베어러",
+    "internalName": "char_4187_graceb"
+  },
+  "grain_buds": {
+    "id": "grain_buds",
+    "name": "Grain Buds",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/grain_buds.png",
+    "niches": [],
+    "cnName": "小满",
+    "twName": "小滿",
+    "jpName": "グレインバッズ",
+    "krName": "그레인버즈",
+    "internalName": "char_4122_grabds"
+  },
+  "grani": {
+    "id": "grani",
+    "name": "Grani",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/grani.png",
+    "niches": [
+      "Early Laneholder",
+      "Free Operators"
+    ],
+    "cnName": "格拉尼",
+    "jpName": "グラニ",
+    "krName": "그라니",
+    "internalName": "char_220_grani"
+  },
+  "greythroat": {
+    "id": "greythroat",
+    "name": "GreyThroat",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/greythroat.png",
+    "niches": [
+      "Anti-Air Operators",
+      "Physical DPS"
+    ],
+    "cnName": "灰喉",
+    "jpName": "グレースロート",
+    "krName": "그레이스롯",
+    "internalName": "char_367_swllow"
+  },
+  "greyy_the_lightningbearer": {
+    "id": "greyy_the_lightningbearer",
+    "name": "Greyy the Lightningbearer",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/greyy_the_lightningbearer.png",
+    "niches": [],
+    "cnName": "承曦格雷伊",
+    "jpName": "承しょう曦ぎグレイ",
+    "krName": "그레이 더 라이트닝베어러",
+    "internalName": "char_1027_greyy2"
+  },
+  "hadiya": {
+    "id": "hadiya",
+    "name": "Hadiya",
+    "rarity": 5,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/hadiya.png",
+    "niches": [],
+    "cnName": "哈蒂娅",
+    "jpName": "ハディヤ",
+    "internalName": "char_394_hadiya"
+  },
+  "harmonie": {
+    "id": "harmonie",
+    "name": "Harmonie",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/harmonie.png",
+    "niches": [],
+    "cnName": "和弦[note 1]",
+    "jpName": "ハーモニー[note 2]",
+    "krName": "아르모니",
+    "internalName": "char_297_hamoni"
+  },
+  "harold": {
+    "id": "harold",
+    "name": "Harold",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/harold.png",
+    "niches": [],
+    "cnName": "哈洛德",
+    "jpName": "ハロルド",
+    "krName": "해럴드",
+    "internalName": "char_4114_harold"
+  },
+  "heavyrain": {
+    "id": "heavyrain",
+    "name": "Heavyrain",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/heavyrain.png",
+    "niches": [],
+    "cnName": "暴雨",
+    "jpName": "ヘビーレイン",
+    "krName": "헤비레인",
+    "internalName": "char_304_zebra"
+  },
+  "heidi": {
+    "id": "heidi",
+    "name": "Heidi",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/heidi.png",
+    "niches": [],
+    "cnName": "海蒂",
+    "jpName": "ハイディ",
+    "krName": "하이디",
+    "internalName": "char_4045_heidi"
+  },
+  "hibiscus_the_purifier": {
+    "id": "hibiscus_the_purifier",
+    "name": "Hibiscus the Purifier",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/hibiscus_the_purifier.png",
+    "niches": [],
+    "cnName": "濯尘芙蓉",
+    "twName": "濯塵芙蓉",
+    "jpName": "濯たく塵じんハイビスカス",
+    "krName": "히비스커스 더 퓨리파이어",
+    "internalName": "char_1024_hbisc2"
+  },
+  "highmore": {
+    "id": "highmore",
+    "name": "Highmore",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/highmore.png",
+    "niches": [],
+    "cnName": "海沫",
+    "jpName": "ハイモア",
+    "krName": "하이모어",
+    "internalName": "char_4066_highmo"
+  },
+  "honeyberry": {
+    "id": "honeyberry",
+    "name": "Honeyberry",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/honeyberry.png",
+    "niches": [],
+    "cnName": "蜜莓",
+    "jpName": "ハニーベリー",
+    "krName": "허니베리",
+    "internalName": "char_449_glider"
+  },
+  "hung": {
+    "id": "hung",
+    "name": "Hung",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/hung.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "吽",
+    "jpName": "ウン",
+    "krName": "훔",
+    "internalName": "char_226_hmau"
+  },
+  "iana": {
+    "id": "iana",
+    "name": "Iana",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/iana.png",
+    "niches": [],
+    "cnName": "双月",
+    "jpName": "イアナ",
+    "krName": "야나",
+    "internalName": "char_4124_iana"
+  },
+  "indra": {
+    "id": "indra",
+    "name": "Indra",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/indra.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "因陀罗",
+    "twName": "因陀羅",
+    "jpName": "インドラ",
+    "krName": "인드라",
+    "internalName": "char_155_tiger"
+  },
+  "insider": {
+    "id": "insider",
+    "name": "Insider",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/insider.png",
+    "niches": [],
+    "cnName": "隐现",
+    "twName": "隱現",
+    "jpName": "インサイダー",
+    "krName": "인사이더",
+    "internalName": "char_498_inside"
+  },
+  "iris": {
+    "id": "iris",
+    "name": "Iris",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/iris.png",
+    "niches": [],
+    "cnName": "爱丽丝",
+    "twName": "愛麗絲",
+    "jpName": "アイリス",
+    "krName": "아이리스",
+    "internalName": "char_338_iris"
+  },
+  "istina": {
+    "id": "istina",
+    "name": "Istina",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/istina.png",
+    "niches": [
+      "Stalling"
+    ],
+    "cnName": "真理",
+    "jpName": "イースチナ",
+    "krName": "이스티나",
+    "internalName": "char_195_glassb"
+  },
+  "jieyun": {
+    "id": "jieyun",
+    "name": "Jieyun",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/jieyun.png",
+    "niches": [],
+    "cnName": "截云",
+    "twName": "截雲",
+    "jpName": "ジエユン",
+    "krName": "지에윈",
+    "internalName": "char_4078_bdhkgt"
+  },
+  "kafka": {
+    "id": "kafka",
+    "name": "Kafka",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/kafka.png",
+    "niches": [],
+    "cnName": "卡夫卡",
+    "jpName": "カフカ",
+    "krName": "카프카",
+    "internalName": "char_214_kafka"
+  },
+  "kazemaru": {
+    "id": "kazemaru",
+    "name": "Kazemaru",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/kazemaru.png",
+    "niches": [],
+    "cnName": "风丸",
+    "twName": "風丸",
+    "jpName": "カゼマル",
+    "krName": "카제마루",
+    "internalName": "char_4016_kazema"
+  },
+  "kestrel": {
+    "id": "kestrel",
+    "name": "Kestrel",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/kestrel.png",
+    "niches": [],
+    "cnName": "红隼",
+    "twName": "紅隼",
+    "jpName": "ケストレル",
+    "krName": "케스트럴",
+    "internalName": "char_4023_rfalcn"
+  },
+  "kichisei": {
+    "id": "kichisei",
+    "name": "Kichisei",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/kichisei.png",
+    "niches": [],
+    "cnName": "吉星",
+    "jpName": "キチセイ",
+    "internalName": "char_4203_kichi"
+  },
+  "kirara": {
+    "id": "kirara",
+    "name": "Kirara",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/kirara.png",
+    "niches": [],
+    "cnName": "绮良",
+    "twName": "綺良",
+    "jpName": "キララ",
+    "krName": "키라라",
+    "internalName": "char_478_kirara"
+  },
+  "kjera": {
+    "id": "kjera",
+    "name": "Kjera",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/kjera.png",
+    "niches": [],
+    "cnName": "耶拉",
+    "jpName": "イェラ",
+    "krName": "쉐라",
+    "internalName": "char_4013_kjera"
+  },
+  "kroos_the_keen_glint": {
+    "id": "kroos_the_keen_glint",
+    "name": "Kroos the Keen Glint",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/kroos_the_keen_glint.png",
+    "niches": []
+  },
+  "la_pluma": {
+    "id": "la_pluma",
+    "name": "La Pluma",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/la_pluma.png",
+    "niches": [],
+    "cnName": "羽毛笔",
+    "twName": "羽毛筆",
+    "jpName": "ラ・プルマ",
+    "krName": "라 플루마",
+    "internalName": "char_421_crow"
+  },
+  "laios": {
+    "id": "laios",
+    "name": "Laios",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/laios.png",
+    "niches": [],
+    "cnName": "莱欧斯",
+    "twName": "萊歐斯",
+    "jpName": "ライオス",
+    "krName": "라이오스",
+    "internalName": "char_4142_laios"
+  },
+  "lappland": {
+    "id": "lappland",
+    "name": "Lappland",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/lappland.png",
+    "niches": [
+      "AFK Operators",
+      "Dual-DPS Operators",
+      "Silence"
+    ],
+    "cnName": "拉普兰德",
+    "twName": "拉普蘭德",
+    "jpName": "ラップランド",
+    "krName": "라플란드",
+    "internalName": "char_140_whitew"
+  },
+  "lava_the_purgatory": {
+    "id": "lava_the_purgatory",
+    "name": "Lava the Purgatory",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/lava_the_purgatory.png",
+    "niches": [],
+    "cnName": "炎狱炎熔",
+    "twName": "炎獄炎熔",
+    "jpName": "炎えん獄ごくラヴァ",
+    "krName": "라바 더 퍼거토리",
+    "internalName": "char_1011_lava2"
+  },
+  "leizi": {
+    "id": "leizi",
+    "name": "Leizi",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/leizi.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "惊蛰",
+    "twName": "驚蟄",
+    "jpName": "レイズ",
+    "krName": "레이즈",
+    "internalName": "char_306_leizi"
+  },
+  "leonhardt": {
+    "id": "leonhardt",
+    "name": "Leonhardt",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/leonhardt.png",
+    "niches": [],
+    "cnName": "莱恩哈特",
+    "twName": "萊恩哈特",
+    "jpName": "レオンハルト",
+    "krName": "레온하르트",
+    "internalName": "char_373_lionhd"
+  },
+  "leto": {
+    "id": "leto",
+    "name": "Leto",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/leto.png",
+    "niches": [],
+    "cnName": "烈夏",
+    "jpName": "リェータ",
+    "krName": "레토",
+    "internalName": "char_194_leto"
+  },
+  "liskarm": {
+    "id": "liskarm",
+    "name": "Liskarm",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/liskarm.png",
+    "niches": [
+      "SP Batteries",
+      "Tanking/Blocking Operators"
+    ],
+    "cnName": "雷蛇",
+    "jpName": "リスカム",
+    "krName": "리스캄",
+    "internalName": "char_107_liskam"
+  },
+  "lucilla": {
+    "id": "lucilla",
+    "name": "Lucilla",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/lucilla.png",
+    "niches": [],
+    "cnName": "海霓",
+    "jpName": "ルシーラ",
+    "krName": "루실라",
+    "internalName": "char_4079_haini"
+  },
+  "lunacub": {
+    "id": "lunacub",
+    "name": "Lunacub",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/lunacub.png",
+    "niches": [],
+    "cnName": "子月",
+    "jpName": "ルナカブ",
+    "internalName": "char_4014_lunacu"
+  },
+  "manticore": {
+    "id": "manticore",
+    "name": "Manticore",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/manticore.png",
+    "niches": [
+      "Stalling"
+    ],
+    "cnName": "狮蝎",
+    "twName": "獅蠍",
+    "jpName": "マンティコア",
+    "krName": "맨티코어",
+    "internalName": "char_215_mantic"
+  },
+  "matsukiri": {
+    "id": "matsukiri",
+    "name": "Matsukiri",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": false,
+    "profileImage": "/images/operators/matsukiri.png",
+    "niches": [],
+    "cnName": "松桐",
+    "jpName": "マツキリ",
+    "internalName": "char_4199_makiri"
+  },
+  "mayer": {
+    "id": "mayer",
+    "name": "Mayer",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/mayer.png",
+    "niches": [
+      "Solo Operators"
+    ],
+    "cnName": "梅尔",
+    "twName": "梅爾",
+    "jpName": "メイヤー",
+    "krName": "메이어",
+    "internalName": "char_242_otter"
+  },
+  "melanite": {
+    "id": "melanite",
+    "name": "Melanite",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/melanite.png",
+    "niches": [],
+    "cnName": "玫拉",
+    "jpName": "メラナイト",
+    "krName": "멜라나이트",
+    "internalName": "char_4006_melnte"
+  },
+  "meteorite": {
+    "id": "meteorite",
+    "name": "Meteorite",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/meteorite.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "陨星",
+    "twName": "隕星",
+    "jpName": "メテオリーテ",
+    "krName": "메테오라이트",
+    "internalName": "char_219_meteo"
+  },
+  "minimalist": {
+    "id": "minimalist",
+    "name": "Minimalist",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/minimalist.png",
+    "niches": [],
+    "cnName": "至简",
+    "twName": "至簡",
+    "jpName": "ミニマリスト",
+    "krName": "미니멀리스트",
+    "internalName": "char_4054_malist"
+  },
+  "mint": {
+    "id": "mint",
+    "name": "Mint",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/mint.png",
+    "niches": [],
+    "cnName": "薄绿",
+    "twName": "薄綠",
+    "jpName": "ミント",
+    "krName": "민트",
+    "internalName": "char_388_mint"
+  },
+  "miss_christine": {
+    "id": "miss_christine",
+    "name": "Miss.Christine",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/miss_christine.png",
+    "niches": [],
+    "jpName": "ミス・クリスティーン",
+    "krName": "미스 크리스틴",
+    "internalName": "char_4198_christ"
+  },
+  "misumi_uika": {
+    "id": "misumi_uika",
+    "name": "Misumi Uika",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": false,
+    "profileImage": "/images/operators/misumi_uika.png",
+    "niches": [],
+    "cnName": "三角初华",
+    "twName": "三角初華",
+    "jpName": "三角みすみ 初華ういか",
+    "krName": "미스미 우이카",
+    "internalName": "char_4184_dolris"
+  },
+  "mitm": {
+    "id": "mitm",
+    "name": "Mitm",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/mitm.png",
+    "niches": [],
+    "cnName": "渡桥",
+    "jpName": "ミトム",
+    "krName": "님프",
+    "internalName": "char_4147_mitm"
+  },
+  "morgan": {
+    "id": "morgan",
+    "name": "Morgan",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/morgan.png",
+    "niches": [],
+    "cnName": "摩根",
+    "jpName": "モーガン",
+    "internalName": "char_154_morgan"
+  },
+  "mr_nothing": {
+    "id": "mr_nothing",
+    "name": "Mr. Nothing",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/mr_nothing.png",
+    "niches": [],
+    "cnName": "乌有",
+    "twName": "烏有",
+    "jpName": "ウユウ",
+    "krName": "우요우",
+    "internalName": "char_455_nothin"
+  },
+  "mulberry": {
+    "id": "mulberry",
+    "name": "Mulberry",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/mulberry.png",
+    "niches": [],
+    "cnName": "桑葚",
+    "jpName": "マルベリー",
+    "krName": "멀베리",
+    "internalName": "char_473_mberry"
+  },
+  "nearl": {
+    "id": "nearl",
+    "name": "Nearl",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/nearl.png",
+    "niches": [
+      "Healing Operators",
+      "Tanking/Blocking Operators"
+    ],
+    "cnName": "临光",
+    "twName": "臨光",
+    "jpName": "ニアール",
+    "krName": "니어",
+    "internalName": "char_148_nearl"
+  },
+  "nightmare": {
+    "id": "nightmare",
+    "name": "Nightmare",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/nightmare.png",
+    "niches": [
+      "Healing Operators",
+      "Trash Operators"
+    ],
+    "cnName": "夜魔",
+    "jpName": "ナイトメア",
+    "krName": "나이트메어",
+    "internalName": "char_164_nightm"
+  },
+  "nine_colored_deer": {
+    "id": "nine_colored_deer",
+    "name": "Nine-Colored Deer",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/nine_colored_deer.png",
+    "niches": [],
+    "cnName": "九色鹿",
+    "jpName": "九く色しき鹿ろく",
+    "krName": "나인컬러드 디어",
+    "internalName": "char_4019_ncdeer"
+  },
+  "nowell": {
+    "id": "nowell",
+    "name": "Nowell",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/nowell.png",
+    "niches": [],
+    "cnName": "诺威尔",
+    "twName": "諾威爾",
+    "jpName": "ノウエル",
+    "krName": "노웰",
+    "internalName": "char_4173_nowell"
+  },
+  "odda": {
+    "id": "odda",
+    "name": "Odda",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/odda.png",
+    "niches": []
+  },
+  "paprika": {
+    "id": "paprika",
+    "name": "Paprika",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/paprika.png",
+    "niches": []
+  },
+  "papyrus": {
+    "id": "papyrus",
+    "name": "Papyrus",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/papyrus.png",
+    "niches": []
+  },
+  "philae": {
+    "id": "philae",
+    "name": "Philae",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/philae.png",
+    "niches": []
+  },
+  "platinum": {
+    "id": "platinum",
+    "name": "Platinum",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/platinum.png",
+    "niches": [
+      "AFK Operators",
+      "Anti-Air Operators",
+      "Physical DPS"
+    ]
+  },
+  "poncirus": {
+    "id": "poncirus",
+    "name": "Poncirus",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/poncirus.png",
+    "niches": []
+  },
+  "pramanix": {
+    "id": "pramanix",
+    "name": "Pramanix",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/pramanix.png",
+    "niches": [
+      "Defense Shred",
+      "Resistance Shred"
+    ]
+  },
+  "projekt_red": {
+    "id": "projekt_red",
+    "name": "Projekt Red",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/projekt_red.png",
+    "niches": [
+      "Fast-Redeploy Operators"
+    ]
+  },
+  "provence": {
+    "id": "provence",
+    "name": "Provence",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/provence.png",
+    "niches": [
+      "Trash Operators"
+    ]
+  },
+  "proviso": {
+    "id": "proviso",
+    "name": "Proviso",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/proviso.png",
+    "niches": []
+  },
+  "ptilopsis": {
+    "id": "ptilopsis",
+    "name": "Ptilopsis",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/ptilopsis.png",
+    "niches": [
+      "Healing Operators",
+      "SP Batteries"
+    ]
+  },
+  "puzzle": {
+    "id": "puzzle",
+    "name": "Puzzle",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/puzzle.png",
+    "niches": []
+  },
+  "qanipalaat": {
+    "id": "qanipalaat",
+    "name": "Qanipalaat",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/qanipalaat.png",
+    "niches": []
+  },
+  "quercus": {
+    "id": "quercus",
+    "name": "Quercus",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/quercus.png",
+    "niches": []
+  },
+  "rathalos_s_noir_corne": {
+    "id": "rathalos_s_noir_corne",
+    "name": "Rathalos S Noir Corne",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/rathalos_s_noir_corne.png",
+    "niches": []
+  },
+  "record_keeper": {
+    "id": "record_keeper",
+    "name": "Record Keeper",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/record_keeper.png",
+    "niches": []
+  },
+  "reed": {
+    "id": "reed",
+    "name": "Reed",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/reed.png",
+    "niches": [
+      "DP Generation",
+      "Dual-DPS Operators",
+      "Trash Operators"
+    ]
+  },
+  "robin": {
+    "id": "robin",
+    "name": "Robin",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/robin.png",
+    "niches": []
+  },
+  "rockrock": {
+    "id": "rockrock",
+    "name": "Rockrock",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/rockrock.png",
+    "niches": []
+  },
+  "rose_salt": {
+    "id": "rose_salt",
+    "name": "Rose Salt",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/rose_salt.png",
+    "niches": []
+  },
+  "sand_reckoner": {
+    "id": "sand_reckoner",
+    "name": "Sand Reckoner",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/sand_reckoner.png",
+    "niches": []
+  },
+  "santalla": {
+    "id": "santalla",
+    "name": "Santalla",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/santalla.png",
+    "niches": []
+  },
+  "savage": {
+    "id": "savage",
+    "name": "Savage",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/savage.png",
+    "niches": [
+      "Trash Operators"
+    ]
+  },
+  "scene": {
+    "id": "scene",
+    "name": "Scene",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/scene.png",
+    "niches": []
+  },
+  "senshi": {
+    "id": "senshi",
+    "name": "Senshi",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/senshi.png",
+    "niches": []
+  },
+  "sesa": {
+    "id": "sesa",
+    "name": "Sesa",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/sesa.png",
+    "niches": [
+      "Trash Operators",
+      "Unconventional Niches"
+    ]
+  },
+  "shalem": {
+    "id": "shalem",
+    "name": "Shalem",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/shalem.png",
+    "niches": []
+  },
+  "shamare": {
+    "id": "shamare",
+    "name": "Shamare",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/shamare.png",
+    "niches": [
+      "Attack Debuffing",
+      "Defense Shred",
+      "Global Range Operators",
+      "Resistance Shred"
+    ]
+  },
+  "sideroca": {
+    "id": "sideroca",
+    "name": "Sideroca",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/sideroca.png",
+    "niches": [
+      "Free Operators",
+      "Tanking/Blocking Operators",
+      "Trash Operators"
+    ]
+  },
+  "silence": {
+    "id": "silence",
+    "name": "Silence",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/silence.png",
+    "niches": [
+      "Healing Operators",
+      "Unconventional Niches"
+    ]
+  },
+  "skybox": {
+    "id": "skybox",
+    "name": "Skybox",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/skybox.png",
+    "niches": []
+  },
+  "skyfire": {
+    "id": "skyfire",
+    "name": "Skyfire",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/skyfire.png",
+    "niches": [
+      "Trash Operators"
+    ]
+  },
+  "snow_hunter": {
+    "id": "snow_hunter",
+    "name": "Snow Hunter",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/snow_hunter.png",
+    "niches": []
+  },
+  "snowsant": {
+    "id": "snowsant",
+    "name": "Snowsant",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/snowsant.png",
+    "niches": [
+      "Shift Operators"
+    ]
+  },
+  "sora": {
+    "id": "sora",
+    "name": "Sora",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/sora.png",
+    "niches": [
+      "Enmity Healing",
+      "Sleep"
+    ]
+  },
+  "specter": {
+    "id": "specter",
+    "name": "Specter",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/specter.png",
+    "niches": [
+      "Late Laneholder",
+      "Tanking/Blocking Operators"
+    ]
+  },
+  "spuria": {
+    "id": "spuria",
+    "name": "Spuria",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/spuria.png",
+    "niches": []
+  },
+  "surfer": {
+    "id": "surfer",
+    "name": "Surfer",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/surfer.png",
+    "niches": []
+  },
+  "swire": {
+    "id": "swire",
+    "name": "Swire",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/swire.png",
+    "niches": [
+      "Trash Operators"
+    ]
+  },
+  "tachanka": {
+    "id": "tachanka",
+    "name": "Tachanka",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/tachanka.png",
+    "niches": []
+  },
+  "tecno": {
+    "id": "tecno",
+    "name": "Tecno",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/tecno.png",
+    "niches": []
+  },
+  "tequila": {
+    "id": "tequila",
+    "name": "Tequila",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/tequila.png",
+    "niches": []
+  },
+  "texas": {
+    "id": "texas",
+    "name": "Texas",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/texas.png",
+    "niches": [
+      "DP Generation",
+      "Early Laneholder"
+    ]
+  },
+  "tin_man": {
+    "id": "tin_man",
+    "name": "Tin Man",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/tin_man.png",
+    "niches": []
+  },
+  "tippi": {
+    "id": "tippi",
+    "name": "Tippi",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/tippi.png",
+    "niches": []
+  },
+  "toddifons": {
+    "id": "toddifons",
+    "name": "Toddifons",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/toddifons.png",
+    "niches": []
+  },
+  "tomimi": {
+    "id": "tomimi",
+    "name": "Tomimi",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/tomimi.png",
+    "niches": []
+  },
+  "tsukinogi": {
+    "id": "tsukinogi",
+    "name": "Tsukinogi",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/tsukinogi.png",
+    "niches": []
+  },
+  "tuye": {
+    "id": "tuye",
+    "name": "Tuye",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/tuye.png",
+    "niches": []
+  },
+  "underflow": {
+    "id": "underflow",
+    "name": "Underflow",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/underflow.png",
+    "niches": []
+  },
+  "valarqvin": {
+    "id": "valarqvin",
+    "name": "Valarqvin",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/valarqvin.png",
+    "niches": []
+  },
+  "vendela": {
+    "id": "vendela",
+    "name": "Vendela",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/vendela.png",
+    "niches": []
+  },
+  "vetochki": {
+    "id": "vetochki",
+    "name": "Vetochki",
+    "rarity": 5,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/vetochki.png",
+    "niches": []
+  },
+  "vulcan": {
+    "id": "vulcan",
+    "name": "Vulcan",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/vulcan.png",
+    "niches": [
+      "Trash Operators"
+    ]
+  },
+  "waai_fu": {
+    "id": "waai_fu",
+    "name": "Waai Fu",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/waai_fu.png",
+    "niches": [
+      "Fast-Redeploy Operators",
+      "Silence"
+    ]
+  },
+  "wakaba_mutsumi": {
+    "id": "wakaba_mutsumi",
+    "name": "Wakaba Mutsumi",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": false,
+    "profileImage": "/images/operators/wakaba_mutsumi.png",
+    "niches": []
+  },
+  "wanqing": {
+    "id": "wanqing",
+    "name": "Wanqing",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/wanqing.png",
+    "niches": []
+  },
+  "warfarin": {
+    "id": "warfarin",
+    "name": "Warfarin",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/warfarin.png",
+    "niches": [
+      "Attack Buffing",
+      "Healing Operators",
+      "SP Batteries"
+    ]
+  },
+  "warmy": {
+    "id": "warmy",
+    "name": "Warmy",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/warmy.png",
+    "niches": []
+  },
+  "whislash": {
+    "id": "whislash",
+    "name": "Whislash",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/whislash.png",
+    "niches": []
+  },
+  "whisperain": {
+    "id": "whisperain",
+    "name": "Whisperain",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/whisperain.png",
+    "niches": []
+  },
+  "wild_mane": {
+    "id": "wild_mane",
+    "name": "Wild Mane",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/wild_mane.png",
+    "niches": []
+  },
+  "wind_chimes": {
+    "id": "wind_chimes",
+    "name": "Wind Chimes",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/wind_chimes.png",
+    "niches": []
+  },
+  "windflit": {
+    "id": "windflit",
+    "name": "Windflit",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/windflit.png",
+    "niches": []
+  },
+  "wulfenite": {
+    "id": "wulfenite",
+    "name": "Wulfenite",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/wulfenite.png",
+    "niches": []
+  },
+  "xingzhu": {
+    "id": "xingzhu",
+    "name": "Xingzhu",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/xingzhu.png",
+    "niches": []
+  },
+  "yahata_umiri": {
+    "id": "yahata_umiri",
+    "name": "Yahata Umiri",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": false,
+    "profileImage": "/images/operators/yahata_umiri.png",
+    "niches": []
+  },
+  "y_tenji_nyamu": {
+    "id": "y_tenji_nyamu",
+    "name": "Yūtenji Nyamu",
+    "rarity": 5,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/y_tenji_nyamu.png",
+    "niches": []
+  },
+  "zima": {
+    "id": "zima",
+    "name": "Zima",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/zima.png",
+    "niches": [
+      "Attack Buffing",
+      "DP Generation",
+      "Defense/Survival Buffing",
+      "Early Laneholder"
+    ]
+  }
+}

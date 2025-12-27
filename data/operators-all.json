@@ -1,0 +1,3051 @@
+{
+  "confess_47": {
+    "id": "confess_47",
+    "name": "CONFESS-47",
+    "rarity": 1,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/confess_47.png",
+    "niches": []
+  },
+  "castle_3": {
+    "id": "castle_3",
+    "name": "Castle-3",
+    "rarity": 1,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/castle_3.png",
+    "niches": []
+  },
+  "friston_3": {
+    "id": "friston_3",
+    "name": "Friston-3",
+    "rarity": 1,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/friston_3.png",
+    "niches": []
+  },
+  "justice_knight": {
+    "id": "justice_knight",
+    "name": "Justice Knight",
+    "rarity": 1,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/justice_knight.png",
+    "niches": []
+  },
+  "lancet_2": {
+    "id": "lancet_2",
+    "name": "Lancet-2",
+    "rarity": 1,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/lancet_2.png",
+    "niches": []
+  },
+  "phonor_0": {
+    "id": "phonor_0",
+    "name": "PhonoR-0",
+    "rarity": 1,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/phonor_0.png",
+    "niches": []
+  },
+  "thrm_ex": {
+    "id": "thrm_ex",
+    "name": "THRM-EX",
+    "rarity": 1,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/thrm_ex.png",
+    "niches": []
+  },
+  "terra_research_commission": {
+    "id": "terra_research_commission",
+    "name": "Terra Research Commission",
+    "rarity": 1,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/terra_research_commission.png",
+    "niches": []
+  },
+  "u_official": {
+    "id": "u_official",
+    "name": "U-Official",
+    "rarity": 1,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/u_official.png",
+    "niches": []
+  },
+  "12f": {
+    "id": "12f",
+    "name": "12F",
+    "rarity": 2,
+    "class": "Caster",
+    "global": false,
+    "profileImage": "/images/operators/12f.png",
+    "niches": []
+  },
+  "durin": {
+    "id": "durin",
+    "name": "Durin",
+    "rarity": 2,
+    "class": "Caster",
+    "global": false,
+    "profileImage": "/images/operators/durin.png",
+    "niches": []
+  },
+  "noir_corne": {
+    "id": "noir_corne",
+    "name": "Noir Corne",
+    "rarity": 2,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/noir_corne.png",
+    "niches": []
+  },
+  "rangers": {
+    "id": "rangers",
+    "name": "Rangers",
+    "rarity": 2,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/rangers.png",
+    "niches": []
+  },
+  "yato": {
+    "id": "yato",
+    "name": "Yato",
+    "rarity": 2,
+    "class": "Vanguard",
+    "global": false,
+    "profileImage": "/images/operators/yato.png",
+    "niches": []
+  },
+  "adnachiel": {
+    "id": "adnachiel",
+    "name": "Adnachiel",
+    "rarity": 3,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/adnachiel.png",
+    "niches": []
+  },
+  "ansel": {
+    "id": "ansel",
+    "name": "Ansel",
+    "rarity": 3,
+    "class": "Medic",
+    "global": false,
+    "profileImage": "/images/operators/ansel.png",
+    "niches": []
+  },
+  "beagle": {
+    "id": "beagle",
+    "name": "Beagle",
+    "rarity": 3,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/beagle.png",
+    "niches": []
+  },
+  "cardigan": {
+    "id": "cardigan",
+    "name": "Cardigan",
+    "rarity": 3,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/cardigan.png",
+    "niches": []
+  },
+  "catapult": {
+    "id": "catapult",
+    "name": "Catapult",
+    "rarity": 3,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/catapult.png",
+    "niches": []
+  },
+  "fang": {
+    "id": "fang",
+    "name": "Fang",
+    "rarity": 3,
+    "class": "Vanguard",
+    "global": false,
+    "profileImage": "/images/operators/fang.png",
+    "niches": []
+  },
+  "hibiscus": {
+    "id": "hibiscus",
+    "name": "Hibiscus",
+    "rarity": 3,
+    "class": "Medic",
+    "global": false,
+    "profileImage": "/images/operators/hibiscus.png",
+    "niches": []
+  },
+  "kroos": {
+    "id": "kroos",
+    "name": "Kroos",
+    "rarity": 3,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/kroos.png",
+    "niches": []
+  },
+  "lava": {
+    "id": "lava",
+    "name": "Lava",
+    "rarity": 3,
+    "class": "Caster",
+    "global": false,
+    "profileImage": "/images/operators/lava.png",
+    "niches": []
+  },
+  "melantha": {
+    "id": "melantha",
+    "name": "Melantha",
+    "rarity": 3,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/melantha.png",
+    "niches": []
+  },
+  "midnight": {
+    "id": "midnight",
+    "name": "Midnight",
+    "rarity": 3,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/midnight.png",
+    "niches": []
+  },
+  "orchid": {
+    "id": "orchid",
+    "name": "Orchid",
+    "rarity": 3,
+    "class": "Supporter",
+    "global": false,
+    "profileImage": "/images/operators/orchid.png",
+    "niches": []
+  },
+  "plume": {
+    "id": "plume",
+    "name": "Plume",
+    "rarity": 3,
+    "class": "Vanguard",
+    "global": false,
+    "profileImage": "/images/operators/plume.png",
+    "niches": []
+  },
+  "popukar": {
+    "id": "popukar",
+    "name": "Popukar",
+    "rarity": 3,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/popukar.png",
+    "niches": []
+  },
+  "spot": {
+    "id": "spot",
+    "name": "Spot",
+    "rarity": 3,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/spot.png",
+    "niches": []
+  },
+  "steward": {
+    "id": "steward",
+    "name": "Steward",
+    "rarity": 3,
+    "class": "Caster",
+    "global": false,
+    "profileImage": "/images/operators/steward.png",
+    "niches": []
+  },
+  "vanilla": {
+    "id": "vanilla",
+    "name": "Vanilla",
+    "rarity": 3,
+    "class": "Vanguard",
+    "global": false,
+    "profileImage": "/images/operators/vanilla.png",
+    "niches": []
+  },
+  "amiya_guard": {
+    "id": "amiya_guard",
+    "name": "Amiya (Guard)",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/amiya_guard.png"
+  },
+  "amiya_medic": {
+    "id": "amiya_medic",
+    "name": "Amiya (Medic)",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/amiya_medic.png"
+  },
+  "absinthe": {
+    "id": "absinthe",
+    "name": "Absinthe",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/absinthe.png",
+    "niches": []
+  },
+  "akafuyu": {
+    "id": "akafuyu",
+    "name": "Akafuyu",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/akafuyu.png",
+    "niches": []
+  },
+  "alanna": {
+    "id": "alanna",
+    "name": "Alanna",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/alanna.png",
+    "niches": []
+  },
+  "almond": {
+    "id": "almond",
+    "name": "Almond",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/almond.png",
+    "niches": []
+  },
+  "amiya": {
+    "id": "amiya",
+    "name": "Amiya",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/amiya.png",
+    "niches": []
+  },
+  "andreana": {
+    "id": "andreana",
+    "name": "Andreana",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/andreana.png",
+    "niches": []
+  },
+  "aosta": {
+    "id": "aosta",
+    "name": "Aosta",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/aosta.png",
+    "niches": []
+  },
+  "april": {
+    "id": "april",
+    "name": "April",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/april.png",
+    "niches": []
+  },
+  "aroma": {
+    "id": "aroma",
+    "name": "Aroma",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/aroma.png",
+    "niches": []
+  },
+  "asbestos": {
+    "id": "asbestos",
+    "name": "Asbestos",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/asbestos.png",
+    "niches": []
+  },
+  "ashlock": {
+    "id": "ashlock",
+    "name": "Ashlock",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/ashlock.png",
+    "niches": []
+  },
+  "astesia": {
+    "id": "astesia",
+    "name": "Astesia",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/astesia.png",
+    "niches": []
+  },
+  "astgenne": {
+    "id": "astgenne",
+    "name": "Astgenne",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/astgenne.png",
+    "niches": []
+  },
+  "aurora": {
+    "id": "aurora",
+    "name": "Aurora",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/aurora.png",
+    "niches": []
+  },
+  "ayerscarpe": {
+    "id": "ayerscarpe",
+    "name": "Ayerscarpe",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/ayerscarpe.png",
+    "niches": []
+  },
+  "bassline": {
+    "id": "bassline",
+    "name": "Bassline",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/bassline.png",
+    "niches": []
+  },
+  "beeswax": {
+    "id": "beeswax",
+    "name": "Beeswax",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/beeswax.png",
+    "niches": []
+  },
+  "bena": {
+    "id": "bena",
+    "name": "Bena",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/bena.png",
+    "niches": []
+  },
+  "bibeak": {
+    "id": "bibeak",
+    "name": "Bibeak",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/bibeak.png",
+    "niches": []
+  },
+  "bison": {
+    "id": "bison",
+    "name": "Bison",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/bison.png",
+    "niches": []
+  },
+  "blacknight": {
+    "id": "blacknight",
+    "name": "Blacknight",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/blacknight.png",
+    "niches": []
+  },
+  "blitz": {
+    "id": "blitz",
+    "name": "Blitz",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/blitz.png",
+    "niches": []
+  },
+  "blue_poison": {
+    "id": "blue_poison",
+    "name": "Blue Poison",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/blue_poison.png",
+    "niches": []
+  },
+  "bobbing": {
+    "id": "bobbing",
+    "name": "Bobbing",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/bobbing.png",
+    "niches": []
+  },
+  "breeze": {
+    "id": "breeze",
+    "name": "Breeze",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/breeze.png",
+    "niches": []
+  },
+  "brigid": {
+    "id": "brigid",
+    "name": "Brigid",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/brigid.png",
+    "niches": []
+  },
+  "broca": {
+    "id": "broca",
+    "name": "Broca",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/broca.png",
+    "niches": []
+  },
+  "bryophyta": {
+    "id": "bryophyta",
+    "name": "Bryophyta",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/bryophyta.png",
+    "niches": []
+  },
+  "cairn": {
+    "id": "cairn",
+    "name": "Cairn",
+    "rarity": 5,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/cairn.png",
+    "niches": []
+  },
+  "cantabile": {
+    "id": "cantabile",
+    "name": "Cantabile",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/cantabile.png",
+    "niches": []
+  },
+  "catherine": {
+    "id": "catherine",
+    "name": "Catherine",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/catherine.png",
+    "niches": []
+  },
+  "cement": {
+    "id": "cement",
+    "name": "Cement",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/cement.png",
+    "niches": []
+  },
+  "ceylon": {
+    "id": "ceylon",
+    "name": "Ceylon",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/ceylon.png",
+    "niches": []
+  },
+  "chiave": {
+    "id": "chiave",
+    "name": "Chiave",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/chiave.png",
+    "niches": []
+  },
+  "chilchuck": {
+    "id": "chilchuck",
+    "name": "Chilchuck",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/chilchuck.png",
+    "niches": []
+  },
+  "cliffheart": {
+    "id": "cliffheart",
+    "name": "Cliffheart",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/cliffheart.png",
+    "niches": []
+  },
+  "coldshot": {
+    "id": "coldshot",
+    "name": "Coldshot",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/coldshot.png",
+    "niches": []
+  },
+  "corroserum": {
+    "id": "corroserum",
+    "name": "Corroserum",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/corroserum.png",
+    "niches": []
+  },
+  "croissant": {
+    "id": "croissant",
+    "name": "Croissant",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/croissant.png",
+    "niches": []
+  },
+  "czerny": {
+    "id": "czerny",
+    "name": "Czerny",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/czerny.png",
+    "niches": []
+  },
+  "dagda": {
+    "id": "dagda",
+    "name": "Dagda",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/dagda.png",
+    "niches": []
+  },
+  "delphine": {
+    "id": "delphine",
+    "name": "Delphine",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/delphine.png",
+    "niches": []
+  },
+  "diamante": {
+    "id": "diamante",
+    "name": "Diamante",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/diamante.png",
+    "niches": []
+  },
+  "doc": {
+    "id": "doc",
+    "name": "Doc",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/doc.png",
+    "niches": []
+  },
+  "elysium": {
+    "id": "elysium",
+    "name": "Elysium",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/elysium.png",
+    "niches": []
+  },
+  "enforcer": {
+    "id": "enforcer",
+    "name": "Enforcer",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/enforcer.png",
+    "niches": []
+  },
+  "erato": {
+    "id": "erato",
+    "name": "Erato",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/erato.png",
+    "niches": []
+  },
+  "executor": {
+    "id": "executor",
+    "name": "Executor",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/executor.png",
+    "niches": []
+  },
+  "fang_the_fire_sharpened": {
+    "id": "fang_the_fire_sharpened",
+    "name": "Fang the Fire-Sharpened",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/fang_the_fire_sharpened.png",
+    "niches": []
+  },
+  "feater": {
+    "id": "feater",
+    "name": "FEater",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/feater.png",
+    "niches": []
+  },
+  "figurino": {
+    "id": "figurino",
+    "name": "Figurino",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/figurino.png",
+    "niches": []
+  },
+  "firewatch": {
+    "id": "firewatch",
+    "name": "Firewatch",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/firewatch.png",
+    "niches": []
+  },
+  "firewhistle": {
+    "id": "firewhistle",
+    "name": "Firewhistle",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/firewhistle.png",
+    "niches": []
+  },
+  "flamebringer": {
+    "id": "flamebringer",
+    "name": "Flamebringer",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/flamebringer.png",
+    "niches": []
+  },
+  "flint": {
+    "id": "flint",
+    "name": "Flint",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/flint.png",
+    "niches": []
+  },
+  "folinic": {
+    "id": "folinic",
+    "name": "Folinic",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/folinic.png",
+    "niches": []
+  },
+  "franka": {
+    "id": "franka",
+    "name": "Franka",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/franka.png",
+    "niches": []
+  },
+  "frost": {
+    "id": "frost",
+    "name": "Frost",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/frost.png",
+    "niches": []
+  },
+  "fuze": {
+    "id": "fuze",
+    "name": "Fuze",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/fuze.png",
+    "niches": []
+  },
+  "glaucus": {
+    "id": "glaucus",
+    "name": "Glaucus",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/glaucus.png",
+    "niches": []
+  },
+  "gracebearer": {
+    "id": "gracebearer",
+    "name": "Gracebearer",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/gracebearer.png",
+    "niches": []
+  },
+  "grain_buds": {
+    "id": "grain_buds",
+    "name": "Grain Buds",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/grain_buds.png",
+    "niches": []
+  },
+  "grani": {
+    "id": "grani",
+    "name": "Grani",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/grani.png",
+    "niches": []
+  },
+  "greythroat": {
+    "id": "greythroat",
+    "name": "GreyThroat",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/greythroat.png",
+    "niches": []
+  },
+  "greyy_the_lightningbearer": {
+    "id": "greyy_the_lightningbearer",
+    "name": "Greyy the Lightningbearer",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/greyy_the_lightningbearer.png",
+    "niches": []
+  },
+  "hadiya": {
+    "id": "hadiya",
+    "name": "Hadiya",
+    "rarity": 5,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/hadiya.png",
+    "niches": []
+  },
+  "harmonie": {
+    "id": "harmonie",
+    "name": "Harmonie",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/harmonie.png",
+    "niches": []
+  },
+  "harold": {
+    "id": "harold",
+    "name": "Harold",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/harold.png",
+    "niches": []
+  },
+  "heavyrain": {
+    "id": "heavyrain",
+    "name": "Heavyrain",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/heavyrain.png",
+    "niches": []
+  },
+  "heidi": {
+    "id": "heidi",
+    "name": "Heidi",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/heidi.png",
+    "niches": []
+  },
+  "hibiscus_the_purifier": {
+    "id": "hibiscus_the_purifier",
+    "name": "Hibiscus the Purifier",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/hibiscus_the_purifier.png",
+    "niches": []
+  },
+  "highmore": {
+    "id": "highmore",
+    "name": "Highmore",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/highmore.png",
+    "niches": []
+  },
+  "honeyberry": {
+    "id": "honeyberry",
+    "name": "Honeyberry",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/honeyberry.png",
+    "niches": []
+  },
+  "hung": {
+    "id": "hung",
+    "name": "Hung",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/hung.png",
+    "niches": []
+  },
+  "iana": {
+    "id": "iana",
+    "name": "Iana",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/iana.png",
+    "niches": []
+  },
+  "indra": {
+    "id": "indra",
+    "name": "Indra",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/indra.png",
+    "niches": []
+  },
+  "insider": {
+    "id": "insider",
+    "name": "Insider",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/insider.png",
+    "niches": []
+  },
+  "iris": {
+    "id": "iris",
+    "name": "Iris",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/iris.png",
+    "niches": []
+  },
+  "istina": {
+    "id": "istina",
+    "name": "Istina",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/istina.png",
+    "niches": []
+  },
+  "jieyun": {
+    "id": "jieyun",
+    "name": "Jieyun",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/jieyun.png",
+    "niches": []
+  },
+  "kafka": {
+    "id": "kafka",
+    "name": "Kafka",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/kafka.png",
+    "niches": []
+  },
+  "kazemaru": {
+    "id": "kazemaru",
+    "name": "Kazemaru",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/kazemaru.png",
+    "niches": []
+  },
+  "kestrel": {
+    "id": "kestrel",
+    "name": "Kestrel",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/kestrel.png",
+    "niches": []
+  },
+  "kichisei": {
+    "id": "kichisei",
+    "name": "Kichisei",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/kichisei.png",
+    "niches": []
+  },
+  "kirara": {
+    "id": "kirara",
+    "name": "Kirara",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/kirara.png",
+    "niches": []
+  },
+  "kjera": {
+    "id": "kjera",
+    "name": "Kjera",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/kjera.png",
+    "niches": []
+  },
+  "kroos_the_keen_glint": {
+    "id": "kroos_the_keen_glint",
+    "name": "Kroos the Keen Glint",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/kroos_the_keen_glint.png",
+    "niches": []
+  },
+  "la_pluma": {
+    "id": "la_pluma",
+    "name": "La Pluma",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/la_pluma.png",
+    "niches": []
+  },
+  "laios": {
+    "id": "laios",
+    "name": "Laios",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/laios.png",
+    "niches": []
+  },
+  "lappland": {
+    "id": "lappland",
+    "name": "Lappland",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/lappland.png",
+    "niches": []
+  },
+  "lava_the_purgatory": {
+    "id": "lava_the_purgatory",
+    "name": "Lava the Purgatory",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/lava_the_purgatory.png",
+    "niches": []
+  },
+  "leizi": {
+    "id": "leizi",
+    "name": "Leizi",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/leizi.png",
+    "niches": []
+  },
+  "leonhardt": {
+    "id": "leonhardt",
+    "name": "Leonhardt",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/leonhardt.png",
+    "niches": []
+  },
+  "leto": {
+    "id": "leto",
+    "name": "Leto",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/leto.png",
+    "niches": []
+  },
+  "liskarm": {
+    "id": "liskarm",
+    "name": "Liskarm",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/liskarm.png",
+    "niches": []
+  },
+  "lucilla": {
+    "id": "lucilla",
+    "name": "Lucilla",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/lucilla.png",
+    "niches": []
+  },
+  "lunacub": {
+    "id": "lunacub",
+    "name": "Lunacub",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/lunacub.png",
+    "niches": []
+  },
+  "manticore": {
+    "id": "manticore",
+    "name": "Manticore",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/manticore.png",
+    "niches": []
+  },
+  "matsukiri": {
+    "id": "matsukiri",
+    "name": "Matsukiri",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": false,
+    "profileImage": "/images/operators/matsukiri.png",
+    "niches": []
+  },
+  "mayer": {
+    "id": "mayer",
+    "name": "Mayer",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/mayer.png",
+    "niches": []
+  },
+  "melanite": {
+    "id": "melanite",
+    "name": "Melanite",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/melanite.png",
+    "niches": []
+  },
+  "meteorite": {
+    "id": "meteorite",
+    "name": "Meteorite",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/meteorite.png",
+    "niches": []
+  },
+  "minimalist": {
+    "id": "minimalist",
+    "name": "Minimalist",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/minimalist.png",
+    "niches": []
+  },
+  "mint": {
+    "id": "mint",
+    "name": "Mint",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/mint.png",
+    "niches": []
+  },
+  "miss_christine": {
+    "id": "miss_christine",
+    "name": "Miss.Christine",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/miss_christine.png",
+    "niches": []
+  },
+  "misumi_uika": {
+    "id": "misumi_uika",
+    "name": "Misumi Uika",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": false,
+    "profileImage": "/images/operators/misumi_uika.png",
+    "niches": []
+  },
+  "mitm": {
+    "id": "mitm",
+    "name": "Mitm",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/mitm.png",
+    "niches": []
+  },
+  "morgan": {
+    "id": "morgan",
+    "name": "Morgan",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/morgan.png",
+    "niches": []
+  },
+  "mr_nothing": {
+    "id": "mr_nothing",
+    "name": "Mr. Nothing",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/mr_nothing.png",
+    "niches": []
+  },
+  "mulberry": {
+    "id": "mulberry",
+    "name": "Mulberry",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/mulberry.png",
+    "niches": []
+  },
+  "nearl": {
+    "id": "nearl",
+    "name": "Nearl",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/nearl.png",
+    "niches": []
+  },
+  "nightmare": {
+    "id": "nightmare",
+    "name": "Nightmare",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/nightmare.png",
+    "niches": []
+  },
+  "nine_colored_deer": {
+    "id": "nine_colored_deer",
+    "name": "Nine-Colored Deer",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/nine_colored_deer.png",
+    "niches": []
+  },
+  "nowell": {
+    "id": "nowell",
+    "name": "Nowell",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/nowell.png",
+    "niches": []
+  },
+  "odda": {
+    "id": "odda",
+    "name": "Odda",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/odda.png",
+    "niches": []
+  },
+  "paprika": {
+    "id": "paprika",
+    "name": "Paprika",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/paprika.png",
+    "niches": []
+  },
+  "papyrus": {
+    "id": "papyrus",
+    "name": "Papyrus",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/papyrus.png",
+    "niches": []
+  },
+  "philae": {
+    "id": "philae",
+    "name": "Philae",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/philae.png",
+    "niches": []
+  },
+  "platinum": {
+    "id": "platinum",
+    "name": "Platinum",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/platinum.png",
+    "niches": []
+  },
+  "poncirus": {
+    "id": "poncirus",
+    "name": "Poncirus",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/poncirus.png",
+    "niches": []
+  },
+  "pramanix": {
+    "id": "pramanix",
+    "name": "Pramanix",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/pramanix.png",
+    "niches": []
+  },
+  "projekt_red": {
+    "id": "projekt_red",
+    "name": "Projekt Red",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/projekt_red.png",
+    "niches": []
+  },
+  "provence": {
+    "id": "provence",
+    "name": "Provence",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/provence.png",
+    "niches": []
+  },
+  "proviso": {
+    "id": "proviso",
+    "name": "Proviso",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/proviso.png",
+    "niches": []
+  },
+  "ptilopsis": {
+    "id": "ptilopsis",
+    "name": "Ptilopsis",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/ptilopsis.png",
+    "niches": []
+  },
+  "puzzle": {
+    "id": "puzzle",
+    "name": "Puzzle",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/puzzle.png",
+    "niches": []
+  },
+  "qanipalaat": {
+    "id": "qanipalaat",
+    "name": "Qanipalaat",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/qanipalaat.png",
+    "niches": []
+  },
+  "quercus": {
+    "id": "quercus",
+    "name": "Quercus",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/quercus.png",
+    "niches": []
+  },
+  "rathalos_s_noir_corne": {
+    "id": "rathalos_s_noir_corne",
+    "name": "Rathalos S Noir Corne",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/rathalos_s_noir_corne.png",
+    "niches": []
+  },
+  "record_keeper": {
+    "id": "record_keeper",
+    "name": "Record Keeper",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/record_keeper.png",
+    "niches": []
+  },
+  "reed": {
+    "id": "reed",
+    "name": "Reed",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/reed.png",
+    "niches": []
+  },
+  "robin": {
+    "id": "robin",
+    "name": "Robin",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/robin.png",
+    "niches": []
+  },
+  "rockrock": {
+    "id": "rockrock",
+    "name": "Rockrock",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/rockrock.png",
+    "niches": []
+  },
+  "rose_salt": {
+    "id": "rose_salt",
+    "name": "Rose Salt",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/rose_salt.png",
+    "niches": []
+  },
+  "sand_reckoner": {
+    "id": "sand_reckoner",
+    "name": "Sand Reckoner",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/sand_reckoner.png",
+    "niches": []
+  },
+  "santalla": {
+    "id": "santalla",
+    "name": "Santalla",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/santalla.png",
+    "niches": []
+  },
+  "savage": {
+    "id": "savage",
+    "name": "Savage",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/savage.png",
+    "niches": []
+  },
+  "scene": {
+    "id": "scene",
+    "name": "Scene",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/scene.png",
+    "niches": []
+  },
+  "senshi": {
+    "id": "senshi",
+    "name": "Senshi",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/senshi.png",
+    "niches": []
+  },
+  "sesa": {
+    "id": "sesa",
+    "name": "Sesa",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/sesa.png",
+    "niches": []
+  },
+  "shalem": {
+    "id": "shalem",
+    "name": "Shalem",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/shalem.png",
+    "niches": []
+  },
+  "shamare": {
+    "id": "shamare",
+    "name": "Shamare",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/shamare.png",
+    "niches": []
+  },
+  "sideroca": {
+    "id": "sideroca",
+    "name": "Sideroca",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/sideroca.png",
+    "niches": []
+  },
+  "silence": {
+    "id": "silence",
+    "name": "Silence",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/silence.png",
+    "niches": []
+  },
+  "skybox": {
+    "id": "skybox",
+    "name": "Skybox",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/skybox.png",
+    "niches": []
+  },
+  "skyfire": {
+    "id": "skyfire",
+    "name": "Skyfire",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/skyfire.png",
+    "niches": []
+  },
+  "snow_hunter": {
+    "id": "snow_hunter",
+    "name": "Snow Hunter",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/snow_hunter.png",
+    "niches": []
+  },
+  "snowsant": {
+    "id": "snowsant",
+    "name": "Snowsant",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/snowsant.png",
+    "niches": []
+  },
+  "sora": {
+    "id": "sora",
+    "name": "Sora",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/sora.png",
+    "niches": []
+  },
+  "specter": {
+    "id": "specter",
+    "name": "Specter",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/specter.png",
+    "niches": []
+  },
+  "spuria": {
+    "id": "spuria",
+    "name": "Spuria",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/spuria.png",
+    "niches": []
+  },
+  "surfer": {
+    "id": "surfer",
+    "name": "Surfer",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/surfer.png",
+    "niches": []
+  },
+  "swire": {
+    "id": "swire",
+    "name": "Swire",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/swire.png",
+    "niches": []
+  },
+  "tachanka": {
+    "id": "tachanka",
+    "name": "Tachanka",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/tachanka.png",
+    "niches": []
+  },
+  "tecno": {
+    "id": "tecno",
+    "name": "Tecno",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/tecno.png",
+    "niches": []
+  },
+  "tequila": {
+    "id": "tequila",
+    "name": "Tequila",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/tequila.png",
+    "niches": []
+  },
+  "texas": {
+    "id": "texas",
+    "name": "Texas",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/texas.png",
+    "niches": []
+  },
+  "tin_man": {
+    "id": "tin_man",
+    "name": "Tin Man",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/tin_man.png",
+    "niches": []
+  },
+  "tippi": {
+    "id": "tippi",
+    "name": "Tippi",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/tippi.png",
+    "niches": []
+  },
+  "toddifons": {
+    "id": "toddifons",
+    "name": "Toddifons",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/toddifons.png",
+    "niches": []
+  },
+  "tomimi": {
+    "id": "tomimi",
+    "name": "Tomimi",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/tomimi.png",
+    "niches": []
+  },
+  "tsukinogi": {
+    "id": "tsukinogi",
+    "name": "Tsukinogi",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/tsukinogi.png",
+    "niches": []
+  },
+  "tuye": {
+    "id": "tuye",
+    "name": "Tuye",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/tuye.png",
+    "niches": []
+  },
+  "underflow": {
+    "id": "underflow",
+    "name": "Underflow",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/underflow.png",
+    "niches": []
+  },
+  "valarqvin": {
+    "id": "valarqvin",
+    "name": "Valarqvin",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/valarqvin.png",
+    "niches": []
+  },
+  "vendela": {
+    "id": "vendela",
+    "name": "Vendela",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/vendela.png",
+    "niches": []
+  },
+  "vetochki": {
+    "id": "vetochki",
+    "name": "Vetochki",
+    "rarity": 5,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/vetochki.png",
+    "niches": []
+  },
+  "vulcan": {
+    "id": "vulcan",
+    "name": "Vulcan",
+    "rarity": 5,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/vulcan.png",
+    "niches": []
+  },
+  "waai_fu": {
+    "id": "waai_fu",
+    "name": "Waai Fu",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/waai_fu.png",
+    "niches": []
+  },
+  "wakaba_mutsumi": {
+    "id": "wakaba_mutsumi",
+    "name": "Wakaba Mutsumi",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": false,
+    "profileImage": "/images/operators/wakaba_mutsumi.png",
+    "niches": []
+  },
+  "wanqing": {
+    "id": "wanqing",
+    "name": "Wanqing",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/wanqing.png",
+    "niches": []
+  },
+  "warfarin": {
+    "id": "warfarin",
+    "name": "Warfarin",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/warfarin.png",
+    "niches": []
+  },
+  "warmy": {
+    "id": "warmy",
+    "name": "Warmy",
+    "rarity": 5,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/warmy.png",
+    "niches": []
+  },
+  "whislash": {
+    "id": "whislash",
+    "name": "Whislash",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/whislash.png",
+    "niches": []
+  },
+  "whisperain": {
+    "id": "whisperain",
+    "name": "Whisperain",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/whisperain.png",
+    "niches": []
+  },
+  "wild_mane": {
+    "id": "wild_mane",
+    "name": "Wild Mane",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/wild_mane.png",
+    "niches": []
+  },
+  "wind_chimes": {
+    "id": "wind_chimes",
+    "name": "Wind Chimes",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/wind_chimes.png",
+    "niches": []
+  },
+  "windflit": {
+    "id": "windflit",
+    "name": "Windflit",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/windflit.png",
+    "niches": []
+  },
+  "wulfenite": {
+    "id": "wulfenite",
+    "name": "Wulfenite",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/wulfenite.png",
+    "niches": []
+  },
+  "xingzhu": {
+    "id": "xingzhu",
+    "name": "Xingzhu",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/xingzhu.png",
+    "niches": []
+  },
+  "yahata_umiri": {
+    "id": "yahata_umiri",
+    "name": "Yahata Umiri",
+    "rarity": 5,
+    "class": "Specialist",
+    "global": false,
+    "profileImage": "/images/operators/yahata_umiri.png",
+    "niches": []
+  },
+  "y_tenji_nyamu": {
+    "id": "y_tenji_nyamu",
+    "name": "Yūtenji Nyamu",
+    "rarity": 5,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/y_tenji_nyamu.png",
+    "niches": []
+  },
+  "zima": {
+    "id": "zima",
+    "name": "Zima",
+    "rarity": 5,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/zima.png",
+    "niches": []
+  },
+  "aak": {
+    "id": "aak",
+    "name": "Aak",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/aak.png",
+    "niches": []
+  },
+  "angelina": {
+    "id": "angelina",
+    "name": "Angelina",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/angelina.png",
+    "niches": []
+  },
+  "archetto": {
+    "id": "archetto",
+    "name": "Archetto",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/archetto.png",
+    "niches": []
+  },
+  "ascalon": {
+    "id": "ascalon",
+    "name": "Ascalon",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/ascalon.png",
+    "niches": []
+  },
+  "ash": {
+    "id": "ash",
+    "name": "Ash",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/ash.png",
+    "niches": []
+  },
+  "astgenne_the_lightchaser": {
+    "id": "astgenne_the_lightchaser",
+    "name": "Astgenne the Lightchaser",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": false,
+    "profileImage": "/images/operators/astgenne_the_lightchaser.png",
+    "niches": []
+  },
+  "bagpipe": {
+    "id": "bagpipe",
+    "name": "Bagpipe",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/bagpipe.png",
+    "niches": []
+  },
+  "blaze": {
+    "id": "blaze",
+    "name": "Blaze",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/blaze.png",
+    "niches": []
+  },
+  "blaze_the_igniting_spark": {
+    "id": "blaze_the_igniting_spark",
+    "name": "Blaze the Igniting Spark",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/blaze_the_igniting_spark.png",
+    "niches": []
+  },
+  "blemishine": {
+    "id": "blemishine",
+    "name": "Blemishine",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/blemishine.png",
+    "niches": []
+  },
+  "carnelian": {
+    "id": "carnelian",
+    "name": "Carnelian",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/carnelian.png",
+    "niches": []
+  },
+  "ceobe": {
+    "id": "ceobe",
+    "name": "Ceobe",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/ceobe.png",
+    "niches": []
+  },
+  "ch_en": {
+    "id": "ch_en",
+    "name": "Ch'en",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/ch_en.png",
+    "niches": []
+  },
+  "ch_en_the_holungday": {
+    "id": "ch_en_the_holungday",
+    "name": "Ch'en the Holungday",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/ch_en_the_holungday.png",
+    "niches": []
+  },
+  "chongyue": {
+    "id": "chongyue",
+    "name": "Chongyue",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/chongyue.png",
+    "niches": []
+  },
+  "civilight_eterna": {
+    "id": "civilight_eterna",
+    "name": "Civilight Eterna",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/civilight_eterna.png",
+    "niches": []
+  },
+  "crownslayer": {
+    "id": "crownslayer",
+    "name": "Crownslayer",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/crownslayer.png",
+    "niches": []
+  },
+  "degenbrecher": {
+    "id": "degenbrecher",
+    "name": "Degenbrecher",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/degenbrecher.png",
+    "niches": []
+  },
+  "dorothy": {
+    "id": "dorothy",
+    "name": "Dorothy",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/dorothy.png",
+    "niches": []
+  },
+  "dusk": {
+    "id": "dusk",
+    "name": "Dusk",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/dusk.png",
+    "niches": []
+  },
+  "ebenholz": {
+    "id": "ebenholz",
+    "name": "Ebenholz",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/ebenholz.png",
+    "niches": []
+  },
+  "ela": {
+    "id": "ela",
+    "name": "Ela",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/ela.png",
+    "niches": []
+  },
+  "entelechia": {
+    "id": "entelechia",
+    "name": "Entelechia",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/entelechia.png",
+    "niches": []
+  },
+  "eunectes": {
+    "id": "eunectes",
+    "name": "Eunectes",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/eunectes.png",
+    "niches": []
+  },
+  "executor_the_ex_foedere": {
+    "id": "executor_the_ex_foedere",
+    "name": "Executor the Ex Foedere",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/executor_the_ex_foedere.png",
+    "niches": []
+  },
+  "exusiai": {
+    "id": "exusiai",
+    "name": "Exusiai",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/exusiai.png",
+    "niches": []
+  },
+  "exusiai_the_new_covenant": {
+    "id": "exusiai_the_new_covenant",
+    "name": "Exusiai the New Covenant",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/exusiai_the_new_covenant.png",
+    "niches": []
+  },
+  "eyjafjalla": {
+    "id": "eyjafjalla",
+    "name": "Eyjafjalla",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/eyjafjalla.png",
+    "niches": []
+  },
+  "eyjafjalla_the_hv_t_aska": {
+    "id": "eyjafjalla_the_hv_t_aska",
+    "name": "Eyjafjalla the Hvít Aska",
+    "rarity": 6,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/eyjafjalla_the_hv_t_aska.png",
+    "niches": []
+  },
+  "fartooth": {
+    "id": "fartooth",
+    "name": "Fartooth",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/fartooth.png",
+    "niches": []
+  },
+  "fiammetta": {
+    "id": "fiammetta",
+    "name": "Fiammetta",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/fiammetta.png",
+    "niches": []
+  },
+  "flametail": {
+    "id": "flametail",
+    "name": "Flametail",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/flametail.png",
+    "niches": []
+  },
+  "gavial_the_invincible": {
+    "id": "gavial_the_invincible",
+    "name": "Gavial the Invincible",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/gavial_the_invincible.png",
+    "niches": []
+  },
+  "gladiia": {
+    "id": "gladiia",
+    "name": "Gladiia",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/gladiia.png",
+    "niches": []
+  },
+  "gnosis": {
+    "id": "gnosis",
+    "name": "Gnosis",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/gnosis.png",
+    "niches": []
+  },
+  "goldenglow": {
+    "id": "goldenglow",
+    "name": "Goldenglow",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/goldenglow.png",
+    "niches": []
+  },
+  "haruka": {
+    "id": "haruka",
+    "name": "Haruka",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": false,
+    "profileImage": "/images/operators/haruka.png",
+    "niches": []
+  },
+  "hellagur": {
+    "id": "hellagur",
+    "name": "Hellagur",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/hellagur.png",
+    "niches": []
+  },
+  "ho_olheyak": {
+    "id": "ho_olheyak",
+    "name": "Ho'olheyak",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/ho_olheyak.png",
+    "niches": []
+  },
+  "hoederer": {
+    "id": "hoederer",
+    "name": "Hoederer",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/hoederer.png",
+    "niches": []
+  },
+  "horn": {
+    "id": "horn",
+    "name": "Horn",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/horn.png",
+    "niches": []
+  },
+  "hoshiguma": {
+    "id": "hoshiguma",
+    "name": "Hoshiguma",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/hoshiguma.png",
+    "niches": []
+  },
+  "hoshiguma_the_breacher": {
+    "id": "hoshiguma_the_breacher",
+    "name": "Hoshiguma the Breacher",
+    "rarity": 6,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/hoshiguma_the_breacher.png",
+    "niches": []
+  },
+  "ifrit": {
+    "id": "ifrit",
+    "name": "Ifrit",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/ifrit.png",
+    "niches": []
+  },
+  "ines": {
+    "id": "ines",
+    "name": "Ines",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/ines.png",
+    "niches": []
+  },
+  "irene": {
+    "id": "irene",
+    "name": "Irene",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/irene.png",
+    "niches": []
+  },
+  "jessica_the_liberated": {
+    "id": "jessica_the_liberated",
+    "name": "Jessica the Liberated",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/jessica_the_liberated.png",
+    "niches": []
+  },
+  "kal_tsit": {
+    "id": "kal_tsit",
+    "name": "Kal'tsit",
+    "rarity": 6,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/kal_tsit.png",
+    "niches": []
+  },
+  "kirin_r_yato": {
+    "id": "kirin_r_yato",
+    "name": "Kirin R Yato",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/kirin_r_yato.png",
+    "niches": []
+  },
+  "lappland_the_decadenza": {
+    "id": "lappland_the_decadenza",
+    "name": "Lappland the Decadenza",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/lappland_the_decadenza.png",
+    "niches": []
+  },
+  "lee": {
+    "id": "lee",
+    "name": "Lee",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/lee.png",
+    "niches": []
+  },
+  "leizi_the_thunderbringer": {
+    "id": "leizi_the_thunderbringer",
+    "name": "Leizi the Thunderbringer",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/leizi_the_thunderbringer.png",
+    "niches": []
+  },
+  "lemuen": {
+    "id": "lemuen",
+    "name": "Lemuen",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/lemuen.png",
+    "niches": []
+  },
+  "lessing": {
+    "id": "lessing",
+    "name": "Lessing",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/lessing.png",
+    "niches": []
+  },
+  "lin": {
+    "id": "lin",
+    "name": "Lin",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/lin.png",
+    "niches": []
+  },
+  "ling": {
+    "id": "ling",
+    "name": "Ling",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/ling.png",
+    "niches": []
+  },
+  "logos": {
+    "id": "logos",
+    "name": "Logos",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/logos.png",
+    "niches": []
+  },
+  "lumen": {
+    "id": "lumen",
+    "name": "Lumen",
+    "rarity": 6,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/lumen.png",
+    "niches": []
+  },
+  "magallan": {
+    "id": "magallan",
+    "name": "Magallan",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/magallan.png",
+    "niches": []
+  },
+  "mantra": {
+    "id": "mantra",
+    "name": "Mantra",
+    "rarity": 6,
+    "class": "Caster",
+    "global": false,
+    "profileImage": "/images/operators/mantra.png",
+    "niches": []
+  },
+  "marcille": {
+    "id": "marcille",
+    "name": "Marcille",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/marcille.png",
+    "niches": []
+  },
+  "mizuki": {
+    "id": "mizuki",
+    "name": "Mizuki",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/mizuki.png",
+    "niches": []
+  },
+  "mon3tr": {
+    "id": "mon3tr",
+    "name": "Mon3tr",
+    "rarity": 6,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/mon3tr.png",
+    "niches": []
+  },
+  "mostima": {
+    "id": "mostima",
+    "name": "Mostima",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/mostima.png",
+    "niches": []
+  },
+  "mountain": {
+    "id": "mountain",
+    "name": "Mountain",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/mountain.png",
+    "niches": []
+  },
+  "mudrock": {
+    "id": "mudrock",
+    "name": "Mudrock",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/mudrock.png",
+    "niches": []
+  },
+  "muelsyse": {
+    "id": "muelsyse",
+    "name": "Muelsyse",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/muelsyse.png",
+    "niches": []
+  },
+  "m_ynar": {
+    "id": "m_ynar",
+    "name": "Młynar",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/m_ynar.png",
+    "niches": []
+  },
+  "narantuya": {
+    "id": "narantuya",
+    "name": "Narantuya",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/narantuya.png",
+    "niches": []
+  },
+  "nasti": {
+    "id": "nasti",
+    "name": "Nasti",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": false,
+    "profileImage": "/images/operators/nasti.png",
+    "niches": []
+  },
+  "nearl_the_radiant_knight": {
+    "id": "nearl_the_radiant_knight",
+    "name": "Nearl the Radiant Knight",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/nearl_the_radiant_knight.png",
+    "niches": []
+  },
+  "necrass": {
+    "id": "necrass",
+    "name": "Necrass",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/necrass.png",
+    "niches": []
+  },
+  "nian": {
+    "id": "nian",
+    "name": "Nian",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/nian.png",
+    "niches": []
+  },
+  "nightingale": {
+    "id": "nightingale",
+    "name": "Nightingale",
+    "rarity": 6,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/nightingale.png",
+    "niches": []
+  },
+  "nymph": {
+    "id": "nymph",
+    "name": "Nymph",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/nymph.png",
+    "niches": []
+  },
+  "pallas": {
+    "id": "pallas",
+    "name": "Pallas",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/pallas.png",
+    "niches": []
+  },
+  "passenger": {
+    "id": "passenger",
+    "name": "Passenger",
+    "rarity": 6,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/passenger.png",
+    "niches": []
+  },
+  "penance": {
+    "id": "penance",
+    "name": "Penance",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/penance.png",
+    "niches": []
+  },
+  "pepe": {
+    "id": "pepe",
+    "name": "Pepe",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/pepe.png",
+    "niches": []
+  },
+  "phantom": {
+    "id": "phantom",
+    "name": "Phantom",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/phantom.png",
+    "niches": []
+  },
+  "poz_mka": {
+    "id": "poz_mka",
+    "name": "Pozëmka",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/poz_mka.png",
+    "niches": []
+  },
+  "pramanix_the_prerita": {
+    "id": "pramanix_the_prerita",
+    "name": "Pramanix the Prerita",
+    "rarity": 6,
+    "class": "Caster",
+    "global": false,
+    "profileImage": "/images/operators/pramanix_the_prerita.png",
+    "niches": []
+  },
+  "qiubai": {
+    "id": "qiubai",
+    "name": "Qiubai",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/qiubai.png",
+    "niches": []
+  },
+  "raidian": {
+    "id": "raidian",
+    "name": "Raidian",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/raidian.png",
+    "niches": []
+  },
+  "ray": {
+    "id": "ray",
+    "name": "Ray",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/ray.png",
+    "niches": []
+  },
+  "reed_the_flame_shadow": {
+    "id": "reed_the_flame_shadow",
+    "name": "Reed the Flame Shadow",
+    "rarity": 6,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/reed_the_flame_shadow.png",
+    "niches": []
+  },
+  "rosa": {
+    "id": "rosa",
+    "name": "Rosa",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/rosa.png",
+    "niches": []
+  },
+  "rosmontis": {
+    "id": "rosmontis",
+    "name": "Rosmontis",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/rosmontis.png",
+    "niches": []
+  },
+  "saga": {
+    "id": "saga",
+    "name": "Saga",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/saga.png",
+    "niches": []
+  },
+  "saileach": {
+    "id": "saileach",
+    "name": "Saileach",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/saileach.png",
+    "niches": []
+  },
+  "sankta_miksaparato": {
+    "id": "sankta_miksaparato",
+    "name": "Sankta Miksaparato",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/sankta_miksaparato.png",
+    "niches": []
+  },
+  "saria": {
+    "id": "saria",
+    "name": "Saria",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/saria.png",
+    "niches": []
+  },
+  "schwarz": {
+    "id": "schwarz",
+    "name": "Schwarz",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/schwarz.png",
+    "niches": []
+  },
+  "shining": {
+    "id": "shining",
+    "name": "Shining",
+    "rarity": 6,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/shining.png",
+    "niches": []
+  },
+  "shu": {
+    "id": "shu",
+    "name": "Shu",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/shu.png",
+    "niches": []
+  },
+  "siege": {
+    "id": "siege",
+    "name": "Siege",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/siege.png",
+    "niches": []
+  },
+  "silence_the_paradigmatic": {
+    "id": "silence_the_paradigmatic",
+    "name": "Silence the Paradigmatic",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/silence_the_paradigmatic.png",
+    "niches": []
+  },
+  "silverash": {
+    "id": "silverash",
+    "name": "SilverAsh",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/silverash.png",
+    "niches": []
+  },
+  "silverash_the_reignfrost": {
+    "id": "silverash_the_reignfrost",
+    "name": "SilverAsh the Reignfrost",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": false,
+    "profileImage": "/images/operators/silverash_the_reignfrost.png",
+    "niches": []
+  },
+  "skadi": {
+    "id": "skadi",
+    "name": "Skadi",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/skadi.png",
+    "niches": []
+  },
+  "skadi_the_corrupting_heart": {
+    "id": "skadi_the_corrupting_heart",
+    "name": "Skadi the Corrupting Heart",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/skadi_the_corrupting_heart.png",
+    "niches": []
+  },
+  "specter_the_unchained": {
+    "id": "specter_the_unchained",
+    "name": "Specter the Unchained",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/specter_the_unchained.png",
+    "niches": []
+  },
+  "stainless": {
+    "id": "stainless",
+    "name": "Stainless",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/stainless.png",
+    "niches": []
+  },
+  "surtr": {
+    "id": "surtr",
+    "name": "Surtr",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/surtr.png",
+    "niches": []
+  },
+  "suzuran": {
+    "id": "suzuran",
+    "name": "Suzuran",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/suzuran.png",
+    "niches": []
+  },
+  "swire_the_elegant_wit": {
+    "id": "swire_the_elegant_wit",
+    "name": "Swire the Elegant Wit",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/swire_the_elegant_wit.png",
+    "niches": []
+  },
+  "texas_the_omertosa": {
+    "id": "texas_the_omertosa",
+    "name": "Texas the Omertosa",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/texas_the_omertosa.png",
+    "niches": []
+  },
+  "thorns": {
+    "id": "thorns",
+    "name": "Thorns",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/thorns.png",
+    "niches": []
+  },
+  "thorns_the_lodestar": {
+    "id": "thorns_the_lodestar",
+    "name": "Thorns the Lodestar",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/thorns_the_lodestar.png",
+    "niches": []
+  },
+  "togawa_sakiko": {
+    "id": "togawa_sakiko",
+    "name": "Togawa Sakiko",
+    "rarity": 6,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/togawa_sakiko.png",
+    "niches": []
+  },
+  "tragodia": {
+    "id": "tragodia",
+    "name": "Tragodia",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/tragodia.png",
+    "niches": []
+  },
+  "typhon": {
+    "id": "typhon",
+    "name": "Typhon",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/typhon.png",
+    "niches": []
+  },
+  "ulpianus": {
+    "id": "ulpianus",
+    "name": "Ulpianus",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/ulpianus.png",
+    "niches": []
+  },
+  "vigil": {
+    "id": "vigil",
+    "name": "Vigil",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/vigil.png",
+    "niches": []
+  },
+  "vina_victoria": {
+    "id": "vina_victoria",
+    "name": "Vina Victoria",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/vina_victoria.png",
+    "niches": []
+  },
+  "virtuosa": {
+    "id": "virtuosa",
+    "name": "Virtuosa",
+    "rarity": 6,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/virtuosa.png",
+    "niches": []
+  },
+  "viviana": {
+    "id": "viviana",
+    "name": "Viviana",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/viviana.png",
+    "niches": []
+  },
+  "vulpisfoglia": {
+    "id": "vulpisfoglia",
+    "name": "Vulpisfoglia",
+    "rarity": 6,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/vulpisfoglia.png",
+    "niches": []
+  },
+  "w": {
+    "id": "w",
+    "name": "W",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/w.png",
+    "niches": []
+  },
+  "weedy": {
+    "id": "weedy",
+    "name": "Weedy",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/weedy.png",
+    "niches": []
+  },
+  "wi_adel": {
+    "id": "wi_adel",
+    "name": "Wiš'adel",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/wi_adel.png",
+    "niches": []
+  },
+  "yu": {
+    "id": "yu",
+    "name": "Yu",
+    "rarity": 6,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/yu.png",
+    "niches": []
+  },
+  "zuo_le": {
+    "id": "zuo_le",
+    "name": "Zuo Le",
+    "rarity": 6,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/zuo_le.png",
+    "niches": []
+  }
+}

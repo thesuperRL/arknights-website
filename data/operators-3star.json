@@ -1,0 +1,272 @@
+{
+  "adnachiel": {
+    "id": "adnachiel",
+    "name": "Adnachiel",
+    "rarity": 3,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/adnachiel.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "安德切尔",
+    "twName": "安德切爾",
+    "jpName": "アドナキエル",
+    "krName": "아드나키엘",
+    "characters": "char_211_adnach"
+  },
+  "ansel": {
+    "id": "ansel",
+    "name": "Ansel",
+    "rarity": 3,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/ansel.png",
+    "niches": [
+      "healing-operators",
+      "low-rarity"
+    ],
+    "cnName": "安赛尔",
+    "twName": "安賽爾",
+    "jpName": "アンセル",
+    "krName": "안셀",
+    "characters": "char_212_ansel"
+  },
+  "beagle": {
+    "id": "beagle",
+    "name": "Beagle",
+    "rarity": 3,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/beagle.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "米格鲁",
+    "twName": "米格魯",
+    "jpName": "ビーグル",
+    "krName": "비글",
+    "characters": "char_122_beagle"
+  },
+  "cardigan": {
+    "id": "cardigan",
+    "name": "Cardigan",
+    "rarity": 3,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/cardigan.png",
+    "niches": [
+      "healing-operators",
+      "low-rarity",
+      "tanking-blocking-operators"
+    ],
+    "cnName": "卡缇",
+    "twName": "卡緹",
+    "jpName": "カーディ",
+    "krName": "카디건",
+    "characters": "char_209_ardign"
+  },
+  "catapult": {
+    "id": "catapult",
+    "name": "Catapult",
+    "rarity": 3,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/catapult.png",
+    "niches": [],
+    "cnName": "空爆",
+    "jpName": "カタパルト",
+    "krName": "캐터펄트",
+    "characters": "char_282_catap"
+  },
+  "fang": {
+    "id": "fang",
+    "name": "Fang",
+    "rarity": 3,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/fang.png",
+    "niches": [
+      "low-rarity"
+    ],
+    "cnName": "芬",
+    "jpName": "フェン",
+    "krName": "팽",
+    "characters": "char_123_fang"
+  },
+  "hibiscus": {
+    "id": "hibiscus",
+    "name": "Hibiscus",
+    "rarity": 3,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/hibiscus.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "芙蓉",
+    "jpName": "ハイビスカス",
+    "krName": "히비스커스",
+    "characters": "char_120_hibisc"
+  },
+  "kroos": {
+    "id": "kroos",
+    "name": "Kroos",
+    "rarity": 3,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/kroos.png",
+    "niches": [
+      "anti-air-operators",
+      "low-rarity",
+      "physical-dps"
+    ],
+    "cnName": "克洛丝",
+    "twName": "克洛絲",
+    "jpName": "クルース",
+    "krName": "크루스",
+    "characters": "char_124_kroos"
+  },
+  "lava": {
+    "id": "lava",
+    "name": "Lava",
+    "rarity": 3,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/lava.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "炎熔",
+    "jpName": "ラヴァ",
+    "krName": "라바",
+    "characters": "char_121_lava"
+  },
+  "melantha": {
+    "id": "melantha",
+    "name": "Melantha",
+    "rarity": 3,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/melantha.png",
+    "niches": [
+      "low-rarity",
+      "physical-dps"
+    ],
+    "cnName": "玫兰莎",
+    "twName": "玫蘭莎",
+    "jpName": "メランサ",
+    "krName": "멜란사",
+    "characters": "char_208_melan"
+  },
+  "midnight": {
+    "id": "midnight",
+    "name": "Midnight",
+    "rarity": 3,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/midnight.png",
+    "niches": [
+      "Trash Operators",
+      "dual-dps"
+    ],
+    "cnName": "月见夜",
+    "twName": "月見夜",
+    "jpName": "ミッドナイト",
+    "krName": "미드나이트",
+    "characters": "char_283_midn"
+  },
+  "orchid": {
+    "id": "orchid",
+    "name": "Orchid",
+    "rarity": 3,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/orchid.png",
+    "niches": [
+      "low-rarity"
+    ],
+    "cnName": "梓兰",
+    "twName": "梓蘭",
+    "jpName": "オーキッド",
+    "krName": "오키드",
+    "characters": "char_278_orchid"
+  },
+  "plume": {
+    "id": "plume",
+    "name": "Plume",
+    "rarity": 3,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/plume.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "翎羽",
+    "jpName": "プリュム",
+    "krName": "플룸",
+    "characters": "char_192_falco"
+  },
+  "popukar": {
+    "id": "popukar",
+    "name": "Popukar",
+    "rarity": 3,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/popukar.png",
+    "niches": [
+      "early-laneholder",
+      "low-rarity"
+    ],
+    "cnName": "泡普卡",
+    "jpName": "ポプカル",
+    "krName": "포푸카",
+    "characters": "char_281_popka"
+  },
+  "spot": {
+    "id": "spot",
+    "name": "Spot",
+    "rarity": 3,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/spot.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "斑点",
+    "twName": "斑點",
+    "jpName": "スポット",
+    "krName": "스팟",
+    "characters": "char_284_spot"
+  },
+  "steward": {
+    "id": "steward",
+    "name": "Steward",
+    "rarity": 3,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/steward.png",
+    "niches": [
+      "Trash Operators",
+      "low-rarity"
+    ],
+    "cnName": "史都华德",
+    "twName": "史都華德",
+    "jpName": "スチュワード",
+    "krName": "스튜어드",
+    "characters": "char_210_stward"
+  },
+  "vanilla": {
+    "id": "vanilla",
+    "name": "Vanilla",
+    "rarity": 3,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/vanilla.png",
+    "niches": [],
+    "cnName": "香草",
+    "jpName": "バニラ",
+    "krName": "바닐라",
+    "characters": "char_240_wyvern"
+  }
+}

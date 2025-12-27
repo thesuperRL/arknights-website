@@ -1,0 +1,108 @@
+{
+  "confess_47": {
+    "id": "confess_47",
+    "name": "CONFESS-47",
+    "rarity": 1,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/confess_47.png",
+    "niches": [],
+    "internalName": "char_4188_confes"
+  },
+  "castle_3": {
+    "id": "castle_3",
+    "name": "Castle-3",
+    "rarity": 1,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/castle_3.png",
+    "niches": [
+      "def-buff",
+      "robot"
+    ],
+    "internalName": "char_286_cast3"
+  },
+  "friston_3": {
+    "id": "friston_3",
+    "name": "Friston-3",
+    "rarity": 1,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/friston_3.png",
+    "niches": [],
+    "internalName": "char_4093_frston"
+  },
+  "justice_knight": {
+    "id": "justice_knight",
+    "name": "Justice Knight",
+    "rarity": 1,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/justice_knight.png",
+    "niches": [],
+    "cnName": "正义骑士号",
+    "jpName": "ジャスティスナイト",
+    "krName": "저스티스 나이트",
+    "internalName": "char_4000_jnight"
+  },
+  "lancet_2": {
+    "id": "lancet_2",
+    "name": "Lancet-2",
+    "rarity": 1,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/lancet_2.png",
+    "niches": [
+      "robot"
+    ],
+    "internalName": "char_285_medic2"
+  },
+  "phonor_0": {
+    "id": "phonor_0",
+    "name": "PhonoR-0",
+    "rarity": 1,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/phonor_0.png",
+    "niches": [],
+    "internalName": "char_4136_phonor"
+  },
+  "thrm_ex": {
+    "id": "thrm_ex",
+    "name": "THRM-EX",
+    "rarity": 1,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/thrm_ex.png",
+    "niches": [
+      "def-shred",
+      "res-shred",
+      "robot"
+    ],
+    "internalName": "char_376_therex"
+  },
+  "terra_research_commission": {
+    "id": "terra_research_commission",
+    "name": "Terra Research Commission",
+    "rarity": 1,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/terra_research_commission.png",
+    "niches": [],
+    "cnName": "泰拉大陆调查团",
+    "twName": "泰拉大陸調查團",
+    "jpName": "テラ大陸調査団",
+    "krName": "테라 대륙 조사단",
+    "internalName": "char_4077_palico"
+  },
+  "u_official": {
+    "id": "u_official",
+    "name": "U-Official",
+    "rarity": 1,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/u_official.png",
+    "niches": [],
+    "internalName": "char_4091_ulika"
+  }
+}

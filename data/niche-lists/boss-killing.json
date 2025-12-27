@@ -1,0 +1,16 @@
+{
+  "niche": "Boss Killing",
+  "description": "Operators that do well against bosses and high-stat elite enemies",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "ceobe": "",
+    "eunectes": "",
+    "eyjafjalla": "",
+    "schwarz": "",
+    "silverash": ""
+  },
+  "relatedNiches": [
+    "Arts DPS",
+    "Physical DPS"
+  ]
+}

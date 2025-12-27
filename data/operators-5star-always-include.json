@@ -1,0 +1,18 @@
+{
+  "amiya_guard": {
+    "id": "amiya_guard",
+    "name": "Amiya (Guard)",
+    "rarity": 5,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/amiya_guard.png"
+  },
+  "amiya_medic": {
+    "id": "amiya_medic",
+    "name": "Amiya (Medic)",
+    "rarity": 5,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/amiya_medic.png"
+  }
+}

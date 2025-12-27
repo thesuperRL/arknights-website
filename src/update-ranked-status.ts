@@ -52,7 +52,8 @@ function getOperatorNiches(): Map<string, string[]> {
   const operatorLists = loadAllNicheLists();
   const operatorNiches = new Map<string, string[]>();
   
-  for (const [niche, operatorList] of Object.entries(operatorLists)) {
+  // Collection is now keyed by filename
+  for (const [filename, operatorList] of Object.entries(operatorLists)) {
     // Skip if operatorList doesn't have operators dictionary
     if (!operatorList.operators || typeof operatorList.operators !== 'object') {
       continue;
@@ -63,13 +64,14 @@ function getOperatorNiches(): Map<string, string[]> {
         operatorNiches.set(operatorId, []);
       }
       const niches = operatorNiches.get(operatorId)!;
-      if (!niches.includes(niche)) {
-        niches.push(niche);
+      // Store filename codes, not display names
+      if (!niches.includes(filename)) {
+        niches.push(filename);
       }
     }
   }
 
-  // Add trash operators to niches
+  // Add trash operators to niches (using display name "Trash Operators" as it's a special case)
   const trashOperators = getTrashOperators();
   for (const operatorId of trashOperators) {
     if (!operatorNiches.has(operatorId)) {

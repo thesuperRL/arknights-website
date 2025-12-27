@@ -1,0 +1,24 @@
+{
+  "niche": "Late Laneholder",
+  "description": "Operators that hold lanes well in late game",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "astesia": "Arts laneholder but not really good. Direct powercrept by Viviana",
+    "blaze": "",
+    "cuora": "Once highest defense in game",
+    "cutter": "",
+    "dur_nar": "",
+    "executor_the_ex_foedere": "",
+    "gummy": "",
+    "hellagur": "Not a great laneholder but needs no heals with him",
+    "hoshiguma": "Almost immortal",
+    "nian": "",
+    "saria": "",
+    "silverash": "",
+    "specter": "Actually immortal (for 15 seconds)",
+    "weedy": ""
+  },
+  "relatedNiches": [
+    "Tanking/Blocking Operators"
+  ]
+}

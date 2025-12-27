@@ -1,0 +1,16 @@
+{
+  "niche": "AOE Physical DPS",
+  "description": "Operators that deal high physical damage in an area",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "ascalon": "",
+    "ethan": "",
+    "executor": "",
+    "silverash": "",
+    "w": ""
+  },
+  "relatedNiches": [
+    "Boss Killing",
+    "Physical DPS"
+  ]
+}

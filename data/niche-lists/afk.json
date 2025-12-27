@@ -1,0 +1,17 @@
+{
+  "niche": "AFK Operators",
+  "description": "Operators that are able to do their job well without player interaction",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "blaze": "AFK skill 2",
+    "eyjafjalla": "AFK AOE caster",
+    "gavial": "AFK healer",
+    "gummy": "AFK laneholder / healer to some degree",
+    "hoshiguma": "AFK tank",
+    "ifrit": "AFK AOE caster",
+    "lappland": "AFK late laneholder",
+    "platinum": "AFK sniper",
+    "siege": "AFK early laneholder / DP generation",
+    "silverash": "AFK late laneholder"
+  }
+}

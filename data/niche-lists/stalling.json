@@ -1,0 +1,24 @@
+{
+  "niche": "Stalling",
+  "description": "Operators that crowd control enemies",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "angelina": "Reliable slow to many enemies in range during skill",
+    "ascalon": "",
+    "bibeak": "Can kind of stunlock low atk speed enemies",
+    "ceobe": "OK slow",
+    "crownslayer": "",
+    "deepcolor": "",
+    "ethan": "Crazy low rarity staller",
+    "istina": "Just a worse Angelina.",
+    "manticore": "Diet Ascalon/Ethan",
+    "may": "Surprisingly good crowd control",
+    "mostima": "Massive slow but at a really high SP cost",
+    "nighmare": "Don't use her because of this",
+    "w": "Slight crowd control with mine stuns",
+    "weedy": ""
+  },
+  "relatedNiches": [
+    "Tanking/Blocking Operators"
+  ]
+}

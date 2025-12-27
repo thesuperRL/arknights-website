@@ -13,8 +13,8 @@ export interface NicheRange {
 }
 
 export interface TeamPreferences {
-  requiredNiches: Record<string, NicheRange>; // Niche filename -> range of operators needed (e.g., {"healing": {min: 1, max: 2}})
-  preferredNiches: Record<string, NicheRange>; // Niche filename -> range of operators preferred (e.g., {"arts_dps": {min: 1, max: 3}})
+  requiredNiches: Record<string, NicheRange>; // Niche filename -> range of operators needed (e.g., {"healing-operators": {min: 1, max: 2}})
+  preferredNiches: Record<string, NicheRange>; // Niche filename -> range of operators preferred (e.g., {"arts-dps": {min: 1, max: 3}})
   rarityRanking?: number[]; // Rarity preference order (e.g., [6, 4, 5, 3, 2, 1] means 6-star is most preferred, then 4-star, etc.)
   allowDuplicates?: boolean; // Allow multiple operators from same niche
 }
@@ -106,18 +106,18 @@ function loadAllOperators(): Record<string, any> {
 /**
  * Gets niches for an operator, with AOE niches merged into DPS niches
  */
-async function getOperatorNiches(operatorId: string): Promise<string[]> {
-  const niches = await getNichesForOperator(operatorId);
+function getOperatorNiches(operatorId: string): string[] {
+  const niches = getNichesForOperator(operatorId);
   const expandedNiches = [...niches];
   
-  // Add arts_dps if operator has arts_aoe but not arts_dps
-  if (niches.includes('arts_aoe') && !niches.includes('arts_dps')) {
-    expandedNiches.push('arts_dps');
+  // Add arts-dps if operator has aoe-arts-dps but not arts-dps
+  if (niches.includes('aoe-arts-dps') && !niches.includes('arts-dps')) {
+    expandedNiches.push('arts-dps');
   }
   
-  // Add phys_dps if operator has phys_aoe but not phys_dps
-  if (niches.includes('phys_aoe') && !niches.includes('phys_dps')) {
-    expandedNiches.push('phys_dps');
+  // Add physical-dps if operator has aoe-physical-dps but not physical-dps
+  if (niches.includes('aoe-physical-dps') && !niches.includes('physical-dps')) {
+    expandedNiches.push('physical-dps');
   }
   
   return expandedNiches;
@@ -154,8 +154,12 @@ function scoreOperator(
   
   // Calculate current niche counts in existing team (using normalized niches)
   const normalizeNiche = (niche: string): string => {
-    if (niche === 'arts_aoe') return 'arts_dps';
-    if (niche === 'phys_aoe') return 'phys_dps';
+    // Normalize AOE niches to their DPS equivalents for counting purposes
+    if (niche === 'aoe-arts-dps') return 'arts-dps';
+    if (niche === 'aoe-physical-dps') return 'physical-dps';
+    // Legacy support (old format with underscores)
+    if (niche === 'arts_aoe') return 'arts-dps';
+    if (niche === 'phys_aoe') return 'physical-dps';
     return niche;
   };
   
@@ -168,7 +172,7 @@ function scoreOperator(
   }
   
   // Niches that should not contribute to scoring (using filenames)
-  const excludedNiches = new Set(['free', 'soloists', 'enmity_healers', 'unconventional_niches', 'dual-dps']);
+  const excludedNiches = new Set(['free', 'soloist', 'enmity_healing', 'unconventional-niches', 'dual-dps']);
   
   // Boost score for operators in want-to-use list
   if (wantToUseSet && wantToUseSet.has(operatorId)) {
@@ -295,7 +299,7 @@ function scoreOperator(
 /**
  * Finds the best operator to fill a specific niche
  */
-async function findBestOperatorForNiche(
+function findBestOperatorForNiche(
   niche: string,
   availableOperators: string[],
   allOperators: Record<string, any>,
@@ -305,7 +309,7 @@ async function findBestOperatorForNiche(
   preferredNiches: Set<string>,
   trashOperators?: Set<string>,
   wantToUseSet?: Set<string>
-): Promise<{ operatorId: string; operator: any; niches: string[] } | null> {
+): { operatorId: string; operator: any; niches: string[] } | null {
   let bestOperator: { operatorId: string; operator: any; niches: string[] } | null = null;
   let bestScore = -Infinity;
   
@@ -316,11 +320,11 @@ async function findBestOperatorForNiche(
     const operator = allOperators[operatorId];
     if (!operator) continue;
     
-    const niches = await getOperatorNiches(operatorId);
+    const niches = getOperatorNiches(operatorId);
     // Check if operator fills the niche (including AOE variants)
     const fillsNiche = niches.includes(niche) || 
-                      (niche === 'arts_dps' && niches.includes('arts_aoe')) ||
-                      (niche === 'phys_dps' && niches.includes('phys_aoe'));
+                      (niche === 'arts-dps' && niches.includes('aoe-arts-dps')) ||
+                      (niche === 'physical-dps' && niches.includes('aoe-physical-dps'));
     if (!fillsNiche) continue;
     
     const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet);
@@ -339,11 +343,11 @@ async function findBestOperatorForNiche(
       const operator = allOperators[operatorId];
       if (!operator) continue;
       
-      const niches = await getOperatorNiches(operatorId);
+      const niches = getOperatorNiches(operatorId);
       // Check if operator fills the niche (including AOE variants)
       const fillsNiche = niches.includes(niche) || 
-                        (niche === 'arts_dps' && niches.includes('arts_aoe')) ||
-                        (niche === 'phys_dps' && niches.includes('phys_aoe'));
+                        (niche === 'arts-dps' && niches.includes('aoe-arts-dps')) ||
+                        (niche === 'physical-dps' && niches.includes('aoe-physical-dps'));
       if (!fillsNiche) continue;
       
       const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet);
@@ -400,12 +404,13 @@ export async function buildTeam(
   
   // First pass: Fill required niches to minimum
   for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
-    const currentCount = nicheCounts[niche] || 0;
     const minCount = range.min;
     
     // Fill up to minimum
-    while (currentCount < minCount && team.length < 12) {
-      const candidate = await findBestOperatorForNiche(
+    while (team.length < 12) {
+      const currentCount = nicheCounts[niche] || 0;
+      if (currentCount >= minCount) break;
+      const candidate = findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
@@ -431,10 +436,6 @@ export async function buildTeam(
         for (const opNiche of candidate.niches) {
           nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
         }
-        
-        // Update currentCount for this niche
-        const newCurrentCount = nicheCounts[niche] || 0;
-        if (newCurrentCount >= minCount) break;
       } else {
         break; // No more operators available for this niche
       }
@@ -445,12 +446,13 @@ export async function buildTeam(
   for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
     if (team.length >= 12) break;
     
-    const currentCount = nicheCounts[niche] || 0;
     const maxCount = range.max;
     
     // Fill up to maximum if we have space
-    while (currentCount < maxCount && team.length < 12) {
-      const candidate = await findBestOperatorForNiche(
+    while (team.length < 12) {
+      const currentCount = nicheCounts[niche] || 0;
+      if (currentCount >= maxCount) break;
+      const candidate = findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
@@ -476,10 +478,6 @@ export async function buildTeam(
         for (const opNiche of candidate.niches) {
           nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
         }
-        
-        // Update currentCount for this niche
-        const newCurrentCount = nicheCounts[niche] || 0;
-        if (newCurrentCount >= maxCount) break;
       } else {
         break; // No more operators available for this niche
       }
@@ -490,12 +488,13 @@ export async function buildTeam(
   for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
     if (team.length >= 12) break;
     
-    const currentCount = nicheCounts[niche] || 0;
     const minCount = range.min;
     
     // Fill up to minimum
-    while (currentCount < minCount && team.length < 12) {
-      const candidate = await findBestOperatorForNiche(
+    while (team.length < 12) {
+      const currentCount = nicheCounts[niche] || 0;
+      if (currentCount >= minCount) break;
+      const candidate = findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
@@ -521,10 +520,6 @@ export async function buildTeam(
         for (const opNiche of candidate.niches) {
           nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
         }
-        
-        // Update currentCount for this niche
-        const newCurrentCount = nicheCounts[niche] || 0;
-        if (newCurrentCount >= minCount) break;
       } else {
         break; // No more operators available for this niche
       }
@@ -535,12 +530,13 @@ export async function buildTeam(
   for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
     if (team.length >= 12) break;
     
-    const currentCount = nicheCounts[niche] || 0;
     const maxCount = range.max;
     
     // Fill up to maximum if we have space
-    while (currentCount < maxCount && team.length < 12) {
-      const candidate = await findBestOperatorForNiche(
+    while (team.length < 12) {
+      const currentCount = nicheCounts[niche] || 0;
+      if (currentCount >= maxCount) break;
+      const candidate = findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
@@ -566,10 +562,6 @@ export async function buildTeam(
         for (const opNiche of candidate.niches) {
           nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
         }
-        
-        // Update currentCount for this niche
-        const newCurrentCount = nicheCounts[niche] || 0;
-        if (newCurrentCount >= maxCount) break;
       } else {
         break; // No more operators available for this niche
       }
@@ -606,7 +598,7 @@ export async function buildTeam(
       const operator = allOperators[operatorId];
       if (!operator) continue;
       
-      const niches = await getOperatorNiches(operatorId);
+      const niches = getOperatorNiches(operatorId);
       const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet);
       
       if (!bestCandidate || score > bestCandidate.score) {
@@ -623,7 +615,7 @@ export async function buildTeam(
         const operator = allOperators[operatorId];
         if (!operator) continue;
         
-        const niches = await getOperatorNiches(operatorId);
+        const niches = getOperatorNiches(operatorId);
         const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet);
         
         if (!bestCandidate || score > bestCandidate.score) {
@@ -705,18 +697,18 @@ export async function buildTeam(
 export function getDefaultPreferences(): TeamPreferences {
   return {
     requiredNiches: {
-        'dp_generator': { min: 1, max: 2 },
-        'laneholder': { min: 2, max: 3 },
-        'healing': { min: 2, max: 3 },
-        'arts_dps': { min: 1, max: 2 },
-        'phys_dps': { min: 1, max: 2 },
+        'dp-generation': { min: 1, max: 2 },
+        'early-laneholder': { min: 1, max: 2 },
+        'late-laneholder': { min: 1, max: 2 },
+        'healing-operators': { min: 2, max: 3 },
+        'arts-dps': { min: 1, max: 2 },
+        'physical-dps': { min: 1, max: 2 },
     },
     preferredNiches: {
-        'early_laneholder': { min: 1, max: 1 },
-        'anti-air': { min: 1, max: 1 },
-        'tanking_blocking': { min: 1, max: 2 },
-        'stall': { min: 0, max: 1 },
-        'fast-redeploy': { min: 0, max: 1 }
+        'anti-air-operators': { min: 1, max: 1 },
+        'tanking-blocking-operators': { min: 1, max: 2 },
+        'stalling': { min: 0, max: 1 },
+        'fast-redeploy-operators': { min: 0, max: 1 }
     },
     rarityRanking: [6, 4, 5, 3, 2, 1], // Default: 6 > 4 > 5 > 3 > 2 > 1
     allowDuplicates: true

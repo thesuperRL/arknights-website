@@ -1,0 +1,14 @@
+{
+  "niche": "Fast-Redeploy Operators",
+  "description": "Operators that are able to redeploy quickly",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "crownslayer": "",
+    "gravel": "Soaks damage well",
+    "phantom": "Essentially two fast-redeploys with his shadow",
+    "projekt_red": "",
+    "utage": "A clunkier Texas Alter",
+    "waai_fu": "",
+    "yato": "a pseudo-fast-redeploy that works when you have nothing else"
+  }
+}

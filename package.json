@@ -19,7 +19,8 @@
     "fix:global": "ts-node src/fix-global-status.ts",
     "rename:internalname": "ts-node src/rename-characters-to-internalname.ts",
     "upload:accounts": "ts-node src/upload-accounts-to-sql.ts",
-    "migrate:niches": "ts-node src/migrate-niches-to-sql.ts"
+    "migrate:niches": "ts-node src/migrate-niches-to-sql.ts",
+    "migrate:niches:from-sql": "ts-node src/migrate-niches-from-sql.ts"
   },
   "repository": {
     "type": "git",

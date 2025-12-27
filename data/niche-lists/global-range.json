@@ -1,0 +1,9 @@
+{
+  "niche": "Global Range Operators",
+  "description": "Operators that are able to hit anywhere on the map",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "ambriel": "Awkward targeting priority",
+    "shamare": "Global debuffs"
+  }
+}

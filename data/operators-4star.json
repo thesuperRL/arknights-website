@@ -1,0 +1,921 @@
+{
+  "aciddrop": {
+    "id": "aciddrop",
+    "name": "Aciddrop",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/aciddrop.png",
+    "niches": [],
+    "cnName": "酸糖",
+    "jpName": "アシッドドロップ",
+    "krName": "애시드드롭",
+    "internalName": "char_366_acdrop"
+  },
+  "akkord": {
+    "id": "akkord",
+    "name": "Akkord",
+    "rarity": 4,
+    "class": "Caster",
+    "global": false,
+    "profileImage": "/images/operators/akkord.png",
+    "niches": [],
+    "cnName": "协律",
+    "internalName": "char_4051_akkord"
+  },
+  "ambriel": {
+    "id": "ambriel",
+    "name": "Ambriel",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/ambriel.png",
+    "niches": [
+      "Trash Operators",
+      "global-range",
+      "physical-dps"
+    ],
+    "cnName": "安比尔",
+    "twName": "安比爾",
+    "jpName": "アンブリエル",
+    "krName": "엠브리엘",
+    "internalName": "char_302_glaze"
+  },
+  "arene": {
+    "id": "arene",
+    "name": "Arene",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/arene.png",
+    "niches": [],
+    "cnName": "芳汀",
+    "jpName": "アレーン",
+    "krName": "아렌",
+    "internalName": "char_271_spikes"
+  },
+  "beanstalk": {
+    "id": "beanstalk",
+    "name": "Beanstalk",
+    "rarity": 4,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/beanstalk.png",
+    "niches": [],
+    "cnName": "豆苗",
+    "jpName": "ビーンストーク",
+    "krName": "빈스토크",
+    "internalName": "char_452_bstalk"
+  },
+  "beehunter": {
+    "id": "beehunter",
+    "name": "Beehunter",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/beehunter.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "猎蜂",
+    "twName": "獵蜂",
+    "jpName": "ビーハンター",
+    "krName": "비헌터",
+    "internalName": "char_137_brownb"
+  },
+  "bubble": {
+    "id": "bubble",
+    "name": "Bubble",
+    "rarity": 4,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/bubble.png",
+    "niches": [],
+    "cnName": "泡泡",
+    "jpName": "バブル",
+    "krName": "버블",
+    "internalName": "char_381_bubble"
+  },
+  "caper": {
+    "id": "caper",
+    "name": "Caper",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/caper.png",
+    "niches": [],
+    "cnName": "跃跃",
+    "twName": "躍躍",
+    "jpName": "ケイパー",
+    "krName": "케이퍼",
+    "internalName": "char_4100_caper"
+  },
+  "chestnut": {
+    "id": "chestnut",
+    "name": "Chestnut",
+    "rarity": 4,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/chestnut.png",
+    "niches": [],
+    "cnName": "褐果",
+    "jpName": "チェスナット",
+    "krName": "체스트넛",
+    "internalName": "char_4041_chnut"
+  },
+  "click": {
+    "id": "click",
+    "name": "Click",
+    "rarity": 4,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/click.png",
+    "niches": [],
+    "cnName": "卡达",
+    "twName": "卡達",
+    "jpName": "カシャ",
+    "krName": "클릭",
+    "internalName": "char_328_cammou"
+  },
+  "contrail": {
+    "id": "contrail",
+    "name": "Contrail",
+    "rarity": 4,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/contrail.png",
+    "niches": [],
+    "cnName": "云迹",
+    "jpName": "コントレイル",
+    "krName": "콘트레일",
+    "internalName": "char_4165_ctrail"
+  },
+  "conviction": {
+    "id": "conviction",
+    "name": "Conviction",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/conviction.png",
+    "niches": [
+      "Trash Operators",
+      "free"
+    ],
+    "cnName": "断罪者",
+    "twName": "斷罪者",
+    "jpName": "コンビクション",
+    "krName": "컨빅션",
+    "internalName": "char_159_peacok"
+  },
+  "courier": {
+    "id": "courier",
+    "name": "Courier",
+    "rarity": 4,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/courier.png",
+    "niches": [
+      "Trash Operators",
+      "early-laneholder"
+    ],
+    "cnName": "讯使",
+    "twName": "訊使",
+    "jpName": "クーリエ",
+    "krName": "쿠리어",
+    "internalName": "char_198_blackd"
+  },
+  "cuora": {
+    "id": "cuora",
+    "name": "Cuora",
+    "rarity": 4,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/cuora.png",
+    "niches": [
+      "late-laneholder",
+      "low-rarity",
+      "tanking-blocking-operators"
+    ],
+    "cnName": "蛇屠箱",
+    "jpName": "クオーラ",
+    "krName": "쿠오라",
+    "internalName": "char_150_snakek"
+  },
+  "cutter": {
+    "id": "cutter",
+    "name": "Cutter",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/cutter.png",
+    "niches": [
+      "late-laneholder",
+      "low-rarity"
+    ],
+    "cnName": "刻刀",
+    "jpName": "カッター",
+    "krName": "커터",
+    "internalName": "char_301_cutter"
+  },
+  "deepcolor": {
+    "id": "deepcolor",
+    "name": "Deepcolor",
+    "rarity": 4,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/deepcolor.png",
+    "niches": [
+      "low-rarity",
+      "stalling"
+    ],
+    "cnName": "深海色",
+    "jpName": "ディピカ",
+    "krName": "딥컬러",
+    "internalName": "char_110_deepcl"
+  },
+  "dobermann": {
+    "id": "dobermann",
+    "name": "Dobermann",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/dobermann.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "杜宾",
+    "twName": "杜賓",
+    "jpName": "ドーベルマン",
+    "krName": "도베르만",
+    "internalName": "char_130_doberm"
+  },
+  "dur_nar": {
+    "id": "dur_nar",
+    "name": "Dur-nar",
+    "rarity": 4,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/dur_nar.png",
+    "niches": [
+      "arts-dps",
+      "late-laneholder"
+    ],
+    "cnName": "坚雷",
+    "twName": "堅雷",
+    "jpName": "ジュナー",
+    "krName": "듀나",
+    "internalName": "char_260_durnar"
+  },
+  "earthspirit": {
+    "id": "earthspirit",
+    "name": "Earthspirit",
+    "rarity": 4,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/earthspirit.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "地灵",
+    "twName": "地灵",
+    "jpName": "アーススピリット",
+    "krName": "어스스피릿",
+    "internalName": "char_183_skgoat"
+  },
+  "estelle": {
+    "id": "estelle",
+    "name": "Estelle",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/estelle.png",
+    "niches": [
+      "low-rarity"
+    ],
+    "cnName": "艾丝黛尔",
+    "twName": "艾絲黛爾",
+    "jpName": "エステル",
+    "krName": "에스텔",
+    "internalName": "char_127_estell"
+  },
+  "ethan": {
+    "id": "ethan",
+    "name": "Ethan",
+    "rarity": 4,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/ethan.png",
+    "niches": [
+      "aoe-physical-dps",
+      "low-rarity",
+      "physical-dps",
+      "stalling"
+    ],
+    "cnName": "伊桑",
+    "jpName": "イーサン",
+    "krName": "에단",
+    "internalName": "char_355_ethan"
+  },
+  "frostleaf": {
+    "id": "frostleaf",
+    "name": "Frostleaf",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/frostleaf.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "霜叶",
+    "twName": "霜葉",
+    "jpName": "フロストリーフ",
+    "krName": "프로스트리프",
+    "internalName": "char_193_frostl"
+  },
+  "gavial": {
+    "id": "gavial",
+    "name": "Gavial",
+    "rarity": 4,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/gavial.png",
+    "niches": [
+      "afk",
+      "healing-operators"
+    ],
+    "cnName": "嘉维尔",
+    "twName": "嘉維爾",
+    "jpName": "ガヴィル",
+    "krName": "가비알",
+    "internalName": "char_187_ccheal"
+  },
+  "gitano": {
+    "id": "gitano",
+    "name": "Gitano",
+    "rarity": 4,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/gitano.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "远山",
+    "twName": "遠山",
+    "jpName": "ギターノ",
+    "krName": "기타노",
+    "internalName": "char_109_fmout"
+  },
+  "gravel": {
+    "id": "gravel",
+    "name": "Gravel",
+    "rarity": 4,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/gravel.png",
+    "niches": [
+      "fast-redeploy-operators",
+      "low-rarity",
+      "tanking-blocking-operators"
+    ],
+    "cnName": "砾",
+    "twName": "礫",
+    "jpName": "グラベル",
+    "krName": "그라벨",
+    "internalName": "char_237_gravel"
+  },
+  "greyy": {
+    "id": "greyy",
+    "name": "Greyy",
+    "rarity": 4,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/greyy.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "格雷伊",
+    "jpName": "グレイ",
+    "krName": "그레이",
+    "internalName": "char_253_greyy"
+  },
+  "gummy": {
+    "id": "gummy",
+    "name": "Gummy",
+    "rarity": 4,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/gummy.png",
+    "niches": [
+      "afk",
+      "early-laneholder",
+      "healing-operators",
+      "late-laneholder",
+      "low-rarity",
+      "tanking-blocking-operators"
+    ],
+    "cnName": "古米",
+    "jpName": "グム",
+    "krName": "굼",
+    "internalName": "char_196_sunbr"
+  },
+  "haze": {
+    "id": "haze",
+    "name": "Haze",
+    "rarity": 4,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/haze.png",
+    "niches": [
+      "Trash Operators",
+      "res-shred"
+    ],
+    "cnName": "夜烟",
+    "jpName": "ヘイズ",
+    "krName": "헤이즈",
+    "internalName": "char_141_nights"
+  },
+  "humus": {
+    "id": "humus",
+    "name": "Humus",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/humus.png",
+    "niches": [],
+    "cnName": "休谟斯",
+    "twName": "休謨斯",
+    "jpName": "ヒューマス",
+    "krName": "휴머스",
+    "internalName": "char_491_humus"
+  },
+  "indigo": {
+    "id": "indigo",
+    "name": "Indigo",
+    "rarity": 4,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/indigo.png",
+    "niches": [],
+    "cnName": "深靛",
+    "jpName": "インディゴ",
+    "krName": "인디고",
+    "internalName": "char_469_indigo"
+  },
+  "jackie": {
+    "id": "jackie",
+    "name": "Jackie",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/jackie.png",
+    "niches": [],
+    "cnName": "杰克",
+    "twName": "傑克",
+    "jpName": "ジャッキー",
+    "krName": "재키",
+    "internalName": "char_347_jaksel"
+  },
+  "jaye": {
+    "id": "jaye",
+    "name": "Jaye",
+    "rarity": 4,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/jaye.png",
+    "niches": [],
+    "cnName": "孑",
+    "jpName": "ジェイ",
+    "krName": "제이",
+    "internalName": "char_272_strong"
+  },
+  "jessica": {
+    "id": "jessica",
+    "name": "Jessica",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/jessica.png",
+    "niches": [
+      "Trash Operators",
+      "anti-air-operators",
+      "physical-dps"
+    ],
+    "cnName": "杰西卡",
+    "twName": "潔西卡",
+    "jpName": "ジェシカ",
+    "krName": "제시카",
+    "internalName": "char_235_jesica"
+  },
+  "luo_xiaohei": {
+    "id": "luo_xiaohei",
+    "name": "Luo Xiaohei",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/luo_xiaohei.png",
+    "niches": [],
+    "cnName": "罗小黑",
+    "twName": "羅小黑",
+    "jpName": "羅小黒ロシャオヘイ",
+    "krName": "나소흑",
+    "internalName": "char_4067_lolxh"
+  },
+  "lutonada": {
+    "id": "lutonada",
+    "name": "Lutonada",
+    "rarity": 4,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/lutonada.png",
+    "niches": [],
+    "cnName": "露托",
+    "jpName": "ルトナダ",
+    "krName": "루토나다",
+    "internalName": "char_4130_luton"
+  },
+  "matoimaru": {
+    "id": "matoimaru",
+    "name": "Matoimaru",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/matoimaru.png",
+    "niches": [
+      "tanking-blocking-operators"
+    ],
+    "cnName": "缠丸",
+    "twName": "纏丸",
+    "jpName": "マトイマル",
+    "krName": "마토이마루",
+    "internalName": "char_289_gyuki"
+  },
+  "matterhorn": {
+    "id": "matterhorn",
+    "name": "Matterhorn",
+    "rarity": 4,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/matterhorn.png",
+    "niches": [
+      "tanking-blocking-operators"
+    ],
+    "cnName": "角峰",
+    "jpName": "マッターホルン",
+    "krName": "마터호른",
+    "internalName": "char_199_yak"
+  },
+  "may": {
+    "id": "may",
+    "name": "May",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/may.png",
+    "niches": [
+      "anti-air-operators",
+      "low-rarity",
+      "stalling"
+    ],
+    "cnName": "梅",
+    "jpName": "メイ",
+    "krName": "메이",
+    "internalName": "char_133_mm"
+  },
+  "meteor": {
+    "id": "meteor",
+    "name": "Meteor",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/meteor.png",
+    "niches": [
+      "def-shred",
+      "low-rarity"
+    ],
+    "cnName": "流星",
+    "jpName": "メテオ",
+    "krName": "메테오",
+    "internalName": "char_126_shotst"
+  },
+  "mousse": {
+    "id": "mousse",
+    "name": "Mousse",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/mousse.png",
+    "niches": [
+      "atk-debuff",
+      "low-rarity"
+    ],
+    "cnName": "慕斯",
+    "jpName": "ムース",
+    "krName": "무스",
+    "internalName": "char_185_frncat"
+  },
+  "myrrh": {
+    "id": "myrrh",
+    "name": "Myrrh",
+    "rarity": 4,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/myrrh.png",
+    "niches": [
+      "Trash Operators"
+    ],
+    "cnName": "末药",
+    "jpName": "ミルラ",
+    "krName": "미르",
+    "internalName": "char_117_myrrh"
+  },
+  "myrtle": {
+    "id": "myrtle",
+    "name": "Myrtle",
+    "rarity": 4,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/myrtle.png",
+    "niches": [
+      "dp-generation"
+    ],
+    "cnName": "桃金娘",
+    "jpName": "テンニンカ",
+    "krName": "머틀",
+    "internalName": "char_151_myrtle"
+  },
+  "perfumer": {
+    "id": "perfumer",
+    "name": "Perfumer",
+    "rarity": 4,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/perfumer.png",
+    "niches": [
+      "enmity-healing",
+      "healing-operators",
+      "low-rarity"
+    ],
+    "cnName": "调香师",
+    "twName": "調香師",
+    "jpName": "パフューマー",
+    "krName": "퍼퓨머",
+    "internalName": "char_181_flower"
+  },
+  "pinecone": {
+    "id": "pinecone",
+    "name": "Pinecone",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/pinecone.png",
+    "niches": [],
+    "cnName": "松果",
+    "jpName": "パインコーン",
+    "krName": "파인콘",
+    "internalName": "char_440_pinecn"
+  },
+  "podenco": {
+    "id": "podenco",
+    "name": "Podenco",
+    "rarity": 4,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/podenco.png",
+    "niches": [],
+    "cnName": "波登可",
+    "jpName": "ポデンコ",
+    "krName": "포덴코",
+    "internalName": "char_258_podego"
+  },
+  "pudding": {
+    "id": "pudding",
+    "name": "Pudding",
+    "rarity": 4,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/pudding.png",
+    "niches": [],
+    "cnName": "布丁",
+    "jpName": "プリン",
+    "krName": "푸딩",
+    "internalName": "char_4004_pudd"
+  },
+  "purestream": {
+    "id": "purestream",
+    "name": "Purestream",
+    "rarity": 4,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/purestream.png",
+    "niches": [
+      "Trash Operators",
+      "def-buff"
+    ],
+    "cnName": "清流",
+    "jpName": "セイリュウ",
+    "krName": "퓨어스트림",
+    "internalName": "char_385_finlpp"
+  },
+  "quartz": {
+    "id": "quartz",
+    "name": "Quartz",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/quartz.png",
+    "niches": [],
+    "cnName": "石英",
+    "jpName": "クォーツ",
+    "krName": "쿼츠",
+    "internalName": "char_4063_quartz"
+  },
+  "roberta": {
+    "id": "roberta",
+    "name": "Roberta",
+    "rarity": 4,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/roberta.png",
+    "niches": [],
+    "cnName": "罗比菈塔",
+    "twName": "羅比菈塔",
+    "jpName": "ロベルタ",
+    "krName": "로베르타",
+    "internalName": "char_484_robrta"
+  },
+  "rope": {
+    "id": "rope",
+    "name": "Rope",
+    "rarity": 4,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/rope.png",
+    "niches": [
+      "Trash Operators",
+      "low-rarity",
+      "shift"
+    ],
+    "cnName": "暗索",
+    "jpName": "ロープ",
+    "krName": "로프",
+    "internalName": "char_236_rope"
+  },
+  "scavenger": {
+    "id": "scavenger",
+    "name": "Scavenger",
+    "rarity": 4,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/scavenger.png",
+    "niches": [
+      "Trash Operators",
+      "early-laneholder"
+    ],
+    "cnName": "清道夫",
+    "jpName": "スカベンジャー",
+    "krName": "스캐빈저",
+    "internalName": "char_149_scave"
+  },
+  "shaw": {
+    "id": "shaw",
+    "name": "Shaw",
+    "rarity": 4,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/shaw.png",
+    "niches": [
+      "shift"
+    ],
+    "cnName": "阿消",
+    "jpName": "ショウ",
+    "krName": "쇼",
+    "internalName": "char_277_sqrrel"
+  },
+  "shirayuki": {
+    "id": "shirayuki",
+    "name": "Shirayuki",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/shirayuki.png",
+    "niches": [],
+    "cnName": "白雪",
+    "jpName": "シラユキ",
+    "krName": "시라유키",
+    "internalName": "char_118_yuki"
+  },
+  "snegurochka": {
+    "id": "snegurochka",
+    "name": "Snegurochka",
+    "rarity": 4,
+    "class": "Vanguard",
+    "global": false,
+    "profileImage": "/images/operators/snegurochka.png",
+    "niches": [],
+    "cnName": "冬时",
+    "internalName": "char_4208_wintim"
+  },
+  "sussurro": {
+    "id": "sussurro",
+    "name": "Sussurro",
+    "rarity": 4,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/sussurro.png",
+    "niches": [],
+    "cnName": "苏苏洛",
+    "twName": "蘇蘇洛",
+    "jpName": "ススーロ",
+    "krName": "수수로",
+    "internalName": "char_298_susuro"
+  },
+  "totter": {
+    "id": "totter",
+    "name": "Totter",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/totter.png",
+    "niches": [],
+    "cnName": "铅踝",
+    "twName": "鉛踝",
+    "jpName": "トター",
+    "krName": "토터",
+    "internalName": "char_4062_totter"
+  },
+  "utage": {
+    "id": "utage",
+    "name": "Utage",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/utage.png",
+    "niches": [
+      "fast-redeploy-operators"
+    ],
+    "cnName": "宴",
+    "jpName": "ウタゲ",
+    "krName": "우타게",
+    "internalName": "char_337_utage"
+  },
+  "verdant": {
+    "id": "verdant",
+    "name": "Verdant",
+    "rarity": 4,
+    "class": "Specialist",
+    "global": true,
+    "profileImage": "/images/operators/verdant.png",
+    "niches": [],
+    "cnName": "维荻",
+    "twName": "維荻",
+    "jpName": "ヴァ―ダント",
+    "krName": "버던트",
+    "internalName": "char_4107_vrdant"
+  },
+  "vermeil": {
+    "id": "vermeil",
+    "name": "Vermeil",
+    "rarity": 4,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/vermeil.png",
+    "niches": [
+      "anti-air-operators"
+    ],
+    "cnName": "红云",
+    "twName": "紅雲",
+    "jpName": "ヴァーミル",
+    "krName": "버메일",
+    "internalName": "char_190_clour"
+  },
+  "vigna": {
+    "id": "vigna",
+    "name": "Vigna",
+    "rarity": 4,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/vigna.png",
+    "niches": [
+      "low-rarity",
+      "physical-dps"
+    ],
+    "cnName": "红豆",
+    "twName": "紅豆",
+    "jpName": "ヴィグナ",
+    "krName": "비그나",
+    "internalName": "char_290_vigna"
+  },
+  "windscoot": {
+    "id": "windscoot",
+    "name": "Windscoot",
+    "rarity": 4,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/windscoot.png",
+    "niches": [],
+    "cnName": "骋风",
+    "jpName": "ウインドスクート",
+    "krName": "윈드스쿠트",
+    "internalName": "char_445_wscoot"
+  }
+}

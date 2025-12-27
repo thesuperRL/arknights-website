@@ -1,0 +1,27 @@
+{
+  "niche": "Physical DPS",
+  "description": "Operators that deal high physical damage",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "ambriel": "Awkward targeting priority",
+    "ascalon": "",
+    "ceobe": "",
+    "ethan": "",
+    "exusiai": "",
+    "exusiai_the_new_covenant": "",
+    "firewatch": "Comfortable to use but not good enough to be worth using",
+    "greythroat": "Exusiai but worse",
+    "jessica": "Kroos has better DPS until you E2 her",
+    "kroos": "Surprising damage for a 3-star",
+    "melantha": "",
+    "platinum": "Deals more damage the lower her attack speed, meaning cold debuffs are actually a buff",
+    "schwarz": "Against high-defense targets + when Pozy cannot be used well",
+    "silverash": "",
+    "vigna": "Pretty crazy dps for a 4-star",
+    "w": ""
+  },
+  "relatedNiches": [
+    "AOE Physical DPS",
+    "Boss Killing"
+  ]
+}

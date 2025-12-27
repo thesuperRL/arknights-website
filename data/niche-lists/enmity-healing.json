@@ -1,0 +1,11 @@
+{
+  "niche": "Enmity Healing",
+  "description": "Operators that can heal 'unhealable' operators (i.e. Reapers, Mushas, and Juggernauts)",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "angelina": "Global passive healing when skill inactive",
+    "civilight_eterna": "",
+    "perfumer": "Global passive healing",
+    "sora": ""
+  }
+}

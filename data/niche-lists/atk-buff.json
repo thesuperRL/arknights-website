@@ -1,0 +1,12 @@
+{
+  "niche": "Attack Buffing",
+  "description": "Operators that buff allies' attack",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "saria": "",
+    "swire": "Buffs melee operators in surrounding tiles with bad uptime"
+  },
+  "relatedNiches": [
+    "Attack Buffing"
+  ]
+}

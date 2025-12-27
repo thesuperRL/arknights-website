@@ -1,0 +1,50 @@
+{
+  "ryanli1366@gmail.com": {
+    "requiredNiches": {
+      "dp_generator": {
+        "min": 1,
+        "max": 2
+      },
+      "laneholder": {
+        "min": 2,
+        "max": 3
+      },
+      "healing": {
+        "min": 2,
+        "max": 3
+      },
+      "arts_dps": {
+        "min": 1,
+        "max": 2
+      },
+      "phys_dps": {
+        "min": 1,
+        "max": 2
+      }
+    },
+    "preferredNiches": {
+      "early_laneholder": {
+        "min": 1,
+        "max": 1
+      },
+      "anti-air": {
+        "min": 1,
+        "max": 1
+      },
+      "tanking_blocking": {
+        "min": 1,
+        "max": 2
+      },
+      "stall": {
+        "min": 0,
+        "max": 1
+      },
+      "fast-redeploy": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "prioritizeRarity": true,
+    "allowDuplicates": false
+  }
+}

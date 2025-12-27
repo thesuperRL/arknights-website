@@ -1,0 +1,10 @@
+{
+  "niche": "Robot Operators",
+  "description": "Operators that are robots, i.e. do not take deployment slots at the cost of really long redeploy times",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "castle_3": "",
+    "lancet_2": "",
+    "thrm_ex": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "niche": "Tanking/Blocking Operators",
+  "description": "Operators that can tank attacks and block enemies",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "bison": "Cuora but a little worse",
+    "blaze": "Revive",
+    "cardigan": "Low-rarity self-sustaining tank",
+    "croissant": "",
+    "cuora": "Once highest defense in game",
+    "gravel": "Soaks damage well",
+    "gummy": "",
+    "hellagur": "Really good dodge on skill 2",
+    "hoshiguma": "Almost immortal",
+    "liskarm": "",
+    "matoimaru": "Pretty chonky low-rarity operator",
+    "matterhorn": "Near immune to arts damage",
+    "nearl": "",
+    "nian": "Absorbs more damage than Hoshiguma with skill use",
+    "nightingale": "Literally has 2 Gravels",
+    "saria": "",
+    "sideroca": "OK self-sustain",
+    "specter": "Actually immortal (for 15 seconds)",
+    "12f": "50% physical dodge"
+  },
+  "relatedNiches": [
+    "Late Laneholder"
+  ]
+}

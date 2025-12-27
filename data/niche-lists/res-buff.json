@@ -1,0 +1,9 @@
+{
+  "niche": "Resistance Buff",
+  "description": "Operators that are able to increase resistance",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "croissant": "Good arts resistance buff, can share to close-by allies",
+    "nightingale": "Hands down the best resistance buff in the game, removes the concept of arts damage"
+  }
+}
