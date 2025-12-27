@@ -55,6 +55,9 @@ const TeamBuilderPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [showRequiredNiches, setShowRequiredNiches] = useState(false);
+  const [showPreferredNiches, setShowPreferredNiches] = useState(false);
+  const [showCoverage, setShowCoverage] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -132,7 +135,7 @@ const TeamBuilderPage: React.FC = () => {
     
     // Ensure prioritizeRarity and allowDuplicates are set
     migrated.prioritizeRarity = prefs.prioritizeRarity !== undefined ? prefs.prioritizeRarity : true;
-    migrated.allowDuplicates = prefs.allowDuplicates !== undefined ? prefs.allowDuplicates : false;
+    migrated.allowDuplicates = true; // Always allow duplicates
     
     // Remove old properties
     delete migrated.minOperatorsPerNiche;
@@ -375,98 +378,111 @@ const TeamBuilderPage: React.FC = () => {
           </label>
         </div>
 
-        <div className="preference-group">
-          <label>
-            <input
-              type="checkbox"
-              checked={preferences.allowDuplicates || false}
-              onChange={(e) => setPreferences({ ...preferences, allowDuplicates: e.target.checked })}
-            />
-            Allow multiple operators from same niche
-          </label>
+
+        {/* Temporarily removed required and preferred niches sections */}
+        {/* 
+        <div className="niche-selection-collapsible">
+          <button 
+            className="niche-selection-toggle"
+            onClick={() => setShowRequiredNiches(!showRequiredNiches)}
+          >
+            <span>Required Niches</span>
+            <span className="toggle-icon">{showRequiredNiches ? '▼' : '▶'}</span>
+          </button>
+          {showRequiredNiches && (
+            <div className="niche-selection-content">
+              <p className="help-text">Specify the range of operators from each niche required in your team (e.g., 1 to 2 healers)</p>
+              <div className="niche-list">
+                {allNiches.map(niche => {
+                  const range = preferences.requiredNiches[niche.filename] || { min: 0, max: 0 };
+                  return (
+                    <div key={niche.filename} className="niche-input-row">
+                      <label className="niche-label">{niche.displayName}</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="12"
+                        value={range.min || 0}
+                        onChange={(e) => {
+                          const newMin = parseInt(e.target.value) || 0;
+                          updateRequiredNicheRange(niche.filename, newMin, Math.max(newMin, range.max || 0));
+                        }}
+                        className="niche-count-input"
+                        placeholder="Min"
+                      />
+                      <span className="niche-range-separator">to</span>
+                      <input
+                        type="number"
+                        min={range.min || 0}
+                        max="12"
+                        value={range.max || 0}
+                        onChange={(e) => {
+                          const newMax = parseInt(e.target.value) || 0;
+                          updateRequiredNicheRange(niche.filename, range.min || 0, newMax);
+                        }}
+                        className="niche-count-input"
+                        placeholder="Max"
+                      />
+                      <span className="niche-count-label">operators</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
-        <div className="niche-selection">
-          <h3>Required Niches</h3>
-          <p className="help-text">Specify the range of operators from each niche required in your team (e.g., 1 to 2 healers)</p>
-          <div className="niche-list">
-            {allNiches.map(niche => {
-              const range = preferences.requiredNiches[niche.filename] || { min: 0, max: 0 };
-              return (
-                <div key={niche.filename} className="niche-input-row">
-                  <label className="niche-label">{niche.displayName}</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="12"
-                    value={range.min || 0}
-                    onChange={(e) => {
-                      const newMin = parseInt(e.target.value) || 0;
-                      updateRequiredNicheRange(niche.filename, newMin, Math.max(newMin, range.max || 0));
-                    }}
-                    className="niche-count-input"
-                    placeholder="Min"
-                  />
-                  <span className="niche-range-separator">to</span>
-                  <input
-                    type="number"
-                    min={range.min || 0}
-                    max="12"
-                    value={range.max || 0}
-                    onChange={(e) => {
-                      const newMax = parseInt(e.target.value) || 0;
-                      updateRequiredNicheRange(niche.filename, range.min || 0, newMax);
-                    }}
-                    className="niche-count-input"
-                    placeholder="Max"
-                  />
-                  <span className="niche-count-label">operators</span>
-                </div>
-              );
-            })}
-          </div>
+        <div className="niche-selection-collapsible">
+          <button 
+            className="niche-selection-toggle"
+            onClick={() => setShowPreferredNiches(!showPreferredNiches)}
+          >
+            <span>Preferred Niches</span>
+            <span className="toggle-icon">{showPreferredNiches ? '▼' : '▶'}</span>
+          </button>
+          {showPreferredNiches && (
+            <div className="niche-selection-content">
+              <p className="help-text">Specify the range of operators from each niche preferred (but not required) in your team</p>
+              <div className="niche-list">
+                {allNiches.map(niche => {
+                  const range = preferences.preferredNiches[niche.filename] || { min: 0, max: 0 };
+                  return (
+                    <div key={niche.filename} className="niche-input-row">
+                      <label className="niche-label">{niche.displayName}</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="12"
+                        value={range.min || 0}
+                        onChange={(e) => {
+                          const newMin = parseInt(e.target.value) || 0;
+                          updatePreferredNicheRange(niche.filename, newMin, Math.max(newMin, range.max || 0));
+                        }}
+                        className="niche-count-input"
+                        placeholder="Min"
+                      />
+                      <span className="niche-range-separator">to</span>
+                      <input
+                        type="number"
+                        min={range.min || 0}
+                        max="12"
+                        value={range.max || 0}
+                        onChange={(e) => {
+                          const newMax = parseInt(e.target.value) || 0;
+                          updatePreferredNicheRange(niche.filename, range.min || 0, newMax);
+                        }}
+                        className="niche-count-input"
+                        placeholder="Max"
+                      />
+                      <span className="niche-count-label">operators</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
-
-        <div className="niche-selection">
-          <h3>Preferred Niches</h3>
-          <p className="help-text">Specify the range of operators from each niche preferred (but not required) in your team</p>
-          <div className="niche-list">
-            {allNiches.map(niche => {
-              const range = preferences.preferredNiches[niche.filename] || { min: 0, max: 0 };
-              return (
-                <div key={niche.filename} className="niche-input-row">
-                  <label className="niche-label">{niche.displayName}</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="12"
-                    value={range.min || 0}
-                    onChange={(e) => {
-                      const newMin = parseInt(e.target.value) || 0;
-                      updatePreferredNicheRange(niche.filename, newMin, Math.max(newMin, range.max || 0));
-                    }}
-                    className="niche-count-input"
-                    placeholder="Min"
-                  />
-                  <span className="niche-range-separator">to</span>
-                  <input
-                    type="number"
-                    min={range.min || 0}
-                    max="12"
-                    value={range.max || 0}
-                    onChange={(e) => {
-                      const newMax = parseInt(e.target.value) || 0;
-                      updatePreferredNicheRange(niche.filename, range.min || 0, newMax);
-                    }}
-                    className="niche-count-input"
-                    placeholder="Max"
-                  />
-                  <span className="niche-count-label">operators</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        */}
 
         <div className="action-buttons">
           <button onClick={savePreferences} disabled={saving}>
@@ -481,11 +497,8 @@ const TeamBuilderPage: React.FC = () => {
       {teamResult && (
         <div className="team-result">
           <h2>Generated Team ({teamResult.team.length}/12)</h2>
-          <div className="team-stats">
-            <div className="stat">
-              <strong>Score:</strong> {teamResult.score}
-            </div>
-            {teamResult.missingNiches.length > 0 && (
+          {teamResult.missingNiches.length > 0 && (
+            <div className="team-stats">
               <div className="stat warning">
                 <strong>Missing Niches:</strong> {teamResult.missingNiches.map(niche => {
                   // Handle format like "niche (1/2)" or just "niche"
@@ -493,49 +506,125 @@ const TeamBuilderPage: React.FC = () => {
                   return nicheFilenameMap[nicheName] || niche;
                 }).join(', ')}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <div className="team-grid">
-            {teamResult.team.map((member, index) => (
-              <div key={member.operatorId} className="team-member-card">
-                <div className={`operator-card rarity-${member.operator.rarity}`}>
-                  <img
-                    src={member.operator.profileImage || '/images/operators/placeholder.png'}
-                    alt={getOperatorName(member.operator, language)}
-                    className="operator-image"
-                  />
-                  <div className="operator-info">
-                    <div className="operator-name">{getOperatorName(member.operator, language)}</div>
-                    <Stars rarity={member.operator.rarity} />
-                    <div className="operator-class">{member.operator.class}</div>
-                    {member.primaryNiche && (
-                      <div className="primary-niche">Primary: {nicheFilenameMap[member.primaryNiche] || member.primaryNiche}</div>
-                    )}
-                    <div className="operator-niches">
-                      {member.niches.slice(0, 3).map(niche => (
-                        <span key={niche} className="niche-tag">{nicheFilenameMap[niche] || niche}</span>
-                      ))}
+            {(() => {
+              // Sort team by required niches first (vaguely)
+              const requiredNicheSet = new Set(Object.keys(preferences.requiredNiches));
+              const sortedTeam = [...teamResult.team].sort((a, b) => {
+                // Check if operators fill required niches
+                const aFillsRequired = a.primaryNiche && requiredNicheSet.has(a.primaryNiche);
+                const bFillsRequired = b.primaryNiche && requiredNicheSet.has(b.primaryNiche);
+                
+                if (aFillsRequired && !bFillsRequired) return -1;
+                if (!aFillsRequired && bFillsRequired) return 1;
+                
+                // If both fill required or neither, maintain original order
+                return 0;
+              });
+              
+              // Sort by class first, then by rarity
+              const classOrder: Record<string, number> = {
+                'Vanguard': 1,
+                'Guard': 2,
+                'Defender': 3,
+                'Sniper': 4,
+                'Caster': 5,
+                'Medic': 6,
+                'Supporter': 7,
+                'Specialist': 8
+              };
+              
+              const classAndRaritySorted = sortedTeam.sort((a, b) => {
+                const aClass = a.operator.class || '';
+                const bClass = b.operator.class || '';
+                const aClassOrder = classOrder[aClass] || 999;
+                const bClassOrder = classOrder[bClass] || 999;
+                
+                // First sort by class order
+                if (aClassOrder !== bClassOrder) {
+                  return aClassOrder - bClassOrder;
+                }
+                
+                // Then sort by rarity (higher first)
+                const aRarity = a.operator.rarity || 0;
+                const bRarity = b.operator.rarity || 0;
+                return bRarity - aRarity;
+              });
+              
+              return classAndRaritySorted.map((member, index) => {
+                // Determine primary niche: prefer required niches, then use the assigned primaryNiche
+                const requiredNicheSet = new Set(Object.keys(preferences.requiredNiches));
+                const preferredNicheSet = new Set(Object.keys(preferences.preferredNiches));
+                
+                // Find first required niche this operator fills
+                const requiredNiche = member.niches.find(niche => requiredNicheSet.has(niche));
+                
+                // Primary niche: prefer required, fallback to assigned primaryNiche
+                const displayPrimaryNiche = requiredNiche || member.primaryNiche;
+                
+                // Filter niches to only show preferred ones (excluding the primary niche)
+                const displayNiches = member.niches.filter(niche => 
+                  preferredNicheSet.has(niche) && niche !== displayPrimaryNiche
+                );
+                
+                return (
+                  <div key={member.operatorId} className="team-member-card">
+                    <div className={`operator-card rarity-${member.operator.rarity} ${member.isTrash ? 'trash-operator' : ''}`}>
+                      <img
+                        src={member.operator.profileImage || '/images/operators/placeholder.png'}
+                        alt={getOperatorName(member.operator, language)}
+                        className="operator-image"
+                      />
+                      <div className="operator-info">
+                        <div className="operator-name">{getOperatorName(member.operator, language)}</div>
+                        <div className="stars-wrapper">
+                          <Stars rarity={member.operator.rarity} />
+                        </div>
+                        <div className="operator-class">{member.operator.class}</div>
+                        <div className="primary-niche">
+                          {displayPrimaryNiche ? (nicheFilenameMap[displayPrimaryNiche] || displayPrimaryNiche) : '\u00A0'}
+                        </div>
+                        {displayNiches.length > 0 && (
+                          <div className="operator-niches">
+                            {displayNiches.slice(0, 3).map(niche => (
+                              <span key={niche} className="niche-tag">{nicheFilenameMap[niche] || niche}</span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                );
+              });
+            })()}
           </div>
 
-          <div className="coverage-section">
-            <h3>Niche Coverage</h3>
-            <div className="coverage-list">
-              {Object.entries(teamResult.coverage).map(([niche, count]) => {
-                const displayName = nicheFilenameMap[niche] || niche;
-                return (
-                  <div key={niche} className="coverage-item">
-                    <span className="niche-name">{displayName}</span>
-                    <span className="coverage-count">{count}</span>
-                  </div>
-                );
-              })}
-            </div>
+          <div className="coverage-section-collapsible">
+            <button 
+              className="coverage-toggle"
+              onClick={() => setShowCoverage(!showCoverage)}
+            >
+              <span>Niche Coverage</span>
+              <span className="toggle-icon">{showCoverage ? '▼' : '▶'}</span>
+            </button>
+            {showCoverage && (
+              <div className="coverage-content">
+                <div className="coverage-list">
+                  {Object.entries(teamResult.coverage).map(([niche, count]) => {
+                    const displayName = nicheFilenameMap[niche] || niche;
+                    return (
+                      <div key={niche} className="coverage-item">
+                        <span className="niche-name">{displayName}</span>
+                        <span className="coverage-count">{count}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 interface NicheListInfo {
-  niche: string;
+  niche?: string;
+  filename: string;
+  displayName: string;
   description: string;
   lastUpdated: string;
 }
@@ -53,11 +55,11 @@ const HomePage: React.FC = () => {
         ) : (
           nicheLists.map((nicheList) => (
             <Link
-              key={nicheList.niche}
-              to={`/niche-list/${encodeURIComponent(nicheList.niche)}`}
+              key={nicheList.filename || nicheList.niche}
+              to={`/niche-list/${encodeURIComponent(nicheList.filename || nicheList.displayName || nicheList.niche || '')}`}
               className="niche-list-card"
             >
-              <h2>{nicheList.niche}</h2>
+              <h2>{nicheList.displayName || nicheList.niche}</h2>
               <p>{nicheList.description || 'No description available'}</p>
               <div className="meta">
                 {nicheList.lastUpdated && `Last updated: ${nicheList.lastUpdated}`}

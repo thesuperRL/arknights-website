@@ -55,8 +55,13 @@ export function loadNicheList(niche: string, dataDir: string = path.join(__dirna
     }
   }
   
-  // Fallback: try filename matching
-  const filePath = path.join(dataDir, `${decodedNiche.toLowerCase().replace(/\s+/g, '-')}.json`);
+  // Try filename matching - handle both with and without .json extension
+  let filename = decodedNiche.toLowerCase().replace(/\s+/g, '-').replace(/\//g, '-').replace(/_/g, '-');
+  if (!filename.endsWith('.json')) {
+    filename = `${filename}.json`;
+  }
+  
+  const filePath = path.join(dataDir, filename);
   
   if (fs.existsSync(filePath)) {
     try {
@@ -68,6 +73,22 @@ export function loadNicheList(niche: string, dataDir: string = path.join(__dirna
       }
     } catch (error) {
       console.error(`Error loading operator list from ${filePath}:`, error);
+    }
+  }
+  
+  // Try alternative filename formats (with underscores instead of hyphens)
+  const altFilename = decodedNiche.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_');
+  const altFilePath = path.join(dataDir, `${altFilename}.json`);
+  
+  if (fs.existsSync(altFilePath)) {
+    try {
+      const content = fs.readFileSync(altFilePath, 'utf-8');
+      const operatorList = JSON.parse(content);
+      if (operatorList.operators && operatorList.niche) {
+        return operatorList;
+      }
+    } catch (error) {
+      console.error(`Error loading operator list from ${altFilePath}:`, error);
     }
   }
   

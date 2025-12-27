@@ -24,6 +24,7 @@ export interface TeamMember {
   operator: any; // Operator data
   niches: string[]; // Niches this operator fills
   primaryNiche?: string; // Primary niche this operator is filling
+  isTrash?: boolean; // Whether this operator is a trash operator
 }
 
 export interface TeamResult {
@@ -31,6 +32,40 @@ export interface TeamResult {
   coverage: Record<string, number>; // Niche -> count of operators covering it
   missingNiches: string[]; // Required niches that couldn't be filled
   score: number; // Team quality score
+}
+
+/**
+ * Loads trash operators from the trash-operators.json file
+ */
+function loadTrashOperators(): Set<string> {
+  const trashFilePath = path.join(__dirname, '../data/niche-lists', 'trash-operators.json');
+  const trashOperators = new Set<string>();
+
+  if (fs.existsSync(trashFilePath)) {
+    try {
+      const content = fs.readFileSync(trashFilePath, 'utf-8');
+      const trashData = JSON.parse(content);
+      if (trashData.operators && typeof trashData.operators === 'object' && !Array.isArray(trashData.operators)) {
+        // Dictionary format
+        for (const operatorId of Object.keys(trashData.operators)) {
+          trashOperators.add(operatorId);
+        }
+      } else if (trashData.operators && Array.isArray(trashData.operators)) {
+        // Legacy array format (for backwards compatibility)
+        for (const op of trashData.operators) {
+          if (typeof op === 'string') {
+            trashOperators.add(op);
+          } else if (op.operatorId) {
+            trashOperators.add(op.operatorId);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error loading trash operators:', error);
+    }
+  }
+
+  return trashOperators;
 }
 
 /**
@@ -68,10 +103,23 @@ function loadAllOperators(): Record<string, any> {
 }
 
 /**
- * Gets niches for an operator
+ * Gets niches for an operator, with AOE niches merged into DPS niches
  */
 function getOperatorNiches(operatorId: string): string[] {
-  return getNichesForOperator(operatorId);
+  const niches = getNichesForOperator(operatorId);
+  const expandedNiches = [...niches];
+  
+  // Add arts_dps if operator has arts_aoe but not arts_dps
+  if (niches.includes('arts_aoe') && !niches.includes('arts_dps')) {
+    expandedNiches.push('arts_dps');
+  }
+  
+  // Add phys_dps if operator has phys_aoe but not phys_dps
+  if (niches.includes('phys_aoe') && !niches.includes('phys_dps')) {
+    expandedNiches.push('phys_dps');
+  }
+  
+  return expandedNiches;
 }
 
 /**
@@ -89,22 +137,59 @@ function scoreOperator(
   let score = 0;
   
   // Base score from rarity (if prioritizing rarity)
+  // Priority order: 6 > 4 > 5 > 3 > 2 > 1
   if (preferences.prioritizeRarity) {
     const rarity = operator.rarity || 0;
-    score += rarity * 10;
+    const rarityScores: Record<number, number> = {
+      6: 60,
+      4: 50,
+      5: 40,
+      3: 30,
+      2: 20,
+      1: 10
+    };
+    score += rarityScores[rarity] || 0;
   }
+  
+  // Niches that should not contribute to scoring (using filenames)
+  const excludedNiches = new Set(['free', 'soloists', 'enmity_healers', 'unconventional_niches', 'dual-dps']);
+  
+  // Normalize niche names for scoring (treat AOE and DPS as equivalent)
+  const normalizeNiche = (niche: string): string => {
+    if (niche === 'arts_aoe') return 'arts_dps';
+    if (niche === 'phys_aoe') return 'phys_dps';
+    return niche;
+  };
+  
+  // Track which normalized niches we've already scored to avoid double counting
+  const scoredNiches = new Set<string>();
   
   // Check if operator fills required niches
   for (const niche of niches) {
-    if (requiredNiches.has(niche)) {
+    // Skip excluded niches
+    if (excludedNiches.has(niche)) {
+      continue;
+    }
+    
+    const normalizedNiche = normalizeNiche(niche);
+    
+    // Skip if we've already scored this normalized niche
+    if (scoredNiches.has(normalizedNiche)) {
+      continue;
+    }
+    
+    scoredNiches.add(normalizedNiche);
+    
+    if (requiredNiches.has(niche) || requiredNiches.has(normalizedNiche)) {
       score += 100; // High priority for required niches
-    } else if (preferredNiches.has(niche)) {
+    } else if (preferredNiches.has(niche) || preferredNiches.has(normalizedNiche)) {
       score += 50; // Medium priority for preferred niches
     }
   }
   
   // Penalize if too many operators from same niche already in team
-  if (!preferences.allowDuplicates) {
+  // Note: allowDuplicates is always true now, but keeping logic for potential future use
+  if (false) {
     const existingNicheCounts: Record<string, number> = {};
     for (const member of existingTeam) {
       for (const niche of member.niches) {
@@ -142,7 +227,8 @@ function findBestOperatorForNiche(
   existingTeam: TeamMember[],
   preferences: TeamPreferences,
   requiredNiches: Set<string>,
-  preferredNiches: Set<string>
+  preferredNiches: Set<string>,
+  trashOperators?: Set<string>
 ): { operatorId: string; operator: any; niches: string[] } | null {
   let bestOperator: { operatorId: string; operator: any; niches: string[] } | null = null;
   let bestScore = -Infinity;
@@ -152,9 +238,17 @@ function findBestOperatorForNiche(
     if (!operator) continue;
     
     const niches = getOperatorNiches(operatorId);
-    if (!niches.includes(niche)) continue;
+    // Check if operator fills the niche (including AOE variants)
+    const fillsNiche = niches.includes(niche) || 
+                      (niche === 'arts_dps' && niches.includes('arts_aoe')) ||
+                      (niche === 'phys_dps' && niches.includes('phys_aoe'));
+    if (!fillsNiche) continue;
     
-    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches);
+    // Apply heavy penalty for trash operators
+    let score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches);
+    if (trashOperators && trashOperators.has(operatorId)) {
+      score -= 500; // Heavy penalty for trash operators
+    }
     
     if (score > bestScore) {
       bestScore = score;
@@ -175,7 +269,10 @@ export function buildTeam(
   // Load all operators
   const allOperators = loadAllOperators();
   
-  // Get user's raised operators
+  // Load trash operators to apply penalty (but not exclude them)
+  const trashOperators = loadTrashOperators();
+  
+  // Get user's raised operators (including trash operators)
   const raisedOperatorIds = getWantToUse(email);
   const availableOperators = raisedOperatorIds.filter(id => allOperators[id]);
   
@@ -210,7 +307,8 @@ export function buildTeam(
         team,
         preferences,
         requiredNiches,
-        preferredNiches
+        preferredNiches,
+        trashOperators
       );
       
       if (candidate) {
@@ -218,7 +316,8 @@ export function buildTeam(
           operatorId: candidate.operatorId,
           operator: candidate.operator,
           niches: candidate.niches,
-          primaryNiche: niche
+          primaryNiche: niche,
+          isTrash: trashOperators.has(candidate.operatorId)
         });
         usedOperatorIds.add(candidate.operatorId);
         
@@ -252,7 +351,8 @@ export function buildTeam(
         team,
         preferences,
         requiredNiches,
-        preferredNiches
+        preferredNiches,
+        trashOperators
       );
       
       if (candidate) {
@@ -260,7 +360,8 @@ export function buildTeam(
           operatorId: candidate.operatorId,
           operator: candidate.operator,
           niches: candidate.niches,
-          primaryNiche: niche
+          primaryNiche: niche,
+          isTrash: trashOperators.has(candidate.operatorId)
         });
         usedOperatorIds.add(candidate.operatorId);
         
@@ -294,7 +395,8 @@ export function buildTeam(
         team,
         preferences,
         requiredNiches,
-        preferredNiches
+        preferredNiches,
+        trashOperators
       );
       
       if (candidate) {
@@ -302,7 +404,8 @@ export function buildTeam(
           operatorId: candidate.operatorId,
           operator: candidate.operator,
           niches: candidate.niches,
-          primaryNiche: niche
+          primaryNiche: niche,
+          isTrash: trashOperators.has(candidate.operatorId)
         });
         usedOperatorIds.add(candidate.operatorId);
         
@@ -336,7 +439,8 @@ export function buildTeam(
         team,
         preferences,
         requiredNiches,
-        preferredNiches
+        preferredNiches,
+        trashOperators
       );
       
       if (candidate) {
@@ -344,7 +448,8 @@ export function buildTeam(
           operatorId: candidate.operatorId,
           operator: candidate.operator,
           niches: candidate.niches,
-          primaryNiche: niche
+          primaryNiche: niche,
+          isTrash: trashOperators.has(candidate.operatorId)
         });
         usedOperatorIds.add(candidate.operatorId);
         
@@ -384,7 +489,8 @@ export function buildTeam(
       team.push({
         operatorId: bestCandidate.operatorId,
         operator: bestCandidate.operator,
-        niches: bestCandidate.niches
+        niches: bestCandidate.niches,
+        isTrash: trashOperators.has(bestCandidate.operatorId)
       });
       usedOperatorIds.add(bestCandidate.operatorId);
       
@@ -465,7 +571,7 @@ export function getDefaultPreferences(): TeamPreferences {
         'fast-redeploy': { min: 0, max: 1 }
     },
     prioritizeRarity: true,
-    allowDuplicates: false
+    allowDuplicates: true
   };
 }
 

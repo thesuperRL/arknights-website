@@ -47,8 +47,24 @@ app.get('/api/niche-lists', (_req, res) => {
 // API route to get a specific niche list
 app.get('/api/niche-lists/:niche', (req, res) => {
   try {
-    const niche = req.params.niche;
-    const operatorList = loadNicheList(niche);
+    const niche = decodeURIComponent(req.params.niche);
+    
+    // Try loading by the provided niche name (could be display name or filename)
+    let operatorList = loadNicheList(niche);
+    
+    // If not found, try using the filename map to convert display name to filename
+    if (!operatorList) {
+      const filenameMap = getNicheFilenameMap();
+      // Check if niche is a display name that needs to be converted to filename
+      const filename = Object.keys(filenameMap).find(f => filenameMap[f] === niche);
+      if (filename) {
+        operatorList = loadNicheList(filename);
+      }
+      // If still not found, try treating it as a filename directly
+      if (!operatorList) {
+        operatorList = loadNicheList(niche.toLowerCase().replace(/\s+/g, '-').replace(/\//g, '-'));
+      }
+    }
     
     if (!operatorList) {
       res.status(404).json({ error: 'Operator list not found' });

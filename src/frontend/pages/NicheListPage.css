@@ -122,43 +122,110 @@
 
 .operator-card {
     position: relative;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 0.75rem;
-    transition: background 0.3s;
-    text-align: center;
-    isolation: isolate;
-    height: 100%;
+    background: rgba(22, 33, 62, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s, filter 0.3s, opacity 0.3s;
+    text-decoration: none;
+    color: var(--text-light);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 2px solid transparent;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: 100%;
+}
+
+/* Rarity colors - more solid for better visibility */
+.operator-card.rarity-6 {
+    border-color: rgba(255, 150, 0, 0.9);
+    background: rgba(255, 165, 0, 0.35);
+}
+
+.operator-card.rarity-5 {
+    border-color: rgba(255, 215, 0, 0.9);
+    background: rgba(255, 215, 0, 0.35);
+}
+
+.operator-card.rarity-4 {
+    border-color: rgba(230, 230, 250, 0.9);
+    background: rgba(230, 230, 250, 0.35);
+}
+
+.operator-card.rarity-3 {
+    border-color: rgba(0, 191, 255, 0.9);
+    background: rgba(0, 191, 255, 0.35);
+}
+
+.operator-card.rarity-2 {
+    border-color: rgba(154, 205, 50, 0.9);
+    background: rgba(154, 205, 50, 0.35);
+}
+
+.operator-card.rarity-1 {
+    border-color: rgba(128, 128, 128, 0.9);
+    background: rgba(128, 128, 128, 0.35);
+}
+
+.operator-card.non-global.rarity-6,
+.operator-card.non-global.rarity-5,
+.operator-card.non-global.rarity-4,
+.operator-card.non-global.rarity-3,
+.operator-card.non-global.rarity-2,
+.operator-card.non-global.rarity-1 {
+    border-color: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.operator-card.unowned {
+    opacity: 0.6;
+    filter: brightness(0.7);
+}
+
+.operator-card.unowned:hover {
+    opacity: 0.8;
+    filter: brightness(0.85);
 }
 
 .operator-card:hover {
-    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.operator-card.non-global {
+    border-color: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.operator-card.non-global .operator-name {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.operator-card.non-global:hover {
+    border-color: rgba(0, 0, 0, 1);
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.operator-card.non-global:hover .operator-name {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .operator-image {
-    width: 120px;
-    max-width: 120px;
-    height: 120px;
-    min-width: 120px;
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    min-height: 200px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     object-position: center;
     border-radius: 8px;
-    margin: 0 auto;
-    display: block;
-    background: #1a1a2e;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s, border-color 0.3s;
-    isolation: isolate;
     flex-shrink: 0;
-}
-
-.operator-card:hover .operator-image {
-    transform: scale(1.05);
-    border-color: rgba(255, 255, 255, 0.4);
+    background: var(--bg-secondary);
 }
 
 .operator-name-link {
@@ -186,16 +253,25 @@
 
 .operator-name {
     font-weight: bold;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.75rem;
     color: var(--text-light);
-    font-size: 30px !important;
-    min-height: 1.5em;
-    display: flex;
+    font-size: 1.056rem;
+    min-height: 1.3rem;
+    max-height: calc(1.3rem * 2);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     align-items: center;
     justify-content: center;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    line-height: 1.2;
+    word-break: break-word;
+    line-height: 1.3;
+    overflow: hidden;
+    text-align: center;
+    padding: 0 0.5rem;
+    flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .operator-class {
