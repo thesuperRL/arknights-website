@@ -64,6 +64,9 @@ const TeamBuilderPage: React.FC = () => {
   }, [user]);
 
   const migratePreferences = (prefs: any): TeamPreferences => {
+    // Create a new object to avoid mutating the original
+    const migrated: any = { ...prefs };
+    
     // Migrate from old format (arrays or single numbers) to new format (ranges with filenames)
     if (Array.isArray(prefs.requiredNiches)) {
       const requiredNiches: Record<string, NicheRange> = {};
@@ -73,7 +76,7 @@ const TeamBuilderPage: React.FC = () => {
           || niche.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_');
         requiredNiches[filename] = { min: 1, max: 1 }; // Default to 1 operator per niche
       }
-      prefs.requiredNiches = requiredNiches;
+      migrated.requiredNiches = requiredNiches;
     } else if (prefs.requiredNiches && typeof prefs.requiredNiches === 'object') {
       // Migrate from display names to filenames and from numbers to ranges
       const requiredNiches: Record<string, NicheRange> = {};
@@ -91,7 +94,9 @@ const TeamBuilderPage: React.FC = () => {
           requiredNiches[filename] = { min: 1, max: 1 };
         }
       }
-      prefs.requiredNiches = requiredNiches;
+      migrated.requiredNiches = requiredNiches;
+    } else {
+      migrated.requiredNiches = prefs.requiredNiches || {};
     }
     
     if (Array.isArray(prefs.preferredNiches)) {
@@ -102,7 +107,7 @@ const TeamBuilderPage: React.FC = () => {
           || niche.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_');
         preferredNiches[filename] = { min: 1, max: 1 }; // Default to 1 operator per niche
       }
-      prefs.preferredNiches = preferredNiches;
+      migrated.preferredNiches = preferredNiches;
     } else if (prefs.preferredNiches && typeof prefs.preferredNiches === 'object') {
       // Migrate from display names to filenames and from numbers to ranges
       const preferredNiches: Record<string, NicheRange> = {};
@@ -120,13 +125,19 @@ const TeamBuilderPage: React.FC = () => {
           preferredNiches[filename] = { min: 1, max: 1 };
         }
       }
-      prefs.preferredNiches = preferredNiches;
+      migrated.preferredNiches = preferredNiches;
+    } else {
+      migrated.preferredNiches = prefs.preferredNiches || {};
     }
     
+    // Ensure prioritizeRarity and allowDuplicates are set
+    migrated.prioritizeRarity = prefs.prioritizeRarity !== undefined ? prefs.prioritizeRarity : true;
+    migrated.allowDuplicates = prefs.allowDuplicates !== undefined ? prefs.allowDuplicates : false;
+    
     // Remove old properties
-    delete prefs.minOperatorsPerNiche;
-    delete prefs.maxOperatorsPerNiche;
-    return prefs as TeamPreferences;
+    delete migrated.minOperatorsPerNiche;
+    delete migrated.maxOperatorsPerNiche;
+    return migrated as TeamPreferences;
   };
 
   const loadPreferences = async () => {
@@ -144,12 +155,21 @@ const TeamBuilderPage: React.FC = () => {
           // If map not loaded yet, set preferences directly (will be migrated on next render)
           setPreferences(data);
         }
+      } else if (response.status === 401) {
+        // Not authenticated, can't load preferences
+        setError('Please log in to use team preferences');
       } else {
-        // Load defaults if no saved preferences
+        // Load defaults if no saved preferences (404 or other error)
         const defaultResponse = await fetch('/api/team/preferences/default');
         if (defaultResponse.ok) {
           const defaultData = await defaultResponse.json();
-          setPreferences(defaultData);
+          // Wait for nicheFilenameMap if needed
+          if (Object.keys(nicheFilenameMap).length > 0) {
+            const migrated = migratePreferences(defaultData);
+            setPreferences(migrated);
+          } else {
+            setPreferences(defaultData);
+          }
         }
       }
     } catch (err) {
@@ -159,7 +179,13 @@ const TeamBuilderPage: React.FC = () => {
         const defaultResponse = await fetch('/api/team/preferences/default');
         if (defaultResponse.ok) {
           const defaultData = await defaultResponse.json();
-          setPreferences(defaultData);
+          // Wait for nicheFilenameMap if needed
+          if (Object.keys(nicheFilenameMap).length > 0) {
+            const migrated = migratePreferences(defaultData);
+            setPreferences(migrated);
+          } else {
+            setPreferences(defaultData);
+          }
         }
       } catch (e) {
         setError('Failed to load preferences');
@@ -178,11 +204,11 @@ const TeamBuilderPage: React.FC = () => {
       );
       
       if (needsMigration) {
-        const migrated = migratePreferences(preferences);
+        const migrated = migratePreferences({ ...preferences });
         setPreferences(migrated);
       }
     }
-  }, [nicheFilenameMap]);
+  }, [nicheFilenameMap, preferences]);
 
   const loadNicheLists = async () => {
     try {
@@ -211,20 +237,30 @@ const TeamBuilderPage: React.FC = () => {
     if (!preferences) return;
     
     setSaving(true);
+    setError(null);
     try {
+      // Ensure preferences are in the correct format before saving
+      const prefsToSave = Object.keys(nicheFilenameMap).length > 0 
+        ? migratePreferences({ ...preferences })
+        : preferences;
+      
       const response = await fetch('/api/team/preferences', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ preferences }),
+        body: JSON.stringify({ preferences: prefsToSave }),
         credentials: 'include'
       });
       
       if (!response.ok) {
-        throw new Error('Failed to save preferences');
+        const errorData = await response.json().catch(() => ({ error: 'Failed to save preferences' }));
+        throw new Error(errorData.error || 'Failed to save preferences');
       }
       
+      const result = await response.json();
+      setPreferences(result.preferences || prefsToSave);
       alert('Preferences saved successfully!');
     } catch (err: any) {
+      console.error('Error saving preferences:', err);
       setError(err.message || 'Failed to save preferences');
     } finally {
       setSaving(false);

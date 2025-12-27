@@ -619,7 +619,20 @@ app.get('/api/team/preferences', async (req, res) => {
       }
     }
     
-    const userPreferences = preferences[session.email] || getDefaultPreferences();
+    // If user has no saved preferences, use defaults and auto-save them
+    if (!preferences[session.email]) {
+      const defaultPrefs = getDefaultPreferences();
+      preferences[session.email] = defaultPrefs;
+      
+      // Save defaults to file so they persist across rebuilds
+      const dir = path.dirname(preferencesFile);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      fs.writeFileSync(preferencesFile, JSON.stringify(preferences, null, 2));
+    }
+    
+    const userPreferences = preferences[session.email];
     res.json(userPreferences);
   } catch (error: any) {
     console.error('Error getting preferences:', error);
