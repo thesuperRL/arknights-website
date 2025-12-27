@@ -6,6 +6,10 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/amiya_guard.png",
+    "cnName": "阿米娅",
+    "twName": "阿米婭",
+    "jpName": "アーミヤ",
+    "krName": "아미야",
     "internalName": "char_1001_amiya2"
   },
   "amiya_medic": {
@@ -15,6 +19,10 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/amiya_medic.png",
+    "cnName": "阿米娅",
+    "twName": "阿米婭",
+    "jpName": "アーミヤ",
+    "krName": "아미야",
     "internalName": "char_1037_amiya3"
   },
   "absinthe": {
@@ -431,7 +439,12 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/cantabile.png",
-    "niches": []
+    "niches": [],
+    "cnName": "晓歌",
+    "twName": "曉歌",
+    "jpName": "カンタービレ",
+    "krName": "칸타빌레",
+    "internalName": "char_497_ctable"
   },
   "catherine": {
     "id": "catherine",
@@ -470,7 +483,12 @@
     "niches": [
       "Free Operators",
       "Trash Operators"
-    ]
+    ],
+    "cnName": "锡兰",
+    "twName": "錫蘭",
+    "jpName": "セイロン",
+    "krName": "실론",
+    "internalName": "char_348_ceylon"
   },
   "chiave": {
     "id": "chiave",
@@ -2152,7 +2170,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/surfer.png",
-    "niches": []
+    "niches": [],
+    "cnName": "寻澜",
+    "jpName": "サーファー",
+    "krName": "서퍼",
+    "internalName": "char_4052_surfer"
   },
   "swire": {
     "id": "swire",
@@ -2163,7 +2185,12 @@
     "profileImage": "/images/operators/swire.png",
     "niches": [
       "Trash Operators"
-    ]
+    ],
+    "cnName": "诗怀雅",
+    "twName": "詩懷雅",
+    "jpName": "スワイヤー",
+    "krName": "스와이어",
+    "internalName": "char_308_swire"
   },
   "tachanka": {
     "id": "tachanka",
@@ -2172,7 +2199,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/tachanka.png",
-    "niches": []
+    "niches": [],
+    "cnName": "战车",
+    "twName": "戰車",
+    "jpName": "タチャンカ",
+    "krName": "타찬카",
+    "internalName": "char_459_tachak"
   },
   "tecno": {
     "id": "tecno",
@@ -2181,7 +2213,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/tecno.png",
-    "niches": []
+    "niches": [],
+    "cnName": "特克诺",
+    "jpName": "テクノ",
+    "krName": "테크노",
+    "internalName": "char_4164_tecno"
   },
   "tequila": {
     "id": "tequila",

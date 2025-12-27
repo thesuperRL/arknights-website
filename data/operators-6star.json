@@ -6,7 +6,11 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/aak.png",
-    "niches": []
+    "niches": [],
+    "cnName": "阿",
+    "jpName": "ア",
+    "krName": "아",
+    "internalName": "char_225_haak"
   },
   "angelina": {
     "id": "angelina",
