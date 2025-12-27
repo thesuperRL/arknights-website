@@ -14,7 +14,7 @@ interface NicheRange {
 interface TeamPreferences {
   requiredNiches: Record<string, NicheRange>; // Niche filename -> range of operators
   preferredNiches: Record<string, NicheRange>; // Niche filename -> range of operators
-  prioritizeRarity?: boolean;
+  rarityRanking?: number[]; // Rarity preference order (e.g., [6, 4, 5, 3, 2, 1])
   allowDuplicates?: boolean;
 }
 
@@ -30,6 +30,7 @@ interface TeamResult {
   coverage: Record<string, number>;
   missingNiches: string[];
   score: number;
+  emptySlots: number;
 }
 
 interface Operator {
@@ -39,6 +40,7 @@ interface Operator {
   class: string;
   profileImage: string;
   global: boolean;
+  niches?: string[];
   cnName?: string;
   twName?: string;
   jpName?: string;
@@ -58,13 +60,60 @@ const TeamBuilderPage: React.FC = () => {
   const [showRequiredNiches, setShowRequiredNiches] = useState(false);
   const [showPreferredNiches, setShowPreferredNiches] = useState(false);
   const [showCoverage, setShowCoverage] = useState(false);
+  const [allOperators, setAllOperators] = useState<Record<string, Operator>>({});
+  const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
+  const [selectedEmptySlots, setSelectedEmptySlots] = useState<Record<number, string>>({}); // slot index -> operatorId
+  const [modifiedTeam, setModifiedTeam] = useState<TeamMember[] | null>(null); // Modified team with user changes
+  const [originalTeam, setOriginalTeam] = useState<TeamMember[] | null>(null); // Original generated team (for revert)
+  const [showOperatorSelectModal, setShowOperatorSelectModal] = useState<{ type: 'replace' | 'empty'; operatorId?: string; slotIndex?: number } | null>(null); // Modal state with operator ID or slot index
+  const [operatorSelectSearch, setOperatorSelectSearch] = useState('');
 
   useEffect(() => {
     if (user) {
       loadPreferences();
       loadNicheLists();
+      loadAllOperators();
+      loadOwnedOperators();
     }
   }, [user]);
+  
+  const loadAllOperators = async () => {
+    try {
+      const rarities = [1, 2, 3, 4, 5, 6];
+      const allOps: Record<string, Operator> = {};
+
+      for (const rarity of rarities) {
+        const response = await fetch(`/api/operators/rarity/${rarity}`);
+        if (response.ok) {
+          const operators = await response.json() as Record<string, Operator>;
+          Object.assign(allOps, operators);
+        }
+      }
+
+      setAllOperators(allOps);
+    } catch (err) {
+      console.error('Error loading operators:', err);
+    }
+  };
+  
+  const loadOwnedOperators = async () => {
+    if (!user) {
+      setOwnedOperators(new Set());
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/user', {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setOwnedOperators(new Set(data.ownedOperators || []));
+      }
+    } catch (err) {
+      console.error('Error loading owned operators:', err);
+    }
+  };
 
   const migratePreferences = (prefs: any): TeamPreferences => {
     // Create a new object to avoid mutating the original
@@ -133,8 +182,19 @@ const TeamBuilderPage: React.FC = () => {
       migrated.preferredNiches = prefs.preferredNiches || {};
     }
     
-    // Ensure prioritizeRarity and allowDuplicates are set
-    migrated.prioritizeRarity = prefs.prioritizeRarity !== undefined ? prefs.prioritizeRarity : true;
+    // Migrate prioritizeRarity to rarityRanking
+    if (prefs.prioritizeRarity !== undefined) {
+      // Convert old boolean to ranking array
+      if (prefs.prioritizeRarity) {
+        migrated.rarityRanking = [6, 4, 5, 3, 2, 1]; // Default ranking
+      } else {
+        migrated.rarityRanking = []; // No preference
+      }
+      delete migrated.prioritizeRarity;
+    } else if (!prefs.rarityRanking) {
+      // Set default ranking if not present
+      migrated.rarityRanking = [6, 4, 5, 3, 2, 1];
+    }
     migrated.allowDuplicates = true; // Always allow duplicates
     
     // Remove old properties
@@ -290,6 +350,10 @@ const TeamBuilderPage: React.FC = () => {
       
       const data = await response.json();
       setTeamResult(data);
+      setOriginalTeam([...data.team]); // Store original generated team
+      setModifiedTeam(null); // Reset modified team when building new team
+      // Reset selected empty slots when building a new team
+      setSelectedEmptySlots({});
     } catch (err: any) {
       setError(err.message || 'Failed to build team');
     } finally {
@@ -344,6 +408,197 @@ const TeamBuilderPage: React.FC = () => {
       preferredNiches: newPreferred
     });
   };
+  
+  // Recalculate niche coverage and missing niches from a team
+  const recalculateCoverage = (team: TeamMember[]): { coverage: Record<string, number>; missingNiches: string[] } => {
+    return recalculateCoverageWithEmptySlots(team, selectedEmptySlots);
+  };
+
+  // Recalculate niche coverage including empty slots
+  const recalculateCoverageWithEmptySlots = (team: TeamMember[], emptySlots: Record<number, string>): { coverage: Record<string, number>; missingNiches: string[] } => {
+    if (!preferences) return { coverage: {}, missingNiches: [] };
+    
+    const nicheCounts: Record<string, number> = {};
+    
+    // Count niches from all team members
+    for (const member of team) {
+      if (member && member.niches) {
+        for (const niche of member.niches) {
+          nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
+        }
+      }
+    }
+    
+    // Also count niches from operators selected in empty slots
+    for (const operatorId of Object.values(emptySlots)) {
+      const operator = allOperators[operatorId];
+      if (operator && operator.niches) {
+        for (const niche of operator.niches) {
+          nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
+        }
+      }
+    }
+    
+    // Calculate missing niches
+    const missingNiches: string[] = [];
+    for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
+      const currentCount = nicheCounts[niche] || 0;
+      if (currentCount < range.min) {
+        missingNiches.push(`${niche} (${currentCount}/${range.min}-${range.max})`);
+      }
+    }
+    
+    return { coverage: nicheCounts, missingNiches };
+  };
+  
+  // Handle operator selection/replacement
+  const handleOperatorSelect = (operatorId: string) => {
+    if (!teamResult || !preferences) return;
+    
+    const modalState = showOperatorSelectModal;
+    if (modalState === null) return;
+    
+    const operator = allOperators[operatorId];
+    if (!operator) return;
+    
+    // Get niches for this operator from the operator's niches property or fetch from API
+    const operatorNiches = operator.niches || [];
+    
+    // Create new team member
+    const newMember: TeamMember = {
+      operatorId: operator.id,
+      operator: operator,
+      niches: operatorNiches,
+      isTrash: false // Could check trash operators list if needed
+    };
+    
+    // Get current team (use modified team if available, otherwise use original)
+    const currentTeam = modifiedTeam || teamResult.team;
+    let newTeam: TeamMember[];
+    
+    if (modalState.type === 'empty') {
+      // Empty slot - add to selectedEmptySlots
+      const slotIndex = modalState.slotIndex!;
+      const newSelectedSlots = {
+        ...selectedEmptySlots,
+        [slotIndex]: operatorId
+      };
+      setSelectedEmptySlots(newSelectedSlots);
+      
+      // Recalculate coverage including the new empty slot operator
+      const currentTeam = modifiedTeam || teamResult.team;
+      const { coverage, missingNiches } = recalculateCoverageWithEmptySlots(currentTeam, newSelectedSlots);
+      
+      // Update team result with new coverage
+      setTeamResult({
+        ...teamResult,
+        coverage: coverage,
+        missingNiches: missingNiches
+      });
+      
+      setShowOperatorSelectModal(null);
+      setOperatorSelectSearch('');
+      return;
+    } else {
+      // Replace existing team member - find by operator ID
+      newTeam = [...currentTeam];
+      const operatorToReplaceId = modalState.operatorId;
+      const replaceIndex = newTeam.findIndex(member => member.operatorId === operatorToReplaceId);
+      
+      if (replaceIndex === -1) {
+        console.error('Could not find operator to replace:', operatorToReplaceId);
+        setShowOperatorSelectModal(null);
+        setOperatorSelectSearch('');
+        return;
+      }
+      
+      newTeam[replaceIndex] = newMember;
+    }
+    
+    // Recalculate coverage
+    const { coverage, missingNiches } = recalculateCoverage(newTeam);
+    
+    // Update team result
+    setModifiedTeam(newTeam);
+    setTeamResult({
+      ...teamResult,
+      team: newTeam,
+      coverage: coverage,
+      missingNiches: missingNiches
+    });
+    
+    setShowOperatorSelectModal(null);
+    setOperatorSelectSearch('');
+  };
+
+  // Revert a single operator to its original
+  const handleRevertOperator = (operatorId: string) => {
+    if (!teamResult || !originalTeam) return;
+    
+    // Get current team (use modified team if available, otherwise use original)
+    const currentTeam = modifiedTeam || teamResult.team;
+    
+    // Find the operator in the current team
+    const currentIndex = currentTeam.findIndex(member => member.operatorId === operatorId);
+    if (currentIndex === -1) return;
+    
+    // Find the original operator at the same position
+    const originalMember = originalTeam[currentIndex];
+    if (!originalMember) return;
+    
+    // Check if this operator was actually changed
+    if (originalMember.operatorId === operatorId) {
+      // Operator is already the original, nothing to revert
+      return;
+    }
+    
+    // Create new team with the original operator restored
+    const newTeam = [...currentTeam];
+    newTeam[currentIndex] = { ...originalMember };
+    
+    // Recalculate coverage
+    const { coverage, missingNiches } = recalculateCoverage(newTeam);
+    
+    // Update team result
+    setModifiedTeam(newTeam);
+    setTeamResult({
+      ...teamResult,
+      team: newTeam,
+      coverage: coverage,
+      missingNiches: missingNiches
+    });
+  };
+
+  // Revert an empty slot selection
+  const handleRevertEmptySlot = (slotIndex: number) => {
+    const newSelected = { ...selectedEmptySlots };
+    delete newSelected[slotIndex];
+    setSelectedEmptySlots(newSelected);
+    
+    // Recalculate coverage after removing empty slot operator
+    const currentTeam = modifiedTeam || teamResult.team;
+    const { coverage, missingNiches } = recalculateCoverageWithEmptySlots(currentTeam, newSelected);
+    
+    // Update team result with new coverage
+    setTeamResult({
+      ...teamResult,
+      coverage: coverage,
+      missingNiches: missingNiches
+    });
+  };
+
+  // Check if an operator was changed from the original
+  const isOperatorChanged = (operatorId: string): boolean => {
+    if (!originalTeam || !modifiedTeam) return false;
+    
+    // Find this operator in the current modified team
+    const currentIndex = modifiedTeam.findIndex(m => m.operatorId === operatorId);
+    if (currentIndex === -1) return false;
+    
+    // Compare with the original team at the same position
+    if (originalTeam.length <= currentIndex) return false;
+    return originalTeam[currentIndex].operatorId !== operatorId;
+  };
 
   if (!user) {
     return (
@@ -368,14 +623,47 @@ const TeamBuilderPage: React.FC = () => {
         <h2>Team Preferences</h2>
         
         <div className="preference-group">
-          <label>
-            <input
-              type="checkbox"
-              checked={preferences.prioritizeRarity || false}
-              onChange={(e) => setPreferences({ ...preferences, prioritizeRarity: e.target.checked })}
-            />
-            Prioritize higher rarity operators
-          </label>
+          <label className="preference-label">Rarity Preference Order</label>
+          <div className="rarity-ranking-container">
+            <div className="rarity-ranking-list">
+              {(preferences.rarityRanking || [6, 4, 5, 3, 2, 1]).map((rarity, index) => (
+                <div key={rarity} className="rarity-ranking-item">
+                  <span className="rarity-rank-number">{index + 1}</span>
+                  <span className="rarity-star">{rarity}★</span>
+                  <button
+                    className="rarity-move-btn"
+                    onClick={() => {
+                      if (index > 0) {
+                        const newRanking = [...(preferences.rarityRanking || [6, 4, 5, 3, 2, 1])];
+                        [newRanking[index - 1], newRanking[index]] = [newRanking[index], newRanking[index - 1]];
+                        setPreferences({ ...preferences, rarityRanking: newRanking });
+                      }
+                    }}
+                    disabled={index === 0}
+                  >
+                    ↑
+                  </button>
+                  <button
+                    className="rarity-move-btn"
+                    onClick={() => {
+                      const ranking = preferences.rarityRanking || [6, 4, 5, 3, 2, 1];
+                      if (index < ranking.length - 1) {
+                        const newRanking = [...ranking];
+                        [newRanking[index], newRanking[index + 1]] = [newRanking[index + 1], newRanking[index]];
+                        setPreferences({ ...preferences, rarityRanking: newRanking });
+                      }
+                    }}
+                    disabled={index === (preferences.rarityRanking || [6, 4, 5, 3, 2, 1]).length - 1}
+                  >
+                    ↓
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="rarity-ranking-help">
+              Higher position = higher priority. Use arrows to reorder.
+            </div>
+          </div>
         </div>
 
 
@@ -496,24 +784,33 @@ const TeamBuilderPage: React.FC = () => {
 
       {teamResult && (
         <div className="team-result">
-          <h2>Generated Team ({teamResult.team.length}/12)</h2>
-          {teamResult.missingNiches.length > 0 && (
-            <div className="team-stats">
-              <div className="stat warning">
-                <strong>Missing Niches:</strong> {teamResult.missingNiches.map(niche => {
-                  // Handle format like "niche (1/2)" or just "niche"
-                  const [nicheName] = niche.split(' (');
-                  return nicheFilenameMap[nicheName] || niche;
-                }).join(', ')}
+          <div className="team-result-header">
+            <h2>Generated Team ({(modifiedTeam || teamResult.team).length}/12)</h2>
+          </div>
+          {(() => {
+            const currentTeam = modifiedTeam || teamResult.team;
+            const { missingNiches } = recalculateCoverage(currentTeam);
+            return missingNiches.length > 0 && (
+              <div className="team-stats">
+                <div className="stat warning">
+                  <strong>Missing Niches:</strong> {missingNiches.map(niche => {
+                    // Handle format like "niche (1/2)" or just "niche"
+                    const [nicheName] = niche.split(' (');
+                    return nicheFilenameMap[nicheName] || niche;
+                  }).join(', ')}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           <div className="team-grid">
             {(() => {
+              // Use modified team if available, otherwise use original
+              const currentTeam = modifiedTeam || teamResult.team;
+              
               // Sort team by required niches first (vaguely)
               const requiredNicheSet = new Set(Object.keys(preferences.requiredNiches));
-              const sortedTeam = [...teamResult.team].sort((a, b) => {
+              const sortedTeam = [...currentTeam].sort((a, b) => {
                 // Check if operators fill required niches
                 const aFillsRequired = a.primaryNiche && requiredNicheSet.has(a.primaryNiche);
                 const bFillsRequired = b.primaryNiche && requiredNicheSet.has(b.primaryNiche);
@@ -554,7 +851,68 @@ const TeamBuilderPage: React.FC = () => {
                 return bRarity - aRarity;
               });
               
-              return classAndRaritySorted.map((member, index) => {
+              const teamWithEmptySlots: Array<TeamMember | null> = [...classAndRaritySorted];
+              
+              // Add empty slots
+              for (let i = 0; i < (teamResult.emptySlots || 0); i++) {
+                teamWithEmptySlots.push(null);
+              }
+              
+              return teamWithEmptySlots.map((member, index) => {
+                // Empty slot
+                if (member === null) {
+                  const slotIndex = classAndRaritySorted.length + (index - classAndRaritySorted.length);
+                  const selectedOperatorId = selectedEmptySlots[slotIndex];
+                  const selectedOperator = selectedOperatorId ? allOperators[selectedOperatorId] : null;
+                  
+                  return (
+                    <div key={`empty-${slotIndex}`} className="team-member-card">
+                      {selectedOperator ? (
+                        <div 
+                          className={`operator-card rarity-${selectedOperator.rarity}`}
+                          onClick={() => setShowOperatorSelectModal({ type: 'empty', slotIndex })}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <img
+                            src={selectedOperator.profileImage || '/images/operators/placeholder.png'}
+                            alt={getOperatorName(selectedOperator, language)}
+                            className="operator-image"
+                          />
+                          <div className="operator-info">
+                            <div className="operator-name">{getOperatorName(selectedOperator, language)}</div>
+                            <div className="stars-wrapper">
+                              <Stars rarity={selectedOperator.rarity} />
+                            </div>
+                            <div className="operator-class">{selectedOperator.class}</div>
+                            <button 
+                              className="revert-operator-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRevertEmptySlot(slotIndex);
+                              }}
+                              title="Remove operator from empty slot"
+                            >
+                              ↶ Revert
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div 
+                          className="empty-slot-card"
+                          onClick={() => setShowOperatorSelectModal({ type: 'empty', slotIndex })}
+                        >
+                          <div className="empty-slot-content">
+                            <div className="free-choice-badge">Free Choice</div>
+                            <span className="empty-slot-icon">+</span>
+                            <span className="empty-slot-text">Select Any Operator</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+                
+                // Regular operator card
                 // Determine primary niche: prefer required niches, then use the assigned primaryNiche
                 const requiredNicheSet = new Set(Object.keys(preferences.requiredNiches));
                 const preferredNicheSet = new Set(Object.keys(preferences.preferredNiches));
@@ -570,9 +928,16 @@ const TeamBuilderPage: React.FC = () => {
                   preferredNicheSet.has(niche) && niche !== displayPrimaryNiche
                 );
                 
+                // Check if this operator was changed from the original
+                const wasChanged = modifiedTeam !== null && isOperatorChanged(member.operatorId);
+                
                 return (
                   <div key={member.operatorId} className="team-member-card">
-                    <div className={`operator-card rarity-${member.operator.rarity} ${member.isTrash ? 'trash-operator' : ''}`}>
+                    <div 
+                      className={`operator-card rarity-${member.operator.rarity} ${member.isTrash ? 'trash-operator' : ''}`}
+                      onClick={() => setShowOperatorSelectModal({ type: 'replace', operatorId: member.operatorId })}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <img
                         src={member.operator.profileImage || '/images/operators/placeholder.png'}
                         alt={getOperatorName(member.operator, language)}
@@ -584,15 +949,29 @@ const TeamBuilderPage: React.FC = () => {
                           <Stars rarity={member.operator.rarity} />
                         </div>
                         <div className="operator-class">{member.operator.class}</div>
-                        <div className="primary-niche">
-                          {displayPrimaryNiche ? (nicheFilenameMap[displayPrimaryNiche] || displayPrimaryNiche) : '\u00A0'}
-                        </div>
+                        {!wasChanged && (
+                          <div className="primary-niche">
+                            {displayPrimaryNiche ? (nicheFilenameMap[displayPrimaryNiche] || displayPrimaryNiche) : '\u00A0'}
+                          </div>
+                        )}
                         {displayNiches.length > 0 && (
                           <div className="operator-niches">
                             {displayNiches.slice(0, 3).map(niche => (
                               <span key={niche} className="niche-tag">{nicheFilenameMap[niche] || niche}</span>
                             ))}
                           </div>
+                        )}
+                        {wasChanged && (
+                          <button 
+                            className="revert-operator-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRevertOperator(member.operatorId);
+                            }}
+                            title="Revert to original generated operator"
+                          >
+                            ↶ Revert
+                          </button>
                         )}
                       </div>
                     </div>
@@ -613,7 +992,11 @@ const TeamBuilderPage: React.FC = () => {
             {showCoverage && (
               <div className="coverage-content">
                 <div className="coverage-list">
-                  {Object.entries(teamResult.coverage).map(([niche, count]) => {
+                  {Object.entries((() => {
+                    const currentTeam = modifiedTeam || teamResult.team;
+                    const hasChanges = modifiedTeam !== null || Object.keys(selectedEmptySlots).length > 0;
+                    return hasChanges ? recalculateCoverage(currentTeam).coverage : teamResult.coverage;
+                  })()).map(([niche, count]) => {
                     const displayName = nicheFilenameMap[niche] || niche;
                     return (
                       <div key={niche} className="coverage-item">
@@ -625,6 +1008,98 @@ const TeamBuilderPage: React.FC = () => {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+      
+      {/* Operator Selection Modal */}
+      {showOperatorSelectModal !== null && (
+        <div className="modal-overlay" onClick={() => setShowOperatorSelectModal(null)}>
+          <div className="modal-content operator-select-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Select Operator</h2>
+              <button className="modal-close" onClick={() => setShowOperatorSelectModal(null)}>×</button>
+            </div>
+            <div className="modal-body">
+              <input
+                type="text"
+                placeholder="Search operators..."
+                value={operatorSelectSearch}
+                onChange={(e) => setOperatorSelectSearch(e.target.value)}
+                className="operator-search-input"
+              />
+              <div className="operator-select-grid">
+                {(() => {
+                  // Get all operator IDs currently in the team
+                  const currentTeam = modifiedTeam || teamResult.team || [];
+                  const teamOperatorIds = new Set(currentTeam.map(member => member.operatorId));
+                  
+                  // Get operator IDs from selected empty slots
+                  const emptySlotOperatorIds = new Set(Object.values(selectedEmptySlots));
+                  
+                  // Combine all used operator IDs
+                  const usedOperatorIds = new Set([...teamOperatorIds, ...emptySlotOperatorIds]);
+                  
+                  // If we're replacing an operator, allow selecting the same operator (it will be replaced)
+                  const modalState = showOperatorSelectModal;
+                  let operatorToReplace: string | null = null;
+                  if (modalState !== null && modalState.type === 'replace' && modalState.operatorId) {
+                    operatorToReplace = modalState.operatorId;
+                  }
+                  
+                  return Object.values(allOperators)
+                    .filter(op => {
+                      // Only show owned operators
+                      if (!ownedOperators.has(op.id)) {
+                        return false;
+                      }
+                      
+                      // Exclude operators already in the team (unless we're replacing that same operator)
+                      if (usedOperatorIds.has(op.id) && op.id !== operatorToReplace) {
+                        return false;
+                      }
+                      
+                      // Apply search filter
+                      if (operatorSelectSearch) {
+                        const displayName = getOperatorName(op, language);
+                        const allNames = [
+                          op.name,
+                          op.cnName,
+                          op.twName,
+                          op.jpName,
+                          op.krName
+                        ].filter(Boolean).map(n => n!.toLowerCase());
+                        const searchLower = operatorSelectSearch.toLowerCase();
+                        return displayName.toLowerCase().includes(searchLower) ||
+                          allNames.some(name => name.includes(searchLower));
+                      }
+                      return true;
+                    })
+                    .sort((a, b) => {
+                      // Sort by rarity (higher first), then by name
+                      if (a.rarity !== b.rarity) {
+                        return b.rarity - a.rarity;
+                      }
+                      return getOperatorName(a, language).localeCompare(getOperatorName(b, language));
+                    })
+                    .map(op => (
+                      <div
+                        key={op.id}
+                        className={`operator-select-card rarity-${op.rarity}`}
+                        onClick={() => handleOperatorSelect(op.id)}
+                      >
+                        <img
+                          src={op.profileImage || '/images/operators/placeholder.png'}
+                          alt={getOperatorName(op, language)}
+                          className="operator-select-image"
+                        />
+                        <div className="operator-select-name">{getOperatorName(op, language)}</div>
+                        <Stars rarity={op.rarity} />
+                      </div>
+                    ));
+                })()}
+              </div>
+            </div>
           </div>
         </div>
       )}

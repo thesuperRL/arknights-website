@@ -1,101 +1,232 @@
 /**
- * Account storage system - currently uses JSON file, ready for SQL migration
+ * Account storage system - SQL Database implementation
+ * Migrated from JSON file to Azure SQL Database
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as sql from 'mssql';
 import bcrypt from 'bcrypt';
 
 export interface LocalAccount {
-  id: string;
+  id: number; // Changed from string to number (INT IDENTITY in SQL)
   email: string;
   passwordHash: string; // bcrypt hash
   createdAt: string; // ISO date string
   lastLogin?: string; // ISO date string
-  ownedOperators?: string[]; // Array of operator IDs
-  wantToUse?: string[]; // Array of operator IDs the user wants to use
+  ownedOperators?: string[]; // Array of operator IDs (stored as JSON)
+  wantToUse?: string[]; // Array of operator IDs (stored as JSON)
 }
 
-interface AccountStorage {
-  accounts: Record<string, LocalAccount>; // email -> account
-}
-
-const ACCOUNTS_FILE = path.join(__dirname, '../data/accounts.json');
+// Database connection pool (singleton)
+let pool: sql.ConnectionPool | null = null;
 
 /**
- * Initialize accounts file if it doesn't exist
+ * Get or create database connection pool
  */
-function ensureAccountsFile(): void {
-  if (!fs.existsSync(ACCOUNTS_FILE)) {
-    const dir = path.dirname(ACCOUNTS_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
+async function getDbPool(): Promise<sql.ConnectionPool> {
+  if (pool && pool.connected) {
+    return pool;
+  }
+
+  // Database configuration from environment variables
+  function getDbConfig(): string | sql.config {
+    // If connection string is provided, use it
+    if (process.env.AZURE_SQL_CONNECTION_STRING) {
+      return process.env.AZURE_SQL_CONNECTION_STRING;
     }
-    const initialData: AccountStorage = { accounts: {} };
-    fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify(initialData, null, 2));
+
+    // Otherwise, use individual settings
+    let server = process.env.AZURE_SQL_SERVER || '';
+    const database = process.env.AZURE_SQL_DATABASE || '';
+    const user = process.env.AZURE_SQL_USER || '';
+    const password = process.env.AZURE_SQL_PASSWORD || '';
+    
+    // Handle case where port might be included in server name
+    let port = parseInt(process.env.AZURE_SQL_PORT || '1433', 10);
+    if (server.includes(':')) {
+      const parts = server.split(':');
+      server = parts[0];
+      if (parts[1] && !process.env.AZURE_SQL_PORT) {
+        port = parseInt(parts[1], 10);
+      }
+    }
+
+    if (!server || !database || !user || !password) {
+      throw new Error('Missing required database configuration. Please set AZURE_SQL_SERVER, AZURE_SQL_DATABASE, AZURE_SQL_USER, and AZURE_SQL_PASSWORD environment variables.');
+    }
+
+    return {
+      server,
+      database,
+      user,
+      password,
+      port,
+      options: {
+        encrypt: true, // Azure SQL requires encryption
+        trustServerCertificate: false,
+        enableArithAbort: true
+      }
+    };
   }
+
+  const dbConfig = getDbConfig();
+  pool = typeof dbConfig === 'string' 
+    ? new sql.ConnectionPool(dbConfig)
+    : new sql.ConnectionPool(dbConfig);
+  
+  await pool.connect();
+  return pool;
 }
 
 /**
- * Load all accounts from storage
+ * Parse JSON column safely
  */
-export function loadAccounts(): Record<string, LocalAccount> {
-  ensureAccountsFile();
+function parseJsonColumn(jsonString: string | null): string[] {
+  if (!jsonString) return [];
   try {
-    const content = fs.readFileSync(ACCOUNTS_FILE, 'utf-8');
-    const data: AccountStorage = JSON.parse(content);
-    return data.accounts || {};
-  } catch (error) {
-    console.error('Error loading accounts:', error);
-    return {};
+    const parsed = JSON.parse(jsonString);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
   }
 }
 
 /**
- * Save accounts to storage
+ * Convert database row to LocalAccount
  */
-export function saveAccounts(accounts: Record<string, LocalAccount>): void {
-  ensureAccountsFile();
-  const data: AccountStorage = { accounts };
-  fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify(data, null, 2));
+function rowToAccount(row: any, ownedOperatorsCol: string, wantToUseCol: string): LocalAccount {
+  return {
+    id: row.id,
+    email: row.email,
+    passwordHash: row.passwordHash,
+    createdAt: row.createdAt ? new Date(row.createdAt).toISOString() : new Date().toISOString(),
+    lastLogin: row.lastLogin ? new Date(row.lastLogin).toISOString() : undefined,
+    ownedOperators: parseJsonColumn(row[ownedOperatorsCol]),
+    wantToUse: parseJsonColumn(row[wantToUseCol])
+  };
+}
+
+/**
+ * Get column names from accounts table
+ */
+async function getColumnNames(pool: sql.ConnectionPool): Promise<Record<string, string>> {
+  const query = `
+    SELECT COLUMN_NAME, DATA_TYPE
+    FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_NAME = 'accounts'
+    ORDER BY ORDINAL_POSITION
+  `;
+  const result = await pool.request().query(query);
+  const columns: Record<string, string> = {};
+  
+  for (const row of result.recordset) {
+    const colName = row.COLUMN_NAME;
+    const lowerName = colName.toLowerCase();
+    
+    if (lowerName === 'email' || lowerName === 'emailaddress') {
+      columns.email = colName;
+    } else if (lowerName === 'password' || lowerName === 'passwordhash' || lowerName === 'password_hash') {
+      columns.passwordHash = colName;
+    } else if (lowerName === 'createdat' || lowerName === 'created_at' || lowerName === 'datecreated') {
+      columns.createdAt = colName;
+    } else if (lowerName === 'lastlogin' || lowerName === 'last_login' || lowerName === 'datelastlogin') {
+      columns.lastLogin = colName;
+    } else if (lowerName === 'id') {
+      columns.id = colName;
+    } else if (lowerName === 'ownedoperators' || lowerName === 'owned_operators') {
+      columns.ownedOperators = colName;
+    } else if (lowerName === 'wanttouse' || lowerName === 'want_to_use' || lowerName === 'wanttouseoperators' || lowerName === 'want_to_use_operators') {
+      columns.wantToUse = colName;
+    }
+  }
+  
+  // Set defaults if not found
+  columns.email = columns.email || 'email';
+  columns.passwordHash = columns.passwordHash || 'passwordHash';
+  columns.createdAt = columns.createdAt || 'createdAt';
+  columns.lastLogin = columns.lastLogin || 'lastLogin';
+  columns.id = columns.id || 'id';
+  columns.ownedOperators = columns.ownedOperators || 'ownedOperators';
+  columns.wantToUse = columns.wantToUse || 'wantToUse';
+  
+  return columns;
 }
 
 /**
  * Find account by email
  */
-export function findAccountByEmail(email: string): LocalAccount | null {
-  const accounts = loadAccounts();
-  const normalizedEmail = email.toLowerCase().trim();
-  return accounts[normalizedEmail] || null;
+export async function findAccountByEmail(email: string): Promise<LocalAccount | null> {
+  try {
+    const dbPool = await getDbPool();
+    const columns = await getColumnNames(dbPool);
+    const normalizedEmail = email.toLowerCase().trim();
+    
+    const escapeCol = (col: string) => `[${col}]`;
+    const query = `SELECT ${escapeCol(columns.id)}, ${escapeCol(columns.email)}, ${escapeCol(columns.passwordHash)}, ${escapeCol(columns.createdAt)}, ${escapeCol(columns.lastLogin)}, ${escapeCol(columns.ownedOperators)}, ${escapeCol(columns.wantToUse)} FROM accounts WHERE ${escapeCol(columns.email)} = @email`;
+    
+    const request = dbPool.request();
+    request.input('email', sql.NVarChar(255), normalizedEmail);
+    const result = await request.query(query);
+    
+    if (result.recordset.length === 0) {
+      return null;
+    }
+    
+    return rowToAccount(result.recordset[0], columns.ownedOperators, columns.wantToUse);
+  } catch (error) {
+    console.error('Error finding account by email:', error);
+    throw error;
+  }
 }
 
 /**
  * Create a new account
  */
 export async function createAccount(email: string, password: string): Promise<LocalAccount> {
-  const accounts = loadAccounts();
-  const normalizedEmail = email.toLowerCase().trim();
-
-  if (accounts[normalizedEmail]) {
-    throw new Error('Account with this email already exists');
+  try {
+    const dbPool = await getDbPool();
+    const columns = await getColumnNames(dbPool);
+    const normalizedEmail = email.toLowerCase().trim();
+    
+    // Check if account already exists
+    const existing = await findAccountByEmail(normalizedEmail);
+    if (existing) {
+      throw new Error('Account with this email already exists');
+    }
+    
+    // Hash password
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+    const createdAt = new Date().toISOString();
+    
+    const escapeCol = (col: string) => `[${col}]`;
+    const insertQuery = `
+      INSERT INTO accounts (${escapeCol(columns.email)}, ${escapeCol(columns.passwordHash)}, ${escapeCol(columns.createdAt)}, ${escapeCol(columns.ownedOperators)}, ${escapeCol(columns.wantToUse)})
+      OUTPUT INSERTED.${escapeCol(columns.id)}
+      VALUES (@email, @passwordHash, @createdAt, @ownedOperators, @wantToUse)
+    `;
+    
+    const request = dbPool.request();
+    request.input('email', sql.NVarChar(255), normalizedEmail);
+    request.input('passwordHash', sql.NVarChar(sql.MAX), passwordHash);
+    request.input('createdAt', sql.DateTime2, new Date(createdAt));
+    request.input('ownedOperators', sql.NVarChar(sql.MAX), JSON.stringify([]));
+    request.input('wantToUse', sql.NVarChar(sql.MAX), JSON.stringify([]));
+    
+    const result = await request.query(insertQuery);
+    const accountId = result.recordset[0][columns.id];
+    
+    return {
+      id: accountId,
+      email: normalizedEmail,
+      passwordHash,
+      createdAt,
+      ownedOperators: [],
+      wantToUse: []
+    };
+  } catch (error) {
+    console.error('Error creating account:', error);
+    throw error;
   }
-
-  // Hash password
-  const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(password, saltRounds);
-
-  const account: LocalAccount = {
-    id: `local_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
-    email: normalizedEmail,
-    passwordHash,
-    createdAt: new Date().toISOString(),
-    ownedOperators: []
-  };
-
-  accounts[normalizedEmail] = account;
-  saveAccounts(accounts);
-
-  return account;
 }
 
 /**
@@ -108,76 +239,116 @@ export async function verifyPassword(account: LocalAccount, password: string): P
 /**
  * Update last login time
  */
-export function updateLastLogin(email: string): void {
-  const accounts = loadAccounts();
-  const normalizedEmail = email.toLowerCase().trim();
-  
-  if (accounts[normalizedEmail]) {
-    accounts[normalizedEmail].lastLogin = new Date().toISOString();
-    saveAccounts(accounts);
+export async function updateLastLogin(email: string): Promise<void> {
+  try {
+    const dbPool = await getDbPool();
+    const columns = await getColumnNames(dbPool);
+    const normalizedEmail = email.toLowerCase().trim();
+    
+    const escapeCol = (col: string) => `[${col}]`;
+    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.lastLogin)} = @lastLogin WHERE ${escapeCol(columns.email)} = @email`;
+    
+    const request = dbPool.request();
+    request.input('email', sql.NVarChar(255), normalizedEmail);
+    request.input('lastLogin', sql.DateTime2, new Date());
+    
+    await request.query(updateQuery);
+  } catch (error) {
+    console.error('Error updating last login:', error);
+    throw error;
   }
 }
 
 /**
  * Add operator to account's owned operators
  */
-export function addOperatorToAccount(email: string, operatorId: string): boolean {
-  const accounts = loadAccounts();
-  const normalizedEmail = email.toLowerCase().trim();
-  
-  if (accounts[normalizedEmail]) {
-    if (!accounts[normalizedEmail].ownedOperators) {
-      accounts[normalizedEmail].ownedOperators = [];
+export async function addOperatorToAccount(email: string, operatorId: string): Promise<boolean> {
+  try {
+    const account = await findAccountByEmail(email);
+    if (!account) {
+      return false;
     }
-    if (!accounts[normalizedEmail].ownedOperators!.includes(operatorId)) {
-      accounts[normalizedEmail].ownedOperators!.push(operatorId);
-      saveAccounts(accounts);
-      return true;
+    
+    const ownedOperators = account.ownedOperators || [];
+    if (ownedOperators.includes(operatorId)) {
+      return false; // Already exists
     }
+    
+    ownedOperators.push(operatorId);
+    
+    const dbPool = await getDbPool();
+    const columns = await getColumnNames(dbPool);
+    const normalizedEmail = email.toLowerCase().trim();
+    
+    const escapeCol = (col: string) => `[${col}]`;
+    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.ownedOperators)} = @ownedOperators WHERE ${escapeCol(columns.email)} = @email`;
+    
+    const request = dbPool.request();
+    request.input('email', sql.NVarChar(255), normalizedEmail);
+    request.input('ownedOperators', sql.NVarChar(sql.MAX), JSON.stringify(ownedOperators));
+    
+    await request.query(updateQuery);
+    return true;
+  } catch (error) {
+    console.error('Error adding operator to account:', error);
+    return false;
   }
-  
-  return false;
 }
 
 /**
  * Remove operator from account's owned operators
  */
-export function removeOperatorFromAccount(email: string, operatorId: string): boolean {
-  const accounts = loadAccounts();
-  const normalizedEmail = email.toLowerCase().trim();
-  
-  if (accounts[normalizedEmail] && accounts[normalizedEmail].ownedOperators) {
-    const index = accounts[normalizedEmail].ownedOperators!.indexOf(operatorId);
-    if (index > -1) {
-      accounts[normalizedEmail].ownedOperators!.splice(index, 1);
-      saveAccounts(accounts);
-      return true;
+export async function removeOperatorFromAccount(email: string, operatorId: string): Promise<boolean> {
+  try {
+    const account = await findAccountByEmail(email);
+    if (!account || !account.ownedOperators) {
+      return false;
     }
+    
+    const ownedOperators = account.ownedOperators.filter(id => id !== operatorId);
+    
+    if (ownedOperators.length === account.ownedOperators.length) {
+      return false; // Operator not found
+    }
+    
+    const dbPool = await getDbPool();
+    const columns = await getColumnNames(dbPool);
+    const normalizedEmail = email.toLowerCase().trim();
+    
+    const escapeCol = (col: string) => `[${col}]`;
+    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.ownedOperators)} = @ownedOperators WHERE ${escapeCol(columns.email)} = @email`;
+    
+    const request = dbPool.request();
+    request.input('email', sql.NVarChar(255), normalizedEmail);
+    request.input('ownedOperators', sql.NVarChar(sql.MAX), JSON.stringify(ownedOperators));
+    
+    await request.query(updateQuery);
+    return true;
+  } catch (error) {
+    console.error('Error removing operator from account:', error);
+    return false;
   }
-  
-  return false;
 }
 
 /**
  * Get owned operators for an account
  */
-export function getOwnedOperators(email: string): string[] {
-  const account = findAccountByEmail(email);
+export async function getOwnedOperators(email: string): Promise<string[]> {
+  const account = await findAccountByEmail(email);
   return account?.ownedOperators || [];
 }
 
 /**
  * Toggle want to use status for an operator
  */
-export function toggleWantToUse(email: string, operatorId: string): boolean {
-  const accounts = loadAccounts();
-  const normalizedEmail = email.toLowerCase().trim();
-  
-  if (accounts[normalizedEmail]) {
-    if (!accounts[normalizedEmail].wantToUse) {
-      accounts[normalizedEmail].wantToUse = [];
+export async function toggleWantToUse(email: string, operatorId: string): Promise<boolean> {
+  try {
+    const account = await findAccountByEmail(email);
+    if (!account) {
+      return false;
     }
-    const wantToUse = accounts[normalizedEmail].wantToUse!;
+    
+    const wantToUse = account.wantToUse || [];
     const index = wantToUse.indexOf(operatorId);
     
     if (index > -1) {
@@ -187,34 +358,90 @@ export function toggleWantToUse(email: string, operatorId: string): boolean {
       // Add to want to use
       wantToUse.push(operatorId);
     }
-    saveAccounts(accounts);
+    
+    const dbPool = await getDbPool();
+    const columns = await getColumnNames(dbPool);
+    const normalizedEmail = email.toLowerCase().trim();
+    
+    const escapeCol = (col: string) => `[${col}]`;
+    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.wantToUse)} = @wantToUse WHERE ${escapeCol(columns.email)} = @email`;
+    
+    const request = dbPool.request();
+    request.input('email', sql.NVarChar(255), normalizedEmail);
+    request.input('wantToUse', sql.NVarChar(sql.MAX), JSON.stringify(wantToUse));
+    
+    await request.query(updateQuery);
     return true;
+  } catch (error) {
+    console.error('Error toggling want to use:', error);
+    return false;
   }
-  
-  return false;
 }
 
 /**
  * Get want to use operators for an account
  */
-export function getWantToUse(email: string): string[] {
-  const account = findAccountByEmail(email);
+export async function getWantToUse(email: string): Promise<string[]> {
+  const account = await findAccountByEmail(email);
   return account?.wantToUse || [];
 }
 
 /**
- * Delete an account (for future use)
+ * Delete an account
  */
-export function deleteAccount(email: string): boolean {
-  const accounts = loadAccounts();
-  const normalizedEmail = email.toLowerCase().trim();
-  
-  if (accounts[normalizedEmail]) {
-    delete accounts[normalizedEmail];
-    saveAccounts(accounts);
-    return true;
+export async function deleteAccount(email: string): Promise<boolean> {
+  try {
+    const dbPool = await getDbPool();
+    const columns = await getColumnNames(dbPool);
+    const normalizedEmail = email.toLowerCase().trim();
+    
+    const escapeCol = (col: string) => `[${col}]`;
+    const deleteQuery = `DELETE FROM accounts WHERE ${escapeCol(columns.email)} = @email`;
+    
+    const request = dbPool.request();
+    request.input('email', sql.NVarChar(255), normalizedEmail);
+    
+    const result = await request.query(deleteQuery);
+    return result.rowsAffected[0] > 0;
+  } catch (error) {
+    console.error('Error deleting account:', error);
+    return false;
   }
-  
-  return false;
 }
 
+/**
+ * Load all accounts (for migration/backup purposes)
+ * @deprecated Use SQL queries directly instead
+ */
+export async function loadAccounts(): Promise<Record<string, LocalAccount>> {
+  try {
+    const dbPool = await getDbPool();
+    const columns = await getColumnNames(dbPool);
+    
+    const escapeCol = (col: string) => `[${col}]`;
+    const query = `SELECT ${escapeCol(columns.id)}, ${escapeCol(columns.email)}, ${escapeCol(columns.passwordHash)}, ${escapeCol(columns.createdAt)}, ${escapeCol(columns.lastLogin)}, ${escapeCol(columns.ownedOperators)}, ${escapeCol(columns.wantToUse)} FROM accounts`;
+    
+    const result = await dbPool.request().query(query);
+    const accounts: Record<string, LocalAccount> = {};
+    
+    for (const row of result.recordset) {
+      const account = rowToAccount(row, columns.ownedOperators, columns.wantToUse);
+      accounts[account.email] = account;
+    }
+    
+    return accounts;
+  } catch (error) {
+    console.error('Error loading accounts:', error);
+    return {};
+  }
+}
+
+/**
+ * Close database connection (for cleanup)
+ */
+export async function closeDbConnection(): Promise<void> {
+  if (pool) {
+    await pool.close();
+    pool = null;
+  }
+}

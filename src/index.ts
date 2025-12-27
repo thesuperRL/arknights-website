@@ -2,6 +2,10 @@
  * Main entry point for the Arknights website
  */
 
+// Load environment variables from .env file
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -249,7 +253,7 @@ app.get('/api/auth/user', async (req, res) => {
       return;
     }
 
-    const account = findAccountByEmail(session.email);
+    const account = await findAccountByEmail(session.email);
     const ownedOperators = account?.ownedOperators || [];
     const wantToUse = account?.wantToUse || [];
     
@@ -329,7 +333,7 @@ app.post('/api/auth/local-login', async (req, res) => {
       return;
     }
 
-    const account = findAccountByEmail(email);
+    const account = await findAccountByEmail(email);
     if (!account) {
       res.status(401).json({ error: 'Invalid email or password' });
       return;
@@ -342,7 +346,7 @@ app.post('/api/auth/local-login', async (req, res) => {
     }
 
     // Update last login
-    updateLastLogin(email);
+    await updateLastLogin(email);
 
     // Create session
     const sessionId = generateSessionId();
@@ -460,7 +464,7 @@ app.post('/api/auth/remove-operator', (req, res) => {
 });
 
 // POST /api/auth/toggle-want-to-use - Toggle want to use status for an operator
-app.post('/api/auth/toggle-want-to-use', (req, res) => {
+app.post('/api/auth/toggle-want-to-use', async (req, res) => {
   try {
     console.log('Toggle want to use endpoint hit');
     const sessionId = req.cookies.sessionId;
@@ -486,9 +490,9 @@ app.post('/api/auth/toggle-want-to-use', (req, res) => {
     }
 
     console.log(`Toggling want to use for operator: ${operatorId}, user: ${session.email}`);
-    const success = toggleWantToUse(session.email, operatorId);
+    const success = await toggleWantToUse(session.email, operatorId);
     if (success) {
-      const account = findAccountByEmail(session.email);
+      const account = await findAccountByEmail(session.email);
       const wantToUse = account?.wantToUse || [];
       const isWantToUse = wantToUse.includes(operatorId);
       console.log(`Successfully toggled. Want to use: ${isWantToUse}`);
@@ -588,7 +592,7 @@ app.post('/api/team/build', async (req, res) => {
     }
 
     const preferences: TeamPreferences = req.body.preferences || getDefaultPreferences();
-    const result = buildTeam(session.email, preferences);
+    const result = await buildTeam(session.email, preferences);
     
     res.json(result);
   } catch (error: any) {

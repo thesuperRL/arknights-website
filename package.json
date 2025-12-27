@@ -17,7 +17,8 @@
     "scrape:all": "ts-node src/scrape-all.ts",
     "validate:niches": "ts-node src/validate-niche-lists.ts",
     "fix:global": "ts-node src/fix-global-status.ts",
-    "rename:internalname": "ts-node src/rename-characters-to-internalname.ts"
+    "rename:internalname": "ts-node src/rename-characters-to-internalname.ts",
+    "upload:accounts": "ts-node src/upload-accounts-to-sql.ts"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
   "devDependencies": {
     "@types/cheerio": "^0.22.35",
     "@types/express": "^5.0.6",
+    "@types/mssql": "^9.1.8",
     "@types/node": "^25.0.3",
     "@types/puppeteer": "^5.4.7",
     "@types/react": "^19.2.7",
@@ -53,7 +55,9 @@
     "bcrypt": "^6.0.0",
     "cheerio": "^1.1.2",
     "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "mssql": "^11.0.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.11.0"

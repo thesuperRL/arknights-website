@@ -15,7 +15,7 @@ export interface NicheRange {
 export interface TeamPreferences {
   requiredNiches: Record<string, NicheRange>; // Niche filename -> range of operators needed (e.g., {"healing": {min: 1, max: 2}})
   preferredNiches: Record<string, NicheRange>; // Niche filename -> range of operators preferred (e.g., {"arts_dps": {min: 1, max: 3}})
-  prioritizeRarity?: boolean; // Prioritize higher rarity operators
+  rarityRanking?: number[]; // Rarity preference order (e.g., [6, 4, 5, 3, 2, 1] means 6-star is most preferred, then 4-star, etc.)
   allowDuplicates?: boolean; // Allow multiple operators from same niche
 }
 
@@ -32,6 +32,7 @@ export interface TeamResult {
   coverage: Record<string, number>; // Niche -> count of operators covering it
   missingNiches: string[]; // Required niches that couldn't be filled
   score: number; // Team quality score
+  emptySlots: number; // Number of empty slots after filling all niches
 }
 
 /**
@@ -136,30 +137,37 @@ function scoreOperator(
 ): number {
   let score = 0;
   
-  // Base score from rarity (if prioritizing rarity)
-  // Priority order: 6 > 4 > 5 > 3 > 2 > 1
-  if (preferences.prioritizeRarity) {
+  // Base score from rarity ranking
+  // Higher position in ranking = higher score
+  if (preferences.rarityRanking && preferences.rarityRanking.length > 0) {
     const rarity = operator.rarity || 0;
-    const rarityScores: Record<number, number> = {
-      6: 60,
-      4: 50,
-      5: 40,
-      3: 30,
-      2: 20,
-      1: 10
-    };
-    score += rarityScores[rarity] || 0;
+    const rankingIndex = preferences.rarityRanking.indexOf(rarity);
+    if (rankingIndex !== -1) {
+      // Score based on position in ranking (first = highest score)
+      // Score decreases by 10 for each position down the ranking
+      const baseScore = 60;
+      const positionScore = baseScore - (rankingIndex * 10);
+      score += Math.max(0, positionScore); // Ensure non-negative
+    }
   }
   
-  // Niches that should not contribute to scoring (using filenames)
-  const excludedNiches = new Set(['free', 'soloists', 'enmity_healers', 'unconventional_niches', 'dual-dps']);
-  
-  // Normalize niche names for scoring (treat AOE and DPS as equivalent)
+  // Calculate current niche counts in existing team (using normalized niches)
   const normalizeNiche = (niche: string): string => {
     if (niche === 'arts_aoe') return 'arts_dps';
     if (niche === 'phys_aoe') return 'phys_dps';
     return niche;
   };
+  
+  const nicheCounts: Record<string, number> = {};
+  for (const member of existingTeam) {
+    for (const niche of member.niches) {
+      const normalized = normalizeNiche(niche);
+      nicheCounts[normalized] = (nicheCounts[normalized] || 0) + 1;
+    }
+  }
+  
+  // Niches that should not contribute to scoring (using filenames)
+  const excludedNiches = new Set(['free', 'soloists', 'enmity_healers', 'unconventional_niches', 'dual-dps']);
   
   // Track which normalized niches we've already scored to avoid double counting
   const scoredNiches = new Set<string>();
@@ -180,10 +188,71 @@ function scoreOperator(
     
     scoredNiches.add(normalizedNiche);
     
-    if (requiredNiches.has(niche) || requiredNiches.has(normalizedNiche)) {
-      score += 100; // High priority for required niches
-    } else if (preferredNiches.has(niche) || preferredNiches.has(normalizedNiche)) {
-      score += 50; // Medium priority for preferred niches
+    // Check if niche is in required or preferred niches
+    const isRequired = requiredNiches.has(niche) || requiredNiches.has(normalizedNiche);
+    const isPreferred = preferredNiches.has(niche) || preferredNiches.has(normalizedNiche);
+    
+    if (isRequired || isPreferred) {
+      // Get the range for this niche (check both original and normalized)
+      const requiredRange = preferences.requiredNiches[niche] || preferences.requiredNiches[normalizedNiche];
+      const preferredRange = preferences.preferredNiches[niche] || preferences.preferredNiches[normalizedNiche];
+      
+      // Get current count for this normalized niche (before adding this operator)
+      const currentCount = nicheCounts[normalizedNiche] || 0;
+      // Count after adding this operator would be currentCount + 1
+      const newCount = currentCount + 1;
+      
+      // Calculate score with diminishing returns and negative penalties
+      if (isRequired && requiredRange) {
+        const maxCount = requiredRange.max;
+        const minCount = requiredRange.min;
+        
+        if (newCount < minCount) {
+          // Below minimum: full score (we need more operators)
+          score += 100;
+        } else if (newCount <= maxCount) {
+          // Between min and max: diminishing returns
+          // Full score at min, linearly decreases to 0 at max
+          if (maxCount === minCount) {
+            // If min == max, give full score when we reach it
+            score += 100;
+          } else {
+            // Calculate diminishing score based on how close we are to max
+            // At min: full score (100)
+            // At max: 0 score
+            // Linear interpolation
+            const progress = (newCount - minCount) / (maxCount - minCount);
+            const diminishingScore = 100 * (1 - progress);
+            score += diminishingScore;
+          }
+        } else {
+          // Negative penalty for exceeding max
+          // Penalty increases with how much we exceed
+          const excess = newCount - maxCount;
+          score -= 50 * excess; // -50 per operator over max
+        }
+      } else if (isPreferred && preferredRange) {
+        const maxCount = preferredRange.max;
+        const minCount = preferredRange.min;
+        
+        if (newCount < minCount) {
+          // Below minimum: full score (we need more operators)
+          score += 50;
+        } else if (newCount <= maxCount) {
+          // Diminishing returns for preferred niches (lower base score)
+          if (maxCount === minCount) {
+            score += 50;
+          } else {
+            const progress = (newCount - minCount) / (maxCount - minCount);
+            const diminishingScore = 50 * (1 - progress);
+            score += diminishingScore;
+          }
+        } else {
+          // Negative penalty for exceeding preferred max
+          const excess = newCount - maxCount;
+          score -= 25 * excess; // -25 per operator over max (less penalty than required)
+        }
+      }
     }
   }
   
@@ -233,7 +302,10 @@ function findBestOperatorForNiche(
   let bestOperator: { operatorId: string; operator: any; niches: string[] } | null = null;
   let bestScore = -Infinity;
   
+  // First pass: only consider non-trash operators
   for (const operatorId of availableOperators) {
+    if (trashOperators && trashOperators.has(operatorId)) continue; // Skip trash operators in first pass
+    
     const operator = allOperators[operatorId];
     if (!operator) continue;
     
@@ -244,15 +316,35 @@ function findBestOperatorForNiche(
                       (niche === 'phys_dps' && niches.includes('phys_aoe'));
     if (!fillsNiche) continue;
     
-    // Apply heavy penalty for trash operators
-    let score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches);
-    if (trashOperators && trashOperators.has(operatorId)) {
-      score -= 500; // Heavy penalty for trash operators
-    }
+    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches);
     
     if (score > bestScore) {
       bestScore = score;
       bestOperator = { operatorId, operator, niches };
+    }
+  }
+  
+  // If no non-trash operator found, consider trash operators as last resort
+  if (!bestOperator && trashOperators) {
+    for (const operatorId of availableOperators) {
+      if (!trashOperators.has(operatorId)) continue; // Only consider trash operators now
+      
+      const operator = allOperators[operatorId];
+      if (!operator) continue;
+      
+      const niches = getOperatorNiches(operatorId);
+      // Check if operator fills the niche (including AOE variants)
+      const fillsNiche = niches.includes(niche) || 
+                        (niche === 'arts_dps' && niches.includes('arts_aoe')) ||
+                        (niche === 'phys_dps' && niches.includes('phys_aoe'));
+      if (!fillsNiche) continue;
+      
+      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches);
+      
+      if (score > bestScore) {
+        bestScore = score;
+        bestOperator = { operatorId, operator, niches };
+      }
     }
   }
   
@@ -262,10 +354,10 @@ function findBestOperatorForNiche(
 /**
  * Builds a team of 12 operators based on preferences
  */
-export function buildTeam(
+export async function buildTeam(
   email: string,
   preferences: TeamPreferences
-): TeamResult {
+): Promise<TeamResult> {
   // Load all operators
   const allOperators = loadAllOperators();
   
@@ -273,7 +365,7 @@ export function buildTeam(
   const trashOperators = loadTrashOperators();
   
   // Get user's raised operators (including trash operators)
-  const raisedOperatorIds = getWantToUse(email);
+  const raisedOperatorIds = await getWantToUse(email);
   const availableOperators = raisedOperatorIds.filter(id => allOperators[id]);
   
   if (availableOperators.length === 0) {
@@ -281,7 +373,8 @@ export function buildTeam(
       team: [],
       coverage: {},
       missingNiches: Object.keys(preferences.requiredNiches),
-      score: 0
+      score: 0,
+      emptySlots: 0
     };
   }
   
@@ -467,12 +560,32 @@ export function buildTeam(
     }
   }
   
+  // Check if all required and preferred niches are filled to their maximum
+  const allRequiredNichesFilled = Object.entries(preferences.requiredNiches).every(([niche, range]) => {
+    const currentCount = nicheCounts[niche] || 0;
+    return currentCount >= range.max;
+  });
+  
+  const allPreferredNichesFilled = Object.entries(preferences.preferredNiches).every(([niche, range]) => {
+    const currentCount = nicheCounts[niche] || 0;
+    return currentCount >= range.max;
+  });
+  
+  // Calculate empty slots (only fill remaining slots if niches aren't all filled)
+  const emptySlots = allRequiredNichesFilled && allPreferredNichesFilled 
+    ? Math.max(0, 12 - team.length)
+    : 0;
+  
   // Fifth pass: Fill remaining slots with best available operators
-  while (team.length < 12 && availableOperators.length > usedOperatorIds.size) {
+  // Only fill if not all niches are filled to their maximum
+  // First try to fill with non-trash operators only
+  while (team.length < 12 && availableOperators.length > usedOperatorIds.size && !(allRequiredNichesFilled && allPreferredNichesFilled)) {
     let bestCandidate: { operatorId: string; operator: any; niches: string[]; score: number } | null = null;
     
+    // First pass: only consider non-trash operators
     for (const operatorId of availableOperators) {
       if (usedOperatorIds.has(operatorId)) continue;
+      if (trashOperators.has(operatorId)) continue; // Skip trash operators in first pass
       
       const operator = allOperators[operatorId];
       if (!operator) continue;
@@ -482,6 +595,24 @@ export function buildTeam(
       
       if (!bestCandidate || score > bestCandidate.score) {
         bestCandidate = { operatorId, operator, niches, score };
+      }
+    }
+    
+    // If no non-trash candidate found, allow trash operators as last resort
+    if (!bestCandidate) {
+      for (const operatorId of availableOperators) {
+        if (usedOperatorIds.has(operatorId)) continue;
+        if (!trashOperators.has(operatorId)) continue; // Only consider trash operators now
+        
+        const operator = allOperators[operatorId];
+        if (!operator) continue;
+        
+        const niches = getOperatorNiches(operatorId);
+        const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches);
+        
+        if (!bestCandidate || score > bestCandidate.score) {
+          bestCandidate = { operatorId, operator, niches, score };
+        }
       }
     }
     
@@ -547,7 +678,8 @@ export function buildTeam(
     team,
     coverage: nicheCounts,
     missingNiches,
-    score
+    score,
+    emptySlots
   };
 }
 
@@ -570,7 +702,7 @@ export function getDefaultPreferences(): TeamPreferences {
         'stall': { min: 0, max: 1 },
         'fast-redeploy': { min: 0, max: 1 }
     },
-    prioritizeRarity: true,
+    rarityRanking: [6, 4, 5, 3, 2, 1], // Default: 6 > 4 > 5 > 3 > 2 > 1
     allowDuplicates: true
   };
 }
