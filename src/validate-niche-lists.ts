@@ -1,14 +1,18 @@
 /**
  * Script to validate operator lists against operator data
+ * Now validates against SQL database instead of JSON files
  */
 
-import { loadAllNicheLists, validateNicheList } from './niche-list-utils';
+// Load environment variables from .env file
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { loadAllNicheLists, validateNicheList, closeDbConnection } from './niche-list-utils';
 import * as fs from 'fs';
 import * as path from 'path';
 
 async function main() {
   const dataDir = path.join(__dirname, '../data');
-  const operatorListsDir = path.join(dataDir, 'niche-lists');
   
   // Load all operator data
   const operatorsData: Record<string, any> = {};
@@ -26,7 +30,7 @@ async function main() {
   console.log(`Loaded ${Object.keys(operatorsData).length} operators\n`);
 
   // Load all niche lists
-  const nicheLists = loadAllNicheLists(operatorListsDir);
+  const nicheLists = await loadAllNicheLists();
   const niches = Object.keys(nicheLists);
   
   console.log(`Found ${niches.length} niche lists:\n`);
@@ -63,12 +67,18 @@ async function main() {
   
   if (totalErrors === 0) {
     console.log(`\n✅ All operator lists are valid!`);
+    await closeDbConnection();
     process.exit(0);
   } else {
     console.log(`\n❌ Please fix the errors above.`);
+    await closeDbConnection();
     process.exit(1);
   }
 }
 
-main().catch(console.error);
+main().catch(async (error) => {
+  console.error(error);
+  await closeDbConnection();
+  process.exit(1);
+});
 

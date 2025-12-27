@@ -9,7 +9,7 @@ dotenv.config();
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import { loadAllNicheLists, loadNicheList, getNicheFilenameMap } from './niche-list-utils';
+import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
 import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse } from './account-storage';
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
@@ -28,14 +28,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
 // API route to get all niche lists
-app.get('/api/niche-lists', (_req, res) => {
+app.get('/api/niche-lists', async (_req, res) => {
   try {
-    const nicheLists = loadAllNicheLists();
-    const filenameMap = getNicheFilenameMap();
+    const nicheLists = await loadAllNicheLists();
     const niches = Object.keys(nicheLists).map(displayName => {
-      const filename = Object.keys(filenameMap).find(f => filenameMap[f] === displayName) || displayName.toLowerCase().replace(/\s+/g, '_').replace(/\//g, '_');
       return {
-        filename,
         displayName,
         description: nicheLists[displayName].description || '',
         lastUpdated: nicheLists[displayName].lastUpdated || ''
@@ -49,26 +46,12 @@ app.get('/api/niche-lists', (_req, res) => {
 });
 
 // API route to get a specific niche list
-app.get('/api/niche-lists/:niche', (req, res) => {
+app.get('/api/niche-lists/:niche', async (req, res) => {
   try {
     const niche = decodeURIComponent(req.params.niche);
     
-    // Try loading by the provided niche name (could be display name or filename)
-    let operatorList = loadNicheList(niche);
-    
-    // If not found, try using the filename map to convert display name to filename
-    if (!operatorList) {
-      const filenameMap = getNicheFilenameMap();
-      // Check if niche is a display name that needs to be converted to filename
-      const filename = Object.keys(filenameMap).find(f => filenameMap[f] === niche);
-      if (filename) {
-        operatorList = loadNicheList(filename);
-      }
-      // If still not found, try treating it as a filename directly
-      if (!operatorList) {
-        operatorList = loadNicheList(niche.toLowerCase().replace(/\s+/g, '-').replace(/\//g, '-'));
-      }
-    }
+    // Load by display name (case-insensitive match in SQL)
+    const operatorList = await loadNicheList(niche);
     
     if (!operatorList) {
       res.status(404).json({ error: 'Operator list not found' });
@@ -149,7 +132,7 @@ app.get('/api/trash-operators', (_req, res) => {
 
 // API route to get a specific operator by ID with their rankings
 // This must come BEFORE the rarity route to avoid conflicts
-app.get('/api/operators/:id', (req, res) => {
+app.get('/api/operators/:id', async (req, res) => {
   try {
     const operatorId = req.params.id;
     
@@ -173,7 +156,7 @@ app.get('/api/operators/:id', (req, res) => {
     }
 
     // Load all niche lists to find where this operator is listed
-    const operatorLists = loadAllNicheLists();
+    const operatorLists = await loadAllNicheLists();
     const rankings: Array<{ niche: string; tier: string; notes?: string }> = [];
 
     for (const [niche, operatorList] of Object.entries(operatorLists)) {

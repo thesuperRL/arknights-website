@@ -106,8 +106,8 @@ function loadAllOperators(): Record<string, any> {
 /**
  * Gets niches for an operator, with AOE niches merged into DPS niches
  */
-function getOperatorNiches(operatorId: string): string[] {
-  const niches = getNichesForOperator(operatorId);
+async function getOperatorNiches(operatorId: string): Promise<string[]> {
+  const niches = await getNichesForOperator(operatorId);
   const expandedNiches = [...niches];
   
   // Add arts_dps if operator has arts_aoe but not arts_dps
@@ -295,7 +295,7 @@ function scoreOperator(
 /**
  * Finds the best operator to fill a specific niche
  */
-function findBestOperatorForNiche(
+async function findBestOperatorForNiche(
   niche: string,
   availableOperators: string[],
   allOperators: Record<string, any>,
@@ -305,7 +305,7 @@ function findBestOperatorForNiche(
   preferredNiches: Set<string>,
   trashOperators?: Set<string>,
   wantToUseSet?: Set<string>
-): { operatorId: string; operator: any; niches: string[] } | null {
+): Promise<{ operatorId: string; operator: any; niches: string[] } | null> {
   let bestOperator: { operatorId: string; operator: any; niches: string[] } | null = null;
   let bestScore = -Infinity;
   
@@ -316,7 +316,7 @@ function findBestOperatorForNiche(
     const operator = allOperators[operatorId];
     if (!operator) continue;
     
-    const niches = getOperatorNiches(operatorId);
+    const niches = await getOperatorNiches(operatorId);
     // Check if operator fills the niche (including AOE variants)
     const fillsNiche = niches.includes(niche) || 
                       (niche === 'arts_dps' && niches.includes('arts_aoe')) ||
@@ -339,7 +339,7 @@ function findBestOperatorForNiche(
       const operator = allOperators[operatorId];
       if (!operator) continue;
       
-      const niches = getOperatorNiches(operatorId);
+      const niches = await getOperatorNiches(operatorId);
       // Check if operator fills the niche (including AOE variants)
       const fillsNiche = niches.includes(niche) || 
                         (niche === 'arts_dps' && niches.includes('arts_aoe')) ||
@@ -405,7 +405,7 @@ export async function buildTeam(
     
     // Fill up to minimum
     while (currentCount < minCount && team.length < 12) {
-      const candidate = findBestOperatorForNiche(
+      const candidate = await findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
@@ -450,7 +450,7 @@ export async function buildTeam(
     
     // Fill up to maximum if we have space
     while (currentCount < maxCount && team.length < 12) {
-      const candidate = findBestOperatorForNiche(
+      const candidate = await findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
@@ -495,7 +495,7 @@ export async function buildTeam(
     
     // Fill up to minimum
     while (currentCount < minCount && team.length < 12) {
-      const candidate = findBestOperatorForNiche(
+      const candidate = await findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
@@ -540,7 +540,7 @@ export async function buildTeam(
     
     // Fill up to maximum if we have space
     while (currentCount < maxCount && team.length < 12) {
-      const candidate = findBestOperatorForNiche(
+      const candidate = await findBestOperatorForNiche(
         niche,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
@@ -606,7 +606,7 @@ export async function buildTeam(
       const operator = allOperators[operatorId];
       if (!operator) continue;
       
-      const niches = getOperatorNiches(operatorId);
+      const niches = await getOperatorNiches(operatorId);
       const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet);
       
       if (!bestCandidate || score > bestCandidate.score) {
@@ -623,7 +623,7 @@ export async function buildTeam(
         const operator = allOperators[operatorId];
         if (!operator) continue;
         
-        const niches = getOperatorNiches(operatorId);
+        const niches = await getOperatorNiches(operatorId);
         const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet);
         
         if (!bestCandidate || score > bestCandidate.score) {
