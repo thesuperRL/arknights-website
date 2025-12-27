@@ -2006,7 +2006,12 @@
       "Defense Shred",
       "Global Range Operators",
       "Resistance Shred"
-    ]
+    ],
+    "cnName": "巫恋",
+    "twName": "巫戀",
+    "jpName": "シャマレ",
+    "krName": "샤마르",
+    "internalName": "char_254_vodfox"
   },
   "sideroca": {
     "id": "sideroca",
