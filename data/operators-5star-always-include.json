@@ -5,7 +5,12 @@
     "rarity": 5,
     "class": "Guard",
     "global": true,
-    "profileImage": "/images/operators/amiya_guard.png"
+    "profileImage": "/images/operators/amiya_guard.png",
+    "cnName": "阿米娅",
+    "twName": "阿米婭",
+    "jpName": "アーミヤ",
+    "krName": "아미야",
+    "internalName": "char_1001_amiya2"
   },
   "amiya_medic": {
     "id": "amiya_medic",
@@ -13,6 +18,11 @@
     "rarity": 5,
     "class": "Medic",
     "global": true,
-    "profileImage": "/images/operators/amiya_medic.png"
+    "profileImage": "/images/operators/amiya_medic.png",
+    "cnName": "阿米娅",
+    "twName": "阿米婭",
+    "jpName": "アーミヤ",
+    "krName": "아미야",
+    "internalName": "char_1037_amiya3"
   }
 }

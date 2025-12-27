@@ -1617,7 +1617,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/odda.png",
-    "niches": []
+    "niches": [],
+    "cnName": "奥达",
+    "twName": "奧達",
+    "jpName": "オッダ",
+    "krName": "오다",
+    "internalName": "char_4131_odda"
   },
   "paprika": {
     "id": "paprika",
@@ -1635,7 +1640,11 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/papyrus.png",
-    "niches": []
+    "niches": [],
+    "cnName": "莎草",
+    "jpName": "パピルス",
+    "krName": "파피루스",
+    "internalName": "char_4139_papyrs"
   },
   "philae": {
     "id": "philae",
@@ -1644,7 +1653,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/philae.png",
-    "niches": []
+    "niches": [],
+    "cnName": "菲莱",
+    "jpName": "フィラエ",
+    "krName": "필라에",
+    "internalName": "char_4148_philae"
   },
   "platinum": {
     "id": "platinum",
@@ -1657,7 +1670,11 @@
       "AFK Operators",
       "Anti-Air Operators",
       "Physical DPS"
-    ]
+    ],
+    "cnName": "白金",
+    "jpName": "プラチナ",
+    "krName": "플래티넘",
+    "internalName": "char_204_platnm"
   },
   "poncirus": {
     "id": "poncirus",
@@ -1666,7 +1683,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/poncirus.png",
-    "niches": []
+    "niches": [],
+    "cnName": "青枳",
+    "jpName": "ポンシラス",
+    "krName": "폰사이러스",
+    "internalName": "char_488_buildr"
   },
   "pramanix": {
     "id": "pramanix",
@@ -1678,7 +1699,11 @@
     "niches": [
       "Defense Shred",
       "Resistance Shred"
-    ]
+    ],
+    "cnName": "初雪",
+    "jpName": "プラマニクス",
+    "krName": "프라마닉스",
+    "internalName": "char_174_slbell"
   },
   "projekt_red": {
     "id": "projekt_red",
@@ -1689,7 +1714,12 @@
     "profileImage": "/images/operators/projekt_red.png",
     "niches": [
       "Fast-Redeploy Operators"
-    ]
+    ],
+    "cnName": "红",
+    "twName": "紅",
+    "jpName": "レッド",
+    "krName": "레드",
+    "internalName": "char_144_red"
   },
   "provence": {
     "id": "provence",
@@ -1700,7 +1730,12 @@
     "profileImage": "/images/operators/provence.png",
     "niches": [
       "Trash Operators"
-    ]
+    ],
+    "cnName": "普罗旺斯",
+    "twName": "普羅旺斯",
+    "jpName": "プロヴァンス",
+    "krName": "프로방스",
+    "internalName": "char_145_prove"
   },
   "proviso": {
     "id": "proviso",
@@ -1709,7 +1744,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/proviso.png",
-    "niches": []
+    "niches": [],
+    "cnName": "但书",
+    "twName": "但書",
+    "jpName": "プロヴァイゾ",
+    "krName": "프로바이조",
+    "internalName": "char_4032_provs"
   },
   "ptilopsis": {
     "id": "ptilopsis",
@@ -1721,7 +1761,12 @@
     "niches": [
       "Healing Operators",
       "SP Batteries"
-    ]
+    ],
+    "cnName": "白面鸮",
+    "twName": "白面鴞",
+    "jpName": "フィリオプシス",
+    "krName": "프틸롭시스",
+    "internalName": "char_128_plosis"
   },
   "puzzle": {
     "id": "puzzle",
@@ -1730,7 +1775,12 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/puzzle.png",
-    "niches": []
+    "niches": [],
+    "cnName": "谜图",
+    "twName": "謎圖",
+    "jpName": "パズル",
+    "krName": "퍼즐",
+    "internalName": "char_4017_puzzle"
   },
   "qanipalaat": {
     "id": "qanipalaat",
@@ -1739,7 +1789,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/qanipalaat.png",
-    "niches": []
+    "niches": [],
+    "cnName": "雪绒",
+    "twName": "雪絨",
+    "jpName": "カニパラート",
+    "krName": "카니팔라트",
+    "internalName": "char_466_qanik"
   },
   "quercus": {
     "id": "quercus",
