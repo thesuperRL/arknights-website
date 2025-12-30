@@ -37,7 +37,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/archetto.png",
-    "niches": [],
+    "niches": [
+      "anti-air-operators",
+      "aoe-physical-dps",
+      "physical-dps",
+      "sp-battery"
+    ],
     "cnName": "空弦",
     "jpName": "アルケット",
     "krName": "아르케토",
@@ -68,7 +73,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/ash.png",
-    "niches": [],
+    "niches": [
+      "anti-air-operators",
+      "boss-killing",
+      "physical-dps"
+    ],
     "cnName": "灰烬",
     "twName": "灰燼",
     "jpName": "アッシュ",
@@ -144,7 +153,12 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/blemishine.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "late-laneholder",
+      "tanking-blocking-operators",
+      "unconventional-niches"
+    ],
     "cnName": "瑕光",
     "jpName": "ブレミシャイン",
     "krName": "블레미샤인",
@@ -193,9 +207,11 @@
     "global": true,
     "profileImage": "/images/operators/ch_en.png",
     "niches": [
-      "trash-operators",
+      "arts-dps",
       "dual-dps",
-      "sp-battery"
+      "physical-dps",
+      "sp-battery",
+      "trash-operators"
     ],
     "cnName": "陈",
     "twName": "陳",
@@ -296,7 +312,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/dusk.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "late-laneholder",
+      "stalling",
+      "trash-operators"
+    ],
     "cnName": "夕",
     "jpName": "シー",
     "krName": "시",
@@ -350,7 +371,8 @@
     "global": true,
     "profileImage": "/images/operators/eunectes.png",
     "niches": [
-      "boss-killing"
+      "boss-killing",
+      "tanking-blocking-operators"
     ],
     "cnName": "森蚺",
     "jpName": "ユーネクテス",
@@ -704,7 +726,12 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/kal_tsit.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "late-laneholder",
+      "tanking-blocking-operators",
+      "true_damage"
+    ],
     "cnName": "凯尔希",
     "twName": "凱爾希",
     "jpName": "ケルシー",
@@ -936,7 +963,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/mountain.png",
-    "niches": [],
+    "niches": [
+      "early-laneholder",
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "山",
     "jpName": "マウンテン",
     "krName": "마운틴",
@@ -949,7 +980,12 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/mudrock.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "boss-killing",
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "泥岩",
     "jpName": "マドロック",
     "krName": "머드락",
@@ -1105,7 +1141,9 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/passenger.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps"
+    ],
     "cnName": "异客",
     "twName": "異客",
     "jpName": "パッセンジャー",
@@ -1239,7 +1277,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/rosa.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "physical-dps"
+    ],
     "cnName": "早露",
     "jpName": "ロサ",
     "krName": "로사",
@@ -1252,7 +1293,9 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/rosmontis.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps"
+    ],
     "cnName": "迷迭香",
     "jpName": "ロスモンティス",
     "krName": "로즈몬티스",
@@ -1265,7 +1308,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/saga.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "sp-battery"
+    ],
     "cnName": "嵯峨",
     "jpName": "サガ",
     "krName": "사가",
@@ -1449,7 +1496,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/skadi_the_corrupting_heart.png",
-    "niches": [],
+    "niches": [
+      "atk-buff",
+      "def-buff",
+      "enmity-healing",
+      "global-range"
+    ],
     "cnName": "浊心斯卡蒂",
     "twName": "濁心斯卡蒂",
     "jpName": "濁だく心しんスカジ",
@@ -1491,7 +1543,10 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/surtr.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "boss-killing"
+    ],
     "cnName": "史尔特尔",
     "twName": "史爾特爾",
     "jpName": "スルト",
@@ -1505,7 +1560,14 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/suzuran.png",
-    "niches": [],
+    "niches": [
+      "def-shred",
+      "fragile",
+      "healing-operators",
+      "res-shred",
+      "sp-battery",
+      "stalling"
+    ],
     "cnName": "铃兰",
     "twName": "鈴蘭",
     "jpName": "スズラン",
@@ -1546,7 +1608,13 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/thorns.png",
-    "niches": [],
+    "niches": [
+      "afk",
+      "arts-dps",
+      "dual-dps",
+      "late-laneholder",
+      "physical-dps"
+    ],
     "cnName": "棘刺",
     "jpName": "ソーンズ",
     "krName": "쏜즈",

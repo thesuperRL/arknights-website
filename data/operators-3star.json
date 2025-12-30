@@ -167,8 +167,10 @@
     "global": true,
     "profileImage": "/images/operators/midnight.png",
     "niches": [
-      "trash-operators",
-      "dual-dps"
+      "arts-dps",
+      "dual-dps",
+      "physical-dps",
+      "trash-operators"
     ],
     "cnName": "月见夜",
     "twName": "月見夜",

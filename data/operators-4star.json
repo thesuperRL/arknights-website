@@ -6,7 +6,9 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/aciddrop.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "酸糖",
     "jpName": "アシッドドロップ",
     "krName": "애시드드롭",
@@ -48,7 +50,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/arene.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "dual-dps",
+      "physical-dps"
+    ],
     "cnName": "芳汀",
     "jpName": "アレーン",
     "krName": "아렌",
@@ -61,7 +67,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/beanstalk.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "low-rarity"
+    ],
     "cnName": "豆苗",
     "jpName": "ビーンストーク",
     "krName": "빈스토크",
@@ -90,7 +100,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/bubble.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "low-rarity",
+      "tanking-blocking-operators"
+    ],
     "cnName": "泡泡",
     "jpName": "バブル",
     "krName": "버블",
@@ -130,7 +144,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/click.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "low-rarity",
+      "stalling"
+    ],
     "cnName": "卡达",
     "twName": "卡達",
     "jpName": "カシャ",
@@ -468,7 +486,9 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/jackie.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "杰克",
     "twName": "傑克",
     "jpName": "ジャッキー",
@@ -482,7 +502,12 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/jaye.png",
-    "niches": [],
+    "niches": [
+      "fast-redeploy-operators",
+      "healing-operators",
+      "low-rarity",
+      "silence"
+    ],
     "cnName": "孑",
     "jpName": "ジェイ",
     "krName": "제이",
@@ -668,7 +693,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/pinecone.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "low-rarity"
+    ],
     "cnName": "松果",
     "jpName": "パインコーン",
     "krName": "파인콘",
@@ -681,7 +709,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/podenco.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "low-rarity",
+      "silence",
+      "stalling"
+    ],
     "cnName": "波登可",
     "jpName": "ポデンコ",
     "krName": "포덴코",
