@@ -194,7 +194,9 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/ashlock.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps"
+    ],
     "cnName": "灰毫",
     "jpName": "アッシュロック",
     "krName": "애쉬락",
@@ -237,7 +239,9 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/aurora.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "极光",
     "twName": "極光",
     "jpName": "オーロラ",
@@ -296,7 +300,10 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/bena.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "贝娜",
     "twName": "貝娜",
     "jpName": "ベナ",
@@ -342,7 +349,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/blacknight.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "sleep"
+    ],
     "cnName": "夜半",
     "jpName": "ブラックナイト",
     "krName": "블랙나이트",
@@ -593,7 +604,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/corroserum.png",
-    "niches": [],
+    "niches": [
+      "silence",
+      "trash-operators"
+    ],
     "cnName": "蚀清",
     "twName": "蝕清",
     "jpName": "コロセラム",
@@ -711,7 +725,9 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/enforcer.png",
-    "niches": [],
+    "niches": [
+      "shift"
+    ],
     "cnName": "见行者",
     "twName": "見行者",
     "jpName": "エンフォーサー",
@@ -1068,7 +1084,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/heidi.png",
-    "niches": [],
+    "niches": [
+      "atk-buff",
+      "enmity-healing",
+      "free",
+      "sp-battery"
+    ],
     "cnName": "海蒂",
     "jpName": "ハイディ",
     "krName": "하이디",
@@ -1108,7 +1129,11 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/honeyberry.png",
-    "niches": [],
+    "niches": [
+      "elemental_damage_healers",
+      "free",
+      "healing-operators"
+    ],
     "cnName": "蜜莓",
     "jpName": "ハニーベリー",
     "krName": "허니베리",
@@ -1242,7 +1267,10 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/kazemaru.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "风丸",
     "twName": "風丸",
     "jpName": "カゼマル",
@@ -1282,7 +1310,9 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/kirara.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "绮良",
     "twName": "綺良",
     "jpName": "キララ",
@@ -1296,7 +1326,9 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/kjera.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "耶拉",
     "jpName": "イェラ",
     "krName": "쉐라",
@@ -1309,7 +1341,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/kroos_the_keen_glint.png",
-    "niches": [],
+    "niches": [
+      "anti-air-operators",
+      "physical-dps",
+      "stalling"
+    ],
     "cnName": "寒芒克洛丝",
     "twName": "寒芒克洛絲",
     "jpName": "寒かん芒ぼうクルース",
@@ -1323,7 +1359,9 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/la_pluma.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder"
+    ],
     "cnName": "羽毛笔",
     "twName": "羽毛筆",
     "jpName": "ラ・プルマ",
@@ -1503,7 +1541,6 @@
     "global": true,
     "profileImage": "/images/operators/mayer.png",
     "niches": [
-      "soloist",
       "trash-operators"
     ],
     "cnName": "梅尔",
@@ -1646,7 +1683,10 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/mulberry.png",
-    "niches": [],
+    "niches": [
+      "elemental_damage_healers",
+      "healing-operators"
+    ],
     "cnName": "桑葚",
     "jpName": "マルベリー",
     "krName": "멀베리",
@@ -1693,7 +1733,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/nine_colored_deer.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "trash-operators"
+    ],
     "cnName": "九色鹿",
     "jpName": "九く色しき鹿ろく",
     "krName": "나인컬러드 디어",
@@ -1910,7 +1953,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/quercus.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "sp-battery"
+    ],
     "cnName": "夏栎",
     "twName": "夏櫟",
     "jpName": "クエルクス",
@@ -1989,7 +2035,9 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/rockrock.png",
-    "niches": [],
+    "niches": [
+      "arts-dps"
+    ],
     "cnName": "洛洛",
     "jpName": "ロックロック",
     "krName": "락락",
@@ -2102,7 +2150,10 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/shalem.png",
-    "niches": [],
+    "niches": [
+      "free",
+      "trash-operators"
+    ],
     "cnName": "暮落",
     "jpName": "シャレム",
     "krName": "샬렘",
@@ -2328,7 +2379,10 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/tequila.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "tanking-blocking-operators"
+    ],
     "cnName": "龙舌兰",
     "twName": "龍舌蘭",
     "jpName": "テキーラ",
@@ -2387,7 +2441,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/toddifons.png",
-    "niches": [],
+    "niches": [
+      "trash-operators",
+      "unconventional-niches"
+    ],
     "cnName": "熔泉",
     "jpName": "トギフォンス",
     "krName": "토디폰스",
@@ -2622,7 +2679,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/wild_mane.png",
-    "niches": [],
+    "niches": [
+      "shift",
+      "stalling",
+      "trash-operators"
+    ],
     "cnName": "野鬃",
     "jpName": "ワイルドメイン",
     "krName": "와일드메인",
@@ -2649,7 +2710,9 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/windflit.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "掠风",
     "twName": "掠風",
     "jpName": "ウィンドフリット",

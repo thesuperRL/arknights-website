@@ -228,7 +228,12 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/ch_en_the_holungday.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "def-shred",
+      "stalling",
+      "unconventional-niches"
+    ],
     "cnName": "假日威龙陈",
     "twName": "假日威龍陳",
     "jpName": "遊ゆう龍りゅうチェン",
@@ -469,7 +474,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/fartooth.png",
-    "niches": [],
+    "niches": [
+      "global-range",
+      "physical-dps",
+      "unconventional-niches"
+    ],
     "cnName": "远牙",
     "twName": "遠牙",
     "jpName": "ファートゥース",
@@ -483,7 +492,9 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/fiammetta.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps"
+    ],
     "cnName": "菲亚梅塔",
     "twName": "菲亞梅塔",
     "jpName": "フィアメッタ",
@@ -497,7 +508,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/flametail.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "焰尾",
     "jpName": "フレイムテイル",
     "krName": "플레임테일",
@@ -542,7 +557,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/gnosis.png",
-    "niches": [],
+    "niches": [
+      "def-shred",
+      "fragile",
+      "res-shred",
+      "stalling"
+    ],
     "cnName": "灵知",
     "twName": "靈知",
     "jpName": "ノーシス",
@@ -556,7 +576,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/goldenglow.png",
-    "niches": [],
+    "niches": [
+      "afk",
+      "arts-dps",
+      "global-range"
+    ],
     "cnName": "澄闪",
     "twName": "澄閃",
     "jpName": "ゴールデングロー",
@@ -626,7 +650,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/horn.png",
-    "niches": [],
+    "niches": [
+      "afk",
+      "aoe-physical-dps",
+      "unconventional-niches"
+    ],
     "cnName": "号角",
     "twName": "號角",
     "jpName": "ホルン",
@@ -700,7 +728,10 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/irene.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "unconventional-niches"
+    ],
     "cnName": "艾丽妮",
     "twName": "艾麗妮",
     "jpName": "アイリーニ",
@@ -773,7 +804,11 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/lee.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "shift",
+      "unconventional-niches"
+    ],
     "cnName": "老鲤",
     "twName": "老鯉",
     "jpName": "リー",
@@ -841,7 +876,11 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/ling.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "late-laneholder",
+      "stalling"
+    ],
     "cnName": "令",
     "jpName": "リィン",
     "krName": "링",
@@ -868,7 +907,10 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/lumen.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "unconventional-niches"
+    ],
     "cnName": "流明",
     "jpName": "ルーメン",
     "krName": "루멘",
@@ -882,8 +924,7 @@
     "global": true,
     "profileImage": "/images/operators/magallan.png",
     "niches": [
-      "trash-operators",
-      "soloist"
+      "trash-operators"
     ],
     "cnName": "麦哲伦",
     "twName": "麥哲倫",
@@ -924,7 +965,10 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/mizuki.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "stalling"
+    ],
     "cnName": "水月",
     "jpName": "ミヅキ",
     "krName": "미즈키",
@@ -1054,7 +1098,10 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/nearl_the_radiant_knight.png",
-    "niches": [],
+    "niches": [
+      "fast-redeploy-operators",
+      "true_damage"
+    ],
     "cnName": "耀骑士临光",
     "twName": "耀騎士臨光",
     "jpName": "耀よう騎き士しニアール",
@@ -1130,7 +1177,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/pallas.png",
-    "niches": [],
+    "niches": [
+      "atk-buff",
+      "def-buff",
+      "late-laneholder",
+      "unconventional-niches"
+    ],
     "cnName": "帕拉斯",
     "jpName": "パラス",
     "krName": "팔라스",
@@ -1327,7 +1379,12 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/saileach.png",
-    "niches": [],
+    "niches": [
+      "def-shred",
+      "dp-generation",
+      "fragile",
+      "res-shred"
+    ],
     "cnName": "琴柳",
     "jpName": "サイラッハ",
     "krName": "사일라흐",
@@ -1457,7 +1514,8 @@
       "aoe-physical-dps",
       "boss-killing",
       "late-laneholder",
-      "physical-dps"
+      "physical-dps",
+      "unconventional-niches"
     ],
     "cnName": "银灰",
     "twName": "銀灰",
@@ -1517,7 +1575,11 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/specter_the_unchained.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "stalling",
+      "tanking-blocking-operators"
+    ],
     "cnName": "归溟幽灵鲨",
     "twName": "歸溟幽靈鯊",
     "jpName": "帰き溟めいスペクター",

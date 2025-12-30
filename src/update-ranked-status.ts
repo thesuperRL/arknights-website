@@ -3,7 +3,7 @@
  * Checks which tier lists each operator appears in and updates the niches array
  */
 
-import { loadAllNicheLists } from './niche-list-utils';
+import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -234,8 +234,112 @@ function writeUnrankedLog(unrankedOperators: string[]): void {
   console.log(`📝 Wrote unranked operators log to: ${logPath}`);
 }
 
+/**
+ * Copies fragile operators to def-shred and res-shred lists at build time
+ * Copies dual-dps operators to arts-dps and physical-dps lists at build time
+ */
+function copyOperatorsToDerivedNiches(): void {
+  const nicheListsDir = path.join(__dirname, '../data/niche-lists');
+  let updatedFiles = 0;
+
+  // Copy fragile operators to def-shred and res-shred
+  const fragileList = loadNicheList('fragile', nicheListsDir);
+  if (fragileList && fragileList.operators) {
+    const fragileOperators = Object.keys(fragileList.operators);
+    
+    // Add to def-shred
+    const defShredList = loadNicheList('def-shred', nicheListsDir);
+    if (defShredList) {
+      let defShredUpdated = false;
+      for (const operatorId of fragileOperators) {
+        if (!defShredList.operators[operatorId]) {
+          defShredList.operators[operatorId] = 'applies fragile';
+          defShredUpdated = true;
+        }
+      }
+      if (defShredUpdated) {
+        const defShredPath = path.join(nicheListsDir, 'def-shred.json');
+        fs.writeFileSync(defShredPath, JSON.stringify(defShredList, null, 2));
+        console.log(`✅ Added ${fragileOperators.length} fragile operator(s) to def-shred.json`);
+        updatedFiles++;
+      }
+    }
+
+    // Add to res-shred
+    const resShredList = loadNicheList('res-shred', nicheListsDir);
+    if (resShredList) {
+      let resShredUpdated = false;
+      for (const operatorId of fragileOperators) {
+        if (!resShredList.operators[operatorId]) {
+          resShredList.operators[operatorId] = 'applies fragile';
+          resShredUpdated = true;
+        }
+      }
+      if (resShredUpdated) {
+        const resShredPath = path.join(nicheListsDir, 'res-shred.json');
+        fs.writeFileSync(resShredPath, JSON.stringify(resShredList, null, 2));
+        console.log(`✅ Added ${fragileOperators.length} fragile operator(s) to res-shred.json`);
+        updatedFiles++;
+      }
+    }
+  }
+
+  // Copy dual-dps operators to arts-dps and physical-dps
+  const dualDpsList = loadNicheList('dual-dps', nicheListsDir);
+  if (dualDpsList && dualDpsList.operators) {
+    const dualDpsOperators = Object.entries(dualDpsList.operators);
+    
+    // Add to arts-dps
+    const artsDpsList = loadNicheList('arts-dps', nicheListsDir);
+    if (artsDpsList) {
+      let artsDpsUpdated = false;
+      for (const [operatorId, note] of dualDpsOperators) {
+        if (!artsDpsList.operators[operatorId]) {
+          // Use the original note from dual-dps (even if empty string)
+          artsDpsList.operators[operatorId] = note;
+          artsDpsUpdated = true;
+        }
+      }
+      if (artsDpsUpdated) {
+        const artsDpsPath = path.join(nicheListsDir, 'arts-dps.json');
+        fs.writeFileSync(artsDpsPath, JSON.stringify(artsDpsList, null, 2));
+        console.log(`✅ Added ${dualDpsOperators.length} dual-dps operator(s) to arts-dps.json`);
+        updatedFiles++;
+      }
+    }
+
+    // Add to physical-dps
+    const physicalDpsList = loadNicheList('physical-dps', nicheListsDir);
+    if (physicalDpsList) {
+      let physicalDpsUpdated = false;
+      for (const [operatorId, note] of dualDpsOperators) {
+        if (!physicalDpsList.operators[operatorId]) {
+          // Use the original note from dual-dps (even if empty string)
+          physicalDpsList.operators[operatorId] = note;
+          physicalDpsUpdated = true;
+        }
+      }
+      if (physicalDpsUpdated) {
+        const physicalDpsPath = path.join(nicheListsDir, 'physical-dps.json');
+        fs.writeFileSync(physicalDpsPath, JSON.stringify(physicalDpsList, null, 2));
+        console.log(`✅ Added ${dualDpsOperators.length} dual-dps operator(s) to physical-dps.json`);
+        updatedFiles++;
+      }
+    }
+  }
+
+  if (updatedFiles > 0) {
+    console.log(`\n📋 Updated ${updatedFiles} niche list file(s) with derived operators`);
+  }
+}
+
 async function main() {
   console.log('🔍 Checking operator niches...\n');
+
+  // Copy fragile and dual-dps operators to their derived niches at build time
+  console.log('📋 Copying operators to derived niches...\n');
+  copyOperatorsToDerivedNiches();
+  console.log('');
 
   // Load all operators first for validation
   const allOperators = loadAllOperators();

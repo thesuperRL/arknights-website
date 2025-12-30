@@ -73,43 +73,11 @@ app.get('/api/niche-lists/:niche', (req, res) => {
       }
     }
 
-    // Build the operators map, starting with the niche's own operators
-    const operatorsMap = new Map<string, string>();
-    for (const [operatorId, note] of Object.entries(operatorList.operators)) {
-      operatorsMap.set(operatorId, note);
-    }
-
-    // If this is def-shred or res-shred, also include fragile operators with "applies fragile" note
-    if (niche === 'def-shred' || niche === 'res-shred') {
-      const fragileList = loadNicheList('fragile');
-      if (fragileList && fragileList.operators) {
-        for (const [operatorId, _note] of Object.entries(fragileList.operators)) {
-          // Only add if not already in the list (to avoid duplicates)
-          if (!operatorsMap.has(operatorId)) {
-            operatorsMap.set(operatorId, 'applies fragile');
-          }
-        }
-      }
-    }
-
-    // If this is arts-dps or physical-dps, also include dual-dps operators with "Dual-DPS" note
-    if (niche === 'arts-dps' || niche === 'physical-dps') {
-      const dualDpsList = loadNicheList('dual-dps');
-      if (dualDpsList && dualDpsList.operators) {
-        for (const [operatorId, note] of Object.entries(dualDpsList.operators)) {
-          // Only add if not already in the list (to avoid duplicates)
-          if (!operatorsMap.has(operatorId)) {
-            // Use the note from dual-dps if it exists, otherwise use "Dual-DPS"
-            operatorsMap.set(operatorId, note || 'Dual-DPS');
-          }
-        }
-      }
-    }
-
     // Enrich operator list with operator data
+    // Note: Fragile and dual-dps operators are already copied to their derived niches at build time
     const enrichedOperatorList = {
       ...operatorList,
-      operators: Array.from(operatorsMap.entries()).map(([operatorId, note]) => ({
+      operators: Object.entries(operatorList.operators).map(([operatorId, note]) => ({
         operatorId,
         note,
         operator: operatorsData[operatorId] || null

@@ -131,7 +131,10 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/chestnut.png",
-    "niches": [],
+    "niches": [
+      "elemental_damage_healers",
+      "trash-operators"
+    ],
     "cnName": "褐果",
     "jpName": "チェスナット",
     "krName": "체스트넛",
@@ -473,7 +476,9 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/indigo.png",
-    "niches": [],
+    "niches": [
+      "stalling"
+    ],
     "cnName": "深靛",
     "jpName": "インディゴ",
     "krName": "인디고",
@@ -727,7 +732,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/pudding.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "low-rarity"
+    ],
     "cnName": "布丁",
     "jpName": "プリン",
     "krName": "푸딩",
@@ -769,7 +777,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/roberta.png",
-    "niches": [],
+    "niches": [
+      "tanking-blocking-operators",
+      "trash-operators"
+    ],
     "cnName": "罗比菈塔",
     "twName": "羅比菈塔",
     "jpName": "ロベルタ",
