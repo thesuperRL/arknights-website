@@ -1,7 +1,6 @@
-Unranked Operators (204 total)
-Generated: 2025-12-30T07:11:06.103Z
+Unranked Operators (202 total)
+Generated: 2025-12-30T07:12:38.765Z
 
-aak (Aak)
 akkord (Akkord)
 alanna (Alanna)
 amiya_medic (Amiya (Medic))
@@ -165,7 +164,6 @@ spuria (Spuria)
 stainless (Stainless)
 surfer (Surfer)
 swire_the_elegant_wit (Swire the Elegant Wit)
-tachanka (Tachanka)
 tecno (Tecno)
 tequila (Tequila)
 terra_research_commission (Terra Research Commission)

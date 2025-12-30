@@ -2299,7 +2299,9 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/tachanka.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "战车",
     "twName": "戰車",
     "jpName": "タチャンカ",
