@@ -3,8 +3,10 @@
   "description": "Operators that apply the Fragile debuff to make enemies take more damage",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "shamare": "Fragile",
-    "thrm_ex": "Fragile",
-    "suzuran": "Fragile"
+    "shamare": "",
+    "thrm_ex": "",
+    "suzuran": "",
+    "saileach": "",
+    "gnosis": ""
   }
 }

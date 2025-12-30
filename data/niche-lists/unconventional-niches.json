@@ -6,12 +6,22 @@
     "ceobe": "Reverse defense scaling, deals more damage the higher opponents defense are",
     "exusiai_the_new_covenant": "Able to revive ground operators",
     "gladiia": "The best support for Ulpianus, just by being there.",
-    "nian": "+1 block",
+    "nian": "+1 block for operators in a large area",
     "sesa": "Increases damage taken by blocked enemies",
     "silence": "Can buff a ranged operator into being able to take Aak's buff",
     "scene": "Invisibility removal",
     "april": "Fast-redeploy camo sniper. Rare but may be useful",
     "blemishine": "Buffs defensive recovery skills",
-    "heavyrain": "Giving camoflage to teammates"
+    "heavyrain": "Giving camoflage to teammates",
+    "toddifons": "Sarkaz Racism (i.e. deals more damage to sarkaz enemies)",
+    "pallas": "+1 block for the operator in front of her",
+    "ch_en_the_holungday": "Ammo conservation buffs for ranged operators",
+    "fartooth": "Funny range and range-based scaling",
+    "justice_knight": "Antitaunts enemies in her range with passive",
+    "lee": "Immune to abnormal statuses",
+    "horn": "Counters invisibility, + a revive and a buff after said revive",
+    "silverash": "Counters invisibility",
+    "lumen": "Instantly removes abnormal statuses",
+    "irene": "Levitate"
   }
 }

@@ -79,14 +79,14 @@ app.get('/api/niche-lists/:niche', (req, res) => {
       operatorsMap.set(operatorId, note);
     }
 
-    // If this is def-shred or res-shred, also include fragile operators with "Fragile" note
+    // If this is def-shred or res-shred, also include fragile operators with "applies fragile" note
     if (niche === 'def-shred' || niche === 'res-shred') {
       const fragileList = loadNicheList('fragile');
       if (fragileList && fragileList.operators) {
         for (const [operatorId, _note] of Object.entries(fragileList.operators)) {
           // Only add if not already in the list (to avoid duplicates)
           if (!operatorsMap.has(operatorId)) {
-            operatorsMap.set(operatorId, 'Fragile');
+            operatorsMap.set(operatorId, 'applies fragile');
           }
         }
       }
