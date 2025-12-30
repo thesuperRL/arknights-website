@@ -15,6 +15,20 @@ import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, add
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
 import * as fs from 'fs';
 
+/**
+ * Sanitize error messages to remove sensitive server information
+ */
+function sanitizeErrorMessage(error: any): string {
+  let message = error.message || String(error);
+  
+  // Remove server names and ports from error messages
+  message = message.replace(/[a-zA-Z0-9-]+\.database\.windows\.net(?::\d+)?/g, 'SQL server');
+  message = message.replace(/Failed to connect to [^ ]+ in (\d+)ms/g, 'Failed to connect to SQL server in $1ms');
+  message = message.replace(/ConnectionError: [^:]+: /g, '');
+  
+  return message;
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -252,7 +266,7 @@ app.get('/api/auth/user', async (req, res) => {
     });
   } catch (error: any) {
     console.error('Error getting user data:', error);
-    res.status(500).json({ error: error.message || 'Failed to get user data' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get user data' });
   }
 });
 
@@ -306,7 +320,7 @@ app.post('/api/auth/register', async (req, res) => {
     });
   } catch (error: any) {
     console.error('Error registering account:', error);
-    res.status(500).json({ error: error.message || 'Registration failed' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Registration failed' });
   }
 });
 
@@ -360,7 +374,7 @@ app.post('/api/auth/local-login', async (req, res) => {
     });
   } catch (error: any) {
     console.error('Error logging in:', error);
-    res.status(500).json({ error: error.message || 'Login failed' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Login failed' });
   }
 });
 
@@ -377,7 +391,7 @@ app.post('/api/auth/logout', (req, res) => {
     res.json({ success: true });
   } catch (error: any) {
     console.error('Error logging out:', error);
-    res.status(500).json({ error: error.message || 'Failed to logout' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to logout' });
   }
 });
 
@@ -412,7 +426,7 @@ app.post('/api/auth/add-operator', async (req, res) => {
     }
   } catch (error: any) {
     console.error('Error adding operator:', error);
-    res.status(500).json({ error: error.message || 'Failed to add operator' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to add operator' });
   }
 });
 
@@ -446,7 +460,7 @@ app.post('/api/auth/remove-operator', async (req, res) => {
     }
   } catch (error: any) {
     console.error('Error removing operator:', error);
-    res.status(500).json({ error: error.message || 'Failed to remove operator' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to remove operator' });
   }
 });
 
@@ -490,7 +504,7 @@ app.post('/api/auth/toggle-want-to-use', async (req, res) => {
     }
   } catch (error: any) {
     console.error('Error toggling want to use:', error);
-    res.status(500).json({ error: error.message || 'Failed to toggle want to use' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to toggle want to use' });
   }
 });
 
@@ -515,7 +529,7 @@ app.post('/api/team/build', async (req, res) => {
     res.json(result);
   } catch (error: any) {
     console.error('Error building team:', error);
-    res.status(500).json({ error: error.message || 'Failed to build team' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to build team' });
   }
 });
 
@@ -525,7 +539,7 @@ app.get('/api/team/preferences/default', (_req, res) => {
     res.json(getDefaultPreferences());
   } catch (error: any) {
     console.error('Error getting default preferences:', error);
-    res.status(500).json({ error: error.message || 'Failed to get default preferences' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get default preferences' });
   }
 });
 
@@ -574,7 +588,7 @@ app.get('/api/team/preferences', async (req, res) => {
     res.json(userPreferences);
   } catch (error: any) {
     console.error('Error getting preferences:', error);
-    res.status(500).json({ error: error.message || 'Failed to get preferences' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get preferences' });
   }
 });
 
@@ -626,7 +640,7 @@ app.post('/api/team/preferences', async (req, res) => {
     res.json({ success: true, preferences });
   } catch (error: any) {
     console.error('Error saving preferences:', error);
-    res.status(500).json({ error: error.message || 'Failed to save preferences' });
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to save preferences' });
   }
 });
 

@@ -60,6 +60,7 @@ const TeamBuilderPage: React.FC = () => {
   const [showRequiredNiches, setShowRequiredNiches] = useState(false);
   const [showPreferredNiches, setShowPreferredNiches] = useState(false);
   const [showCoverage, setShowCoverage] = useState(false);
+  const [showPreferences, setShowPreferences] = useState(true);
   const [allOperators, setAllOperators] = useState<Record<string, Operator>>({});
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
   const [selectedEmptySlots, setSelectedEmptySlots] = useState<Record<number, string>>({}); // slot index -> operatorId
@@ -379,6 +380,8 @@ const TeamBuilderPage: React.FC = () => {
       setModifiedTeam(null); // Reset modified team when building new team
       // Reset selected empty slots when building a new team
       setSelectedEmptySlots({});
+      // Auto-collapse preferences when team is generated
+      setShowPreferences(false);
     } catch (err: any) {
       setError(err.message || 'Failed to build team');
     } finally {
@@ -644,52 +647,61 @@ const TeamBuilderPage: React.FC = () => {
 
       {error && <div className="error">{error}</div>}
 
-      <div className="preferences-section">
-        <h2>Team Preferences</h2>
-        
-        <div className="preference-group">
-          <label className="preference-label">Rarity Preference Order</label>
-          <div className="rarity-ranking-container">
-            <div className="rarity-ranking-list">
-              {(preferences.rarityRanking || [6, 4, 5, 3, 2, 1]).map((rarity, index) => (
-                <div key={rarity} className="rarity-ranking-item">
-                  <span className="rarity-rank-number">{index + 1}</span>
-                  <span className="rarity-star">{rarity}★</span>
-                  <button
-                    className="rarity-move-btn"
-                    onClick={() => {
-                      if (index > 0) {
-                        const newRanking = [...(preferences.rarityRanking || [6, 4, 5, 3, 2, 1])];
-                        [newRanking[index - 1], newRanking[index]] = [newRanking[index], newRanking[index - 1]];
-                        setPreferences({ ...preferences, rarityRanking: newRanking });
-                      }
-                    }}
-                    disabled={index === 0}
-                  >
-                    ↑
-                  </button>
-                  <button
-                    className="rarity-move-btn"
-                    onClick={() => {
-                      const ranking = preferences.rarityRanking || [6, 4, 5, 3, 2, 1];
-                      if (index < ranking.length - 1) {
-                        const newRanking = [...ranking];
-                        [newRanking[index], newRanking[index + 1]] = [newRanking[index + 1], newRanking[index]];
-                        setPreferences({ ...preferences, rarityRanking: newRanking });
-                      }
-                    }}
-                    disabled={index === (preferences.rarityRanking || [6, 4, 5, 3, 2, 1]).length - 1}
-                  >
-                    ↓
-                  </button>
+      <div className="preferences-section-collapsible">
+        <button 
+          className="preferences-section-toggle"
+          onClick={() => setShowPreferences(!showPreferences)}
+        >
+          <span>Team Preferences</span>
+          <span className="toggle-icon">{showPreferences ? '▼' : '▶'}</span>
+        </button>
+        {showPreferences && (
+          <div className="preferences-section-content">
+            <h2>Team Preferences</h2>
+            
+            <div className="preference-group">
+              <label className="preference-label">Rarity Preference Order</label>
+              <div className="rarity-ranking-container">
+                <div className="rarity-ranking-list">
+                  {(preferences.rarityRanking || [6, 4, 5, 3, 2, 1]).map((rarity, index) => (
+                    <div key={rarity} className="rarity-ranking-item">
+                      <span className="rarity-rank-number">{index + 1}</span>
+                      <span className="rarity-star">{rarity}★</span>
+                      <button
+                        className="rarity-move-btn"
+                        onClick={() => {
+                          if (index > 0) {
+                            const newRanking = [...(preferences.rarityRanking || [6, 4, 5, 3, 2, 1])];
+                            [newRanking[index - 1], newRanking[index]] = [newRanking[index], newRanking[index - 1]];
+                            setPreferences({ ...preferences, rarityRanking: newRanking });
+                          }
+                        }}
+                        disabled={index === 0}
+                      >
+                        ↑
+                      </button>
+                      <button
+                        className="rarity-move-btn"
+                        onClick={() => {
+                          const ranking = preferences.rarityRanking || [6, 4, 5, 3, 2, 1];
+                          if (index < ranking.length - 1) {
+                            const newRanking = [...ranking];
+                            [newRanking[index], newRanking[index + 1]] = [newRanking[index + 1], newRanking[index]];
+                            setPreferences({ ...preferences, rarityRanking: newRanking });
+                          }
+                        }}
+                        disabled={index === (preferences.rarityRanking || [6, 4, 5, 3, 2, 1]).length - 1}
+                      >
+                        ↓
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              ))}
+                <div className="rarity-ranking-help">
+                  Higher position = higher priority. Use arrows to reorder.
+                </div>
+              </div>
             </div>
-            <div className="rarity-ranking-help">
-              Higher position = higher priority. Use arrows to reorder.
-            </div>
-          </div>
-        </div>
 
 
         {/* Temporarily removed required and preferred niches sections */}
@@ -797,14 +809,16 @@ const TeamBuilderPage: React.FC = () => {
         </div>
         */}
 
-        <div className="action-buttons">
-          <button onClick={savePreferences} disabled={saving}>
-            {saving ? 'Saving...' : 'Save Preferences'}
-          </button>
-          <button onClick={buildTeam} disabled={loading} className="primary">
-            {loading ? 'Building Team...' : 'Build Team'}
-          </button>
-        </div>
+            <div className="action-buttons">
+              <button onClick={savePreferences} disabled={saving}>
+                {saving ? 'Saving...' : 'Save Preferences'}
+              </button>
+              <button onClick={buildTeam} disabled={loading} className="primary">
+                {loading ? 'Building Team...' : 'Build Team'}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {teamResult && (
