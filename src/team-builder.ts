@@ -172,7 +172,7 @@ function scoreOperator(
   }
   
   // Niches that should not contribute to scoring (using filenames)
-  const excludedNiches = new Set(['free', 'soloist', 'enmity-healing', 'unconventional-niches', 'dual-dps']);
+  const excludedNiches = new Set(['free', 'soloist', 'enmity-healing', 'unconventional-niches', 'dual-dps', 'fragile']);
   
   // Boost score for operators in want-to-use list
   if (wantToUseSet && wantToUseSet.has(operatorId)) {

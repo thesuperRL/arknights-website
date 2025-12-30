@@ -1,12 +1,15 @@
 {
   "niche": "Dual-DPS Operators",
-  "description": "Operators able to deal both physical and arts damage",
+  "description": "Operators able to deal both physical and arts damage at the same time",
   "lastUpdated": "2025-12-25",
   "operators": {
     "blue_poison": "Arts DOT",
     "ch_en": "",
     "lappland": "Can turn damage into arts",
     "midnight": "Can turn damage into arts",
-    "reed": ""
+    "reed": "",
+    "thorns": "Arts DOT",
+    "arene": "",
+    "aosta": ""
   }
 }
