@@ -5,7 +5,8 @@
   "operators": {
     "saria": "",
     "swire": "Buffs melee operators in surrounding tiles with bad uptime",
-    "whislash": "For melee operators"
+    "whislash": "For melee operators",
+    "skadi_the_corrupting_heart": ""
   },
   "relatedNiches": [
     "Attack Buffing"

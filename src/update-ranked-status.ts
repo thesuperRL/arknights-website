@@ -83,6 +83,29 @@ function getOperatorNiches(): Map<string, string[]> {
     }
   }
 
+  // Apply build-time rules: fragile -> def-shred + res-shred, dual-dps -> arts-dps + physical-dps
+  for (const [operatorId, niches] of operatorNiches.entries()) {
+    // If operator is in fragile niche, also add def-shred and res-shred
+    if (niches.includes('fragile')) {
+      if (!niches.includes('def-shred')) {
+        niches.push('def-shred');
+      }
+      if (!niches.includes('res-shred')) {
+        niches.push('res-shred');
+      }
+    }
+
+    // If operator is in dual-dps niche, also add arts-dps and physical-dps
+    if (niches.includes('dual-dps')) {
+      if (!niches.includes('arts-dps')) {
+        niches.push('arts-dps');
+      }
+      if (!niches.includes('physical-dps')) {
+        niches.push('physical-dps');
+      }
+    }
+  }
+
   return operatorNiches;
 }
 

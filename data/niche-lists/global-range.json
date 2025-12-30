@@ -4,6 +4,8 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "ambriel": "Awkward targeting priority",
-    "shamare": "Global debuffs"
+    "shamare": "Global debuffs",
+    "skadi_the_corrupting_heart": "Summon that helps with range extensions",
+    "silence": "Summon that helps with range extensions"
   }
 }
