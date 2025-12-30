@@ -1678,6 +1678,7 @@
     "profileImage": "/images/operators/nightmare.png",
     "niches": [
       "healing-operators",
+      "stalling",
       "trash-operators"
     ],
     "cnName": "夜魔",

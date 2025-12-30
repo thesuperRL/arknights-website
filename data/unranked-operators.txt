@@ -1,5 +1,5 @@
-Unranked Operators (205 total)
-Generated: 2025-12-30T07:07:26.451Z
+Unranked Operators (204 total)
+Generated: 2025-12-30T07:11:06.103Z
 
 aak (Aak)
 akkord (Akkord)
@@ -19,7 +19,6 @@ bryophyta (Bryophyta)
 cairn (Cairn)
 cantabile (Cantabile)
 caper (Caper)
-catapult (Catapult)
 catherine (Catherine)
 cement (Cement)
 ch_en_the_holungday (Ch'en the Holungday)

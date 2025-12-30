@@ -48,9 +48,31 @@ function getTrashOperators(): Set<string> {
   return trashOperators;
 }
 
-function getOperatorNiches(): Map<string, string[]> {
+function loadAllOperators(): Record<string, OperatorData> {
+  const dataDir = path.join(__dirname, '../data');
+  const operators: Record<string, OperatorData> = {};
+  const rarities = [1, 2, 3, 4, 5, 6];
+  
+  for (const rarity of rarities) {
+    const filePath = path.join(dataDir, `operators-${rarity}star.json`);
+    if (fs.existsSync(filePath)) {
+      try {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        const data = JSON.parse(content);
+        Object.assign(operators, data);
+      } catch (error) {
+        console.error(`Error loading operators-${rarity}star.json:`, error);
+      }
+    }
+  }
+  
+  return operators;
+}
+
+function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<string, string[]> {
   const operatorLists = loadAllNicheLists();
   const operatorNiches = new Map<string, string[]>();
+  const unrecognizedOperators: Array<{ operatorId: string; niche: string }> = [];
   
   // Collection is now keyed by filename
   for (const [filename, operatorList] of Object.entries(operatorLists)) {
@@ -60,6 +82,12 @@ function getOperatorNiches(): Map<string, string[]> {
     }
     
     for (const operatorId of Object.keys(operatorList.operators)) {
+      // Validate that operator ID exists
+      if (!allOperators[operatorId]) {
+        unrecognizedOperators.push({ operatorId, niche: operatorList.niche });
+        continue; // Skip unrecognized operators
+      }
+      
       if (!operatorNiches.has(operatorId)) {
         operatorNiches.set(operatorId, []);
       }
@@ -69,6 +97,16 @@ function getOperatorNiches(): Map<string, string[]> {
         niches.push(filename);
       }
     }
+  }
+  
+  // Report unrecognized operators
+  if (unrecognizedOperators.length > 0) {
+    console.error('\n❌ Unrecognized operator IDs found in niche lists:');
+    for (const { operatorId, niche } of unrecognizedOperators) {
+      console.error(`   - ${operatorId} in "${niche}"`);
+    }
+    console.error('\nPlease fix these errors before building.');
+    process.exit(1);
   }
 
   // Add trash operators to niches (using internal code "trash-operators")
@@ -199,9 +237,31 @@ function writeUnrankedLog(unrankedOperators: string[]): void {
 async function main() {
   console.log('🔍 Checking operator niches...\n');
 
-  // Get all operator IDs and their niches
-  const operatorNiches = getOperatorNiches();
+  // Load all operators first for validation
+  const allOperators = loadAllOperators();
+  console.log(`Loaded ${Object.keys(allOperators).length} operators from data files\n`);
+
+  // Get all operator IDs and their niches (with validation)
+  const operatorNiches = getOperatorNiches(allOperators);
   const trashOperators = getTrashOperators();
+  
+  // Validate trash operators too
+  const unrecognizedTrash: string[] = [];
+  for (const operatorId of trashOperators) {
+    if (!allOperators[operatorId]) {
+      unrecognizedTrash.push(operatorId);
+    }
+  }
+  
+  if (unrecognizedTrash.length > 0) {
+    console.error('\n❌ Unrecognized operator IDs found in trash-operators.json:');
+    for (const operatorId of unrecognizedTrash) {
+      console.error(`   - ${operatorId}`);
+    }
+    console.error('\nPlease fix these errors before building.');
+    process.exit(1);
+  }
+  
   const rankedCount = operatorNiches.size;
   console.log(`Found ${rankedCount} unique operators in operator lists`);
   console.log(`Found ${trashOperators.size} operators in trash list\n`);
