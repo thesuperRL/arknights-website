@@ -235,6 +235,58 @@ function writeUnrankedLog(unrankedOperators: string[]): void {
 }
 
 /**
+ * Capitalizes the first character of a string if it's not empty and capitalizable
+ */
+function capitalizeFirst(str: string): string {
+  if (!str || str.length === 0) {
+    return str;
+  }
+  const firstChar = str.charAt(0);
+  // Only capitalize if it's a lowercase letter
+  if (firstChar >= 'a' && firstChar <= 'z') {
+    return firstChar.toUpperCase() + str.slice(1);
+  }
+  return str;
+}
+
+/**
+ * Capitalizes the first character of all notes in all niche lists
+ */
+function capitalizeAllNotes(): void {
+  const nicheListsDir = path.join(__dirname, '../data/niche-lists');
+  const nicheLists = loadAllNicheLists(nicheListsDir);
+  let updatedFiles = 0;
+
+  for (const [filename, operatorList] of Object.entries(nicheLists)) {
+    if (!operatorList.operators) continue;
+
+    let fileUpdated = false;
+    const updatedOperators: Record<string, string> = {};
+
+    for (const [operatorId, note] of Object.entries(operatorList.operators)) {
+      const capitalizedNote = capitalizeFirst(note);
+      if (capitalizedNote !== note) {
+        updatedOperators[operatorId] = capitalizedNote;
+        fileUpdated = true;
+      } else {
+        updatedOperators[operatorId] = note;
+      }
+    }
+
+    if (fileUpdated) {
+      operatorList.operators = updatedOperators;
+      const filePath = path.join(nicheListsDir, `${filename}.json`);
+      fs.writeFileSync(filePath, JSON.stringify(operatorList, null, 2));
+      updatedFiles++;
+    }
+  }
+
+  if (updatedFiles > 0) {
+    console.log(`✅ Capitalized notes in ${updatedFiles} niche list file(s)`);
+  }
+}
+
+/**
  * Copies fragile operators to def-shred and res-shred lists at build time
  * Copies dual-dps operators to arts-dps and physical-dps lists at build time
  */
@@ -253,7 +305,7 @@ function copyOperatorsToDerivedNiches(): void {
       let defShredUpdated = false;
       for (const operatorId of fragileOperators) {
         if (!defShredList.operators[operatorId]) {
-          defShredList.operators[operatorId] = 'applies fragile';
+          defShredList.operators[operatorId] = 'Applies fragile';
           defShredUpdated = true;
         }
       }
@@ -271,7 +323,7 @@ function copyOperatorsToDerivedNiches(): void {
       let resShredUpdated = false;
       for (const operatorId of fragileOperators) {
         if (!resShredList.operators[operatorId]) {
-          resShredList.operators[operatorId] = 'applies fragile';
+          resShredList.operators[operatorId] = 'Applies fragile';
           resShredUpdated = true;
         }
       }
@@ -293,10 +345,10 @@ function copyOperatorsToDerivedNiches(): void {
     const artsDpsList = loadNicheList('arts-dps', nicheListsDir);
     if (artsDpsList) {
       let artsDpsUpdated = false;
-      for (const [operatorId, note] of dualDpsOperators) {
+      for (const [operatorId, _note] of dualDpsOperators) {
         if (!artsDpsList.operators[operatorId]) {
-          // Use the original note from dual-dps (even if empty string)
-          artsDpsList.operators[operatorId] = note;
+          // Don't copy notes for dual-dps operators
+          artsDpsList.operators[operatorId] = '';
           artsDpsUpdated = true;
         }
       }
@@ -312,10 +364,10 @@ function copyOperatorsToDerivedNiches(): void {
     const physicalDpsList = loadNicheList('physical-dps', nicheListsDir);
     if (physicalDpsList) {
       let physicalDpsUpdated = false;
-      for (const [operatorId, note] of dualDpsOperators) {
+      for (const [operatorId, _note] of dualDpsOperators) {
         if (!physicalDpsList.operators[operatorId]) {
-          // Use the original note from dual-dps (even if empty string)
-          physicalDpsList.operators[operatorId] = note;
+          // Don't copy notes for dual-dps operators
+          physicalDpsList.operators[operatorId] = '';
           physicalDpsUpdated = true;
         }
       }
@@ -335,6 +387,11 @@ function copyOperatorsToDerivedNiches(): void {
 
 async function main() {
   console.log('🔍 Checking operator niches...\n');
+
+  // Capitalize first letter of all notes in all niche lists
+  console.log('📝 Capitalizing notes in niche lists...\n');
+  capitalizeAllNotes();
+  console.log('');
 
   // Copy fragile and dual-dps operators to their derived niches at build time
   console.log('📋 Copying operators to derived niches...\n');
