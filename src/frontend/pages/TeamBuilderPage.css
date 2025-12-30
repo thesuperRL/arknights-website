@@ -1,42 +1,77 @@
 .team-builder-page {
-  max-width: 1200px;
+  width: 100%;
+  max-width: min(1800px, 95vw);
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0.75rem 1.5rem;
+  box-sizing: border-box;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .team-builder-page h1 {
-  margin-bottom: 0.5rem;
-  font-size: 2.5rem;
+  margin-bottom: 0.15rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: white;
 }
 
 .subtitle {
   color: white;
-  margin-bottom: 3rem;
-  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
 
-.preferences-section {
-  background: #2a2a3a;
-  border-radius: 16px;
-  padding: 2.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.preferences-section-collapsible {
+  margin-bottom: 0.75rem;
   border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #2a2a3a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
 }
 
-.preferences-section h2 {
+.preferences-section-collapsible:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.preferences-section-toggle {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: #2a2a3a;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-light);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.preferences-section-toggle:hover {
+  background: rgba(42, 42, 58, 0.9);
+  color: var(--primary-color);
+}
+
+.preferences-section-content {
+  padding: 1rem;
+  background: #2a2a3a;
+}
+
+.preferences-section-content h2 {
   margin-top: 0;
-  margin-bottom: 2rem;
-  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: white;
 }
 
 .preference-group {
-  margin-bottom: 1.25rem;
-  padding: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
   background: var(--bg-secondary);
   border-radius: 8px;
   transition: background 0.2s;
@@ -228,18 +263,18 @@
 
 .action-buttons {
   display: flex;
-  gap: 1.25rem;
-  margin-top: 2.5rem;
-  padding-top: 2rem;
-  border-top: 2px solid var(--border-color);
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
 }
 
 .action-buttons button {
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 1.05rem;
+  font-size: 0.85rem;
   font-weight: 600;
   transition: all 0.3s;
   background: var(--button-bg);
@@ -271,8 +306,8 @@
 
 .team-result {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 3rem;
+  border-radius: 12px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -285,14 +320,14 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   gap: 1rem;
 }
 
 .team-result h2 {
   margin-top: 0;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: white;
   flex: 1;
@@ -335,15 +370,15 @@
 
 .team-stats {
   display: flex;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
   border-bottom: 1px solid var(--border-color);
   justify-content: center;
 }
 
 .stat {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
 }
 
 .stat.warning {
@@ -355,9 +390,9 @@
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-auto-flow: column;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  max-width: 1200px;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  max-width: 100%;
   width: 100%;
   justify-content: center;
   align-items: stretch;
@@ -395,7 +430,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 480px;
+  min-height: 220px;
 }
 
 .team-member-card .operator-card {
@@ -403,12 +438,12 @@
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
-  border-radius: 12px;
+  border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border: 2px solid transparent;
   background: var(--card-bg);
-  min-height: 480px;
+  min-height: 220px;
   flex: 1;
 }
 
@@ -441,8 +476,8 @@
 .operator-image {
   width: 100%;
   max-width: 100%;
-  height: 220px;
-  min-height: 220px;
+  height: 100px;
+  min-height: 100px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center;
@@ -452,7 +487,7 @@
 }
 
 .operator-info {
-  padding: 1.25rem;
+  padding: 0.5rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -465,12 +500,12 @@
 
 .operator-name {
   font-weight: 600;
-  font-size: 1.122rem;
+  font-size: 0.8rem;
   color: var(--text-light);
-  line-height: 1.3;
-  min-height: 1.3rem;
-  max-height: calc(1.3rem * 2);
-  margin: 0 auto 1rem auto;
+  line-height: 1.1;
+  min-height: 1.1rem;
+  max-height: calc(1.1rem * 2);
+  margin: 0 auto 0.3rem auto;
   overflow: hidden;
   word-wrap: break-word;
   word-break: break-word;
@@ -481,49 +516,49 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   text-align: center;
-  padding: 0 0.5rem;
+  padding: 0 0.2rem;
   flex-shrink: 0;
 }
 
 .operator-info > div:has(.stars-component),
 .operator-info > .stars-wrapper {
-  height: 1.5rem;
+  height: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
   margin-top: 0;
   flex-shrink: 0;
 }
 
 .operator-class {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  height: 1.4rem;
+  height: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
   text-align: center;
 }
 
 .primary-niche {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   color: white;
   font-weight: 600;
-  padding: 0.4rem 0.75rem;
+  padding: 0.25rem 0.5rem;
   background: rgba(16, 185, 129, 0.15);
-  border-radius: 6px;
+  border-radius: 4px;
   width: fit-content;
   max-width: 100%;
   border: 1px solid rgba(16, 185, 129, 0.3);
-  min-height: 1.8rem;
+  min-height: 1.4rem;
   height: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 0.5rem auto;
+  margin: 0 auto 0.3rem auto;
   box-sizing: border-box;
   visibility: visible;
   word-wrap: break-word;
@@ -537,8 +572,8 @@
   border: none;
   padding: 0;
   min-width: 0;
-  min-height: 1.8rem;
-  height: 1.8rem;
+  min-height: 1.4rem;
+  height: 1.4rem;
   display: inline-flex;
   align-items: center;
 }
@@ -546,18 +581,18 @@
 .operator-niches {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.3rem;
   margin-top: auto;
-  padding-top: 0.5rem;
+  padding-top: 0.3rem;
   justify-content: center;
   align-items: center;
 }
 
 .niche-tag {
-  font-size: 0.8rem;
-  padding: 0.35rem 0.6rem;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.4rem;
   background: var(--bg-secondary);
-  border-radius: 6px;
+  border-radius: 4px;
   color: var(--text-secondary);
   font-weight: 500;
   border: 1px solid var(--border-color);
@@ -580,7 +615,7 @@
 }
 
 .coverage-section-collapsible {
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
@@ -659,10 +694,10 @@
 .team-member-card .empty-slot-card {
   width: 100%;
   height: 100%;
-  min-height: 480px;
+  min-height: 220px;
   background: rgba(42, 42, 58, 0.6);
   border: 2px dashed rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -689,23 +724,23 @@
   background: rgba(16, 185, 129, 0.2);
   border: 1px solid rgba(16, 185, 129, 0.5);
   color: #10b981;
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .empty-slot-icon {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 300;
   line-height: 1;
 }
 
 .empty-slot-text {
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 500;
 }
 
@@ -862,12 +897,12 @@
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
   transition: all 0.2s;
   width: 100%;
 }
@@ -881,22 +916,22 @@
 
 /* Rarity Ranking Styling */
 .rarity-ranking-container {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .rarity-ranking-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .rarity-ranking-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
   background: var(--bg-secondary);
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid var(--border-color);
   transition: all 0.2s;
 }
@@ -910,19 +945,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background: var(--primary-color);
   color: white;
   border-radius: 50%;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   flex-shrink: 0;
 }
 
 .rarity-star {
   flex: 1;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-light);
 }
@@ -931,14 +966,14 @@
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid var(--border-color);
   color: var(--text-light);
-  width: 2rem;
-  height: 2rem;
+  width: 1.75rem;
+  height: 1.75rem;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 0.85rem;
   transition: all 0.2s;
   flex-shrink: 0;
 }
@@ -955,8 +990,8 @@
 }
 
 .rarity-ranking-help {
-  margin-top: 0.75rem;
-  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
   font-style: italic;
 }

@@ -20,6 +20,20 @@ export interface LocalAccount {
 let pool: sql.ConnectionPool | null = null;
 
 /**
+ * Sanitize error messages to remove sensitive server information
+ */
+function sanitizeErrorMessage(error: any): string {
+  let message = error.message || String(error);
+  
+  // Remove server names and ports from error messages
+  message = message.replace(/[a-zA-Z0-9-]+\.database\.windows\.net(?::\d+)?/g, 'SQL server');
+  message = message.replace(/Failed to connect to [^ ]+ in (\d+)ms/g, 'Failed to connect to SQL server in $1ms');
+  message = message.replace(/ConnectionError: [^:]+: /g, '');
+  
+  return message;
+}
+
+/**
  * Get or create database connection pool
  */
 async function getDbPool(): Promise<sql.ConnectionPool> {
@@ -60,6 +74,13 @@ async function getDbPool(): Promise<sql.ConnectionPool> {
       user,
       password,
       port,
+      connectionTimeout: parseInt(process.env.AZURE_SQL_CONNECTION_TIMEOUT || '30000', 10), // 30 seconds
+      requestTimeout: parseInt(process.env.AZURE_SQL_REQUEST_TIMEOUT || '30000', 10), // 30 seconds
+      pool: {
+        max: 10,
+        min: 0,
+        idleTimeoutMillis: 30000
+      },
       options: {
         encrypt: true, // Azure SQL requires encryption
         trustServerCertificate: false,
@@ -73,8 +94,27 @@ async function getDbPool(): Promise<sql.ConnectionPool> {
     ? new sql.ConnectionPool(dbConfig)
     : new sql.ConnectionPool(dbConfig);
   
-  await pool.connect();
-  return pool;
+  try {
+    await pool.connect();
+    console.log('Database connection established successfully');
+    return pool;
+  } catch (error: any) {
+    const sanitizedMessage = sanitizeErrorMessage(error);
+    console.error('Database connection error:', sanitizedMessage);
+    pool = null; // Reset pool on error
+    
+    // Provide helpful error messages without exposing server details
+    if (error.code === 'ETIMEOUT' || error.message?.includes('timeout') || error.message?.includes('Failed to connect')) {
+      // Extract timeout value if present, otherwise use default
+      const timeoutMatch = error.message?.match(/(\d+)ms/);
+      const timeout = timeoutMatch ? timeoutMatch[1] : '15000';
+      throw new Error(`Failed to connect to SQL server in ${timeout}ms`);
+    } else if (error.code === 'ELOGIN' || error.message?.includes('Login failed')) {
+      throw new Error(`Database authentication failed. Please check your credentials.`);
+    } else {
+      throw new Error(`Database connection failed: ${sanitizedMessage}`);
+    }
+  }
 }
 
 /**
