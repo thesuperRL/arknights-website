@@ -195,7 +195,7 @@
     font-weight: bold;
     margin-bottom: 0.75rem;
     color: var(--text-light);
-    font-size: 1.056rem;
+    font-size: 1.2rem;
     min-height: 1.3rem;
     max-height: calc(1.3rem * 2);
     display: -webkit-box;

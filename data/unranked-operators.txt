@@ -1,21 +1,5 @@
-Unranked Operators (31 total)
-Generated: 2025-12-31T06:03:59.103Z
-
-=== GLOBAL OPERATORS ===
-
---- Specialist ---
-figurino (Figurino)
-iana (Iana)
-swire_the_elegant_wit (Swire the Elegant Wit)
-thorns_the_lodestar (Thorns the Lodestar)
-tin_man (Tin Man)
-tippi (Tippi)
-verdant (Verdant)
-
---- Supporter ---
-lucilla (Lucilla)
-stainless (Stainless)
-valarqvin (Valarqvin)
+Unranked Operators (21 total)
+Generated: 2025-12-31T22:52:48.634Z
 
 === NON-GLOBAL OPERATORS ===
 

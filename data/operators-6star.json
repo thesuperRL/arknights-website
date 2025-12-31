@@ -1744,7 +1744,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/stainless.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "sp-battery"
+    ],
     "cnName": "白铁",
     "twName": "白鐵",
     "jpName": "ステインレス",
@@ -1796,7 +1799,13 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/swire_the_elegant_wit.png",
-    "niches": [],
+    "niches": [
+      "fast-redeploy-operators",
+      "late-laneholder",
+      "shift",
+      "tanking-blocking-operators",
+      "trash-operators"
+    ],
     "cnName": "琳琅诗怀雅",
     "twName": "琳瑯詩懷雅",
     "jpName": "琳りん琅ろうスワイヤー",
@@ -1845,7 +1854,14 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/thorns_the_lodestar.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "atk-buff",
+      "atk-debuff",
+      "def-shred",
+      "enmity-healing",
+      "res-shred"
+    ],
     "cnName": "引星棘刺",
     "jpName": "引星いんせいソーンズ",
     "krName": "쏜즈 더 로드스타",

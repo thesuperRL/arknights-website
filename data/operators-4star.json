@@ -169,7 +169,8 @@
     "global": true,
     "profileImage": "/images/operators/contrail.png",
     "niches": [
-      "low-rarity"
+      "low-rarity",
+      "unconventional-niches"
     ],
     "cnName": "云迹",
     "jpName": "コントレイル",
@@ -936,7 +937,9 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/verdant.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "维荻",
     "twName": "維荻",
     "jpName": "ヴァ―ダント",

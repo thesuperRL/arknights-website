@@ -869,7 +869,10 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/figurino.png",
-    "niches": [],
+    "niches": [
+      "fast-redeploy-operators",
+      "stalling"
+    ],
     "cnName": "裁度",
     "jpName": "フィグリーノ",
     "krName": "피구리노",
@@ -1262,7 +1265,9 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/iana.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "双月",
     "jpName": "イアナ",
     "krName": "야나",
@@ -1604,7 +1609,12 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/lucilla.png",
-    "niches": [],
+    "niches": [
+      "def-shred",
+      "fragile",
+      "res-shred",
+      "trash-operators"
+    ],
     "cnName": "海霓",
     "jpName": "ルシーラ",
     "krName": "루실라",
@@ -2609,7 +2619,11 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/tin_man.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "atk-debuff",
+      "enmity-healing"
+    ],
     "cnName": "锡人",
     "twName": "錫人",
     "jpName": "ブリキ",
@@ -2623,7 +2637,10 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/tippi.png",
-    "niches": [],
+    "niches": [
+      "trash-operators",
+      "unconventional-niches"
+    ],
     "cnName": "蒂比",
     "jpName": "ティッピ",
     "krName": "티피",
@@ -2718,7 +2735,9 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/valarqvin.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage"
+    ],
     "cnName": "凛视",
     "twName": "凜視",
     "jpName": "ヴァラルクビン",
