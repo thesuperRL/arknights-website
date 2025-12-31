@@ -139,7 +139,6 @@
     "profileImage": "/images/operators/aosta.png",
     "niches": [
       "arts-dps",
-      "dual-dps",
       "physical-dps",
       "trash-operators"
     ],
@@ -371,8 +370,7 @@
     "profileImage": "/images/operators/blacknight.png",
     "niches": [
       "dp-generation",
-      "early-laneholder",
-      "sleep"
+      "early-laneholder"
     ],
     "cnName": "夜半",
     "jpName": "ブラックナイト",
@@ -408,7 +406,6 @@
     "niches": [
       "anti-air-operators",
       "arts-dps",
-      "dual-dps",
       "physical-dps"
     ],
     "cnName": "蓝毒",
@@ -805,7 +802,6 @@
     "profileImage": "/images/operators/erato.png",
     "niches": [
       "physical-dps",
-      "sleep",
       "trash-operators"
     ],
     "cnName": "埃拉托",
@@ -1314,7 +1310,6 @@
     "global": true,
     "profileImage": "/images/operators/iris.png",
     "niches": [
-      "sleep",
       "trash-operators"
     ],
     "cnName": "爱丽丝",
@@ -1365,8 +1360,7 @@
     "global": true,
     "profileImage": "/images/operators/kafka.png",
     "niches": [
-      "fast-redeploy-operators",
-      "sleep"
+      "fast-redeploy-operators"
     ],
     "cnName": "卡夫卡",
     "jpName": "カフカ",
@@ -1509,9 +1503,7 @@
     "global": true,
     "profileImage": "/images/operators/lappland.png",
     "niches": [
-      "afk",
       "arts-dps",
-      "dual-dps",
       "physical-dps",
       "silence"
     ],
@@ -1979,7 +1971,6 @@
     "global": true,
     "profileImage": "/images/operators/platinum.png",
     "niches": [
-      "afk",
       "anti-air-operators",
       "physical-dps"
     ],
@@ -2183,7 +2174,6 @@
     "niches": [
       "arts-dps",
       "dp-generation",
-      "dual-dps",
       "physical-dps",
       "trash-operators"
     ],
@@ -2469,7 +2459,6 @@
     "profileImage": "/images/operators/sora.png",
     "niches": [
       "enmity-healing",
-      "sleep",
       "trash-operators"
     ],
     "cnName": "空",
@@ -2701,7 +2690,6 @@
     "global": true,
     "profileImage": "/images/operators/tuye.png",
     "niches": [
-      "afk",
       "healing-operators"
     ],
     "cnName": "图耶",
@@ -2719,7 +2707,6 @@
     "profileImage": "/images/operators/underflow.png",
     "niches": [
       "arts-dps",
-      "dual-dps",
       "late-laneholder",
       "physical-dps",
       "tanking-blocking-operators"
@@ -2891,7 +2878,6 @@
     "global": true,
     "profileImage": "/images/operators/whisperain.png",
     "niches": [
-      "afk",
       "healing-operators",
       "trash-operators"
     ],

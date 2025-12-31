@@ -123,7 +123,6 @@
     "global": true,
     "profileImage": "/images/operators/blaze.png",
     "niches": [
-      "afk",
       "late-laneholder",
       "tanking-blocking-operators"
     ],
@@ -210,7 +209,6 @@
     "profileImage": "/images/operators/ch_en.png",
     "niches": [
       "arts-dps",
-      "dual-dps",
       "physical-dps",
       "sp-battery",
       "trash-operators"
@@ -470,7 +468,6 @@
     "global": true,
     "profileImage": "/images/operators/eyjafjalla.png",
     "niches": [
-      "afk",
       "aoe-arts-dps",
       "arts-dps",
       "boss-killing",
@@ -614,7 +611,6 @@
     "global": true,
     "profileImage": "/images/operators/goldenglow.png",
     "niches": [
-      "afk",
       "arts-dps",
       "global-range"
     ],
@@ -696,7 +692,6 @@
     "global": true,
     "profileImage": "/images/operators/horn.png",
     "niches": [
-      "afk",
       "aoe-physical-dps",
       "unconventional-niches"
     ],
@@ -714,7 +709,6 @@
     "global": true,
     "profileImage": "/images/operators/hoshiguma.png",
     "niches": [
-      "afk",
       "late-laneholder",
       "tanking-blocking-operators"
     ],
@@ -742,7 +736,6 @@
     "global": true,
     "profileImage": "/images/operators/ifrit.png",
     "niches": [
-      "afk",
       "aoe-arts-dps",
       "arts-dps",
       "res-shred"
@@ -1628,7 +1621,6 @@
     "profileImage": "/images/operators/siege.png",
     "niches": [
       "trash-operators",
-      "afk",
       "dp-generation",
       "early-laneholder"
     ],
@@ -1661,7 +1653,6 @@
     "global": true,
     "profileImage": "/images/operators/silverash.png",
     "niches": [
-      "afk",
       "aoe-physical-dps",
       "boss-killing",
       "late-laneholder",
@@ -1836,9 +1827,7 @@
     "global": true,
     "profileImage": "/images/operators/thorns.png",
     "niches": [
-      "afk",
       "arts-dps",
-      "dual-dps",
       "late-laneholder",
       "physical-dps"
     ],

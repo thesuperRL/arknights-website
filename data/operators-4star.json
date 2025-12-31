@@ -52,7 +52,6 @@
     "profileImage": "/images/operators/arene.png",
     "niches": [
       "arts-dps",
-      "dual-dps",
       "physical-dps"
     ],
     "cnName": "芳汀",
@@ -367,7 +366,6 @@
     "global": true,
     "profileImage": "/images/operators/gavial.png",
     "niches": [
-      "afk",
       "healing-operators"
     ],
     "cnName": "嘉维尔",
@@ -433,7 +431,6 @@
     "global": true,
     "profileImage": "/images/operators/gummy.png",
     "niches": [
-      "afk",
       "early-laneholder",
       "healing-operators",
       "late-laneholder",

@@ -121,7 +121,7 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
     }
   }
 
-  // Apply build-time rules: fragile -> def-shred + res-shred, dual-dps -> arts-dps + physical-dps
+  // Apply build-time rules: fragile -> def-shred + res-shred
   for (const [_operatorId, niches] of operatorNiches.entries()) {
     // If operator is in fragile niche, also add def-shred and res-shred
     if (niches.includes('fragile')) {
@@ -130,16 +130,6 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
       }
       if (!niches.includes('res-shred')) {
         niches.push('res-shred');
-      }
-    }
-
-    // If operator is in dual-dps niche, also add arts-dps and physical-dps
-    if (niches.includes('dual-dps')) {
-      if (!niches.includes('arts-dps')) {
-        niches.push('arts-dps');
-      }
-      if (!niches.includes('physical-dps')) {
-        niches.push('physical-dps');
       }
     }
   }
@@ -428,49 +418,6 @@ function copyOperatorsToDerivedNiches(): void {
     }
   }
 
-  // Copy dual-dps operators to arts-dps and physical-dps
-  const dualDpsList = loadNicheList('dual-dps', nicheListsDir);
-  if (dualDpsList && dualDpsList.operators) {
-    const dualDpsOperators = Object.entries(dualDpsList.operators);
-    
-    // Add to arts-dps
-    const artsDpsList = loadNicheList('arts-dps', nicheListsDir);
-    if (artsDpsList) {
-      let artsDpsUpdated = false;
-      for (const [operatorId, _note] of dualDpsOperators) {
-        if (!artsDpsList.operators[operatorId]) {
-          // Don't copy notes for dual-dps operators
-          artsDpsList.operators[operatorId] = '';
-          artsDpsUpdated = true;
-        }
-      }
-      if (artsDpsUpdated) {
-        const artsDpsPath = path.join(nicheListsDir, 'arts-dps.json');
-        fs.writeFileSync(artsDpsPath, JSON.stringify(artsDpsList, null, 2));
-        console.log(`✅ Added ${dualDpsOperators.length} dual-dps operator(s) to arts-dps.json`);
-        updatedFiles++;
-      }
-    }
-
-    // Add to physical-dps
-    const physicalDpsList = loadNicheList('physical-dps', nicheListsDir);
-    if (physicalDpsList) {
-      let physicalDpsUpdated = false;
-      for (const [operatorId, _note] of dualDpsOperators) {
-        if (!physicalDpsList.operators[operatorId]) {
-          // Don't copy notes for dual-dps operators
-          physicalDpsList.operators[operatorId] = '';
-          physicalDpsUpdated = true;
-        }
-      }
-      if (physicalDpsUpdated) {
-        const physicalDpsPath = path.join(nicheListsDir, 'physical-dps.json');
-        fs.writeFileSync(physicalDpsPath, JSON.stringify(physicalDpsList, null, 2));
-        console.log(`✅ Added ${dualDpsOperators.length} dual-dps operator(s) to physical-dps.json`);
-        updatedFiles++;
-      }
-    }
-  }
 
   if (updatedFiles > 0) {
     console.log(`\n📋 Updated ${updatedFiles} niche list file(s) with derived operators`);
@@ -485,7 +432,7 @@ async function main() {
   capitalizeAllNotes();
   console.log('');
 
-  // Copy fragile and dual-dps operators to their derived niches at build time
+  // Copy fragile operators to their derived niches at build time
   console.log('📋 Copying operators to derived niches...\n');
   copyOperatorsToDerivedNiches();
   console.log('');

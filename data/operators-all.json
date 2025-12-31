@@ -345,8 +345,7 @@
     "global": true,
     "profileImage": "/images/operators/midnight.png",
     "niches": [
-      "trash-operators",
-      "dual-dps"
+      "trash-operators"
     ],
     "cnName": "月见夜",
     "twName": "月見夜",
@@ -788,7 +787,6 @@
     "global": true,
     "profileImage": "/images/operators/gavial.png",
     "niches": [
-      "afk",
       "healing-operators"
     ],
     "cnName": "嘉维尔",
@@ -854,7 +852,6 @@
     "global": true,
     "profileImage": "/images/operators/gummy.png",
     "niches": [
-      "afk",
       "early-laneholder",
       "healing-operators",
       "late-laneholder",
@@ -1712,8 +1709,7 @@
     "global": true,
     "profileImage": "/images/operators/blue_poison.png",
     "niches": [
-      "Anti-Air Operators",
-      "Dual-DPS Operators"
+      "Anti-Air Operators"
     ],
     "cnName": "蓝毒",
     "twName": "藍毒",
@@ -2661,8 +2657,6 @@
     "global": true,
     "profileImage": "/images/operators/lappland.png",
     "niches": [
-      "AFK Operators",
-      "Dual-DPS Operators",
       "Silence"
     ],
     "cnName": "拉普兰德",
@@ -3069,7 +3063,6 @@
     "global": true,
     "profileImage": "/images/operators/platinum.png",
     "niches": [
-      "AFK Operators",
       "Anti-Air Operators",
       "Physical DPS"
     ],
@@ -3249,7 +3242,6 @@
     "profileImage": "/images/operators/reed.png",
     "niches": [
       "DP Generation",
-      "Dual-DPS Operators",
       "Trash Operators"
     ],
     "cnName": "苇草",
@@ -3508,8 +3500,7 @@
     "global": true,
     "profileImage": "/images/operators/sora.png",
     "niches": [
-      "Enmity Healing",
-      "Sleep"
+      "Enmity Healing"
     ],
     "cnName": "空",
     "jpName": "ソラ",
@@ -4107,7 +4098,6 @@
     "global": true,
     "profileImage": "/images/operators/blaze.png",
     "niches": [
-      "afk",
       "late-laneholder",
       "tanking-blocking-operators"
     ],
@@ -4189,7 +4179,6 @@
     "profileImage": "/images/operators/ch_en.png",
     "niches": [
       "trash-operators",
-      "dual-dps",
       "sp-battery"
     ],
     "cnName": "陈",
@@ -4408,7 +4397,6 @@
     "global": true,
     "profileImage": "/images/operators/eyjafjalla.png",
     "niches": [
-      "afk",
       "aoe-arts-dps",
       "arts-dps",
       "boss-killing",
@@ -4612,7 +4600,6 @@
     "global": true,
     "profileImage": "/images/operators/hoshiguma.png",
     "niches": [
-      "afk",
       "late-laneholder",
       "tanking-blocking-operators"
     ],
@@ -4640,7 +4627,6 @@
     "global": true,
     "profileImage": "/images/operators/ifrit.png",
     "niches": [
-      "afk",
       "aoe-arts-dps",
       "arts-dps",
       "res-shred"
@@ -5368,7 +5354,6 @@
     "profileImage": "/images/operators/siege.png",
     "niches": [
       "trash-operators",
-      "afk",
       "dp-generation",
       "early-laneholder"
     ],
@@ -5399,7 +5384,6 @@
     "global": true,
     "profileImage": "/images/operators/silverash.png",
     "niches": [
-      "afk",
       "aoe-physical-dps",
       "boss-killing",
       "late-laneholder",

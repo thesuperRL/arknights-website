@@ -169,16 +169,6 @@ export function getNichesForOperator(operatorId: string, dataDir: string = path.
     }
   }
 
-  // If operator is in dual-dps niche, also count them as arts-dps and physical-dps
-  // This allows dual-dps operators to be counted in those niches for teambuilding
-  if (niches.includes('dual-dps')) {
-    if (!niches.includes('arts-dps')) {
-      niches.push('arts-dps');
-    }
-    if (!niches.includes('physical-dps')) {
-      niches.push('physical-dps');
-    }
-  }
 
   return niches;
 }
