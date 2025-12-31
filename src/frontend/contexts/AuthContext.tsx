@@ -9,6 +9,7 @@ interface AuthContextType {
   user: UserInfo | null;
   loading: boolean;
   checkAuth: () => Promise<void>;
+  setUserDirect: (user: UserInfo) => void;
   logout: () => Promise<void>;
 }
 
@@ -51,6 +52,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const setUserDirect = (userInfo: UserInfo) => {
+    setUser(userInfo);
+    setLoading(false);
+  };
+
   const logout = async () => {
     try {
       await fetch('/api/auth/logout', { 
@@ -68,7 +74,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, checkAuth, logout }}>
+    <AuthContext.Provider value={{ user, loading, checkAuth, setUserDirect, logout }}>
       {children}
     </AuthContext.Provider>
   );

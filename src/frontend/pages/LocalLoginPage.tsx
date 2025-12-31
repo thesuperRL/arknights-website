@@ -9,7 +9,7 @@ const LocalLoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { user, loading: authLoading, checkAuth } = useAuth();
+  const { user, loading: authLoading, setUserDirect } = useAuth();
 
   // Redirect if already logged in
   useEffect(() => {
@@ -37,8 +37,13 @@ const LocalLoginPage: React.FC = () => {
         throw new Error(data.error || 'Login failed');
       }
 
-      // Refresh auth state
-      await checkAuth();
+      // Update auth state directly with data from login response (avoid redundant API call)
+      if (data.user) {
+        setUserDirect({
+          email: data.user.email,
+          nickname: data.user.nickname
+        });
+      }
       
       // Redirect to profile page
       navigate('/profile');

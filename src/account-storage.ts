@@ -19,6 +19,9 @@ export interface LocalAccount {
 // Database connection pool (singleton)
 let pool: sql.ConnectionPool | null = null;
 
+// Cache for column names (to avoid repeated INFORMATION_SCHEMA queries)
+let columnNamesCache: Record<string, string> | null = null;
+
 /**
  * Sanitize error messages to remove sensitive server information
  */
@@ -146,9 +149,14 @@ function rowToAccount(row: any, ownedOperatorsCol: string, wantToUseCol: string)
 }
 
 /**
- * Get column names from accounts table
+ * Get column names from accounts table (cached)
  */
 async function getColumnNames(pool: sql.ConnectionPool): Promise<Record<string, string>> {
+  // Return cached column names if available
+  if (columnNamesCache) {
+    return columnNamesCache;
+  }
+
   const query = `
     SELECT COLUMN_NAME, DATA_TYPE
     FROM INFORMATION_SCHEMA.COLUMNS 
@@ -188,6 +196,8 @@ async function getColumnNames(pool: sql.ConnectionPool): Promise<Record<string, 
   columns.ownedOperators = columns.ownedOperators || 'ownedOperators';
   columns.wantToUse = columns.wantToUse || 'wantToUse';
   
+  // Cache the result
+  columnNamesCache = columns;
   return columns;
 }
 
