@@ -28,7 +28,12 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1037_amiya3"
+    "internalName": "char_1037_amiya3",
+    "niches": [
+      "arts-dps",
+      "healing-operators",
+      "true_damage"
+    ]
   },
   "absinthe": {
     "id": "absinthe",
@@ -68,7 +73,11 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/alanna.png",
-    "niches": [],
+    "niches": [
+      "atk-buff",
+      "def-buff",
+      "trash-operators"
+    ],
     "cnName": "阿兰娜",
     "twName": "阿蘭娜",
     "jpName": "アランナ",
@@ -164,7 +173,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/aroma.png",
-    "niches": [],
+    "niches": [
+      "stalling",
+      "trash-operators"
+    ],
     "cnName": "阿罗玛",
     "twName": "阿羅瑪",
     "jpName": "アロマ",
@@ -460,7 +472,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/bryophyta.png",
-    "niches": [],
+    "niches": [
+      "atk-buff",
+      "def-buff",
+      "trash-operators"
+    ],
     "cnName": "苍苔",
     "twName": "蒼苔",
     "jpName": "ブライオフャイタ",
@@ -1102,7 +1118,11 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/hibiscus_the_purifier.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "healing-operators",
+      "trash-operators"
+    ],
     "cnName": "濯尘芙蓉",
     "twName": "濯塵芙蓉",
     "jpName": "濯たく塵じんハイビスカス",
@@ -1116,7 +1136,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/highmore.png",
-    "niches": [],
+    "niches": [
+      "free",
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "海沫",
     "jpName": "ハイモア",
     "krName": "하이모어",
@@ -1237,7 +1261,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/jieyun.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "free",
+      "trash-operators"
+    ],
     "cnName": "截云",
     "twName": "截雲",
     "jpName": "ジエユン",
@@ -1642,7 +1670,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/mitm.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "trash-operators"
+    ],
     "cnName": "渡桥",
     "jpName": "ミトム",
     "krName": "님프",
@@ -1833,7 +1865,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/poncirus.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "trash-operators"
+    ],
     "cnName": "青枳",
     "jpName": "ポンシラス",
     "krName": "폰사이러스",
@@ -1984,7 +2020,10 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/record_keeper.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "trash-operators"
+    ],
     "cnName": "录武官",
     "twName": "錄武官",
     "jpName": "レコードキーパー",
@@ -2063,7 +2102,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/sand_reckoner.png",
-    "niches": [],
+    "niches": [
+      "stalling",
+      "trash-operators"
+    ],
     "cnName": "衡沙",
     "jpName": "サンドレコナー",
     "krName": "샌드레코너",
@@ -2306,7 +2348,9 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/spuria.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "空构",
     "twName": "空構",
     "jpName": "スプリア",
@@ -2696,7 +2740,9 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/wind_chimes.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "铎铃",
     "twName": "鐸鈴",
     "jpName": "ウィンドチャイム",

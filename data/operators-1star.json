@@ -6,7 +6,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/confess_47.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "robot",
+      "sleep"
+    ],
     "internalName": "char_4188_confes"
   },
   "castle_3": {
@@ -67,7 +71,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/phonor_0.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage",
+      "robot"
+    ],
     "internalName": "char_4136_phonor"
   },
   "thrm_ex": {
@@ -92,7 +99,9 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/terra_research_commission.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "泰拉大陆调查团",
     "twName": "泰拉大陸調查團",
     "jpName": "テラ大陸調査団",
@@ -106,7 +115,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/u_official.png",
-    "niches": [],
+    "niches": [
+      "stalling",
+      "trash-operators"
+    ],
     "internalName": "char_4091_ulika"
   }
 }

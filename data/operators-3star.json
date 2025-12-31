@@ -267,7 +267,9 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/vanilla.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "香草",
     "jpName": "バニラ",
     "krName": "바닐라",

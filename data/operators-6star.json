@@ -460,7 +460,11 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/eyjafjalla_the_hv_t_aska.png",
-    "niches": [],
+    "niches": [
+      "elemental_damage_healers",
+      "global-range",
+      "healing-operators"
+    ],
     "cnName": "纯烬艾雅法拉",
     "twName": "純燼艾雅法拉",
     "jpName": "純じゅん燼じんエイヤフィヤトラ",
@@ -714,7 +718,12 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/ines.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "fast-redeploy-operators",
+      "stalling"
+    ],
     "cnName": "伊内丝",
     "twName": "伊內絲",
     "jpName": "イネス",
@@ -791,7 +800,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/lappland_the_decadenza.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "global-range",
+      "silence",
+      "stalling"
+    ],
     "cnName": "荒芜拉普兰德",
     "jpName": "荒蕪こうぶラップランド",
     "krName": "라플란드 더 데카덴차",
@@ -849,7 +863,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/lessing.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "free",
+      "trash-operators",
+      "unconventional-niches"
+    ],
     "cnName": "止颂",
     "twName": "止頌",
     "jpName": "レッシング",
@@ -893,7 +912,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/logos.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "boss-killing",
+      "res-shred",
+      "unconventional-niches"
+    ],
     "cnName": "逻各斯",
     "twName": "邏各斯",
     "jpName": "ロゴス",
@@ -1252,7 +1276,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/poz_mka.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "def-shred",
+      "physical-dps"
+    ],
     "cnName": "鸿雪",
     "twName": "鴻雪",
     "jpName": "パゼオンカ",
@@ -1464,7 +1492,15 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/shu.png",
-    "niches": [],
+    "niches": [
+      "def-buff",
+      "enmity-healing",
+      "healing-operators",
+      "late-laneholder",
+      "res-buff",
+      "stalling",
+      "tanking-blocking-operators"
+    ],
     "cnName": "黍",
     "jpName": "シュウ",
     "krName": "슈",
@@ -1718,7 +1754,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/tragodia.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage",
+      "stalling"
+    ],
     "cnName": "酒神",
     "jpName": "トラゴディア",
     "krName": "트라고디아",
@@ -1731,7 +1770,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/typhon.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "physical-dps"
+    ],
     "cnName": "提丰",
     "twName": "提豐",
     "jpName": "ティフォン",
@@ -1786,7 +1828,9 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/virtuosa.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage"
+    ],
     "cnName": "塑心",
     "jpName": "ヴィルトゥオーサ",
     "krName": "비르투오사",
@@ -1858,7 +1902,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/wi_adel.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "boss-killing"
+    ],
     "cnName": "维什戴尔",
     "twName": "維什戴爾",
     "jpName": "ウィシャデル",
@@ -1872,7 +1919,12 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/yu.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage",
+      "late-laneholder",
+      "stalling",
+      "tanking-blocking-operators"
+    ],
     "cnName": "余",
     "twName": "餘",
     "jpName": "ユー",

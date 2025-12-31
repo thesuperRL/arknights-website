@@ -165,7 +165,9 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/contrail.png",
-    "niches": [],
+    "niches": [
+      "low-rarity"
+    ],
     "cnName": "云迹",
     "jpName": "コントレイル",
     "krName": "콘트레일",
@@ -764,7 +766,9 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/quartz.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "石英",
     "jpName": "クォーツ",
     "krName": "쿼츠",
