@@ -38,7 +38,10 @@
     "specter_the_unchained": "As a dollkeeper, perma tank ranged damage",
     "tequila": "Deals reflect damage",
     "roberta": "",
-    "flametail": "Dodge tank"
+    "flametail": "Dodge tank",
+    "highmore": "Self-heals elemental damage",
+    "shu": "",
+    "yu": ""
   },
   "relatedNiches": [
     "Late Laneholder"

@@ -33,7 +33,15 @@
     "gnosis": "",
     "kroos_the_keen_glint": "Stuns",
     "ling": "S2",
-    "specter_the_unchained": "Doll slows"
+    "specter_the_unchained": "Doll slows",
+    "aroma": "Short levitate",
+    "ines": "",
+    "lappland_the_decadenza": "S2 fear and S3 slow",
+    "sand_reckoner": "",
+    "shu": "Teleporting unlimited numbers of enemies back",
+    "tragodia": "S1 bind, S2 controlling enemies, and S3 locking them in place",
+    "u_official": "RNG",
+    "yu": "Teleport"
   },
   "relatedNiches": [
     "Tanking/Blocking Operators"

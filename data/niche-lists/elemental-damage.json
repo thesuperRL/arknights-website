@@ -1,8 +1,12 @@
 {
-  "niche": "Elemental Damage",
+  "niche": "Elemental Damage DPS",
   "description": "Operators that deal high elemental damage",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "blaze_the_igniting_spark": ""
+    "blaze_the_igniting_spark": "",
+    "phonor_0": "",
+    "tragodia": "",
+    "virtuosa": "",
+    "yu": ""
   }
 }
