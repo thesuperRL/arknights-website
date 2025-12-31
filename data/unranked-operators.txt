@@ -40,14 +40,10 @@ tippi (Tippi)
 verdant (Verdant)
 
 --- Supporter ---
-grain_buds (Grain Buds)
 lucilla (Lucilla)
-proviso (Proviso)
 raidian (Raidian)
-silence_the_paradigmatic (Silence the Paradigmatic)
 stainless (Stainless)
 valarqvin (Valarqvin)
-xingzhu (Xingzhu)
 
 --- Vanguard ---
 muelsyse (Muelsyse)
