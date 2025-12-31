@@ -860,7 +860,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/shirayuki.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "physical-dps"
+    ],
     "cnName": "白雪",
     "jpName": "シラユキ",
     "krName": "시라유키",

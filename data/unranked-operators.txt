@@ -1,5 +1,5 @@
-Unranked Operators (61 total)
-Generated: 2025-12-31T03:06:39.837Z
+Unranked Operators (55 total)
+Generated: 2025-12-31T03:11:22.961Z
 
 === GLOBAL OPERATORS ===
 
@@ -24,15 +24,9 @@ mon3tr (Mon3tr)
 reed_the_flame_shadow (Reed the Flame Shadow)
 
 --- Sniper ---
-erato (Erato)
-greyy_the_lightningbearer (Greyy the Lightningbearer)
-insider (Insider)
 lemuen (Lemuen)
-lunacub (Lunacub)
-melanite (Melanite)
 narantuya (Narantuya)
 ray (Ray)
-shirayuki (Shirayuki)
 
 --- Specialist ---
 figurino (Figurino)

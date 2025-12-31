@@ -803,7 +803,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/erato.png",
-    "niches": [],
+    "niches": [
+      "physical-dps",
+      "sleep",
+      "trash-operators"
+    ],
     "cnName": "埃拉托",
     "jpName": "エラト",
     "krName": "에라토",
@@ -1092,7 +1096,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/greyy_the_lightningbearer.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "physical-dps"
+    ],
     "cnName": "承曦格雷伊",
     "jpName": "承しょう曦ぎグレイ",
     "krName": "그레이 더 라이트닝베어러",
@@ -1282,7 +1289,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/insider.png",
-    "niches": [],
+    "niches": [
+      "physical-dps",
+      "trash-operators"
+    ],
     "cnName": "隐现",
     "twName": "隱現",
     "jpName": "インサイダー",
@@ -1605,7 +1615,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/lunacub.png",
-    "niches": [],
+    "niches": [
+      "physical-dps",
+      "unconventional-niches"
+    ],
     "cnName": "子月",
     "jpName": "ルナカブ",
     "internalName": "char_4014_lunacu"
@@ -1661,7 +1674,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/melanite.png",
-    "niches": [],
+    "niches": [
+      "physical-dps",
+      "trash-operators"
+    ],
     "cnName": "玫拉",
     "jpName": "メラナイト",
     "krName": "멜라나이트",
