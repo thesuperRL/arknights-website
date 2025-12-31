@@ -1580,7 +1580,9 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/silence_the_paradigmatic.png",
-    "niches": [],
+    "niches": [
+      "healing-operators"
+    ],
     "cnName": "淬羽赫默",
     "jpName": "淬さい羽うサイレンス",
     "krName": "사일런스 더 패러디그매틱",

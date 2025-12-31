@@ -1049,7 +1049,9 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/grain_buds.png",
-    "niches": [],
+    "niches": [
+      "stalling"
+    ],
     "cnName": "小满",
     "twName": "小滿",
     "jpName": "グレインバッズ",
@@ -2048,7 +2050,9 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/proviso.png",
-    "niches": [],
+    "niches": [
+      "stalling"
+    ],
     "cnName": "但书",
     "twName": "但書",
     "jpName": "プロヴァイゾ",
@@ -2949,7 +2953,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/xingzhu.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "trash-operators"
+    ],
     "cnName": "行箸",
     "jpName": "シィンズゥ",
     "krName": "싱주",
