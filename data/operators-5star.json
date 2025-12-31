@@ -832,7 +832,10 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/fang_the_fire_sharpened.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder"
+    ],
     "cnName": "历阵锐枪芬",
     "twName": "歷陣銳槍芬",
     "jpName": "歴陣鋭槍れきじんえいそうフェン",
@@ -1377,7 +1380,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/kestrel.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "trash-operators"
+    ],
     "cnName": "红隼",
     "twName": "紅隼",
     "jpName": "ケストレル",
@@ -2778,7 +2785,9 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/wanqing.png",
-    "niches": [],
+    "niches": [
+      "dp-generation"
+    ],
     "cnName": "万顷",
     "twName": "萬頃",
     "jpName": "ワンチィン",

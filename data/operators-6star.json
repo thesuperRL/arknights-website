@@ -1910,7 +1910,10 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/vulpisfoglia.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder"
+    ],
     "cnName": "忍冬",
     "jpName": "ウルピスフォリア",
     "krName": "불피스폴리아",
