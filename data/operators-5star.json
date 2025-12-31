@@ -721,7 +721,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/delphine.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "trash-operators"
+    ],
     "cnName": "戴菲恩",
     "jpName": "デルフィーン",
     "krName": "델핀",
@@ -734,7 +737,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/diamante.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage",
+      "trash-operators"
+    ],
     "cnName": "折光",
     "jpName": "ディアマンテ",
     "krName": "디아만테",
@@ -1093,7 +1099,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/harmonie.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "trash-operators"
+    ],
     "cnName": "和弦[note 1]",
     "jpName": "ハーモニー[note 2]",
     "krName": "아르모니",
@@ -2723,7 +2732,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/warmy.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage",
+      "trash-operators"
+    ],
     "cnName": "温米",
     "twName": "溫米",
     "jpName": "ウォーミー",
@@ -2819,7 +2831,10 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/wulfenite.png",
-    "niches": [],
+    "niches": [
+      "global-range",
+      "stalling"
+    ],
     "cnName": "钼铅",
     "jpName": "ウルフェナイト",
     "krName": "울페나이트",

@@ -309,7 +309,10 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/dorothy.png",
-    "niches": [],
+    "niches": [
+      "global-range",
+      "stalling"
+    ],
     "cnName": "多萝西",
     "twName": "多蘿西",
     "jpName": "ドロシー",
@@ -341,7 +344,11 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/ebenholz.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "boss-killing",
+      "trash-operators"
+    ],
     "cnName": "黑键",
     "twName": "黑鍵",
     "jpName": "エーベンホルツ",
@@ -355,7 +362,14 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/ela.png",
-    "niches": [],
+    "niches": [
+      "def-shred",
+      "fragile",
+      "global-range",
+      "physical-dps",
+      "res-shred",
+      "stalling"
+    ],
     "cnName": "艾拉",
     "jpName": "エラ",
     "krName": "엘라",
@@ -1192,7 +1206,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/nymph.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage",
+      "stalling"
+    ],
     "cnName": "妮芙",
     "jpName": "ニンフ",
     "krName": "님프",
