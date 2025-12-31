@@ -2723,7 +2723,8 @@
     "global": true,
     "profileImage": "/images/operators/valarqvin.png",
     "niches": [
-      "elemental-damage"
+      "elemental-damage",
+      "free"
     ],
     "cnName": "凛视",
     "twName": "凜視",

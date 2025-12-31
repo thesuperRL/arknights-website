@@ -3,12 +3,20 @@
   "description": "Operators that apply the Fragile debuff to make enemies take more damage",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "shamare": "",
-    "thrm_ex": "",
-    "suzuran": "",
-    "saileach": "",
-    "gnosis": "",
-    "ela": "",
-    "lucilla": "Applies fragile to non-elite non-boss enemies"
+    "SS": {},
+    "S": {},
+    "A": {
+      "shamare": "",
+      "thrm_ex": "",
+      "suzuran": "",
+      "saileach": "",
+      "gnosis": "",
+      "ela": "",
+      "lucilla": "Applies fragile to non-elite non-boss enemies"
+    },
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }

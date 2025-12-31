@@ -3,11 +3,19 @@
   "description": "Operators that sleep enemies or work well with slept enemies",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "sora": "",
-    "kafka": "",
-    "iris": "",
-    "blacknight": "Crazy skill 2 with SP buffs, permasleeps groups of enemies",
-    "confess_47": "",
-    "erato": ""
+    "SS": {},
+    "S": {},
+    "A": {
+      "sora": "",
+      "kafka": "",
+      "iris": "",
+      "blacknight": "Crazy skill 2 with SP buffs, permasleeps groups of enemies",
+      "confess_47": "",
+      "erato": ""
+    },
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }

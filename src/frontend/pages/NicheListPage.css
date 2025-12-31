@@ -141,6 +141,53 @@
     height: 100%;
 }
 
+.operator-rating {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    min-width: 28px;
+    text-align: center;
+}
+
+.operator-rating.rating-SS {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+}
+
+.operator-rating.rating-S {
+    background: linear-gradient(135deg, #ffa500, #ff8c00);
+}
+
+.operator-rating.rating-A {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+    text-shadow: none;
+}
+
+.operator-rating.rating-B {
+    background: linear-gradient(135deg, #90ee90, #7cfc00);
+    color: #333;
+    text-shadow: none;
+}
+
+.operator-rating.rating-C {
+    background: linear-gradient(135deg, #87ceeb, #4682b4);
+}
+
+.operator-rating.rating-D {
+    background: linear-gradient(135deg, #dda0dd, #ba55d3);
+}
+
+.operator-rating.rating-F {
+    background: linear-gradient(135deg, #a9a9a9, #808080);
+}
+
 /* Rarity colors - more solid for better visibility */
 .operator-card.rarity-6 {
     border-color: rgba(255, 150, 0, 0.9);

@@ -10,6 +10,7 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
+import { Rating } from './niche-list-types';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
 import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse } from './account-storage';
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
@@ -89,13 +90,27 @@ app.get('/api/niche-lists/:niche', (req, res) => {
 
     // Enrich operator list with operator data
     // Note: Fragile operators are already copied to their derived niches at build time
+    // Convert from rating-grouped structure to flat array for frontend
+    const operatorEntries: Array<{operatorId: string; rating: string; note: string; operator: any}> = [];
+    const ratingOrder: Rating[] = ["SS", "S", "A", "B", "C", "D", "F"];
+    
+    for (const rating of ratingOrder) {
+      if (operatorList.operators[rating]) {
+        const operatorsInRating = operatorList.operators[rating]!;
+        for (const [operatorId, description] of Object.entries(operatorsInRating)) {
+          operatorEntries.push({
+            operatorId: operatorId,
+            rating: rating,
+            note: description,
+            operator: operatorsData[operatorId] || null
+          });
+        }
+      }
+    }
+    
     const enrichedOperatorList = {
       ...operatorList,
-      operators: Object.entries(operatorList.operators).map(([operatorId, note]) => ({
-        operatorId,
-        note,
-        operator: operatorsData[operatorId] || null
-      }))
+      operators: operatorEntries
     };
 
     res.json(enrichedOperatorList);
@@ -178,12 +193,18 @@ app.get('/api/operators/:id', async (req, res) => {
 
     // Collection is now keyed by filename
     for (const [_filename, operatorList] of Object.entries(operatorLists)) {
-      if (operatorList.operators && operatorId in operatorList.operators) {
-        rankings.push({
-          niche: operatorList.niche, // Use display name for the ranking
-          tier: 'N/A',
-          notes: operatorList.operators[operatorId] || undefined
-        });
+      if (operatorList.operators) {
+        // Search through all rating groups
+        for (const [rating, operatorsInRating] of Object.entries(operatorList.operators)) {
+          if (operatorsInRating && operatorId in operatorsInRating) {
+            rankings.push({
+              niche: operatorList.niche, // Use display name for the ranking
+              tier: rating,
+              notes: operatorsInRating[operatorId] || undefined
+            });
+            break; // Found in this niche, move to next niche
+          }
+        }
       }
     }
 

@@ -81,20 +81,25 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
       continue;
     }
     
-    for (const operatorId of Object.keys(operatorList.operators)) {
-      // Validate that operator ID exists
-      if (!allOperators[operatorId]) {
-        unrecognizedOperators.push({ operatorId, niche: operatorList.niche });
-        continue; // Skip unrecognized operators
-      }
-      
-      if (!operatorNiches.has(operatorId)) {
-        operatorNiches.set(operatorId, []);
-      }
-      const niches = operatorNiches.get(operatorId)!;
-      // Store filename codes, not display names
-      if (!niches.includes(filename)) {
-        niches.push(filename);
+    // Iterate through rating groups
+    for (const operatorsInRating of Object.values(operatorList.operators)) {
+      if (operatorsInRating) {
+        for (const operatorId of Object.keys(operatorsInRating)) {
+          // Validate that operator ID exists
+          if (!allOperators[operatorId]) {
+            unrecognizedOperators.push({ operatorId, niche: operatorList.niche });
+            continue; // Skip unrecognized operators
+          }
+          
+          if (!operatorNiches.has(operatorId)) {
+            operatorNiches.set(operatorId, []);
+          }
+          const niches = operatorNiches.get(operatorId)!;
+          // Store filename codes, not display names
+          if (!niches.includes(filename)) {
+            niches.push(filename);
+          }
+        }
       }
     }
   }
@@ -343,15 +348,22 @@ function capitalizeAllNotes(): void {
     if (!operatorList.operators) continue;
 
     let fileUpdated = false;
-    const updatedOperators: Record<string, string> = {};
+    const updatedOperators: Partial<Record<string, Record<string, string>>> = {};
 
-    for (const [operatorId, note] of Object.entries(operatorList.operators)) {
-      const capitalizedNote = capitalizeFirst(note);
-      if (capitalizedNote !== note) {
-        updatedOperators[operatorId] = capitalizedNote;
-        fileUpdated = true;
-      } else {
-        updatedOperators[operatorId] = note;
+    // Process each rating group
+    for (const [rating, operatorsInRating] of Object.entries(operatorList.operators)) {
+      if (operatorsInRating) {
+        const updatedOperatorsInRating: Record<string, string> = {};
+        for (const [operatorId, description] of Object.entries(operatorsInRating)) {
+          const capitalizedDescription = capitalizeFirst(description || '');
+          if (capitalizedDescription !== description) {
+            fileUpdated = true;
+            updatedOperatorsInRating[operatorId] = capitalizedDescription;
+          } else {
+            updatedOperatorsInRating[operatorId] = description;
+          }
+        }
+        updatedOperators[rating] = updatedOperatorsInRating;
       }
     }
 
@@ -379,15 +391,31 @@ function copyOperatorsToDerivedNiches(): void {
   // Copy fragile operators to def-shred and res-shred
   const fragileList = loadNicheList('fragile', nicheListsDir);
   if (fragileList && fragileList.operators) {
-    const fragileOperators = Object.keys(fragileList.operators);
+    // Collect all fragile operator IDs from all rating groups
+    const fragileOperators: string[] = [];
+    for (const operatorsInRating of Object.values(fragileList.operators)) {
+      if (operatorsInRating) {
+        for (const operatorId of Object.keys(operatorsInRating)) {
+          fragileOperators.push(operatorId);
+        }
+      }
+    }
     
     // Add to def-shred
     const defShredList = loadNicheList('def-shred', nicheListsDir);
     if (defShredList) {
       let defShredUpdated = false;
+      // Initialize operators object if needed
+      if (!defShredList.operators) {
+        defShredList.operators = {};
+      }
+      if (!defShredList.operators['A']) {
+        defShredList.operators['A'] = {};
+      }
+      
       for (const operatorId of fragileOperators) {
-        if (!defShredList.operators[operatorId]) {
-          defShredList.operators[operatorId] = 'Applies fragile';
+        if (!(operatorId in defShredList.operators['A']!)) {
+          defShredList.operators['A']![operatorId] = 'Applies fragile';
           defShredUpdated = true;
         }
       }
@@ -403,9 +431,17 @@ function copyOperatorsToDerivedNiches(): void {
     const resShredList = loadNicheList('res-shred', nicheListsDir);
     if (resShredList) {
       let resShredUpdated = false;
+      // Initialize operators object if needed
+      if (!resShredList.operators) {
+        resShredList.operators = {};
+      }
+      if (!resShredList.operators['A']) {
+        resShredList.operators['A'] = {};
+      }
+      
       for (const operatorId of fragileOperators) {
-        if (!resShredList.operators[operatorId]) {
-          resShredList.operators[operatorId] = 'Applies fragile';
+        if (!(operatorId in resShredList.operators['A']!)) {
+          resShredList.operators['A']![operatorId] = 'Applies fragile';
           resShredUpdated = true;
         }
       }

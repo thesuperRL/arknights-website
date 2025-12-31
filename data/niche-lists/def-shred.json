@@ -3,18 +3,26 @@
   "description": "Operators that are able to decrease the defense of enemies",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "elysium": "",
-    "meteor": "",
-    "pramanix": "Some of the best in the game",
-    "ch_en_the_holungday": "Flat defense shred so its not that good",
-    "shamare": "Applies fragile",
-    "thrm_ex": "Applies fragile",
-    "suzuran": "Applies fragile",
-    "saileach": "Applies fragile",
-    "gnosis": "Applies fragile",
-    "poz_mka": "Via the typewriter",
-    "ela": "Applies fragile",
-    "thorns_the_lodestar": "",
-    "lucilla": "Applies fragile"
+    "SS": {},
+    "S": {},
+    "A": {
+      "elysium": "",
+      "meteor": "",
+      "pramanix": "Some of the best in the game",
+      "ch_en_the_holungday": "Flat defense shred so its not that good",
+      "shamare": "Applies fragile",
+      "thrm_ex": "Applies fragile",
+      "suzuran": "Applies fragile",
+      "saileach": "Applies fragile",
+      "gnosis": "Applies fragile",
+      "poz_mka": "Via the typewriter",
+      "ela": "Applies fragile",
+      "thorns_the_lodestar": "",
+      "lucilla": "Applies fragile"
+    },
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }

@@ -389,8 +389,18 @@ async function migrateNiches(): Promise<void> {
         const { id: nicheId, tableName } = await insertNiche(pool, nicheList);
         console.log(`    - Niche ID: ${nicheId}, Table: niches.${tableName}`);
 
-        await insertNicheOperators(pool, tableName, nicheList.operators);
-        console.log(`    - Added ${Object.keys(nicheList.operators).length} operators`);
+        // Flatten rating-grouped structure to flat name-description pairs
+        const flattenedOperators: Record<string, string> = {};
+        if (nicheList.operators) {
+          for (const operatorsInRating of Object.values(nicheList.operators)) {
+            if (operatorsInRating) {
+              Object.assign(flattenedOperators, operatorsInRating);
+            }
+          }
+        }
+
+        await insertNicheOperators(pool, tableName, flattenedOperators);
+        console.log(`    - Added ${Object.keys(flattenedOperators).length} operators`);
 
         if (nicheList.relatedNiches && nicheList.relatedNiches.length > 0) {
           await insertRelatedNiches(pool, nicheId, nicheList.relatedNiches);

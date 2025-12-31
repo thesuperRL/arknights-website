@@ -3,18 +3,26 @@
   "description": "Operators that can generate large amounts of SP for other operators",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "bagpipe": "Boosts for vanguards, especially flagbearers",
-    "ch_en": "Small auto sp battery for offensive/defensive recovery",
-    "liskarm": "",
-    "ptilopsis": "Holy SP generator and no large requirements for it too",
-    "saria": "Small SP battery when giving heals",
-    "warfarin": "Small SP battery",
-    "suzuran": "For Supporters",
-    "archetto": "For offensive recovery snipers",
-    "saga": "Teammates killing wounded enemies",
-    "quercus": "1SP for every heal on allies",
-    "heidi": "In chapter 10 only (why???)",
-    "luo_xiaohei": "Very limited critically wounded",
-    "stainless": "Via machines"
+    "SS": {},
+    "S": {},
+    "A": {
+      "bagpipe": "Boosts for vanguards, especially flagbearers",
+      "ch_en": "Small auto sp battery for offensive/defensive recovery",
+      "liskarm": "",
+      "ptilopsis": "Holy SP generator and no large requirements for it too",
+      "saria": "Small SP battery when giving heals",
+      "warfarin": "Small SP battery",
+      "suzuran": "For Supporters",
+      "archetto": "For offensive recovery snipers",
+      "saga": "Teammates killing wounded enemies",
+      "quercus": "1SP for every heal on allies",
+      "heidi": "In chapter 10 only (why???)",
+      "luo_xiaohei": "Very limited critically wounded",
+      "stainless": "Via machines"
+    },
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }

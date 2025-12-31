@@ -113,6 +113,7 @@ const OperatorPage: React.FC = () => {
                 <Link to={`/niche-list/${encodeURIComponent(ranking.niche)}`} className="ranking-niche-link">
                   <div className="ranking-niche">{ranking.niche}</div>
                 </Link>
+                <div className={`ranking-tier tier-${ranking.tier}`}>{ranking.tier}</div>
                 {ranking.notes && (
                   <div className="ranking-notes">{ranking.notes}</div>
                 )}

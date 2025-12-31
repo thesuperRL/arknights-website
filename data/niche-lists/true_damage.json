@@ -3,14 +3,22 @@
   "description": "Operators that deal true damage or equivalent",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "amiya": "",
-    "franka": "",
-    "weedy": "",
-    "amiya_guard": "",
-    "kal_tsit": "Mon3tr, also absurd uptimes",
-    "nearl_the_radiant_knight": "",
-    "amiya_medic": "",
-    "vina_victoria": "",
-    "mon3tr": ""
+    "SS": {},
+    "S": {},
+    "A": {
+      "amiya": "",
+      "franka": "",
+      "weedy": "",
+      "amiya_guard": "",
+      "kal_tsit": "Mon3tr, also absurd uptimes",
+      "nearl_the_radiant_knight": "",
+      "amiya_medic": "",
+      "vina_victoria": "",
+      "mon3tr": ""
+    },
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }

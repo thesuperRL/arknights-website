@@ -3,18 +3,26 @@
   "description": "Operators that buff allies' defense and/or survival chance (note: this entire niche is mostly useless in modern Arknights)",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "castle_3": "Buffs melee units while not using a deployment slot",
-    "croissant": "Good arts resistance buff, can share to close-by allies",
-    "nian": "",
-    "purestream": "",
-    "shining": "Strongest defense buff",
-    "zima": "Buffs Vanguards",
-    "whislash": "For melee operators",
-    "skadi_the_corrupting_heart": "",
-    "pallas": "Usefulness of buff hindered by high SP costs",
-    "alanna": "",
-    "bryophyta": "",
-    "shu": "Sanctuary",
-    "catherine": ""
+    "SS": {},
+    "S": {},
+    "A": {
+      "castle_3": "Buffs melee units while not using a deployment slot",
+      "croissant": "Good arts resistance buff, can share to close-by allies",
+      "nian": "",
+      "purestream": "",
+      "shining": "Strongest defense buff",
+      "zima": "Buffs Vanguards",
+      "whislash": "For melee operators",
+      "skadi_the_corrupting_heart": "",
+      "pallas": "Usefulness of buff hindered by high SP costs",
+      "alanna": "",
+      "bryophyta": "",
+      "shu": "Sanctuary",
+      "catherine": ""
+    },
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }

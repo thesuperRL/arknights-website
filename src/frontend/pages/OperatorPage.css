@@ -146,6 +146,38 @@
     margin-bottom: 0.5rem;
 }
 
+.ranking-tier.tier-SS {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+}
+
+.ranking-tier.tier-S {
+    background: linear-gradient(135deg, #ffa500, #ff8c00);
+}
+
+.ranking-tier.tier-A {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+    text-shadow: none;
+}
+
+.ranking-tier.tier-B {
+    background: linear-gradient(135deg, #90ee90, #7cfc00);
+    color: #333;
+    text-shadow: none;
+}
+
+.ranking-tier.tier-C {
+    background: linear-gradient(135deg, #87ceeb, #4682b4);
+}
+
+.ranking-tier.tier-D {
+    background: linear-gradient(135deg, #dda0dd, #ba55d3);
+}
+
+.ranking-tier.tier-F {
+    background: linear-gradient(135deg, #a9a9a9, #808080);
+}
+
 .ranking-notes {
     font-size: 0.9rem;
     color: var(--text-muted);

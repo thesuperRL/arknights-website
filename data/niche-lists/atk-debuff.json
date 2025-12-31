@@ -3,9 +3,17 @@
   "description": "Operators that debuff enemies' attack",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "mousse": "",
-    "shamare": "",
-    "thorns_the_lodestar": "",
-    "tin_man": ""
+    "SS": {},
+    "S": {},
+    "A": {
+      "mousse": "",
+      "shamare": "",
+      "thorns_the_lodestar": "",
+      "tin_man": ""
+    },
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }

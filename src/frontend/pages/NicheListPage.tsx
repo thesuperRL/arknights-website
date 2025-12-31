@@ -17,6 +17,7 @@ interface Operator {
 
 interface OperatorListEntry {
   operatorId: string;
+  rating: string;
   note: string;
   operator: Operator | null;
 }
@@ -86,11 +87,20 @@ const NicheListPage: React.FC = () => {
     return <div className="error">{error || 'Operator list not found'}</div>;
   }
 
-  // Sort operators: by rarity (higher first), then by global status, then by name
+  // Rating order: SS > S > A > B > C > D > F
+  const ratingOrder: Record<string, number> = { 'SS': 0, 'S': 1, 'A': 2, 'B': 3, 'C': 4, 'D': 5, 'F': 6 };
+  
+  // Sort operators: by rating (SS first), then by rarity (higher first), then by global status, then by name
   const sortedOperators = [...operatorList.operators].sort((a, b) => {
+    // Sort by rating first
+    const aRating = ratingOrder[a.rating] ?? 999;
+    const bRating = ratingOrder[b.rating] ?? 999;
+    if (aRating !== bRating) {
+      return aRating - bRating;
+    }
+    // Then by rarity (higher first)
     const aRarity = a.operator?.rarity ?? 0;
     const bRarity = b.operator?.rarity ?? 0;
-    // Sort by rarity (higher first)
     if (aRarity !== bRarity) {
       return bRarity - aRarity;
     }
@@ -146,6 +156,7 @@ const NicheListPage: React.FC = () => {
             >
               {entry.operator ? (
                 <>
+                  <div className={`operator-rating rating-${entry.rating}`}>{entry.rating}</div>
                   <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
                     <img
                       src={entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`}
@@ -174,6 +185,7 @@ const NicheListPage: React.FC = () => {
                 </>
               ) : (
                 <>
+                  <div className={`operator-rating rating-${entry.rating}`}>{entry.rating}</div>
                   <div className="operator-name">{entry.operatorId}</div>
                   <div className="operator-class">Operator not found</div>
                 </>

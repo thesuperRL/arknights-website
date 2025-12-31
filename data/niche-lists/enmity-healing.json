@@ -3,15 +3,23 @@
   "description": "Operators that can heal 'unhealable' operators (i.e. Reapers, Mushas, and Juggernauts)",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "angelina": "Global passive healing when skill inactive",
-    "civilight_eterna": "",
-    "perfumer": "Global passive healing",
-    "sora": "",
-    "heavyrain": "",
-    "skadi_the_corrupting_heart": "",
-    "heidi": "",
-    "shu": "On sowed tiles",
-    "thorns_the_lodestar": "",
-    "tin_man": ""
+    "SS": {},
+    "S": {},
+    "A": {
+      "angelina": "Global passive healing when skill inactive",
+      "civilight_eterna": "",
+      "perfumer": "Global passive healing",
+      "sora": "",
+      "heavyrain": "",
+      "skadi_the_corrupting_heart": "",
+      "heidi": "",
+      "shu": "On sowed tiles",
+      "thorns_the_lodestar": "",
+      "tin_man": ""
+    },
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }

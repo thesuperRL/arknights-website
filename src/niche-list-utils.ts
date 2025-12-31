@@ -100,9 +100,15 @@ export function saveNicheList(operatorList: OperatorList, dataDir: string = path
 export function validateNicheList(operatorList: OperatorList, operatorsData: Record<string, any>): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
 
-  for (const operatorId of Object.keys(operatorList.operators)) {
-    if (!operatorsData[operatorId]) {
-      errors.push(`Operator ${operatorId} in ${operatorList.niche} not found in operators data`);
+  if (operatorList.operators) {
+    for (const operatorsInRating of Object.values(operatorList.operators)) {
+      if (operatorsInRating) {
+        for (const operatorId of Object.keys(operatorsInRating)) {
+          if (!operatorsData[operatorId]) {
+            errors.push(`Operator ${operatorId} in ${operatorList.niche} not found in operators data`);
+          }
+        }
+      }
     }
   }
 
@@ -153,8 +159,14 @@ export function getNichesForOperator(operatorId: string, dataDir: string = path.
 
   // Collection is now keyed by filename, so we can directly iterate
   for (const [filename, operatorList] of Object.entries(collection)) {
-    if (operatorId in operatorList.operators) {
-      niches.push(filename);
+    if (operatorList.operators) {
+      // Search through all rating groups
+      for (const operatorsInRating of Object.values(operatorList.operators)) {
+        if (operatorsInRating && operatorId in operatorsInRating) {
+          niches.push(filename);
+          break; // Found in this niche, move to next niche
+        }
+      }
     }
   }
 

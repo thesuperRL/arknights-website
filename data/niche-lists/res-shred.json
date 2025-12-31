@@ -3,20 +3,28 @@
   "description": "Operators that are able to decrease the resistance of enemies",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "eyjafjalla": "",
-    "haze": "Very situational because this is her only good use and there are better options",
-    "ifrit": "Skill 3 is one of the best resistance debuffs in the game",
-    "pramanix": "Some of the best in the game",
-    "chiave": "",
-    "shamare": "Applies fragile",
-    "thrm_ex": "Applies fragile",
-    "suzuran": "Applies fragile",
-    "saileach": "Applies fragile",
-    "gnosis": "Applies fragile",
-    "logos": "",
-    "ela": "Applies fragile",
-    "raidian": "Applies arts fragility",
-    "thorns_the_lodestar": "",
-    "lucilla": "Applies fragile"
+    "SS": {},
+    "S": {},
+    "A": {
+      "eyjafjalla": "",
+      "haze": "Very situational because this is her only good use and there are better options",
+      "ifrit": "Skill 3 is one of the best resistance debuffs in the game",
+      "pramanix": "Some of the best in the game",
+      "chiave": "",
+      "shamare": "Applies fragile",
+      "thrm_ex": "Applies fragile",
+      "suzuran": "Applies fragile",
+      "saileach": "Applies fragile",
+      "gnosis": "Applies fragile",
+      "logos": "",
+      "ela": "Applies fragile",
+      "raidian": "Applies arts fragility",
+      "thorns_the_lodestar": "",
+      "lucilla": "Applies fragile"
+    },
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }
