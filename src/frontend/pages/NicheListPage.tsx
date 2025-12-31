@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import './TierListPage.css';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useAuth } from '../contexts/AuthContext';
+import { getRarityClass } from '../utils/rarityUtils';
+import { getOperatorName } from '../utils/operatorNameUtils';
+import './NicheListPage.css';
 
 interface Operator {
   id: string;
@@ -8,10 +12,12 @@ interface Operator {
   rarity: number;
   class: string;
   profileImage: string;
+  global: boolean;
 }
 
 interface OperatorListEntry {
   operatorId: string;
+  note: string;
   operator: Operator | null;
 }
 
@@ -19,23 +25,47 @@ interface OperatorList {
   niche: string;
   description: string;
   operators: OperatorListEntry[];
+  relatedNiches?: string[];
 }
 
-const TierListPage: React.FC = () => {
+const NicheListPage: React.FC = () => {
   const { niche } = useParams<{ niche: string }>();
+  const { language } = useLanguage();
+  const { user } = useAuth();
   const [operatorList, setOperatorList] = useState<OperatorList | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (niche) {
       loadOperatorList(niche);
     }
+    loadOwnedOperators();
   }, [niche]);
+
+  const loadOwnedOperators = async () => {
+    if (!user) {
+      setOwnedOperators(new Set());
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/user', {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setOwnedOperators(new Set(data.ownedOperators || []));
+      }
+    } catch (err) {
+      console.error('Error loading owned operators:', err);
+    }
+  };
 
   const loadOperatorList = async (nicheName: string) => {
     try {
-      const response = await fetch(`/api/tier-lists/${encodeURIComponent(nicheName)}`);
+      const response = await fetch(`/api/niche-lists/${encodeURIComponent(nicheName)}`);
       if (!response.ok) {
         throw new Error('Failed to load operator list');
       }
@@ -56,9 +86,29 @@ const TierListPage: React.FC = () => {
     return <div className="error">{error || 'Operator list not found'}</div>;
   }
 
+  // Sort operators: by rarity (higher first), then by global status, then by name
+  const sortedOperators = [...operatorList.operators].sort((a, b) => {
+    const aRarity = a.operator?.rarity ?? 0;
+    const bRarity = b.operator?.rarity ?? 0;
+    // Sort by rarity (higher first)
+    if (aRarity !== bRarity) {
+      return bRarity - aRarity;
+    }
+    // Then by global status (global operators first)
+    const aGlobal = a.operator?.global ?? false;
+    const bGlobal = b.operator?.global ?? false;
+    if (aGlobal !== bGlobal) {
+      return aGlobal ? -1 : 1;
+    }
+    // Finally by name
+    const aName = a.operator?.name ?? a.operatorId;
+    const bName = b.operator?.name ?? b.operatorId;
+    return aName.localeCompare(bName);
+  });
+
   return (
-    <div className="tier-list-page">
-      <div className="tier-list-header">
+    <div className="niche-list-page">
+      <div className="niche-list-header">
         <Link to="/" className="back-button">
           ← Back to Home
         </Link>
@@ -66,10 +116,34 @@ const TierListPage: React.FC = () => {
         <p>{operatorList.description || ''}</p>
       </div>
 
-      <div className="tier-list-container">
+      {operatorList.relatedNiches && operatorList.relatedNiches.length > 0 && (
+        <div className="related-niches-section">
+          <h2>Related Niches</h2>
+          <div className="related-niches-list">
+            {operatorList.relatedNiches.map((relatedNiche) => (
+              <Link
+                key={relatedNiche}
+                to={`/niche-list/${encodeURIComponent(relatedNiche)}`}
+                className="related-niche-link"
+              >
+                {relatedNiche}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="niche-list-container">
         <div className="operators-grid">
-          {operatorList.operators.map((entry, index) => (
-            <div key={`${entry.operatorId}-${index}`} className="operator-card">
+          {sortedOperators.map((entry, index) => {
+            const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
+            const isOwned = entry.operator ? ownedOperators.has(entry.operator.id) : false;
+            return (
+            <div 
+              key={`${entry.operatorId}-${index}`} 
+              className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
+              title={entry.note || undefined}
+            >
               {entry.operator ? (
                 <>
                   <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
@@ -89,11 +163,14 @@ const TierListPage: React.FC = () => {
                     />
                   </Link>
                   <Link to={`/operator/${entry.operator.id}`} className="operator-name-link">
-                    <div className="operator-name">{entry.operator.name}</div>
+                    <div className="operator-name">{getOperatorName(entry.operator, language)}</div>
                   </Link>
                   <div className="operator-class">
                     {entry.operator.class} • {entry.operator.rarity}★
                   </div>
+                  {entry.note && (
+                    <div className="operator-note-tooltip">{entry.note}</div>
+                  )}
                 </>
               ) : (
                 <>
@@ -102,12 +179,13 @@ const TierListPage: React.FC = () => {
                 </>
               )}
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
   );
 };
 
-export default TierListPage;
+export default NicheListPage;
 
