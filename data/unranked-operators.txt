@@ -56,12 +56,8 @@ valarqvin (Valarqvin)
 xingzhu (Xingzhu)
 
 --- Vanguard ---
-fang_the_fire_sharpened (Fang the Fire-Sharpened)
-kestrel (Kestrel)
 muelsyse (Muelsyse)
 vigil (Vigil)
-vulpisfoglia (Vulpisfoglia)
-wanqing (Wanqing)
 
 === NON-GLOBAL OPERATORS ===
 
