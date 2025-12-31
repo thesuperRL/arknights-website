@@ -295,7 +295,13 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/degenbrecher.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "boss-killing",
+      "late-laneholder",
+      "physical-dps",
+      "tanking-blocking-operators"
+    ],
     "cnName": "锏",
     "twName": "鐧",
     "jpName": "デーゲンブレヒャー",
@@ -671,7 +677,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/hoederer.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "late-laneholder",
+      "physical-dps",
+      "tanking-blocking-operators"
+    ],
     "cnName": "赫德雷",
     "jpName": "へドリー",
     "krName": "외드레르",
@@ -784,7 +795,12 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/jessica_the_liberated.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "physical-dps",
+      "stalling",
+      "tanking-blocking-operators"
+    ],
     "cnName": "涤火杰西卡",
     "twName": "滌火潔西卡",
     "jpName": "滌じょう火かジェシカ",
@@ -799,6 +815,7 @@
     "global": true,
     "profileImage": "/images/operators/kal_tsit.png",
     "niches": [
+      "boss-killing",
       "healing-operators",
       "late-laneholder",
       "tanking-blocking-operators",
@@ -817,7 +834,10 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/kirin_r_yato.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "fast-redeploy-operators"
+    ],
     "cnName": "麒麟R夜刀",
     "jpName": "キリンRヤトウ",
     "krName": "키린R 야토",
@@ -866,7 +886,10 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/leizi_the_thunderbringer.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "boss-killing"
+    ],
     "cnName": "司霆惊蛰",
     "jpName": "司霆レイズ",
     "krName": "레이즈 더 썬더브링어",
@@ -879,7 +902,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/lemuen.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "global-range",
+      "physical-dps"
+    ],
     "cnName": "蕾缪安",
     "twName": "蕾繆安",
     "jpName": "レミュアン",
@@ -912,7 +939,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/lin.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "tanking-blocking-operators"
+    ],
     "cnName": "林",
     "jpName": "リン",
     "krName": "린",
@@ -1038,7 +1068,12 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/mon3tr.png",
-    "niches": [],
+    "niches": [
+      "atk-buff",
+      "boss-killing",
+      "healing-operators",
+      "true_damage"
+    ],
     "internalName": "char_4179_monstr"
   },
   "mostima": {
@@ -1101,7 +1136,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/muelsyse.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "stalling"
+    ],
     "cnName": "缪尔赛思",
     "twName": "繆爾賽思",
     "jpName": "ミュルジス",
@@ -1115,7 +1154,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/m_ynar.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "boss-killing",
+      "tanking-blocking-operators"
+    ],
     "cnName": "玛恩纳",
     "twName": "瑪恩納",
     "jpName": "ムリナール",
@@ -1129,7 +1172,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/narantuya.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "boss-killing",
+      "physical-dps"
+    ],
     "cnName": "娜仁图亚",
     "jpName": "ナラントゥヤ",
     "krName": "나란투야",
@@ -1172,7 +1219,12 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/necrass.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "boss-killing",
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "死芒",
     "jpName": "ネクラス",
     "krName": "네크라스",
@@ -1271,7 +1323,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/penance.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "斥罪",
     "jpName": "ペナンス",
     "krName": "페넌스",
@@ -1363,7 +1419,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/raidian.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "res-shred"
+    ],
     "cnName": "电弧",
     "jpName": "レイディアン",
     "krName": "라이디언",
@@ -1376,7 +1435,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/ray.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "physical-dps"
+    ],
     "cnName": "莱伊",
     "twName": "萊伊",
     "jpName": "レイ",
@@ -1390,7 +1452,10 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/reed_the_flame_shadow.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "healing-operators"
+    ],
     "cnName": "焰影苇草",
     "twName": "焰影葦草",
     "jpName": "焔えん影えいリード",
@@ -1745,7 +1810,10 @@
     "class": "Specialist",
     "global": true,
     "profileImage": "/images/operators/texas_the_omertosa.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "fast-redeploy-operators"
+    ],
     "cnName": "缄默德克萨斯",
     "jpName": "血けつ掟じょうテキサス",
     "krName": "텍사스 디 오메르토사",
@@ -1837,7 +1905,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/ulpianus.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "late-laneholder",
+      "physical-dps",
+      "tanking-blocking-operators"
+    ],
     "cnName": "乌尔比安",
     "twName": "烏爾比安",
     "jpName": "ウルピアヌス",
@@ -1851,7 +1924,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/vigil.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "trash-operators"
+    ],
     "cnName": "伺夜",
     "jpName": "ヴィジェル",
     "krName": "비질",
@@ -1997,7 +2074,13 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/zuo_le.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "boss-killing",
+      "late-laneholder",
+      "physical-dps",
+      "tanking-blocking-operators"
+    ],
     "cnName": "左乐",
     "twName": "左樂",
     "jpName": "ズオ・ラウ",

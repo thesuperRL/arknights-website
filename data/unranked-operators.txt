@@ -1,39 +1,12 @@
-Unranked Operators (51 total)
-Generated: 2025-12-31T05:42:17.631Z
+Unranked Operators (31 total)
+Generated: 2025-12-31T06:03:59.103Z
 
 === GLOBAL OPERATORS ===
-
---- Caster ---
-lin (Lin)
-necrass (Necrass)
-
---- Defender ---
-jessica_the_liberated (Jessica the Liberated)
-penance (Penance)
-
---- Guard ---
-degenbrecher (Degenbrecher)
-hoederer (Hoederer)
-leizi_the_thunderbringer (Leizi the Thunderbringer)
-m_ynar (Młynar)
-ulpianus (Ulpianus)
-zuo_le (Zuo Le)
-
---- Medic ---
-mon3tr (Mon3tr)
-reed_the_flame_shadow (Reed the Flame Shadow)
-
---- Sniper ---
-lemuen (Lemuen)
-narantuya (Narantuya)
-ray (Ray)
 
 --- Specialist ---
 figurino (Figurino)
 iana (Iana)
-kirin_r_yato (Kirin R Yato)
 swire_the_elegant_wit (Swire the Elegant Wit)
-texas_the_omertosa (Texas the Omertosa)
 thorns_the_lodestar (Thorns the Lodestar)
 tin_man (Tin Man)
 tippi (Tippi)
@@ -41,13 +14,8 @@ verdant (Verdant)
 
 --- Supporter ---
 lucilla (Lucilla)
-raidian (Raidian)
 stainless (Stainless)
 valarqvin (Valarqvin)
-
---- Vanguard ---
-muelsyse (Muelsyse)
-vigil (Vigil)
 
 === NON-GLOBAL OPERATORS ===
 
