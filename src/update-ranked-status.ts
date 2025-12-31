@@ -224,13 +224,105 @@ function updateOperatorFiles(operatorNiches: Map<string, string[]>): {
 
 function writeUnrankedLog(unrankedOperators: string[]): void {
   const logPath = path.join(__dirname, '../data/unranked-operators.txt');
-  const content = unrankedOperators.length > 0
-    ? `Unranked Operators (${unrankedOperators.length} total)\n` +
-      `Generated: ${new Date().toISOString()}\n\n` +
-      unrankedOperators.join('\n')
-    : `All operators are ranked!\nGenerated: ${new Date().toISOString()}`;
+  
+  if (unrankedOperators.length === 0) {
+    const content = `All operators are ranked!\nGenerated: ${new Date().toISOString()}`;
+    fs.writeFileSync(logPath, content);
+    console.log(`📝 Wrote unranked operators log to: ${logPath}`);
+    return;
+  }
 
-  fs.writeFileSync(logPath, content);
+  // Load all operators to get global and class information
+  const allOperators = loadAllOperators();
+  
+  // Parse operator IDs from the unranked list (format: "id (name)")
+  const operatorIds: string[] = [];
+  for (const entry of unrankedOperators) {
+    const match = entry.match(/^(\S+)\s/);
+    if (match) {
+      operatorIds.push(match[1]);
+    }
+  }
+  
+  // Group operators by global availability, then by class
+  const globalOperators: { [className: string]: Array<{ id: string; name: string }> } = {};
+  const nonGlobalOperators: { [className: string]: Array<{ id: string; name: string }> } = {};
+  
+  for (const operatorId of operatorIds) {
+    const operator = allOperators[operatorId];
+    if (!operator) {
+      console.warn(`Warning: Operator ${operatorId} not found in operators data`);
+      continue;
+    }
+    
+    const operatorInfo = {
+      id: operatorId,
+      name: operator.name
+    };
+    
+    if (operator.global) {
+      if (!globalOperators[operator.class]) {
+        globalOperators[operator.class] = [];
+      }
+      globalOperators[operator.class].push(operatorInfo);
+    } else {
+      if (!nonGlobalOperators[operator.class]) {
+        nonGlobalOperators[operator.class] = [];
+      }
+      nonGlobalOperators[operator.class].push(operatorInfo);
+    }
+  }
+  
+  // Sort classes alphabetically
+  const sortedGlobalClasses = Object.keys(globalOperators).sort();
+  const sortedNonGlobalClasses = Object.keys(nonGlobalOperators).sort();
+  
+  // Sort operators within each class by name
+  for (const className of sortedGlobalClasses) {
+    globalOperators[className].sort((a, b) => a.name.localeCompare(b.name));
+  }
+  for (const className of sortedNonGlobalClasses) {
+    nonGlobalOperators[className].sort((a, b) => a.name.localeCompare(b.name));
+  }
+  
+  // Build the new content
+  const newLines: string[] = [];
+  
+  // Add header
+  newLines.push(`Unranked Operators (${operatorIds.length} total)`);
+  newLines.push(`Generated: ${new Date().toISOString()}`);
+  newLines.push('');
+  
+  // Add Global operators section
+  if (sortedGlobalClasses.length > 0) {
+    newLines.push('=== GLOBAL OPERATORS ===');
+    newLines.push('');
+    
+    for (const className of sortedGlobalClasses) {
+      newLines.push(`--- ${className} ---`);
+      for (const op of globalOperators[className]) {
+        newLines.push(`${op.id} (${op.name})`);
+      }
+      newLines.push('');
+    }
+  }
+  
+  // Add Non-Global operators section
+  if (sortedNonGlobalClasses.length > 0) {
+    newLines.push('=== NON-GLOBAL OPERATORS ===');
+    newLines.push('');
+    
+    for (const className of sortedNonGlobalClasses) {
+      newLines.push(`--- ${className} ---`);
+      for (const op of nonGlobalOperators[className]) {
+        newLines.push(`${op.id} (${op.name})`);
+      }
+      newLines.push('');
+    }
+  }
+  
+  // Write the reorganized content
+  fs.writeFileSync(logPath, newLines.join('\n'), 'utf-8');
   console.log(`📝 Wrote unranked operators log to: ${logPath}`);
 }
 
