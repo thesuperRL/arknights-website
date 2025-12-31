@@ -467,7 +467,10 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/humus.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "trash-operators"
+    ],
     "cnName": "休谟斯",
     "twName": "休謨斯",
     "jpName": "ヒューマス",
@@ -548,7 +551,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/luo_xiaohei.png",
-    "niches": [],
+    "niches": [
+      "physical-dps",
+      "sp-battery",
+      "trash-operators"
+    ],
     "cnName": "罗小黑",
     "twName": "羅小黑",
     "jpName": "羅小黒ロシャオヘイ",
@@ -562,7 +569,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/lutonada.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "tanking-blocking-operators",
+      "unconventional-niches"
+    ],
     "cnName": "露托",
     "jpName": "ルトナダ",
     "krName": "루토나다",
@@ -969,7 +980,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/windscoot.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "low-rarity",
+      "physical-dps"
+    ],
     "cnName": "骋风",
     "jpName": "ウインドスクート",
     "krName": "윈드스쿠트",

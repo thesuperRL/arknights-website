@@ -33,7 +33,12 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/friston_3.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "robot",
+      "tanking-blocking-operators",
+      "trash-operators"
+    ],
     "internalName": "char_4093_frston"
   },
   "justice_knight": {

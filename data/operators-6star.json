@@ -382,7 +382,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/entelechia.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "late-laneholder",
+      "physical-dps"
+    ],
     "cnName": "隐德来希",
     "jpName": "エンテレケイア",
     "krName": "엔텔레키아",
@@ -547,7 +551,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/gavial_the_invincible.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "late-laneholder",
+      "physical-dps",
+      "tanking-blocking-operators"
+    ],
     "cnName": "百炼嘉维尔",
     "twName": "百鍊嘉維爾",
     "jpName": "百ひゃく錬れんガヴィル",
@@ -645,7 +654,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/ho_olheyak.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "trash-operators"
+    ],
     "cnName": "霍尔海雅",
     "twName": "霍爾海雅",
     "jpName": "ホルハイヤ",
@@ -993,7 +1005,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/marcille.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "stalling"
+    ],
     "cnName": "玛露西尔",
     "twName": "瑪露希爾",
     "jpName": "マルシル",
@@ -1269,7 +1284,12 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/pepe.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "late-laneholder",
+      "physical-dps",
+      "stalling"
+    ],
     "cnName": "佩佩",
     "jpName": "ペペ",
     "krName": "페페",
@@ -1326,7 +1346,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/qiubai.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "physical-dps",
+      "stalling"
+    ],
     "cnName": "仇白",
     "jpName": "チューバイ",
     "krName": "치우바이",
@@ -1446,7 +1470,10 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/sankta_miksaparato.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "信仰搅拌机",
     "jpName": "サンクタ・ミキサー",
     "krName": "산크타 믹사파라토",
@@ -1835,7 +1862,10 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/vina_victoria.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "true_damage"
+    ],
     "cnName": "维娜·维多利亚",
     "twName": "維娜·維多利亞",
     "jpName": "ヴィーナ・ヴィクトリア",
@@ -1864,7 +1894,10 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/viviana.png",
-    "niches": [],
+    "niches": [
+      "boss-killing",
+      "late-laneholder"
+    ],
     "cnName": "薇薇安娜",
     "jpName": "ヴィヴィアナ",
     "krName": "비비아나",

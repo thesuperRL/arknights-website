@@ -1,5 +1,5 @@
-Unranked Operators (101 total)
-Generated: 2025-12-31T02:27:45.453Z
+Unranked Operators (65 total)
+Generated: 2025-12-31T03:03:33.138Z
 
 === GLOBAL OPERATORS ===
 
@@ -22,8 +22,6 @@ zuo_le (Zuo Le)
 --- Medic ---
 mon3tr (Mon3tr)
 reed_the_flame_shadow (Reed the Flame Shadow)
-rose_salt (Rose Salt)
-vendela (Vendela)
 
 --- Sniper ---
 erato (Erato)
