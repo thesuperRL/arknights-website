@@ -73,7 +73,7 @@
     "global": true,
     "profileImage": "/images/operators/alanna.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "def-buff",
       "trash-operators"
     ],
@@ -480,7 +480,7 @@
     "global": true,
     "profileImage": "/images/operators/bryophyta.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "def-buff",
       "trash-operators"
     ],
@@ -1169,7 +1169,7 @@
     "global": true,
     "profileImage": "/images/operators/heidi.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "enmity-healing",
       "sp-battery"
     ],
@@ -2510,7 +2510,7 @@
     "global": true,
     "profileImage": "/images/operators/swire.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "trash-operators"
     ],
     "cnName": "诗怀雅",
@@ -2847,7 +2847,7 @@
     "global": true,
     "profileImage": "/images/operators/whislash.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "def-buff"
     ],
     "cnName": "鞭刃",

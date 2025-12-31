@@ -7,7 +7,7 @@
     "global": true,
     "profileImage": "/images/operators/aak.png",
     "niches": [
-      "atk-buff"
+      "damage-buff"
     ],
     "cnName": "阿",
     "jpName": "ア",
@@ -1061,7 +1061,7 @@
     "global": true,
     "profileImage": "/images/operators/mon3tr.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "boss-killing",
       "healing-operators",
       "true_damage"
@@ -1283,7 +1283,7 @@
     "global": true,
     "profileImage": "/images/operators/pallas.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "def-buff",
       "late-laneholder",
       "unconventional-niches"
@@ -1545,7 +1545,7 @@
     "global": true,
     "profileImage": "/images/operators/saria.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "healing-operators",
       "late-laneholder",
       "sp-battery",
@@ -1699,7 +1699,7 @@
     "global": true,
     "profileImage": "/images/operators/skadi_the_corrupting_heart.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "def-buff",
       "enmity-healing",
       "global-range"
@@ -1844,7 +1844,7 @@
     "profileImage": "/images/operators/thorns_the_lodestar.png",
     "niches": [
       "aoe-arts-dps",
-      "atk-buff",
+      "damage-buff",
       "atk-debuff",
       "def-shred",
       "enmity-healing",

@@ -2023,7 +2023,7 @@
     "global": true,
     "profileImage": "/images/operators/elysium.png",
     "niches": [
-      "Attack Buffing",
+      "Damage Buffing",
       "DP Generation",
       "Defense Shred"
     ],
@@ -3822,7 +3822,7 @@
     "global": true,
     "profileImage": "/images/operators/warfarin.png",
     "niches": [
-      "Attack Buffing",
+      "Damage Buffing",
       "Healing Operators",
       "SP Batteries"
     ],
@@ -3975,7 +3975,7 @@
     "global": true,
     "profileImage": "/images/operators/zima.png",
     "niches": [
-      "Attack Buffing",
+      "Damage Buffing",
       "DP Generation",
       "Defense/Survival Buffing",
       "Early Laneholder"
@@ -5286,7 +5286,7 @@
     "global": true,
     "profileImage": "/images/operators/saria.png",
     "niches": [
-      "atk-buff",
+      "damage-buff",
       "healing-operators",
       "late-laneholder",
       "sp-battery",
