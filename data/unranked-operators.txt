@@ -1,22 +1,14 @@
-Unranked Operators (127 total)
-Generated: 2025-12-31T01:41:51.244Z
+Unranked Operators (110 total)
+Generated: 2025-12-31T02:12:00.647Z
 
 akkord (Akkord)
-
 astgenne_the_lightchaser (Astgenne the Lightchaser)
-
-
 cairn (Cairn)
-
-
-dagda (Dagda)
 degenbrecher (Degenbrecher)
-delphine (Delphine)
-diamante (Diamante)
+
+
 doc (Doc)
-dorothy (Dorothy)
-ebenholz (Ebenholz)
-ela (Ela)
+
 entelechia (Entelechia)
 erato (Erato)
 fang_the_fire_sharpened (Fang the Fire-Sharpened)
@@ -29,7 +21,7 @@ gracebearer (Gracebearer)
 grain_buds (Grain Buds)
 greyy_the_lightningbearer (Greyy the Lightningbearer)
 hadiya (Hadiya)
-harmonie (Harmonie)
+
 harold (Harold)
 haruka (Haruka)
 ho_olheyak (Ho'olheyak)
@@ -60,13 +52,12 @@ minimalist (Minimalist)
 miss_christine (Miss.Christine)
 misumi_uika (Misumi Uika)
 mon3tr (Mon3tr)
-morgan (Morgan)
 muelsyse (Muelsyse)
 narantuya (Narantuya)
 nasti (Nasti)
 necrass (Necrass)
 nowell (Nowell)
-nymph (Nymph)
+
 odda (Odda)
 paprika (Paprika)
 papyrus (Papyrus)
@@ -99,7 +90,6 @@ thorns_the_lodestar (Thorns the Lodestar)
 tin_man (Tin Man)
 tippi (Tippi)
 togawa_sakiko (Togawa Sakiko)
-
 ulpianus (Ulpianus)
 underflow (Underflow)
 valarqvin (Valarqvin)
@@ -112,9 +102,9 @@ viviana (Viviana)
 vulpisfoglia (Vulpisfoglia)
 wakaba_mutsumi (Wakaba Mutsumi)
 wanqing (Wanqing)
-warmy (Warmy)
+
 windscoot (Windscoot)
-wulfenite (Wulfenite)
+
 xingzhu (Xingzhu)
 y_tenji_nyamu (Yūtenji Nyamu)
 yahata_umiri (Yahata Umiri)

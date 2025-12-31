@@ -41,7 +41,11 @@
     "shu": "Teleporting unlimited numbers of enemies back",
     "tragodia": "S1 bind, S2 controlling enemies, and S3 locking them in place",
     "u_official": "RNG",
-    "yu": "Teleport"
+    "yu": "Teleport",
+    "nymph": "",
+    "dorothy": "",
+    "ela": "",
+    "wulfenite": ""
   },
   "relatedNiches": [
     "Tanking/Blocking Operators"

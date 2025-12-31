@@ -117,7 +117,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/caper.png",
-    "niches": [],
+    "niches": [
+      "low-rarity",
+      "physical-dps"
+    ],
     "cnName": "跃跃",
     "twName": "躍躍",
     "jpName": "ケイパー",
@@ -887,7 +890,10 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/totter.png",
-    "niches": [],
+    "niches": [
+      "low-rarity",
+      "physical-dps"
+    ],
     "cnName": "铅踝",
     "twName": "鉛踝",
     "jpName": "トター",

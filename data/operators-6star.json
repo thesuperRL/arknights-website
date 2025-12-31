@@ -247,7 +247,11 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/chongyue.png",
-    "niches": [],
+    "niches": [
+      "early-laneholder",
+      "late-laneholder",
+      "physical-dps"
+    ],
     "cnName": "重岳",
     "jpName": "チョンユエ",
     "krName": "총웨",

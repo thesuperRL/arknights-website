@@ -238,7 +238,10 @@
     "class": "Caster",
     "global": true,
     "profileImage": "/images/operators/astgenne.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "free"
+    ],
     "cnName": "星源",
     "jpName": "アステジーニ",
     "krName": "아스트젠",
@@ -283,7 +286,12 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/bassline.png",
-    "niches": [],
+    "niches": [
+      "healing-operators",
+      "late-laneholder",
+      "res-buff",
+      "tanking-blocking-operators"
+    ],
     "cnName": "深律",
     "jpName": "ベースライン",
     "krName": "베이스라인",
@@ -416,7 +424,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/bobbing.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage",
+      "trash-operators"
+    ],
     "cnName": "波卜",
     "jpName": "ボビング",
     "krName": "보빙",
@@ -445,7 +456,9 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/brigid.png",
-    "niches": [],
+    "niches": [
+      "physical-dps"
+    ],
     "cnName": "水灯心",
     "jpName": "ブリギッド",
     "internalName": "char_4177_brigid"
@@ -501,7 +514,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/cantabile.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "fast-redeploy-operators"
+    ],
     "cnName": "晓歌",
     "twName": "曉歌",
     "jpName": "カンタービレ",
@@ -515,7 +532,10 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/catherine.png",
-    "niches": [],
+    "niches": [
+      "def-buff",
+      "trash-operators"
+    ],
     "cnName": "凯瑟琳",
     "twName": "凱瑟琳",
     "jpName": "キャサリン",
@@ -529,7 +549,10 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/cement.png",
-    "niches": [],
+    "niches": [
+      "tanking-blocking-operators",
+      "trash-operators"
+    ],
     "cnName": "洋灰",
     "jpName": "セメント",
     "krName": "시멘트",
@@ -576,7 +599,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/chilchuck.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "fast-redeploy-operators"
+    ],
     "cnName": "齐尔查克",
     "twName": "奇爾查克",
     "jpName": "チルチャック",
@@ -606,7 +633,11 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/coldshot.png",
-    "niches": [],
+    "niches": [
+      "free",
+      "physical-dps",
+      "trash-operators"
+    ],
     "cnName": "冰酿",
     "twName": "冰釀",
     "jpName": "コールドショット",
@@ -656,7 +687,11 @@
     "class": "Defender",
     "global": true,
     "profileImage": "/images/operators/czerny.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "tanking-blocking-operators",
+      "unconventional-niches"
+    ],
     "cnName": "车尔尼",
     "twName": "車爾尼",
     "jpName": "ツェルニー",
@@ -670,7 +705,9 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/dagda.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "达格达",
     "twName": "達格達",
     "jpName": "ダグザ",
@@ -1687,7 +1724,9 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/morgan.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "摩根",
     "jpName": "モーガン",
     "internalName": "char_154_morgan"
@@ -1961,7 +2000,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/puzzle.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "fast-redeploy-operators"
+    ],
     "cnName": "谜图",
     "twName": "謎圖",
     "jpName": "パズル",
@@ -2364,7 +2407,11 @@
     "class": "Vanguard",
     "global": true,
     "profileImage": "/images/operators/surfer.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "early-laneholder",
+      "fast-redeploy-operators"
+    ],
     "cnName": "寻澜",
     "jpName": "サーファー",
     "krName": "서퍼",
