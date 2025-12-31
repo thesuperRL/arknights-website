@@ -532,9 +532,9 @@
     "global": true,
     "profileImage": "/images/operators/jessica.png",
     "niches": [
-      "trash-operators",
       "anti-air-operators",
-      "physical-dps"
+      "physical-dps",
+      "trash-operators"
     ],
     "cnName": "杰西卡",
     "twName": "潔西卡",

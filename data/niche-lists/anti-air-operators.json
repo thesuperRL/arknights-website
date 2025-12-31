@@ -3,25 +3,29 @@
   "description": "Operators that attack air units well",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
-    "A": {
-      "blue_poison": "",
+    "SS": {
       "exusiai": "",
-      "glaucus": "Anti-drone niche but not very useful otherwise",
-      "greythroat": "Exusiai but worse",
-      "jessica": "Kroos has better DPS until you E2 her",
-      "kroos": "Surprising damage for a 3-star",
-      "may": "",
-      "platinum": "",
-      "vermeil": "",
-      "april": "",
-      "archetto": "",
-      "ash": "",
+      "archetto": ""
+    },
+    "S": {
       "kroos_the_keen_glint": ""
     },
-    "B": {},
-    "C": {},
+    "A": {
+      "blue_poison": "",
+      "platinum": "",
+      "kroos": "Surprising damage for a 3-star",
+      "greythroat": "Exusiai but worse",
+      "ash": ""
+    },
+    "B": {
+      "jessica": "Kroos has better DPS until you E2 her",
+      "may": "",
+      "april": "",
+      "vermeil": ""
+    },
+    "C": {
+      "glaucus": "Anti-drone niche but not very useful otherwise"
+    },
     "D": {},
     "F": {}
   }
