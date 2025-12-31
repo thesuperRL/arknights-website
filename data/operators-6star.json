@@ -574,7 +574,6 @@
     "global": true,
     "profileImage": "/images/operators/gladiia.png",
     "niches": [
-      "free",
       "shift",
       "unconventional-niches"
     ],
@@ -915,7 +914,6 @@
     "profileImage": "/images/operators/lessing.png",
     "niches": [
       "boss-killing",
-      "free",
       "trash-operators",
       "unconventional-niches"
     ],
@@ -966,6 +964,7 @@
     "global": true,
     "profileImage": "/images/operators/logos.png",
     "niches": [
+      "aoe-arts-dps",
       "arts-dps",
       "boss-killing",
       "res-shred",
@@ -1077,9 +1076,9 @@
     "global": true,
     "profileImage": "/images/operators/mostima.png",
     "niches": [
-      "trash-operators",
       "aoe-arts-dps",
-      "stalling"
+      "stalling",
+      "trash-operators"
     ],
     "cnName": "莫斯提马",
     "twName": "莫斯提馬",
@@ -1267,6 +1266,7 @@
     "global": true,
     "profileImage": "/images/operators/nymph.png",
     "niches": [
+      "aoe-arts-dps",
       "elemental-damage",
       "stalling"
     ],

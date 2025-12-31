@@ -3,29 +3,36 @@
   "description": "Operators that deal high arts damage in an area",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
+    "SS": {
+      "logos": "",
+      "nymph": ""
+    },
+    "S": {
+      "eyjafjalla": "One of the best AOE casters as a core caster..."
+    },
     "A": {
-      "eyjafjalla": "One of the best AOE casters as a core caster...",
       "ifrit": "",
-      "mostima": "Very large AOE arts damage and slow but at a really high SP cost",
-      "asbestos": "",
-      "leonhardt": "",
-      "lava_the_purgatory": "",
-      "dusk": "",
-      "passenger": "",
-      "pudding": "",
-      "ling": "Summons deal AOE arts damage to ground",
-      "astgenne": "",
-      "marcille": "",
-      "lin": "",
+      "ling": "Summons deal AOE arts damage to ground enemies",
       "texas_the_omertosa": "",
+      "lin": "",
+      "passenger": ""
+    },
+    "B": {
+      "pudding": "",
+      "mostima": "Very large AOE arts damage and slow but at a really high SP cost",
+      "marcille": "",
+      "leonhardt": ""
+    },
+    "C": {
+      "astgenne": "",
       "thorns_the_lodestar": "",
+      "dusk": ""
+    },
+    "D": {
+      "asbestos": "",
+      "lava_the_purgatory": "",
       "tin_man": ""
     },
-    "B": {},
-    "C": {},
-    "D": {},
     "F": {}
   },
   "relatedNiches": [

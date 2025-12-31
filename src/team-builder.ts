@@ -70,6 +70,35 @@ function loadTrashOperators(): Set<string> {
 }
 
 /**
+ * Loads free operators from the free.json file
+ */
+function loadFreeOperators(): Set<string> {
+  const freeFilePath = path.join(__dirname, '../data/niche-lists', 'free.json');
+  const freeOperators = new Set<string>();
+
+  if (fs.existsSync(freeFilePath)) {
+    try {
+      const content = fs.readFileSync(freeFilePath, 'utf-8');
+      const freeData = JSON.parse(content);
+      if (freeData.operators && typeof freeData.operators === 'object') {
+        // Rating-grouped structure: iterate through all rating groups
+        for (const operatorsInRating of Object.values(freeData.operators)) {
+          if (operatorsInRating && typeof operatorsInRating === 'object' && !Array.isArray(operatorsInRating)) {
+            for (const operatorId of Object.keys(operatorsInRating)) {
+              freeOperators.add(operatorId);
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error loading free operators:', error);
+    }
+  }
+
+  return freeOperators;
+}
+
+/**
  * Loads all operator data from JSON files
  */
 function loadAllOperators(): Record<string, any> {
@@ -344,6 +373,7 @@ function findBestOperatorForNiche(
   requiredNiches: Set<string>,
   preferredNiches: Set<string>,
   trashOperators?: Set<string>,
+  freeOperators?: Set<string>,
   wantToUseSet?: Set<string>
 ): { operatorId: string; operator: any; niches: string[] } | null {
   // Sort operators by rarity preference order for optimal examination
@@ -354,9 +384,10 @@ function findBestOperatorForNiche(
   let bestScore = -Infinity;
   const candidates: Array<{ operatorId: string; operator: any; niches: string[]; score: number }> = [];
   
-  // First pass: only consider non-trash operators
+  // First pass: only consider non-trash and non-free operators
   for (const operatorId of sortedOperators) {
     if (trashOperators && trashOperators.has(operatorId)) continue; // Skip trash operators in first pass
+    if (freeOperators && freeOperators.has(operatorId)) continue; // Skip free operators in first pass
     
     const operator = allOperators[operatorId];
     if (!operator) continue;
@@ -451,8 +482,9 @@ export async function buildTeam(
   // Load all operators
   const allOperators = loadAllOperators();
   
-  // Load trash operators to apply penalty (but not exclude them)
+  // Load trash operators and free operators to apply penalty (but not exclude them)
   const trashOperators = loadTrashOperators();
+  const freeOperators = loadFreeOperators();
   
   // Get user's owned operators and want-to-use operators from SQL database
   const ownedOperatorIds = await getOwnedOperators(email);
@@ -501,6 +533,7 @@ export async function buildTeam(
         requiredNiches,
         preferredNiches,
         trashOperators,
+        freeOperators,
         wantToUseSet
       );
       
@@ -543,6 +576,7 @@ export async function buildTeam(
         requiredNiches,
         preferredNiches,
         trashOperators,
+        freeOperators,
         wantToUseSet
       );
       
@@ -585,6 +619,7 @@ export async function buildTeam(
         requiredNiches,
         preferredNiches,
         trashOperators,
+        freeOperators,
         wantToUseSet
       );
       
@@ -627,6 +662,7 @@ export async function buildTeam(
         requiredNiches,
         preferredNiches,
         trashOperators,
+        freeOperators,
         wantToUseSet
       );
       
@@ -677,10 +713,11 @@ export async function buildTeam(
     let bestCandidate: { operatorId: string; operator: any; niches: string[]; score: number } | null = null;
     const candidates: Array<{ operatorId: string; operator: any; niches: string[]; score: number }> = [];
     
-    // First pass: only consider non-trash operators (already sorted by rarity preference)
+    // First pass: only consider non-trash and non-free operators (already sorted by rarity preference)
     for (const operatorId of sortedRemainingOperators) {
       if (usedOperatorIds.has(operatorId)) continue;
       if (trashOperators.has(operatorId)) continue; // Skip trash operators in first pass
+      if (freeOperators.has(operatorId)) continue; // Skip free operators in first pass
       
       const operator = allOperators[operatorId];
       if (!operator) continue;
