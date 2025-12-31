@@ -1,5 +1,5 @@
 {
-  "niche": "Healing Operators",
+  "niche": "Healing / Sustain Operators",
   "description": "Operators that restore health to allies",
   "lastUpdated": "2025-12-25",
   "operators": {
@@ -51,7 +51,8 @@
       "silence_the_paradigmatic": "",
       "xingzhu": "",
       "mon3tr": "",
-      "reed_the_flame_shadow": ""
+      "reed_the_flame_shadow": "",
+      "civilight_eterna": ""
     },
     "B": {},
     "C": {},

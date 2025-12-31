@@ -3,24 +3,29 @@
   "description": "Operators that buff allies' attack",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
-    "A": {
-      "saria": "",
-      "swire": "Buffs melee operators in surrounding tiles with bad uptime",
-      "whislash": "For melee operators",
-      "skadi_the_corrupting_heart": "",
-      "aak": "Hard to tank the buff for operators but if tanked is very good",
-      "pallas": "Usefulness of buff hindered by high SP costs",
-      "heidi": "At the price of -3 block for operators who receive this buff",
-      "bryophyta": "",
-      "alanna": "",
+    "SS": {
+      "aak": "Hard to tank the buff for operators but if tanked is very good"
+    },
+    "S": {
       "mon3tr": "",
+      "skadi_the_corrupting_heart": "",
+      "civilight_eterna": "",
       "thorns_the_lodestar": ""
     },
-    "B": {},
-    "C": {},
-    "D": {},
+    "A": {
+      "pallas": "Usefulness of buff hindered by high SP costs"
+    },
+    "B": {
+      "heidi": "At the price of -3 block for operators who receive this buff (which is a pretty hefty price)",
+      "alanna": ""
+    },
+    "C": {
+      "swire": "Buffs melee operators in surrounding tiles with bad uptime",
+      "whislash": "For melee operators"
+    },
+    "D": {
+      "bryophyta": ""
+    },
     "F": {}
   },
   "relatedNiches": [
