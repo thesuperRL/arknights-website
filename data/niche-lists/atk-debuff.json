@@ -4,14 +4,16 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {},
-    "S": {},
+    "S": {
+      "shamare": ""
+    },
     "A": {
-      "mousse": "",
-      "shamare": "",
       "thorns_the_lodestar": "",
       "tin_man": ""
     },
-    "B": {},
+    "B": {
+      "mousse": ""
+    },
     "C": {},
     "D": {},
     "F": {}
