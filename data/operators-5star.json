@@ -10,12 +10,7 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1001_amiya2",
-    "niches": [
-      "arts-dps",
-      "trash-operators",
-      "true_damage"
-    ]
+    "internalName": "char_1001_amiya2"
   },
   "amiya_medic": {
     "id": "amiya_medic",
@@ -28,12 +23,7 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1037_amiya3",
-    "niches": [
-      "arts-dps",
-      "healing-operators",
-      "true_damage"
-    ]
+    "internalName": "char_1037_amiya3"
   },
   "absinthe": {
     "id": "absinthe",
