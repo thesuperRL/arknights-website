@@ -18,7 +18,9 @@
     "B": {
       "meteor": "Good shred on mid uptime"
     },
-    "C": {},
+    "C": {
+      "ifrit": "Flat shred"
+    },
     "D": {},
     "F": {}
   }

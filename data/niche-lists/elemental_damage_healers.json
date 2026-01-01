@@ -1,20 +1,25 @@
 {
-  "niche": "Anti-Elemental Damage",
+  "niche": "Elemental Damage Recovery",
   "description": "Operators that alleviate elemental damage",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
+    "SS": {
+      "eyjafjalla_the_hv_t_aska": "Erases elemental damage from the game"
+    },
+    "S": {
+    },
     "A": {
-      "mulberry": "",
-      "honeyberry": "",
-      "chestnut": "",
-      "eyjafjalla_the_hv_t_aska": "",
+      "mulberry": ""
+    },
+    "B": {
+      "honeyberry": ""
+    },
+    "C": {
       "harold": ""
     },
-    "B": {},
-    "C": {},
-    "D": {},
+    "D": {
+      "chestnut": ""
+    },
     "F": {}
   }
 }
