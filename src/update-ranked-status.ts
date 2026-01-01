@@ -126,19 +126,6 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
     }
   }
 
-  // Apply build-time rules: fragile -> def-shred + res-shred
-  for (const [_operatorId, niches] of operatorNiches.entries()) {
-    // If operator is in fragile niche, also add def-shred and res-shred
-    if (niches.includes('fragile')) {
-      if (!niches.includes('def-shred')) {
-        niches.push('def-shred');
-      }
-      if (!niches.includes('res-shred')) {
-        niches.push('res-shred');
-      }
-    }
-  }
-
   return operatorNiches;
 }
 
@@ -381,78 +368,11 @@ function capitalizeAllNotes(): void {
 }
 
 /**
- * Copies fragile operators to def-shred and res-shred lists at build time
  * Copies dual-dps operators to arts-dps and physical-dps lists at build time
  */
 function copyOperatorsToDerivedNiches(): void {
   const nicheListsDir = path.join(__dirname, '../data/niche-lists');
   let updatedFiles = 0;
-
-  // Copy fragile operators to def-shred and res-shred
-  const fragileList = loadNicheList('fragile', nicheListsDir);
-  if (fragileList && fragileList.operators) {
-    // Collect all fragile operator IDs from all rating groups
-    const fragileOperators: string[] = [];
-    for (const operatorsInRating of Object.values(fragileList.operators)) {
-      if (operatorsInRating) {
-        for (const operatorId of Object.keys(operatorsInRating)) {
-          fragileOperators.push(operatorId);
-        }
-      }
-    }
-    
-    // Add to def-shred
-    const defShredList = loadNicheList('def-shred', nicheListsDir);
-    if (defShredList) {
-      let defShredUpdated = false;
-      // Initialize operators object if needed
-      if (!defShredList.operators) {
-        defShredList.operators = {};
-      }
-      if (!defShredList.operators['A']) {
-        defShredList.operators['A'] = {};
-      }
-      
-      for (const operatorId of fragileOperators) {
-        if (!(operatorId in defShredList.operators['A']!)) {
-          defShredList.operators['A']![operatorId] = 'Applies fragile';
-          defShredUpdated = true;
-        }
-      }
-      if (defShredUpdated) {
-        const defShredPath = path.join(nicheListsDir, 'def-shred.json');
-        fs.writeFileSync(defShredPath, JSON.stringify(defShredList, null, 2));
-        console.log(`✅ Added ${fragileOperators.length} fragile operator(s) to def-shred.json`);
-        updatedFiles++;
-      }
-    }
-
-    // Add to res-shred
-    const resShredList = loadNicheList('res-shred', nicheListsDir);
-    if (resShredList) {
-      let resShredUpdated = false;
-      // Initialize operators object if needed
-      if (!resShredList.operators) {
-        resShredList.operators = {};
-      }
-      if (!resShredList.operators['A']) {
-        resShredList.operators['A'] = {};
-      }
-      
-      for (const operatorId of fragileOperators) {
-        if (!(operatorId in resShredList.operators['A']!)) {
-          resShredList.operators['A']![operatorId] = 'Applies fragile';
-          resShredUpdated = true;
-        }
-      }
-      if (resShredUpdated) {
-        const resShredPath = path.join(nicheListsDir, 'res-shred.json');
-        fs.writeFileSync(resShredPath, JSON.stringify(resShredList, null, 2));
-        console.log(`✅ Added ${fragileOperators.length} fragile operator(s) to res-shred.json`);
-        updatedFiles++;
-      }
-    }
-  }
 
 
   if (updatedFiles > 0) {

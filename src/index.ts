@@ -89,7 +89,6 @@ app.get('/api/niche-lists/:niche', (req, res) => {
     }
 
     // Enrich operator list with operator data
-    // Note: Fragile operators are already copied to their derived niches at build time
     // Convert from rating-grouped structure to flat array for frontend
     const operatorEntries: Array<{operatorId: string; rating: string; note: string; operator: any}> = [];
     const ratingOrder: Rating[] = ["SS", "S", "A", "B", "C", "D", "F"];

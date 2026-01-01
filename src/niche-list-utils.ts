@@ -170,18 +170,6 @@ export function getNichesForOperator(operatorId: string, dataDir: string = path.
     }
   }
 
-  // If operator is in fragile niche, also count them as def-shred and res-shred
-  // This allows fragile operators to be counted in those niches for teambuilding
-  if (niches.includes('fragile')) {
-    if (!niches.includes('def-shred')) {
-      niches.push('def-shred');
-    }
-    if (!niches.includes('res-shred')) {
-      niches.push('res-shred');
-    }
-  }
-
-
   return niches;
 }
 
