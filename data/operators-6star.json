@@ -139,7 +139,8 @@
     "global": true,
     "profileImage": "/images/operators/blaze_the_igniting_spark.png",
     "niches": [
-      "elemental-damage"
+      "elemental-damage",
+      "elemental-dps"
     ],
     "cnName": "烛煌",
     "twName": "燭煌",
@@ -228,7 +229,6 @@
     "profileImage": "/images/operators/ch_en_the_holungday.png",
     "niches": [
       "aoe-physical-dps",
-      "def-shred",
       "stalling",
       "unconventional-niches"
     ],
@@ -263,7 +263,11 @@
     "global": true,
     "profileImage": "/images/operators/civilight_eterna.png",
     "niches": [
-      "enmity-healing"
+      "damage-buff",
+      "enmity-healing",
+      "healing-operators",
+      "stalling",
+      "true_damage"
     ],
     "cnName": "魔王",
     "jpName": "シヴィライト・エテルナ\n魔王",
@@ -367,11 +371,9 @@
     "global": true,
     "profileImage": "/images/operators/ela.png",
     "niches": [
-      "def-shred",
       "fragile",
       "global-range",
       "physical-dps",
-      "res-shred",
       "stalling"
     ],
     "cnName": "艾拉",
@@ -591,9 +593,7 @@
     "global": true,
     "profileImage": "/images/operators/gnosis.png",
     "niches": [
-      "def-shred",
       "fragile",
-      "res-shred",
       "stalling"
     ],
     "cnName": "灵知",
@@ -737,6 +737,7 @@
     "niches": [
       "aoe-arts-dps",
       "arts-dps",
+      "def-shred",
       "res-shred"
     ],
     "cnName": "伊芙利特",
@@ -1268,6 +1269,7 @@
     "niches": [
       "aoe-arts-dps",
       "elemental-damage",
+      "elemental-dps",
       "stalling"
     ],
     "cnName": "妮芙",
@@ -1414,7 +1416,7 @@
     "profileImage": "/images/operators/raidian.png",
     "niches": [
       "arts-dps",
-      "res-shred"
+      "fragile"
     ],
     "cnName": "电弧",
     "jpName": "レイディアン",
@@ -1511,10 +1513,8 @@
     "global": true,
     "profileImage": "/images/operators/saileach.png",
     "niches": [
-      "def-shred",
       "dp-generation",
-      "fragile",
-      "res-shred"
+      "fragile"
     ],
     "cnName": "琴柳",
     "jpName": "サイラッハ",
@@ -1545,10 +1545,11 @@
     "global": true,
     "profileImage": "/images/operators/saria.png",
     "niches": [
-      "damage-buff",
+      "fragile",
       "healing-operators",
       "late-laneholder",
       "sp-battery",
+      "stalling",
       "tanking-blocking-operators"
     ],
     "cnName": "塞雷娅",
@@ -1770,10 +1771,8 @@
     "global": true,
     "profileImage": "/images/operators/suzuran.png",
     "niches": [
-      "def-shred",
       "fragile",
       "healing-operators",
-      "res-shred",
       "sp-battery",
       "stalling"
     ],
@@ -1844,10 +1843,10 @@
     "profileImage": "/images/operators/thorns_the_lodestar.png",
     "niches": [
       "aoe-arts-dps",
-      "damage-buff",
       "atk-debuff",
       "def-shred",
       "enmity-healing",
+      "fragile",
       "res-shred"
     ],
     "cnName": "引星棘刺",
@@ -2061,6 +2060,7 @@
     "profileImage": "/images/operators/yu.png",
     "niches": [
       "elemental-damage",
+      "elemental_damage_healers",
       "late-laneholder",
       "stalling",
       "tanking-blocking-operators"

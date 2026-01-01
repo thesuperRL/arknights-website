@@ -89,9 +89,7 @@
     "global": true,
     "profileImage": "/images/operators/thrm_ex.png",
     "niches": [
-      "def-shred",
       "fragile",
-      "res-shred",
       "robot"
     ],
     "internalName": "char_376_therex"

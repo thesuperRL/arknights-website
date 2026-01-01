@@ -3,7 +3,7 @@
  * Checks which tier lists each operator appears in and updates the niches array
  */
 
-import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
+import { loadAllNicheLists } from './niche-list-utils';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -371,13 +371,8 @@ function capitalizeAllNotes(): void {
  * Copies dual-dps operators to arts-dps and physical-dps lists at build time
  */
 function copyOperatorsToDerivedNiches(): void {
-  const nicheListsDir = path.join(__dirname, '../data/niche-lists');
-  let updatedFiles = 0;
-
-
-  if (updatedFiles > 0) {
-    console.log(`\n📋 Updated ${updatedFiles} niche list file(s) with derived operators`);
-  }
+  // Currently no derived niche copying logic
+  // This function is kept for potential future use
 }
 
 async function main() {

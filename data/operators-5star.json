@@ -480,7 +480,6 @@
     "global": true,
     "profileImage": "/images/operators/bryophyta.png",
     "niches": [
-      "damage-buff",
       "def-buff",
       "trash-operators"
     ],
@@ -730,6 +729,7 @@
     "profileImage": "/images/operators/diamante.png",
     "niches": [
       "elemental-damage",
+      "elemental-dps",
       "trash-operators"
     ],
     "cnName": "折光",
@@ -1027,6 +1027,7 @@
     "profileImage": "/images/operators/gracebearer.png",
     "niches": [
       "elemental-damage",
+      "elemental-dps",
       "late-laneholder"
     ],
     "cnName": "聆音",
@@ -1590,9 +1591,7 @@
     "global": true,
     "profileImage": "/images/operators/lucilla.png",
     "niches": [
-      "def-shred",
       "fragile",
-      "res-shred",
       "trash-operators"
     ],
     "cnName": "海霓",
@@ -1734,6 +1733,7 @@
     "profileImage": "/images/operators/miss_christine.png",
     "niches": [
       "elemental-damage",
+      "elemental-dps",
       "trash-operators"
     ],
     "jpName": "ミス・クリスティーン",
@@ -2342,8 +2342,7 @@
       "atk-debuff",
       "def-shred",
       "fragile",
-      "global-range",
-      "res-shred"
+      "global-range"
     ],
     "cnName": "巫恋",
     "twName": "巫戀",
@@ -2444,6 +2443,7 @@
     "global": true,
     "profileImage": "/images/operators/sora.png",
     "niches": [
+      "damage-buff",
       "enmity-healing",
       "trash-operators"
     ],
@@ -2477,6 +2477,7 @@
     "global": true,
     "profileImage": "/images/operators/spuria.png",
     "niches": [
+      "damage-buff",
       "trash-operators"
     ],
     "cnName": "空构",
@@ -2813,6 +2814,7 @@
     "global": true,
     "profileImage": "/images/operators/warfarin.png",
     "niches": [
+      "damage-buff",
       "healing-operators",
       "sp-battery"
     ],
@@ -2831,6 +2833,7 @@
     "profileImage": "/images/operators/warmy.png",
     "niches": [
       "elemental-damage",
+      "elemental-dps",
       "trash-operators"
     ],
     "cnName": "温米",
