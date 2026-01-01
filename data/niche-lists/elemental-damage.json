@@ -1,28 +1,34 @@
 {
-  "niche": "Elemental Damage DPS",
-  "description": "Operators that deal high elemental damage",
+  "niche": "Elemental Burst Inducers",
+  "description": "Operators that apply elemental damage well",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
+    "SS": {
+      "yu": "He can make your best arts dpses deal burn too",
+      "virtuosa": ""
+    },
+    "S": {
+      "tragodia": ""
+    },
     "A": {
-      "blaze_the_igniting_spark": "",
-      "phonor_0": "",
-      "tragodia": "",
-      "virtuosa": "",
-      "yu": "",
-      "bobbing": "",
-      "diamante": "",
-      "warmy": "",
       "nymph": "",
-      "miss_christine": "",
-      "philae": "",
-      "gracebearer": "",
       "valarqvin": "Bad application of elemental damage outside of IS"
     },
-    "B": {},
-    "C": {},
-    "D": {},
-    "F": {}
+    "B": {
+      "bobbing": "",
+      "philae": ""
+    },
+    "C": {
+      "diamante": "",
+      "warmy": "",
+      "gracebearer": "",
+      "miss_christine": "",
+      "blaze_the_igniting_spark": ""
+    },
+    "D": {
+    },
+    "F": {
+      "phonor_0": ""
+    }
   }
 }

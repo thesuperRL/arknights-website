@@ -1,0 +1,27 @@
+{
+  "niche": "Elemental Damage Dealers",
+  "description": "Operators that deal high elemental damage (mostly contingent on enemies already being bursted)",
+  "lastUpdated": "2025-12-25",
+  "operators": {
+    "SS": {
+      "nymph": "",
+      "blaze_the_igniting_spark": ""
+    },
+    "S": {
+      "diamante": "",
+      "warmy": ""
+    },
+    "A": {
+      "gracebearer": "",
+      "miss_christine": ""
+    },
+    "B": {
+    },
+    "C": {
+    },
+    "D": {
+    },
+    "F": {
+    }
+  }
+}
