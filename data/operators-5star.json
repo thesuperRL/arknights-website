@@ -1861,7 +1861,9 @@
     "global": true,
     "profileImage": "/images/operators/nine_colored_deer.png",
     "niches": [
+      "def-buff",
       "healing-operators",
+      "res-buff",
       "trash-operators"
     ],
     "cnName": "九色鹿",
@@ -2110,7 +2112,9 @@
     "global": true,
     "profileImage": "/images/operators/quercus.png",
     "niches": [
+      "def-buff",
       "healing-operators",
+      "res-buff",
       "sp-battery"
     ],
     "cnName": "夏栎",
@@ -2661,6 +2665,8 @@
     "global": true,
     "profileImage": "/images/operators/tsukinogi.png",
     "niches": [
+      "def-buff",
+      "res-buff",
       "trash-operators"
     ],
     "cnName": "月禾",
@@ -2945,7 +2951,9 @@
     "global": true,
     "profileImage": "/images/operators/xingzhu.png",
     "niches": [
+      "def-buff",
       "healing-operators",
+      "res-buff",
       "trash-operators"
     ],
     "cnName": "行箸",

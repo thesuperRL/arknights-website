@@ -65,14 +65,11 @@ const FreeOperatorsPage: React.FC = () => {
 
   const loadFreeOperators = async () => {
     try {
-      console.log('Loading free operators...');
       const response = await fetch('/api/free-operators');
-      console.log('Free operators response status:', response.status);
       if (!response.ok) {
-        throw new Error(`Failed to load free operators: ${response.status} ${response.statusText}`);
+        throw new Error('Failed to load free operators');
       }
       const freeData = await response.json() as FreeOperatorsData;
-      console.log('Free operators loaded:', freeData.operators?.length, 'operators');
       setData(freeData);
       setLoading(false);
     } catch (err) {

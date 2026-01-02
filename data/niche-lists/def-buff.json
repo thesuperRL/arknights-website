@@ -14,11 +14,16 @@
     "A": {
       "zima": "Buffs Vanguards",
       "pallas": "Usefulness of buff hindered by high SP costs",
-      "catherine": "" 
+      "catherine": "",
+      "nine_colored_deer": "Sanctuary",
+      "quercus": "Sanctuary",
+      "silence_the_paradigmatic": "Sanctuary"
     },
     "B": {
       "croissant": "OK arts dodge buff, can share to close-by allies",
       "alanna": "",
+      "tsukinogi": "Sanctuary",
+      "xingzhu": "Sanctuary",
       "bryophyta": ""
     },
     "C": {

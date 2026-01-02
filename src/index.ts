@@ -165,8 +165,6 @@ app.get('/api/trash-operators', (_req, res) => {
 app.get('/api/free-operators', (_req, res) => {
   try {
     const filePath = path.join(__dirname, '../data', 'free.json');
-    console.log('Free operators API called, file path:', filePath);
-    console.log('File exists:', fs.existsSync(filePath));
     if (!fs.existsSync(filePath)) {
       console.log('Free operators file not found');
       res.status(404).json({ error: 'Free operators not found' });
@@ -210,8 +208,6 @@ app.get('/api/free-operators', (_req, res) => {
 app.get('/api/global-range-operators', (_req, res) => {
   try {
     const filePath = path.join(__dirname, '../data', 'global-range.json');
-    console.log('Global range operators API called, file path:', filePath);
-    console.log('File exists:', fs.existsSync(filePath));
     if (!fs.existsSync(filePath)) {
       console.log('Global range operators file not found');
       res.status(404).json({ error: 'Global range operators not found' });
@@ -297,19 +293,34 @@ app.get('/api/operators/:id', async (req, res) => {
       }
     }
 
-    // Check if operator is in trash list
-    const trashFilePath = path.join(__dirname, '../data', 'trash-operators.json');
-    if (fs.existsSync(trashFilePath)) {
-      const trashContent = fs.readFileSync(trashFilePath, 'utf-8');
-      const trashData = JSON.parse(trashContent);
-      if (trashData.operators && operatorId in trashData.operators) {
-        rankings.push({
-          niche: trashData.niche || 'trash-operators',
-          tier: 'N/A',
-          notes: trashData.operators[operatorId] || 'No optimal use'
-        });
+    // Check if operator is in special lists (free, global-range, trash)
+    // These operators show niche name but no ranking tier
+    const specialLists = [
+      { file: 'free.json', name: 'Free Operators' },
+      { file: 'global-range.json', name: 'Global Range Operators' },
+      { file: 'trash-operators.json', name: 'Trash Operators' }
+    ];
+
+    for (const specialList of specialLists) {
+      const specialFilePath = path.join(__dirname, '../data', specialList.file);
+      if (fs.existsSync(specialFilePath)) {
+        try {
+          const specialContent = fs.readFileSync(specialFilePath, 'utf-8');
+          const specialData = JSON.parse(specialContent);
+          if (specialData.operators && operatorId in specialData.operators) {
+            rankings.push({
+              niche: specialList.name,
+              tier: '', // Empty tier - will display niche name without ranking
+              notes: specialData.operators[operatorId] || undefined
+            });
+          }
+        } catch (error) {
+          // Silently ignore errors when checking special lists
+        }
       }
     }
+
+    // Add normal rankings for operators not in special lists (only if no special ranking added)
 
     res.json({
       operator,

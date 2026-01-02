@@ -1628,7 +1628,9 @@
     "global": true,
     "profileImage": "/images/operators/silence_the_paradigmatic.png",
     "niches": [
-      "healing-operators"
+      "def-buff",
+      "healing-operators",
+      "res-buff"
     ],
     "cnName": "淬羽赫默",
     "jpName": "淬さい羽うサイレンス",

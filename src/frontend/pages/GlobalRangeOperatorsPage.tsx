@@ -65,14 +65,11 @@ const GlobalRangeOperatorsPage: React.FC = () => {
 
   const loadGlobalRangeOperators = async () => {
     try {
-      console.log('Loading global range operators...');
       const response = await fetch('/api/global-range-operators');
-      console.log('Global range operators response status:', response.status);
       if (!response.ok) {
-        throw new Error(`Failed to load global range operators: ${response.status} ${response.statusText}`);
+        throw new Error('Failed to load global range operators');
       }
       const globalRangeData = await response.json() as GlobalRangeOperatorsData;
-      console.log('Global range operators loaded:', globalRangeData.operators?.length, 'operators');
       setData(globalRangeData);
       setLoading(false);
     } catch (err) {
