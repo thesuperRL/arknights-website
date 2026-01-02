@@ -33,6 +33,7 @@
     "global": true,
     "profileImage": "/images/operators/ambriel.png",
     "niches": [
+      "global-range",
       "physical-dps",
       "trash-operators"
     ],
@@ -167,7 +168,8 @@
     "global": true,
     "profileImage": "/images/operators/contrail.png",
     "niches": [
-      "low-rarity"
+      "low-rarity",
+      "unconventional-niches"
     ],
     "cnName": "云迹",
     "jpName": "コントレイル",
@@ -182,6 +184,7 @@
     "global": true,
     "profileImage": "/images/operators/conviction.png",
     "niches": [
+      "free",
       "trash-operators"
     ],
     "cnName": "断罪者",
@@ -565,7 +568,8 @@
     "profileImage": "/images/operators/lutonada.png",
     "niches": [
       "late-laneholder",
-      "tanking-blocking-operators"
+      "tanking-blocking-operators",
+      "unconventional-niches"
     ],
     "cnName": "露托",
     "jpName": "ルトナダ",

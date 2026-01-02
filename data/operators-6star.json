@@ -158,7 +158,8 @@
     "niches": [
       "healing-operators",
       "late-laneholder",
-      "tanking-blocking-operators"
+      "tanking-blocking-operators",
+      "unconventional-niches"
     ],
     "cnName": "瑕光",
     "jpName": "ブレミシャイン",
@@ -192,7 +193,8 @@
       "boss-killing",
       "physical-dps",
       "silence",
-      "stalling"
+      "stalling",
+      "unconventional-niches"
     ],
     "cnName": "刻俄柏",
     "jpName": "ケオベ",
@@ -226,7 +228,8 @@
     "profileImage": "/images/operators/ch_en_the_holungday.png",
     "niches": [
       "aoe-physical-dps",
-      "stalling"
+      "stalling",
+      "unconventional-niches"
     ],
     "cnName": "假日威龙陈",
     "twName": "假日威龍陳",
@@ -313,6 +316,7 @@
     "global": true,
     "profileImage": "/images/operators/dorothy.png",
     "niches": [
+      "global-range",
       "stalling"
     ],
     "cnName": "多萝西",
@@ -366,6 +370,7 @@
     "profileImage": "/images/operators/ela.png",
     "niches": [
       "fragile",
+      "global-range",
       "physical-dps",
       "stalling"
     ],
@@ -447,7 +452,8 @@
     "global": true,
     "profileImage": "/images/operators/exusiai_the_new_covenant.png",
     "niches": [
-      "physical-dps"
+      "physical-dps",
+      "unconventional-niches"
     ],
     "cnName": "新约能天使",
     "jpName": "新約しんやくエクシア",
@@ -481,6 +487,7 @@
     "profileImage": "/images/operators/eyjafjalla_the_hv_t_aska.png",
     "niches": [
       "elemental_damage_healers",
+      "global-range",
       "healing-operators"
     ],
     "cnName": "纯烬艾雅法拉",
@@ -497,7 +504,9 @@
     "global": true,
     "profileImage": "/images/operators/fartooth.png",
     "niches": [
-      "physical-dps"
+      "global-range",
+      "physical-dps",
+      "unconventional-niches"
     ],
     "cnName": "远牙",
     "twName": "遠牙",
@@ -565,7 +574,9 @@
     "global": true,
     "profileImage": "/images/operators/gladiia.png",
     "niches": [
-      "shift"
+      "free",
+      "shift",
+      "unconventional-niches"
     ],
     "cnName": "歌蕾蒂娅",
     "twName": "歌蕾蒂婭",
@@ -598,7 +609,8 @@
     "global": true,
     "profileImage": "/images/operators/goldenglow.png",
     "niches": [
-      "arts-dps"
+      "arts-dps",
+      "global-range"
     ],
     "cnName": "澄闪",
     "twName": "澄閃",
@@ -678,7 +690,8 @@
     "global": true,
     "profileImage": "/images/operators/horn.png",
     "niches": [
-      "aoe-physical-dps"
+      "aoe-physical-dps",
+      "unconventional-niches"
     ],
     "cnName": "号角",
     "twName": "號角",
@@ -757,7 +770,9 @@
     "class": "Guard",
     "global": true,
     "profileImage": "/images/operators/irene.png",
-    "niches": [],
+    "niches": [
+      "unconventional-niches"
+    ],
     "cnName": "艾丽妮",
     "twName": "艾麗妮",
     "jpName": "アイリーニ",
@@ -828,6 +843,7 @@
     "profileImage": "/images/operators/lappland_the_decadenza.png",
     "niches": [
       "arts-dps",
+      "global-range",
       "silence",
       "stalling"
     ],
@@ -845,7 +861,8 @@
     "profileImage": "/images/operators/lee.png",
     "niches": [
       "late-laneholder",
-      "shift"
+      "shift",
+      "unconventional-niches"
     ],
     "cnName": "老鲤",
     "twName": "老鯉",
@@ -878,6 +895,7 @@
     "profileImage": "/images/operators/lemuen.png",
     "niches": [
       "boss-killing",
+      "global-range",
       "physical-dps"
     ],
     "cnName": "蕾缪安",
@@ -895,7 +913,9 @@
     "profileImage": "/images/operators/lessing.png",
     "niches": [
       "boss-killing",
-      "trash-operators"
+      "free",
+      "trash-operators",
+      "unconventional-niches"
     ],
     "cnName": "止颂",
     "twName": "止頌",
@@ -947,7 +967,8 @@
       "aoe-arts-dps",
       "arts-dps",
       "boss-killing",
-      "res-shred"
+      "res-shred",
+      "unconventional-niches"
     ],
     "cnName": "逻各斯",
     "twName": "邏各斯",
@@ -963,7 +984,8 @@
     "global": true,
     "profileImage": "/images/operators/lumen.png",
     "niches": [
-      "healing-operators"
+      "healing-operators",
+      "unconventional-niches"
     ],
     "cnName": "流明",
     "jpName": "ルーメン",
@@ -1208,7 +1230,8 @@
     "niches": [
       "def-buff",
       "late-laneholder",
-      "tanking-blocking-operators"
+      "tanking-blocking-operators",
+      "unconventional-niches"
     ],
     "cnName": "年",
     "jpName": "ニェン",
@@ -1262,7 +1285,8 @@
     "niches": [
       "damage-buff",
       "def-buff",
-      "late-laneholder"
+      "late-laneholder",
+      "unconventional-niches"
     ],
     "cnName": "帕拉斯",
     "jpName": "パラス",
@@ -1633,7 +1657,8 @@
       "aoe-physical-dps",
       "boss-killing",
       "late-laneholder",
-      "physical-dps"
+      "physical-dps",
+      "unconventional-niches"
     ],
     "cnName": "银灰",
     "twName": "銀灰",
@@ -1678,6 +1703,7 @@
     "niches": [
       "damage-buff",
       "def-buff",
+      "global-range",
       "synergies/enmity-healing"
     ],
     "cnName": "浊心斯卡蒂",

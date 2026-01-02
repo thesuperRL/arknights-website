@@ -73,6 +73,43 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
   const operatorLists = loadAllNicheLists();
   const operatorNiches = new Map<string, string[]>();
   const unrecognizedOperators: Array<{ operatorId: string; niche: string }> = [];
+
+  // Add special operator lists as if they were regular niche lists
+  const specialLists = [
+    { file: 'free.json', name: 'Free Operators' },
+    { file: 'global-range.json', name: 'Global Range Operators' },
+    { file: 'trash-operators.json', name: 'Trash Operators' },
+    { file: 'unconventional-niches.json', name: 'Unconventional Niches' }
+  ];
+
+  for (const specialList of specialLists) {
+    const specialFilePath = path.join(__dirname, '../data', specialList.file);
+    if (fs.existsSync(specialFilePath)) {
+      try {
+        const content = fs.readFileSync(specialFilePath, 'utf-8');
+        const specialData = JSON.parse(content);
+        // Convert flat operators object to tiered structure expected by the system
+        const tieredOperators: Partial<Record<string, Record<string, string>>> = {
+          'A': {} // Put all special operators in the A tier
+        };
+
+        // Copy all operators to the A tier
+        for (const [operatorId, note] of Object.entries(specialData.operators)) {
+          tieredOperators['A']![operatorId] = note as string;
+        }
+
+        // Add as if it's a regular niche list
+        operatorLists[specialList.file.replace('.json', '')] = {
+          niche: specialList.name,
+          description: specialData.description || '',
+          lastUpdated: specialData.lastUpdated || '',
+          operators: tieredOperators
+        };
+      } catch (error) {
+        console.error(`Error loading ${specialList.file}:`, error);
+      }
+    }
+  }
   
   // Collection is now keyed by filename
   for (const [filename, operatorList] of Object.entries(operatorLists)) {
@@ -114,17 +151,7 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
     process.exit(1);
   }
 
-  // Add trash operators to niches (using internal code "trash-operators")
-  const trashOperators = getTrashOperators();
-  for (const operatorId of trashOperators) {
-    if (!operatorNiches.has(operatorId)) {
-      operatorNiches.set(operatorId, []);
-    }
-    const niches = operatorNiches.get(operatorId)!;
-    if (!niches.includes('trash-operators')) {
-      niches.push('trash-operators');
-    }
-  }
+  // Special operator lists are now processed as regular niche lists above
 
   return operatorNiches;
 }
@@ -415,7 +442,8 @@ async function main() {
   
   const rankedCount = operatorNiches.size;
   console.log(`Found ${rankedCount} unique operators in operator lists`);
-  console.log(`Found ${trashOperators.size} operators in trash list\n`);
+  console.log(`Found ${trashOperators.size} operators in trash list`);
+  console.log(`(Special lists: free, global-range, trash, unconventional niches are included)\n`);
 
   // Update operator files
   const { updated, unranked } = updateOperatorFiles(operatorNiches);

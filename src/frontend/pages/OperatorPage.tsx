@@ -72,8 +72,8 @@ const OperatorPage: React.FC = () => {
 
   return (
     <div className="operator-page">
-      <Link to="/" className="back-button">
-        ← Back to Home
+      <Link to="/all-operators" className="back-button">
+        ← Back to All Operators
       </Link>
 
       <div className="operator-header">

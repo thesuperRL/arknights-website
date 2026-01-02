@@ -43,6 +43,7 @@
     "global": true,
     "profileImage": "/images/operators/absinthe.png",
     "niches": [
+      "free",
       "trash-operators"
     ],
     "cnName": "苦艾",
@@ -155,7 +156,8 @@
     "profileImage": "/images/operators/april.png",
     "niches": [
       "anti-air-operators",
-      "fast-redeploy-operators"
+      "fast-redeploy-operators",
+      "unconventional-niches"
     ],
     "cnName": "四月",
     "jpName": "エイプリル",
@@ -235,7 +237,8 @@
     "global": true,
     "profileImage": "/images/operators/astgenne.png",
     "niches": [
-      "aoe-arts-dps"
+      "aoe-arts-dps",
+      "free"
     ],
     "cnName": "星源",
     "jpName": "アステジーニ",
@@ -349,6 +352,7 @@
     "global": true,
     "profileImage": "/images/operators/bison.png",
     "niches": [
+      "free",
       "tanking-blocking-operators"
     ],
     "cnName": "拜松",
@@ -557,6 +561,7 @@
     "global": true,
     "profileImage": "/images/operators/ceylon.png",
     "niches": [
+      "free",
       "trash-operators"
     ],
     "cnName": "锡兰",
@@ -609,6 +614,7 @@
     "global": true,
     "profileImage": "/images/operators/cliffheart.png",
     "niches": [
+      "free",
       "shift"
     ],
     "cnName": "崖心",
@@ -624,6 +630,7 @@
     "global": true,
     "profileImage": "/images/operators/coldshot.png",
     "niches": [
+      "free",
       "physical-dps",
       "trash-operators"
     ],
@@ -678,7 +685,8 @@
     "profileImage": "/images/operators/czerny.png",
     "niches": [
       "late-laneholder",
-      "tanking-blocking-operators"
+      "tanking-blocking-operators",
+      "unconventional-niches"
     ],
     "cnName": "车尔尼",
     "twName": "車爾尼",
@@ -908,6 +916,7 @@
     "global": true,
     "profileImage": "/images/operators/flamebringer.png",
     "niches": [
+      "free",
       "trash-operators"
     ],
     "cnName": "炎客",
@@ -1058,6 +1067,7 @@
     "profileImage": "/images/operators/grani.png",
     "niches": [
       "early-laneholder",
+      "free",
       "trash-operators"
     ],
     "cnName": "格拉尼",
@@ -1152,7 +1162,8 @@
     "niches": [
       "healing-operators",
       "synergies/enmity-healing",
-      "tanking-blocking-operators"
+      "tanking-blocking-operators",
+      "unconventional-niches"
     ],
     "cnName": "暴雨",
     "jpName": "ヘビーレイン",
@@ -1168,6 +1179,7 @@
     "profileImage": "/images/operators/heidi.png",
     "niches": [
       "damage-buff",
+      "free",
       "sp-battery",
       "synergies/enmity-healing"
     ],
@@ -1202,6 +1214,7 @@
     "global": true,
     "profileImage": "/images/operators/highmore.png",
     "niches": [
+      "free",
       "late-laneholder",
       "tanking-blocking-operators"
     ],
@@ -1219,6 +1232,7 @@
     "profileImage": "/images/operators/honeyberry.png",
     "niches": [
       "elemental_damage_healers",
+      "free",
       "healing-operators"
     ],
     "cnName": "蜜莓",
@@ -1331,6 +1345,7 @@
     "profileImage": "/images/operators/jieyun.png",
     "niches": [
       "aoe-physical-dps",
+      "free",
       "trash-operators"
     ],
     "cnName": "截云",
@@ -1606,7 +1621,8 @@
     "global": true,
     "profileImage": "/images/operators/lunacub.png",
     "niches": [
-      "physical-dps"
+      "physical-dps",
+      "unconventional-niches"
     ],
     "cnName": "子月",
     "jpName": "ルナカブ",
@@ -2273,7 +2289,9 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/scene.png",
-    "niches": [],
+    "niches": [
+      "unconventional-niches"
+    ],
     "cnName": "稀音",
     "jpName": "シーン",
     "krName": "씬",
@@ -2306,7 +2324,8 @@
     "global": true,
     "profileImage": "/images/operators/sesa.png",
     "niches": [
-      "trash-operators"
+      "trash-operators",
+      "unconventional-niches"
     ],
     "cnName": "慑砂",
     "twName": "懾砂",
@@ -2322,6 +2341,7 @@
     "global": true,
     "profileImage": "/images/operators/shalem.png",
     "niches": [
+      "free",
       "trash-operators"
     ],
     "cnName": "暮落",
@@ -2339,7 +2359,8 @@
     "niches": [
       "atk-debuff",
       "def-shred",
-      "fragile"
+      "fragile",
+      "global-range"
     ],
     "cnName": "巫恋",
     "twName": "巫戀",
@@ -2355,6 +2376,7 @@
     "global": true,
     "profileImage": "/images/operators/sideroca.png",
     "niches": [
+      "free",
       "tanking-blocking-operators",
       "trash-operators"
     ],
@@ -2371,7 +2393,9 @@
     "global": true,
     "profileImage": "/images/operators/silence.png",
     "niches": [
-      "healing-operators"
+      "global-range",
+      "healing-operators",
+      "unconventional-niches"
     ],
     "cnName": "赫默",
     "jpName": "サイレンス",
@@ -2610,7 +2634,8 @@
     "global": true,
     "profileImage": "/images/operators/tippi.png",
     "niches": [
-      "trash-operators"
+      "trash-operators",
+      "unconventional-niches"
     ],
     "cnName": "蒂比",
     "jpName": "ティッピ",
@@ -2625,7 +2650,8 @@
     "global": true,
     "profileImage": "/images/operators/toddifons.png",
     "niches": [
-      "trash-operators"
+      "trash-operators",
+      "unconventional-niches"
     ],
     "cnName": "熔泉",
     "jpName": "トギフォンス",
@@ -2640,6 +2666,7 @@
     "global": true,
     "profileImage": "/images/operators/tomimi.png",
     "niches": [
+      "free",
       "trash-operators"
     ],
     "cnName": "特米米",
@@ -2704,7 +2731,8 @@
     "global": true,
     "profileImage": "/images/operators/valarqvin.png",
     "niches": [
-      "elemental-damage"
+      "elemental-damage",
+      "free"
     ],
     "cnName": "凛视",
     "twName": "凜視",
@@ -2926,6 +2954,7 @@
     "global": true,
     "profileImage": "/images/operators/wulfenite.png",
     "niches": [
+      "global-range",
       "stalling"
     ],
     "cnName": "钼铅",
