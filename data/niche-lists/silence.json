@@ -3,20 +3,24 @@
   "description": "Operators that are able to silence enemies",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
-    "A": {
-      "ceobe": "Inconsistent and should not be used for it",
+    "SS": {
       "lappland": "Almost permanent silence, Stultifera Navis god",
-      "waai_fu": "Inconsistent silence at only 8 second duration",
-      "podenco": "",
-      "jaye": "",
-      "blitz": "Limited skill uses",
-      "corroserum": "Bad uptime",
       "lappland_the_decadenza": ""
     },
-    "B": {},
-    "C": {},
+    "S": {
+    },
+    "A": {
+      "ceobe": "Inconsistent and should not be used for it",
+      "podenco": "",
+      "jaye": ""
+    },
+    "B": {
+      "blitz": "Limited skill uses",
+      "waai_fu": "Inconsistent silence at only 8 second duration"
+    },
+    "C": {
+      "corroserum": "Bad uptime"
+    },
     "D": {},
     "F": {}
   }
