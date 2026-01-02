@@ -1,46 +1,47 @@
 {
   "niche": "Early Laneholder",
-  "description": "Low-DP operators that hold lanes well in early game",
+  "description": "Low-DP (tentatively less than 18DP) operators that can be placed to hold groups of basic enemies well in the early game",
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
       "bagpipe": "",
       "ines": "",
+      "vulpisfoglia": "",
+      "mountain": "",
+      "saga": "",
       "muelsyse": ""
     },
     "S": {
-      "mountain": "Very cheap",
-      "gummy": "A cheap defender with DP costs just a bit more than most vanguards",
-      "vulpisfoglia": "",
-      "saga": ""
-    },
-    "A": {
-      "flametail": "",
-      "beanstalk": "",
-      "blacknight": "Crazy skill 2 with SP buffs, permasleeps groups of enemies",
-      "chilchuck": "",
       "cantabile": "",
       "surfer": "",
-      "puzzle": "",
-      "chongyue": "",
+      "flametail": "",
+      "puzzle": ""
+    },
+    "A": {
+      "blacknight": "Crazy skill 2 with SP buffs, permasleeps groups of enemies",
       "fang_the_fire_sharpened": "",
-      "siege": "",
       "texas": "",
-      "zima": ""
+      "zima": "",
+      "vigil": "",
+      "mitm": "",
+      "siege": ""
     },
     "B": {
       "courier": "",
       "scavenger": "",
+      "beanstalk": "",
       "poncirus": "",
-      "vigil": ""
+      "grani": ""
     },
     "C": {
       "kestrel": "",
-      "grani": ""
+      "chilchuck": "",
+      "fang": ""
     },
     "D": {
-      "mitm": ""
+      "vanilla": ""
     },
-    "F": {}
+    "F": {
+    }
   }
 }

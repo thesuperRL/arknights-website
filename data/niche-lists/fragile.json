@@ -3,22 +3,25 @@
   "description": "Operators that apply the Fragile debuff to make enemies take more damage",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
-    "A": {
-      "shamare": "",
-      "thrm_ex": "",
-      "suzuran": "",
-      "saileach": "",
-      "gnosis": "",
-      "ela": "",
-      "lucilla": "Applies fragile to non-elite non-boss enemies",
-      "raidian": "Applies arts fragility",
-      "thorns_the_lodestar": "",
-      "saria": "Applies arts fragility"
+    "SS": {
+      "gnosis": "60% fragile to frozen enemies and 30% to cold enemies after module",
+      "shamare": "33% fragile to those with less tha 40% HP in attack range",
+      "suzuran": "25% fragile on skill activation in a large area"
     },
-    "B": {},
-    "C": {},
+    "S": {
+      "ela": "35% fragile when trap triggered",
+      "raidian": "Applies 35% arts fragility",
+      "saria": "Applies 20% arts fragility"
+    },
+    "A": {
+      "saileach": "15% fragile on skill activation",
+      "thrm_ex": "Explodes and inflicts 30% fragile"
+    },
+    "B": {
+    },
+    "C": {
+      "lucilla": "Applies 18% fragile to non-elite non-boss enemies (So the least useful group of enemies to fragile is fragiled)"
+    },
     "D": {},
     "F": {}
   }

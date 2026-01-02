@@ -1,6 +1,6 @@
 {
   "niche": "DP Generation",
-  "description": "Operators that generate high amounts of DP",
+  "description": "Operators that are used to generate DP",
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
