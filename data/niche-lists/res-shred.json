@@ -3,19 +3,23 @@
   "description": "Operators that are able to decrease the resistance of enemies",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
-    "A": {
-      "eyjafjalla": "",
-      "haze": "Very situational because this is her only good use and there are better options",
-      "ifrit": "Skill 3 is one of the best resistance debuffs in the game",
-      "pramanix": "Some of the best in the game",
-      "chiave": "",
-      "logos": "",
-      "thorns_the_lodestar": ""
+    "SS": {
+      "logos": "-10 RES on attack hit",
+      "ifrit": "Skill 3 is one of the best resistance debuffs in the game (-7 RES) on top of passive -44% res for enemies in range"
     },
-    "B": {},
-    "C": {},
+    "S": {
+      "pramanix": "Some of the best in the game (-20% RES in range)",
+      "eyjafjalla": "-10% on skill 2 hit, which is very consistent because it charges quickly"
+    },
+    "A": {
+      "thorns_the_lodestar": "-31% res in S3 triangle"
+    },
+    "B": {
+      "haze": "-23% on attack hit for 1s"
+    },
+    "C": {
+      "chiave": "-10% RES on skill 2 hit"
+    },
     "D": {},
     "F": {}
   }
