@@ -77,17 +77,26 @@ async function getDbPool(): Promise<sql.ConnectionPool> {
       user,
       password,
       port,
-      connectionTimeout: parseInt(process.env.AZURE_SQL_CONNECTION_TIMEOUT || '30000', 10), // 30 seconds
-      requestTimeout: parseInt(process.env.AZURE_SQL_REQUEST_TIMEOUT || '30000', 10), // 30 seconds
+      connectionTimeout: parseInt(process.env.AZURE_SQL_CONNECTION_TIMEOUT || '5000', 10), // 5 seconds (reduced from 30)
+      requestTimeout: parseInt(process.env.AZURE_SQL_REQUEST_TIMEOUT || '10000', 10), // 10 seconds (reduced from 30)
       pool: {
-        max: 10,
+        max: 5, // Reduced from 10 to prevent connection pool exhaustion
         min: 0,
-        idleTimeoutMillis: 30000
+        idleTimeoutMillis: 30000,
+        acquireTimeoutMillis: 10000, // 10 seconds to acquire connection
+        createTimeoutMillis: 10000, // 10 seconds to create connection
+        destroyTimeoutMillis: 5000, // 5 seconds to destroy connection
+        reapIntervalMillis: 1000, // Check for idle connections every second
+        createRetryIntervalMillis: 200 // Retry every 200ms if connection creation fails
       },
       options: {
         encrypt: true, // Azure SQL requires encryption
         trustServerCertificate: false,
-        enableArithAbort: true
+        enableArithAbort: true,
+        abortTransactionOnError: true,
+        useUTC: false,
+        datefirst: 1,
+        dateFormat: 'dmy'
       }
     };
   }
@@ -157,75 +166,109 @@ async function getColumnNames(pool: sql.ConnectionPool): Promise<Record<string, 
     return columnNamesCache;
   }
 
-  const query = `
-    SELECT COLUMN_NAME, DATA_TYPE
-    FROM INFORMATION_SCHEMA.COLUMNS 
-    WHERE TABLE_NAME = 'accounts'
-    ORDER BY ORDINAL_POSITION
-  `;
-  const result = await pool.request().query(query);
-  const columns: Record<string, string> = {};
-  
-  for (const row of result.recordset) {
-    const colName = row.COLUMN_NAME;
-    const lowerName = colName.toLowerCase();
-    
-    if (lowerName === 'email' || lowerName === 'emailaddress') {
-      columns.email = colName;
-    } else if (lowerName === 'password' || lowerName === 'passwordhash' || lowerName === 'password_hash') {
-      columns.passwordHash = colName;
-    } else if (lowerName === 'createdat' || lowerName === 'created_at' || lowerName === 'datecreated') {
-      columns.createdAt = colName;
-    } else if (lowerName === 'lastlogin' || lowerName === 'last_login' || lowerName === 'datelastlogin') {
-      columns.lastLogin = colName;
-    } else if (lowerName === 'id') {
-      columns.id = colName;
-    } else if (lowerName === 'ownedoperators' || lowerName === 'owned_operators') {
-      columns.ownedOperators = colName;
-    } else if (lowerName === 'wanttouse' || lowerName === 'want_to_use' || lowerName === 'wanttouseoperators' || lowerName === 'want_to_use_operators') {
-      columns.wantToUse = colName;
+  try {
+    // Use a simpler, faster query to get column names
+    const query = `
+      SELECT TOP 1 * FROM accounts WHERE 1=0
+    `;
+    const result = await pool.request().query(query);
+
+    const columns: Record<string, string> = {};
+
+    // Extract column names from the result metadata instead of INFORMATION_SCHEMA
+    if (result.recordset.columns) {
+      for (const colName of Object.keys(result.recordset.columns)) {
+        const lowerName = colName.toLowerCase();
+
+        if (lowerName === 'email' || lowerName === 'emailaddress') {
+          columns.email = colName;
+        } else if (lowerName === 'password' || lowerName === 'passwordhash' || lowerName === 'password_hash') {
+          columns.passwordHash = colName;
+        } else if (lowerName === 'createdat' || lowerName === 'created_at' || lowerName === 'datecreated') {
+          columns.createdAt = colName;
+        } else if (lowerName === 'lastlogin' || lowerName === 'last_login' || lowerName === 'datelastlogin') {
+          columns.lastLogin = colName;
+        } else if (lowerName === 'id') {
+          columns.id = colName;
+        } else if (lowerName === 'ownedoperators' || lowerName === 'owned_operators') {
+          columns.ownedOperators = colName;
+        } else if (lowerName === 'wanttouse' || lowerName === 'want_to_use' || lowerName === 'wanttouseoperators' || lowerName === 'want_to_use_operators') {
+          columns.wantToUse = colName;
+        }
+      }
     }
+
+    // Set defaults if not found
+    columns.email = columns.email || 'email';
+    columns.passwordHash = columns.passwordHash || 'passwordHash';
+    columns.createdAt = columns.createdAt || 'createdAt';
+    columns.lastLogin = columns.lastLogin || 'lastLogin';
+    columns.id = columns.id || 'id';
+    columns.ownedOperators = columns.ownedOperators || 'ownedOperators';
+    columns.wantToUse = columns.wantToUse || 'wantToUse';
+
+    // Cache the result
+    columnNamesCache = columns;
+    return columns;
+  } catch (error: any) {
+    // Fallback to hardcoded defaults if query fails
+    console.warn('Failed to get column names from database, using defaults:', error);
+    const columns = {
+      email: 'email',
+      passwordHash: 'passwordHash',
+      createdAt: 'createdAt',
+      lastLogin: 'lastLogin',
+      id: 'id',
+      ownedOperators: 'ownedOperators',
+      wantToUse: 'wantToUse'
+    };
+    columnNamesCache = columns;
+    return columns;
   }
-  
-  // Set defaults if not found
-  columns.email = columns.email || 'email';
-  columns.passwordHash = columns.passwordHash || 'passwordHash';
-  columns.createdAt = columns.createdAt || 'createdAt';
-  columns.lastLogin = columns.lastLogin || 'lastLogin';
-  columns.id = columns.id || 'id';
-  columns.ownedOperators = columns.ownedOperators || 'ownedOperators';
-  columns.wantToUse = columns.wantToUse || 'wantToUse';
-  
-  // Cache the result
-  columnNamesCache = columns;
-  return columns;
 }
 
 /**
- * Find account by email
+ * Find account by email with optimized query
  */
 export async function findAccountByEmail(email: string): Promise<LocalAccount | null> {
-  try {
-    const dbPool = await getDbPool();
-    const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
-    
-    const escapeCol = (col: string) => `[${col}]`;
-    const query = `SELECT ${escapeCol(columns.id)}, ${escapeCol(columns.email)}, ${escapeCol(columns.passwordHash)}, ${escapeCol(columns.createdAt)}, ${escapeCol(columns.lastLogin)}, ${escapeCol(columns.ownedOperators)}, ${escapeCol(columns.wantToUse)} FROM accounts WHERE ${escapeCol(columns.email)} = @email`;
-    
-    const request = dbPool.request();
-    request.input('email', sql.NVarChar(255), normalizedEmail);
-    const result = await request.query(query);
-    
-    if (result.recordset.length === 0) {
-      return null;
+  const maxRetries = 2;
+  let lastError: any;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const dbPool = await getDbPool();
+      const columns = await getColumnNames(dbPool);
+      const normalizedEmail = email.toLowerCase().trim();
+
+      // Use a more efficient query - only select needed columns
+      const escapeCol = (col: string) => `[${col}]`;
+      const query = `SELECT ${escapeCol(columns.id)}, ${escapeCol(columns.email)}, ${escapeCol(columns.passwordHash)}, ${escapeCol(columns.createdAt)}, ${escapeCol(columns.lastLogin)}, ${escapeCol(columns.ownedOperators)}, ${escapeCol(columns.wantToUse)} FROM accounts WHERE LOWER(${escapeCol(columns.email)}) = LOWER(@email)`;
+
+      const request = dbPool.request();
+      request.input('email', sql.NVarChar(255), normalizedEmail);
+      const result = await request.query(query);
+
+      if (result.recordset.length === 0) {
+        return null;
+      }
+
+      return rowToAccount(result.recordset[0], columns.ownedOperators, columns.wantToUse);
+    } catch (error: any) {
+      lastError = error;
+      console.error(`Error finding account by email (attempt ${attempt}/${maxRetries}):`, error.message);
+
+      // If this is a timeout or connection error and we have retries left, wait and retry
+      if ((error.code === 'ETIMEOUT' || error.code === 'TIMEOUT' || error.message?.includes('timeout')) && attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempt)); // Exponential backoff
+        continue;
+      }
+
+      // For other errors or if we're out of retries, throw
+      throw error;
     }
-    
-    return rowToAccount(result.recordset[0], columns.ownedOperators, columns.wantToUse);
-  } catch (error) {
-    console.error('Error finding account by email:', error);
-    throw error;
   }
+
+  throw lastError;
 }
 
 /**
@@ -280,32 +323,49 @@ export async function createAccount(email: string, password: string): Promise<Lo
 }
 
 /**
- * Verify password for an account
+ * Verify password for an account with timing
  */
 export async function verifyPassword(account: LocalAccount, password: string): Promise<boolean> {
-  return await bcrypt.compare(password, account.passwordHash);
+  try {
+    // Add timing for password verification (should be fast, < 100ms typically)
+    const startTime = Date.now();
+    const isValid = await bcrypt.compare(password, account.passwordHash);
+    const duration = Date.now() - startTime;
+
+    if (duration > 500) {
+      console.warn(`Password verification took ${duration}ms, which is unusually slow`);
+    }
+
+    return isValid;
+  } catch (error) {
+    console.error('Error verifying password:', error);
+    return false;
+  }
 }
 
 /**
- * Update last login time
+ * Update last login time (non-blocking)
  */
 export async function updateLastLogin(email: string): Promise<void> {
   try {
     const dbPool = await getDbPool();
     const columns = await getColumnNames(dbPool);
     const normalizedEmail = email.toLowerCase().trim();
-    
+
     const escapeCol = (col: string) => `[${col}]`;
-    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.lastLogin)} = @lastLogin WHERE ${escapeCol(columns.email)} = @email`;
-    
+    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.lastLogin)} = @lastLogin WHERE LOWER(${escapeCol(columns.email)}) = LOWER(@email)`;
+
     const request = dbPool.request();
     request.input('email', sql.NVarChar(255), normalizedEmail);
     request.input('lastLogin', sql.DateTime2, new Date());
-    
-    await request.query(updateQuery);
-  } catch (error) {
-    console.error('Error updating last login:', error);
-    throw error;
+
+    // Execute in background - don't wait for completion
+    request.query(updateQuery).catch(error => {
+      console.warn('Failed to update last login time (non-critical):', error.message);
+    });
+  } catch (error: any) {
+    // Don't throw error for last login update - it's not critical for login success
+    console.warn('Failed to update last login time (non-critical):', error?.message || error);
   }
 }
 

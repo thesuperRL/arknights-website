@@ -8,7 +8,6 @@
     "profileImage": "/images/operators/confess_47.png",
     "niches": [
       "dp-generation",
-      "robot",
       "synergies/sleep"
     ],
     "internalName": "char_4188_confes"
@@ -21,8 +20,7 @@
     "global": true,
     "profileImage": "/images/operators/castle_3.png",
     "niches": [
-      "def-buff",
-      "robot"
+      "def-buff"
     ],
     "internalName": "char_286_cast3"
   },
@@ -35,7 +33,6 @@
     "profileImage": "/images/operators/friston_3.png",
     "niches": [
       "late-laneholder",
-      "robot",
       "tanking-blocking-operators",
       "trash-operators"
     ],
@@ -49,7 +46,6 @@
     "global": true,
     "profileImage": "/images/operators/justice_knight.png",
     "niches": [
-      "robot",
       "unconventional-niches"
     ],
     "cnName": "正义骑士号",
@@ -64,9 +60,7 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/lancet_2.png",
-    "niches": [
-      "robot"
-    ],
+    "niches": [],
     "internalName": "char_285_medic2"
   },
   "phonor_0": {
@@ -77,8 +71,7 @@
     "global": true,
     "profileImage": "/images/operators/phonor_0.png",
     "niches": [
-      "elemental-damage",
-      "robot"
+      "elemental-damage"
     ],
     "internalName": "char_4136_phonor"
   },
@@ -90,8 +83,7 @@
     "global": true,
     "profileImage": "/images/operators/thrm_ex.png",
     "niches": [
-      "fragile",
-      "robot"
+      "fragile"
     ],
     "internalName": "char_376_therex"
   },

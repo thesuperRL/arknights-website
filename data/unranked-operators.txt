@@ -1,5 +1,10 @@
-Unranked Operators (21 total)
-Generated: 2026-01-02T06:32:05.804Z
+Unranked Operators (22 total)
+Generated: 2026-01-02T07:12:48.751Z
+
+=== GLOBAL OPERATORS ===
+
+--- Medic ---
+lancet_2 (Lancet-2)
 
 === NON-GLOBAL OPERATORS ===
 
