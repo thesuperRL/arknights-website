@@ -74,6 +74,14 @@ const TierListsPage: React.FC = () => {
           <h2>Trash Operators</h2>
           <p>Operators with no optimal use</p>
         </Link>
+        <Link to="/free-operators" className="special-card free-card">
+          <h2>Free Operators</h2>
+          <p>Operators that are free to obtain</p>
+        </Link>
+        <Link to="/global-range-operators" className="special-card global-range-card">
+          <h2>Global Range Operators</h2>
+          <p>Operators that can hit anywhere on the map</p>
+        </Link>
       </div>
     </div>
   );

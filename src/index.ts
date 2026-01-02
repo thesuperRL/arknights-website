@@ -122,7 +122,7 @@ app.get('/api/niche-lists/:niche', (req, res) => {
 // API route to get trash operators
 app.get('/api/trash-operators', (_req, res) => {
   try {
-    const filePath = path.join(__dirname, '../data/niche-lists', 'trash-operators.json');
+    const filePath = path.join(__dirname, '../data', 'trash-operators.json');
     if (!fs.existsSync(filePath)) {
       res.status(404).json({ error: 'Trash operators not found' });
       return;
@@ -158,6 +158,96 @@ app.get('/api/trash-operators', (_req, res) => {
   } catch (error) {
     console.error('Error loading trash operators:', error);
     res.status(500).json({ error: 'Failed to load trash operators' });
+  }
+});
+
+// API route to get free operators
+app.get('/api/free-operators', (_req, res) => {
+  try {
+    const filePath = path.join(__dirname, '../data', 'free.json');
+    console.log('Free operators API called, file path:', filePath);
+    console.log('File exists:', fs.existsSync(filePath));
+    if (!fs.existsSync(filePath)) {
+      console.log('Free operators file not found');
+      res.status(404).json({ error: 'Free operators not found' });
+      return;
+    }
+
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const freeData = JSON.parse(content);
+
+    // Load operator data to enrich the free operators list
+    const operatorsData: Record<string, any> = {};
+    const rarities = [1, 2, 3, 4, 5, 6];
+
+    for (const rarity of rarities) {
+      const operatorFilePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
+      if (fs.existsSync(operatorFilePath)) {
+        const operatorContent = fs.readFileSync(operatorFilePath, 'utf-8');
+        const operators = JSON.parse(operatorContent);
+        Object.assign(operatorsData, operators);
+      }
+    }
+
+    // Enrich free operators list with operator data
+    const enrichedFreeList = {
+      ...freeData,
+      operators: Object.entries(freeData.operators || {}).map(([operatorId, note]) => ({
+        operatorId,
+        note: note || '',
+        operator: operatorsData[operatorId] || null
+      }))
+    };
+
+    res.json(enrichedFreeList);
+  } catch (error) {
+    console.error('Error loading free operators:', error);
+    res.status(500).json({ error: 'Failed to load free operators' });
+  }
+});
+
+// API route to get global range operators
+app.get('/api/global-range-operators', (_req, res) => {
+  try {
+    const filePath = path.join(__dirname, '../data', 'global-range.json');
+    console.log('Global range operators API called, file path:', filePath);
+    console.log('File exists:', fs.existsSync(filePath));
+    if (!fs.existsSync(filePath)) {
+      console.log('Global range operators file not found');
+      res.status(404).json({ error: 'Global range operators not found' });
+      return;
+    }
+
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const globalRangeData = JSON.parse(content);
+
+    // Load operator data to enrich the global range operators list
+    const operatorsData: Record<string, any> = {};
+    const rarities = [1, 2, 3, 4, 5, 6];
+
+    for (const rarity of rarities) {
+      const operatorFilePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
+      if (fs.existsSync(operatorFilePath)) {
+        const operatorContent = fs.readFileSync(operatorFilePath, 'utf-8');
+        const operators = JSON.parse(operatorContent);
+        Object.assign(operatorsData, operators);
+      }
+    }
+
+    // Enrich global range operators list with operator data
+    const enrichedGlobalRangeList = {
+      ...globalRangeData,
+      operators: Object.entries(globalRangeData.operators || {}).map(([operatorId, note]) => ({
+        operatorId,
+        note: note || '',
+        operator: operatorsData[operatorId] || null
+      }))
+    };
+
+    res.json(enrichedGlobalRangeList);
+  } catch (error) {
+    console.error('Error loading global range operators:', error);
+    res.status(500).json({ error: 'Failed to load global range operators' });
   }
 });
 
@@ -208,7 +298,7 @@ app.get('/api/operators/:id', async (req, res) => {
     }
 
     // Check if operator is in trash list
-    const trashFilePath = path.join(__dirname, '../data/niche-lists', 'trash-operators.json');
+    const trashFilePath = path.join(__dirname, '../data', 'trash-operators.json');
     if (fs.existsSync(trashFilePath)) {
       const trashContent = fs.readFileSync(trashFilePath, 'utf-8');
       const trashData = JSON.parse(trashContent);

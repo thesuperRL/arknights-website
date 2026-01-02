@@ -334,7 +334,7 @@ async function migrateNiches(): Promise<void> {
   console.log(`Reading niche lists from ${nicheListsDir}...`);
   const files = fs.readdirSync(nicheListsDir);
   const jsonFiles = files.filter(file =>
-    file.endsWith('.json') && file !== 'trash-operators.json' && file !== 'free.json' && file !== 'README.md'
+    file.endsWith('.json') && file !== 'README.md'
   );
 
   console.log(`Found ${jsonFiles.length} niche list files to migrate`);

@@ -63,6 +63,38 @@
     margin: 0;
 }
 
+.free-card {
+    background: rgba(34, 139, 34, 0.3);
+    border: 2px solid rgba(34, 139, 34, 0.5);
+}
+
+.free-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.free-card p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.global-range-card {
+    background: rgba(70, 130, 180, 0.3);
+    border: 2px solid rgba(70, 130, 180, 0.5);
+}
+
+.global-range-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.global-range-card p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
 .niche-lists-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

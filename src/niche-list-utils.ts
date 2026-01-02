@@ -32,7 +32,7 @@ export function loadAllNicheLists(dataDir: string = path.join(__dirname, '../dat
         // Recursively process subdirectories
         const subPrefix = prefix ? `${prefix}/${file}` : file;
         processDirectory(fullPath, subPrefix);
-      } else if (file.endsWith('.json') && file !== 'trash-operators.json' && file !== 'free.json' && file !== 'README.md') {
+      } else if (file.endsWith('.json') && file !== 'README.md') {
         try {
           const content = fs.readFileSync(fullPath, 'utf-8');
           const operatorList: OperatorList = JSON.parse(content);
@@ -135,7 +135,7 @@ export function getNicheFilename(nicheDisplayName: string, dataDir: string = pat
   const files = fs.readdirSync(dataDir);
   
   for (const file of files) {
-    if (file.endsWith('.json') && file !== 'trash-operators.json' && file !== 'free.json' && file !== 'README.md') {
+    if (file.endsWith('.json') && file !== 'README.md') {
       const filePath = path.join(dataDir, file);
       try {
         const content = fs.readFileSync(filePath, 'utf-8');

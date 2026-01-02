@@ -177,7 +177,7 @@ Niche lists are stored in `data/niche-lists/` as JSON files. Each file represent
 
 ### Trash Operators
 
-A special page lists operators with no optimal use. Edit `data/niche-lists/trash-operators.json` to add or remove operators from this list.
+A special page lists operators with no optimal use. Edit `data/trash-operators.json` to add or remove operators from this list.
 
 **Structure:**
 ```json

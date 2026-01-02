@@ -39,7 +39,7 @@ export interface TeamResult {
  * Loads trash operators from the trash-operators.json file
  */
 function loadTrashOperators(): Set<string> {
-  const trashFilePath = path.join(__dirname, '../data/niche-lists', 'trash-operators.json');
+  const trashFilePath = path.join(__dirname, '../data', 'trash-operators.json');
   const trashOperators = new Set<string>();
 
   if (fs.existsSync(trashFilePath)) {
@@ -73,7 +73,7 @@ function loadTrashOperators(): Set<string> {
  * Loads free operators from the free.json file
  */
 function loadFreeOperators(): Set<string> {
-  const freeFilePath = path.join(__dirname, '../data/niche-lists', 'free.json');
+  const freeFilePath = path.join(__dirname, '../data', 'free.json');
   const freeOperators = new Set<string>();
 
   if (fs.existsSync(freeFilePath)) {
@@ -81,13 +81,9 @@ function loadFreeOperators(): Set<string> {
       const content = fs.readFileSync(freeFilePath, 'utf-8');
       const freeData = JSON.parse(content);
       if (freeData.operators && typeof freeData.operators === 'object') {
-        // Rating-grouped structure: iterate through all rating groups
-        for (const operatorsInRating of Object.values(freeData.operators)) {
-          if (operatorsInRating && typeof operatorsInRating === 'object' && !Array.isArray(operatorsInRating)) {
-            for (const operatorId of Object.keys(operatorsInRating)) {
-              freeOperators.add(operatorId);
-            }
-          }
+        // Flat operator structure: iterate directly through operators
+        for (const operatorId of Object.keys(freeData.operators)) {
+          freeOperators.add(operatorId);
         }
       }
     } catch (error) {

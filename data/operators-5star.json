@@ -366,7 +366,8 @@
     "profileImage": "/images/operators/blacknight.png",
     "niches": [
       "dp-generation",
-      "early-laneholder"
+      "early-laneholder",
+      "synergies/sleep"
     ],
     "cnName": "夜半",
     "jpName": "ブラックナイト",
@@ -795,6 +796,7 @@
     "profileImage": "/images/operators/erato.png",
     "niches": [
       "physical-dps",
+      "synergies/sleep",
       "trash-operators"
     ],
     "cnName": "埃拉托",
@@ -1151,6 +1153,7 @@
     "profileImage": "/images/operators/heavyrain.png",
     "niches": [
       "healing-operators",
+      "synergies/enmity-healing",
       "tanking-blocking-operators",
       "unconventional-niches"
     ],
@@ -1168,7 +1171,8 @@
     "profileImage": "/images/operators/heidi.png",
     "niches": [
       "damage-buff",
-      "sp-battery"
+      "sp-battery",
+      "synergies/enmity-healing"
     ],
     "cnName": "海蒂",
     "jpName": "ハイディ",
@@ -1296,6 +1300,7 @@
     "global": true,
     "profileImage": "/images/operators/iris.png",
     "niches": [
+      "synergies/sleep",
       "trash-operators"
     ],
     "cnName": "爱丽丝",
@@ -1345,7 +1350,8 @@
     "global": true,
     "profileImage": "/images/operators/kafka.png",
     "niches": [
-      "fast-redeploy-operators"
+      "fast-redeploy-operators",
+      "synergies/sleep"
     ],
     "cnName": "卡夫卡",
     "jpName": "カフカ",
@@ -2336,8 +2342,7 @@
     "niches": [
       "atk-debuff",
       "def-shred",
-      "fragile",
-      "global-range"
+      "fragile"
     ],
     "cnName": "巫恋",
     "twName": "巫戀",
@@ -2369,7 +2374,6 @@
     "global": true,
     "profileImage": "/images/operators/silence.png",
     "niches": [
-      "global-range",
       "healing-operators",
       "unconventional-niches"
     ],
@@ -2439,6 +2443,8 @@
     "profileImage": "/images/operators/sora.png",
     "niches": [
       "damage-buff",
+      "synergies/enmity-healing",
+      "synergies/sleep",
       "trash-operators"
     ],
     "cnName": "空",
@@ -2591,7 +2597,8 @@
     "profileImage": "/images/operators/tin_man.png",
     "niches": [
       "aoe-arts-dps",
-      "atk-debuff"
+      "atk-debuff",
+      "synergies/enmity-healing"
     ],
     "cnName": "锡人",
     "twName": "錫人",
@@ -2923,7 +2930,6 @@
     "global": true,
     "profileImage": "/images/operators/wulfenite.png",
     "niches": [
-      "global-range",
       "stalling"
     ],
     "cnName": "钼铅",

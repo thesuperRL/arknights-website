@@ -23,7 +23,8 @@
     "profileImage": "/images/operators/angelina.png",
     "niches": [
       "healing-operators",
-      "stalling"
+      "stalling",
+      "synergies/enmity-healing"
     ],
     "cnName": "安洁莉娜",
     "twName": "安潔莉娜",
@@ -263,6 +264,7 @@
       "damage-buff",
       "healing-operators",
       "stalling",
+      "synergies/enmity-healing",
       "true_damage"
     ],
     "cnName": "魔王",
@@ -314,7 +316,6 @@
     "global": true,
     "profileImage": "/images/operators/dorothy.png",
     "niches": [
-      "global-range",
       "stalling"
     ],
     "cnName": "多萝西",
@@ -368,7 +369,6 @@
     "profileImage": "/images/operators/ela.png",
     "niches": [
       "fragile",
-      "global-range",
       "physical-dps",
       "stalling"
     ],
@@ -485,7 +485,6 @@
     "profileImage": "/images/operators/eyjafjalla_the_hv_t_aska.png",
     "niches": [
       "elemental_damage_healers",
-      "global-range",
       "healing-operators"
     ],
     "cnName": "纯烬艾雅法拉",
@@ -502,7 +501,6 @@
     "global": true,
     "profileImage": "/images/operators/fartooth.png",
     "niches": [
-      "global-range",
       "physical-dps",
       "unconventional-niches"
     ],
@@ -606,8 +604,7 @@
     "global": true,
     "profileImage": "/images/operators/goldenglow.png",
     "niches": [
-      "arts-dps",
-      "global-range"
+      "arts-dps"
     ],
     "cnName": "澄闪",
     "twName": "澄閃",
@@ -840,7 +837,6 @@
     "profileImage": "/images/operators/lappland_the_decadenza.png",
     "niches": [
       "arts-dps",
-      "global-range",
       "silence",
       "stalling"
     ],
@@ -892,7 +888,6 @@
     "profileImage": "/images/operators/lemuen.png",
     "niches": [
       "boss-killing",
-      "global-range",
       "physical-dps"
     ],
     "cnName": "蕾缪安",
@@ -1599,6 +1594,7 @@
       "late-laneholder",
       "res-buff",
       "stalling",
+      "synergies/enmity-healing",
       "tanking-blocking-operators"
     ],
     "cnName": "黍",
@@ -1696,7 +1692,7 @@
     "niches": [
       "damage-buff",
       "def-buff",
-      "global-range"
+      "synergies/enmity-healing"
     ],
     "cnName": "浊心斯卡蒂",
     "twName": "濁心斯卡蒂",
@@ -1837,7 +1833,8 @@
       "aoe-arts-dps",
       "atk-debuff",
       "def-shred",
-      "res-shred"
+      "res-shred",
+      "synergies/enmity-healing"
     ],
     "cnName": "引星棘刺",
     "jpName": "引星いんせいソーンズ",

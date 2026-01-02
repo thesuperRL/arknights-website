@@ -18,7 +18,7 @@ interface OperatorData {
 }
 
 function getTrashOperators(): Set<string> {
-  const trashFilePath = path.join(__dirname, '../data/niche-lists', 'trash-operators.json');
+  const trashFilePath = path.join(__dirname, '../data', 'trash-operators.json');
   const trashOperators = new Set<string>();
 
   if (fs.existsSync(trashFilePath)) {

@@ -8,7 +8,8 @@
     "profileImage": "/images/operators/confess_47.png",
     "niches": [
       "dp-generation",
-      "robot"
+      "robot",
+      "synergies/sleep"
     ],
     "internalName": "char_4188_confes"
   },

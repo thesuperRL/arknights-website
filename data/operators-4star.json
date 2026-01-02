@@ -33,9 +33,8 @@
     "global": true,
     "profileImage": "/images/operators/ambriel.png",
     "niches": [
-      "trash-operators",
-      "global-range",
-      "physical-dps"
+      "physical-dps",
+      "trash-operators"
     ],
     "cnName": "安比尔",
     "twName": "安比爾",
@@ -694,7 +693,8 @@
     "profileImage": "/images/operators/perfumer.png",
     "niches": [
       "healing-operators",
-      "low-rarity"
+      "low-rarity",
+      "synergies/enmity-healing"
     ],
     "cnName": "调香师",
     "twName": "調香師",
