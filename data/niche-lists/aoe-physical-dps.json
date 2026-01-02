@@ -3,44 +3,45 @@
   "description": "Operators that deal high physical damage in an area",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
-    "A": {
+    "SS": {
       "ascalon": "",
-      "ethan": "",
-      "executor": "",
+      "wi_adel": ""
+    },
+    "S": {
       "silverash": "",
-      "w": "",
-      "mudrock": "Melee AOE",
-      "rosmontis": "Ground AOE",
-      "pinecone": "",
-      "archetto": "Good at swarm clearing",
-      "tequila": "Deals reflect damage",
-      "mizuki": "",
-      "ch_en_the_holungday": "",
-      "ashlock": "Only hits ground",
-      "fiammetta": "",
-      "horn": "",
-      "irene": "When skill 3",
-      "jieyun": "",
-      "wi_adel": "",
-      "firewhistle": "",
-      "fuze": "",
-      "odda": "",
+      "degenbrecher": "",
       "pepe": "",
-      "greyy_the_lightningbearer": "",
-      "shirayuki": "",
-      "narantuya": "Slightly, via loopshooter bouncing",
+      "ethan": "",
       "leizi_the_thunderbringer": "",
       "m_ynar": "",
-      "degenbrecher": "",
-      "zuo_le": "",
-      "kirin_r_yato": "",
-      "stainless": ""
+      "ch_en_the_holungday": ""
     },
-    "B": {},
-    "C": {},
-    "D": {},
+    "A": {
+      "kirin_r_yato": "",
+      "w": "",
+      "mizuki": "",
+      "fiammetta": "",
+      "horn": "",
+      "narantuya": "Slightly, via loopshooter bouncing",
+      "firewhistle": ""
+    },
+    "B": {
+      "rosmontis": "Ground AOE",
+      "pinecone": "",
+      "jieyun": "",
+      "greyy_the_lightningbearer": "",
+      "shirayuki": "",
+      "archetto": "Good at swarm clearing"
+    },
+    "C": {
+      "ashlock": "Only hits ground",
+      "tequila": "",
+      "odda": "",
+      "stainless": "",
+      "executor": ""
+    },
+    "D": {
+    },
     "F": {}
   },
   "relatedNiches": [

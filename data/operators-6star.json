@@ -772,7 +772,6 @@
     "global": true,
     "profileImage": "/images/operators/irene.png",
     "niches": [
-      "aoe-physical-dps",
       "unconventional-niches"
     ],
     "cnName": "艾丽妮",
@@ -1112,7 +1111,6 @@
     "global": true,
     "profileImage": "/images/operators/mudrock.png",
     "niches": [
-      "aoe-physical-dps",
       "boss-killing",
       "late-laneholder",
       "tanking-blocking-operators"
@@ -2079,7 +2077,6 @@
     "global": true,
     "profileImage": "/images/operators/zuo_le.png",
     "niches": [
-      "aoe-physical-dps",
       "boss-killing",
       "late-laneholder",
       "physical-dps",

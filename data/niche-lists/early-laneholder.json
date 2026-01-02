@@ -3,40 +3,44 @@
   "description": "Low-DP operators that hold lanes well in early game",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
-    "A": {
+    "SS": {
       "bagpipe": "",
-      "courier": "",
-      "grani": "",
-      "gummy": "A cheap defender with DP costs on par with vanguards",
-      "popukar": "",
-      "scavenger": "",
+      "ines": "",
+      "muelsyse": ""
+    },
+    "S": {
+      "mountain": "Very cheap",
+      "gummy": "A cheap defender with DP costs just a bit more than most vanguards",
+      "vulpisfoglia": "",
+      "saga": ""
+    },
+    "A": {
+      "flametail": "",
+      "beanstalk": "",
+      "blacknight": "Crazy skill 2 with SP buffs, permasleeps groups of enemies",
+      "chilchuck": "",
+      "cantabile": "",
+      "surfer": "",
+      "puzzle": "",
+      "chongyue": "",
+      "fang_the_fire_sharpened": "",
       "siege": "",
       "texas": "",
-      "zima": "",
-      "mountain": "Very cheap",
-      "beanstalk": "",
-      "saga": "",
-      "flametail": "",
-      "blacknight": "Crazy skill 2 with SP buffs, permasleeps groups of enemies",
-      "ines": "",
-      "mitm": "",
+      "zima": ""
+    },
+    "B": {
+      "courier": "",
+      "scavenger": "",
       "poncirus": "",
-      "cantabile": "",
-      "chilchuck": "",
-      "surfer": "",
-      "chongyue": "",
-      "puzzle": "",
-      "fang_the_fire_sharpened": "",
-      "kestrel": "",
-      "vulpisfoglia": "",
-      "muelsyse": "",
       "vigil": ""
     },
-    "B": {},
-    "C": {},
-    "D": {},
+    "C": {
+      "kestrel": "",
+      "grani": ""
+    },
+    "D": {
+      "mitm": ""
+    },
     "F": {}
   }
 }

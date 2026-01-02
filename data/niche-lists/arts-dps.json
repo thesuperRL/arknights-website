@@ -3,47 +3,47 @@
   "description": "Operators that deal high arts damage",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
-    "A": {
-      "astesia": "",
+    "SS": {
       "ceobe": "",
-      "dur_nar": "Decent arts damage",
       "eyjafjalla": "",
-      "ifrit": "",
-      "click": "",
       "surtr": "",
-      "amiya_guard": "",
-      "goldenglow": "Arts shreds for herself",
-      "rockrock": "",
-      "blue_poison": "Arts DOT",
-      "ch_en": "",
-      "lappland": "Can turn damage into arts",
-      "midnight": "Can turn damage into arts",
-      "reed": "",
-      "thorns": "Arts DOT",
-      "arene": "Can turn damage into arts",
-      "aosta": "",
-      "amiya_medic": "",
-      "hibiscus_the_purifier": "",
       "lappland_the_decadenza": "",
-      "logos": "",
+      "logos": ""
+    },
+    "S": {
+      "nymph": "",
+      "goldenglow": "Arts shreds for herself",
+      "raidian": ""
+    },
+    "A": {
+      "lappland": "Can turn damage into arts",
+      "reed_the_flame_shadow": "",
+      "necrass": "",
       "ebenholz": "",
-      "harmonie": "",
-      "delphine": "",
+      "ifrit": ""
+    },
+    "B": {
+      "amiya_medic": "",
+      "click": "",
       "ho_olheyak": "",
+      "rockrock": "",
+      "harmonie": ""
+    },
+    "C": {
+      "delphine": "",
+      "astesia": "",
+      "amiya_guard": "",
+      "dur_nar": "Decent arts damage",
       "santalla": "",
       "tecno": "",
       "minimalist": "",
       "qanipalaat": "",
-      "necrass": "",
-      "reed_the_flame_shadow": "",
-      "raidian": "",
-      "underflow": ""
+      "arene": "Can turn damage into arts"
     },
-    "B": {},
-    "C": {},
-    "D": {},
+    "D": {
+      "midnight": "Can turn damage into arts",
+      "hibiscus_the_purifier": ""
+    },
     "F": {}
   },
   "relatedNiches": [
