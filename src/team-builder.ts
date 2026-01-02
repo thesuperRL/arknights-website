@@ -4,7 +4,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { getNichesForOperator } from './niche-list-utils';
+import { getNichesForOperator, loadNicheList } from './niche-list-utils';
 import { getOwnedOperators, getWantToUse } from './account-storage';
 
 export interface NicheRange {
@@ -149,7 +149,39 @@ function getOperatorNiches(operatorId: string): string[] {
 }
 
 /**
+ * Gets the tier of an operator in a specific niche
+ * Returns a numerical score where higher numbers = better tier
+ */
+export function getOperatorTierInNiche(operatorId: string, niche: string): number {
+  const nicheList = loadNicheList(niche);
+  if (!nicheList || !nicheList.operators) {
+    return 0; // Default tier if niche not found
+  }
+
+  // Define tier values (higher = better)
+  const tierValues: Record<string, number> = {
+    'SS': 100,
+    'S': 90,
+    'A': 80,
+    'B': 70,
+    'C': 60,
+    'D': 50,
+    'F': 40
+  };
+
+  // Search through all tier groups to find the operator
+  for (const [tier, operators] of Object.entries(nicheList.operators)) {
+    if (operators && operatorId in operators) {
+      return tierValues[tier] || 0;
+    }
+  }
+
+  return 0; // Operator not found in this niche
+}
+
+/**
  * Scores an operator based on how well it fits the preferences
+ * If primaryNiche is provided, heavily prioritizes operator tier in that niche
  */
 function scoreOperator(
   operator: any,
@@ -159,7 +191,8 @@ function scoreOperator(
   existingTeam: TeamMember[],
   requiredNiches: Set<string>,
   preferredNiches: Set<string>,
-  wantToUseSet?: Set<string>
+  wantToUseSet?: Set<string>,
+  primaryNiche?: string
 ): number {
   let score = 0;
   
@@ -201,16 +234,50 @@ function scoreOperator(
   // Niches that should not contribute to scoring (using filenames)
   const excludedNiches = new Set(['free', 'unconventional-niches', 'fragile']);
   
+  // If we have a primary niche, heavily prioritize the operator's tier in that niche
+  if (primaryNiche) {
+    const tierScore = getOperatorTierInNiche(operatorId, primaryNiche);
+    // Tier score becomes the dominant factor (multiplied by 10 for heavy weighting)
+    score += tierScore * 10;
+
+    // Still give some bonus for covering the primary niche
+    if (niches.includes(primaryNiche)) {
+      score += 50;
+    }
+  }
+
   // Boost score for operators in want-to-use list
   if (wantToUseSet && wantToUseSet.has(operatorId)) {
     score += 50; // Significant boost for operators user wants to use
   }
-  
-  // Track which normalized niches we've already scored to avoid double counting
-  const scoredNiches = new Set<string>();
-  
-  // Check if operator fills required niches
-  for (const niche of niches) {
+
+  // If no primary niche specified, fall back to the original niche coverage logic
+  // but with reduced weighting compared to tier scoring
+  if (!primaryNiche) {
+    // Calculate current niche counts in existing team (using normalized niches)
+    const normalizeNiche = (niche: string): string => {
+      // Normalize AOE niches to their DPS equivalents for counting purposes
+      if (niche === 'aoe-arts-dps') return 'arts-dps';
+      if (niche === 'aoe-physical-dps') return 'physical-dps';
+      // Legacy support (old format with underscores)
+      if (niche === 'arts_aoe') return 'arts-dps';
+      if (niche === 'phys_aoe') return 'physical-dps';
+      return niche;
+    };
+
+    const nicheCounts: Record<string, number> = {};
+    for (const member of existingTeam) {
+      for (const niche of member.niches) {
+        const normalized = normalizeNiche(niche);
+        nicheCounts[normalized] = (nicheCounts[normalized] || 0) + 1;
+      }
+    }
+
+    // Track which normalized niches we've already scored to avoid double counting
+    const scoredNiches = new Set<string>();
+
+    // Check if operator fills required niches
+    for (const niche of niches) {
     // Skip excluded niches
     if (excludedNiches.has(niche)) {
       continue;
@@ -291,6 +358,7 @@ function scoreOperator(
         }
       }
     }
+  }
   }
   
   // Penalize if too many operators from same niche already in team
@@ -395,7 +463,7 @@ function findBestOperatorForNiche(
                       (niche === 'physical-dps' && niches.includes('aoe-physical-dps'));
     if (!fillsNiche) continue;
     
-    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet);
+    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, niche);
     
     candidates.push({ operatorId, operator, niches, score });
     
@@ -420,7 +488,7 @@ function findBestOperatorForNiche(
                         (niche === 'physical-dps' && niches.includes('aoe-physical-dps'));
       if (!fillsNiche) continue;
       
-      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet);
+      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, niche);
       
       candidates.push({ operatorId, operator, niches, score });
       

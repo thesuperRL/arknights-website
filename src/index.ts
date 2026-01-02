@@ -447,28 +447,41 @@ app.post('/api/auth/register', async (req, res) => {
 
 // POST /api/auth/local-login - Login with local account (email/password)
 app.post('/api/auth/local-login', async (req, res) => {
+  const startTime = Date.now();
+
   try {
     const { email, password } = req.body;
-    
+
     if (!email || !password) {
+      const duration = Date.now() - startTime;
+      console.log(`Login failed - missing credentials (${duration}ms)`);
       res.status(400).json({ error: 'Email and password are required' });
       return;
     }
 
+    console.log(`Login attempt for email: ${email.substring(0, 3)}***`);
+
     const account = await findAccountByEmail(email);
     if (!account) {
+      const duration = Date.now() - startTime;
+      console.log(`Login failed - account not found (${duration}ms)`);
       res.status(401).json({ error: 'Invalid email or password' });
       return;
     }
 
+    const passwordStartTime = Date.now();
     const isValid = await verifyPassword(account, password);
+    const passwordDuration = Date.now() - passwordStartTime;
+
     if (!isValid) {
+      const duration = Date.now() - startTime;
+      console.log(`Login failed - invalid password (${duration}ms, password check: ${passwordDuration}ms)`);
       res.status(401).json({ error: 'Invalid email or password' });
       return;
     }
 
-    // Update last login
-    await updateLastLogin(email);
+    // Update last login (non-blocking)
+    updateLastLogin(email);
 
     // Create session
     const sessionId = generateSessionId();
@@ -482,11 +495,14 @@ app.post('/api/auth/local-login', async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+      maxAge: 30 * 24 * 60 * 60 * 60 * 1000 // 30 days
     });
 
-    res.json({ 
-      success: true, 
+    const totalDuration = Date.now() - startTime;
+    console.log(`Login successful for ${email} (${totalDuration}ms total, ${passwordDuration}ms password)`);
+
+    res.json({
+      success: true,
       sessionId,
       user: {
         email: account.email,
@@ -494,8 +510,17 @@ app.post('/api/auth/local-login', async (req, res) => {
       }
     });
   } catch (error: any) {
-    console.error('Error logging in:', error);
-    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Login failed' });
+    const duration = Date.now() - startTime;
+    console.error(`Login error after ${duration}ms:`, sanitizeErrorMessage(error));
+
+    // Provide more specific error messages based on error type
+    if (error.message?.includes('timeout') || error.code === 'ETIMEOUT') {
+      res.status(503).json({ error: 'Login service temporarily unavailable. Please try again.' });
+    } else if (error.message?.includes('connection')) {
+      res.status(503).json({ error: 'Database connection issue. Please try again.' });
+    } else {
+      res.status(500).json({ error: sanitizeErrorMessage(error) || 'Login failed' });
+    }
   }
 });
 

@@ -60,7 +60,9 @@
     "class": "Medic",
     "global": true,
     "profileImage": "/images/operators/lancet_2.png",
-    "niches": [],
+    "niches": [
+      "healing-operators"
+    ],
     "internalName": "char_285_medic2"
   },
   "phonor_0": {
