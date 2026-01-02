@@ -3,22 +3,26 @@
   "description": "Operators that deal true damage or equivalent",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
-    "S": {},
-    "A": {
-      "amiya": "",
-      "franka": "",
-      "weedy": "",
-      "amiya_guard": "",
+    "SS": {
+      "mon3tr": "True DPS god"
+    },
+    "S": {
       "kal_tsit": "Mon3tr, also absurd uptimes",
+      "vina_victoria": ""
+    },
+    "A": {
       "nearl_the_radiant_knight": "",
-      "amiya_medic": "",
-      "vina_victoria": "",
-      "mon3tr": "",
+      "amiya_medic": "Limited skill uses but deals more of it",
       "civilight_eterna": ""
     },
-    "B": {},
-    "C": {},
+    "B": {
+      "amiya": "Limited skill uses",
+      "amiya_guard": "Limited skill uses",
+      "weedy": "Weird true damage based on distance travelled"
+    },
+    "C": {
+      "franka": "Pseudo-true damage because of ignore defense, but bad chances"
+    },
     "D": {},
     "F": {}
   }
