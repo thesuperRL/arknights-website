@@ -430,7 +430,6 @@
     "global": true,
     "profileImage": "/images/operators/gummy.png",
     "niches": [
-      "early-laneholder",
       "healing-operators",
       "late-laneholder",
       "low-rarity",
@@ -694,7 +693,6 @@
     "global": true,
     "profileImage": "/images/operators/perfumer.png",
     "niches": [
-      "enmity-healing",
       "healing-operators",
       "low-rarity"
     ],
@@ -918,7 +916,7 @@
     "global": true,
     "profileImage": "/images/operators/utage.png",
     "niches": [
-      "fast-redeploy-operators"
+      "late-laneholder"
     ],
     "cnName": "宴",
     "jpName": "ウタゲ",
@@ -965,6 +963,7 @@
     "global": true,
     "profileImage": "/images/operators/vigna.png",
     "niches": [
+      "dp-generation",
       "low-rarity",
       "physical-dps"
     ],

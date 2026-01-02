@@ -89,6 +89,7 @@
     "global": true,
     "profileImage": "/images/operators/fang.png",
     "niches": [
+      "early-laneholder",
       "low-rarity"
     ],
     "cnName": "芬",
@@ -218,7 +219,6 @@
     "global": true,
     "profileImage": "/images/operators/popukar.png",
     "niches": [
-      "early-laneholder",
       "low-rarity"
     ],
     "cnName": "泡普卡",
@@ -267,6 +267,7 @@
     "global": true,
     "profileImage": "/images/operators/vanilla.png",
     "niches": [
+      "early-laneholder",
       "trash-operators"
     ],
     "cnName": "香草",

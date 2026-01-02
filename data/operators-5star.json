@@ -10,7 +10,12 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1001_amiya2"
+    "internalName": "char_1001_amiya2",
+    "niches": [
+      "arts-dps",
+      "trash-operators",
+      "true_damage"
+    ]
   },
   "amiya_medic": {
     "id": "amiya_medic",
@@ -23,7 +28,12 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1037_amiya3"
+    "internalName": "char_1037_amiya3",
+    "niches": [
+      "arts-dps",
+      "healing-operators",
+      "true_damage"
+    ]
   },
   "absinthe": {
     "id": "absinthe",
@@ -127,7 +137,6 @@
     "global": true,
     "profileImage": "/images/operators/aosta.png",
     "niches": [
-      "arts-dps",
       "physical-dps",
       "trash-operators"
     ],
@@ -392,7 +401,6 @@
     "profileImage": "/images/operators/blue_poison.png",
     "niches": [
       "anti-air-operators",
-      "arts-dps",
       "physical-dps"
     ],
     "cnName": "蓝毒",
@@ -584,6 +592,7 @@
     "niches": [
       "dp-generation",
       "early-laneholder",
+      "elemental_damage_healers",
       "fast-redeploy-operators"
     ],
     "cnName": "齐尔查克",
@@ -1141,7 +1150,6 @@
     "global": true,
     "profileImage": "/images/operators/heavyrain.png",
     "niches": [
-      "enmity-healing",
       "healing-operators",
       "tanking-blocking-operators",
       "unconventional-niches"
@@ -1160,7 +1168,6 @@
     "profileImage": "/images/operators/heidi.png",
     "niches": [
       "damage-buff",
-      "enmity-healing",
       "sp-battery"
     ],
     "cnName": "海蒂",
@@ -2149,7 +2156,6 @@
     "global": true,
     "profileImage": "/images/operators/reed.png",
     "niches": [
-      "arts-dps",
       "dp-generation",
       "physical-dps",
       "trash-operators"
@@ -2433,7 +2439,6 @@
     "profileImage": "/images/operators/sora.png",
     "niches": [
       "damage-buff",
-      "enmity-healing",
       "trash-operators"
     ],
     "cnName": "空",
@@ -2586,8 +2591,7 @@
     "profileImage": "/images/operators/tin_man.png",
     "niches": [
       "aoe-arts-dps",
-      "atk-debuff",
-      "enmity-healing"
+      "atk-debuff"
     ],
     "cnName": "锡人",
     "twName": "錫人",
@@ -2681,7 +2685,6 @@
     "global": true,
     "profileImage": "/images/operators/underflow.png",
     "niches": [
-      "arts-dps",
       "late-laneholder",
       "physical-dps",
       "tanking-blocking-operators"

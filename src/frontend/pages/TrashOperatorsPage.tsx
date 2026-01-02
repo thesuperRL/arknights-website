@@ -109,8 +109,8 @@ const TrashOperatorsPage: React.FC = () => {
   return (
     <div className="trash-operators-page">
       <div className="trash-operators-header">
-        <Link to="/" className="back-button">
-          ← Back to Home
+        <Link to="/tier-lists" className="back-button">
+          ← Back to Tier Lists
         </Link>
         <h1>{data.niche}</h1>
         <p>{data.description}</p>

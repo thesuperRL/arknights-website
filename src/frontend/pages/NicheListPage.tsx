@@ -119,8 +119,8 @@ const NicheListPage: React.FC = () => {
   return (
     <div className="niche-list-page">
       <div className="niche-list-header">
-        <Link to="/" className="back-button">
-          ← Back to Home
+        <Link to="/tier-lists" className="back-button">
+          ← Back to Tier Lists
         </Link>
         <h1>{operatorList.niche}</h1>
         <p>{operatorList.description || ''}</p>

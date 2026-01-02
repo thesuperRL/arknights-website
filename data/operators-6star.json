@@ -22,7 +22,6 @@
     "global": true,
     "profileImage": "/images/operators/angelina.png",
     "niches": [
-      "enmity-healing",
       "healing-operators",
       "stalling"
     ],
@@ -209,7 +208,6 @@
     "global": true,
     "profileImage": "/images/operators/ch_en.png",
     "niches": [
-      "arts-dps",
       "physical-dps",
       "sp-battery",
       "trash-operators"
@@ -246,7 +244,6 @@
     "global": true,
     "profileImage": "/images/operators/chongyue.png",
     "niches": [
-      "early-laneholder",
       "late-laneholder",
       "physical-dps"
     ],
@@ -264,7 +261,6 @@
     "profileImage": "/images/operators/civilight_eterna.png",
     "niches": [
       "damage-buff",
-      "enmity-healing",
       "healing-operators",
       "stalling",
       "true_damage"
@@ -1194,7 +1190,6 @@
     "global": true,
     "profileImage": "/images/operators/nearl_the_radiant_knight.png",
     "niches": [
-      "fast-redeploy-operators",
       "true_damage"
     ],
     "cnName": "耀骑士临光",
@@ -1266,6 +1261,7 @@
     "profileImage": "/images/operators/nymph.png",
     "niches": [
       "aoe-arts-dps",
+      "arts-dps",
       "elemental-damage",
       "elemental-dps",
       "stalling"
@@ -1599,7 +1595,6 @@
     "profileImage": "/images/operators/shu.png",
     "niches": [
       "def-buff",
-      "enmity-healing",
       "healing-operators",
       "late-laneholder",
       "res-buff",
@@ -1683,6 +1678,7 @@
     "global": true,
     "profileImage": "/images/operators/skadi.png",
     "niches": [
+      "fast-redeploy-operators",
       "trash-operators"
     ],
     "cnName": "斯卡蒂",
@@ -1700,7 +1696,6 @@
     "niches": [
       "damage-buff",
       "def-buff",
-      "enmity-healing",
       "global-range"
     ],
     "cnName": "浊心斯卡蒂",
@@ -1823,7 +1818,6 @@
     "global": true,
     "profileImage": "/images/operators/thorns.png",
     "niches": [
-      "arts-dps",
       "late-laneholder",
       "physical-dps"
     ],
@@ -1843,8 +1837,6 @@
       "aoe-arts-dps",
       "atk-debuff",
       "def-shred",
-      "enmity-healing",
-      "fragile",
       "res-shred"
     ],
     "cnName": "引星棘刺",

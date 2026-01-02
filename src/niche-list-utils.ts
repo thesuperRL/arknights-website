@@ -9,57 +9,66 @@ import * as path from 'path';
 import { OperatorList, OperatorListCollection } from './niche-list-types';
 
 /**
- * Loads all operator lists from the data directory
+ * Loads all operator lists from the data directory and subdirectories
  * Returns a collection keyed by filename (without .json extension)
  */
 export function loadAllNicheLists(dataDir: string = path.join(__dirname, '../data/niche-lists')): OperatorListCollection {
   const collection: OperatorListCollection = {};
-  
+
   if (!fs.existsSync(dataDir)) {
     console.warn(`Operator lists directory does not exist: ${dataDir}`);
     return collection;
   }
 
-  const files = fs.readdirSync(dataDir);
-  const jsonFiles = files.filter(file => 
-    file.endsWith('.json') && file !== 'trash-operators.json' && file !== 'free.json' && file !== 'README.md'
-  );
+  // Helper function to process files in a directory
+  function processDirectory(dirPath: string, prefix: string = '') {
+    const files = fs.readdirSync(dirPath);
 
-  for (const file of jsonFiles) {
-    try {
-      const filePath = path.join(dataDir, file);
-      const content = fs.readFileSync(filePath, 'utf-8');
-      const operatorList: OperatorList = JSON.parse(content);
-      // Only add if it has the operator list structure (has 'operators' property)
-      if (operatorList.operators && operatorList.niche) {
-        // Use filename (without .json) as the key
-        const filename = file.replace('.json', '');
-        collection[filename] = operatorList;
+    for (const file of files) {
+      const fullPath = path.join(dirPath, file);
+      const stat = fs.statSync(fullPath);
+
+      if (stat.isDirectory()) {
+        // Recursively process subdirectories
+        const subPrefix = prefix ? `${prefix}/${file}` : file;
+        processDirectory(fullPath, subPrefix);
+      } else if (file.endsWith('.json') && file !== 'trash-operators.json' && file !== 'free.json' && file !== 'README.md') {
+        try {
+          const content = fs.readFileSync(fullPath, 'utf-8');
+          const operatorList: OperatorList = JSON.parse(content);
+          // Only add if it has the operator list structure (has 'operators' property)
+          if (operatorList.operators && operatorList.niche) {
+            // Use filename with prefix (without .json) as the key
+            const filename = prefix ? `${prefix}/${file.replace('.json', '')}` : file.replace('.json', '');
+            collection[filename] = operatorList;
+          }
+        } catch (error) {
+          console.error(`Error loading operator list from ${fullPath}:`, error);
+        }
       }
-    } catch (error) {
-      console.error(`Error loading operator list from ${file}:`, error);
     }
   }
 
+  processDirectory(dataDir);
   return collection;
 }
 
 /**
  * Loads a specific operator list by filename (without .json extension)
- * The filename parameter should be the filename code (e.g., "healing-operators")
+ * The filename parameter should be the filename code (e.g., "healing-operators" or "synergies/sleep")
  */
 export function loadNicheList(nicheFilename: string, dataDir: string = path.join(__dirname, '../data/niche-lists')): OperatorList | null {
   // Decode URL-encoded niche filename
   const decodedFilename = decodeURIComponent(nicheFilename);
-  
-  // Try loading by filename directly
+
+  // Try loading by filename directly (handles both root files and subdir files)
   let filename = decodedFilename;
   if (filename.endsWith('.json')) {
     filename = filename.replace('.json', '');
   }
-  
+
   const filePath = path.join(dataDir, `${filename}.json`);
-  
+
   if (fs.existsSync(filePath)) {
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
@@ -72,7 +81,7 @@ export function loadNicheList(nicheFilename: string, dataDir: string = path.join
       console.error(`Error loading operator list from ${filePath}:`, error);
     }
   }
-  
+
   return null;
 }
 
