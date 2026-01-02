@@ -95,6 +95,22 @@
     margin: 0;
 }
 
+.unconventional-niches-card {
+    background: rgba(138, 43, 226, 0.3);
+    border: 2px solid rgba(138, 43, 226, 0.5);
+}
+
+.unconventional-niches-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.unconventional-niches-card p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
 .niche-lists-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

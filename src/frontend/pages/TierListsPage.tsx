@@ -82,6 +82,10 @@ const TierListsPage: React.FC = () => {
           <h2>Global Range Operators</h2>
           <p>Operators that can hit anywhere on the map</p>
         </Link>
+        <Link to="/unconventional-niches-operators" className="special-card unconventional-niches-card">
+          <h2>Unconventional Niches</h2>
+          <p>Truly unique niches not covered by other tier lists</p>
+        </Link>
       </div>
     </div>
   );

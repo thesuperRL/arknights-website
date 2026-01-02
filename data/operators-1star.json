@@ -45,9 +45,7 @@
     "class": "Sniper",
     "global": true,
     "profileImage": "/images/operators/justice_knight.png",
-    "niches": [
-      "unconventional-niches"
-    ],
+    "niches": [],
     "cnName": "正义骑士号",
     "jpName": "ジャスティスナイト",
     "krName": "저스티스 나이트",

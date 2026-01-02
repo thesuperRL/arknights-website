@@ -183,7 +183,7 @@ export function getOperatorTierInNiche(operatorId: string, niche: string): numbe
  * Scores an operator based on how well it fits the preferences
  * If primaryNiche is provided, heavily prioritizes operator tier in that niche
  */
-function scoreOperator(
+export function scoreOperator(
   operator: any,
   operatorId: string,
   niches: string[],
@@ -192,9 +192,15 @@ function scoreOperator(
   requiredNiches: Set<string>,
   preferredNiches: Set<string>,
   wantToUseSet?: Set<string>,
-  primaryNiche?: string
+  primaryNiche?: string,
+  isTrash?: boolean
 ): number {
   let score = 0;
+
+  // Apply heavy penalty for trash operators - more significant than any tier benefits
+  if (isTrash) {
+    score -= 1000; // Massive penalty that outweighs any tier score (tier max is 100 * 10 = 1000)
+  }
   
   // Base score from rarity ranking
   // Higher position in ranking = higher score
@@ -452,21 +458,21 @@ function findBestOperatorForNiche(
   for (const operatorId of sortedOperators) {
     if (trashOperators && trashOperators.has(operatorId)) continue; // Skip trash operators in first pass
     if (freeOperators && freeOperators.has(operatorId)) continue; // Skip free operators in first pass
-    
+
     const operator = allOperators[operatorId];
     if (!operator) continue;
-    
+
     const niches = getOperatorNiches(operatorId);
     // Check if operator fills the niche (including AOE variants)
-    const fillsNiche = niches.includes(niche) || 
+    const fillsNiche = niches.includes(niche) ||
                       (niche === 'arts-dps' && niches.includes('aoe-arts-dps')) ||
                       (niche === 'physical-dps' && niches.includes('aoe-physical-dps'));
     if (!fillsNiche) continue;
-    
-    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, niche);
-    
+
+    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, niche, false);
+
     candidates.push({ operatorId, operator, niches, score });
-    
+
     if (score > bestScore) {
       bestScore = score;
       bestOperator = { operatorId, operator, niches };
@@ -477,21 +483,21 @@ function findBestOperatorForNiche(
   if (!bestOperator && trashOperators) {
     for (const operatorId of sortedOperators) {
       if (!trashOperators.has(operatorId)) continue; // Only consider trash operators now
-      
+
       const operator = allOperators[operatorId];
       if (!operator) continue;
-      
+
       const niches = getOperatorNiches(operatorId);
       // Check if operator fills the niche (including AOE variants)
-      const fillsNiche = niches.includes(niche) || 
+      const fillsNiche = niches.includes(niche) ||
                         (niche === 'arts-dps' && niches.includes('aoe-arts-dps')) ||
                         (niche === 'physical-dps' && niches.includes('aoe-physical-dps'));
       if (!fillsNiche) continue;
-      
-      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, niche);
-      
+
+      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, niche, true);
+
       candidates.push({ operatorId, operator, niches, score });
-      
+
       if (score > bestScore) {
         bestScore = score;
         bestOperator = { operatorId, operator, niches };
@@ -782,15 +788,15 @@ export async function buildTeam(
       if (usedOperatorIds.has(operatorId)) continue;
       if (trashOperators.has(operatorId)) continue; // Skip trash operators in first pass
       if (freeOperators.has(operatorId)) continue; // Skip free operators in first pass
-      
+
       const operator = allOperators[operatorId];
       if (!operator) continue;
-      
+
       const niches = getOperatorNiches(operatorId);
-      const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet);
-      
+      const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet, undefined, false);
+
       candidates.push({ operatorId, operator, niches, score });
-      
+
       if (!bestCandidate || score > bestCandidate.score) {
         bestCandidate = { operatorId, operator, niches, score };
       }
@@ -801,15 +807,15 @@ export async function buildTeam(
       for (const operatorId of sortedRemainingOperators) {
         if (usedOperatorIds.has(operatorId)) continue;
         if (!trashOperators.has(operatorId)) continue; // Only consider trash operators now
-        
+
         const operator = allOperators[operatorId];
         if (!operator) continue;
-        
+
         const niches = getOperatorNiches(operatorId);
-        const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet);
-        
+        const score = scoreOperator(operator, operatorId, niches, preferences, team, requiredNiches, preferredNiches, wantToUseSet, undefined, true);
+
         candidates.push({ operatorId, operator, niches, score });
-        
+
         if (!bestCandidate || score > bestCandidate.score) {
           bestCandidate = { operatorId, operator, niches, score };
         }

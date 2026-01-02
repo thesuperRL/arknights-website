@@ -167,8 +167,7 @@
     "global": true,
     "profileImage": "/images/operators/contrail.png",
     "niches": [
-      "low-rarity",
-      "unconventional-niches"
+      "low-rarity"
     ],
     "cnName": "云迹",
     "jpName": "コントレイル",
@@ -566,8 +565,7 @@
     "profileImage": "/images/operators/lutonada.png",
     "niches": [
       "late-laneholder",
-      "tanking-blocking-operators",
-      "unconventional-niches"
+      "tanking-blocking-operators"
     ],
     "cnName": "露托",
     "jpName": "ルトナダ",

@@ -1,5 +1,16 @@
-Unranked Operators (21 total)
-Generated: 2026-01-02T07:17:15.901Z
+Unranked Operators (24 total)
+Generated: 2026-01-02T07:32:33.341Z
+
+=== GLOBAL OPERATORS ===
+
+--- Guard ---
+irene (Irene)
+
+--- Sniper ---
+justice_knight (Justice Knight)
+
+--- Supporter ---
+scene (Scene)
 
 === NON-GLOBAL OPERATORS ===
 

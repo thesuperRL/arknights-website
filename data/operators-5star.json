@@ -155,8 +155,7 @@
     "profileImage": "/images/operators/april.png",
     "niches": [
       "anti-air-operators",
-      "fast-redeploy-operators",
-      "unconventional-niches"
+      "fast-redeploy-operators"
     ],
     "cnName": "四月",
     "jpName": "エイプリル",
@@ -679,8 +678,7 @@
     "profileImage": "/images/operators/czerny.png",
     "niches": [
       "late-laneholder",
-      "tanking-blocking-operators",
-      "unconventional-niches"
+      "tanking-blocking-operators"
     ],
     "cnName": "车尔尼",
     "twName": "車爾尼",
@@ -1154,8 +1152,7 @@
     "niches": [
       "healing-operators",
       "synergies/enmity-healing",
-      "tanking-blocking-operators",
-      "unconventional-niches"
+      "tanking-blocking-operators"
     ],
     "cnName": "暴雨",
     "jpName": "ヘビーレイン",
@@ -1609,8 +1606,7 @@
     "global": true,
     "profileImage": "/images/operators/lunacub.png",
     "niches": [
-      "physical-dps",
-      "unconventional-niches"
+      "physical-dps"
     ],
     "cnName": "子月",
     "jpName": "ルナカブ",
@@ -2277,9 +2273,7 @@
     "class": "Supporter",
     "global": true,
     "profileImage": "/images/operators/scene.png",
-    "niches": [
-      "unconventional-niches"
-    ],
+    "niches": [],
     "cnName": "稀音",
     "jpName": "シーン",
     "krName": "씬",
@@ -2312,8 +2306,7 @@
     "global": true,
     "profileImage": "/images/operators/sesa.png",
     "niches": [
-      "trash-operators",
-      "unconventional-niches"
+      "trash-operators"
     ],
     "cnName": "慑砂",
     "twName": "懾砂",
@@ -2378,8 +2371,7 @@
     "global": true,
     "profileImage": "/images/operators/silence.png",
     "niches": [
-      "healing-operators",
-      "unconventional-niches"
+      "healing-operators"
     ],
     "cnName": "赫默",
     "jpName": "サイレンス",
@@ -2618,8 +2610,7 @@
     "global": true,
     "profileImage": "/images/operators/tippi.png",
     "niches": [
-      "trash-operators",
-      "unconventional-niches"
+      "trash-operators"
     ],
     "cnName": "蒂比",
     "jpName": "ティッピ",
@@ -2634,8 +2625,7 @@
     "global": true,
     "profileImage": "/images/operators/toddifons.png",
     "niches": [
-      "trash-operators",
-      "unconventional-niches"
+      "trash-operators"
     ],
     "cnName": "熔泉",
     "jpName": "トギフォンス",
