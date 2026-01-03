@@ -10,7 +10,11 @@
       "dp-generation",
       "synergies/sleep"
     ],
-    "internalName": "char_4188_confes"
+    "internalName": "char_4188_confes",
+    "nicheTiers": {
+      "dp-generation": "D",
+      "synergies/sleep": "A"
+    }
   },
   "castle_3": {
     "id": "castle_3",
@@ -22,7 +26,10 @@
     "niches": [
       "def-buff"
     ],
-    "internalName": "char_286_cast3"
+    "internalName": "char_286_cast3",
+    "nicheTiers": {
+      "def-buff": "C"
+    }
   },
   "friston_3": {
     "id": "friston_3",
@@ -36,7 +43,12 @@
       "tanking-blocking-operators",
       "trash-operators"
     ],
-    "internalName": "char_4093_frston"
+    "internalName": "char_4093_frston",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "tanking-blocking-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "justice_knight": {
     "id": "justice_knight",
@@ -51,7 +63,10 @@
     "cnName": "正义骑士号",
     "jpName": "ジャスティスナイト",
     "krName": "저스티스 나이트",
-    "internalName": "char_4000_jnight"
+    "internalName": "char_4000_jnight",
+    "nicheTiers": {
+      "unconventional-niches": "A"
+    }
   },
   "lancet_2": {
     "id": "lancet_2",
@@ -63,7 +78,10 @@
     "niches": [
       "healing-operators"
     ],
-    "internalName": "char_285_medic2"
+    "internalName": "char_285_medic2",
+    "nicheTiers": {
+      "healing-operators": "A"
+    }
   },
   "phonor_0": {
     "id": "phonor_0",
@@ -75,7 +93,10 @@
     "niches": [
       "elemental-damage"
     ],
-    "internalName": "char_4136_phonor"
+    "internalName": "char_4136_phonor",
+    "nicheTiers": {
+      "elemental-damage": "F"
+    }
   },
   "thrm_ex": {
     "id": "thrm_ex",
@@ -87,7 +108,10 @@
     "niches": [
       "fragile"
     ],
-    "internalName": "char_376_therex"
+    "internalName": "char_376_therex",
+    "nicheTiers": {
+      "fragile": "A"
+    }
   },
   "terra_research_commission": {
     "id": "terra_research_commission",
@@ -103,7 +127,10 @@
     "twName": "泰拉大陸調查團",
     "jpName": "テラ大陸調査団",
     "krName": "테라 대륙 조사단",
-    "internalName": "char_4077_palico"
+    "internalName": "char_4077_palico",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "u_official": {
     "id": "u_official",
@@ -116,6 +143,10 @@
       "stalling",
       "trash-operators"
     ],
-    "internalName": "char_4091_ulika"
+    "internalName": "char_4091_ulika",
+    "nicheTiers": {
+      "stalling": "A",
+      "trash-operators": "A"
+    }
   }
 }

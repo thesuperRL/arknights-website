@@ -9,7 +9,10 @@
     "niches": [
       "tanking-blocking-operators"
     ],
-    "internalName": "char_009_12fce"
+    "internalName": "char_009_12fce",
+    "nicheTiers": {
+      "tanking-blocking-operators": "A"
+    }
   },
   "durin": {
     "id": "durin",
@@ -24,7 +27,10 @@
     "cnName": "杜林",
     "jpName": "ドゥリン",
     "krName": "두린",
-    "internalName": "char_501_durin"
+    "internalName": "char_501_durin",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "noir_corne": {
     "id": "noir_corne",
@@ -39,7 +45,10 @@
     "cnName": "黑角",
     "jpName": "ノイルホーン",
     "krName": "느와르 코르네",
-    "internalName": "char_500_noirc"
+    "internalName": "char_500_noirc",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "rangers": {
     "id": "rangers",
@@ -54,7 +63,10 @@
     "cnName": "巡林者",
     "jpName": "レンジャー",
     "krName": "레인저",
-    "internalName": "char_503_rang"
+    "internalName": "char_503_rang",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "yato": {
     "id": "yato",
@@ -69,6 +81,9 @@
     "cnName": "夜刀",
     "jpName": "ヤトウ",
     "krName": "야토",
-    "internalName": "char_502_nblade"
+    "internalName": "char_502_nblade",
+    "nicheTiers": {
+      "fast-redeploy-operators": "B"
+    }
   }
 }

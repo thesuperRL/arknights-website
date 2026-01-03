@@ -13,7 +13,10 @@
     "twName": "安德切爾",
     "jpName": "アドナキエル",
     "krName": "아드나키엘",
-    "characters": "char_211_adnach"
+    "characters": "char_211_adnach",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "ansel": {
     "id": "ansel",
@@ -30,7 +33,11 @@
     "twName": "安賽爾",
     "jpName": "アンセル",
     "krName": "안셀",
-    "characters": "char_212_ansel"
+    "characters": "char_212_ansel",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "low-rarity": "A"
+    }
   },
   "beagle": {
     "id": "beagle",
@@ -46,7 +53,10 @@
     "twName": "米格魯",
     "jpName": "ビーグル",
     "krName": "비글",
-    "characters": "char_122_beagle"
+    "characters": "char_122_beagle",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "cardigan": {
     "id": "cardigan",
@@ -64,7 +74,12 @@
     "twName": "卡緹",
     "jpName": "カーディ",
     "krName": "카디건",
-    "characters": "char_209_ardign"
+    "characters": "char_209_ardign",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "tanking-blocking-operators": "A",
+      "low-rarity": "A"
+    }
   },
   "catapult": {
     "id": "catapult",
@@ -79,7 +94,10 @@
     "cnName": "空爆",
     "jpName": "カタパルト",
     "krName": "캐터펄트",
-    "characters": "char_282_catap"
+    "characters": "char_282_catap",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "fang": {
     "id": "fang",
@@ -95,7 +113,11 @@
     "cnName": "芬",
     "jpName": "フェン",
     "krName": "팽",
-    "characters": "char_123_fang"
+    "characters": "char_123_fang",
+    "nicheTiers": {
+      "early-laneholder": "C",
+      "low-rarity": "A"
+    }
   },
   "hibiscus": {
     "id": "hibiscus",
@@ -110,7 +132,10 @@
     "cnName": "芙蓉",
     "jpName": "ハイビスカス",
     "krName": "히비스커스",
-    "characters": "char_120_hibisc"
+    "characters": "char_120_hibisc",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "kroos": {
     "id": "kroos",
@@ -128,7 +153,12 @@
     "twName": "克洛絲",
     "jpName": "クルース",
     "krName": "크루스",
-    "characters": "char_124_kroos"
+    "characters": "char_124_kroos",
+    "nicheTiers": {
+      "anti-air-operators": "A",
+      "physical-dps": "A",
+      "low-rarity": "A"
+    }
   },
   "lava": {
     "id": "lava",
@@ -143,7 +173,10 @@
     "cnName": "炎熔",
     "jpName": "ラヴァ",
     "krName": "라바",
-    "characters": "char_121_lava"
+    "characters": "char_121_lava",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "melantha": {
     "id": "melantha",
@@ -160,7 +193,11 @@
     "twName": "玫蘭莎",
     "jpName": "メランサ",
     "krName": "멜란사",
-    "characters": "char_208_melan"
+    "characters": "char_208_melan",
+    "nicheTiers": {
+      "physical-dps": "A",
+      "low-rarity": "A"
+    }
   },
   "midnight": {
     "id": "midnight",
@@ -178,7 +215,12 @@
     "twName": "月見夜",
     "jpName": "ミッドナイト",
     "krName": "미드나이트",
-    "characters": "char_283_midn"
+    "characters": "char_283_midn",
+    "nicheTiers": {
+      "arts-dps": "D",
+      "physical-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "orchid": {
     "id": "orchid",
@@ -194,7 +236,10 @@
     "twName": "梓蘭",
     "jpName": "オーキッド",
     "krName": "오키드",
-    "characters": "char_278_orchid"
+    "characters": "char_278_orchid",
+    "nicheTiers": {
+      "low-rarity": "A"
+    }
   },
   "plume": {
     "id": "plume",
@@ -209,7 +254,10 @@
     "cnName": "翎羽",
     "jpName": "プリュム",
     "krName": "플룸",
-    "characters": "char_192_falco"
+    "characters": "char_192_falco",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "popukar": {
     "id": "popukar",
@@ -224,7 +272,10 @@
     "cnName": "泡普卡",
     "jpName": "ポプカル",
     "krName": "포푸카",
-    "characters": "char_281_popka"
+    "characters": "char_281_popka",
+    "nicheTiers": {
+      "low-rarity": "A"
+    }
   },
   "spot": {
     "id": "spot",
@@ -240,7 +291,10 @@
     "twName": "斑點",
     "jpName": "スポット",
     "krName": "스팟",
-    "characters": "char_284_spot"
+    "characters": "char_284_spot",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "steward": {
     "id": "steward",
@@ -250,14 +304,18 @@
     "global": true,
     "profileImage": "/images/operators/steward.png",
     "niches": [
-      "trash-operators",
-      "low-rarity"
+      "low-rarity",
+      "trash-operators"
     ],
     "cnName": "史都华德",
     "twName": "史都華德",
     "jpName": "スチュワード",
     "krName": "스튜어드",
-    "characters": "char_210_stward"
+    "characters": "char_210_stward",
+    "nicheTiers": {
+      "trash-operators": "A",
+      "low-rarity": "A"
+    }
   },
   "vanilla": {
     "id": "vanilla",
@@ -273,6 +331,10 @@
     "cnName": "香草",
     "jpName": "バニラ",
     "krName": "바닐라",
-    "characters": "char_240_wyvern"
+    "characters": "char_240_wyvern",
+    "nicheTiers": {
+      "early-laneholder": "D",
+      "trash-operators": "A"
+    }
   }
 }

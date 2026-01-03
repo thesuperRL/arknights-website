@@ -15,6 +15,7 @@ interface OperatorData {
   global: boolean;
   profileImage: string;
   niches?: string[];
+  nicheTiers?: Record<string, string>;
 }
 
 function getTrashOperators(): Set<string> {
@@ -69,9 +70,9 @@ function loadAllOperators(): Record<string, OperatorData> {
   return operators;
 }
 
-function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<string, string[]> {
+function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<string, Record<string, string>> {
   const operatorLists = loadAllNicheLists();
-  const operatorNiches = new Map<string, string[]>();
+  const operatorNiches = new Map<string, Record<string, string>>();
   const unrecognizedOperators: Array<{ operatorId: string; niche: string }> = [];
 
   // Add special operator lists as if they were regular niche lists
@@ -118,25 +119,23 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
     if (!operatorList.operators || typeof operatorList.operators !== 'object') {
       continue;
     }
-    
-    // Iterate through rating groups
-    for (const operatorsInRating of Object.values(operatorList.operators)) {
-      if (operatorsInRating) {
-        for (const operatorId of Object.keys(operatorsInRating)) {
+
+    // Iterate through rating groups (tiers)
+    for (const [tier, operatorsInTier] of Object.entries(operatorList.operators)) {
+      if (operatorsInTier) {
+        for (const operatorId of Object.keys(operatorsInTier)) {
           // Validate that operator ID exists
           if (!allOperators[operatorId]) {
             unrecognizedOperators.push({ operatorId, niche: operatorList.niche });
             continue; // Skip unrecognized operators
           }
-          
+
           if (!operatorNiches.has(operatorId)) {
-            operatorNiches.set(operatorId, []);
+            operatorNiches.set(operatorId, {});
           }
-          const niches = operatorNiches.get(operatorId)!;
-          // Store filename codes, not display names
-          if (!niches.includes(filename)) {
-            niches.push(filename);
-          }
+          const nicheTiers = operatorNiches.get(operatorId)!;
+          // Store filename to tier mapping
+          nicheTiers[filename] = tier;
         }
       }
     }
@@ -157,7 +156,7 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
   return operatorNiches;
 }
 
-function updateOperatorFiles(operatorNiches: Map<string, string[]>): {
+function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>): {
   updated: number;
   unranked: string[];
 } {
@@ -178,28 +177,36 @@ function updateOperatorFiles(operatorNiches: Map<string, string[]>): {
     let fileUpdated = false;
 
     for (const [id, operator] of Object.entries(operators)) {
-      const niches = operatorNiches.get(id) || [];
+      const nicheTiers = operatorNiches.get(id) || {};
+      const nicheNames = Object.keys(nicheTiers);
+
       // Handle migration from old 'ranked' field
       const currentNiches = operator.niches || [];
-      
+      const currentNicheTiers = operator.nicheTiers || {};
+
       // Sort arrays for comparison
-      const sortedNewNiches = [...niches].sort();
+      const sortedNewNiches = [...nicheNames].sort();
       const sortedCurrentNiches = [...currentNiches].sort();
-      
-      // Check if arrays are different
-      const arraysEqual = sortedNewNiches.length === sortedCurrentNiches.length &&
+
+      // Check if niches array is different
+      const nichesArrayEqual = sortedNewNiches.length === sortedCurrentNiches.length &&
         sortedNewNiches.every((val, idx) => val === sortedCurrentNiches[idx]);
-      
+
+      // Check if nicheTiers mapping is different
+      const nicheTiersEqual = Object.keys(nicheTiers).length === Object.keys(currentNicheTiers).length &&
+        Object.keys(nicheTiers).every(key => nicheTiers[key] === currentNicheTiers[key]);
+
       // Also check if we need to remove old 'ranked' field
       const hasOldRankedField = 'ranked' in operator;
-      
+
       // 1, 2, and 3-star operators are always globally available
       const needsGlobalFix = (rarity === 1 || rarity === 2 || rarity === 3) && operator.global === false;
-      
-      if (!arraysEqual || hasOldRankedField || needsGlobalFix) {
+
+      if (!nichesArrayEqual || !nicheTiersEqual || hasOldRankedField || needsGlobalFix) {
         const updatedOperator: any = {
           ...operator,
-          niches: sortedNewNiches
+          niches: sortedNewNiches,
+          nicheTiers: nicheTiers
         };
         // Remove old 'ranked' field if it exists
         if (hasOldRankedField) {
@@ -215,7 +222,7 @@ function updateOperatorFiles(operatorNiches: Map<string, string[]>): {
       }
 
       // Only add to unranked if not in any niche (including trash)
-      if (niches.length === 0) {
+      if (nicheNames.length === 0) {
         unrankedOperators.push(`${id} (${operator.name})`);
       }
     }

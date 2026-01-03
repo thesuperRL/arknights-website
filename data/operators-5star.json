@@ -15,7 +15,12 @@
       "arts-dps",
       "trash-operators",
       "true_damage"
-    ]
+    ],
+    "nicheTiers": {
+      "arts-dps": "C",
+      "true_damage": "B",
+      "trash-operators": "A"
+    }
   },
   "amiya_medic": {
     "id": "amiya_medic",
@@ -33,7 +38,12 @@
       "arts-dps",
       "healing-operators",
       "true_damage"
-    ]
+    ],
+    "nicheTiers": {
+      "arts-dps": "B",
+      "healing-operators": "A",
+      "true_damage": "A"
+    }
   },
   "absinthe": {
     "id": "absinthe",
@@ -49,7 +59,11 @@
     "cnName": "苦艾",
     "jpName": "アブサント",
     "krName": "압생트",
-    "internalName": "char_405_absin"
+    "internalName": "char_405_absin",
+    "nicheTiers": {
+      "free": "A",
+      "trash-operators": "A"
+    }
   },
   "akafuyu": {
     "id": "akafuyu",
@@ -64,7 +78,10 @@
     "cnName": "赤冬",
     "jpName": "アカフユ",
     "krName": "아카후유",
-    "internalName": "char_475_akafyu"
+    "internalName": "char_475_akafyu",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "alanna": {
     "id": "alanna",
@@ -82,7 +99,12 @@
     "twName": "阿蘭娜",
     "jpName": "アランナ",
     "krName": "알라나",
-    "internalName": "char_4178_alanna"
+    "internalName": "char_4178_alanna",
+    "nicheTiers": {
+      "damage-buff": "C",
+      "def-buff": "B",
+      "trash-operators": "A"
+    }
   },
   "almond": {
     "id": "almond",
@@ -97,7 +119,10 @@
     "cnName": "杏仁",
     "jpName": "アーモンド",
     "krName": "아몬드",
-    "internalName": "char_4105_almond"
+    "internalName": "char_4105_almond",
+    "nicheTiers": {
+      "shift": "A"
+    }
   },
   "amiya": {
     "id": "amiya",
@@ -113,7 +138,10 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_002_amiya"
+    "internalName": "char_002_amiya",
+    "nicheTiers": {
+      "true_damage": "B"
+    }
   },
   "andreana": {
     "id": "andreana",
@@ -128,7 +156,10 @@
     "cnName": "安哲拉",
     "jpName": "アンドレアナ",
     "krName": "안드레아나",
-    "internalName": "char_218_cuttle"
+    "internalName": "char_218_cuttle",
+    "nicheTiers": {
+      "physical-dps": "A"
+    }
   },
   "aosta": {
     "id": "aosta",
@@ -145,7 +176,11 @@
     "twName": "奧斯塔",
     "jpName": "アオスタ",
     "krName": "아오스타",
-    "internalName": "char_346_aosta"
+    "internalName": "char_346_aosta",
+    "nicheTiers": {
+      "physical-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "april": {
     "id": "april",
@@ -162,7 +197,12 @@
     "cnName": "四月",
     "jpName": "エイプリル",
     "krName": "에이프릴",
-    "internalName": "char_365_aprl"
+    "internalName": "char_365_aprl",
+    "nicheTiers": {
+      "anti-air-operators": "A",
+      "fast-redeploy-operators": "A",
+      "unconventional-niches": "A"
+    }
   },
   "aroma": {
     "id": "aroma",
@@ -179,7 +219,11 @@
     "twName": "阿羅瑪",
     "jpName": "アロマ",
     "krName": "아로마",
-    "internalName": "char_446_aroma"
+    "internalName": "char_446_aroma",
+    "nicheTiers": {
+      "stalling": "A",
+      "trash-operators": "A"
+    }
   },
   "asbestos": {
     "id": "asbestos",
@@ -195,7 +239,11 @@
     "cnName": "石棉",
     "jpName": "アスベストス",
     "krName": "아스베스토스",
-    "internalName": "char_378_asbest"
+    "internalName": "char_378_asbest",
+    "nicheTiers": {
+      "aoe-arts-dps": "D",
+      "tanking-blocking-operators": "A"
+    }
   },
   "ashlock": {
     "id": "ashlock",
@@ -210,7 +258,10 @@
     "cnName": "灰毫",
     "jpName": "アッシュロック",
     "krName": "애쉬락",
-    "internalName": "char_431_ashlok"
+    "internalName": "char_431_ashlok",
+    "nicheTiers": {
+      "aoe-physical-dps": "C"
+    }
   },
   "astesia": {
     "id": "astesia",
@@ -227,7 +278,11 @@
     "twName": "星極",
     "jpName": "アステシア",
     "krName": "아스테시아",
-    "internalName": "char_274_astesi"
+    "internalName": "char_274_astesi",
+    "nicheTiers": {
+      "arts-dps": "C",
+      "late-laneholder": "A"
+    }
   },
   "astgenne": {
     "id": "astgenne",
@@ -243,7 +298,11 @@
     "cnName": "星源",
     "jpName": "アステジーニ",
     "krName": "아스트젠",
-    "internalName": "char_135_halo"
+    "internalName": "char_135_halo",
+    "nicheTiers": {
+      "aoe-arts-dps": "C",
+      "free": "A"
+    }
   },
   "aurora": {
     "id": "aurora",
@@ -259,7 +318,10 @@
     "twName": "極光",
     "jpName": "オーロラ",
     "krName": "오로라",
-    "internalName": "char_422_aurora"
+    "internalName": "char_422_aurora",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "ayerscarpe": {
     "id": "ayerscarpe",
@@ -275,7 +337,10 @@
     "twName": "斷崖",
     "jpName": "エアースカーペ",
     "krName": "에이어스카르페",
-    "internalName": "char_294_ayer"
+    "internalName": "char_294_ayer",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "bassline": {
     "id": "bassline",
@@ -293,7 +358,13 @@
     "cnName": "深律",
     "jpName": "ベースライン",
     "krName": "베이스라인",
-    "internalName": "char_4109_baslin"
+    "internalName": "char_4109_baslin",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "late-laneholder": "A",
+      "res-buff": "B",
+      "tanking-blocking-operators": "A"
+    }
   },
   "beeswax": {
     "id": "beeswax",
@@ -309,7 +380,10 @@
     "twName": "蜜蠟",
     "jpName": "ビーズワクス",
     "krName": "비즈왁스",
-    "internalName": "char_344_beewax"
+    "internalName": "char_344_beewax",
+    "nicheTiers": {
+      "tanking-blocking-operators": "A"
+    }
   },
   "bena": {
     "id": "bena",
@@ -326,7 +400,11 @@
     "twName": "貝娜",
     "jpName": "ベナ",
     "krName": "베나",
-    "internalName": "char_369_bena"
+    "internalName": "char_369_bena",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "tanking-blocking-operators": "A"
+    }
   },
   "bibeak": {
     "id": "bibeak",
@@ -342,7 +420,11 @@
     "cnName": "柏喙",
     "jpName": "バイビーク",
     "krName": "바이비크",
-    "internalName": "char_252_bibeak"
+    "internalName": "char_252_bibeak",
+    "nicheTiers": {
+      "stalling": "A",
+      "trash-operators": "A"
+    }
   },
   "bison": {
     "id": "bison",
@@ -358,7 +440,11 @@
     "cnName": "拜松",
     "jpName": "バイソン",
     "krName": "바이슨",
-    "internalName": "char_325_bison"
+    "internalName": "char_325_bison",
+    "nicheTiers": {
+      "tanking-blocking-operators": "A",
+      "free": "A"
+    }
   },
   "blacknight": {
     "id": "blacknight",
@@ -375,7 +461,12 @@
     "cnName": "夜半",
     "jpName": "ブラックナイト",
     "krName": "블랙나이트",
-    "internalName": "char_476_blkngt"
+    "internalName": "char_476_blkngt",
+    "nicheTiers": {
+      "dp-generation": "B",
+      "early-laneholder": "A",
+      "synergies/sleep": "A"
+    }
   },
   "blitz": {
     "id": "blitz",
@@ -394,7 +485,13 @@
     "twName": "閃擊",
     "jpName": "ブリッツ",
     "krName": "블리츠",
-    "internalName": "char_457_blitz"
+    "internalName": "char_457_blitz",
+    "nicheTiers": {
+      "silence": "B",
+      "stalling": "A",
+      "tanking-blocking-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "blue_poison": {
     "id": "blue_poison",
@@ -411,7 +508,11 @@
     "twName": "藍毒",
     "jpName": "アズリウス",
     "krName": "블루포이즌",
-    "internalName": "char_129_bluep"
+    "internalName": "char_129_bluep",
+    "nicheTiers": {
+      "anti-air-operators": "A",
+      "physical-dps": "A"
+    }
   },
   "bobbing": {
     "id": "bobbing",
@@ -427,7 +528,11 @@
     "cnName": "波卜",
     "jpName": "ボビング",
     "krName": "보빙",
-    "internalName": "char_487_bobb"
+    "internalName": "char_487_bobb",
+    "nicheTiers": {
+      "elemental-damage": "A",
+      "trash-operators": "A"
+    }
   },
   "breeze": {
     "id": "breeze",
@@ -443,7 +548,10 @@
     "twName": "微風",
     "jpName": "ブリーズ",
     "krName": "브리즈",
-    "internalName": "char_275_breeze"
+    "internalName": "char_275_breeze",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "brigid": {
     "id": "brigid",
@@ -457,7 +565,10 @@
     ],
     "cnName": "水灯心",
     "jpName": "ブリギッド",
-    "internalName": "char_4177_brigid"
+    "internalName": "char_4177_brigid",
+    "nicheTiers": {
+      "physical-dps": "A"
+    }
   },
   "broca": {
     "id": "broca",
@@ -472,7 +583,10 @@
     "cnName": "布洛卡",
     "jpName": "ブローカ",
     "krName": "브로카",
-    "internalName": "char_356_broca"
+    "internalName": "char_356_broca",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "bryophyta": {
     "id": "bryophyta",
@@ -489,7 +603,11 @@
     "twName": "蒼苔",
     "jpName": "ブライオフャイタ",
     "krName": "브라이오피타",
-    "internalName": "char_4106_bryota"
+    "internalName": "char_4106_bryota",
+    "nicheTiers": {
+      "def-buff": "B",
+      "trash-operators": "A"
+    }
   },
   "cairn": {
     "id": "cairn",
@@ -518,7 +636,12 @@
     "twName": "曉歌",
     "jpName": "カンタービレ",
     "krName": "칸타빌레",
-    "internalName": "char_497_ctable"
+    "internalName": "char_497_ctable",
+    "nicheTiers": {
+      "dp-generation": "S",
+      "early-laneholder": "S",
+      "fast-redeploy-operators": "S"
+    }
   },
   "catherine": {
     "id": "catherine",
@@ -535,7 +658,11 @@
     "twName": "凱瑟琳",
     "jpName": "キャサリン",
     "krName": "캐서린",
-    "internalName": "char_4162_cathy"
+    "internalName": "char_4162_cathy",
+    "nicheTiers": {
+      "def-buff": "A",
+      "trash-operators": "A"
+    }
   },
   "cement": {
     "id": "cement",
@@ -551,7 +678,11 @@
     "cnName": "洋灰",
     "jpName": "セメント",
     "krName": "시멘트",
-    "internalName": "char_464_cement"
+    "internalName": "char_464_cement",
+    "nicheTiers": {
+      "tanking-blocking-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "ceylon": {
     "id": "ceylon",
@@ -568,7 +699,11 @@
     "twName": "錫蘭",
     "jpName": "セイロン",
     "krName": "실론",
-    "internalName": "char_348_ceylon"
+    "internalName": "char_348_ceylon",
+    "nicheTiers": {
+      "free": "A",
+      "trash-operators": "A"
+    }
   },
   "chiave": {
     "id": "chiave",
@@ -585,7 +720,11 @@
     "twName": "賈維",
     "jpName": "キアーベ",
     "krName": "키아베",
-    "internalName": "char_349_chiave"
+    "internalName": "char_349_chiave",
+    "nicheTiers": {
+      "dp-generation": "A",
+      "res-shred": "C"
+    }
   },
   "chilchuck": {
     "id": "chilchuck",
@@ -604,7 +743,13 @@
     "twName": "奇爾查克",
     "jpName": "チルチャック",
     "krName": "칠책",
-    "internalName": "char_4144_chilc"
+    "internalName": "char_4144_chilc",
+    "nicheTiers": {
+      "dp-generation": "S",
+      "early-laneholder": "C",
+      "elemental_damage_healers": "C",
+      "fast-redeploy-operators": "S"
+    }
   },
   "cliffheart": {
     "id": "cliffheart",
@@ -620,7 +765,11 @@
     "cnName": "崖心",
     "jpName": "クリフハート",
     "krName": "클리프하트",
-    "internalName": "char_173_slchan"
+    "internalName": "char_173_slchan",
+    "nicheTiers": {
+      "shift": "A",
+      "free": "A"
+    }
   },
   "coldshot": {
     "id": "coldshot",
@@ -638,7 +787,12 @@
     "twName": "冰釀",
     "jpName": "コールドショット",
     "krName": "콜드샷",
-    "internalName": "char_4104_coldst"
+    "internalName": "char_4104_coldst",
+    "nicheTiers": {
+      "physical-dps": "A",
+      "free": "A",
+      "trash-operators": "A"
+    }
   },
   "corroserum": {
     "id": "corroserum",
@@ -655,7 +809,11 @@
     "twName": "蝕清",
     "jpName": "コロセラム",
     "krName": "코로세럼",
-    "internalName": "char_489_serum"
+    "internalName": "char_489_serum",
+    "nicheTiers": {
+      "silence": "C",
+      "trash-operators": "A"
+    }
   },
   "croissant": {
     "id": "croissant",
@@ -674,7 +832,13 @@
     "twName": "可頌",
     "jpName": "クロワッサン",
     "krName": "크루아상",
-    "internalName": "char_201_moeshd"
+    "internalName": "char_201_moeshd",
+    "nicheTiers": {
+      "def-buff": "B",
+      "res-buff": "C",
+      "shift": "B",
+      "tanking-blocking-operators": "A"
+    }
   },
   "czerny": {
     "id": "czerny",
@@ -692,7 +856,12 @@
     "twName": "車爾尼",
     "jpName": "ツェルニー",
     "krName": "체르니",
-    "internalName": "char_4047_pianst"
+    "internalName": "char_4047_pianst",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "tanking-blocking-operators": "A",
+      "unconventional-niches": "A"
+    }
   },
   "dagda": {
     "id": "dagda",
@@ -708,7 +877,10 @@
     "twName": "達格達",
     "jpName": "ダグザ",
     "krName": "다그다",
-    "internalName": "char_157_dagda"
+    "internalName": "char_157_dagda",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "delphine": {
     "id": "delphine",
@@ -724,7 +896,11 @@
     "cnName": "戴菲恩",
     "jpName": "デルフィーン",
     "krName": "델핀",
-    "internalName": "char_4110_delphn"
+    "internalName": "char_4110_delphn",
+    "nicheTiers": {
+      "arts-dps": "C",
+      "trash-operators": "A"
+    }
   },
   "diamante": {
     "id": "diamante",
@@ -741,7 +917,12 @@
     "cnName": "折光",
     "jpName": "ディアマンテ",
     "krName": "디아만테",
-    "internalName": "char_499_kaitou"
+    "internalName": "char_499_kaitou",
+    "nicheTiers": {
+      "elemental-damage": "C",
+      "elemental-dps": "S",
+      "trash-operators": "A"
+    }
   },
   "doc": {
     "id": "doc",
@@ -758,7 +939,11 @@
     "twName": "醫生",
     "jpName": "ドック",
     "krName": "닥",
-    "internalName": "char_4125_rdoc"
+    "internalName": "char_4125_rdoc",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "elysium": {
     "id": "elysium",
@@ -775,7 +960,11 @@
     "twName": "極境",
     "jpName": "エリジウム",
     "krName": "엘리시움",
-    "internalName": "char_401_elysm"
+    "internalName": "char_401_elysm",
+    "nicheTiers": {
+      "def-shred": "A",
+      "dp-generation": "SS"
+    }
   },
   "enforcer": {
     "id": "enforcer",
@@ -791,7 +980,10 @@
     "twName": "見行者",
     "jpName": "エンフォーサー",
     "krName": "인포서",
-    "internalName": "char_4036_forcer"
+    "internalName": "char_4036_forcer",
+    "nicheTiers": {
+      "shift": "A"
+    }
   },
   "erato": {
     "id": "erato",
@@ -808,7 +1000,12 @@
     "cnName": "埃拉托",
     "jpName": "エラト",
     "krName": "에라토",
-    "internalName": "char_4043_erato"
+    "internalName": "char_4043_erato",
+    "nicheTiers": {
+      "physical-dps": "A",
+      "synergies/sleep": "A",
+      "trash-operators": "A"
+    }
   },
   "executor": {
     "id": "executor",
@@ -824,7 +1021,11 @@
     "cnName": "送葬人",
     "jpName": "イグゼキュター",
     "krName": "이그제큐터",
-    "internalName": "char_279_excu"
+    "internalName": "char_279_excu",
+    "nicheTiers": {
+      "aoe-physical-dps": "C",
+      "trash-operators": "A"
+    }
   },
   "fang_the_fire_sharpened": {
     "id": "fang_the_fire_sharpened",
@@ -841,7 +1042,11 @@
     "twName": "歷陣銳槍芬",
     "jpName": "歴陣鋭槍れきじんえいそうフェン",
     "krName": "팽 더 파이어 샤픈드",
-    "internalName": "char_1036_fang2"
+    "internalName": "char_1036_fang2",
+    "nicheTiers": {
+      "dp-generation": "B",
+      "early-laneholder": "A"
+    }
   },
   "feater": {
     "id": "feater",
@@ -857,7 +1062,10 @@
     "twName": "食鐵獸",
     "jpName": "エフイーター",
     "krName": "에프이터",
-    "internalName": "char_241_panda"
+    "internalName": "char_241_panda",
+    "nicheTiers": {
+      "shift": "A"
+    }
   },
   "figurino": {
     "id": "figurino",
@@ -873,7 +1081,11 @@
     "cnName": "裁度",
     "jpName": "フィグリーノ",
     "krName": "피구리노",
-    "internalName": "char_4155_talr"
+    "internalName": "char_4155_talr",
+    "nicheTiers": {
+      "fast-redeploy-operators": "B",
+      "stalling": "A"
+    }
   },
   "firewatch": {
     "id": "firewatch",
@@ -889,7 +1101,11 @@
     "cnName": "守林人",
     "jpName": "ファイヤーウォッチ",
     "krName": "파이어워치",
-    "internalName": "char_158_milu"
+    "internalName": "char_158_milu",
+    "nicheTiers": {
+      "physical-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "firewhistle": {
     "id": "firewhistle",
@@ -906,7 +1122,12 @@
     "cnName": "火哨",
     "jpName": "ファイヤーホイッスル",
     "krName": "파이어휘슬",
-    "internalName": "char_493_firwhl"
+    "internalName": "char_493_firwhl",
+    "nicheTiers": {
+      "aoe-physical-dps": "A",
+      "late-laneholder": "A",
+      "tanking-blocking-operators": "A"
+    }
   },
   "flamebringer": {
     "id": "flamebringer",
@@ -922,7 +1143,11 @@
     "cnName": "炎客",
     "jpName": "エンカク",
     "krName": "플레임브링어",
-    "internalName": "char_131_flameb"
+    "internalName": "char_131_flameb",
+    "nicheTiers": {
+      "free": "A",
+      "trash-operators": "A"
+    }
   },
   "flint": {
     "id": "flint",
@@ -938,7 +1163,11 @@
     "cnName": "燧石",
     "jpName": "フリント",
     "krName": "플린트",
-    "internalName": "char_415_flint"
+    "internalName": "char_415_flint",
+    "nicheTiers": {
+      "stalling": "A",
+      "trash-operators": "A"
+    }
   },
   "folinic": {
     "id": "folinic",
@@ -954,7 +1183,10 @@
     "twName": "亞葉",
     "jpName": "フォリニック",
     "krName": "폴리닉",
-    "internalName": "char_345_folnic"
+    "internalName": "char_345_folnic",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "franka": {
     "id": "franka",
@@ -971,7 +1203,11 @@
     "twName": "芙蘭卡",
     "jpName": "フランカ",
     "krName": "프란카",
-    "internalName": "char_106_franka"
+    "internalName": "char_106_franka",
+    "nicheTiers": {
+      "true_damage": "C",
+      "trash-operators": "A"
+    }
   },
   "frost": {
     "id": "frost",
@@ -988,7 +1224,11 @@
     "twName": "霜華",
     "jpName": "フロスト",
     "krName": "프로스트",
-    "internalName": "char_458_rfrost"
+    "internalName": "char_458_rfrost",
+    "nicheTiers": {
+      "physical-dps": "A",
+      "stalling": "A"
+    }
   },
   "fuze": {
     "id": "fuze",
@@ -1006,7 +1246,12 @@
     "twName": "導火索",
     "jpName": "フューズ",
     "krName": "퓨즈",
-    "internalName": "char_4126_fuze"
+    "internalName": "char_4126_fuze",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "physical-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "glaucus": {
     "id": "glaucus",
@@ -1023,7 +1268,11 @@
     "twName": "格勞克斯",
     "jpName": "グラウコス",
     "krName": "글라우쿠스",
-    "internalName": "char_326_glacus"
+    "internalName": "char_326_glacus",
+    "nicheTiers": {
+      "anti-air-operators": "C",
+      "trash-operators": "A"
+    }
   },
   "gracebearer": {
     "id": "gracebearer",
@@ -1040,7 +1289,12 @@
     "cnName": "聆音",
     "jpName": "グレースベアラー",
     "krName": "그레이스베어러",
-    "internalName": "char_4187_graceb"
+    "internalName": "char_4187_graceb",
+    "nicheTiers": {
+      "elemental-damage": "C",
+      "elemental-dps": "A",
+      "late-laneholder": "A"
+    }
   },
   "grain_buds": {
     "id": "grain_buds",
@@ -1056,7 +1310,10 @@
     "twName": "小滿",
     "jpName": "グレインバッズ",
     "krName": "그레인버즈",
-    "internalName": "char_4122_grabds"
+    "internalName": "char_4122_grabds",
+    "nicheTiers": {
+      "stalling": "A"
+    }
   },
   "grani": {
     "id": "grani",
@@ -1073,7 +1330,12 @@
     "cnName": "格拉尼",
     "jpName": "グラニ",
     "krName": "그라니",
-    "internalName": "char_220_grani"
+    "internalName": "char_220_grani",
+    "nicheTiers": {
+      "early-laneholder": "B",
+      "free": "A",
+      "trash-operators": "A"
+    }
   },
   "greythroat": {
     "id": "greythroat",
@@ -1089,7 +1351,11 @@
     "cnName": "灰喉",
     "jpName": "グレースロート",
     "krName": "그레이스롯",
-    "internalName": "char_367_swllow"
+    "internalName": "char_367_swllow",
+    "nicheTiers": {
+      "anti-air-operators": "A",
+      "physical-dps": "A"
+    }
   },
   "greyy_the_lightningbearer": {
     "id": "greyy_the_lightningbearer",
@@ -1105,7 +1371,11 @@
     "cnName": "承曦格雷伊",
     "jpName": "承しょう曦ぎグレイ",
     "krName": "그레이 더 라이트닝베어러",
-    "internalName": "char_1027_greyy2"
+    "internalName": "char_1027_greyy2",
+    "nicheTiers": {
+      "aoe-physical-dps": "B",
+      "physical-dps": "A"
+    }
   },
   "hadiya": {
     "id": "hadiya",
@@ -1133,7 +1403,11 @@
     "cnName": "和弦[note 1]",
     "jpName": "ハーモニー[note 2]",
     "krName": "아르모니",
-    "internalName": "char_297_hamoni"
+    "internalName": "char_297_hamoni",
+    "nicheTiers": {
+      "arts-dps": "B",
+      "trash-operators": "A"
+    }
   },
   "harold": {
     "id": "harold",
@@ -1150,7 +1424,12 @@
     "cnName": "哈洛德",
     "jpName": "ハロルド",
     "krName": "해럴드",
-    "internalName": "char_4114_harold"
+    "internalName": "char_4114_harold",
+    "nicheTiers": {
+      "elemental_damage_healers": "B",
+      "healing-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "heavyrain": {
     "id": "heavyrain",
@@ -1168,7 +1447,13 @@
     "cnName": "暴雨",
     "jpName": "ヘビーレイン",
     "krName": "헤비레인",
-    "internalName": "char_304_zebra"
+    "internalName": "char_304_zebra",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "synergies/enmity-healing": "A",
+      "tanking-blocking-operators": "A",
+      "unconventional-niches": "A"
+    }
   },
   "heidi": {
     "id": "heidi",
@@ -1186,7 +1471,13 @@
     "cnName": "海蒂",
     "jpName": "ハイディ",
     "krName": "하이디",
-    "internalName": "char_4045_heidi"
+    "internalName": "char_4045_heidi",
+    "nicheTiers": {
+      "damage-buff": "B",
+      "sp-battery": "C",
+      "synergies/enmity-healing": "A",
+      "free": "A"
+    }
   },
   "hibiscus_the_purifier": {
     "id": "hibiscus_the_purifier",
@@ -1204,7 +1495,12 @@
     "twName": "濯塵芙蓉",
     "jpName": "濯たく塵じんハイビスカス",
     "krName": "히비스커스 더 퓨리파이어",
-    "internalName": "char_1024_hbisc2"
+    "internalName": "char_1024_hbisc2",
+    "nicheTiers": {
+      "arts-dps": "D",
+      "healing-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "highmore": {
     "id": "highmore",
@@ -1221,7 +1517,12 @@
     "cnName": "海沫",
     "jpName": "ハイモア",
     "krName": "하이모어",
-    "internalName": "char_4066_highmo"
+    "internalName": "char_4066_highmo",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "tanking-blocking-operators": "A",
+      "free": "A"
+    }
   },
   "honeyberry": {
     "id": "honeyberry",
@@ -1238,7 +1539,12 @@
     "cnName": "蜜莓",
     "jpName": "ハニーベリー",
     "krName": "허니베리",
-    "internalName": "char_449_glider"
+    "internalName": "char_449_glider",
+    "nicheTiers": {
+      "elemental_damage_healers": "A",
+      "healing-operators": "A",
+      "free": "A"
+    }
   },
   "hung": {
     "id": "hung",
@@ -1253,7 +1559,10 @@
     "cnName": "吽",
     "jpName": "ウン",
     "krName": "훔",
-    "internalName": "char_226_hmau"
+    "internalName": "char_226_hmau",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "iana": {
     "id": "iana",
@@ -1268,7 +1577,10 @@
     "cnName": "双月",
     "jpName": "イアナ",
     "krName": "야나",
-    "internalName": "char_4124_iana"
+    "internalName": "char_4124_iana",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "indra": {
     "id": "indra",
@@ -1284,7 +1596,10 @@
     "twName": "因陀羅",
     "jpName": "インドラ",
     "krName": "인드라",
-    "internalName": "char_155_tiger"
+    "internalName": "char_155_tiger",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "insider": {
     "id": "insider",
@@ -1301,7 +1616,11 @@
     "twName": "隱現",
     "jpName": "インサイダー",
     "krName": "인사이더",
-    "internalName": "char_498_inside"
+    "internalName": "char_498_inside",
+    "nicheTiers": {
+      "physical-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "iris": {
     "id": "iris",
@@ -1318,7 +1637,11 @@
     "twName": "愛麗絲",
     "jpName": "アイリス",
     "krName": "아이리스",
-    "internalName": "char_338_iris"
+    "internalName": "char_338_iris",
+    "nicheTiers": {
+      "synergies/sleep": "A",
+      "trash-operators": "A"
+    }
   },
   "istina": {
     "id": "istina",
@@ -1334,7 +1657,11 @@
     "cnName": "真理",
     "jpName": "イースチナ",
     "krName": "이스티나",
-    "internalName": "char_195_glassb"
+    "internalName": "char_195_glassb",
+    "nicheTiers": {
+      "stalling": "A",
+      "trash-operators": "A"
+    }
   },
   "jieyun": {
     "id": "jieyun",
@@ -1352,7 +1679,12 @@
     "twName": "截雲",
     "jpName": "ジエユン",
     "krName": "지에윈",
-    "internalName": "char_4078_bdhkgt"
+    "internalName": "char_4078_bdhkgt",
+    "nicheTiers": {
+      "aoe-physical-dps": "B",
+      "free": "A",
+      "trash-operators": "A"
+    }
   },
   "kafka": {
     "id": "kafka",
@@ -1368,7 +1700,11 @@
     "cnName": "卡夫卡",
     "jpName": "カフカ",
     "krName": "카프카",
-    "internalName": "char_214_kafka"
+    "internalName": "char_214_kafka",
+    "nicheTiers": {
+      "fast-redeploy-operators": "B",
+      "synergies/sleep": "A"
+    }
   },
   "kazemaru": {
     "id": "kazemaru",
@@ -1385,7 +1721,11 @@
     "twName": "風丸",
     "jpName": "カゼマル",
     "krName": "카제마루",
-    "internalName": "char_4016_kazema"
+    "internalName": "char_4016_kazema",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "tanking-blocking-operators": "A"
+    }
   },
   "kestrel": {
     "id": "kestrel",
@@ -1403,7 +1743,12 @@
     "twName": "紅隼",
     "jpName": "ケストレル",
     "krName": "케스트럴",
-    "internalName": "char_4023_rfalcn"
+    "internalName": "char_4023_rfalcn",
+    "nicheTiers": {
+      "dp-generation": "C",
+      "early-laneholder": "C",
+      "trash-operators": "A"
+    }
   },
   "kichisei": {
     "id": "kichisei",
@@ -1431,7 +1776,10 @@
     "twName": "綺良",
     "jpName": "キララ",
     "krName": "키라라",
-    "internalName": "char_478_kirara"
+    "internalName": "char_478_kirara",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "kjera": {
     "id": "kjera",
@@ -1446,7 +1794,10 @@
     "cnName": "耶拉",
     "jpName": "イェラ",
     "krName": "쉐라",
-    "internalName": "char_4013_kjera"
+    "internalName": "char_4013_kjera",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "kroos_the_keen_glint": {
     "id": "kroos_the_keen_glint",
@@ -1464,7 +1815,12 @@
     "twName": "寒芒克洛絲",
     "jpName": "寒かん芒ぼうクルース",
     "krName": "크루스 더 킨 글린트",
-    "internalName": "char_1021_kroos2"
+    "internalName": "char_1021_kroos2",
+    "nicheTiers": {
+      "anti-air-operators": "S",
+      "physical-dps": "A",
+      "stalling": "A"
+    }
   },
   "la_pluma": {
     "id": "la_pluma",
@@ -1480,7 +1836,10 @@
     "twName": "羽毛筆",
     "jpName": "ラ・プルマ",
     "krName": "라 플루마",
-    "internalName": "char_421_crow"
+    "internalName": "char_421_crow",
+    "nicheTiers": {
+      "late-laneholder": "A"
+    }
   },
   "laios": {
     "id": "laios",
@@ -1496,7 +1855,10 @@
     "twName": "萊歐斯",
     "jpName": "ライオス",
     "krName": "라이오스",
-    "internalName": "char_4142_laios"
+    "internalName": "char_4142_laios",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "lappland": {
     "id": "lappland",
@@ -1514,7 +1876,12 @@
     "twName": "拉普蘭德",
     "jpName": "ラップランド",
     "krName": "라플란드",
-    "internalName": "char_140_whitew"
+    "internalName": "char_140_whitew",
+    "nicheTiers": {
+      "arts-dps": "A",
+      "physical-dps": "A",
+      "silence": "SS"
+    }
   },
   "lava_the_purgatory": {
     "id": "lava_the_purgatory",
@@ -1531,7 +1898,11 @@
     "twName": "炎獄炎熔",
     "jpName": "炎えん獄ごくラヴァ",
     "krName": "라바 더 퍼거토리",
-    "internalName": "char_1011_lava2"
+    "internalName": "char_1011_lava2",
+    "nicheTiers": {
+      "aoe-arts-dps": "D",
+      "trash-operators": "A"
+    }
   },
   "leizi": {
     "id": "leizi",
@@ -1547,7 +1918,10 @@
     "twName": "驚蟄",
     "jpName": "レイズ",
     "krName": "레이즈",
-    "internalName": "char_306_leizi"
+    "internalName": "char_306_leizi",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "leonhardt": {
     "id": "leonhardt",
@@ -1563,7 +1937,10 @@
     "twName": "萊恩哈特",
     "jpName": "レオンハルト",
     "krName": "레온하르트",
-    "internalName": "char_373_lionhd"
+    "internalName": "char_373_lionhd",
+    "nicheTiers": {
+      "aoe-arts-dps": "B"
+    }
   },
   "leto": {
     "id": "leto",
@@ -1579,7 +1956,11 @@
     "cnName": "烈夏",
     "jpName": "リェータ",
     "krName": "레토",
-    "internalName": "char_194_leto"
+    "internalName": "char_194_leto",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "physical-dps": "A"
+    }
   },
   "liskarm": {
     "id": "liskarm",
@@ -1595,7 +1976,11 @@
     "cnName": "雷蛇",
     "jpName": "リスカム",
     "krName": "리스캄",
-    "internalName": "char_107_liskam"
+    "internalName": "char_107_liskam",
+    "nicheTiers": {
+      "sp-battery": "S",
+      "tanking-blocking-operators": "A"
+    }
   },
   "lucilla": {
     "id": "lucilla",
@@ -1611,7 +1996,11 @@
     "cnName": "海霓",
     "jpName": "ルシーラ",
     "krName": "루실라",
-    "internalName": "char_4079_haini"
+    "internalName": "char_4079_haini",
+    "nicheTiers": {
+      "fragile": "C",
+      "trash-operators": "A"
+    }
   },
   "lunacub": {
     "id": "lunacub",
@@ -1626,7 +2015,11 @@
     ],
     "cnName": "子月",
     "jpName": "ルナカブ",
-    "internalName": "char_4014_lunacu"
+    "internalName": "char_4014_lunacu",
+    "nicheTiers": {
+      "physical-dps": "A",
+      "unconventional-niches": "A"
+    }
   },
   "manticore": {
     "id": "manticore",
@@ -1642,7 +2035,10 @@
     "twName": "獅蠍",
     "jpName": "マンティコア",
     "krName": "맨티코어",
-    "internalName": "char_215_mantic"
+    "internalName": "char_215_mantic",
+    "nicheTiers": {
+      "stalling": "A"
+    }
   },
   "matsukiri": {
     "id": "matsukiri",
@@ -1670,7 +2066,10 @@
     "twName": "梅爾",
     "jpName": "メイヤー",
     "krName": "메이어",
-    "internalName": "char_242_otter"
+    "internalName": "char_242_otter",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "melanite": {
     "id": "melanite",
@@ -1686,7 +2085,11 @@
     "cnName": "玫拉",
     "jpName": "メラナイト",
     "krName": "멜라나이트",
-    "internalName": "char_4006_melnte"
+    "internalName": "char_4006_melnte",
+    "nicheTiers": {
+      "physical-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "meteorite": {
     "id": "meteorite",
@@ -1702,7 +2105,10 @@
     "twName": "隕星",
     "jpName": "メテオリーテ",
     "krName": "메테오라이트",
-    "internalName": "char_219_meteo"
+    "internalName": "char_219_meteo",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "minimalist": {
     "id": "minimalist",
@@ -1719,7 +2125,11 @@
     "twName": "至簡",
     "jpName": "ミニマリスト",
     "krName": "미니멀리스트",
-    "internalName": "char_4054_malist"
+    "internalName": "char_4054_malist",
+    "nicheTiers": {
+      "arts-dps": "C",
+      "trash-operators": "A"
+    }
   },
   "mint": {
     "id": "mint",
@@ -1736,7 +2146,11 @@
     "twName": "薄綠",
     "jpName": "ミント",
     "krName": "민트",
-    "internalName": "char_388_mint"
+    "internalName": "char_388_mint",
+    "nicheTiers": {
+      "tanking-blocking-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "miss_christine": {
     "id": "miss_christine",
@@ -1752,7 +2166,12 @@
     ],
     "jpName": "ミス・クリスティーン",
     "krName": "미스 크리스틴",
-    "internalName": "char_4198_christ"
+    "internalName": "char_4198_christ",
+    "nicheTiers": {
+      "elemental-damage": "C",
+      "elemental-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "misumi_uika": {
     "id": "misumi_uika",
@@ -1783,7 +2202,12 @@
     "cnName": "渡桥",
     "jpName": "ミトム",
     "krName": "님프",
-    "internalName": "char_4147_mitm"
+    "internalName": "char_4147_mitm",
+    "nicheTiers": {
+      "dp-generation": "C",
+      "early-laneholder": "A",
+      "trash-operators": "A"
+    }
   },
   "morgan": {
     "id": "morgan",
@@ -1797,7 +2221,10 @@
     ],
     "cnName": "摩根",
     "jpName": "モーガン",
-    "internalName": "char_154_morgan"
+    "internalName": "char_154_morgan",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "mr_nothing": {
     "id": "mr_nothing",
@@ -1813,7 +2240,10 @@
     "twName": "烏有",
     "jpName": "ウユウ",
     "krName": "우요우",
-    "internalName": "char_455_nothin"
+    "internalName": "char_455_nothin",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "mulberry": {
     "id": "mulberry",
@@ -1829,7 +2259,11 @@
     "cnName": "桑葚",
     "jpName": "マルベリー",
     "krName": "멀베리",
-    "internalName": "char_473_mberry"
+    "internalName": "char_473_mberry",
+    "nicheTiers": {
+      "elemental_damage_healers": "A",
+      "healing-operators": "A"
+    }
   },
   "nearl": {
     "id": "nearl",
@@ -1846,7 +2280,11 @@
     "twName": "臨光",
     "jpName": "ニアール",
     "krName": "니어",
-    "internalName": "char_148_nearl"
+    "internalName": "char_148_nearl",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "tanking-blocking-operators": "A"
+    }
   },
   "nightmare": {
     "id": "nightmare",
@@ -1863,7 +2301,12 @@
     "cnName": "夜魔",
     "jpName": "ナイトメア",
     "krName": "나이트메어",
-    "internalName": "char_164_nightm"
+    "internalName": "char_164_nightm",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "stalling": "A",
+      "trash-operators": "A"
+    }
   },
   "nine_colored_deer": {
     "id": "nine_colored_deer",
@@ -1881,7 +2324,13 @@
     "cnName": "九色鹿",
     "jpName": "九く色しき鹿ろく",
     "krName": "나인컬러드 디어",
-    "internalName": "char_4019_ncdeer"
+    "internalName": "char_4019_ncdeer",
+    "nicheTiers": {
+      "def-buff": "A",
+      "healing-operators": "A",
+      "res-buff": "A",
+      "trash-operators": "A"
+    }
   },
   "nowell": {
     "id": "nowell",
@@ -1898,7 +2347,11 @@
     "twName": "諾威爾",
     "jpName": "ノウエル",
     "krName": "노웰",
-    "internalName": "char_4173_nowell"
+    "internalName": "char_4173_nowell",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "odda": {
     "id": "odda",
@@ -1917,7 +2370,13 @@
     "twName": "奧達",
     "jpName": "オッダ",
     "krName": "오다",
-    "internalName": "char_4131_odda"
+    "internalName": "char_4131_odda",
+    "nicheTiers": {
+      "aoe-physical-dps": "C",
+      "late-laneholder": "A",
+      "physical-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "paprika": {
     "id": "paprika",
@@ -1933,7 +2392,11 @@
     "cnName": "明椒",
     "jpName": "パプリカ",
     "krName": "파프리카",
-    "internalName": "char_4071_peper"
+    "internalName": "char_4071_peper",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "papyrus": {
     "id": "papyrus",
@@ -1948,7 +2411,10 @@
     "cnName": "莎草",
     "jpName": "パピルス",
     "krName": "파피루스",
-    "internalName": "char_4139_papyrs"
+    "internalName": "char_4139_papyrs",
+    "nicheTiers": {
+      "healing-operators": "A"
+    }
   },
   "philae": {
     "id": "philae",
@@ -1965,7 +2431,12 @@
     "cnName": "菲莱",
     "jpName": "フィラエ",
     "krName": "필라에",
-    "internalName": "char_4148_philae"
+    "internalName": "char_4148_philae",
+    "nicheTiers": {
+      "elemental-damage": "B",
+      "late-laneholder": "A",
+      "tanking-blocking-operators": "A"
+    }
   },
   "platinum": {
     "id": "platinum",
@@ -1981,7 +2452,11 @@
     "cnName": "白金",
     "jpName": "プラチナ",
     "krName": "플래티넘",
-    "internalName": "char_204_platnm"
+    "internalName": "char_204_platnm",
+    "nicheTiers": {
+      "anti-air-operators": "A",
+      "physical-dps": "A"
+    }
   },
   "poncirus": {
     "id": "poncirus",
@@ -1998,7 +2473,12 @@
     "cnName": "青枳",
     "jpName": "ポンシラス",
     "krName": "폰사이러스",
-    "internalName": "char_488_buildr"
+    "internalName": "char_488_buildr",
+    "nicheTiers": {
+      "dp-generation": "A",
+      "early-laneholder": "B",
+      "trash-operators": "A"
+    }
   },
   "pramanix": {
     "id": "pramanix",
@@ -2014,7 +2494,11 @@
     "cnName": "初雪",
     "jpName": "プラマニクス",
     "krName": "프라마닉스",
-    "internalName": "char_174_slbell"
+    "internalName": "char_174_slbell",
+    "nicheTiers": {
+      "def-shred": "SS",
+      "res-shred": "S"
+    }
   },
   "projekt_red": {
     "id": "projekt_red",
@@ -2030,7 +2514,10 @@
     "twName": "紅",
     "jpName": "レッド",
     "krName": "레드",
-    "internalName": "char_144_red"
+    "internalName": "char_144_red",
+    "nicheTiers": {
+      "fast-redeploy-operators": "A"
+    }
   },
   "provence": {
     "id": "provence",
@@ -2046,7 +2533,10 @@
     "twName": "普羅旺斯",
     "jpName": "プロヴァンス",
     "krName": "프로방스",
-    "internalName": "char_145_prove"
+    "internalName": "char_145_prove",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "proviso": {
     "id": "proviso",
@@ -2062,7 +2552,10 @@
     "twName": "但書",
     "jpName": "プロヴァイゾ",
     "krName": "프로바이조",
-    "internalName": "char_4032_provs"
+    "internalName": "char_4032_provs",
+    "nicheTiers": {
+      "stalling": "A"
+    }
   },
   "ptilopsis": {
     "id": "ptilopsis",
@@ -2079,7 +2572,11 @@
     "twName": "白面鴞",
     "jpName": "フィリオプシス",
     "krName": "프틸롭시스",
-    "internalName": "char_128_plosis"
+    "internalName": "char_128_plosis",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "sp-battery": "SS"
+    }
   },
   "puzzle": {
     "id": "puzzle",
@@ -2097,7 +2594,12 @@
     "twName": "謎圖",
     "jpName": "パズル",
     "krName": "퍼즐",
-    "internalName": "char_4017_puzzle"
+    "internalName": "char_4017_puzzle",
+    "nicheTiers": {
+      "dp-generation": "S",
+      "early-laneholder": "S",
+      "fast-redeploy-operators": "S"
+    }
   },
   "qanipalaat": {
     "id": "qanipalaat",
@@ -2114,7 +2616,11 @@
     "twName": "雪絨",
     "jpName": "カニパラート",
     "krName": "카니팔라트",
-    "internalName": "char_466_qanik"
+    "internalName": "char_466_qanik",
+    "nicheTiers": {
+      "arts-dps": "C",
+      "trash-operators": "A"
+    }
   },
   "quercus": {
     "id": "quercus",
@@ -2133,7 +2639,13 @@
     "twName": "夏櫟",
     "jpName": "クエルクス",
     "krName": "퀘르쿠스",
-    "internalName": "char_492_quercu"
+    "internalName": "char_492_quercu",
+    "nicheTiers": {
+      "def-buff": "A",
+      "healing-operators": "A",
+      "res-buff": "A",
+      "sp-battery": "A"
+    }
   },
   "rathalos_s_noir_corne": {
     "id": "rathalos_s_noir_corne",
@@ -2151,7 +2663,12 @@
     "twName": "火龍S黑角",
     "jpName": "レウスSノイルホーン",
     "krName": "레우스S 느와르 코르네",
-    "internalName": "char_1030_noirc2"
+    "internalName": "char_1030_noirc2",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "physical-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "record_keeper": {
     "id": "record_keeper",
@@ -2168,7 +2685,11 @@
     "twName": "錄武官",
     "jpName": "レコードキーパー",
     "krName": "레코드키퍼",
-    "internalName": "char_4196_reckpr"
+    "internalName": "char_4196_reckpr",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "reed": {
     "id": "reed",
@@ -2186,7 +2707,12 @@
     "twName": "葦草",
     "jpName": "リード",
     "krName": "리드",
-    "internalName": "char_261_sddrag"
+    "internalName": "char_261_sddrag",
+    "nicheTiers": {
+      "dp-generation": "C",
+      "physical-dps": "A",
+      "trash-operators": "A"
+    }
   },
   "robin": {
     "id": "robin",
@@ -2203,7 +2729,11 @@
     "twName": "羅賓",
     "jpName": "ロビン",
     "krName": "로빈",
-    "internalName": "char_451_robin"
+    "internalName": "char_451_robin",
+    "nicheTiers": {
+      "shift": "B",
+      "stalling": "A"
+    }
   },
   "rockrock": {
     "id": "rockrock",
@@ -2218,7 +2748,10 @@
     "cnName": "洛洛",
     "jpName": "ロックロック",
     "krName": "락락",
-    "internalName": "char_4040_rockr"
+    "internalName": "char_4040_rockr",
+    "nicheTiers": {
+      "arts-dps": "B"
+    }
   },
   "rose_salt": {
     "id": "rose_salt",
@@ -2233,7 +2766,10 @@
     "cnName": "瑰盐",
     "jpName": "ローズソルト",
     "krName": "로즈솔트",
-    "internalName": "char_4163_rosesa"
+    "internalName": "char_4163_rosesa",
+    "nicheTiers": {
+      "healing-operators": "A"
+    }
   },
   "sand_reckoner": {
     "id": "sand_reckoner",
@@ -2249,7 +2785,11 @@
     "cnName": "衡沙",
     "jpName": "サンドレコナー",
     "krName": "샌드레코너",
-    "internalName": "char_4140_lasher"
+    "internalName": "char_4140_lasher",
+    "nicheTiers": {
+      "stalling": "A",
+      "trash-operators": "A"
+    }
   },
   "santalla": {
     "id": "santalla",
@@ -2265,7 +2805,11 @@
     "cnName": "寒檀",
     "jpName": "サンタラ",
     "krName": "산탈라",
-    "internalName": "char_341_sntlla"
+    "internalName": "char_341_sntlla",
+    "nicheTiers": {
+      "arts-dps": "C",
+      "trash-operators": "A"
+    }
   },
   "savage": {
     "id": "savage",
@@ -2280,7 +2824,10 @@
     "cnName": "暴行",
     "jpName": "サベージ",
     "krName": "새비지",
-    "internalName": "char_230_savage"
+    "internalName": "char_230_savage",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "scene": {
     "id": "scene",
@@ -2295,7 +2842,10 @@
     "cnName": "稀音",
     "jpName": "シーン",
     "krName": "씬",
-    "internalName": "char_336_folivo"
+    "internalName": "char_336_folivo",
+    "nicheTiers": {
+      "unconventional-niches": "A"
+    }
   },
   "senshi": {
     "id": "senshi",
@@ -2314,7 +2864,13 @@
     "twName": "先西",
     "jpName": "センシ",
     "krName": "센시",
-    "internalName": "char_4143_sensi"
+    "internalName": "char_4143_sensi",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "late-laneholder": "A",
+      "tanking-blocking-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "sesa": {
     "id": "sesa",
@@ -2331,7 +2887,11 @@
     "twName": "懾砂",
     "jpName": "シェーシャ",
     "krName": "세사",
-    "internalName": "char_379_sesa"
+    "internalName": "char_379_sesa",
+    "nicheTiers": {
+      "trash-operators": "A",
+      "unconventional-niches": "A"
+    }
   },
   "shalem": {
     "id": "shalem",
@@ -2347,7 +2907,11 @@
     "cnName": "暮落",
     "jpName": "シャレム",
     "krName": "샬렘",
-    "internalName": "char_4025_aprot2"
+    "internalName": "char_4025_aprot2",
+    "nicheTiers": {
+      "free": "A",
+      "trash-operators": "A"
+    }
   },
   "shamare": {
     "id": "shamare",
@@ -2366,7 +2930,13 @@
     "twName": "巫戀",
     "jpName": "シャマレ",
     "krName": "샤마르",
-    "internalName": "char_254_vodfox"
+    "internalName": "char_254_vodfox",
+    "nicheTiers": {
+      "atk-debuff": "S",
+      "def-shred": "SS",
+      "fragile": "SS",
+      "global-range": "A"
+    }
   },
   "sideroca": {
     "id": "sideroca",
@@ -2383,7 +2953,12 @@
     "cnName": "铸铁",
     "jpName": "シデロカ",
     "krName": "시데로카",
-    "internalName": "char_333_sidero"
+    "internalName": "char_333_sidero",
+    "nicheTiers": {
+      "tanking-blocking-operators": "A",
+      "free": "A",
+      "trash-operators": "A"
+    }
   },
   "silence": {
     "id": "silence",
@@ -2400,7 +2975,12 @@
     "cnName": "赫默",
     "jpName": "サイレンス",
     "krName": "사일런스",
-    "internalName": "char_108_silent"
+    "internalName": "char_108_silent",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "global-range": "A",
+      "unconventional-niches": "A"
+    }
   },
   "skybox": {
     "id": "skybox",
@@ -2426,7 +3006,10 @@
     "cnName": "天火",
     "jpName": "スカイフレア",
     "krName": "스카이파이어",
-    "internalName": "char_166_skfire"
+    "internalName": "char_166_skfire",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "snow_hunter": {
     "id": "snow_hunter",
@@ -2452,7 +3035,10 @@
     "cnName": "雪雉",
     "jpName": "スノーズント",
     "krName": "스노우상트",
-    "internalName": "char_383_snsant"
+    "internalName": "char_383_snsant",
+    "nicheTiers": {
+      "shift": "A"
+    }
   },
   "sora": {
     "id": "sora",
@@ -2470,7 +3056,13 @@
     "cnName": "空",
     "jpName": "ソラ",
     "krName": "소라",
-    "internalName": "char_101_sora"
+    "internalName": "char_101_sora",
+    "nicheTiers": {
+      "damage-buff": "B",
+      "synergies/enmity-healing": "A",
+      "synergies/sleep": "A",
+      "trash-operators": "A"
+    }
   },
   "specter": {
     "id": "specter",
@@ -2487,7 +3079,11 @@
     "twName": "幽靈鯊",
     "jpName": "スペクター",
     "krName": "스펙터",
-    "internalName": "char_143_ghost"
+    "internalName": "char_143_ghost",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "tanking-blocking-operators": "A"
+    }
   },
   "spuria": {
     "id": "spuria",
@@ -2504,7 +3100,11 @@
     "twName": "空構",
     "jpName": "スプリア",
     "krName": "스푸리아",
-    "internalName": "char_4015_spuria"
+    "internalName": "char_4015_spuria",
+    "nicheTiers": {
+      "damage-buff": "B",
+      "trash-operators": "A"
+    }
   },
   "surfer": {
     "id": "surfer",
@@ -2521,7 +3121,12 @@
     "cnName": "寻澜",
     "jpName": "サーファー",
     "krName": "서퍼",
-    "internalName": "char_4052_surfer"
+    "internalName": "char_4052_surfer",
+    "nicheTiers": {
+      "dp-generation": "S",
+      "early-laneholder": "S",
+      "fast-redeploy-operators": "S"
+    }
   },
   "swire": {
     "id": "swire",
@@ -2538,7 +3143,11 @@
     "twName": "詩懷雅",
     "jpName": "スワイヤー",
     "krName": "스와이어",
-    "internalName": "char_308_swire"
+    "internalName": "char_308_swire",
+    "nicheTiers": {
+      "damage-buff": "C",
+      "trash-operators": "A"
+    }
   },
   "tachanka": {
     "id": "tachanka",
@@ -2554,7 +3163,10 @@
     "twName": "戰車",
     "jpName": "タチャンカ",
     "krName": "타찬카",
-    "internalName": "char_459_tachak"
+    "internalName": "char_459_tachak",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "tecno": {
     "id": "tecno",
@@ -2571,7 +3183,12 @@
     "cnName": "特克诺",
     "jpName": "テクノ",
     "krName": "테크노",
-    "internalName": "char_4164_tecno"
+    "internalName": "char_4164_tecno",
+    "nicheTiers": {
+      "arts-dps": "C",
+      "stalling": "A",
+      "trash-operators": "A"
+    }
   },
   "tequila": {
     "id": "tequila",
@@ -2588,7 +3205,11 @@
     "twName": "龍舌蘭",
     "jpName": "テキーラ",
     "krName": "테킬라",
-    "internalName": "char_486_takila"
+    "internalName": "char_486_takila",
+    "nicheTiers": {
+      "aoe-physical-dps": "C",
+      "tanking-blocking-operators": "A"
+    }
   },
   "texas": {
     "id": "texas",
@@ -2606,7 +3227,12 @@
     "twName": "德克薩斯",
     "jpName": "テキサス",
     "krName": "텍사스",
-    "internalName": "char_102_texas"
+    "internalName": "char_102_texas",
+    "nicheTiers": {
+      "dp-generation": "A",
+      "early-laneholder": "A",
+      "stalling": "A"
+    }
   },
   "tin_man": {
     "id": "tin_man",
@@ -2624,7 +3250,12 @@
     "twName": "錫人",
     "jpName": "ブリキ",
     "krName": "틴맨",
-    "internalName": "char_4151_tinman"
+    "internalName": "char_4151_tinman",
+    "nicheTiers": {
+      "aoe-arts-dps": "D",
+      "atk-debuff": "A",
+      "synergies/enmity-healing": "A"
+    }
   },
   "tippi": {
     "id": "tippi",
@@ -2640,7 +3271,11 @@
     "cnName": "蒂比",
     "jpName": "ティッピ",
     "krName": "티피",
-    "internalName": "char_4191_tippi"
+    "internalName": "char_4191_tippi",
+    "nicheTiers": {
+      "trash-operators": "A",
+      "unconventional-niches": "A"
+    }
   },
   "toddifons": {
     "id": "toddifons",
@@ -2656,7 +3291,11 @@
     "cnName": "熔泉",
     "jpName": "トギフォンス",
     "krName": "토디폰스",
-    "internalName": "char_363_toddi"
+    "internalName": "char_363_toddi",
+    "nicheTiers": {
+      "trash-operators": "A",
+      "unconventional-niches": "A"
+    }
   },
   "tomimi": {
     "id": "tomimi",
@@ -2672,7 +3311,11 @@
     "cnName": "特米米",
     "jpName": "トミミ",
     "krName": "토미미",
-    "internalName": "char_411_tomimi"
+    "internalName": "char_411_tomimi",
+    "nicheTiers": {
+      "free": "A",
+      "trash-operators": "A"
+    }
   },
   "tsukinogi": {
     "id": "tsukinogi",
@@ -2689,7 +3332,12 @@
     "cnName": "月禾",
     "jpName": "ツキノギ",
     "krName": "츠키노기",
-    "internalName": "char_343_tknogi"
+    "internalName": "char_343_tknogi",
+    "nicheTiers": {
+      "def-buff": "B",
+      "res-buff": "C",
+      "trash-operators": "A"
+    }
   },
   "tuye": {
     "id": "tuye",
@@ -2705,7 +3353,10 @@
     "twName": "圖耶",
     "jpName": "トゥイエ",
     "krName": "투예",
-    "internalName": "char_402_tuye"
+    "internalName": "char_402_tuye",
+    "nicheTiers": {
+      "healing-operators": "A"
+    }
   },
   "underflow": {
     "id": "underflow",
@@ -2721,7 +3372,12 @@
     ],
     "cnName": "深巡",
     "jpName": "アンダーフロー",
-    "internalName": "char_4137_udflow"
+    "internalName": "char_4137_udflow",
+    "nicheTiers": {
+      "late-laneholder": "A",
+      "physical-dps": "A",
+      "tanking-blocking-operators": "A"
+    }
   },
   "valarqvin": {
     "id": "valarqvin",
@@ -2738,7 +3394,11 @@
     "twName": "凜視",
     "jpName": "ヴァラルクビン",
     "krName": "발라크빈",
-    "internalName": "char_4102_threye"
+    "internalName": "char_4102_threye",
+    "nicheTiers": {
+      "elemental-damage": "B",
+      "free": "A"
+    }
   },
   "vendela": {
     "id": "vendela",
@@ -2754,7 +3414,11 @@
     "cnName": "刺玫",
     "jpName": "ヴァンデラ",
     "krName": "벤델라",
-    "internalName": "char_494_vendla"
+    "internalName": "char_494_vendla",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "vetochki": {
     "id": "vetochki",
@@ -2780,7 +3444,10 @@
     "cnName": "火神",
     "jpName": "ヴァルカン",
     "krName": "벌컨",
-    "internalName": "char_163_hpsts"
+    "internalName": "char_163_hpsts",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "waai_fu": {
     "id": "waai_fu",
@@ -2797,7 +3464,12 @@
     "cnName": "槐琥",
     "jpName": "ワイフー",
     "krName": "와이후",
-    "internalName": "char_243_waaifu"
+    "internalName": "char_243_waaifu",
+    "nicheTiers": {
+      "fast-redeploy-operators": "B",
+      "silence": "B",
+      "trash-operators": "A"
+    }
   },
   "wakaba_mutsumi": {
     "id": "wakaba_mutsumi",
@@ -2827,7 +3499,10 @@
     "twName": "萬頃",
     "jpName": "ワンチィン",
     "krName": "완칭",
-    "internalName": "char_4119_wanqin"
+    "internalName": "char_4119_wanqin",
+    "nicheTiers": {
+      "dp-generation": "SS"
+    }
   },
   "warfarin": {
     "id": "warfarin",
@@ -2845,7 +3520,12 @@
     "twName": "華法琳",
     "jpName": "ワルファリン",
     "krName": "와파린",
-    "internalName": "char_171_bldsk"
+    "internalName": "char_171_bldsk",
+    "nicheTiers": {
+      "damage-buff": "SS",
+      "healing-operators": "A",
+      "sp-battery": "S"
+    }
   },
   "warmy": {
     "id": "warmy",
@@ -2863,7 +3543,12 @@
     "twName": "溫米",
     "jpName": "ウォーミー",
     "krName": "워미",
-    "internalName": "char_4081_warmy"
+    "internalName": "char_4081_warmy",
+    "nicheTiers": {
+      "elemental-damage": "C",
+      "elemental-dps": "S",
+      "trash-operators": "A"
+    }
   },
   "whislash": {
     "id": "whislash",
@@ -2879,7 +3564,11 @@
     "cnName": "鞭刃",
     "jpName": "ウィスラッシュ",
     "krName": "위슬래시",
-    "internalName": "char_265_sophia"
+    "internalName": "char_265_sophia",
+    "nicheTiers": {
+      "damage-buff": "C",
+      "def-buff": "C"
+    }
   },
   "whisperain": {
     "id": "whisperain",
@@ -2895,7 +3584,11 @@
     "cnName": "絮雨",
     "jpName": "ウィスパーレイン",
     "krName": "위스퍼레인",
-    "internalName": "char_436_whispr"
+    "internalName": "char_436_whispr",
+    "nicheTiers": {
+      "healing-operators": "A",
+      "trash-operators": "A"
+    }
   },
   "wild_mane": {
     "id": "wild_mane",
@@ -2912,7 +3605,12 @@
     "cnName": "野鬃",
     "jpName": "ワイルドメイン",
     "krName": "와일드메인",
-    "internalName": "char_496_wildmn"
+    "internalName": "char_496_wildmn",
+    "nicheTiers": {
+      "shift": "B",
+      "stalling": "A",
+      "trash-operators": "A"
+    }
   },
   "wind_chimes": {
     "id": "wind_chimes",
@@ -2928,7 +3626,10 @@
     "twName": "鐸鈴",
     "jpName": "ウィンドチャイム",
     "krName": "윈드차임스",
-    "internalName": "char_4083_chimes"
+    "internalName": "char_4083_chimes",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "windflit": {
     "id": "windflit",
@@ -2944,7 +3645,10 @@
     "twName": "掠風",
     "jpName": "ウィンドフリット",
     "krName": "윈드플릿",
-    "internalName": "char_433_windft"
+    "internalName": "char_433_windft",
+    "nicheTiers": {
+      "trash-operators": "A"
+    }
   },
   "wulfenite": {
     "id": "wulfenite",
@@ -2960,7 +3664,11 @@
     "cnName": "钼铅",
     "jpName": "ウルフェナイト",
     "krName": "울페나이트",
-    "internalName": "char_4171_wulfen"
+    "internalName": "char_4171_wulfen",
+    "nicheTiers": {
+      "stalling": "A",
+      "global-range": "A"
+    }
   },
   "xingzhu": {
     "id": "xingzhu",
@@ -2978,7 +3686,13 @@
     "cnName": "行箸",
     "jpName": "シィンズゥ",
     "krName": "싱주",
-    "internalName": "char_4172_xingzh"
+    "internalName": "char_4172_xingzh",
+    "nicheTiers": {
+      "def-buff": "B",
+      "healing-operators": "A",
+      "res-buff": "C",
+      "trash-operators": "A"
+    }
   },
   "yahata_umiri": {
     "id": "yahata_umiri",
@@ -3023,6 +3737,11 @@
     "cnName": "凛冬",
     "jpName": "ズィマー",
     "krName": "지마",
-    "internalName": "char_115_headbr"
+    "internalName": "char_115_headbr",
+    "nicheTiers": {
+      "def-buff": "A",
+      "dp-generation": "A",
+      "early-laneholder": "A"
+    }
   }
 }
