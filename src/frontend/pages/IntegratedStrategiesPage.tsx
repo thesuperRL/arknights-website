@@ -13,8 +13,18 @@ function getIntegratedStrategiesRecommendation(
   currentTeamOperatorIds: string[],
   requiredClasses: string[],
   temporaryRecruitment?: string,
-  currentHope?: number
+  currentHope?: number,
+  hopeCosts?: Record<number, number>
 ): { recommendedOperator: Operator | null; reasoning: string; score: number } {
+  // Helper functions for hope costs
+  const getHopeCost = (rarity: number): number => {
+    return hopeCosts?.[rarity] ?? 0;
+  };
+
+  const getActualHopeCost = (rarity: number): number => {
+    return hopeCosts?.[rarity] ?? 0;
+  };
+
   // Temporarily add the recruitment operator to raised operators (considered owned & raised)
   let effectiveRaisedOperators = [...raisedOperatorIds];
   if (temporaryRecruitment && allOperators[temporaryRecruitment]) {
@@ -223,9 +233,27 @@ function getIntegratedStrategiesRecommendation(
     const classText = requiredClasses.length === 1
       ? requiredClasses[0]
       : `${requiredClasses.join(' or ')}`;
+
+    // Count valid operators (raised, correct class, sufficient hope)
+    const validOperatorsCount = raisedOperatorIds.filter(id => {
+      const operator = allOperators[id];
+      if (!operator) return false;
+
+      // Check class constraint
+      if (!requiredClasses.includes(operator.class)) return false;
+
+      // Check hope constraint (if hope tracking is enabled)
+      if (currentHope !== undefined) {
+        const hopeCost = getHopeCost(operator.rarity || 1);
+        if (currentHope < hopeCost) return false;
+      }
+
+      return true;
+    }).length;
+
     return {
       recommendedOperator: null,
-      reasoning: `No suitable ${classText} raised operators found for your team composition.`,
+      reasoning: `No suitable ${classText} operators found for your team composition. You have ${validOperatorsCount} valid ${classText} operators available.`,
       score: 0
     };
   }
@@ -343,26 +371,6 @@ const CLASS_OPTIONS = [
   'Specialist'
 ];
 
-// Helper function to get hope cost for an operator
-const getHopeCost = (rarity: number): number => {
-  if (rarity === 6) return 6;
-  if (rarity === 5) return 3;
-  return 0; // 4-stars and below cost 0 hope
-};
-
-// Get actual hope cost for penalty calculations
-const getActualHopeCost = (rarity: number): number => {
-  switch (rarity) {
-    case 6: return 50;
-    case 5: return 30;
-    case 4: return 20;
-    case 3: return 15;
-    case 2: return 10;
-    case 1: return 5;
-    default: return 0;
-  }
-};
-
 const IntegratedStrategiesPage: React.FC = () => {
   const { user } = useAuth();
   const { language } = useLanguage();
@@ -383,6 +391,17 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [showTempRecruitmentModal, setShowTempRecruitmentModal] = useState(false);
   const [tempRecruitmentSearch, setTempRecruitmentSearch] = useState('');
   const [currentHope, setCurrentHope] = useState<number>(0);
+  const [hopeCosts, setHopeCosts] = useState<Record<number, number>>({
+    6: 6,
+    5: 3,
+    4: 0
+  });
+
+  // Helper function to get hope cost for an operator
+  const getHopeCost = (rarity: number): number => {
+    return hopeCosts[rarity] ?? 0;
+  };
+
 
   useEffect(() => {
     if (user) {
@@ -442,15 +461,7 @@ const IntegratedStrategiesPage: React.FC = () => {
       return;
     }
 
-    // Check if user has enough hope (skip for temporary recruitment)
-    if (!temporaryRecruitment || temporaryRecruitment !== operatorId) {
-      const hopeCost = getHopeCost(operator.rarity || 1);
-      if (currentHope < hopeCost) {
-        setError(`Not enough hope! This ${operator.rarity}-star operator requires ${hopeCost} hope.`);
-        return;
-      }
-      setCurrentHope(prev => prev - hopeCost);
-    }
+    // Note: Hope checking removed - users can add operators to team regardless of hope availability
 
     setSelectedOperators(prev => [...prev, { operatorId, operator }]);
     setRecommendation(null); // Clear recommendation when team changes
@@ -486,7 +497,8 @@ const IntegratedStrategiesPage: React.FC = () => {
         operatorIds,
         Array.from(requiredClasses),
         temporaryRecruitment || undefined,
-        currentHope
+        currentHope,
+        hopeCosts
       );
 
       setRecommendation(result);
@@ -573,19 +585,77 @@ const IntegratedStrategiesPage: React.FC = () => {
           <div className="hope-requirements">
             <div className="hope-requirement">
               <span className="hope-stars">★★★★★★</span>
-              <span className="hope-cost">6 hope</span>
+              <span className="hope-cost">{hopeCosts[6]} hope</span>
             </div>
             <div className="hope-requirement">
               <span className="hope-stars">★★★★★</span>
-              <span className="hope-cost">3 hope</span>
+              <span className="hope-cost">{hopeCosts[5]} hope</span>
             </div>
             <div className="hope-requirement">
-              <span className="hope-stars">★★★★ and below</span>
+              <span className="hope-stars">★★★★</span>
+              <span className="hope-cost">{hopeCosts[4]} hope</span>
+            </div>
+            <div className="hope-requirement">
+              <span className="hope-stars">★★★ and below</span>
               <span className="hope-cost">0 hope</span>
             </div>
             <div className="hope-requirement">
               <span className="hope-stars">💫 Temporary Recruitment</span>
               <span className="hope-cost">0 hope</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="hope-cost-config-section">
+          <h3>Hope Cost Configuration</h3>
+          <div className="hope-cost-config">
+            <div className="hope-cost-input-group">
+              <label htmlFor="hope-cost-6star">6★ Cost:</label>
+              <input
+                id="hope-cost-6star"
+                type="number"
+                min="0"
+                max="50"
+                value={hopeCosts[6]}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value) || 0;
+                  setHopeCosts(prev => ({ ...prev, 6: value }));
+                  setRecommendation(null); // Clear recommendation when costs change
+                }}
+                className="hope-cost-input"
+              />
+            </div>
+            <div className="hope-cost-input-group">
+              <label htmlFor="hope-cost-5star">5★ Cost:</label>
+              <input
+                id="hope-cost-5star"
+                type="number"
+                min="0"
+                max="30"
+                value={hopeCosts[5]}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value) || 0;
+                  setHopeCosts(prev => ({ ...prev, 5: value }));
+                  setRecommendation(null); // Clear recommendation when costs change
+                }}
+                className="hope-cost-input"
+              />
+            </div>
+            <div className="hope-cost-input-group">
+              <label htmlFor="hope-cost-4star">4★ Cost:</label>
+              <input
+                id="hope-cost-4star"
+                type="number"
+                min="0"
+                max="20"
+                value={hopeCosts[4]}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value) || 0;
+                  setHopeCosts(prev => ({ ...prev, 4: value }));
+                  setRecommendation(null); // Clear recommendation when costs change
+                }}
+                className="hope-cost-input"
+              />
             </div>
           </div>
         </div>

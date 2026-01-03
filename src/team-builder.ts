@@ -7,6 +7,28 @@ import * as path from 'path';
 import { getNichesForOperator, loadNicheList } from './niche-list-utils';
 import { getOwnedOperators, getWantToUse } from './account-storage';
 
+/**
+ * Hope cost configuration for different rarity operators
+ */
+export const HOPE_COST_CONFIG = {
+  6: 6,  // 6-star operators cost 6 hope
+  5: 3,  // 5-star operators cost 3 hope
+  4: 0,  // 4-star operators cost 0 hope (configurable)
+  3: 0,  // 3-star and below cost 0 hope
+  2: 0,
+  1: 0
+};
+
+/**
+ * Get the hope cost for a given rarity using configured values
+ */
+export function getConfiguredHopeCost(rarity: number, hopeCosts?: Record<number, number>): number {
+  if (hopeCosts && hopeCosts[rarity] !== undefined) {
+    return hopeCosts[rarity];
+  }
+  return HOPE_COST_CONFIG[rarity as keyof typeof HOPE_COST_CONFIG] ?? 0;
+}
+
 export interface NicheRange {
   min: number;
   max: number;
@@ -17,6 +39,7 @@ export interface TeamPreferences {
   preferredNiches: Record<string, NicheRange>; // Niche filename -> range of operators preferred (e.g., {"arts-dps": {min: 1, max: 3}})
   rarityRanking?: number[]; // Rarity preference order (e.g., [6, 4, 5, 3, 2, 1] means 6-star is most preferred, then 4-star, etc.)
   allowDuplicates?: boolean; // Allow multiple operators from same niche
+  hopeCosts?: Record<number, number>; // Hope costs for different rarities (e.g., {6: 6, 5: 3, 4: 0})
 }
 
 export interface TeamMember {
@@ -149,18 +172,10 @@ function getOperatorNiches(operatorId: string): string[] {
 }
 
 /**
- * Gets the actual hope cost for recruiting an operator
+ * Gets the hope cost for recruiting an operator (as used in the system)
  */
-function getActualHopeCost(rarity: number): number {
-  switch (rarity) {
-    case 6: return 50;
-    case 5: return 30;
-    case 4: return 20;
-    case 3: return 15;
-    case 2: return 10;
-    case 1: return 5;
-    default: return 0;
-  }
+function getActualHopeCost(rarity: number, preferences?: TeamPreferences): number {
+  return getConfiguredHopeCost(rarity, preferences?.hopeCosts);
 }
 
 /**
@@ -404,7 +419,7 @@ export function scoreOperator(
   }
   
   // Apply hope cost penalty - higher hope cost operators are penalized when their niches are already well-covered
-  const hopeCost = getActualHopeCost(operator.rarity || 1);
+  const hopeCost = getActualHopeCost(operator.rarity || 1, preferences);
   // Calculate how much the operator's niches are needed (0 = not needed, higher = more needed)
   let nicheNeedFactor = 0;
 
@@ -1222,7 +1237,8 @@ export function getDefaultPreferences(): TeamPreferences {
         'fast-redeploy-operators': { min: 0, max: 1 }
     },
     rarityRanking: [6, 4, 5, 3, 2, 1], // Default: 6 > 4 > 5 > 3 > 2 > 1
-    allowDuplicates: true
+    allowDuplicates: true,
+    hopeCosts: { ...HOPE_COST_CONFIG } // Use default hope costs
   };
 }
 
