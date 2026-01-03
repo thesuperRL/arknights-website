@@ -14,7 +14,8 @@ function getIntegratedStrategiesRecommendation(
   requiredClasses: string[],
   temporaryRecruitment?: string,
   currentHope?: number,
-  hopeCosts?: Record<number, number>
+  hopeCosts?: Record<number, number>,
+  trashOperators?: Set<string>
 ): { recommendedOperator: Operator | null; reasoning: string; score: number } {
   // Helper functions for hope costs
   const getHopeCost = (rarity: number): number => {
@@ -109,12 +110,15 @@ function getIntegratedStrategiesRecommendation(
     'fragile',
     'enmity-healing',
     'sleep',
-    'global-range'
+    'global-range',
+    'synergies/enmity-healing',
+    'synergies/sleep'
   ]);
 
   const importantNiches = new Set([
     ...Object.keys(defaultPreferences.requiredNiches),
-    ...Object.keys(defaultPreferences.preferredNiches)
+    ...Object.keys(defaultPreferences.preferredNiches),
+    'low-rarity' // Include low-rarity even though it's not in the niches folder
   ].filter(niche => !isExcludedNiches.has(niche)));
 
   // Score each available operator
@@ -183,6 +187,12 @@ function getIntegratedStrategiesRecommendation(
       reasoning.push(`⚠️ Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
     }
 
+    // Apply large negative penalty for trash operators - makes them almost impossible to recommend
+    if (trashOperators.has(operatorId)) {
+      const trashPenalty = 10000; // Large penalty that makes trash operators virtually unrecommendable
+      score -= trashPenalty;
+      reasoning.push(`🚫 Trash operator (-${trashPenalty})`);
+    }
 
     // Apply hope cost penalty - higher hope cost operators are penalized when their niches are already well-covered
     const hopeCost = getActualHopeCost(operator.rarity || 1);
@@ -212,12 +222,10 @@ function getIntegratedStrategiesRecommendation(
       }
     }
 
-    // Apply penalty inversely proportional to need - less penalty when niches are needed
-    const hopePenalty = hopeCost * Math.max(0, (4 - nicheNeedFactor) / 4);
-    if (hopePenalty > 0) {
-      score -= hopePenalty;
-      reasoning.push(`💎 Hope cost penalty: ${hopeCost} hope (-${hopePenalty.toFixed(1)})`);
-    }
+    // Apply large hope cost penalty - always present, discourages expensive operators
+    const hopePenalty = hopeCost * 20; // Large multiplier to make hope cost very significant
+    score -= hopePenalty;
+    reasoning.push(`💎 Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
 
     operatorScores.push({
       operatorId,
@@ -396,6 +404,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     5: 3,
     4: 0
   });
+  const [trashOperators, setTrashOperators] = useState<Set<string>>(new Set());
 
   // Helper function to get hope cost for an operator
   const getHopeCost = (rarity: number): number => {
@@ -407,8 +416,23 @@ const IntegratedStrategiesPage: React.FC = () => {
     if (user) {
       loadAllOperators();
       loadOwnedOperators();
+      loadTrashOperators();
     }
   }, [user]);
+
+  const loadTrashOperators = async () => {
+    try {
+      const response = await fetch('/api/trash-operators');
+      if (response.ok) {
+        const data = await response.json();
+        const trashIds = new Set(data.operators?.map((op: any) => op.id) || []);
+        setTrashOperators(trashIds);
+      }
+    } catch (err) {
+      console.error('Error loading trash operators:', err);
+      setTrashOperators(new Set());
+    }
+  };
 
   const loadAllOperators = async () => {
     try {
@@ -498,7 +522,8 @@ const IntegratedStrategiesPage: React.FC = () => {
         Array.from(requiredClasses),
         temporaryRecruitment || undefined,
         currentHope,
-        hopeCosts
+        hopeCosts,
+        trashOperators
       );
 
       setRecommendation(result);

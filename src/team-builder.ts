@@ -462,8 +462,8 @@ export function scoreOperator(
     nicheNeedFactor = 2;
   }
 
-  // Apply penalty inversely proportional to need - less penalty when niches are needed
-  const hopePenalty = hopeCost * Math.max(0, (2 - nicheNeedFactor) / 2);
+  // Apply large hope cost penalty - always present, discourages expensive operators
+  const hopePenalty = hopeCost * 20; // Large multiplier to make hope cost very significant
   score -= hopePenalty;
 
   // Penalize if too many operators from same niche already in team
