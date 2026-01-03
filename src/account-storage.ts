@@ -77,14 +77,14 @@ async function getDbPool(): Promise<sql.ConnectionPool> {
       user,
       password,
       port,
-      connectionTimeout: parseInt(process.env.AZURE_SQL_CONNECTION_TIMEOUT || '5000', 10), // 5 seconds (reduced from 30)
-      requestTimeout: parseInt(process.env.AZURE_SQL_REQUEST_TIMEOUT || '10000', 10), // 10 seconds (reduced from 30)
+      connectionTimeout: parseInt(process.env.AZURE_SQL_CONNECTION_TIMEOUT || '15000', 10), // 15 seconds (increased from 5)
+      requestTimeout: parseInt(process.env.AZURE_SQL_REQUEST_TIMEOUT || '20000', 10), // 20 seconds (increased from 10)
       pool: {
         max: 5, // Reduced from 10 to prevent connection pool exhaustion
         min: 0,
         idleTimeoutMillis: 30000,
-        acquireTimeoutMillis: 10000, // 10 seconds to acquire connection
-        createTimeoutMillis: 10000, // 10 seconds to create connection
+        acquireTimeoutMillis: 20000, // 20 seconds to acquire connection
+        createTimeoutMillis: 20000, // 20 seconds to create connection
         destroyTimeoutMillis: 5000, // 5 seconds to destroy connection
         reapIntervalMillis: 1000, // Check for idle connections every second
         createRetryIntervalMillis: 200 // Retry every 200ms if connection creation fails

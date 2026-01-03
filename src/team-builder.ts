@@ -237,8 +237,16 @@ export function scoreOperator(
     }
   }
   
-  // Niches that should not contribute to scoring (using filenames)
-  const excludedNiches = new Set(['free', 'unconventional-niches', 'fragile']);
+  // Niches that should not contribute to scoring in normal team building (using filenames)
+  const excludedNiches = new Set([
+    'free',
+    'unconventional-niches',
+    'fragile',
+    'enmity-healing',
+    'sleep',
+    'global-range',
+    'low-rarity'
+  ]);
   
   // If we have a primary niche, heavily prioritize the operator's tier in that niche
   if (primaryNiche) {
@@ -924,6 +932,209 @@ export async function buildTeam(
     missingNiches,
     score,
     emptySlots
+  };
+}
+
+/**
+ * Gets the best operator recommendation for Integrated Strategies
+ * Analyzes current team composition and suggests the next operator to add based on class constraint
+ */
+export async function getIntegratedStrategiesRecommendation(
+  email: string,
+  currentTeamOperatorIds: string[],
+  requiredClasses: string[],
+  temporaryRecruitment?: string
+): Promise<{ recommendedOperator: any | null; reasoning: string; score: number }> {
+  // Load all operators and user's data
+  const allOperators = loadAllOperators();
+  const ownedOperatorIds = await getOwnedOperators(email);
+
+  // Start with owned operators
+  let availableOperatorIds = ownedOperatorIds.filter(id => allOperators[id]);
+
+  // Add temporary recruitment operator if specified and not already owned
+  if (temporaryRecruitment && allOperators[temporaryRecruitment] && !ownedOperatorIds.includes(temporaryRecruitment)) {
+    availableOperatorIds.push(temporaryRecruitment);
+  }
+
+  // Filter to only operators of the required classes
+  const availableOperators = availableOperatorIds
+    .filter(id => requiredClasses.includes(allOperators[id].class))
+    .filter(id => !currentTeamOperatorIds.includes(id)); // Exclude operators already in team
+
+  if (availableOperators.length === 0) {
+    const classText = requiredClasses.length === 1
+      ? requiredClasses[0]
+      : `${requiredClasses.join(' or ')}`;
+    const teamCondition = currentTeamOperatorIds.length > 0 ? ' and aren\'t already in your team' : '';
+    return {
+      recommendedOperator: null,
+      reasoning: `No ${classText} operators available that you own${teamCondition}.`,
+      score: 0
+    };
+  }
+
+  // Load current team operators and their niches
+  const currentTeamOperators = currentTeamOperatorIds.map(id => allOperators[id]).filter(Boolean);
+  const currentTeamNiches: string[] = [];
+
+  for (const operator of currentTeamOperators) {
+    if (operator && operator.niches) {
+      currentTeamNiches.push(...operator.niches);
+    }
+  }
+
+  // Count current niche coverage
+  const nicheCounts: Record<string, number> = {};
+  for (const niche of currentTeamNiches) {
+    nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
+  }
+
+  // Load default team preferences to understand what niches are typically important
+  const defaultPreferences = getDefaultPreferences();
+
+  // Niches that should not contribute to scoring in IS team building (using filenames)
+  const isExcludedNiches = new Set([
+    'free',
+    'unconventional-niches',
+    'fragile',
+    'enmity-healing',
+    'sleep',
+    'global-range'
+  ]);
+
+  const importantNiches = new Set([
+    ...Object.keys(defaultPreferences.requiredNiches),
+    ...Object.keys(defaultPreferences.preferredNiches)
+  ].filter(niche => !isExcludedNiches.has(niche)));
+
+  // Score each available operator
+  const operatorScores: Array<{ operatorId: string; score: number; reasoning: string[] }> = [];
+
+  for (const operatorId of availableOperators) {
+    const operator = allOperators[operatorId];
+    if (!operator || !operator.niches) continue;
+
+    let score = 0;
+    const reasoning: string[] = [];
+
+    // Base score from rarity (higher rarity = higher base score)
+    const rarityScore = (operator.rarity || 1) * 10;
+    score += rarityScore;
+    reasoning.push(`★ ${operator.rarity}★ rarity base score (+${rarityScore})`);
+
+    // Bonus for filling important niches that are missing or under-covered
+    for (const niche of operator.niches) {
+      const currentCount = nicheCounts[niche] || 0;
+
+      if (importantNiches.has(niche)) {
+        const requiredRange = defaultPreferences.requiredNiches[niche];
+        const preferredRange = defaultPreferences.preferredNiches[niche];
+
+        if (requiredRange) {
+          // Required niche
+          if (currentCount < requiredRange.min) {
+            // Filling a missing required niche
+            score += 100;
+            reasoning.push(`🎯 Fills missing required niche: ${niche} (+100)`);
+          } else if (currentCount < requiredRange.max) {
+            // Filling an under-covered required niche
+            score += 50;
+            reasoning.push(`➕ Strengthens required niche: ${niche} (+50)`);
+          } else {
+            // Over-covered required niche (still some value)
+            score += 10;
+            reasoning.push(`✅ Supports required niche: ${niche} (+10)`);
+          }
+        } else if (preferredRange) {
+          // Preferred niche
+          if (currentCount < preferredRange.min) {
+            // Filling a missing preferred niche
+            score += 75;
+            reasoning.push(`🎯 Fills missing preferred niche: ${niche} (+75)`);
+          } else if (currentCount < preferredRange.max) {
+            // Filling an under-covered preferred niche
+            score += 30;
+            reasoning.push(`➕ Strengthens preferred niche: ${niche} (+30)`);
+          } else {
+            // Over-covered preferred niche (minimal value)
+            score += 5;
+            reasoning.push(`✅ Supports preferred niche: ${niche} (+5)`);
+          }
+        }
+      } else {
+        // Non-standard niche (some value for variety)
+        score += 15;
+        reasoning.push(`🌟 Provides niche variety: ${niche} (+15)`);
+      }
+    }
+
+    // Penalty for duplicate niches (discourage over-specialization)
+    const duplicateNiches = operator.niches.filter((niche: string) =>
+      !isExcludedNiches.has(niche) && (nicheCounts[niche] || 0) >= 3
+    );
+    if (duplicateNiches.length > 0) {
+      const penalty = duplicateNiches.length * 20;
+      score -= penalty;
+      reasoning.push(`⚠️ Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
+    }
+
+    // Bonus for operators with multiple useful niches
+    const usefulNiches = operator.niches.filter((niche: string) => importantNiches.has(niche));
+    if (usefulNiches.length > 1) {
+      const bonus = (usefulNiches.length - 1) * 25;
+      score += bonus;
+      reasoning.push(`🔄 Versatile: covers ${usefulNiches.length} important niches (+${bonus})`);
+    }
+
+    operatorScores.push({
+      operatorId,
+      score,
+      reasoning
+    });
+  }
+
+  // Sort by score (highest first)
+  operatorScores.sort((a, b) => b.score - a.score);
+
+  if (operatorScores.length === 0) {
+    const classText = requiredClasses.length === 1
+      ? requiredClasses[0]
+      : `${requiredClasses.join(' or ')}`;
+    return {
+      recommendedOperator: null,
+      reasoning: `No suitable ${classText} operators found for your team composition.`,
+      score: 0
+    };
+  }
+
+  const bestOperator = operatorScores[0];
+  const operator = allOperators[bestOperator.operatorId];
+
+  // Create detailed reasoning with better formatting
+  const classText = requiredClasses.length === 1
+    ? requiredClasses[0]
+    : `${requiredClasses.slice(0, -1).join(', ')} or ${requiredClasses[requiredClasses.length - 1]}`;
+
+  const reasoningParts = [
+    `🏆 **Recommended ${classText} Operator**`,
+    '',
+    ...(temporaryRecruitment ? [
+      `💫 **Considering temporary recruitment: ${allOperators[temporaryRecruitment]?.name || 'Unknown Operator'}**`,
+      ''
+    ] : []),
+    '**Scoring Breakdown:**',
+    ...bestOperator.reasoning.map(line => `• ${line}`),
+    '',
+    `**Final Score: ${bestOperator.score}**`,
+    '',
+    '*This operator was selected because it best complements your current team composition and fills important gaps.*'
+  ];
+
+  return {
+    recommendedOperator: operator,
+    reasoning: reasoningParts.join('\n'),
+    score: bestOperator.score
   };
 }
 

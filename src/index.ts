@@ -848,7 +848,7 @@ app.post('/api/team/preferences', async (req, res) => {
     // Load existing preferences
     const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
     let allPreferences: Record<string, TeamPreferences> = {};
-    
+
     if (fs.existsSync(preferencesFile)) {
       try {
         const content = fs.readFileSync(preferencesFile, 'utf-8');
@@ -857,24 +857,25 @@ app.post('/api/team/preferences', async (req, res) => {
         console.error('Error loading preferences:', error);
       }
     }
-    
+
     // Save user's preferences
     allPreferences[session.email] = preferences;
-    
+
     // Ensure directory exists
     const dir = path.dirname(preferencesFile);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    
+
     fs.writeFileSync(preferencesFile, JSON.stringify(allPreferences, null, 2));
-    
+
     res.json({ success: true, preferences });
   } catch (error: any) {
     console.error('Error saving preferences:', error);
     res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to save preferences' });
   }
 });
+
 
 // Serve React app for all non-API routes (SPA routing) - must be last
 // Use a catch-all middleware instead of a route pattern for Express 5

@@ -17,6 +17,7 @@ import LocalLoginPage from './pages/LocalLoginPage';
 import RegisterPage from './pages/RegisterPage';
 import UserProfilePage from './pages/UserProfilePage';
 import TeamBuilderPage from './pages/TeamBuilderPage';
+import IntegratedStrategiesPage from './pages/IntegratedStrategiesPage';
 import './App.css';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/profile" element={<UserProfilePage />} />
               <Route path="/team-builder" element={<TeamBuilderPage />} />
+              <Route path="/integrated-strategies" element={<IntegratedStrategiesPage />} />
               </Routes>
             </main>
             <LanguageSelector />

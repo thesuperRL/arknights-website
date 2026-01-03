@@ -27,6 +27,7 @@ const Navbar: React.FC = () => {
               {user ? (
                 <>
                   <Link to="/team-builder">Team Builder</Link>
+                  <Link to="/integrated-strategies">Integrated Strategies</Link>
                   <Link to="/profile">{user.nickname}</Link>
                   <button onClick={handleLogout} className="nav-logout">
                     Logout
