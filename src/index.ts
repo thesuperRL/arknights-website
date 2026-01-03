@@ -466,14 +466,6 @@ app.get('/api/auth/user', async (req, res) => {
     const raisedOperators = account?.wantToUse || []; // wantToUse is actually the raised operators
     const wantToUse = account?.wantToUse || [];
 
-    console.log('API /auth/user response:', {
-      email: session.email,
-      ownedOperatorsCount: ownedOperators.length,
-      raisedOperatorsCount: raisedOperators.length,
-      wantToUseCount: wantToUse.length,
-      first5Raised: raisedOperators.slice(0, 5),
-      first5WantToUse: wantToUse.slice(0, 5)
-    });
 
     res.json({
       email: session.email,

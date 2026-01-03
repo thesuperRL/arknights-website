@@ -347,6 +347,14 @@
   font-size: 0.9rem;
   color: var(--text-secondary);
   font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.temp-recruitment-note {
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-style: italic;
 }
 
 .remove-temp-operator-btn {
