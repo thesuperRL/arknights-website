@@ -117,11 +117,6 @@ function getIntegratedStrategiesRecommendation(
     let score = 0;
     const reasoning: string[] = [];
 
-    // Base score from rarity (higher rarity = higher base score)
-    const rarityScore = (operator.rarity || 1) * 10;
-    score += rarityScore;
-    reasoning.push(`★ ${operator.rarity}★ rarity base score (+${rarityScore})`);
-
     // Bonus for filling important niches that are missing or under-covered
     for (const niche of operator.niches) {
       const currentCount = nicheCounts[niche] || 0;

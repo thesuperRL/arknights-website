@@ -265,8 +265,8 @@ export function scoreOperator(
     score += 50; // Significant boost for operators user wants to use
   }
 
-  // If no primary niche specified, fall back to the original niche coverage logic
-  // but with reduced weighting compared to tier scoring
+  // If no primary niche specified, score based on operator tiers across all niches
+  // with tier performance weighted more heavily than niche coverage
   if (!primaryNiche) {
     // Calculate current niche counts in existing team (using normalized niches)
     const normalizeNiche = (niche: string): string => {
@@ -289,90 +289,110 @@ export function scoreOperator(
 
     // Track which normalized niches we've already scored to avoid double counting
     const scoredNiches = new Set<string>();
+    let totalTierScore = 0;
+    let nicheCoverageScore = 0;
 
-    // Check if operator fills required niches
+    // Score based on operator's tier performance in each niche they cover
     for (const niche of niches) {
-    // Skip excluded niches
-    if (excludedNiches.has(niche)) {
-      continue;
-    }
-    
-    const normalizedNiche = normalizeNiche(niche);
-    
-    // Skip if we've already scored this normalized niche
-    if (scoredNiches.has(normalizedNiche)) {
-      continue;
-    }
-    
-    scoredNiches.add(normalizedNiche);
-    
-    // Check if niche is in required or preferred niches
-    const isRequired = requiredNiches.has(niche) || requiredNiches.has(normalizedNiche);
-    const isPreferred = preferredNiches.has(niche) || preferredNiches.has(normalizedNiche);
-    
-    if (isRequired || isPreferred) {
-      // Get the range for this niche (check both original and normalized)
-      const requiredRange = preferences.requiredNiches[niche] || preferences.requiredNiches[normalizedNiche];
-      const preferredRange = preferences.preferredNiches[niche] || preferences.preferredNiches[normalizedNiche];
-      
-      // Get current count for this normalized niche (before adding this operator)
-      const currentCount = nicheCounts[normalizedNiche] || 0;
-      // Count after adding this operator would be currentCount + 1
-      const newCount = currentCount + 1;
-      
-      // Calculate score with diminishing returns and negative penalties
-      if (isRequired && requiredRange) {
-        const maxCount = requiredRange.max;
-        const minCount = requiredRange.min;
-        
-        if (newCount < minCount) {
-          // Below minimum: full score (we need more operators)
-          score += 100;
-        } else if (newCount <= maxCount) {
-          // Between min and max: diminishing returns
-          // Full score at min, linearly decreases to 0 at max
-          if (maxCount === minCount) {
-            // If min == max, give full score when we reach it
-            score += 100;
+      // Skip excluded niches
+      if (excludedNiches.has(niche)) {
+        continue;
+      }
+
+      const normalizedNiche = normalizeNiche(niche);
+
+      // Skip if we've already scored this normalized niche
+      if (scoredNiches.has(normalizedNiche)) {
+        continue;
+      }
+
+      scoredNiches.add(normalizedNiche);
+
+      // Get operator's tier score in this niche (heavily weighted)
+      const tierScore = getOperatorTierInNiche(operatorId, niche);
+      totalTierScore += tierScore;
+
+      // Check if niche is in required or preferred niches for additional coverage scoring
+      const isRequired = requiredNiches.has(niche) || requiredNiches.has(normalizedNiche);
+      const isPreferred = preferredNiches.has(niche) || preferredNiches.has(normalizedNiche);
+
+      if (isRequired || isPreferred) {
+        // Get the range for this niche (check both original and normalized)
+        const requiredRange = preferences.requiredNiches[niche] || preferences.requiredNiches[normalizedNiche];
+        const preferredRange = preferences.preferredNiches[niche] || preferences.preferredNiches[normalizedNiche];
+
+        // Get current count for this normalized niche (before adding this operator)
+        const currentCount = nicheCounts[normalizedNiche] || 0;
+        // Count after adding this operator would be currentCount + 1
+        const newCount = currentCount + 1;
+
+        // Calculate niche coverage score with diminishing returns and negative penalties
+        if (isRequired && requiredRange) {
+          const maxCount = requiredRange.max;
+          const minCount = requiredRange.min;
+
+          if (newCount < minCount) {
+            // Below minimum: full score (we need more operators)
+            nicheCoverageScore += 50; // Reduced from 100 since tier is now primary
+          } else if (newCount <= maxCount) {
+            // Between min and max: diminishing returns
+            // Full score at min, linearly decreases to 0 at max
+            if (maxCount === minCount) {
+              // If min == max, give full score when we reach it
+              nicheCoverageScore += 50;
+            } else {
+              // Calculate diminishing score based on how close we are to max
+              // At min: full score (50)
+              // At max: 0 score
+              // Linear interpolation
+              const progress = (newCount - minCount) / (maxCount - minCount);
+              const diminishingScore = 50 * (1 - progress);
+              nicheCoverageScore += diminishingScore;
+            }
           } else {
-            // Calculate diminishing score based on how close we are to max
-            // At min: full score (100)
-            // At max: 0 score
-            // Linear interpolation
-            const progress = (newCount - minCount) / (maxCount - minCount);
-            const diminishingScore = 100 * (1 - progress);
-            score += diminishingScore;
+            // Negative penalty for exceeding max
+            // Penalty increases with how much we exceed
+            const excess = newCount - maxCount;
+            nicheCoverageScore -= 25 * excess; // -25 per operator over max (reduced penalty)
           }
-        } else {
-          // Negative penalty for exceeding max
-          // Penalty increases with how much we exceed
-          const excess = newCount - maxCount;
-          score -= 50 * excess; // -50 per operator over max
-        }
-      } else if (isPreferred && preferredRange) {
-        const maxCount = preferredRange.max;
-        const minCount = preferredRange.min;
-        
-        if (newCount < minCount) {
-          // Below minimum: full score (we need more operators)
-          score += 50;
-        } else if (newCount <= maxCount) {
-          // Diminishing returns for preferred niches (lower base score)
-          if (maxCount === minCount) {
-            score += 50;
+        } else if (isPreferred && preferredRange) {
+          const maxCount = preferredRange.max;
+          const minCount = preferredRange.min;
+
+          if (newCount < minCount) {
+            // Below minimum: full score (we need more operators)
+            nicheCoverageScore += 25; // Reduced from 50 since tier is now primary
+          } else if (newCount <= maxCount) {
+            // Diminishing returns for preferred niches (lower base score)
+            if (maxCount === minCount) {
+              nicheCoverageScore += 25;
+            } else {
+              const progress = (newCount - minCount) / (maxCount - minCount);
+              const diminishingScore = 25 * (1 - progress);
+              nicheCoverageScore += diminishingScore;
+            }
           } else {
-            const progress = (newCount - minCount) / (maxCount - minCount);
-            const diminishingScore = 50 * (1 - progress);
-            score += diminishingScore;
+            // Negative penalty for exceeding preferred max
+            const excess = newCount - maxCount;
+            nicheCoverageScore -= 12.5 * excess; // -12.5 per operator over max (reduced penalty)
           }
-        } else {
-          // Negative penalty for exceeding preferred max
-          const excess = newCount - maxCount;
-          score -= 25 * excess; // -25 per operator over max (less penalty than required)
         }
       }
     }
-  }
+
+    // Apply tier scores with heavy weighting (tier performance is more important than coverage)
+    score += totalTierScore * 8; // Heavy weighting for tier performance across all niches
+
+    // Apply niche coverage score with reduced weighting
+    score += nicheCoverageScore;
+
+    // Bonus for operators with multiple high-tier niches (versatility bonus)
+    if (scoredNiches.size > 1 && totalTierScore > 0) {
+      const averageTierScore = totalTierScore / scoredNiches.size;
+      if (averageTierScore >= 80) { // A-tier or better on average
+        score += scoredNiches.size * 15; // Bonus for versatile high-tier operators
+      }
+    }
   }
   
   // Penalize if too many operators from same niche already in team
@@ -1017,11 +1037,6 @@ export async function getIntegratedStrategiesRecommendation(
 
     let score = 0;
     const reasoning: string[] = [];
-
-    // Base score from rarity (higher rarity = higher base score)
-    const rarityScore = (operator.rarity || 1) * 10;
-    score += rarityScore;
-    reasoning.push(`★ ${operator.rarity}★ rarity base score (+${rarityScore})`);
 
     // Bonus for filling important niches that are missing or under-covered
     for (const niche of operator.niches) {
