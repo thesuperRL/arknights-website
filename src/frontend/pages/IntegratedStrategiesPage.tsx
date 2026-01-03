@@ -12,7 +12,8 @@ function getIntegratedStrategiesRecommendation(
   raisedOperatorIds: string[], // ONLY raised operators that user can deploy
   currentTeamOperatorIds: string[],
   requiredClasses: string[],
-  temporaryRecruitment?: string
+  temporaryRecruitment?: string,
+  currentHope?: number
 ): { recommendedOperator: Operator | null; reasoning: string; score: number } {
   // Temporarily add the recruitment operator to raised operators (considered owned & raised)
   let effectiveRaisedOperators = [...raisedOperatorIds];
@@ -26,9 +27,22 @@ function getIntegratedStrategiesRecommendation(
   let availableOperatorIds = effectiveRaisedOperators.filter(id => allOperators[id]);
 
   // Filter to only operators of the required classes
-  const availableOperators = availableOperatorIds
+  let availableOperators = availableOperatorIds
     .filter(id => requiredClasses.includes(allOperators[id].class))
     .filter(id => !currentTeamOperatorIds.includes(id)); // Exclude operators already in team
+
+  // Filter based on hope requirements
+  if (currentHope !== undefined) {
+    availableOperators = availableOperators.filter(id => {
+      const operator = allOperators[id];
+      // Temporary recruitment costs 0 hope
+      if (temporaryRecruitment === id) {
+        return true;
+      }
+      const hopeCost = getHopeCost(operator.rarity || 1);
+      return currentHope >= hopeCost;
+    });
+  }
 
   if (availableOperators.length === 0) {
     const classText = requiredClasses.length === 1
@@ -306,6 +320,13 @@ const CLASS_OPTIONS = [
   'Specialist'
 ];
 
+// Helper function to get hope cost for an operator
+const getHopeCost = (rarity: number): number => {
+  if (rarity === 6) return 6;
+  if (rarity === 5) return 3;
+  return 0; // 4-stars and below cost 0 hope
+};
+
 const IntegratedStrategiesPage: React.FC = () => {
   const { user } = useAuth();
   const { language } = useLanguage();
@@ -325,6 +346,7 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [temporaryRecruitment, setTemporaryRecruitment] = useState<string>('');
   const [showTempRecruitmentModal, setShowTempRecruitmentModal] = useState(false);
   const [tempRecruitmentSearch, setTempRecruitmentSearch] = useState('');
+  const [currentHope, setCurrentHope] = useState<number>(0);
 
   useEffect(() => {
     if (user) {
@@ -384,8 +406,19 @@ const IntegratedStrategiesPage: React.FC = () => {
       return;
     }
 
+    // Check if user has enough hope (skip for temporary recruitment)
+    if (!temporaryRecruitment || temporaryRecruitment !== operatorId) {
+      const hopeCost = getHopeCost(operator.rarity || 1);
+      if (currentHope < hopeCost) {
+        setError(`Not enough hope! This ${operator.rarity}-star operator requires ${hopeCost} hope.`);
+        return;
+      }
+      setCurrentHope(prev => prev - hopeCost);
+    }
+
     setSelectedOperators(prev => [...prev, { operatorId, operator }]);
     setRecommendation(null); // Clear recommendation when team changes
+    setError(null); // Clear any previous error
   };
 
   const removeOperator = (operatorId: string) => {
@@ -416,7 +449,8 @@ const IntegratedStrategiesPage: React.FC = () => {
         raisedOpsArray, // ONLY raised operators
         operatorIds,
         Array.from(requiredClasses),
-        temporaryRecruitment || undefined
+        temporaryRecruitment || undefined,
+        currentHope
       );
 
       setRecommendation(result);
@@ -477,6 +511,45 @@ const IntegratedStrategiesPage: React.FC = () => {
             <div className="add-operator-content">
               <span className="add-icon">+</span>
               <span className="add-text">Add Operator</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="hope-section">
+        <h2>Hope System</h2>
+        <p>Enter your current hope amount. Operators require specific hope amounts to be recommended.</p>
+
+        <div className="hope-input-container">
+          <label htmlFor="hope-input" className="hope-label">Current Hope:</label>
+          <input
+            id="hope-input"
+            type="number"
+            min="0"
+            value={currentHope}
+            onChange={(e) => {
+              const value = parseInt(e.target.value) || 0;
+              setCurrentHope(Math.max(0, value));
+              setRecommendation(null); // Clear recommendation when hope changes
+            }}
+            className="hope-input"
+          />
+          <div className="hope-requirements">
+            <div className="hope-requirement">
+              <span className="hope-stars">★★★★★★</span>
+              <span className="hope-cost">6 hope</span>
+            </div>
+            <div className="hope-requirement">
+              <span className="hope-stars">★★★★★</span>
+              <span className="hope-cost">3 hope</span>
+            </div>
+            <div className="hope-requirement">
+              <span className="hope-stars">★★★★ and below</span>
+              <span className="hope-cost">0 hope</span>
+            </div>
+            <div className="hope-requirement">
+              <span className="hope-stars">💫 Temporary Recruitment</span>
+              <span className="hope-cost">0 hope</span>
             </div>
           </div>
         </div>
@@ -607,6 +680,9 @@ const IntegratedStrategiesPage: React.FC = () => {
                     <Stars rarity={recommendation.recommendedOperator.rarity} />
                     <div className="operator-class">{recommendation.recommendedOperator.class}</div>
                     <div className="recommendation-score">Score: {recommendation.score.toFixed(1)}</div>
+                    <div className="operator-hope-cost">
+                      Hope Cost: {getHopeCost(recommendation.recommendedOperator.rarity || 1)}
+                    </div>
                   </div>
                 </div>
 
@@ -619,12 +695,6 @@ const IntegratedStrategiesPage: React.FC = () => {
                     className="add-recommended-btn primary"
                   >
                     ➕ Add to Team
-                  </button>
-                  <button
-                    onClick={() => setRecommendation(null)}
-                    className="dismiss-recommendation-btn secondary"
-                  >
-                    Get New Recommendation
                   </button>
                 </div>
               </>

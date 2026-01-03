@@ -547,6 +547,32 @@ export async function loadAccounts(): Promise<Record<string, LocalAccount>> {
 }
 
 /**
+ * Initialize database connection at startup (for faster first requests)
+ */
+export async function initializeDbConnection(): Promise<void> {
+  try {
+    console.log('🔄 Initializing database connection...');
+    const startTime = Date.now();
+
+    // Force connection establishment by calling getDbPool
+    await getDbPool();
+
+    const duration = Date.now() - startTime;
+    console.log(`✅ Database connection initialized successfully in ${duration}ms`);
+
+    // Test the connection by running a simple query
+    const testPool = await getDbPool();
+    await testPool.request().query('SELECT 1 as test');
+    console.log('✅ Database connection test successful');
+  } catch (error: any) {
+    const sanitizedMessage = sanitizeErrorMessage(error);
+    console.error('❌ Failed to initialize database connection:', sanitizedMessage);
+    console.warn('⚠️  Server will continue to run, but account features may be slower or unavailable');
+    // Don't throw - allow server to start even if database is unavailable
+  }
+}
+
+/**
  * Close database connection (for cleanup)
  */
 export async function closeDbConnection(): Promise<void> {

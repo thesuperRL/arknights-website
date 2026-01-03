@@ -181,6 +181,77 @@
   font-weight: 500;
 }
 
+/* Hope Section */
+.hope-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #2a2a3a;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.hope-input-container {
+  margin-top: 0.75rem;
+}
+
+.hope-label {
+  display: block;
+  color: white;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.hope-input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: white;
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 120px;
+  margin-bottom: 1rem;
+}
+
+.hope-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.hope-requirements {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hope-requirement {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hope-requirement:last-child {
+  border-bottom: none;
+}
+
+.hope-stars {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.hope-cost {
+  color: white;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.operator-hope-cost {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 0.25rem;
+}
+
 /* Class Constraint Section */
 .class-constraint-section {
   margin-bottom: 1.5rem;

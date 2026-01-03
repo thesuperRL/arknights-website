@@ -12,7 +12,7 @@ import cookieParser from 'cookie-parser';
 import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
 import { Rating } from './niche-list-types';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
-import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse } from './account-storage';
+import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse, initializeDbConnection } from './account-storage';
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
 import * as fs from 'fs';
 
@@ -891,10 +891,15 @@ app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log('🚀 Arknights Website is running!');
-  console.log(`📍 Server running at http://localhost:${PORT}`);
-  console.log(`   Open your browser and navigate to: http://localhost:${PORT}`);
-  console.log(`   Press Ctrl+C to stop the server`);
-});
+// Initialize database connection before starting server
+(async () => {
+  await initializeDbConnection();
+
+  // Start the server
+  app.listen(PORT, () => {
+    console.log('🚀 Arknights Website is running!');
+    console.log(`📍 Server running at http://localhost:${PORT}`);
+    console.log(`   Open your browser and navigate to: http://localhost:${PORT}`);
+    console.log(`   Press Ctrl+C to stop the server`);
+  });
+})();
