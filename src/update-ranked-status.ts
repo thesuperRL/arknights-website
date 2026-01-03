@@ -79,7 +79,8 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
     { file: 'free.json', name: 'Free Operators' },
     { file: 'global-range.json', name: 'Global Range Operators' },
     { file: 'trash-operators.json', name: 'Trash Operators' },
-    { file: 'unconventional-niches.json', name: 'Unconventional Niches' }
+    { file: 'unconventional-niches.json', name: 'Unconventional Niches' },
+    { file: 'low-rarity.json', name: 'Good Low-Rarity Operators' }
   ];
 
   for (const specialList of specialLists) {
@@ -443,7 +444,7 @@ async function main() {
   const rankedCount = operatorNiches.size;
   console.log(`Found ${rankedCount} unique operators in operator lists`);
   console.log(`Found ${trashOperators.size} operators in trash list`);
-  console.log(`(Special lists: free, global-range, trash, unconventional niches are included)\n`);
+  console.log(`(Special lists: free, global-range, trash, unconventional niches, low-rarity are included)\n`);
 
   // Update operator files
   const { updated, unranked } = updateOperatorFiles(operatorNiches);

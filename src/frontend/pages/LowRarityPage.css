@@ -1,8 +1,8 @@
-.global-range-operators-page {
+.low-rarity-page {
     width: 100%;
 }
 
-.global-range-operators-header {
+.low-rarity-header {
     margin-bottom: 2rem;
 }
 
@@ -19,13 +19,13 @@
     opacity: 1;
 }
 
-.global-range-operators-header h1 {
+.low-rarity-header h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
     color: var(--text-light);
 }
 
-.global-range-operators-header p {
+.low-rarity-header p {
     font-size: 1.1rem;
     color: var(--text-muted);
     margin-bottom: 0.5rem;
@@ -37,7 +37,7 @@
     margin-top: 0.5rem;
 }
 
-.global-range-operators-container {
+.low-rarity-container {
     background: rgba(22, 33, 62, 0.8);
     backdrop-filter: blur(10px);
     border-radius: 15px;

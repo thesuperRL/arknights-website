@@ -10,6 +10,7 @@ import TrashOperatorsPage from './pages/TrashOperatorsPage';
 import FreeOperatorsPage from './pages/FreeOperatorsPage';
 import GlobalRangeOperatorsPage from './pages/GlobalRangeOperatorsPage';
 import UnconventionalNichesPage from './pages/UnconventionalNichesPage';
+import LowRarityPage from './pages/LowRarityPage';
 import OperatorPage from './pages/OperatorPage';
 import AllOperatorsPage from './pages/AllOperatorsPage';
 import LocalLoginPage from './pages/LocalLoginPage';
@@ -34,6 +35,7 @@ function App() {
               <Route path="/free-operators" element={<FreeOperatorsPage />} />
               <Route path="/global-range-operators" element={<GlobalRangeOperatorsPage />} />
               <Route path="/unconventional-niches-operators" element={<UnconventionalNichesPage />} />
+              <Route path="/low-rarity-operators" element={<LowRarityPage />} />
               <Route path="/operator/:id" element={<OperatorPage />} />
               <Route path="/all-operators" element={<AllOperatorsPage />} />
               <Route path="/login" element={<LocalLoginPage />} />

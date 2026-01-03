@@ -289,6 +289,48 @@ app.get('/api/unconventional-niches-operators', (_req, res) => {
   }
 });
 
+// API route to get low-rarity operators
+app.get('/api/low-rarity-operators', (_req, res) => {
+  try {
+    const filePath = path.join(__dirname, '../data', 'low-rarity.json');
+    if (!fs.existsSync(filePath)) {
+      res.status(404).json({ error: 'Low-rarity operators not found' });
+      return;
+    }
+
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const lowRarityData = JSON.parse(content);
+
+    // Load operator data to enrich the low-rarity operators list
+    const operatorsData: Record<string, any> = {};
+    const rarities = [1, 2, 3, 4, 5, 6];
+
+    for (const rarity of rarities) {
+      const operatorFilePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
+      if (fs.existsSync(operatorFilePath)) {
+        const operatorContent = fs.readFileSync(operatorFilePath, 'utf-8');
+        const operators = JSON.parse(operatorContent);
+        Object.assign(operatorsData, operators);
+      }
+    }
+
+    // Enrich low-rarity operators list with operator data
+    const enrichedLowRarityList = {
+      ...lowRarityData,
+      operators: Object.entries(lowRarityData.operators || {}).map(([operatorId, note]) => ({
+        operatorId,
+        note: note || '',
+        operator: operatorsData[operatorId] || null
+      }))
+    };
+
+    res.json(enrichedLowRarityList);
+  } catch (error) {
+    console.error('Error loading low-rarity operators:', error);
+    res.status(500).json({ error: 'Failed to load low-rarity operators' });
+  }
+});
+
 // API route to get a specific operator by ID with their rankings
 // This must come BEFORE the rarity route to avoid conflicts
 app.get('/api/operators/:id', async (req, res) => {
@@ -335,13 +377,14 @@ app.get('/api/operators/:id', async (req, res) => {
       }
     }
 
-    // Check if operator is in special lists (free, global-range, trash, unconventional)
+    // Check if operator is in special lists (free, global-range, trash, unconventional, low-rarity)
     // These operators show niche name but no ranking tier
     const specialLists = [
       { file: 'free.json', name: 'Free Operators' },
       { file: 'global-range.json', name: 'Global Range Operators' },
       { file: 'trash-operators.json', name: 'Trash Operators' },
-      { file: 'unconventional-niches.json', name: 'Unconventional Niches' }
+      { file: 'unconventional-niches.json', name: 'Unconventional Niches' },
+      { file: 'low-rarity.json', name: 'Good Low-Rarity Operators' }
     ];
 
     for (const specialList of specialLists) {

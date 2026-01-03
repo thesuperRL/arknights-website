@@ -37,9 +37,13 @@
     cursor: pointer;
     text-decoration: none;
     color: var(--text-light);
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     min-width: 250px;
+    min-height: 160px;
 }
 
 .special-card:hover {
@@ -107,6 +111,22 @@
 }
 
 .unconventional-niches-card p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.low-rarity-card {
+    background: rgba(210, 105, 30, 0.3);
+    border: 2px solid rgba(210, 105, 30, 0.5);
+}
+
+.low-rarity-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.low-rarity-card p {
     color: var(--text-muted);
     margin: 0;
 }

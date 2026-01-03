@@ -86,6 +86,10 @@ const TierListsPage: React.FC = () => {
           <h2>Unconventional Niches</h2>
           <p>Truly unique niches not covered by other tier lists</p>
         </Link>
+        <Link to="/low-rarity-operators" className="special-card low-rarity-card">
+          <h2>Good Low-Rarity Operators</h2>
+          <p>Low-Rarity operators worth raising for early game strategies</p>
+        </Link>
       </div>
     </div>
   );
