@@ -173,12 +173,40 @@ function getIntegratedStrategiesRecommendation(
       reasoning.push(`⚠️ Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
     }
 
-    // Bonus for operators with multiple useful niches
-    const usefulNiches = operator.niches.filter((niche: string) => importantNiches.has(niche));
-    if (usefulNiches.length > 1) {
-      const bonus = (usefulNiches.length - 1) * 25;
-      score += bonus;
-      reasoning.push(`🔄 Versatile: covers ${usefulNiches.length} important niches (+${bonus})`);
+
+    // Apply hope cost penalty - higher hope cost operators are penalized when their niches are already well-covered
+    const hopeCost = getActualHopeCost(operator.rarity || 1);
+    // Calculate how much the operator's niches are needed (0 = not needed, higher = more needed)
+    let nicheNeedFactor = 0;
+
+    for (const niche of operator.niches) {
+      if (!importantNiches.has(niche)) continue;
+
+      const currentCount = nicheCounts[niche] || 0;
+      const requiredRange = defaultPreferences.requiredNiches[niche];
+      const preferredRange = defaultPreferences.preferredNiches[niche];
+
+      if (requiredRange) {
+        if (currentCount < requiredRange.min) {
+          // High need - niches are under-covered
+          nicheNeedFactor += 2;
+        } else if (currentCount < requiredRange.max) {
+          // Moderate need - niches could use more coverage
+          nicheNeedFactor += 1;
+        }
+      } else if (preferredRange) {
+        if (currentCount < preferredRange.min) {
+          // Moderate need for preferred niches
+          nicheNeedFactor += 1;
+        }
+      }
+    }
+
+    // Apply penalty inversely proportional to need - less penalty when niches are needed
+    const hopePenalty = hopeCost * Math.max(0, (4 - nicheNeedFactor) / 4);
+    if (hopePenalty > 0) {
+      score -= hopePenalty;
+      reasoning.push(`💎 Hope cost penalty: ${hopeCost} hope (-${hopePenalty.toFixed(1)})`);
     }
 
     operatorScores.push({
@@ -320,6 +348,19 @@ const getHopeCost = (rarity: number): number => {
   if (rarity === 6) return 6;
   if (rarity === 5) return 3;
   return 0; // 4-stars and below cost 0 hope
+};
+
+// Get actual hope cost for penalty calculations
+const getActualHopeCost = (rarity: number): number => {
+  switch (rarity) {
+    case 6: return 50;
+    case 5: return 30;
+    case 4: return 20;
+    case 3: return 15;
+    case 2: return 10;
+    case 1: return 5;
+    default: return 0;
+  }
 };
 
 const IntegratedStrategiesPage: React.FC = () => {

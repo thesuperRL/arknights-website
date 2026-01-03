@@ -149,6 +149,21 @@ function getOperatorNiches(operatorId: string): string[] {
 }
 
 /**
+ * Gets the actual hope cost for recruiting an operator
+ */
+function getActualHopeCost(rarity: number): number {
+  switch (rarity) {
+    case 6: return 50;
+    case 5: return 30;
+    case 4: return 20;
+    case 3: return 15;
+    case 2: return 10;
+    case 1: return 5;
+    default: return 0;
+  }
+}
+
+/**
  * Gets the tier of an operator in a specific niche
  * Returns a numerical score where higher numbers = better tier
  */
@@ -395,6 +410,54 @@ export function scoreOperator(
     }
   }
   
+  // Apply hope cost penalty - higher hope cost operators are penalized when their niches are already well-covered
+  const hopeCost = getActualHopeCost(operator.rarity || 1);
+  // Calculate how much the operator's niches are needed (0 = not needed, higher = more needed)
+  let nicheNeedFactor = 0;
+
+  if (!primaryNiche) {
+    // For non-primary niche selection, calculate based on coverage gaps
+    for (const niche of niches) {
+      if (excludedNiches.has(niche)) continue;
+
+      const normalizedNiche = normalizeNiche ? normalizeNiche(niche) : niche;
+      const isRequired = requiredNiches.has(niche) || requiredNiches.has(normalizedNiche);
+      const isPreferred = preferredNiches.has(niche) || preferredNiches.has(normalizedNiche);
+
+      if (isRequired || isPreferred) {
+        const requiredRange = preferences.requiredNiches[niche] || preferences.requiredNiches[normalizedNiche];
+        const preferredRange = preferences.preferredNiches[niche] || preferences.preferredNiches[normalizedNiche];
+        const currentCount = nicheCounts[normalizedNiche] || 0;
+
+        if (requiredRange) {
+          const minCount = requiredRange.min;
+          if (currentCount < minCount) {
+            // High need - niches are under-covered
+            nicheNeedFactor += 2;
+          } else if (currentCount < requiredRange.max) {
+            // Moderate need - niches could use more coverage
+            nicheNeedFactor += 1;
+          }
+          // No need factor if already at or above max
+        } else if (preferredRange) {
+          const minCount = preferredRange.min;
+          if (currentCount < minCount) {
+            // Moderate need for preferred niches
+            nicheNeedFactor += 1;
+          }
+          // No need factor if already at or above max
+        }
+      }
+    }
+  } else {
+    // For primary niche selection, always consider it needed
+    nicheNeedFactor = 2;
+  }
+
+  // Apply penalty inversely proportional to need - less penalty when niches are needed
+  const hopePenalty = hopeCost * Math.max(0, (2 - nicheNeedFactor) / 2);
+  score -= hopePenalty;
+
   // Penalize if too many operators from same niche already in team
   // Note: allowDuplicates is always true now, but keeping logic for potential future use
   if (false) {
@@ -404,7 +467,7 @@ export function scoreOperator(
         existingNicheCounts[niche] = (existingNicheCounts[niche] || 0) + 1;
       }
     }
-    
+
     for (const niche of niches) {
       const existingCount = existingNicheCounts[niche] || 0;
       // Check against required/preferred ranges
@@ -415,13 +478,13 @@ export function scoreOperator(
         preferredRange?.max || 0,
         3 // Default to 3 if not specified
       );
-      
+
       if (existingCount >= maxCount) {
         score -= 50; // Penalty for exceeding max per niche
       }
     }
   }
-  
+
   return score;
 }
 
@@ -1094,13 +1157,6 @@ export async function getIntegratedStrategiesRecommendation(
       reasoning.push(`⚠️ Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
     }
 
-    // Bonus for operators with multiple useful niches
-    const usefulNiches = operator.niches.filter((niche: string) => importantNiches.has(niche));
-    if (usefulNiches.length > 1) {
-      const bonus = (usefulNiches.length - 1) * 25;
-      score += bonus;
-      reasoning.push(`🔄 Versatile: covers ${usefulNiches.length} important niches (+${bonus})`);
-    }
 
     operatorScores.push({
       operatorId,
