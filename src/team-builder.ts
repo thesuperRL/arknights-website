@@ -401,13 +401,6 @@ export function scoreOperator(
     // Apply niche coverage score with reduced weighting
     score += nicheCoverageScore;
 
-    // Bonus for operators with multiple high-tier niches (versatility bonus)
-    if (scoredNiches.size > 1 && totalTierScore > 0) {
-      const averageTierScore = totalTierScore / scoredNiches.size;
-      if (averageTierScore >= 80) { // A-tier or better on average
-        score += scoredNiches.size * 15; // Bonus for versatile high-tier operators
-      }
-    }
   }
   
   // Apply hope cost penalty - higher hope cost operators are penalized when their niches are already well-covered
