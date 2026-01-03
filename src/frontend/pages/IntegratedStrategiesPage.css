@@ -208,26 +208,6 @@
   border-color: var(--primary-color);
 }
 
-.selected-classes-summary {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 6px;
-  text-align: center;
-}
-
-.summary-label {
-  font-weight: 600;
-  color: var(--primary-color);
-  margin-right: 0.5rem;
-}
-
-.summary-classes {
-  color: var(--text-light);
-  font-size: 0.9rem;
-}
-
 /* Advanced Options Section */
 .advanced-options-section-collapsible {
   margin-bottom: 1.5rem;
@@ -557,6 +537,40 @@
   border-radius: 8px;
   color: #ef4444;
   text-align: center;
+}
+
+.no-raised-operators-notice {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 6px;
+  text-align: left;
+}
+
+.no-raised-operators-notice p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.no-raised-operators-notice strong {
+  color: var(--primary-color);
+}
+
+.raised-operators-count {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.raised-operators-count p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-light);
 }
 
 .recommendation-actions {

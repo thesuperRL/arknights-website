@@ -6,26 +6,39 @@ import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
 import './IntegratedStrategiesPage.css';
 
-// Local recommendation algorithm
+// Local recommendation algorithm - ONLY considers raised/deployable operators
 function getIntegratedStrategiesRecommendation(
   allOperators: Record<string, Operator>,
-  ownedOperatorIds: string[],
+  raisedOperatorIds: string[], // ONLY raised operators that user can deploy
   currentTeamOperatorIds: string[],
   requiredClasses: string[],
   temporaryRecruitment?: string
 ): { recommendedOperator: Operator | null; reasoning: string; score: number } {
-  // Start with owned operators
-  let availableOperatorIds = ownedOperatorIds.filter(id => allOperators[id]);
+  // ONLY use raised operators (user's deployable collection)
+  let availableOperatorIds = raisedOperatorIds.filter(id => allOperators[id]);
+  console.log('Available operators after filtering to raised only:', availableOperatorIds.length);
+  console.log('Ceobe in raised operators?', raisedOperatorIds.includes('ceobe'));
+  console.log('All raised operators sample:', raisedOperatorIds.slice(0, 10));
 
-  // Add temporary recruitment operator if specified and not already owned
-  if (temporaryRecruitment && allOperators[temporaryRecruitment] && !ownedOperatorIds.includes(temporaryRecruitment)) {
+  // Add temporary recruitment operator if specified and not already raised
+  if (temporaryRecruitment && allOperators[temporaryRecruitment] && !raisedOperatorIds.includes(temporaryRecruitment)) {
     availableOperatorIds.push(temporaryRecruitment);
+    console.log('Added temporary recruitment:', temporaryRecruitment);
+  } else if (temporaryRecruitment) {
+    console.log('Temporary recruitment not added - either not specified, operator not found, or already owned');
   }
 
   // Filter to only operators of the required classes
   const availableOperators = availableOperatorIds
     .filter(id => requiredClasses.includes(allOperators[id].class))
     .filter(id => !currentTeamOperatorIds.includes(id)); // Exclude operators already in team
+
+  console.log('Final available operators for classes', requiredClasses, ':', availableOperators.length);
+  console.log('Sample operators:', availableOperators.slice(0, 3).map(id => `${allOperators[id]?.name} (${allOperators[id]?.class})`));
+  console.log('Ceobe in final operators?', availableOperators.includes('ceobe'));
+  if (availableOperators.includes('ceobe')) {
+    console.log('Ceobe operator data:', allOperators['ceobe']);
+  }
 
   if (availableOperators.length === 0) {
     const classText = requiredClasses.length === 1
@@ -34,7 +47,7 @@ function getIntegratedStrategiesRecommendation(
     const teamCondition = currentTeamOperatorIds.length > 0 ? ' and aren\'t already in your team' : '';
     return {
       recommendedOperator: null,
-      reasoning: `No ${classText} operators available that you own${teamCondition}.`,
+      reasoning: `No ${classText} raised operators available${teamCondition}.`,
       score: 0
     };
   }
@@ -93,7 +106,18 @@ function getIntegratedStrategiesRecommendation(
   // Score each available operator
   const operatorScores: Array<{ operatorId: string; score: number; reasoning: string[] }> = [];
 
+  console.log('Starting to score operators, availableOperators count:', availableOperators.length);
+  console.log('First 5 operators to score:', availableOperators.slice(0, 5));
+  console.log('Ceobe in availableOperators?', availableOperators.includes('ceobe'));
+  console.log('Ceobe index in availableOperators:', availableOperators.indexOf('ceobe'));
+  console.log('All availableOperators:', availableOperators);
+
   for (const operatorId of availableOperators) {
+    console.log('Scoring operator:', operatorId, allOperators[operatorId]?.name, 'isCeobe?', operatorId === 'ceobe');
+    if (operatorId === 'ceobe') {
+      console.log('ERROR: Ceobe should not be in availableOperators but is being scored!');
+      console.log('availableOperators at scoring time:', [...availableOperators]);
+    }
     const operator = allOperators[operatorId];
     if (!operator || !operator.niches) continue;
 
@@ -179,19 +203,33 @@ function getIntegratedStrategiesRecommendation(
   // Sort by score (highest first)
   operatorScores.sort((a, b) => b.score - a.score);
 
+  console.log('All scored operators:', operatorScores.map(op => ({
+    id: op.operatorId,
+    name: allOperators[op.operatorId]?.name,
+    isCeobe: op.operatorId === 'ceobe',
+    score: op.score
+  })));
+
   if (operatorScores.length === 0) {
     const classText = requiredClasses.length === 1
       ? requiredClasses[0]
       : `${requiredClasses.join(' or ')}`;
     return {
       recommendedOperator: null,
-      reasoning: `No suitable ${classText} operators found for your team composition.`,
+      reasoning: `No suitable ${classText} raised operators found for your team composition.`,
       score: 0
     };
   }
 
   const bestOperator = operatorScores[0];
   const operator = allOperators[bestOperator.operatorId];
+
+  console.log('Selected best operator:', {
+    operatorId: bestOperator.operatorId,
+    operatorName: operator?.name,
+    isCeobe: bestOperator.operatorId === 'ceobe',
+    score: bestOperator.score
+  });
 
   // Create detailed reasoning with better formatting
   const classText = requiredClasses.length === 1
@@ -309,6 +347,8 @@ const IntegratedStrategiesPage: React.FC = () => {
 
   const [allOperators, setAllOperators] = useState<Record<string, Operator>>({});
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
+  const [raisedOperators, setRaisedOperators] = useState<Set<string>>(new Set());
+  const [rawUserData, setRawUserData] = useState<any>(null);
   const [selectedOperators, setSelectedOperators] = useState<SelectedOperator[]>([]);
   const [requiredClasses, setRequiredClasses] = useState<Set<string>>(new Set());
   const [recommendation, setRecommendation] = useState<RecommendationResult | null>(null);
@@ -327,6 +367,14 @@ const IntegratedStrategiesPage: React.FC = () => {
       loadOwnedOperators();
     }
   }, [user]);
+
+  // Debug raised operators state
+  useEffect(() => {
+    console.log('Raised operators state changed:', {
+      size: raisedOperators.size,
+      first5: Array.from(raisedOperators).slice(0, 5)
+    });
+  }, [raisedOperators]);
 
   const loadAllOperators = async () => {
     try {
@@ -350,6 +398,8 @@ const IntegratedStrategiesPage: React.FC = () => {
   const loadOwnedOperators = async () => {
     if (!user) {
       setOwnedOperators(new Set());
+      setRaisedOperators(new Set());
+      setRawUserData(null);
       return;
     }
 
@@ -359,7 +409,21 @@ const IntegratedStrategiesPage: React.FC = () => {
       });
       if (response.ok) {
         const data = await response.json();
+        console.log('Raw user data from API:', data);
+        console.log('ownedOperators length:', data.ownedOperators?.length || 0);
+        console.log('raisedOperators length:', data.raisedOperators?.length || 0);
+        console.log('wantToUse length:', data.wantToUse?.length || 0);
+        console.log('First 5 raisedOperators:', data.raisedOperators?.slice(0, 5));
+        console.log('First 5 wantToUse:', data.wantToUse?.slice(0, 5));
+        setRawUserData(data);
         setOwnedOperators(new Set(data.ownedOperators || []));
+        setRaisedOperators(new Set(data.raisedOperators || []));
+
+        // Verify the state was set correctly
+        setTimeout(() => {
+          console.log('State verification - raisedOperators size:', raisedOperators.size);
+          console.log('State verification - first 5 raised:', Array.from(raisedOperators).slice(0, 5));
+        }, 100); // raisedOperators comes from wantToUse field
       }
     } catch (err) {
       console.error('Error loading owned operators:', err);
@@ -404,19 +468,31 @@ const IntegratedStrategiesPage: React.FC = () => {
     try {
       const operatorIds = selectedOperators.map(selected => selected.operatorId);
 
-      console.log('Getting recommendation locally with:', {
-        currentTeam: operatorIds,
-        requiredClasses: Array.from(requiredClasses),
-        temporaryRecruitment
-      });
+  const raisedOpsArray = Array.from(raisedOperators); // raisedOperators are the deployable operators
 
-      const result = getIntegratedStrategiesRecommendation(
-        allOperators,
-        Array.from(ownedOperators),
-        operatorIds,
-        Array.from(requiredClasses),
-        temporaryRecruitment || undefined
-      );
+  // Check all possible Ceobe identifiers
+  const ceobeVariants = ['ceobe', 'char_4055_bgsnow'];
+  const foundCeobeVariants = ceobeVariants.filter(id => raisedOpsArray.includes(id));
+
+  console.log('Getting recommendation locally with:', {
+    currentTeam: operatorIds,
+    requiredClasses: Array.from(requiredClasses),
+    temporaryRecruitment,
+    raisedOperatorsCount: raisedOpsArray.length,
+    raisedOperatorsSample: raisedOpsArray.slice(0, 5), // Show first 5 for debugging
+    hasCeobeById: raisedOpsArray.includes('char_4055_bgsnow'), // Check if Ceobe is in raised operators by ID
+    hasCeobeByName: raisedOpsArray.includes('ceobe'), // Check if Ceobe is in raised operators by name
+    foundCeobeVariants: foundCeobeVariants, // Show which Ceobe variants are found
+    rawRaisedOperators: raisedOperators // Show the raw Set data
+  });
+
+  const result = getIntegratedStrategiesRecommendation(
+    allOperators,
+    raisedOpsArray, // ONLY raised operators
+    operatorIds,
+    Array.from(requiredClasses),
+    temporaryRecruitment || undefined
+  );
 
       setRecommendation(result);
     } catch (err: any) {
@@ -522,15 +598,6 @@ const IntegratedStrategiesPage: React.FC = () => {
             </button>
           </div>
         </div>
-
-        {requiredClasses.size > 0 && (
-          <div className="selected-classes-summary">
-            <span className="summary-label">Selected:</span>
-            <span className="summary-classes">
-              {Array.from(requiredClasses).join(', ')}
-            </span>
-          </div>
-        )}
       </div>
 
       <div className="advanced-options-section-collapsible">
@@ -638,6 +705,16 @@ const IntegratedStrategiesPage: React.FC = () => {
             ) : (
               <div className="no-recommendation">
                 <p>No suitable operator found for the selected class and team composition.</p>
+                {raisedOperators.size === 0 ? (
+                  <div className="no-raised-operators-notice">
+                    <p><strong>Note:</strong> You haven't marked any operators as raised/deployable.</p>
+                    <p>To get recommendations, mark operators as "want to use" in your profile or operator pages.</p>
+                  </div>
+                ) : (
+                  <div className="raised-operators-count">
+                    <p>You have {raisedOperators.size} raised operator{raisedOperators.size !== 1 ? 's' : ''} available for recommendations.</p>
+                  </div>
+                )}
                 <button
                   onClick={() => setRecommendation(null)}
                   className="try-again-btn secondary"

@@ -12,8 +12,8 @@ export interface LocalAccount {
   passwordHash: string; // bcrypt hash
   createdAt: string; // ISO date string
   lastLogin?: string; // ISO date string
-  ownedOperators?: string[]; // Array of operator IDs (stored as JSON)
-  wantToUse?: string[]; // Array of operator IDs (stored as JSON)
+  ownedOperators?: string[]; // Array of operator IDs that are OWNED (in collection)
+  wantToUse?: string[]; // Array of operator IDs that are RAISED (max level, deployable) - used as raised operators
 }
 
 // Database connection pool (singleton)
@@ -153,7 +153,7 @@ function rowToAccount(row: any, ownedOperatorsCol: string, wantToUseCol: string)
     createdAt: row.createdAt ? new Date(row.createdAt).toISOString() : new Date().toISOString(),
     lastLogin: row.lastLogin ? new Date(row.lastLogin).toISOString() : undefined,
     ownedOperators: parseJsonColumn(row[ownedOperatorsCol]),
-    wantToUse: parseJsonColumn(row[wantToUseCol])
+    wantToUse: parseJsonColumn(row[wantToUseCol]) // This is actually the raised operators
   };
 }
 

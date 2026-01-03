@@ -463,12 +463,23 @@ app.get('/api/auth/user', async (req, res) => {
 
     const account = await findAccountByEmail(session.email);
     const ownedOperators = account?.ownedOperators || [];
+    const raisedOperators = account?.wantToUse || []; // wantToUse is actually the raised operators
     const wantToUse = account?.wantToUse || [];
-    
+
+    console.log('API /auth/user response:', {
+      email: session.email,
+      ownedOperatorsCount: ownedOperators.length,
+      raisedOperatorsCount: raisedOperators.length,
+      wantToUseCount: wantToUse.length,
+      first5Raised: raisedOperators.slice(0, 5),
+      first5WantToUse: wantToUse.slice(0, 5)
+    });
+
     res.json({
       email: session.email,
       nickname: session.email.split('@')[0],
       ownedOperators,
+      raisedOperators, // wantToUse field contains raised operators
       wantToUse
     });
   } catch (error: any) {
