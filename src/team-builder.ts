@@ -1156,13 +1156,16 @@ export async function getIntegratedStrategiesRecommendation(
     }
 
     // Penalty for duplicate niches (discourage over-specialization)
-    const duplicateNiches = operator.niches.filter((niche: string) =>
-      !isExcludedNiches.has(niche) && (nicheCounts[niche] || 0) >= 3
-    );
-    if (duplicateNiches.length > 0) {
-      const penalty = duplicateNiches.length * 20;
-      score -= penalty;
-      reasoning.push(`⚠️ Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
+    // Skip penalty for low-rarity operators
+    if (!operator.niches.includes('low-rarity')) {
+      const duplicateNiches = operator.niches.filter((niche: string) =>
+        !isExcludedNiches.has(niche) && (nicheCounts[niche] || 0) >= 3
+      );
+      if (duplicateNiches.length > 0) {
+        const penalty = duplicateNiches.length * 20;
+        score -= penalty;
+        reasoning.push(`⚠️ Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
+      }
     }
 
 
