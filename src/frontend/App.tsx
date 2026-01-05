@@ -19,6 +19,8 @@ import UserProfilePage from './pages/UserProfilePage';
 import TeamBuilderPage from './pages/TeamBuilderPage';
 import IntegratedStrategiesPage from './pages/IntegratedStrategiesPage';
 import './App.css';
+import './pages/AllOperatorsPage.css';
+import './pages/NicheListPage.css';
 
 function App() {
   return (

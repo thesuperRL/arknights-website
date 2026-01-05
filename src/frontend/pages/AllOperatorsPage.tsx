@@ -5,7 +5,6 @@ import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
-import './AllOperatorsPage.css';
 
 interface Operator {
   id: string;
@@ -222,7 +221,7 @@ const AllOperatorsPage: React.FC = () => {
               <div className="operator-info">
                 <div className="operator-name">{getOperatorName(operator, language)}</div>
                 <div className="operator-meta">
-                  <Stars rarity={operator.rarity} size="small" />
+                  <Stars rarity={operator.rarity} size="tiny" />
                   <span className="operator-class">{operator.class}</span>
                 </div>
                 {operator.niches && operator.niches.length > 0 && (

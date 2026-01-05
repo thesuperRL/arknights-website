@@ -9,6 +9,11 @@
     gap: 0.1rem;
 }
 
+.stars-tiny {
+    font-size: 0.7rem;
+    gap: 0.05rem;
+}
+
 .stars-medium {
     font-size: 1.2rem;
 }

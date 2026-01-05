@@ -48,6 +48,8 @@ body {
     color: var(--text-light);
 }
 
+
+
 /* Global rarity colors for operator cards - more solid for better visibility */
 .operator-card.rarity-6 {
     border-color: rgba(255, 150, 0, 0.9);

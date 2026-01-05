@@ -106,7 +106,7 @@
     "internalName": "char_456_ash",
     "nicheTiers": {
       "anti-air-operators": "A",
-      "boss-killing": "A",
+      "boss-killing": "C",
       "physical-dps": "A"
     }
   },
@@ -248,7 +248,7 @@
     "internalName": "char_2013_cerber",
     "nicheTiers": {
       "arts-dps": "SS",
-      "boss-killing": "A",
+      "boss-killing": "S",
       "physical-dps": "A",
       "silence": "A",
       "stalling": "A",
@@ -388,7 +388,7 @@
     "internalName": "char_4116_blkkgt",
     "nicheTiers": {
       "aoe-physical-dps": "S",
-      "boss-killing": "A",
+      "boss-killing": "S",
       "late-laneholder": "A",
       "physical-dps": "A",
       "tanking-blocking-operators": "A"
@@ -458,7 +458,7 @@
     "internalName": "char_4046_ebnhlz",
     "nicheTiers": {
       "arts-dps": "A",
-      "boss-killing": "A",
+      "boss-killing": "B",
       "trash-operators": "A"
     }
   },
@@ -503,7 +503,7 @@
     "krName": "엔텔레키아",
     "internalName": "char_4010_etlchi",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "B",
       "late-laneholder": "A",
       "physical-dps": "A"
     }
@@ -524,7 +524,7 @@
     "krName": "유넥티스",
     "internalName": "char_416_zumama",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "B",
       "tanking-blocking-operators": "A"
     }
   },
@@ -575,6 +575,7 @@
     "global": true,
     "profileImage": "/images/operators/exusiai_the_new_covenant.png",
     "niches": [
+      "boss-killing",
       "physical-dps",
       "unconventional-niches"
     ],
@@ -583,6 +584,7 @@
     "krName": "엑시아 더 뉴 커버넌트",
     "internalName": "char_1041_angel2",
     "nicheTiers": {
+      "boss-killing": "SS",
       "physical-dps": "A",
       "unconventional-niches": "A"
     }
@@ -607,7 +609,7 @@
     "nicheTiers": {
       "aoe-arts-dps": "S",
       "arts-dps": "SS",
-      "boss-killing": "A",
+      "boss-killing": "S",
       "res-shred": "S"
     }
   },
@@ -717,7 +719,7 @@
     "krName": "가비알 디 인빈서블",
     "internalName": "char_1026_gvial2",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "B",
       "late-laneholder": "A",
       "physical-dps": "A",
       "tanking-blocking-operators": "A"
@@ -861,7 +863,7 @@
     "krName": "외드레르",
     "internalName": "char_4088_hodrer",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "B",
       "late-laneholder": "A",
       "physical-dps": "A",
       "tanking-blocking-operators": "A"
@@ -1123,7 +1125,7 @@
     "internalName": "char_1043_leizi2",
     "nicheTiers": {
       "aoe-physical-dps": "S",
-      "boss-killing": "A"
+      "boss-killing": "S"
     }
   },
   "lemuen": {
@@ -1144,7 +1146,7 @@
     "krName": "르무엔",
     "internalName": "char_4193_lemuen",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "S",
       "physical-dps": "A",
       "global-range": "A"
     }
@@ -1168,7 +1170,7 @@
     "krName": "레싱",
     "internalName": "char_4011_lessng",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "C",
       "free": "A",
       "trash-operators": "A",
       "unconventional-niches": "A"
@@ -1238,7 +1240,7 @@
     "nicheTiers": {
       "aoe-arts-dps": "SS",
       "arts-dps": "SS",
-      "boss-killing": "A",
+      "boss-killing": "SS",
       "res-shred": "SS",
       "unconventional-niches": "A"
     }
@@ -1350,7 +1352,7 @@
     ],
     "internalName": "char_4179_monstr",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "S",
       "damage-buff": "SS",
       "healing-operators": "A",
       "true_damage": "SS"
@@ -1465,7 +1467,7 @@
     "internalName": "char_4064_mlynar",
     "nicheTiers": {
       "aoe-physical-dps": "S",
-      "boss-killing": "A",
+      "boss-killing": "S",
       "tanking-blocking-operators": "A"
     }
   },
@@ -1542,7 +1544,7 @@
     "internalName": "char_450_necras",
     "nicheTiers": {
       "arts-dps": "A",
-      "boss-killing": "A",
+      "boss-killing": "C",
       "late-laneholder": "A",
       "tanking-blocking-operators": "A"
     }
@@ -1745,7 +1747,7 @@
     "krName": "파죰카",
     "internalName": "char_4055_bgsnow",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "B",
       "def-shred": "A",
       "physical-dps": "A"
     }
@@ -1820,7 +1822,7 @@
     "krName": "레이",
     "internalName": "char_4117_ray",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "S",
       "physical-dps": "A"
     }
   },
@@ -1990,7 +1992,7 @@
     "krName": "슈바르츠",
     "internalName": "char_340_shwaz",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "B",
       "physical-dps": "A"
     }
   },
@@ -2113,7 +2115,7 @@
     "internalName": "char_172_svrash",
     "nicheTiers": {
       "aoe-physical-dps": "S",
-      "boss-killing": "A",
+      "boss-killing": "B",
       "late-laneholder": "A",
       "physical-dps": "A",
       "unconventional-niches": "A"
@@ -2237,7 +2239,7 @@
     "internalName": "char_350_surtr",
     "nicheTiers": {
       "arts-dps": "SS",
-      "boss-killing": "A"
+      "boss-killing": "S"
     }
   },
   "suzuran": {
@@ -2407,7 +2409,7 @@
     "krName": "티폰",
     "internalName": "char_2012_typhon",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "S",
       "physical-dps": "A"
     }
   },
@@ -2513,7 +2515,7 @@
     "krName": "비비아나",
     "internalName": "char_4098_vvana",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "C",
       "late-laneholder": "A"
     }
   },
@@ -2599,7 +2601,7 @@
     "internalName": "char_1035_wisdel",
     "nicheTiers": {
       "aoe-physical-dps": "SS",
-      "boss-killing": "A"
+      "boss-killing": "SS"
     }
   },
   "yu": {
@@ -2648,7 +2650,7 @@
     "krName": "좌락",
     "internalName": "char_4121_zuole",
     "nicheTiers": {
-      "boss-killing": "A",
+      "boss-killing": "B",
       "late-laneholder": "A",
       "physical-dps": "A",
       "tanking-blocking-operators": "A"
