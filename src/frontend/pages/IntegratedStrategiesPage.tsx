@@ -186,31 +186,23 @@ async function getIntegratedStrategiesRecommendation(
     // Tier-based scoring - VERY significant, should outweigh hope penalties
     // Calculate tier scores across all niches the operator has
     // Skip "low-rarity" as it's not a tier list
-    const excludedFromTierScoring = new Set(['low-rarity', 'trash-operators']);
-    let totalTierScore = 0;
-    const tierBreakdown: string[] = [];
-    for (const niche of operator.niches) {
-      // Skip niches that are not tier lists
-      if (excludedFromTierScoring.has(niche)) {
-        continue;
-      }
-      const tier = await getOperatorTierInNiche(operatorId, niche);
-      if (tier > 0) {
-        // Use a large multiplier (50x) to ensure tier scores outweigh hope penalties
-        const tierPoints = tier;
-        totalTierScore += tierPoints;
-        const tierName = getTierNameFromValue(tier);
-        tierBreakdown.push(`${niche}: ${tierName} tier (+${tierPoints})`);
-      }
-    }
-    if (totalTierScore > 0) {
-      score += totalTierScore;
-      reasoning.push(`⭐ Tier performance: +${totalTierScore} (${tierBreakdown.join(', ')})`);
-    }
+    const excludedFromTierScoring = new Set(['low-rarity']);
 
     // Bonus for filling important niches that are missing or under-covered
     for (const niche of operator.niches) {
+      if (excludedFromTierScoring.has(niche)) {
+        continue;
+      }
+
       const currentCount = nicheCounts[niche] || 0;
+
+      const tier = await getOperatorTierInNiche(operatorId, niche);
+      if (tier == 0) {
+        continue;
+      }
+
+      const tierPoints = tier;
+      const tierName = getTierNameFromValue(tier);
 
       if (importantNiches.has(niche)) {
         const requiredRange = defaultPreferences.requiredNiches[niche];
@@ -220,69 +212,49 @@ async function getIntegratedStrategiesRecommendation(
           // Required niche
           if (currentCount < requiredRange.min) {
             // Filling a missing required niche
-            const bonus = 100;
-            score += bonus;
-            reasoning.push(`🎯 Fills missing required niche: ${niche} (+${bonus})`);
+            const bonus = tierPoints * 5;
+            score +=  bonus;
+            reasoning.push(`🎯 Fills missing required niche: ${niche} at ${tierName} tier (+${bonus})`);
           } else if (currentCount < requiredRange.max) {
             // Filling an under-covered required niche
-            const bonus = 50;
+            const bonus = tierPoints * 2.5;
             score += bonus;
-            reasoning.push(`➕ Strengthens required niche: ${niche} (+${bonus})`);
+            reasoning.push(`➕ Strengthens required niche: ${niche} at ${tierName} tier (+${bonus})`);
           } else {
-            // Over-covered required niche (still some value)
-            const bonus = 10;
+            // Over-covered required niche (negativevalue)
+            const bonus = tierPoints * (1.25);
             score += bonus;
-            reasoning.push(`✅ Supports required niche: ${niche} (+${bonus})`);
+            reasoning.push(`⚠️ Over-specializes in: ${niche} at ${tierName} tier (+${bonus})`);
           }
         } else if (preferredRange) {
           // Preferred niche
           if (currentCount < preferredRange.min) {
             // Filling a missing preferred niche
-            const bonus = 75;
+            const bonus = tierPoints * 3.5;
             score += bonus;
-            reasoning.push(`🎯 Fills missing preferred niche: ${niche} (+${bonus})`);
+            reasoning.push(`🎯 Fills missing preferred niche: ${niche} at ${tierName} tier (+${bonus})`);
           } else if (currentCount < preferredRange.max) {
             // Filling an under-covered preferred niche
-            const bonus = 30;
+            const bonus = tierPoints * 1.5;
             score += bonus;
-            reasoning.push(`➕ Strengthens preferred niche: ${niche} (+${bonus})`);
+            reasoning.push(`➕ Strengthens preferred niche: ${niche} at ${tierName} tier (+${bonus})`);
           } else {
-            // Over-covered preferred niche (minimal value)
-            const bonus = 5;
+            // Over-covered preferred niche (negative value)
+            const bonus = tierPoints * (0.75);
             score += bonus;
-            reasoning.push(`✅ Supports preferred niche: ${niche} (+${bonus})`);
+            reasoning.push(`⚠️ Over-specializes in: ${niche} at ${tierName} tier (+${bonus})`);
           }
         }
       } else if (niche == "trash-operators") {
-        const minus = 1000;
-        score -= minus;
-        reasoning.push(`🚫 Trash operator (-${minus})`);
+        const trashPenalty = 1000; // Large penalty that makes trash operators virtually unrecommendable
+        score -= trashPenalty;
+        reasoning.push(`🚫 Trash operator (-${trashPenalty})`);
       } else {
         // Non-standard niche (some value for variety)
-            const bonus = 15;
+            const bonus = tierPoints * 0.5;
             score += bonus;
-        reasoning.push(`🌟 Provides niche variety: ${niche} (+${bonus})`);
+        reasoning.push(`🌟 Provides niche variety: ${niche} at ${tierName} tier (+${bonus})`);
       }
-    }
-
-    // Penalty for duplicate niches (discourage over-specialization)
-    // Skip penalty for low-rarity operators
-    if (!operator.niches.includes('low-rarity')) {
-      const duplicateNiches = operator.niches.filter((niche: string) =>
-        !isExcludedNiches.has(niche) && (nicheCounts[niche] || 0) >= 3
-      );
-      if (duplicateNiches.length > 0) {
-        const penalty = duplicateNiches.length * 20;
-        score -= penalty;
-        reasoning.push(`⚠️ Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
-      }
-    }
-
-    // Apply large negative penalty for trash operators - makes them almost impossible to recommend
-    if (trashOperators && trashOperators.has(operatorId)) {
-      const trashPenalty = 10000; // Large penalty that makes trash operators virtually unrecommendable
-      score -= trashPenalty;
-      reasoning.push(`🚫 Trash operator (-${trashPenalty})`);
     }
 
     // Apply hope cost penalty - higher hope cost operators are penalized when their niches are already well-covered
@@ -314,7 +286,7 @@ async function getIntegratedStrategiesRecommendation(
     }
 
     // Apply large hope cost penalty - always present, discourages expensive operators
-    const hopePenalty = hopeCost * 20; // Large multiplier to make hope cost very significant
+    const hopePenalty = hopeCost * 42; // Large multiplier to make hope cost very significant
     score -= hopePenalty;
     reasoning.push(`💎 Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
 

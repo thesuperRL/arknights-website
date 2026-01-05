@@ -3,9 +3,10 @@
   "description": "Operators that can pull or push enemies",
   "lastUpdated": "2025-12-25",
   "operators": {
-    "SS": {},
+    "SS": {
+      "weedy": ""
+    },
     "S": {
-      "weedy": "",
       "gladiia": ""
     },
     "A": {

@@ -2576,7 +2576,7 @@
     "internalName": "char_400_weedy",
     "nicheTiers": {
       "late-laneholder": "B",
-      "shift": "S",
+      "shift": "SS",
       "stalling": "A",
       "true_damage": "B"
     }
