@@ -221,6 +221,14 @@ function getIntegratedStrategiesRecommendation(
     score -= hopePenalty;
     reasoning.push(`💎 Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
 
+    // Log each evaluated character and their scoring criteria
+    console.log(`\n=== Integrated Strategies Evaluation: ${operator.name || operatorId} ===`);
+    console.log(`Class: ${operator.class}, Rarity: ${operator.rarity}★`);
+    console.log(`Niches: ${operator.niches?.join(', ') || 'None'}`);
+    console.log(`Final Score: ${score}`);
+    console.log('Scoring Breakdown:');
+    reasoning.forEach(reason => console.log(`  ${reason}`));
+
     operatorScores.push({
       operatorId,
       score,

@@ -504,7 +504,7 @@
     "internalName": "char_4010_etlchi",
     "nicheTiers": {
       "boss-killing": "B",
-      "late-laneholder": "SS",
+      "late-laneholder": "S",
       "physical-dps": "S"
     }
   },
@@ -545,7 +545,7 @@
     "krName": "이그제큐터 디 엑스 포에데레",
     "internalName": "char_1032_excu2",
     "nicheTiers": {
-      "late-laneholder": "SS",
+      "late-laneholder": "S",
       "physical-dps": "S"
     }
   },
@@ -1403,7 +1403,7 @@
     "internalName": "char_264_f12yin",
     "nicheTiers": {
       "early-laneholder": "SS",
-      "late-laneholder": "SS",
+      "late-laneholder": "S",
       "tanking-blocking-operators": "A"
     }
   },
