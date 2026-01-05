@@ -171,12 +171,6 @@ function getOperatorNiches(operatorId: string): string[] {
   return expandedNiches;
 }
 
-/**
- * Gets the hope cost for recruiting an operator (as used in the system)
- */
-function getActualHopeCost(rarity: number, preferences?: TeamPreferences): number {
-  return getConfiguredHopeCost(rarity, preferences?.hopeCosts);
-}
 
 /**
  * Gets the tier of an operator in a specific niche
@@ -417,54 +411,6 @@ export function scoreOperator(
     score += nicheCoverageScore;
 
   }
-  
-  // Apply hope cost penalty - higher hope cost operators are penalized when their niches are already well-covered
-  const hopeCost = getActualHopeCost(operator.rarity || 1, preferences);
-  // Calculate how much the operator's niches are needed (0 = not needed, higher = more needed)
-  let nicheNeedFactor = 0;
-
-  if (!primaryNiche) {
-    // For non-primary niche selection, calculate based on coverage gaps
-    for (const niche of niches) {
-      if (excludedNiches.has(niche)) continue;
-
-      const normalizedNiche = normalizeNiche ? normalizeNiche(niche) : niche;
-      const isRequired = requiredNiches.has(niche) || requiredNiches.has(normalizedNiche);
-      const isPreferred = preferredNiches.has(niche) || preferredNiches.has(normalizedNiche);
-
-      if (isRequired || isPreferred) {
-        const requiredRange = preferences.requiredNiches[niche] || preferences.requiredNiches[normalizedNiche];
-        const preferredRange = preferences.preferredNiches[niche] || preferences.preferredNiches[normalizedNiche];
-        const currentCount = nicheCounts[normalizedNiche] || 0;
-
-        if (requiredRange) {
-          const minCount = requiredRange.min;
-          if (currentCount < minCount) {
-            // High need - niches are under-covered
-            nicheNeedFactor += 2;
-          } else if (currentCount < requiredRange.max) {
-            // Moderate need - niches could use more coverage
-            nicheNeedFactor += 1;
-          }
-          // No need factor if already at or above max
-        } else if (preferredRange) {
-          const minCount = preferredRange.min;
-          if (currentCount < minCount) {
-            // Moderate need for preferred niches
-            nicheNeedFactor += 1;
-          }
-          // No need factor if already at or above max
-        }
-      }
-    }
-  } else {
-    // For primary niche selection, always consider it needed
-    nicheNeedFactor = 2;
-  }
-
-  // Apply large hope cost penalty - always present, discourages expensive operators
-  const hopePenalty = hopeCost * 20; // Large multiplier to make hope cost very significant
-  score -= hopePenalty;
 
   // Penalize if too many operators from same niche already in team
   // Note: allowDuplicates is always true now, but keeping logic for potential future use

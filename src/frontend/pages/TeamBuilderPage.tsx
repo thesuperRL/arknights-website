@@ -16,7 +16,6 @@ interface TeamPreferences {
   preferredNiches: Record<string, NicheRange>; // Niche filename -> range of operators
   rarityRanking?: number[]; // Rarity preference order (e.g., [6, 4, 5, 3, 2, 1])
   allowDuplicates?: boolean;
-  hopeCosts?: Record<number, number>; // Hope costs for different rarities
 }
 
 interface TeamMember {
@@ -704,62 +703,6 @@ const TeamBuilderPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="preference-group">
-              <label className="preference-label">Hope Costs</label>
-              <div className="hope-costs-container">
-                <div className="hope-cost-input-group">
-                  <label htmlFor="hope-cost-6star">6★:</label>
-                  <input
-                    id="hope-cost-6star"
-                    type="number"
-                    min="0"
-                    max="50"
-                    value={preferences.hopeCosts?.[6] ?? 6}
-                    onChange={(e) => {
-                      const value = parseInt(e.target.value) || 0;
-                      const newHopeCosts = { ...preferences.hopeCosts, 6: value };
-                      setPreferences({ ...preferences, hopeCosts: newHopeCosts });
-                    }}
-                    className="hope-cost-input"
-                  />
-                </div>
-                <div className="hope-cost-input-group">
-                  <label htmlFor="hope-cost-5star">5★:</label>
-                  <input
-                    id="hope-cost-5star"
-                    type="number"
-                    min="0"
-                    max="30"
-                    value={preferences.hopeCosts?.[5] ?? 3}
-                    onChange={(e) => {
-                      const value = parseInt(e.target.value) || 0;
-                      const newHopeCosts = { ...preferences.hopeCosts, 5: value };
-                      setPreferences({ ...preferences, hopeCosts: newHopeCosts });
-                    }}
-                    className="hope-cost-input"
-                  />
-                </div>
-                <div className="hope-cost-input-group">
-                  <label htmlFor="hope-cost-4star">4★:</label>
-                  <input
-                    id="hope-cost-4star"
-                    type="number"
-                    min="0"
-                    max="20"
-                    value={preferences.hopeCosts?.[4] ?? 0}
-                    onChange={(e) => {
-                      const value = parseInt(e.target.value) || 0;
-                      const newHopeCosts = { ...preferences.hopeCosts, 4: value };
-                      setPreferences({ ...preferences, hopeCosts: newHopeCosts });
-                    }}
-                    className="hope-cost-input"
-                  />
-                </div>
-              </div>
-              <div className="hope-costs-help">
-                Configure hope costs for different rarity operators (affects algorithm penalties)
-              </div>
-            </div>
 
 
         {/* Temporarily removed required and preferred niches sections */}

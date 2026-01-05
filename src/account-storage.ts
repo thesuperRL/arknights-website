@@ -1,10 +1,11 @@
 /**
- * Account storage system - SQL Database implementation
- * Migrated from JSON file to Azure SQL Database
+ * Account storage system - TEMPORARILY using JSON file instead of SQL Database
+ * Original: SQL Database implementation migrated from JSON file
  */
 
-import * as sql from 'mssql';
 import bcrypt from 'bcrypt';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export interface LocalAccount {
   id: number; // Changed from string to number (INT IDENTITY in SQL)
@@ -16,299 +17,150 @@ export interface LocalAccount {
   wantToUse?: string[]; // Array of operator IDs that are RAISED (max level, deployable) - used as raised operators
 }
 
-// Database connection pool (singleton)
-let pool: sql.ConnectionPool | null = null;
-
-// Cache for column names (to avoid repeated INFORMATION_SCHEMA queries)
-let columnNamesCache: Record<string, string> | null = null;
-
-/**
- * Sanitize error messages to remove sensitive server information
- */
-function sanitizeErrorMessage(error: any): string {
-  let message = error.message || String(error);
-  
-  // Remove server names and ports from error messages
-  message = message.replace(/[a-zA-Z0-9-]+\.database\.windows\.net(?::\d+)?/g, 'SQL server');
-  message = message.replace(/Failed to connect to [^ ]+ in (\d+)ms/g, 'Failed to connect to SQL server in $1ms');
-  message = message.replace(/ConnectionError: [^:]+: /g, '');
-  
-  return message;
+// JSON account interface (from accounts.json)
+interface JsonAccount {
+  id: string; // String ID in JSON
+  email: string;
+  passwordHash: string;
+  createdAt: string;
+  lastLogin?: string;
+  ownedOperators?: string[];
+  wantToUse?: string[];
 }
 
+// JSON accounts structure
+interface AccountsJson {
+  accounts: Record<string, JsonAccount>;
+}
+
+// Cache for accounts data
+let accountsCache: Record<string, LocalAccount> | null = null;
+let cacheTimestamp: number = 0;
+const CACHE_DURATION = 5000; // 5 seconds
+
+// Path to accounts JSON file
+const ACCOUNTS_JSON_PATH = path.join(__dirname, '../data/accounts.json');
+
 /**
- * Get or create database connection pool
+ * Load accounts from JSON file
  */
-async function getDbPool(): Promise<sql.ConnectionPool> {
-  if (pool && pool.connected) {
-    return pool;
-  }
-
-  // Database configuration from environment variables
-  function getDbConfig(): string | sql.config {
-    // If connection string is provided, use it
-    if (process.env.AZURE_SQL_CONNECTION_STRING) {
-      return process.env.AZURE_SQL_CONNECTION_STRING;
-    }
-
-    // Otherwise, use individual settings
-    let server = process.env.AZURE_SQL_SERVER || '';
-    const database = process.env.AZURE_SQL_DATABASE || '';
-    const user = process.env.AZURE_SQL_USER || '';
-    const password = process.env.AZURE_SQL_PASSWORD || '';
-    
-    // Handle case where port might be included in server name
-    let port = parseInt(process.env.AZURE_SQL_PORT || '1433', 10);
-    if (server.includes(':')) {
-      const parts = server.split(':');
-      server = parts[0];
-      if (parts[1] && !process.env.AZURE_SQL_PORT) {
-        port = parseInt(parts[1], 10);
-      }
-    }
-
-    if (!server || !database || !user || !password) {
-      throw new Error('Missing required database configuration. Please set AZURE_SQL_SERVER, AZURE_SQL_DATABASE, AZURE_SQL_USER, and AZURE_SQL_PASSWORD environment variables.');
-    }
-
-    return {
-      server,
-      database,
-      user,
-      password,
-      port,
-      connectionTimeout: parseInt(process.env.AZURE_SQL_CONNECTION_TIMEOUT || '15000', 10), // 15 seconds (increased from 5)
-      requestTimeout: parseInt(process.env.AZURE_SQL_REQUEST_TIMEOUT || '20000', 10), // 20 seconds (increased from 10)
-      pool: {
-        max: 5, // Reduced from 10 to prevent connection pool exhaustion
-        min: 0,
-        idleTimeoutMillis: 30000,
-        acquireTimeoutMillis: 20000, // 20 seconds to acquire connection
-        createTimeoutMillis: 20000, // 20 seconds to create connection
-        destroyTimeoutMillis: 5000, // 5 seconds to destroy connection
-        reapIntervalMillis: 1000, // Check for idle connections every second
-        createRetryIntervalMillis: 200 // Retry every 200ms if connection creation fails
-      },
-      options: {
-        encrypt: true, // Azure SQL requires encryption
-        trustServerCertificate: false,
-        enableArithAbort: true,
-        abortTransactionOnError: true,
-        useUTC: false,
-        datefirst: 1,
-        dateFormat: 'dmy'
-      }
-    };
-  }
-
-  const dbConfig = getDbConfig();
-  pool = typeof dbConfig === 'string' 
-    ? new sql.ConnectionPool(dbConfig)
-    : new sql.ConnectionPool(dbConfig);
-  
+function loadAccountsFromJson(): Record<string, LocalAccount> {
   try {
-    await pool.connect();
-    console.log('Database connection established successfully');
-    return pool;
-  } catch (error: any) {
-    const sanitizedMessage = sanitizeErrorMessage(error);
-    console.error('Database connection error:', sanitizedMessage);
-    pool = null; // Reset pool on error
-    
-    // Provide helpful error messages without exposing server details
-    if (error.code === 'ETIMEOUT' || error.message?.includes('timeout') || error.message?.includes('Failed to connect')) {
-      // Extract timeout value if present, otherwise use default
-      const timeoutMatch = error.message?.match(/(\d+)ms/);
-      const timeout = timeoutMatch ? timeoutMatch[1] : '15000';
-      throw new Error(`Failed to connect to SQL server in ${timeout}ms`);
-    } else if (error.code === 'ELOGIN' || error.message?.includes('Login failed')) {
-      throw new Error(`Database authentication failed. Please check your credentials.`);
-    } else {
-      throw new Error(`Database connection failed: ${sanitizedMessage}`);
-    }
-  }
-}
+    if (fs.existsSync(ACCOUNTS_JSON_PATH)) {
+      const content = fs.readFileSync(ACCOUNTS_JSON_PATH, 'utf-8');
+      const jsonData: AccountsJson = JSON.parse(content);
 
-/**
- * Parse JSON column safely
- */
-function parseJsonColumn(jsonString: string | null): string[] {
-  if (!jsonString) return [];
-  try {
-    const parsed = JSON.parse(jsonString);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-/**
- * Convert database row to LocalAccount
- */
-function rowToAccount(row: any, ownedOperatorsCol: string, wantToUseCol: string): LocalAccount {
-  return {
-    id: row.id,
-    email: row.email,
-    passwordHash: row.passwordHash,
-    createdAt: row.createdAt ? new Date(row.createdAt).toISOString() : new Date().toISOString(),
-    lastLogin: row.lastLogin ? new Date(row.lastLogin).toISOString() : undefined,
-    ownedOperators: parseJsonColumn(row[ownedOperatorsCol]),
-    wantToUse: parseJsonColumn(row[wantToUseCol]) // This is actually the raised operators
-  };
-}
-
-/**
- * Get column names from accounts table (cached)
- */
-async function getColumnNames(pool: sql.ConnectionPool): Promise<Record<string, string>> {
-  // Return cached column names if available
-  if (columnNamesCache) {
-    return columnNamesCache;
-  }
-
-  try {
-    // Use a simpler, faster query to get column names
-    const query = `
-      SELECT TOP 1 * FROM accounts WHERE 1=0
-    `;
-    const result = await pool.request().query(query);
-
-    const columns: Record<string, string> = {};
-
-    // Extract column names from the result metadata instead of INFORMATION_SCHEMA
-    if (result.recordset.columns) {
-      for (const colName of Object.keys(result.recordset.columns)) {
-        const lowerName = colName.toLowerCase();
-
-        if (lowerName === 'email' || lowerName === 'emailaddress') {
-          columns.email = colName;
-        } else if (lowerName === 'password' || lowerName === 'passwordhash' || lowerName === 'password_hash') {
-          columns.passwordHash = colName;
-        } else if (lowerName === 'createdat' || lowerName === 'created_at' || lowerName === 'datecreated') {
-          columns.createdAt = colName;
-        } else if (lowerName === 'lastlogin' || lowerName === 'last_login' || lowerName === 'datelastlogin') {
-          columns.lastLogin = colName;
-        } else if (lowerName === 'id') {
-          columns.id = colName;
-        } else if (lowerName === 'ownedoperators' || lowerName === 'owned_operators') {
-          columns.ownedOperators = colName;
-        } else if (lowerName === 'wanttouse' || lowerName === 'want_to_use' || lowerName === 'wanttouseoperators' || lowerName === 'want_to_use_operators') {
-          columns.wantToUse = colName;
-        }
+      const accounts: Record<string, LocalAccount> = {};
+      for (const [email, jsonAccount] of Object.entries(jsonData.accounts)) {
+        accounts[email] = {
+          id: parseInt(jsonAccount.id.split('_').pop() || '0', 36), // Convert string ID to number
+          email: jsonAccount.email,
+          passwordHash: jsonAccount.passwordHash,
+          createdAt: jsonAccount.createdAt,
+          lastLogin: jsonAccount.lastLogin,
+          ownedOperators: jsonAccount.ownedOperators || [],
+          wantToUse: jsonAccount.wantToUse || []
+        };
       }
+      return accounts;
+    }
+  } catch (error) {
+    console.error('Error loading accounts from JSON:', error);
+  }
+  return {};
+}
+
+/**
+ * Save accounts to JSON file
+ */
+function saveAccountsToJson(accounts: Record<string, LocalAccount>): void {
+  try {
+    const jsonData: AccountsJson = { accounts: {} };
+
+    for (const [email, account] of Object.entries(accounts)) {
+      jsonData.accounts[email] = {
+        id: `local_${account.createdAt.replace(/[-:]/g, '').slice(0, -5)}_${account.id.toString(36)}`,
+        email: account.email,
+        passwordHash: account.passwordHash,
+        createdAt: account.createdAt,
+        lastLogin: account.lastLogin,
+        ownedOperators: account.ownedOperators || [],
+        wantToUse: account.wantToUse || []
+      };
     }
 
-    // Set defaults if not found
-    columns.email = columns.email || 'email';
-    columns.passwordHash = columns.passwordHash || 'passwordHash';
-    columns.createdAt = columns.createdAt || 'createdAt';
-    columns.lastLogin = columns.lastLogin || 'lastLogin';
-    columns.id = columns.id || 'id';
-    columns.ownedOperators = columns.ownedOperators || 'ownedOperators';
-    columns.wantToUse = columns.wantToUse || 'wantToUse';
+    const dir = path.dirname(ACCOUNTS_JSON_PATH);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
 
-    // Cache the result
-    columnNamesCache = columns;
-    return columns;
-  } catch (error: any) {
-    // Fallback to hardcoded defaults if query fails
-    console.warn('Failed to get column names from database, using defaults:', error);
-    const columns = {
-      email: 'email',
-      passwordHash: 'passwordHash',
-      createdAt: 'createdAt',
-      lastLogin: 'lastLogin',
-      id: 'id',
-      ownedOperators: 'ownedOperators',
-      wantToUse: 'wantToUse'
-    };
-    columnNamesCache = columns;
-    return columns;
+    fs.writeFileSync(ACCOUNTS_JSON_PATH, JSON.stringify(jsonData, null, 2));
+  } catch (error) {
+    console.error('Error saving accounts to JSON:', error);
   }
 }
 
 /**
- * Find account by email with optimized query
+ * Get cached accounts or reload from JSON
+ */
+function getAccountsCache(): Record<string, LocalAccount> {
+  const now = Date.now();
+  if (!accountsCache || (now - cacheTimestamp) > CACHE_DURATION) {
+    accountsCache = loadAccountsFromJson();
+    cacheTimestamp = now;
+  }
+  return accountsCache;
+}
+
+/**
+ * Invalidate cache
+ */
+function invalidateCache(): void {
+  accountsCache = null;
+}
+
+// Database connection pool (singleton) - REMOVED: Using JSON storage instead
+// let pool: sql.ConnectionPool | null = null;
+
+// Cache for column names (to avoid repeated INFORMATION_SCHEMA queries) - REMOVED: Using JSON storage instead
+// let columnNamesCache: Record<string, string> | null = null;
+
+// REMOVED: SQL-related helper functions (parseJsonColumn, rowToAccount, getColumnNames) - using JSON storage instead
+
+/**
+ * Find account by email - JSON implementation
  */
 export async function findAccountByEmail(email: string): Promise<LocalAccount | null> {
-  const maxRetries = 2;
-  let lastError: any;
-
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const dbPool = await getDbPool();
-      const columns = await getColumnNames(dbPool);
-      const normalizedEmail = email.toLowerCase().trim();
-
-      // Use a more efficient query - only select needed columns
-      const escapeCol = (col: string) => `[${col}]`;
-      const query = `SELECT ${escapeCol(columns.id)}, ${escapeCol(columns.email)}, ${escapeCol(columns.passwordHash)}, ${escapeCol(columns.createdAt)}, ${escapeCol(columns.lastLogin)}, ${escapeCol(columns.ownedOperators)}, ${escapeCol(columns.wantToUse)} FROM accounts WHERE LOWER(${escapeCol(columns.email)}) = LOWER(@email)`;
-
-      const request = dbPool.request();
-      request.input('email', sql.NVarChar(255), normalizedEmail);
-      const result = await request.query(query);
-
-      if (result.recordset.length === 0) {
-        return null;
-      }
-
-      return rowToAccount(result.recordset[0], columns.ownedOperators, columns.wantToUse);
-    } catch (error: any) {
-      lastError = error;
-      console.error(`Error finding account by email (attempt ${attempt}/${maxRetries}):`, error.message);
-
-      // If this is a timeout or connection error and we have retries left, wait and retry
-      if ((error.code === 'ETIMEOUT' || error.code === 'TIMEOUT' || error.message?.includes('timeout')) && attempt < maxRetries) {
-        await new Promise(resolve => setTimeout(resolve, 1000 * attempt)); // Exponential backoff
-        continue;
-      }
-
-      // For other errors or if we're out of retries, throw
-      throw error;
-    }
+  try {
+    const accounts = getAccountsCache();
+    const normalizedEmail = email.toLowerCase().trim();
+    return accounts[normalizedEmail] || null;
+  } catch (error: any) {
+    console.error('Error finding account by email:', error.message);
+    throw error;
   }
-
-  throw lastError;
 }
 
 /**
- * Create a new account
+ * Create a new account - JSON implementation
  */
 export async function createAccount(email: string, password: string): Promise<LocalAccount> {
   try {
-    const dbPool = await getDbPool();
-    const columns = await getColumnNames(dbPool);
     const normalizedEmail = email.toLowerCase().trim();
-    
+
     // Check if account already exists
     const existing = await findAccountByEmail(normalizedEmail);
     if (existing) {
       throw new Error('Account with this email already exists');
     }
-    
+
     // Hash password
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
     const createdAt = new Date().toISOString();
-    
-    const escapeCol = (col: string) => `[${col}]`;
-    const insertQuery = `
-      INSERT INTO accounts (${escapeCol(columns.email)}, ${escapeCol(columns.passwordHash)}, ${escapeCol(columns.createdAt)}, ${escapeCol(columns.ownedOperators)}, ${escapeCol(columns.wantToUse)})
-      OUTPUT INSERTED.${escapeCol(columns.id)}
-      VALUES (@email, @passwordHash, @createdAt, @ownedOperators, @wantToUse)
-    `;
-    
-    const request = dbPool.request();
-    request.input('email', sql.NVarChar(255), normalizedEmail);
-    request.input('passwordHash', sql.NVarChar(sql.MAX), passwordHash);
-    request.input('createdAt', sql.DateTime2, new Date(createdAt));
-    request.input('ownedOperators', sql.NVarChar(sql.MAX), JSON.stringify([]));
-    request.input('wantToUse', sql.NVarChar(sql.MAX), JSON.stringify([]));
-    
-    const result = await request.query(insertQuery);
-    const accountId = result.recordset[0][columns.id];
-    
-    return {
+    const accountId = Math.floor(Math.random() * 1000000); // Simple ID generation
+
+    const newAccount: LocalAccount = {
       id: accountId,
       email: normalizedEmail,
       passwordHash,
@@ -316,6 +168,14 @@ export async function createAccount(email: string, password: string): Promise<Lo
       ownedOperators: [],
       wantToUse: []
     };
+
+    // Load existing accounts, add new one, and save
+    const accounts = getAccountsCache();
+    accounts[normalizedEmail] = newAccount;
+    saveAccountsToJson(accounts);
+    invalidateCache(); // Force reload on next access
+
+    return newAccount;
   } catch (error) {
     console.error('Error creating account:', error);
     throw error;
@@ -344,25 +204,18 @@ export async function verifyPassword(account: LocalAccount, password: string): P
 }
 
 /**
- * Update last login time (non-blocking)
+ * Update last login time - JSON implementation (non-blocking)
  */
 export async function updateLastLogin(email: string): Promise<void> {
   try {
-    const dbPool = await getDbPool();
-    const columns = await getColumnNames(dbPool);
     const normalizedEmail = email.toLowerCase().trim();
+    const accounts = getAccountsCache();
 
-    const escapeCol = (col: string) => `[${col}]`;
-    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.lastLogin)} = @lastLogin WHERE LOWER(${escapeCol(columns.email)}) = LOWER(@email)`;
-
-    const request = dbPool.request();
-    request.input('email', sql.NVarChar(255), normalizedEmail);
-    request.input('lastLogin', sql.DateTime2, new Date());
-
-    // Execute in background - don't wait for completion
-    request.query(updateQuery).catch(error => {
-      console.warn('Failed to update last login time (non-critical):', error.message);
-    });
+    if (accounts[normalizedEmail]) {
+      accounts[normalizedEmail].lastLogin = new Date().toISOString();
+      saveAccountsToJson(accounts);
+      invalidateCache();
+    }
   } catch (error: any) {
     // Don't throw error for last login update - it's not critical for login success
     console.warn('Failed to update last login time (non-critical):', error?.message || error);
@@ -370,34 +223,26 @@ export async function updateLastLogin(email: string): Promise<void> {
 }
 
 /**
- * Add operator to account's owned operators
+ * Add operator to account's owned operators - JSON implementation
  */
 export async function addOperatorToAccount(email: string, operatorId: string): Promise<boolean> {
   try {
-    const account = await findAccountByEmail(email);
+    const normalizedEmail = email.toLowerCase().trim();
+    const accounts = getAccountsCache();
+
+    const account = accounts[normalizedEmail];
     if (!account) {
       return false;
     }
-    
+
     const ownedOperators = account.ownedOperators || [];
     if (ownedOperators.includes(operatorId)) {
       return false; // Already exists
     }
-    
+
     ownedOperators.push(operatorId);
-    
-    const dbPool = await getDbPool();
-    const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
-    
-    const escapeCol = (col: string) => `[${col}]`;
-    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.ownedOperators)} = @ownedOperators WHERE ${escapeCol(columns.email)} = @email`;
-    
-    const request = dbPool.request();
-    request.input('email', sql.NVarChar(255), normalizedEmail);
-    request.input('ownedOperators', sql.NVarChar(sql.MAX), JSON.stringify(ownedOperators));
-    
-    await request.query(updateQuery);
+    saveAccountsToJson(accounts);
+    invalidateCache();
     return true;
   } catch (error) {
     console.error('Error adding operator to account:', error);
@@ -406,33 +251,27 @@ export async function addOperatorToAccount(email: string, operatorId: string): P
 }
 
 /**
- * Remove operator from account's owned operators
+ * Remove operator from account's owned operators - JSON implementation
  */
 export async function removeOperatorFromAccount(email: string, operatorId: string): Promise<boolean> {
   try {
-    const account = await findAccountByEmail(email);
+    const normalizedEmail = email.toLowerCase().trim();
+    const accounts = getAccountsCache();
+
+    const account = accounts[normalizedEmail];
     if (!account || !account.ownedOperators) {
       return false;
     }
-    
+
     const ownedOperators = account.ownedOperators.filter(id => id !== operatorId);
-    
+
     if (ownedOperators.length === account.ownedOperators.length) {
       return false; // Operator not found
     }
-    
-    const dbPool = await getDbPool();
-    const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
-    
-    const escapeCol = (col: string) => `[${col}]`;
-    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.ownedOperators)} = @ownedOperators WHERE ${escapeCol(columns.email)} = @email`;
-    
-    const request = dbPool.request();
-    request.input('email', sql.NVarChar(255), normalizedEmail);
-    request.input('ownedOperators', sql.NVarChar(sql.MAX), JSON.stringify(ownedOperators));
-    
-    await request.query(updateQuery);
+
+    account.ownedOperators = ownedOperators;
+    saveAccountsToJson(accounts);
+    invalidateCache();
     return true;
   } catch (error) {
     console.error('Error removing operator from account:', error);
@@ -441,7 +280,7 @@ export async function removeOperatorFromAccount(email: string, operatorId: strin
 }
 
 /**
- * Get owned operators for an account
+ * Get owned operators for an account - JSON implementation
  */
 export async function getOwnedOperators(email: string): Promise<string[]> {
   const account = await findAccountByEmail(email);
@@ -449,18 +288,21 @@ export async function getOwnedOperators(email: string): Promise<string[]> {
 }
 
 /**
- * Toggle want to use status for an operator
+ * Toggle want to use status for an operator - JSON implementation
  */
 export async function toggleWantToUse(email: string, operatorId: string): Promise<boolean> {
   try {
-    const account = await findAccountByEmail(email);
+    const normalizedEmail = email.toLowerCase().trim();
+    const accounts = getAccountsCache();
+
+    const account = accounts[normalizedEmail];
     if (!account) {
       return false;
     }
-    
+
     const wantToUse = account.wantToUse || [];
     const index = wantToUse.indexOf(operatorId);
-    
+
     if (index > -1) {
       // Remove from want to use
       wantToUse.splice(index, 1);
@@ -468,19 +310,10 @@ export async function toggleWantToUse(email: string, operatorId: string): Promis
       // Add to want to use
       wantToUse.push(operatorId);
     }
-    
-    const dbPool = await getDbPool();
-    const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
-    
-    const escapeCol = (col: string) => `[${col}]`;
-    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.wantToUse)} = @wantToUse WHERE ${escapeCol(columns.email)} = @email`;
-    
-    const request = dbPool.request();
-    request.input('email', sql.NVarChar(255), normalizedEmail);
-    request.input('wantToUse', sql.NVarChar(sql.MAX), JSON.stringify(wantToUse));
-    
-    await request.query(updateQuery);
+
+    account.wantToUse = wantToUse;
+    saveAccountsToJson(accounts);
+    invalidateCache();
     return true;
   } catch (error) {
     console.error('Error toggling want to use:', error);
@@ -489,7 +322,7 @@ export async function toggleWantToUse(email: string, operatorId: string): Promis
 }
 
 /**
- * Get want to use operators for an account
+ * Get want to use operators for an account - JSON implementation
  */
 export async function getWantToUse(email: string): Promise<string[]> {
   const account = await findAccountByEmail(email);
@@ -497,22 +330,20 @@ export async function getWantToUse(email: string): Promise<string[]> {
 }
 
 /**
- * Delete an account
+ * Delete an account - JSON implementation
  */
 export async function deleteAccount(email: string): Promise<boolean> {
   try {
-    const dbPool = await getDbPool();
-    const columns = await getColumnNames(dbPool);
     const normalizedEmail = email.toLowerCase().trim();
-    
-    const escapeCol = (col: string) => `[${col}]`;
-    const deleteQuery = `DELETE FROM accounts WHERE ${escapeCol(columns.email)} = @email`;
-    
-    const request = dbPool.request();
-    request.input('email', sql.NVarChar(255), normalizedEmail);
-    
-    const result = await request.query(deleteQuery);
-    return result.rowsAffected[0] > 0;
+    const accounts = getAccountsCache();
+
+    if (accounts[normalizedEmail]) {
+      delete accounts[normalizedEmail];
+      saveAccountsToJson(accounts);
+      invalidateCache();
+      return true;
+    }
+    return false;
   } catch (error) {
     console.error('Error deleting account:', error);
     return false;
@@ -520,26 +351,12 @@ export async function deleteAccount(email: string): Promise<boolean> {
 }
 
 /**
- * Load all accounts (for migration/backup purposes)
- * @deprecated Use SQL queries directly instead
+ * Load all accounts (for migration/backup purposes) - JSON implementation
+ * @deprecated Use JSON file directly instead
  */
 export async function loadAccounts(): Promise<Record<string, LocalAccount>> {
   try {
-    const dbPool = await getDbPool();
-    const columns = await getColumnNames(dbPool);
-    
-    const escapeCol = (col: string) => `[${col}]`;
-    const query = `SELECT ${escapeCol(columns.id)}, ${escapeCol(columns.email)}, ${escapeCol(columns.passwordHash)}, ${escapeCol(columns.createdAt)}, ${escapeCol(columns.lastLogin)}, ${escapeCol(columns.ownedOperators)}, ${escapeCol(columns.wantToUse)} FROM accounts`;
-    
-    const result = await dbPool.request().query(query);
-    const accounts: Record<string, LocalAccount> = {};
-    
-    for (const row of result.recordset) {
-      const account = rowToAccount(row, columns.ownedOperators, columns.wantToUse);
-      accounts[account.email] = account;
-    }
-    
-    return accounts;
+    return getAccountsCache();
   } catch (error) {
     console.error('Error loading accounts:', error);
     return {};
@@ -547,37 +364,30 @@ export async function loadAccounts(): Promise<Record<string, LocalAccount>> {
 }
 
 /**
- * Initialize database connection at startup (for faster first requests)
+ * Initialize JSON account storage at startup
  */
 export async function initializeDbConnection(): Promise<void> {
   try {
-    console.log('🔄 Initializing database connection...');
+    console.log('🔄 Initializing JSON account storage...');
     const startTime = Date.now();
 
-    // Force connection establishment by calling getDbPool
-    await getDbPool();
+    // Test loading accounts from JSON
+    const accounts = loadAccountsFromJson();
+    const accountCount = Object.keys(accounts).length;
 
     const duration = Date.now() - startTime;
-    console.log(`✅ Database connection initialized successfully in ${duration}ms`);
-
-    // Test the connection by running a simple query
-    const testPool = await getDbPool();
-    await testPool.request().query('SELECT 1 as test');
-    console.log('✅ Database connection test successful');
+    console.log(`✅ JSON account storage initialized successfully in ${duration}ms (${accountCount} accounts loaded)`);
   } catch (error: any) {
-    const sanitizedMessage = sanitizeErrorMessage(error);
-    console.error('❌ Failed to initialize database connection:', sanitizedMessage);
-    console.warn('⚠️  Server will continue to run, but account features may be slower or unavailable');
-    // Don't throw - allow server to start even if database is unavailable
+    console.error('❌ Failed to initialize JSON account storage:', error);
+    console.warn('⚠️  Server will continue to run, but account features may be unavailable');
+    // Don't throw - allow server to start even if JSON is unavailable
   }
 }
 
 /**
- * Close database connection (for cleanup)
+ * Close JSON account storage (for cleanup)
  */
 export async function closeDbConnection(): Promise<void> {
-  if (pool) {
-    await pool.close();
-    pool = null;
-  }
+  // No cleanup needed for JSON storage
+  console.log('JSON account storage closed');
 }
