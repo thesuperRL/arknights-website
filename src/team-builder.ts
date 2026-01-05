@@ -118,6 +118,30 @@ function loadFreeOperators(): Set<string> {
 }
 
 /**
+ * Loads team preferences from team-preferences.json for a specific user
+ */
+function loadTeamPreferencesForUser(email: string): TeamPreferences | null {
+  const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
+  
+  if (!fs.existsSync(preferencesFile)) {
+    return null;
+  }
+  
+  try {
+    const content = fs.readFileSync(preferencesFile, 'utf-8');
+    const allPreferences: Record<string, TeamPreferences> = JSON.parse(content);
+    
+    if (allPreferences[email]) {
+      return allPreferences[email];
+    }
+  } catch (error) {
+    console.error('Error loading team preferences:', error);
+  }
+  
+  return null;
+}
+
+/**
  * Loads all operator data from JSON files
  */
 function loadAllOperators(): Record<string, any> {
@@ -1027,8 +1051,9 @@ export async function getIntegratedStrategiesRecommendation(
     nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
   }
 
-  // Load default team preferences to understand what niches are typically important
-  const defaultPreferences = getDefaultPreferences();
+  // Load team preferences from team-preferences.json for this user
+  const userPreferences = loadTeamPreferencesForUser(email);
+  const defaultPreferences = userPreferences || getDefaultPreferences();
 
   // Niches that should not contribute to scoring in IS team building (using filenames)
   const isExcludedNiches = new Set([
@@ -1168,8 +1193,37 @@ export async function getIntegratedStrategiesRecommendation(
 
 /**
  * Gets default team preferences
+ * Reads from data/team-preferences.json, using the first user's preferences if available,
+ * otherwise falls back to hardcoded defaults
  */
 export function getDefaultPreferences(): TeamPreferences {
+  const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
+  
+  // Try to load from file
+  if (fs.existsSync(preferencesFile)) {
+    try {
+      const content = fs.readFileSync(preferencesFile, 'utf-8');
+      const allPreferences: Record<string, TeamPreferences> = JSON.parse(content);
+      
+      // Use the first user's preferences if available
+      const firstUserEmail = Object.keys(allPreferences)[0];
+      if (firstUserEmail && allPreferences[firstUserEmail]) {
+        const userPrefs = allPreferences[firstUserEmail];
+        // Ensure all required fields are present
+        return {
+          requiredNiches: userPrefs.requiredNiches || {},
+          preferredNiches: userPrefs.preferredNiches || {},
+          rarityRanking: userPrefs.rarityRanking || [6, 4, 5, 3, 2, 1],
+          allowDuplicates: userPrefs.allowDuplicates !== undefined ? userPrefs.allowDuplicates : true,
+          hopeCosts: userPrefs.hopeCosts || { ...HOPE_COST_CONFIG }
+        };
+      }
+    } catch (error) {
+      console.error('Error loading team preferences from file:', error);
+    }
+  }
+  
+  // Fallback to hardcoded defaults
   return {
     requiredNiches: {
         'dp-generation': { min: 1, max: 2 },

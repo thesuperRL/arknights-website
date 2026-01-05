@@ -6,12 +6,20 @@ import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
 import './IntegratedStrategiesPage.css';
 
+interface TeamPreferences {
+  requiredNiches: Record<string, { min: number; max: number }>;
+  preferredNiches: Record<string, { min: number; max: number }>;
+  rarityRanking?: number[];
+  allowDuplicates?: boolean;
+}
+
 // Local recommendation algorithm - ONLY considers raised/deployable operators
 function getIntegratedStrategiesRecommendation(
   allOperators: Record<string, Operator>,
   raisedOperatorIds: string[], // ONLY raised operators that user can deploy
   currentTeamOperatorIds: string[],
   requiredClasses: string[],
+  preferences: TeamPreferences,
   temporaryRecruitment?: string,
   currentHope?: number,
   hopeCosts?: Record<number, number>,
@@ -83,25 +91,8 @@ function getIntegratedStrategiesRecommendation(
     nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
   }
 
-  // Default team preferences for Integrated Strategies
-  const defaultPreferences = {
-    requiredNiches: {
-      'dp-generation': { min: 1, max: 2 },
-      'early-laneholder': { min: 1, max: 2 },
-      'late-laneholder': { min: 1, max: 2 },
-      'healing-operators': { min: 2, max: 3 },
-      'arts-dps': { min: 1, max: 2 },
-      'physical-dps': { min: 1, max: 2 },
-    },
-    preferredNiches: {
-      'anti-air-operators': { min: 1, max: 1 },
-      'tanking-blocking-operators': { min: 1, max: 2 },
-      'stalling': { min: 0, max: 1 },
-      'fast-redeploy-operators': { min: 0, max: 1 }
-    },
-    rarityRanking: [6, 4, 5, 3, 2, 1],
-    allowDuplicates: true
-  };
+  // Use preferences passed as parameter (loaded from team-preferences.json via API)
+  const defaultPreferences = preferences;
 
   // Niches that should not contribute to scoring in IS team building (using filenames)
   const isExcludedNiches = new Set([
@@ -191,7 +182,7 @@ function getIntegratedStrategiesRecommendation(
     }
 
     // Apply large negative penalty for trash operators - makes them almost impossible to recommend
-    if (trashOperators.has(operatorId)) {
+    if (trashOperators && trashOperators.has(operatorId)) {
       const trashPenalty = 10000; // Large penalty that makes trash operators virtually unrecommendable
       score -= trashPenalty;
       reasoning.push(`🚫 Trash operator (-${trashPenalty})`);
@@ -408,6 +399,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     4: 0
   });
   const [trashOperators, setTrashOperators] = useState<Set<string>>(new Set());
+  const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
 
   // Helper function to get hope cost for an operator
   const getHopeCost = (rarity: number): number => {
@@ -420,15 +412,47 @@ const IntegratedStrategiesPage: React.FC = () => {
       loadAllOperators();
       loadOwnedOperators();
       loadTrashOperators();
+      loadPreferences();
     }
   }, [user]);
+
+  const loadPreferences = async () => {
+    try {
+      const response = await fetch('/api/team/preferences', {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setPreferences(data);
+      } else {
+        // Load defaults if no saved preferences
+        const defaultResponse = await fetch('/api/team/preferences/default');
+        if (defaultResponse.ok) {
+          const defaultData = await defaultResponse.json();
+          setPreferences(defaultData);
+        }
+      }
+    } catch (err) {
+      console.error('Error loading preferences:', err);
+      // Load defaults on error
+      try {
+        const defaultResponse = await fetch('/api/team/preferences/default');
+        if (defaultResponse.ok) {
+          const defaultData = await defaultResponse.json();
+          setPreferences(defaultData);
+        }
+      } catch (e) {
+        console.error('Failed to load default preferences:', e);
+      }
+    }
+  };
 
   const loadTrashOperators = async () => {
     try {
       const response = await fetch('/api/trash-operators');
       if (response.ok) {
         const data = await response.json();
-        const trashIds = new Set(data.operators?.map((op: any) => op.id) || []);
+        const trashIds = new Set<string>((data.operators || []).map((op: any) => op.id).filter((id: any): id is string => typeof id === 'string'));
         setTrashOperators(trashIds);
       }
     } catch (err) {
@@ -511,6 +535,11 @@ const IntegratedStrategiesPage: React.FC = () => {
       return;
     }
 
+    if (!preferences) {
+      setError('Please wait for preferences to load');
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -523,6 +552,7 @@ const IntegratedStrategiesPage: React.FC = () => {
         raisedOpsArray, // ONLY raised operators
         operatorIds,
         Array.from(requiredClasses),
+        preferences,
         temporaryRecruitment || undefined,
         currentHope,
         hopeCosts,
