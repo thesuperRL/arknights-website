@@ -47,14 +47,16 @@ app.get('/api/niche-lists', (_req, res) => {
   try {
     const nicheLists = loadAllNicheLists();
     // Collection is now keyed by filename
-    const niches = Object.entries(nicheLists).map(([filename, operatorList]) => {
-      return {
-        filename,
-        displayName: operatorList.niche,
-        description: operatorList.description || '',
-        lastUpdated: operatorList.lastUpdated || ''
-      };
-    });
+    const niches = Object.entries(nicheLists)
+      .filter(([filename]) => !filename.startsWith('synergies/'))
+      .map(([filename, operatorList]) => {
+        return {
+          filename,
+          displayName: operatorList.niche,
+          description: operatorList.description || '',
+          lastUpdated: operatorList.lastUpdated || ''
+        };
+      });
     res.json(niches);
   } catch (error) {
     console.error('Error loading niche lists:', error);
