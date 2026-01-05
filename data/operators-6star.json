@@ -153,6 +153,7 @@
     "profileImage": "/images/operators/blaze.png",
     "niches": [
       "late-laneholder",
+      "physical-dps",
       "tanking-blocking-operators"
     ],
     "cnName": "煌",
@@ -161,6 +162,7 @@
     "internalName": "char_017_huang",
     "nicheTiers": {
       "late-laneholder": "S",
+      "physical-dps": "A",
       "tanking-blocking-operators": "A"
     }
   },
