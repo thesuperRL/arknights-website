@@ -26,8 +26,7 @@
     "profileImage": "/images/operators/angelina.png",
     "niches": [
       "healing-operators",
-      "stalling",
-      "synergies/enmity-healing"
+      "stalling"
     ],
     "cnName": "安洁莉娜",
     "twName": "安潔莉娜",
@@ -36,8 +35,7 @@
     "internalName": "char_291_aglina",
     "nicheTiers": {
       "healing-operators": "B",
-      "stalling": "SS",
-      "synergies/enmity-healing": "A"
+      "stalling": "SS"
     }
   },
   "archetto": {
@@ -334,7 +332,6 @@
       "damage-buff",
       "healing-operators",
       "stalling",
-      "synergies/enmity-healing",
       "true_damage"
     ],
     "cnName": "魔王",
@@ -345,7 +342,6 @@
       "damage-buff": "A",
       "healing-operators": "B",
       "stalling": "A",
-      "synergies/enmity-healing": "A",
       "true_damage": "A"
     }
   },
@@ -2038,7 +2034,6 @@
       "late-laneholder",
       "res-buff",
       "stalling",
-      "synergies/enmity-healing",
       "tanking-blocking-operators"
     ],
     "cnName": "黍",
@@ -2051,7 +2046,6 @@
       "late-laneholder": "S",
       "res-buff": "A",
       "stalling": "SS",
-      "synergies/enmity-healing": "A",
       "tanking-blocking-operators": "SS"
     }
   },
@@ -2170,8 +2164,7 @@
     "niches": [
       "damage-buff",
       "def-buff",
-      "global-range",
-      "synergies/enmity-healing"
+      "global-range"
     ],
     "cnName": "浊心斯卡蒂",
     "twName": "濁心斯卡蒂",
@@ -2181,7 +2174,6 @@
     "nicheTiers": {
       "damage-buff": "S",
       "def-buff": "S",
-      "synergies/enmity-healing": "A",
       "global-range": "A"
     }
   },
@@ -2351,8 +2343,7 @@
       "aoe-arts-dps",
       "atk-debuff",
       "def-shred",
-      "res-shred",
-      "synergies/enmity-healing"
+      "res-shred"
     ],
     "cnName": "引星棘刺",
     "jpName": "引星いんせいソーンズ",
@@ -2362,8 +2353,7 @@
       "aoe-arts-dps": "C",
       "atk-debuff": "A",
       "def-shred": "S",
-      "res-shred": "A",
-      "synergies/enmity-healing": "A"
+      "res-shred": "A"
     }
   },
   "togawa_sakiko": {

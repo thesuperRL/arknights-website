@@ -13,8 +13,69 @@ interface TeamPreferences {
   allowDuplicates?: boolean;
 }
 
+// Cache for niche lists to avoid repeated API calls
+const nicheListCache: Record<string, any> = {};
+
+// Helper function to get operator tier in a niche
+async function getOperatorTierInNiche(operatorId: string, niche: string): Promise<number> {
+  // Check cache first
+  if (!nicheListCache[niche]) {
+    try {
+      const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+      if (response.ok) {
+        const data = await response.json();
+        nicheListCache[niche] = data;
+      } else {
+        return 0; // Niche list not found
+      }
+    } catch (error) {
+      console.error(`Error loading niche list ${niche}:`, error);
+      return 0;
+    }
+  }
+
+  const nicheList = nicheListCache[niche];
+  if (!nicheList || !nicheList.operators) {
+    return 0;
+  }
+
+  // Define tier values (higher = better)
+  const tierValues: Record<string, number> = {
+    'SS': 120,
+    'S': 90,
+    'A': 75,
+    'B': 50,
+    'C': 30,
+    'D': 15,
+    'F': 5
+  };
+
+  // Search through operators array to find the operator
+  for (const entry of nicheList.operators) {
+    if (entry.operatorId === operatorId) {
+      return tierValues[entry.rating] || 0;
+    }
+  }
+
+  return 0; // Operator not found in this niche
+}
+
+// Helper to get tier name from tier value
+function getTierNameFromValue(tierValue: number): string {
+  const tierMap: Record<number, string> = {
+    120: 'SS',
+    90: 'S',
+    75: 'A',
+    50: 'B',
+    30: 'C',
+    15: 'D',
+    5: 'F'
+  };
+  return tierMap[tierValue] || 'Unknown';
+}
+
 // Local recommendation algorithm - ONLY considers raised/deployable operators
-function getIntegratedStrategiesRecommendation(
+async function getIntegratedStrategiesRecommendation(
   allOperators: Record<string, Operator>,
   raisedOperatorIds: string[], // ONLY raised operators that user can deploy
   currentTeamOperatorIds: string[],
@@ -24,7 +85,7 @@ function getIntegratedStrategiesRecommendation(
   currentHope?: number,
   hopeCosts?: Record<number, number>,
   trashOperators?: Set<string>
-): { recommendedOperator: Operator | null; reasoning: string; score: number } {
+): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number }> {
   // Helper functions for hope costs
   const getHopeCost = (rarity: number): number => {
     return hopeCosts?.[rarity] ?? 0;
@@ -122,6 +183,31 @@ function getIntegratedStrategiesRecommendation(
     let score = 0;
     const reasoning: string[] = [];
 
+    // Tier-based scoring - VERY significant, should outweigh hope penalties
+    // Calculate tier scores across all niches the operator has
+    // Skip "low-rarity" as it's not a tier list
+    const excludedFromTierScoring = new Set(['low-rarity', 'trash-operators']);
+    let totalTierScore = 0;
+    const tierBreakdown: string[] = [];
+    for (const niche of operator.niches) {
+      // Skip niches that are not tier lists
+      if (excludedFromTierScoring.has(niche)) {
+        continue;
+      }
+      const tier = await getOperatorTierInNiche(operatorId, niche);
+      if (tier > 0) {
+        // Use a large multiplier (50x) to ensure tier scores outweigh hope penalties
+        const tierPoints = tier;
+        totalTierScore += tierPoints;
+        const tierName = getTierNameFromValue(tier);
+        tierBreakdown.push(`${niche}: ${tierName} tier (+${tierPoints})`);
+      }
+    }
+    if (totalTierScore > 0) {
+      score += totalTierScore;
+      reasoning.push(`⭐ Tier performance: +${totalTierScore} (${tierBreakdown.join(', ')})`);
+    }
+
     // Bonus for filling important niches that are missing or under-covered
     for (const niche of operator.niches) {
       const currentCount = nicheCounts[niche] || 0;
@@ -134,37 +220,48 @@ function getIntegratedStrategiesRecommendation(
           // Required niche
           if (currentCount < requiredRange.min) {
             // Filling a missing required niche
-            score += 100;
-            reasoning.push(`🎯 Fills missing required niche: ${niche} (+100)`);
+            const bonus = 100;
+            score += bonus;
+            reasoning.push(`🎯 Fills missing required niche: ${niche} (+${bonus})`);
           } else if (currentCount < requiredRange.max) {
             // Filling an under-covered required niche
-            score += 50;
-            reasoning.push(`➕ Strengthens required niche: ${niche} (+50)`);
+            const bonus = 50;
+            score += bonus;
+            reasoning.push(`➕ Strengthens required niche: ${niche} (+${bonus})`);
           } else {
             // Over-covered required niche (still some value)
-            score += 10;
-            reasoning.push(`✅ Supports required niche: ${niche} (+10)`);
+            const bonus = 10;
+            score += bonus;
+            reasoning.push(`✅ Supports required niche: ${niche} (+${bonus})`);
           }
         } else if (preferredRange) {
           // Preferred niche
           if (currentCount < preferredRange.min) {
             // Filling a missing preferred niche
-            score += 75;
-            reasoning.push(`🎯 Fills missing preferred niche: ${niche} (+75)`);
+            const bonus = 75;
+            score += bonus;
+            reasoning.push(`🎯 Fills missing preferred niche: ${niche} (+${bonus})`);
           } else if (currentCount < preferredRange.max) {
             // Filling an under-covered preferred niche
-            score += 30;
-            reasoning.push(`➕ Strengthens preferred niche: ${niche} (+30)`);
+            const bonus = 30;
+            score += bonus;
+            reasoning.push(`➕ Strengthens preferred niche: ${niche} (+${bonus})`);
           } else {
             // Over-covered preferred niche (minimal value)
-            score += 5;
-            reasoning.push(`✅ Supports preferred niche: ${niche} (+5)`);
+            const bonus = 5;
+            score += bonus;
+            reasoning.push(`✅ Supports preferred niche: ${niche} (+${bonus})`);
           }
         }
+      } else if (niche == "trash-operators") {
+        const minus = 1000;
+        score -= minus;
+        reasoning.push(`🚫 Trash operator (-${minus})`);
       } else {
         // Non-standard niche (some value for variety)
-        score += 15;
-        reasoning.push(`🌟 Provides niche variety: ${niche} (+15)`);
+            const bonus = 15;
+            score += bonus;
+        reasoning.push(`🌟 Provides niche variety: ${niche} (+${bonus})`);
       }
     }
 
@@ -555,7 +652,7 @@ const IntegratedStrategiesPage: React.FC = () => {
       const operatorIds = selectedOperators.map(selected => selected.operatorId);
       const raisedOpsArray = Array.from(raisedOperators); // raisedOperators are the deployable operators
 
-      const result = getIntegratedStrategiesRecommendation(
+      const result = await getIntegratedStrategiesRecommendation(
         allOperators,
         raisedOpsArray, // ONLY raised operators
         operatorIds,

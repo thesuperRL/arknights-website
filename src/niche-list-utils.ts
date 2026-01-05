@@ -50,12 +50,36 @@ export function loadAllNicheLists(dataDir: string = path.join(__dirname, '../dat
   }
 
   processDirectory(dataDir);
+  
+  // Also load synergies from data/synergies/ directory
+  const synergiesDir = path.join(__dirname, '../data/synergies');
+  if (fs.existsSync(synergiesDir)) {
+    const synergyFiles = fs.readdirSync(synergiesDir);
+    for (const file of synergyFiles) {
+      if (file.endsWith('.json')) {
+        const fullPath = path.join(synergiesDir, file);
+        try {
+          const content = fs.readFileSync(fullPath, 'utf-8');
+          const operatorList: OperatorList = JSON.parse(content);
+          if (operatorList.operators && operatorList.niche) {
+            // Use "synergies/" prefix for synergies
+            const filename = `synergies/${file.replace('.json', '')}`;
+            collection[filename] = operatorList;
+          }
+        } catch (error) {
+          console.error(`Error loading synergy list from ${fullPath}:`, error);
+        }
+      }
+    }
+  }
+  
   return collection;
 }
 
 /**
  * Loads a specific operator list by filename (without .json extension)
  * The filename parameter should be the filename code (e.g., "healing-operators" or "synergies/sleep")
+ * Synergies are loaded from data/synergies/ instead of data/niche-lists/synergies/
  */
 export function loadNicheList(nicheFilename: string, dataDir: string = path.join(__dirname, '../data/niche-lists')): OperatorList | null {
   // Decode URL-encoded niche filename
@@ -65,6 +89,28 @@ export function loadNicheList(nicheFilename: string, dataDir: string = path.join
   let filename = decodedFilename;
   if (filename.endsWith('.json')) {
     filename = filename.replace('.json', '');
+  }
+
+  // Check if this is a synergy (starts with "synergies/")
+  if (filename.startsWith('synergies/')) {
+    // Load from data/synergies/ instead of data/niche-lists/synergies/
+    const synergyName = filename.replace('synergies/', '');
+    const synergyDir = path.join(__dirname, '../data/synergies');
+    const filePath = path.join(synergyDir, `${synergyName}.json`);
+    
+    if (fs.existsSync(filePath)) {
+      try {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        const operatorList = JSON.parse(content);
+        // Only return if it has the operator list structure
+        if (operatorList.operators && operatorList.niche) {
+          return operatorList;
+        }
+      } catch (error) {
+        console.error(`Error loading operator list from ${filePath}:`, error);
+      }
+    }
+    return null;
   }
 
   const filePath = path.join(dataDir, `${filename}.json`);

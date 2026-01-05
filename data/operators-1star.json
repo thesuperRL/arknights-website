@@ -7,13 +7,11 @@
     "global": true,
     "profileImage": "/images/operators/confess_47.png",
     "niches": [
-      "dp-generation",
-      "synergies/sleep"
+      "dp-generation"
     ],
     "internalName": "char_4188_confes",
     "nicheTiers": {
-      "dp-generation": "D",
-      "synergies/sleep": "A"
+      "dp-generation": "D"
     }
   },
   "castle_3": {

@@ -455,8 +455,7 @@
     "profileImage": "/images/operators/blacknight.png",
     "niches": [
       "dp-generation",
-      "early-laneholder",
-      "synergies/sleep"
+      "early-laneholder"
     ],
     "cnName": "夜半",
     "jpName": "ブラックナイト",
@@ -464,8 +463,7 @@
     "internalName": "char_476_blkngt",
     "nicheTiers": {
       "dp-generation": "B",
-      "early-laneholder": "A",
-      "synergies/sleep": "A"
+      "early-laneholder": "A"
     }
   },
   "blitz": {
@@ -994,7 +992,6 @@
     "profileImage": "/images/operators/erato.png",
     "niches": [
       "physical-dps",
-      "synergies/sleep",
       "trash-operators"
     ],
     "cnName": "埃拉托",
@@ -1003,7 +1000,6 @@
     "internalName": "char_4043_erato",
     "nicheTiers": {
       "physical-dps": "D",
-      "synergies/sleep": "A",
       "trash-operators": "A"
     }
   },
@@ -1440,7 +1436,6 @@
     "profileImage": "/images/operators/heavyrain.png",
     "niches": [
       "healing-operators",
-      "synergies/enmity-healing",
       "tanking-blocking-operators",
       "unconventional-niches"
     ],
@@ -1450,7 +1445,6 @@
     "internalName": "char_304_zebra",
     "nicheTiers": {
       "healing-operators": "C",
-      "synergies/enmity-healing": "A",
       "tanking-blocking-operators": "B",
       "unconventional-niches": "A"
     }
@@ -1465,8 +1459,7 @@
     "niches": [
       "damage-buff",
       "free",
-      "sp-battery",
-      "synergies/enmity-healing"
+      "sp-battery"
     ],
     "cnName": "海蒂",
     "jpName": "ハイディ",
@@ -1475,7 +1468,6 @@
     "nicheTiers": {
       "damage-buff": "B",
       "sp-battery": "C",
-      "synergies/enmity-healing": "A",
       "free": "A"
     }
   },
@@ -1630,7 +1622,6 @@
     "global": true,
     "profileImage": "/images/operators/iris.png",
     "niches": [
-      "synergies/sleep",
       "trash-operators"
     ],
     "cnName": "爱丽丝",
@@ -1639,7 +1630,6 @@
     "krName": "아이리스",
     "internalName": "char_338_iris",
     "nicheTiers": {
-      "synergies/sleep": "A",
       "trash-operators": "A"
     }
   },
@@ -1694,16 +1684,14 @@
     "global": true,
     "profileImage": "/images/operators/kafka.png",
     "niches": [
-      "fast-redeploy-operators",
-      "synergies/sleep"
+      "fast-redeploy-operators"
     ],
     "cnName": "卡夫卡",
     "jpName": "カフカ",
     "krName": "카프카",
     "internalName": "char_214_kafka",
     "nicheTiers": {
-      "fast-redeploy-operators": "B",
-      "synergies/sleep": "A"
+      "fast-redeploy-operators": "B"
     }
   },
   "kazemaru": {
@@ -3049,8 +3037,6 @@
     "profileImage": "/images/operators/sora.png",
     "niches": [
       "damage-buff",
-      "synergies/enmity-healing",
-      "synergies/sleep",
       "trash-operators"
     ],
     "cnName": "空",
@@ -3059,8 +3045,6 @@
     "internalName": "char_101_sora",
     "nicheTiers": {
       "damage-buff": "B",
-      "synergies/enmity-healing": "A",
-      "synergies/sleep": "A",
       "trash-operators": "A"
     }
   },
@@ -3243,8 +3227,7 @@
     "profileImage": "/images/operators/tin_man.png",
     "niches": [
       "aoe-arts-dps",
-      "atk-debuff",
-      "synergies/enmity-healing"
+      "atk-debuff"
     ],
     "cnName": "锡人",
     "twName": "錫人",
@@ -3253,8 +3236,7 @@
     "internalName": "char_4151_tinman",
     "nicheTiers": {
       "aoe-arts-dps": "D",
-      "atk-debuff": "A",
-      "synergies/enmity-healing": "A"
+      "atk-debuff": "A"
     }
   },
   "tippi": {

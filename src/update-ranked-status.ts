@@ -115,6 +115,11 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
   
   // Collection is now keyed by filename
   for (const [filename, operatorList] of Object.entries(operatorLists)) {
+    // Skip synergies folder - these should not be recorded in operator JSONs
+    if (filename.startsWith('synergies/')) {
+      continue;
+    }
+    
     // Skip if operatorList doesn't have operators dictionary
     if (!operatorList.operators || typeof operatorList.operators !== 'object') {
       continue;

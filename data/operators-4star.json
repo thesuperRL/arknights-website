@@ -860,8 +860,7 @@
     "profileImage": "/images/operators/perfumer.png",
     "niches": [
       "healing-operators",
-      "low-rarity",
-      "synergies/enmity-healing"
+      "low-rarity"
     ],
     "cnName": "调香师",
     "twName": "調香師",
@@ -870,7 +869,6 @@
     "internalName": "char_181_flower",
     "nicheTiers": {
       "healing-operators": "A",
-      "synergies/enmity-healing": "A",
       "low-rarity": "A"
     }
   },
