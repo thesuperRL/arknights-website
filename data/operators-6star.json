@@ -35,8 +35,8 @@
     "krName": "안젤리나",
     "internalName": "char_291_aglina",
     "nicheTiers": {
-      "healing-operators": "A",
-      "stalling": "A",
+      "healing-operators": "B",
+      "stalling": "SS",
       "synergies/enmity-healing": "A"
     }
   },
@@ -83,8 +83,8 @@
     "internalName": "char_4132_ascln",
     "nicheTiers": {
       "aoe-physical-dps": "SS",
-      "physical-dps": "A",
-      "stalling": "A"
+      "physical-dps": "S",
+      "stalling": "SS"
     }
   },
   "ash": {
@@ -160,7 +160,7 @@
     "krName": "블레이즈",
     "internalName": "char_017_huang",
     "nicheTiers": {
-      "late-laneholder": "A",
+      "late-laneholder": "S",
       "tanking-blocking-operators": "A"
     }
   },
@@ -203,9 +203,9 @@
     "krName": "블레미샤인",
     "internalName": "char_423_blemsh",
     "nicheTiers": {
-      "healing-operators": "A",
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A",
+      "healing-operators": "SS",
+      "late-laneholder": "SS",
+      "tanking-blocking-operators": "SS",
       "unconventional-niches": "A"
     }
   },
@@ -251,7 +251,7 @@
       "boss-killing": "S",
       "physical-dps": "A",
       "silence": "A",
-      "stalling": "A",
+      "stalling": "C",
       "unconventional-niches": "A"
     }
   },
@@ -273,7 +273,7 @@
     "krName": "첸",
     "internalName": "char_010_chen",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "B",
       "sp-battery": "B",
       "trash-operators": "A"
     }
@@ -287,7 +287,7 @@
     "profileImage": "/images/operators/ch_en_the_holungday.png",
     "niches": [
       "aoe-physical-dps",
-      "stalling",
+      "physical-dps",
       "unconventional-niches"
     ],
     "cnName": "假日威龙陈",
@@ -297,7 +297,7 @@
     "internalName": "char_1013_chen2",
     "nicheTiers": {
       "aoe-physical-dps": "S",
-      "stalling": "A",
+      "physical-dps": "S",
       "unconventional-niches": "A"
     }
   },
@@ -317,7 +317,7 @@
     "krName": "총웨",
     "internalName": "char_2024_chyue",
     "nicheTiers": {
-      "late-laneholder": "A",
+      "late-laneholder": "S",
       "physical-dps": "A"
     }
   },
@@ -341,7 +341,7 @@
     "internalName": "char_4134_cetsyr",
     "nicheTiers": {
       "damage-buff": "A",
-      "healing-operators": "A",
+      "healing-operators": "B",
       "stalling": "A",
       "synergies/enmity-healing": "A",
       "true_damage": "A"
@@ -364,7 +364,7 @@
     "internalName": "char_1502_crosly",
     "nicheTiers": {
       "fast-redeploy-operators": "SS",
-      "stalling": "A"
+      "stalling": "S"
     }
   },
   "degenbrecher": {
@@ -378,8 +378,7 @@
       "aoe-physical-dps",
       "boss-killing",
       "late-laneholder",
-      "physical-dps",
-      "tanking-blocking-operators"
+      "physical-dps"
     ],
     "cnName": "锏",
     "twName": "鐧",
@@ -389,9 +388,8 @@
     "nicheTiers": {
       "aoe-physical-dps": "S",
       "boss-killing": "S",
-      "late-laneholder": "A",
-      "physical-dps": "A",
-      "tanking-blocking-operators": "A"
+      "late-laneholder": "S",
+      "physical-dps": "S"
     }
   },
   "dorothy": {
@@ -411,7 +409,7 @@
     "krName": "도로시",
     "internalName": "char_4048_doroth",
     "nicheTiers": {
-      "stalling": "A",
+      "stalling": "S",
       "global-range": "A"
     }
   },
@@ -434,8 +432,8 @@
     "internalName": "char_2015_dusk",
     "nicheTiers": {
       "aoe-arts-dps": "C",
-      "late-laneholder": "A",
-      "stalling": "A",
+      "late-laneholder": "C",
+      "stalling": "B",
       "trash-operators": "A"
     }
   },
@@ -481,8 +479,8 @@
     "internalName": "char_4123_ela",
     "nicheTiers": {
       "fragile": "S",
-      "physical-dps": "A",
-      "stalling": "A",
+      "physical-dps": "S",
+      "stalling": "S",
       "global-range": "A"
     }
   },
@@ -504,8 +502,8 @@
     "internalName": "char_4010_etlchi",
     "nicheTiers": {
       "boss-killing": "B",
-      "late-laneholder": "A",
-      "physical-dps": "A"
+      "late-laneholder": "SS",
+      "physical-dps": "S"
     }
   },
   "eunectes": {
@@ -536,7 +534,8 @@
     "global": true,
     "profileImage": "/images/operators/executor_the_ex_foedere.png",
     "niches": [
-      "late-laneholder"
+      "late-laneholder",
+      "physical-dps"
     ],
     "cnName": "圣约送葬人",
     "twName": "聖約送葬人",
@@ -544,7 +543,8 @@
     "krName": "이그제큐터 디 엑스 포에데레",
     "internalName": "char_1032_excu2",
     "nicheTiers": {
-      "late-laneholder": "A"
+      "late-laneholder": "SS",
+      "physical-dps": "S"
     }
   },
   "exusiai": {
@@ -585,7 +585,7 @@
     "internalName": "char_1041_angel2",
     "nicheTiers": {
       "boss-killing": "SS",
-      "physical-dps": "A",
+      "physical-dps": "SS",
       "unconventional-niches": "A"
     }
   },
@@ -632,7 +632,7 @@
     "internalName": "char_1016_agoat2",
     "nicheTiers": {
       "elemental_damage_healers": "SS",
-      "healing-operators": "A",
+      "healing-operators": "SS",
       "global-range": "A"
     }
   },
@@ -654,7 +654,7 @@
     "krName": "파투스",
     "internalName": "char_430_fartth",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "B",
       "global-range": "A",
       "unconventional-niches": "A"
     }
@@ -697,7 +697,7 @@
     "nicheTiers": {
       "dp-generation": "A",
       "early-laneholder": "S",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "C"
     }
   },
   "gavial_the_invincible": {
@@ -720,9 +720,9 @@
     "internalName": "char_1026_gvial2",
     "nicheTiers": {
       "boss-killing": "B",
-      "late-laneholder": "A",
+      "late-laneholder": "SS",
       "physical-dps": "A",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "SS"
     }
   },
   "gladiia": {
@@ -766,7 +766,7 @@
     "internalName": "char_206_gnosis",
     "nicheTiers": {
       "fragile": "SS",
-      "stalling": "A"
+      "stalling": "S"
     }
   },
   "goldenglow": {
@@ -819,8 +819,8 @@
     "krName": "헬라그",
     "internalName": "char_188_helage",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A",
+      "late-laneholder": "B",
+      "tanking-blocking-operators": "B",
       "trash-operators": "A"
     }
   },
@@ -864,7 +864,7 @@
     "internalName": "char_4088_hodrer",
     "nicheTiers": {
       "boss-killing": "B",
-      "late-laneholder": "A",
+      "late-laneholder": "S",
       "physical-dps": "A",
       "tanking-blocking-operators": "A"
     }
@@ -906,8 +906,8 @@
     "krName": "호시구마",
     "internalName": "char_136_hsguma",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A"
+      "late-laneholder": "S",
+      "tanking-blocking-operators": "S"
     }
   },
   "hoshiguma_the_breacher": {
@@ -967,7 +967,7 @@
       "dp-generation": "SS",
       "early-laneholder": "SS",
       "fast-redeploy-operators": "SS",
-      "stalling": "A"
+      "stalling": "S"
     }
   },
   "irene": {
@@ -1008,10 +1008,10 @@
     "krName": "제시카 더 리버레이티드",
     "internalName": "char_1034_jesca2",
     "nicheTiers": {
-      "late-laneholder": "A",
+      "late-laneholder": "SS",
       "physical-dps": "A",
-      "stalling": "A",
-      "tanking-blocking-operators": "A"
+      "stalling": "S",
+      "tanking-blocking-operators": "SS"
     }
   },
   "kal_tsit": {
@@ -1036,8 +1036,8 @@
     "nicheTiers": {
       "boss-killing": "A",
       "healing-operators": "A",
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A",
+      "late-laneholder": "SS",
+      "tanking-blocking-operators": "SS",
       "true_damage": "S"
     }
   },
@@ -1081,7 +1081,7 @@
     "nicheTiers": {
       "arts-dps": "SS",
       "silence": "SS",
-      "stalling": "A",
+      "stalling": "B",
       "global-range": "A"
     }
   },
@@ -1117,7 +1117,8 @@
     "profileImage": "/images/operators/leizi_the_thunderbringer.png",
     "niches": [
       "aoe-physical-dps",
-      "boss-killing"
+      "boss-killing",
+      "physical-dps"
     ],
     "cnName": "司霆惊蛰",
     "jpName": "司霆レイズ",
@@ -1125,7 +1126,8 @@
     "internalName": "char_1043_leizi2",
     "nicheTiers": {
       "aoe-physical-dps": "S",
-      "boss-killing": "S"
+      "boss-killing": "S",
+      "physical-dps": "S"
     }
   },
   "lemuen": {
@@ -1147,7 +1149,7 @@
     "internalName": "char_4193_lemuen",
     "nicheTiers": {
       "boss-killing": "S",
-      "physical-dps": "A",
+      "physical-dps": "SS",
       "global-range": "A"
     }
   },
@@ -1214,8 +1216,8 @@
     "internalName": "char_2023_ling",
     "nicheTiers": {
       "aoe-arts-dps": "A",
-      "late-laneholder": "A",
-      "stalling": "A"
+      "late-laneholder": "S",
+      "stalling": "B"
     }
   },
   "logos": {
@@ -1314,7 +1316,7 @@
     "internalName": "char_4141_marcil",
     "nicheTiers": {
       "aoe-arts-dps": "B",
-      "stalling": "A"
+      "stalling": "B"
     }
   },
   "mizuki": {
@@ -1334,7 +1336,7 @@
     "internalName": "char_437_mizuki",
     "nicheTiers": {
       "aoe-physical-dps": "A",
-      "stalling": "A"
+      "stalling": "S"
     }
   },
   "mon3tr": {
@@ -1354,7 +1356,7 @@
     "nicheTiers": {
       "boss-killing": "S",
       "damage-buff": "SS",
-      "healing-operators": "A",
+      "healing-operators": "SS",
       "true_damage": "SS"
     }
   },
@@ -1399,7 +1401,7 @@
     "internalName": "char_264_f12yin",
     "nicheTiers": {
       "early-laneholder": "SS",
-      "late-laneholder": "A",
+      "late-laneholder": "SS",
       "tanking-blocking-operators": "A"
     }
   },
@@ -1421,8 +1423,8 @@
     "internalName": "char_311_mudrok",
     "nicheTiers": {
       "boss-killing": "A",
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A"
+      "late-laneholder": "SS",
+      "tanking-blocking-operators": "SS"
     }
   },
   "muelsyse": {
@@ -1445,7 +1447,7 @@
     "nicheTiers": {
       "dp-generation": "A",
       "early-laneholder": "SS",
-      "stalling": "A"
+      "stalling": "S"
     }
   },
   "m_ynar": {
@@ -1458,6 +1460,7 @@
     "niches": [
       "aoe-physical-dps",
       "boss-killing",
+      "physical-dps",
       "tanking-blocking-operators"
     ],
     "cnName": "玛恩纳",
@@ -1468,6 +1471,7 @@
     "nicheTiers": {
       "aoe-physical-dps": "S",
       "boss-killing": "S",
+      "physical-dps": "S",
       "tanking-blocking-operators": "A"
     }
   },
@@ -1490,7 +1494,7 @@
     "nicheTiers": {
       "aoe-physical-dps": "A",
       "boss-killing": "A",
-      "physical-dps": "A"
+      "physical-dps": "S"
     }
   },
   "nasti": {
@@ -1568,8 +1572,8 @@
     "internalName": "char_2014_nian",
     "nicheTiers": {
       "def-buff": "SS",
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A",
+      "late-laneholder": "S",
+      "tanking-blocking-operators": "S",
       "unconventional-niches": "A"
     }
   },
@@ -1591,7 +1595,7 @@
     "krName": "나이팅게일",
     "internalName": "char_179_cgbird",
     "nicheTiers": {
-      "healing-operators": "A",
+      "healing-operators": "S",
       "res-buff": "SS",
       "tanking-blocking-operators": "A"
     }
@@ -1619,7 +1623,7 @@
       "arts-dps": "S",
       "elemental-damage": "A",
       "elemental-dps": "SS",
-      "stalling": "A"
+      "stalling": "SS"
     }
   },
   "pallas": {
@@ -1642,7 +1646,7 @@
     "nicheTiers": {
       "damage-buff": "A",
       "def-buff": "A",
-      "late-laneholder": "A",
+      "late-laneholder": "B",
       "unconventional-niches": "A"
     }
   },
@@ -1683,8 +1687,8 @@
     "internalName": "char_4065_judge",
     "nicheTiers": {
       "boss-killing": "A",
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A"
+      "late-laneholder": "SS",
+      "tanking-blocking-operators": "SS"
     }
   },
   "pepe": {
@@ -1706,8 +1710,8 @@
     "internalName": "char_4058_pepe",
     "nicheTiers": {
       "aoe-physical-dps": "S",
-      "late-laneholder": "A",
-      "physical-dps": "A",
+      "late-laneholder": "S",
+      "physical-dps": "S",
       "stalling": "A"
     }
   },
@@ -1782,7 +1786,7 @@
     "nicheTiers": {
       "late-laneholder": "A",
       "physical-dps": "A",
-      "stalling": "A"
+      "stalling": "B"
     }
   },
   "raidian": {
@@ -1823,7 +1827,7 @@
     "internalName": "char_4117_ray",
     "nicheTiers": {
       "boss-killing": "S",
-      "physical-dps": "A"
+      "physical-dps": "S"
     }
   },
   "reed_the_flame_shadow": {
@@ -1844,7 +1848,7 @@
     "internalName": "char_1020_reed2",
     "nicheTiers": {
       "arts-dps": "A",
-      "healing-operators": "A"
+      "healing-operators": "S"
     }
   },
   "rosa": {
@@ -1864,7 +1868,7 @@
     "internalName": "char_197_poca",
     "nicheTiers": {
       "boss-killing": "A",
-      "physical-dps": "A"
+      "physical-dps": "S"
     }
   },
   "rosmontis": {
@@ -1943,8 +1947,8 @@
     "krName": "산크타 믹사파라토",
     "internalName": "char_4194_rmixer",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A"
+      "late-laneholder": "S",
+      "tanking-blocking-operators": "SS"
     }
   },
   "saria": {
@@ -1969,11 +1973,11 @@
     "internalName": "char_202_demkni",
     "nicheTiers": {
       "fragile": "S",
-      "healing-operators": "A",
-      "late-laneholder": "A",
+      "healing-operators": "S",
+      "late-laneholder": "S",
       "sp-battery": "S",
-      "stalling": "A",
-      "tanking-blocking-operators": "A"
+      "stalling": "SS",
+      "tanking-blocking-operators": "SS"
     }
   },
   "schwarz": {
@@ -2015,7 +2019,7 @@
     "internalName": "char_147_shining",
     "nicheTiers": {
       "def-buff": "SS",
-      "healing-operators": "A",
+      "healing-operators": "B",
       "trash-operators": "A"
     }
   },
@@ -2041,12 +2045,12 @@
     "internalName": "char_2025_shu",
     "nicheTiers": {
       "def-buff": "S",
-      "healing-operators": "A",
-      "late-laneholder": "A",
+      "healing-operators": "S",
+      "late-laneholder": "S",
       "res-buff": "A",
-      "stalling": "A",
+      "stalling": "SS",
       "synergies/enmity-healing": "A",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "SS"
     }
   },
   "siege": {
@@ -2082,7 +2086,8 @@
     "niches": [
       "def-buff",
       "healing-operators",
-      "res-buff"
+      "res-buff",
+      "unconventional-niches"
     ],
     "cnName": "淬羽赫默",
     "jpName": "淬さい羽うサイレンス",
@@ -2090,8 +2095,9 @@
     "internalName": "char_1031_slent2",
     "nicheTiers": {
       "def-buff": "A",
-      "healing-operators": "A",
-      "res-buff": "A"
+      "healing-operators": "B",
+      "res-buff": "A",
+      "unconventional-niches": "A"
     }
   },
   "silverash": {
@@ -2195,8 +2201,8 @@
     "krName": "스펙터 디 언체인드",
     "internalName": "char_1023_ghost2",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "stalling": "A",
+      "late-laneholder": "S",
+      "stalling": "S",
       "tanking-blocking-operators": "A"
     }
   },
@@ -2262,9 +2268,9 @@
     "internalName": "char_358_lisa",
     "nicheTiers": {
       "fragile": "SS",
-      "healing-operators": "A",
+      "healing-operators": "B",
       "sp-battery": "A",
-      "stalling": "A"
+      "stalling": "SS"
     }
   },
   "swire_the_elegant_wit": {
@@ -2287,9 +2293,9 @@
     "internalName": "char_1033_swire2",
     "nicheTiers": {
       "fast-redeploy-operators": "A",
-      "late-laneholder": "A",
+      "late-laneholder": "B",
       "shift": "A",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "D"
     }
   },
   "texas_the_omertosa": {
@@ -2328,8 +2334,8 @@
     "krName": "쏜즈",
     "internalName": "char_293_thorns",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "physical-dps": "A"
+      "late-laneholder": "S",
+      "physical-dps": "S"
     }
   },
   "thorns_the_lodestar": {
@@ -2389,7 +2395,7 @@
     "internalName": "char_1042_phatm2",
     "nicheTiers": {
       "elemental-damage": "SS",
-      "stalling": "A"
+      "stalling": "SS"
     }
   },
   "typhon": {
@@ -2410,7 +2416,7 @@
     "internalName": "char_2012_typhon",
     "nicheTiers": {
       "boss-killing": "S",
-      "physical-dps": "A"
+      "physical-dps": "S"
     }
   },
   "ulpianus": {
@@ -2433,9 +2439,9 @@
     "internalName": "char_4145_ulpia",
     "nicheTiers": {
       "boss-killing": "A",
-      "late-laneholder": "A",
-      "physical-dps": "A",
-      "tanking-blocking-operators": "A"
+      "late-laneholder": "SS",
+      "physical-dps": "S",
+      "tanking-blocking-operators": "SS"
     }
   },
   "vigil": {
@@ -2555,7 +2561,7 @@
     "nicheTiers": {
       "aoe-physical-dps": "A",
       "physical-dps": "A",
-      "stalling": "A"
+      "stalling": "C"
     }
   },
   "weedy": {
@@ -2577,7 +2583,7 @@
     "krName": "위디",
     "internalName": "char_400_weedy",
     "nicheTiers": {
-      "late-laneholder": "A",
+      "late-laneholder": "B",
       "shift": "S",
       "stalling": "A",
       "true_damage": "B"
@@ -2592,7 +2598,8 @@
     "profileImage": "/images/operators/wi_adel.png",
     "niches": [
       "aoe-physical-dps",
-      "boss-killing"
+      "boss-killing",
+      "physical-dps"
     ],
     "cnName": "维什戴尔",
     "twName": "維什戴爾",
@@ -2601,7 +2608,8 @@
     "internalName": "char_1035_wisdel",
     "nicheTiers": {
       "aoe-physical-dps": "SS",
-      "boss-killing": "SS"
+      "boss-killing": "SS",
+      "physical-dps": "SS"
     }
   },
   "yu": {
@@ -2626,9 +2634,9 @@
     "nicheTiers": {
       "elemental-damage": "SS",
       "elemental_damage_healers": "B",
-      "late-laneholder": "A",
-      "stalling": "A",
-      "tanking-blocking-operators": "A"
+      "late-laneholder": "SS",
+      "stalling": "SS",
+      "tanking-blocking-operators": "S"
     }
   },
   "zuo_le": {
@@ -2641,8 +2649,7 @@
     "niches": [
       "boss-killing",
       "late-laneholder",
-      "physical-dps",
-      "tanking-blocking-operators"
+      "physical-dps"
     ],
     "cnName": "左乐",
     "twName": "左樂",
@@ -2652,8 +2659,7 @@
     "nicheTiers": {
       "boss-killing": "B",
       "late-laneholder": "A",
-      "physical-dps": "A",
-      "tanking-blocking-operators": "A"
+      "physical-dps": "A"
     }
   }
 }

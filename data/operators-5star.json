@@ -158,7 +158,7 @@
     "krName": "안드레아나",
     "internalName": "char_218_cuttle",
     "nicheTiers": {
-      "physical-dps": "A"
+      "physical-dps": "C"
     }
   },
   "aosta": {
@@ -178,7 +178,7 @@
     "krName": "아오스타",
     "internalName": "char_346_aosta",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "B",
       "trash-operators": "A"
     }
   },
@@ -221,7 +221,7 @@
     "krName": "아로마",
     "internalName": "char_446_aroma",
     "nicheTiers": {
-      "stalling": "A",
+      "stalling": "D",
       "trash-operators": "A"
     }
   },
@@ -242,7 +242,7 @@
     "internalName": "char_378_asbest",
     "nicheTiers": {
       "aoe-arts-dps": "D",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "B"
     }
   },
   "ashlock": {
@@ -281,7 +281,7 @@
     "internalName": "char_274_astesi",
     "nicheTiers": {
       "arts-dps": "C",
-      "late-laneholder": "A"
+      "late-laneholder": "C"
     }
   },
   "astgenne": {
@@ -360,10 +360,10 @@
     "krName": "베이스라인",
     "internalName": "char_4109_baslin",
     "nicheTiers": {
-      "healing-operators": "A",
-      "late-laneholder": "A",
+      "healing-operators": "C",
+      "late-laneholder": "C",
       "res-buff": "B",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "B"
     }
   },
   "beeswax": {
@@ -382,7 +382,7 @@
     "krName": "비즈왁스",
     "internalName": "char_344_beewax",
     "nicheTiers": {
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "B"
     }
   },
   "bena": {
@@ -402,8 +402,8 @@
     "krName": "베나",
     "internalName": "char_369_bena",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A"
+      "late-laneholder": "C",
+      "tanking-blocking-operators": "B"
     }
   },
   "bibeak": {
@@ -422,7 +422,7 @@
     "krName": "바이비크",
     "internalName": "char_252_bibeak",
     "nicheTiers": {
-      "stalling": "A",
+      "stalling": "C",
       "trash-operators": "A"
     }
   },
@@ -442,7 +442,7 @@
     "krName": "바이슨",
     "internalName": "char_325_bison",
     "nicheTiers": {
-      "tanking-blocking-operators": "A",
+      "tanking-blocking-operators": "B",
       "free": "A"
     }
   },
@@ -488,8 +488,8 @@
     "internalName": "char_457_blitz",
     "nicheTiers": {
       "silence": "B",
-      "stalling": "A",
-      "tanking-blocking-operators": "A",
+      "stalling": "C",
+      "tanking-blocking-operators": "C",
       "trash-operators": "A"
     }
   },
@@ -567,7 +567,7 @@
     "jpName": "ブリギッド",
     "internalName": "char_4177_brigid",
     "nicheTiers": {
-      "physical-dps": "A"
+      "physical-dps": "B"
     }
   },
   "broca": {
@@ -680,7 +680,7 @@
     "krName": "시멘트",
     "internalName": "char_464_cement",
     "nicheTiers": {
-      "tanking-blocking-operators": "A",
+      "tanking-blocking-operators": "C",
       "trash-operators": "A"
     }
   },
@@ -789,7 +789,7 @@
     "krName": "콜드샷",
     "internalName": "char_4104_coldst",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "C",
       "free": "A",
       "trash-operators": "A"
     }
@@ -837,7 +837,7 @@
       "def-buff": "B",
       "res-buff": "C",
       "shift": "B",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "B"
     }
   },
   "czerny": {
@@ -858,8 +858,8 @@
     "krName": "체르니",
     "internalName": "char_4047_pianst",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A",
+      "late-laneholder": "C",
+      "tanking-blocking-operators": "B",
       "unconventional-niches": "A"
     }
   },
@@ -941,7 +941,7 @@
     "krName": "닥",
     "internalName": "char_4125_rdoc",
     "nicheTiers": {
-      "healing-operators": "A",
+      "healing-operators": "D",
       "trash-operators": "A"
     }
   },
@@ -1002,7 +1002,7 @@
     "krName": "에라토",
     "internalName": "char_4043_erato",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "D",
       "synergies/sleep": "A",
       "trash-operators": "A"
     }
@@ -1084,7 +1084,7 @@
     "internalName": "char_4155_talr",
     "nicheTiers": {
       "fast-redeploy-operators": "B",
-      "stalling": "A"
+      "stalling": "B"
     }
   },
   "firewatch": {
@@ -1103,7 +1103,7 @@
     "krName": "파이어워치",
     "internalName": "char_158_milu",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "C",
       "trash-operators": "A"
     }
   },
@@ -1126,7 +1126,7 @@
     "nicheTiers": {
       "aoe-physical-dps": "A",
       "late-laneholder": "A",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "B"
     }
   },
   "flamebringer": {
@@ -1165,7 +1165,7 @@
     "krName": "플린트",
     "internalName": "char_415_flint",
     "nicheTiers": {
-      "stalling": "A",
+      "stalling": "D",
       "trash-operators": "A"
     }
   },
@@ -1226,7 +1226,7 @@
     "krName": "프로스트",
     "internalName": "char_458_rfrost",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "B",
       "stalling": "A"
     }
   },
@@ -1248,8 +1248,8 @@
     "krName": "퓨즈",
     "internalName": "char_4126_fuze",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "physical-dps": "A",
+      "late-laneholder": "C",
+      "physical-dps": "B",
       "trash-operators": "A"
     }
   },
@@ -1293,7 +1293,7 @@
     "nicheTiers": {
       "elemental-damage": "C",
       "elemental-dps": "A",
-      "late-laneholder": "A"
+      "late-laneholder": "B"
     }
   },
   "grain_buds": {
@@ -1312,7 +1312,7 @@
     "krName": "그레인버즈",
     "internalName": "char_4122_grabds",
     "nicheTiers": {
-      "stalling": "A"
+      "stalling": "C"
     }
   },
   "grani": {
@@ -1374,7 +1374,7 @@
     "internalName": "char_1027_greyy2",
     "nicheTiers": {
       "aoe-physical-dps": "B",
-      "physical-dps": "A"
+      "physical-dps": "C"
     }
   },
   "hadiya": {
@@ -1427,7 +1427,7 @@
     "internalName": "char_4114_harold",
     "nicheTiers": {
       "elemental_damage_healers": "B",
-      "healing-operators": "A",
+      "healing-operators": "C",
       "trash-operators": "A"
     }
   },
@@ -1449,9 +1449,9 @@
     "krName": "헤비레인",
     "internalName": "char_304_zebra",
     "nicheTiers": {
-      "healing-operators": "A",
+      "healing-operators": "C",
       "synergies/enmity-healing": "A",
-      "tanking-blocking-operators": "A",
+      "tanking-blocking-operators": "B",
       "unconventional-niches": "A"
     }
   },
@@ -1498,7 +1498,7 @@
     "internalName": "char_1024_hbisc2",
     "nicheTiers": {
       "arts-dps": "D",
-      "healing-operators": "A",
+      "healing-operators": "B",
       "trash-operators": "A"
     }
   },
@@ -1520,7 +1520,7 @@
     "internalName": "char_4066_highmo",
     "nicheTiers": {
       "late-laneholder": "A",
-      "tanking-blocking-operators": "A",
+      "tanking-blocking-operators": "B",
       "free": "A"
     }
   },
@@ -1618,7 +1618,7 @@
     "krName": "인사이더",
     "internalName": "char_498_inside",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "D",
       "trash-operators": "A"
     }
   },
@@ -1659,7 +1659,7 @@
     "krName": "이스티나",
     "internalName": "char_195_glassb",
     "nicheTiers": {
-      "stalling": "A",
+      "stalling": "C",
       "trash-operators": "A"
     }
   },
@@ -1724,7 +1724,7 @@
     "internalName": "char_4016_kazema",
     "nicheTiers": {
       "late-laneholder": "A",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "B"
     }
   },
   "kestrel": {
@@ -1819,7 +1819,7 @@
     "nicheTiers": {
       "anti-air-operators": "S",
       "physical-dps": "A",
-      "stalling": "A"
+      "stalling": "C"
     }
   },
   "la_pluma": {
@@ -1879,7 +1879,7 @@
     "internalName": "char_140_whitew",
     "nicheTiers": {
       "arts-dps": "A",
-      "physical-dps": "A",
+      "physical-dps": "B",
       "silence": "SS"
     }
   },
@@ -1958,8 +1958,8 @@
     "krName": "레토",
     "internalName": "char_194_leto",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "physical-dps": "A"
+      "late-laneholder": "B",
+      "physical-dps": "B"
     }
   },
   "liskarm": {
@@ -2017,7 +2017,7 @@
     "jpName": "ルナカブ",
     "internalName": "char_4014_lunacu",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "D",
       "unconventional-niches": "A"
     }
   },
@@ -2087,7 +2087,7 @@
     "krName": "멜라나이트",
     "internalName": "char_4006_melnte",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "C",
       "trash-operators": "A"
     }
   },
@@ -2148,7 +2148,7 @@
     "krName": "민트",
     "internalName": "char_388_mint",
     "nicheTiers": {
-      "tanking-blocking-operators": "A",
+      "tanking-blocking-operators": "D",
       "trash-operators": "A"
     }
   },
@@ -2303,8 +2303,8 @@
     "krName": "나이트메어",
     "internalName": "char_164_nightm",
     "nicheTiers": {
-      "healing-operators": "A",
-      "stalling": "A",
+      "healing-operators": "D",
+      "stalling": "F",
       "trash-operators": "A"
     }
   },
@@ -2327,7 +2327,7 @@
     "internalName": "char_4019_ncdeer",
     "nicheTiers": {
       "def-buff": "A",
-      "healing-operators": "A",
+      "healing-operators": "B",
       "res-buff": "A",
       "trash-operators": "A"
     }
@@ -2349,7 +2349,7 @@
     "krName": "노웰",
     "internalName": "char_4173_nowell",
     "nicheTiers": {
-      "healing-operators": "A",
+      "healing-operators": "C",
       "trash-operators": "A"
     }
   },
@@ -2373,8 +2373,8 @@
     "internalName": "char_4131_odda",
     "nicheTiers": {
       "aoe-physical-dps": "C",
-      "late-laneholder": "A",
-      "physical-dps": "A",
+      "late-laneholder": "C",
+      "physical-dps": "C",
       "trash-operators": "A"
     }
   },
@@ -2394,7 +2394,7 @@
     "krName": "파프리카",
     "internalName": "char_4071_peper",
     "nicheTiers": {
-      "healing-operators": "A",
+      "healing-operators": "B",
       "trash-operators": "A"
     }
   },
@@ -2435,7 +2435,7 @@
     "nicheTiers": {
       "elemental-damage": "B",
       "late-laneholder": "A",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "B"
     }
   },
   "platinum": {
@@ -2665,8 +2665,8 @@
     "krName": "레우스S 느와르 코르네",
     "internalName": "char_1030_noirc2",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "physical-dps": "A",
+      "late-laneholder": "B",
+      "physical-dps": "B",
       "trash-operators": "A"
     }
   },
@@ -2687,7 +2687,7 @@
     "krName": "레코드키퍼",
     "internalName": "char_4196_reckpr",
     "nicheTiers": {
-      "healing-operators": "A",
+      "healing-operators": "B",
       "trash-operators": "A"
     }
   },
@@ -2710,7 +2710,7 @@
     "internalName": "char_261_sddrag",
     "nicheTiers": {
       "dp-generation": "C",
-      "physical-dps": "A",
+      "physical-dps": "D",
       "trash-operators": "A"
     }
   },
@@ -2787,7 +2787,7 @@
     "krName": "샌드레코너",
     "internalName": "char_4140_lasher",
     "nicheTiers": {
-      "stalling": "A",
+      "stalling": "F",
       "trash-operators": "A"
     }
   },
@@ -2866,9 +2866,9 @@
     "krName": "센시",
     "internalName": "char_4143_sensi",
     "nicheTiers": {
-      "healing-operators": "A",
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A",
+      "healing-operators": "C",
+      "late-laneholder": "D",
+      "tanking-blocking-operators": "D",
       "trash-operators": "A"
     }
   },
@@ -2955,7 +2955,7 @@
     "krName": "시데로카",
     "internalName": "char_333_sidero",
     "nicheTiers": {
-      "tanking-blocking-operators": "A",
+      "tanking-blocking-operators": "D",
       "free": "A",
       "trash-operators": "A"
     }
@@ -3081,8 +3081,8 @@
     "krName": "스펙터",
     "internalName": "char_143_ghost",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A"
+      "late-laneholder": "S",
+      "tanking-blocking-operators": "S"
     }
   },
   "spuria": {
@@ -3186,7 +3186,7 @@
     "internalName": "char_4164_tecno",
     "nicheTiers": {
       "arts-dps": "C",
-      "stalling": "A",
+      "stalling": "C",
       "trash-operators": "A"
     }
   },
@@ -3208,7 +3208,7 @@
     "internalName": "char_486_takila",
     "nicheTiers": {
       "aoe-physical-dps": "C",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "B"
     }
   },
   "texas": {
@@ -3231,7 +3231,7 @@
     "nicheTiers": {
       "dp-generation": "A",
       "early-laneholder": "A",
-      "stalling": "A"
+      "stalling": "C"
     }
   },
   "tin_man": {
@@ -3367,7 +3367,6 @@
     "profileImage": "/images/operators/underflow.png",
     "niches": [
       "late-laneholder",
-      "physical-dps",
       "tanking-blocking-operators"
     ],
     "cnName": "深巡",
@@ -3375,8 +3374,7 @@
     "internalName": "char_4137_udflow",
     "nicheTiers": {
       "late-laneholder": "A",
-      "physical-dps": "A",
-      "tanking-blocking-operators": "A"
+      "tanking-blocking-operators": "B"
     }
   },
   "valarqvin": {
@@ -3416,7 +3414,7 @@
     "krName": "벤델라",
     "internalName": "char_494_vendla",
     "nicheTiers": {
-      "healing-operators": "A",
+      "healing-operators": "C",
       "trash-operators": "A"
     }
   },
@@ -3608,7 +3606,7 @@
     "internalName": "char_496_wildmn",
     "nicheTiers": {
       "shift": "B",
-      "stalling": "A",
+      "stalling": "D",
       "trash-operators": "A"
     }
   },
@@ -3689,7 +3687,7 @@
     "internalName": "char_4172_xingzh",
     "nicheTiers": {
       "def-buff": "B",
-      "healing-operators": "A",
+      "healing-operators": "B",
       "res-buff": "C",
       "trash-operators": "A"
     }

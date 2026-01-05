@@ -45,8 +45,8 @@
     ],
     "internalName": "char_4093_frston",
     "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "A",
+      "late-laneholder": "F",
+      "tanking-blocking-operators": "F",
       "trash-operators": "A"
     }
   },
@@ -80,7 +80,7 @@
     ],
     "internalName": "char_285_medic2",
     "nicheTiers": {
-      "healing-operators": "A"
+      "healing-operators": "F"
     }
   },
   "phonor_0": {
@@ -145,7 +145,7 @@
     ],
     "internalName": "char_4091_ulika",
     "nicheTiers": {
-      "stalling": "A",
+      "stalling": "F",
       "trash-operators": "A"
     }
   }

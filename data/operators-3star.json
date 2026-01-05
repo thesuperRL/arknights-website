@@ -35,7 +35,7 @@
     "krName": "안셀",
     "characters": "char_212_ansel",
     "nicheTiers": {
-      "healing-operators": "A",
+      "healing-operators": "C",
       "low-rarity": "A"
     }
   },
@@ -76,8 +76,8 @@
     "krName": "카디건",
     "characters": "char_209_ardign",
     "nicheTiers": {
-      "healing-operators": "A",
-      "tanking-blocking-operators": "A",
+      "healing-operators": "D",
+      "tanking-blocking-operators": "D",
       "low-rarity": "A"
     }
   },
@@ -156,7 +156,7 @@
     "characters": "char_124_kroos",
     "nicheTiers": {
       "anti-air-operators": "A",
-      "physical-dps": "A",
+      "physical-dps": "B",
       "low-rarity": "A"
     }
   },
@@ -195,7 +195,7 @@
     "krName": "멜란사",
     "characters": "char_208_melan",
     "nicheTiers": {
-      "physical-dps": "A",
+      "physical-dps": "B",
       "low-rarity": "A"
     }
   },
@@ -218,7 +218,7 @@
     "characters": "char_283_midn",
     "nicheTiers": {
       "arts-dps": "D",
-      "physical-dps": "A",
+      "physical-dps": "D",
       "trash-operators": "A"
     }
   },
