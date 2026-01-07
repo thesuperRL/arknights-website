@@ -84,7 +84,8 @@ async function getIntegratedStrategiesRecommendation(
   temporaryRecruitment?: string,
   currentHope?: number,
   hopeCosts?: Record<number, number>,
-  trashOperators?: Set<string>
+  trashOperators?: Set<string>,
+  teamSize?: number
 ): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number }> {
   // Helper functions for hope costs
   const getHopeCost = (rarity: number): number => {
@@ -152,8 +153,35 @@ async function getIntegratedStrategiesRecommendation(
     nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
   }
 
+  // Adjust niche requirements based on team size if provided
+  // Scale down requirements proportionally to team size (assuming default team size is 12)
+  const defaultTeamSize = 12;
+  const effectiveTeamSize = teamSize || defaultTeamSize;
+  const sizeMultiplier = effectiveTeamSize / defaultTeamSize;
+
   // Use preferences passed as parameter (loaded from team-preferences.json via API)
-  const defaultPreferences = preferences;
+  // Scale niche requirements based on team size
+  const defaultPreferences = {
+    ...preferences,
+    requiredNiches: Object.fromEntries(
+      Object.entries(preferences.requiredNiches).map(([niche, range]) => [
+        niche,
+        {
+          min: Math.ceil(range.min * sizeMultiplier),
+          max: Math.ceil(range.max * sizeMultiplier)
+        }
+      ])
+    ),
+    preferredNiches: Object.fromEntries(
+      Object.entries(preferences.preferredNiches).map(([niche, range]) => [
+        niche,
+        {
+          min: Math.ceil(range.min * sizeMultiplier),
+          max: Math.ceil(range.max * sizeMultiplier)
+        }
+      ])
+    )
+  };
 
   // Niches that should not contribute to scoring in IS team building (using filenames)
   const isExcludedNiches = new Set([
@@ -477,6 +505,9 @@ const IntegratedStrategiesPage: React.FC = () => {
   });
   const [trashOperators, setTrashOperators] = useState<Set<string>>(new Set());
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
+  const [teamSize, setTeamSize] = useState<number>(8);
+  const [optimalTeam, setOptimalTeam] = useState<Set<string>>(new Set());
+  const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
 
   // Helper function to get hope cost for an operator
   const getHopeCost = (rarity: number): number => {
@@ -502,12 +533,22 @@ const IntegratedStrategiesPage: React.FC = () => {
     }
   }, [user, allOperators]);
 
-  // Auto-save IS team state when it changes (instant save)
+  // Calculate optimal team whenever team or team size changes
   useEffect(() => {
-    if (user && Object.keys(allOperators).length > 0) {
+    if (selectedOperators.length > 0 && preferences && teamSize > 0) {
+      calculateOptimalTeam();
+    } else {
+      setOptimalTeam(new Set());
+    }
+  }, [selectedOperators, teamSize, preferences, allOperators]);
+
+  // Auto-save IS team state when it changes (instant save)
+  // Skip saving during initial load to prevent overwriting loaded data
+  useEffect(() => {
+    if (user && Object.keys(allOperators).length > 0 && !isInitialLoad) {
       saveISTeamState();
     }
-  }, [selectedOperators, currentHope, hopeCosts, user, allOperators]);
+  }, [selectedOperators, currentHope, hopeCosts, teamSize, user, allOperators, isInitialLoad]);
 
   const loadPreferences = async () => {
     try {
@@ -569,6 +610,11 @@ const IntegratedStrategiesPage: React.FC = () => {
             setHopeCosts(data.hopeCosts);
           }
           
+          // Restore team size
+          if (data.teamSize !== undefined) {
+            setTeamSize(data.teamSize);
+          }
+          
           // Restore selected operators only after allOperators is loaded
           if (Object.keys(allOperators).length > 0) {
             if (data.selectedOperators && Array.isArray(data.selectedOperators)) {
@@ -584,11 +630,105 @@ const IntegratedStrategiesPage: React.FC = () => {
               setSelectedOperators(operators);
             }
           }
+          
+          // Mark initial load as complete after loading all data
+          if (!loadOnlyHope && Object.keys(allOperators).length > 0) {
+            setIsInitialLoad(false);
+          } else if (loadOnlyHope) {
+            // For hope-only load, mark complete after a short delay to ensure state is set
+            setTimeout(() => setIsInitialLoad(false), 100);
+          }
         }
       }
     } catch (err) {
       console.error('Error loading IS team state:', err);
+      setIsInitialLoad(false); // Mark as complete even on error
     }
+  };
+
+  const calculateOptimalTeam = async () => {
+    if (!preferences || selectedOperators.length === 0 || teamSize <= 0) {
+      setOptimalTeam(new Set());
+      return;
+    }
+
+    // If team size is greater than or equal to selected operators, all are optimal
+    if (teamSize >= selectedOperators.length) {
+      setOptimalTeam(new Set(selectedOperators.map(s => s.operatorId)));
+      return;
+    }
+
+    // Generate all possible combinations of teamSize operators
+    const combinations: string[][] = [];
+    
+    function generateCombinations(arr: string[], size: number, start: number, current: string[]) {
+      if (current.length === size) {
+        combinations.push([...current]);
+        return;
+      }
+      
+      for (let i = start; i < arr.length; i++) {
+        current.push(arr[i]);
+        generateCombinations(arr, size, i + 1, current);
+        current.pop();
+      }
+    }
+
+    const operatorIds = selectedOperators.map(s => s.operatorId);
+    generateCombinations(operatorIds, Math.min(teamSize, operatorIds.length), 0, []);
+
+    // Score each combination based on niche coverage
+    let bestCombination: string[] = [];
+    let bestScore = -Infinity;
+
+    for (const combo of combinations) {
+      // Calculate niche coverage for this combination
+      const nicheCounts: Record<string, number> = {};
+      
+      for (const opId of combo) {
+        const op = allOperators[opId];
+        if (op && op.niches) {
+          for (const niche of op.niches) {
+            nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
+          }
+        }
+      }
+
+      // Score based on required and preferred niches
+      let score = 0;
+      
+      // Required niches
+      for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
+        const count = nicheCounts[niche] || 0;
+        if (count >= range.min && count <= range.max) {
+          score += 100; // Full points for being in range
+        } else if (count < range.min) {
+          score += (count / range.min) * 100; // Partial points
+        } else {
+          score += Math.max(0, 100 - (count - range.max) * 20); // Penalty for exceeding
+        }
+      }
+
+      // Preferred niches
+      for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
+        const count = nicheCounts[niche] || 0;
+        if (count >= range.min && count <= range.max) {
+          score += 50; // Full points for being in range
+        } else if (count < range.min) {
+          score += (count / range.min) * 50; // Partial points
+        }
+      }
+
+      // Penalty for having trash operators
+      score -= 1000 * (nicheCounts["trash-operators"] || 0);
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestCombination = combo;
+      }
+    }
+
+    setOptimalTeam(new Set(bestCombination));
   };
 
   const saveISTeamState = async () => {
@@ -598,7 +738,8 @@ const IntegratedStrategiesPage: React.FC = () => {
       const teamState = {
         selectedOperators: selectedOperators.map(s => s.operatorId),
         currentHope,
-        hopeCosts
+        hopeCosts,
+        teamSize
       };
       
       await fetch('/api/integrated-strategies/team', {
@@ -611,6 +752,38 @@ const IntegratedStrategiesPage: React.FC = () => {
       });
     } catch (err) {
       console.error('Error saving IS team state:', err);
+    }
+  };
+
+  const resetISTeamState = async () => {
+    if (!user) return;
+    
+    if (!confirm('Are you sure you want to reset all saved data? This will clear your team, hope, and settings.')) {
+      return;
+    }
+    
+    try {
+      // Clear saved state on server
+      await fetch('/api/integrated-strategies/team', {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+      
+      // Reset local state to defaults
+      setSelectedOperators([]);
+      setCurrentHope(0);
+      setHopeCosts({
+        6: 6,
+        5: 3,
+        4: 0
+      });
+      setTeamSize(8);
+      setOptimalTeam(new Set());
+      setRecommendation(null);
+      
+      setIsInitialLoad(false); // Allow saving after reset
+    } catch (err) {
+      console.error('Error resetting IS team state:', err);
     }
   };
 
@@ -719,16 +892,22 @@ const IntegratedStrategiesPage: React.FC = () => {
       const operatorIds = selectedOperators.map(selected => selected.operatorId);
       const raisedOpsArray = Array.from(raisedOperators); // raisedOperators are the deployable operators
 
+      // Use optimal team for recommendations if team size is set
+      const teamForRecommendation = teamSize > 0 && optimalTeam.size > 0 
+        ? Array.from(optimalTeam)
+        : operatorIds;
+
       const result = await getIntegratedStrategiesRecommendation(
         allOperators,
         raisedOpsArray, // ONLY raised operators
-        operatorIds,
+        teamForRecommendation,
         Array.from(requiredClasses),
         preferences,
         temporaryRecruitment || undefined,
         currentHope,
         hopeCosts,
-        trashOperators
+        trashOperators,
+        teamSize
       );
 
       setRecommendation(result);
@@ -750,18 +929,57 @@ const IntegratedStrategiesPage: React.FC = () => {
 
   return (
     <div className="integrated-strategies-page">
-      <h1>Integrated Strategies Team Builder</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+        <h1 style={{ margin: 0 }}>Integrated Strategies Team Builder</h1>
+        <button
+          onClick={resetISTeamState}
+          className="reset-team-btn"
+          title="Reset all saved data"
+        >
+          Reset All
+        </button>
+      </div>
       <p className="subtitle">Select your current operators and get recommendations for the next operator to add</p>
 
       {error && <div className="error">{error}</div>}
 
       <div className="team-selection-section">
-        <h2>Your Current Team</h2>
-        <p>Select operators you already own and plan to use in your Integrated Strategies team</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
+          <h2 style={{ margin: 0 }}>Your Current Team</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <label htmlFor="team-size-input" style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>
+              Team Size:
+            </label>
+            <input
+              id="team-size-input"
+              type="number"
+              min="1"
+              max="12"
+              value={teamSize}
+              onChange={(e) => {
+                const value = parseInt(e.target.value) || 8;
+                setTeamSize(Math.max(1, Math.min(12, value)));
+              }}
+              style={{
+                width: '60px',
+                padding: '0.25rem 0.5rem',
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                color: 'var(--text-light)',
+                fontSize: '0.9rem'
+              }}
+            />
+          </div>
+        </div>
+        <p>Select operators you already own and plan to use in your Integrated Strategies team. Optimal team members are highlighted.</p>
 
         <div className="selected-operators">
           {selectedOperators.map(selected => (
-            <div key={selected.operatorId} className="selected-operator-card">
+            <div 
+              key={selected.operatorId} 
+              className={`selected-operator-card ${optimalTeam.has(selected.operatorId) ? 'optimal-team-member' : ''}`}
+            >
               <img
                 src={selected.operator.profileImage || '/images/operators/placeholder.png'}
                 alt={getOperatorName(selected.operator, language)}
@@ -769,7 +987,7 @@ const IntegratedStrategiesPage: React.FC = () => {
               />
               <div className="operator-info">
                 <div className="operator-name">{getOperatorName(selected.operator, language)}</div>
-                <Stars rarity={selected.operator.rarity} />
+                <Stars rarity={selected.operator.rarity} size="small" />
                 <div className="operator-class">{selected.operator.class}</div>
               </div>
               <button

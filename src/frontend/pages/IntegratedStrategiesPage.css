@@ -15,6 +15,28 @@
   color: white;
 }
 
+.reset-team-btn {
+  padding: 0.5rem 1rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-team-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+.reset-team-btn:active {
+  transform: translateY(0);
+}
+
 .integrated-strategies-page .subtitle {
   color: white;
   margin-bottom: 1rem;
@@ -89,6 +111,11 @@
   border-color: var(--primary-color);
 }
 
+.selected-operator-card.optimal-team-member {
+  border: 3px solid #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
 .selected-operator-card .operator-image {
   width: 60px;
   height: 60px;
@@ -114,6 +141,15 @@
 
 .selected-operator-card .stars-wrapper {
   margin: 0.125rem 0;
+}
+
+.selected-operator-card .stars {
+  font-size: 0.75rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
 }
 
 .selected-operator-card .operator-class {

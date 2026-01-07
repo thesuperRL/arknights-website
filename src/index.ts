@@ -969,6 +969,52 @@ app.post('/api/integrated-strategies/team', async (req, res) => {
   }
 });
 
+// DELETE /api/integrated-strategies/team - Clear user's IS team state
+app.delete('/api/integrated-strategies/team', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      res.status(401).json({ error: 'Not authenticated' });
+      return;
+    }
+
+    const session = getSession(sessionId);
+    if (!session) {
+      res.status(401).json({ error: 'Invalid session' });
+      return;
+    }
+
+    // Load existing team states
+    const isTeamFile = path.join(__dirname, '../data/integrated-strategies-teams.json');
+    let allTeamStates: Record<string, any> = {};
+
+    if (fs.existsSync(isTeamFile)) {
+      try {
+        const content = fs.readFileSync(isTeamFile, 'utf-8');
+        allTeamStates = JSON.parse(content);
+      } catch (error) {
+        console.error('Error loading IS team states:', error);
+      }
+    }
+
+    // Remove user's team state
+    delete allTeamStates[session.email];
+
+    // Ensure directory exists
+    const dir = path.dirname(isTeamFile);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    fs.writeFileSync(isTeamFile, JSON.stringify(allTeamStates, null, 2));
+
+    res.json({ success: true });
+  } catch (error: any) {
+    console.error('Error deleting IS team state:', error);
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to delete IS team state' });
+  }
+});
+
 
 // Serve React app for all non-API routes (SPA routing) - must be last
 // Use a catch-all middleware instead of a route pattern for Express 5

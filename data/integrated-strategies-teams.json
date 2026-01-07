@@ -1,11 +1,12 @@
 {
   "ryanli1366@gmail.com": {
     "selectedOperators": [],
-    "currentHope": 4,
+    "currentHope": 0,
     "hopeCosts": {
       "4": 0,
       "5": 3,
       "6": 6
-    }
+    },
+    "teamSize": 8
   }
 }
