@@ -776,47 +776,79 @@ const IntegratedStrategiesPage: React.FC = () => {
 
           const currentCount = nicheCounts[niche] || 0;
 
-          // Get the best tier in this niche from any operator in the combo
-          let bestTierInNiche = 0;
+          // Get required/preferred ranges to determine how many top tiers to consider
+          const requiredRange = importantNiches.has(niche) ? preferences.requiredNiches[niche] : undefined;
+          const preferredRange = importantNiches.has(niche) ? preferences.preferredNiches[niche] : undefined;
+          
+          // Determine how many top tiers to consider
+          let tierCount = 1; // Default to just the best tier
+          if (requiredRange) {
+            tierCount = Math.max(tierCount, requiredRange.max);
+          }
+          if (preferredRange) {
+            tierCount = Math.max(tierCount, preferredRange.max);
+          }
+
+          // Collect all tiers in this niche from operators in the combo (excluding trash operators)
+          const tiersInNiche: number[] = [];
           for (const otherOpId of combo) {
-            const tier = await getOperatorTierInNiche(otherOpId, niche);
-            if (tier > bestTierInNiche) {
-              bestTierInNiche = tier;
+            const otherOp = allOperators[otherOpId];
+            if (!otherOp || !otherOp.niches) continue;
+            
+            // Skip trash operators
+            const isOtherTrash = (trashOperators && trashOperators.has(otherOpId)) || 
+                                otherOp.niches.includes("trash-operator") || 
+                                otherOp.niches.includes("trash-operators");
+            if (isOtherTrash) continue;
+            
+            // Only consider operators that have this niche
+            if (otherOp.niches.includes(niche)) {
+              const tier = await getOperatorTierInNiche(otherOpId, niche);
+              if (tier > 0) {
+                tiersInNiche.push(tier);
+              }
             }
           }
 
-          if (importantNiches.has(niche)) {
-            const requiredRange = preferences.requiredNiches[niche];
-            const preferredRange = preferences.preferredNiches[niche];
+          // Sort tiers in descending order and take the top x
+          tiersInNiche.sort((a, b) => b - a);
+          const topTiers = tiersInNiche.slice(0, tierCount);
+          
+          // Sum the top tiers (or use the best tier if none found)
+          const totalTierValue = topTiers.length > 0 
+            ? topTiers.reduce((sum, tier) => sum + tier, 0)
+            : 0;
 
+          if (importantNiches.has(niche)) {
             if (requiredRange) {
               // Required niche - tier-weighted scoring
               if (currentCount < requiredRange.min) {
                 // Filling a missing required niche - bonus weighted by tier
-                nicheCoverageScore += bestTierInNiche * 5;
+                nicheCoverageScore += totalTierValue * 5;
               } else if (currentCount < requiredRange.max) {
                 // Filling an under-covered required niche
-                nicheCoverageScore += bestTierInNiche * 2.5;
+                nicheCoverageScore += totalTierValue * 2.5;
               } else {
                 // Over-covered - minimal bonus
-                nicheCoverageScore += bestTierInNiche * 1.25;
+                nicheCoverageScore += totalTierValue * 1.25;
               }
             } else if (preferredRange) {
               // Preferred niche - tier-weighted scoring
               if (currentCount < preferredRange.min) {
                 // Filling a missing preferred niche
-                nicheCoverageScore += bestTierInNiche * 3.5;
+                nicheCoverageScore += totalTierValue * 3.5;
               } else if (currentCount < preferredRange.max) {
                 // Filling an under-covered preferred niche
-                nicheCoverageScore += bestTierInNiche * 1.5;
+                nicheCoverageScore += totalTierValue * 1.5;
               } else {
                 // Over-covered - minimal bonus
-                nicheCoverageScore += bestTierInNiche * 0.75;
+                nicheCoverageScore += totalTierValue * 0.75;
               }
             }
           } else {
-            // Non-standard niche - small tier-weighted bonus
-            nicheCoverageScore += bestTierInNiche * 0.5;
+            // Non-standard niche - small tier-weighted bonus (use best tier only)
+            const bestTier = topTiers.length > 0 ? topTiers[0] : 0;
+            nicheCoverageScore += bestTier * 0.5;
           }
         }
       }

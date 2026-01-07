@@ -24,14 +24,15 @@
       "ebenholz",
       "entelechia",
       "eyjafjalla",
-      "blaze_the_igniting_spark"
+      "blaze_the_igniting_spark",
+      "ines"
     ],
-    "currentHope": 0,
+    "currentHope": 4,
     "hopeCosts": {
       "4": 0,
       "5": 3,
       "6": 6
     },
-    "teamSize": 8
+    "teamSize": 12
   }
 }
