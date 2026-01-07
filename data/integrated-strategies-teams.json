@@ -1,6 +1,31 @@
 {
   "ryanli1366@gmail.com": {
-    "selectedOperators": [],
+    "selectedOperators": [
+      "aak",
+      "archetto",
+      "ash",
+      "ch_en",
+      "chongyue",
+      "ch_en_the_holungday",
+      "crownslayer",
+      "carnelian",
+      "civilight_eterna",
+      "ceobe",
+      "blemishine",
+      "dorothy",
+      "dusk",
+      "ela",
+      "executor_the_ex_foedere",
+      "exusiai_the_new_covenant",
+      "degenbrecher",
+      "gladiia",
+      "gavial_the_invincible",
+      "eyjafjalla_the_hv_t_aska",
+      "ebenholz",
+      "entelechia",
+      "eyjafjalla",
+      "blaze_the_igniting_spark"
+    ],
     "currentHope": 0,
     "hopeCosts": {
       "4": 0,

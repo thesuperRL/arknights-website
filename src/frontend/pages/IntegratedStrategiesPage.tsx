@@ -658,6 +658,24 @@ const IntegratedStrategiesPage: React.FC = () => {
       return;
     }
 
+    // Niches that should not contribute to scoring
+    const isExcludedNiches = new Set([
+      'free',
+      'unconventional-niches',
+      'fragile',
+      'enmity-healing',
+      'sleep',
+      'global-range',
+      'synergies/enmity-healing',
+      'synergies/sleep',
+      'low-rarity'
+    ]);
+
+    const importantNiches = new Set([
+      ...Object.keys(preferences.requiredNiches),
+      ...Object.keys(preferences.preferredNiches)
+    ].filter(niche => !isExcludedNiches.has(niche)));
+
     // Generate all possible combinations of teamSize operators
     const combinations: string[][] = [];
     
@@ -677,7 +695,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     const operatorIds = selectedOperators.map(s => s.operatorId);
     generateCombinations(operatorIds, Math.min(teamSize, operatorIds.length), 0, []);
 
-    // Score each combination based on niche coverage
+    // Score each combination using tier-based scoring (prioritizing tiers over niche coverage)
     let bestCombination: string[] = [];
     let bestScore = -Infinity;
 
@@ -694,33 +712,117 @@ const IntegratedStrategiesPage: React.FC = () => {
         }
       }
 
-      // Score based on required and preferred niches
+      // Score based on tier performance (HIGH EMPHASIS) and niche coverage
       let score = 0;
       
-      // Required niches
-      for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
-        const count = nicheCounts[niche] || 0;
-        if (count >= range.min && count <= range.max) {
-          score += 100; // Full points for being in range
-        } else if (count < range.min) {
-          score += (count / range.min) * 100; // Partial points
-        } else {
-          score += Math.max(0, 100 - (count - range.max) * 20); // Penalty for exceeding
+      // Track which niches we've scored to avoid double counting
+      const scoredNiches = new Set<string>();
+
+      // FIRST: Score based on tier performance (HIGH PRIORITY)
+      let totalTierScore = 0;
+      for (const opId of combo) {
+        const op = allOperators[opId];
+        if (!op || !op.niches) continue;
+
+        // Penalty for trash operators (check both Set and niche list)
+        const isTrash = (trashOperators && trashOperators.has(opId)) || 
+                        op.niches.includes("trash-operator") || 
+                        op.niches.includes("trash-operators");
+        if (isTrash) {
+          score -= 1000;
+          continue;
+        }
+
+        // Calculate tier scores for this operator across all niches
+        for (const niche of op.niches) {
+          if (isExcludedNiches.has(niche)) continue;
+          
+          const normalizedNiche = niche;
+          if (scoredNiches.has(normalizedNiche)) continue;
+          scoredNiches.add(normalizedNiche);
+
+          // Get tier for this operator in this niche
+          const tier = await getOperatorTierInNiche(opId, niche);
+          if (tier === 0) continue;
+
+          // Tier score is weighted heavily (emphasize tiers over coverage)
+          totalTierScore += tier * 10; // High multiplier to prioritize tiers
         }
       }
 
-      // Preferred niches
-      for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
-        const count = nicheCounts[niche] || 0;
-        if (count >= range.min && count <= range.max) {
-          score += 50; // Full points for being in range
-        } else if (count < range.min) {
-          score += (count / range.min) * 50; // Partial points
+      // Apply tier score (HIGH WEIGHT)
+      score += totalTierScore;
+
+      // SECOND: Score based on niche coverage (with tier-weighted bonuses)
+      scoredNiches.clear(); // Reset for coverage scoring
+      let nicheCoverageScore = 0;
+
+      for (const opId of combo) {
+        const op = allOperators[opId];
+        if (!op || !op.niches) continue;
+
+        // Skip trash operators in niche coverage scoring (penalty already applied)
+        const isTrash = (trashOperators && trashOperators.has(opId)) || 
+                        op.niches.includes("trash-operator") || 
+                        op.niches.includes("trash-operators");
+        if (isTrash) continue;
+
+        for (const niche of op.niches) {
+          if (isExcludedNiches.has(niche)) continue;
+
+          const normalizedNiche = niche;
+          if (scoredNiches.has(normalizedNiche)) continue;
+          scoredNiches.add(normalizedNiche);
+
+          const currentCount = nicheCounts[niche] || 0;
+
+          // Get the best tier in this niche from any operator in the combo
+          let bestTierInNiche = 0;
+          for (const otherOpId of combo) {
+            const tier = await getOperatorTierInNiche(otherOpId, niche);
+            if (tier > bestTierInNiche) {
+              bestTierInNiche = tier;
+            }
+          }
+
+          if (importantNiches.has(niche)) {
+            const requiredRange = preferences.requiredNiches[niche];
+            const preferredRange = preferences.preferredNiches[niche];
+
+            if (requiredRange) {
+              // Required niche - tier-weighted scoring
+              if (currentCount < requiredRange.min) {
+                // Filling a missing required niche - bonus weighted by tier
+                nicheCoverageScore += bestTierInNiche * 5;
+              } else if (currentCount < requiredRange.max) {
+                // Filling an under-covered required niche
+                nicheCoverageScore += bestTierInNiche * 2.5;
+              } else {
+                // Over-covered - minimal bonus
+                nicheCoverageScore += bestTierInNiche * 1.25;
+              }
+            } else if (preferredRange) {
+              // Preferred niche - tier-weighted scoring
+              if (currentCount < preferredRange.min) {
+                // Filling a missing preferred niche
+                nicheCoverageScore += bestTierInNiche * 3.5;
+              } else if (currentCount < preferredRange.max) {
+                // Filling an under-covered preferred niche
+                nicheCoverageScore += bestTierInNiche * 1.5;
+              } else {
+                // Over-covered - minimal bonus
+                nicheCoverageScore += bestTierInNiche * 0.75;
+              }
+            }
+          } else {
+            // Non-standard niche - small tier-weighted bonus
+            nicheCoverageScore += bestTierInNiche * 0.5;
+          }
         }
       }
 
-      // Penalty for having trash operators
-      score -= 1000 * (nicheCounts["trash-operators"] || 0);
+      // Apply niche coverage score (LOWER WEIGHT than tier score)
+      score += nicheCoverageScore;
 
       if (score > bestScore) {
         bestScore = score;
