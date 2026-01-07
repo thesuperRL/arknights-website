@@ -490,13 +490,15 @@ const IntegratedStrategiesPage: React.FC = () => {
       loadOwnedOperators();
       loadTrashOperators();
       loadPreferences();
+      // Load hope and hope costs immediately (don't need to wait for operators)
+      loadISTeamState(true);
     }
   }, [user]);
 
-  // Load IS team state after allOperators is loaded
+  // Load selected operators after allOperators is loaded
   useEffect(() => {
     if (user && Object.keys(allOperators).length > 0) {
-      loadISTeamState();
+      loadISTeamState(false); // Load everything including operators
     }
   }, [user, allOperators]);
 
@@ -538,14 +540,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     }
   };
 
-  const loadISTeamState = async () => {
-    // Wait for allOperators to be loaded before restoring state
-    if (Object.keys(allOperators).length === 0) {
-      // If operators aren't loaded yet, wait a bit and try again
-      setTimeout(loadISTeamState, 500);
-      return;
-    }
-
+  const loadISTeamState = async (loadOnlyHope: boolean = false) => {
     try {
       const response = await fetch('/api/integrated-strategies/team', {
         credentials: 'include'
@@ -553,28 +548,41 @@ const IntegratedStrategiesPage: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         if (data) {
-          // Restore selected operators
-          if (data.selectedOperators && Array.isArray(data.selectedOperators)) {
-            const operators = data.selectedOperators
-              .map((opId: string) => {
-                const op = allOperators[opId];
-                if (op) {
-                  return { operatorId: opId, operator: op };
-                }
-                return null;
-              })
-              .filter((item: any) => item !== null);
-            setSelectedOperators(operators);
+          // Always restore current hope and hope costs immediately (don't need to wait for operators)
+          if (loadOnlyHope) {
+            if (data.currentHope !== undefined) {
+              setCurrentHope(data.currentHope);
+            }
+            
+            if (data.hopeCosts) {
+              setHopeCosts(data.hopeCosts);
+            }
+            return; // Early return if only loading hope
           }
           
-          // Restore current hope
+          // Restore everything (hope, costs, and operators)
           if (data.currentHope !== undefined) {
             setCurrentHope(data.currentHope);
           }
           
-          // Restore hope costs
           if (data.hopeCosts) {
             setHopeCosts(data.hopeCosts);
+          }
+          
+          // Restore selected operators only after allOperators is loaded
+          if (Object.keys(allOperators).length > 0) {
+            if (data.selectedOperators && Array.isArray(data.selectedOperators)) {
+              const operators = data.selectedOperators
+                .map((opId: string) => {
+                  const op = allOperators[opId];
+                  if (op) {
+                    return { operatorId: opId, operator: op };
+                  }
+                  return null;
+                })
+                .filter((item: any) => item !== null);
+              setSelectedOperators(operators);
+            }
           }
         }
       }
@@ -671,7 +679,12 @@ const IntegratedStrategiesPage: React.FC = () => {
       return;
     }
 
-    // Note: Hope checking removed - users can add operators to team regardless of hope availability
+    // Calculate hope cost for this operator
+    const operatorRarity = operator.rarity || 1;
+    const operatorHopeCost = hopeCosts[operatorRarity] || 0;
+
+    // Decrease current hope by the operator's cost (don't go below 0)
+    setCurrentHope(prev => Math.max(0, prev - operatorHopeCost));
 
     setSelectedOperators(prev => [...prev, { operatorId, operator }]);
     setRecommendation(null); // Clear recommendation when team changes
