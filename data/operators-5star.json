@@ -1857,6 +1857,7 @@
     "profileImage": "/images/operators/lappland.png",
     "niches": [
       "arts-dps",
+      "late-laneholder",
       "physical-dps",
       "silence"
     ],
@@ -1867,6 +1868,7 @@
     "internalName": "char_140_whitew",
     "nicheTiers": {
       "arts-dps": "A",
+      "late-laneholder": "A",
       "physical-dps": "B",
       "silence": "SS"
     }

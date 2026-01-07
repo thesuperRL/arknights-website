@@ -990,11 +990,6 @@ const IntegratedStrategiesPage: React.FC = () => {
               <div className="operator-select-grid">
                 {Object.values(allOperators)
                   .filter(op => {
-                    // Only show owned operators
-                    if (!ownedOperators.has(op.id)) {
-                      return false;
-                    }
-
                     // Exclude operators already in the team
                     if (selectedOperators.some(selected => selected.operatorId === op.id)) {
                       return false;
@@ -1026,7 +1021,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                   .map(op => (
                     <div
                       key={op.id}
-                      className={`operator-select-card rarity-${op.rarity}`}
+                      className={`operator-select-card rarity-${op.rarity} ${!op.global ? 'non-global' : ''}`}
                       onClick={() => {
                         addOperator(op.id);
                         setShowOperatorSelectModal(false);

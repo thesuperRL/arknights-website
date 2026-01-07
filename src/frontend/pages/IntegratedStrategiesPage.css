@@ -883,11 +883,25 @@
   transform: translateY(-2px);
 }
 
+.operator-select-card.non-global .operator-select-image {
+  filter: blur(4px);
+  opacity: 0.6;
+}
+
+.operator-select-card.non-global {
+  opacity: 0.7;
+}
+
+.operator-select-card.non-global:hover {
+  opacity: 0.9;
+}
+
 .operator-select-image {
   width: 60px;
   height: 60px;
   object-fit: cover;
   border-radius: 6px;
+  transition: filter 0.2s, opacity 0.2s;
 }
 
 .operator-select-name {
