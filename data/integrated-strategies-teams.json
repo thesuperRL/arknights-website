@@ -1,0 +1,11 @@
+{
+  "ryanli1366@gmail.com": {
+    "selectedOperators": [],
+    "currentHope": 10,
+    "hopeCosts": {
+      "4": 0,
+      "5": 3,
+      "6": 6
+    }
+  }
+}

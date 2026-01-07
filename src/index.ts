@@ -881,6 +881,94 @@ app.post('/api/team/preferences', async (req, res) => {
   }
 });
 
+// GET /api/integrated-strategies/team - Get user's saved IS team state
+app.get('/api/integrated-strategies/team', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      res.status(401).json({ error: 'Not authenticated' });
+      return;
+    }
+
+    const session = getSession(sessionId);
+    if (!session) {
+      res.status(401).json({ error: 'Invalid session' });
+      return;
+    }
+
+    // Load IS team state from file (per-user)
+    const isTeamFile = path.join(__dirname, '../data/integrated-strategies-teams.json');
+    let allTeamStates: Record<string, any> = {};
+    
+    if (fs.existsSync(isTeamFile)) {
+      try {
+        const content = fs.readFileSync(isTeamFile, 'utf-8');
+        allTeamStates = JSON.parse(content);
+      } catch (error) {
+        console.error('Error loading IS team states:', error);
+      }
+    }
+    
+    const userTeamState = allTeamStates[session.email] || null;
+    res.json(userTeamState);
+  } catch (error: any) {
+    console.error('Error getting IS team state:', error);
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get IS team state' });
+  }
+});
+
+// POST /api/integrated-strategies/team - Save user's IS team state
+app.post('/api/integrated-strategies/team', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      res.status(401).json({ error: 'Not authenticated' });
+      return;
+    }
+
+    const session = getSession(sessionId);
+    if (!session) {
+      res.status(401).json({ error: 'Invalid session' });
+      return;
+    }
+
+    const teamState = req.body;
+    if (!teamState) {
+      res.status(400).json({ error: 'Team state is required' });
+      return;
+    }
+
+    // Load existing team states
+    const isTeamFile = path.join(__dirname, '../data/integrated-strategies-teams.json');
+    let allTeamStates: Record<string, any> = {};
+
+    if (fs.existsSync(isTeamFile)) {
+      try {
+        const content = fs.readFileSync(isTeamFile, 'utf-8');
+        allTeamStates = JSON.parse(content);
+      } catch (error) {
+        console.error('Error loading IS team states:', error);
+      }
+    }
+
+    // Save user's team state
+    allTeamStates[session.email] = teamState;
+
+    // Ensure directory exists
+    const dir = path.dirname(isTeamFile);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    fs.writeFileSync(isTeamFile, JSON.stringify(allTeamStates, null, 2));
+
+    res.json({ success: true, teamState });
+  } catch (error: any) {
+    console.error('Error saving IS team state:', error);
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to save IS team state' });
+  }
+});
+
 
 // Serve React app for all non-API routes (SPA routing) - must be last
 // Use a catch-all middleware instead of a route pattern for Express 5

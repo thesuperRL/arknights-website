@@ -493,6 +493,20 @@ const IntegratedStrategiesPage: React.FC = () => {
     }
   }, [user]);
 
+  // Load IS team state after allOperators is loaded
+  useEffect(() => {
+    if (user && Object.keys(allOperators).length > 0) {
+      loadISTeamState();
+    }
+  }, [user, allOperators]);
+
+  // Auto-save IS team state when it changes (instant save)
+  useEffect(() => {
+    if (user && Object.keys(allOperators).length > 0) {
+      saveISTeamState();
+    }
+  }, [selectedOperators, currentHope, hopeCosts, user, allOperators]);
+
   const loadPreferences = async () => {
     try {
       const response = await fetch('/api/team/preferences', {
@@ -521,6 +535,74 @@ const IntegratedStrategiesPage: React.FC = () => {
       } catch (e) {
         console.error('Failed to load default preferences:', e);
       }
+    }
+  };
+
+  const loadISTeamState = async () => {
+    // Wait for allOperators to be loaded before restoring state
+    if (Object.keys(allOperators).length === 0) {
+      // If operators aren't loaded yet, wait a bit and try again
+      setTimeout(loadISTeamState, 500);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/integrated-strategies/team', {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data) {
+          // Restore selected operators
+          if (data.selectedOperators && Array.isArray(data.selectedOperators)) {
+            const operators = data.selectedOperators
+              .map((opId: string) => {
+                const op = allOperators[opId];
+                if (op) {
+                  return { operatorId: opId, operator: op };
+                }
+                return null;
+              })
+              .filter((item: any) => item !== null);
+            setSelectedOperators(operators);
+          }
+          
+          // Restore current hope
+          if (data.currentHope !== undefined) {
+            setCurrentHope(data.currentHope);
+          }
+          
+          // Restore hope costs
+          if (data.hopeCosts) {
+            setHopeCosts(data.hopeCosts);
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Error loading IS team state:', err);
+    }
+  };
+
+  const saveISTeamState = async () => {
+    if (!user) return;
+    
+    try {
+      const teamState = {
+        selectedOperators: selectedOperators.map(s => s.operatorId),
+        currentHope,
+        hopeCosts
+      };
+      
+      await fetch('/api/integrated-strategies/team', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(teamState)
+      });
+    } catch (err) {
+      console.error('Error saving IS team state:', err);
     }
   };
 
