@@ -1,12 +1,22 @@
 {
   "ryanli1366@gmail.com": {
-    "selectedOperators": [],
-    "currentHope": 0,
+    "selectedOperators": [
+      "kal_tsit",
+      "cantabile",
+      "jaye",
+      "amiya_medic",
+      "warfarin",
+      "ascalon",
+      "lappland",
+      "shu",
+      "tragodia"
+    ],
+    "currentHope": 11,
     "hopeCosts": {
       "4": 0,
-      "5": 3,
+      "5": 2,
       "6": 6
     },
-    "teamSize": 8
+    "teamSize": 7
   }
 }
