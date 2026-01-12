@@ -534,6 +534,14 @@
     "nicheTiers": {
       "anti-air-operators": "A",
       "physical-dps": "A"
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "bobbing": {
@@ -1967,6 +1975,14 @@
       "late-laneholder": "A",
       "physical-dps": "B",
       "silence": "SS"
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "lava_the_purgatory": {

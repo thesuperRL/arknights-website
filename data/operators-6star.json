@@ -75,6 +75,12 @@
         "groups": [
           "Laterano Operators"
         ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "core",
+        "groups": [
+          "Center"
+        ]
       }
     }
   },
@@ -656,6 +662,12 @@
         "groups": [
           "Laterano Operators"
         ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
       }
     }
   },
@@ -1000,6 +1012,14 @@
       "late-laneholder": "S",
       "physical-dps": "A",
       "tanking-blocking-operators": "A"
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "horn": {
@@ -1109,6 +1129,14 @@
       "early-laneholder": "SS",
       "fast-redeploy-operators": "SS",
       "stalling": "S"
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "irene": {
@@ -2622,6 +2650,12 @@
         "groups": [
           "Additional Appliers"
         ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
       }
     }
   },
@@ -2695,6 +2729,12 @@
         "role": "core",
         "groups": [
           "Appliers"
+        ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
         ]
       }
     }
@@ -2941,6 +2981,14 @@
       "aoe-physical-dps": "SS",
       "boss-killing": "SS",
       "physical-dps": "SS"
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "yu": {
