@@ -6,6 +6,8 @@ import LanguageSelector from './components/LanguageSelector';
 import HomePage from './pages/HomePage';
 import TierListsPage from './pages/TierListsPage';
 import NicheListPage from './pages/NicheListPage';
+import SynergiesPage from './pages/SynergiesPage';
+import SynergyPage from './pages/SynergyPage';
 import TrashOperatorsPage from './pages/TrashOperatorsPage';
 import FreeOperatorsPage from './pages/FreeOperatorsPage';
 import GlobalRangeOperatorsPage from './pages/GlobalRangeOperatorsPage';
@@ -21,6 +23,8 @@ import IntegratedStrategiesPage from './pages/IntegratedStrategiesPage';
 import './App.css';
 import './pages/AllOperatorsPage.css';
 import './pages/NicheListPage.css';
+import './pages/SynergiesPage.css';
+import './pages/SynergyPage.css';
 
 function App() {
   return (
@@ -34,6 +38,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/tier-lists" element={<TierListsPage />} />
               <Route path="/niche-list/:niche" element={<NicheListPage />} />
+              <Route path="/synergies" element={<SynergiesPage />} />
+              <Route path="/synergy/:synergy" element={<SynergyPage />} />
               <Route path="/trash-operators" element={<TrashOperatorsPage />} />
               <Route path="/free-operators" element={<FreeOperatorsPage />} />
               <Route path="/global-range-operators" element={<GlobalRangeOperatorsPage />} />

@@ -4,7 +4,7 @@
   "core": {
     "DPSes": ["blacknight", "erato", "blemishine"]
   },
-  "choice": {
+  "optional": {
     "Sleep Appliers": ["sora", "kafka", "iris", "confess_47", "grain_buds", "necrass"]
   }
 }

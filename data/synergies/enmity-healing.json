@@ -5,6 +5,6 @@
     "Enmities": ["entelechia", "executor_the_ex_foedere", "highmore", "humus", "la_pluma", "akafuyu", "hellagur", "rathalos_s_noir_corne", "utage", "zuo_le", "lutonada","mudrock","penance","vetochki","vulcan"],
     "Healers": ["angelina", "civilight_eterna", "perfumer", "sora", "heavyrain", "skadi_the_corrupting_heart", "heidi", "shu", "thorns_the_lodestar", "tin_man"]
   },
-  "choice": {
+  "optional": {
   }
 }
