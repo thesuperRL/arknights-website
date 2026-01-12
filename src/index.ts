@@ -483,9 +483,29 @@ app.get('/api/operators/:id', async (req, res) => {
 
     // Add normal rankings for operators not in special lists (only if no special ranking added)
 
+    // Enrich synergies with display names
+    const allSynergies = loadAllSynergies();
+    const enrichedSynergies: Array<{ synergy: string; role: string; group: string; filename: string }> = [];
+    
+    if (operator.synergies) {
+      for (const [synergyFilename, synergyData] of Object.entries(operator.synergies)) {
+        const synergy = allSynergies[synergyFilename];
+        if (synergy) {
+          const data = synergyData as { role: string; group: string };
+          enrichedSynergies.push({
+            synergy: synergy.name,
+            role: data.role,
+            group: data.group,
+            filename: synergyFilename
+          });
+        }
+      }
+    }
+
     res.json({
       operator,
-      rankings
+      rankings,
+      synergies: enrichedSynergies
     });
   } catch (error) {
     console.error('Error loading operator:', error);

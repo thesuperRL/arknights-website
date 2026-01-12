@@ -36,6 +36,12 @@
     "nicheTiers": {
       "healing-operators": "B",
       "stalling": "SS"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Healers"
+      }
     }
   },
   "archetto": {
@@ -207,6 +213,12 @@
       "late-laneholder": "SS",
       "tanking-blocking-operators": "SS",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "core",
+        "group": "DPSes"
+      }
     }
   },
   "carnelian": {
@@ -343,6 +355,12 @@
       "healing-operators": "B",
       "stalling": "A",
       "true_damage": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Healers"
+      }
     }
   },
   "crownslayer": {
@@ -502,6 +520,12 @@
       "boss-killing": "B",
       "late-laneholder": "S",
       "physical-dps": "S"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "eunectes": {
@@ -543,6 +567,12 @@
     "nicheTiers": {
       "late-laneholder": "S",
       "physical-dps": "S"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "exusiai": {
@@ -820,6 +850,12 @@
       "late-laneholder": "B",
       "tanking-blocking-operators": "B",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "ho_olheyak": {
@@ -1423,6 +1459,12 @@
       "boss-killing": "A",
       "late-laneholder": "SS",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "muelsyse": {
@@ -1549,6 +1591,12 @@
       "boss-killing": "A",
       "late-laneholder": "A",
       "tanking-blocking-operators": "A"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "optional",
+        "group": "Sleep Appliers"
+      }
     }
   },
   "nian": {
@@ -1687,6 +1735,12 @@
       "boss-killing": "A",
       "late-laneholder": "SS",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "pepe": {
@@ -2047,6 +2101,12 @@
       "res-buff": "A",
       "stalling": "SS",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Healers"
+      }
     }
   },
   "siege": {
@@ -2175,6 +2235,12 @@
       "damage-buff": "S",
       "def-buff": "S",
       "global-range": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Healers"
+      }
     }
   },
   "specter_the_unchained": {
@@ -2354,6 +2420,12 @@
       "atk-debuff": "A",
       "def-shred": "S",
       "res-shred": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Healers"
+      }
     }
   },
   "togawa_sakiko": {
@@ -2652,6 +2724,12 @@
       "boss-killing": "B",
       "late-laneholder": "A",
       "physical-dps": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   }
 }

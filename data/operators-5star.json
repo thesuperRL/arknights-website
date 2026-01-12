@@ -81,6 +81,12 @@
     "internalName": "char_475_akafyu",
     "nicheTiers": {
       "trash-operators": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "alanna": {
@@ -464,6 +470,12 @@
     "nicheTiers": {
       "dp-generation": "B",
       "early-laneholder": "A"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "core",
+        "group": "DPSes"
+      }
     }
   },
   "blitz": {
@@ -1001,6 +1013,12 @@
     "nicheTiers": {
       "physical-dps": "D",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "core",
+        "group": "DPSes"
+      }
     }
   },
   "executor": {
@@ -1309,6 +1327,12 @@
     "internalName": "char_4122_grabds",
     "nicheTiers": {
       "stalling": "C"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "optional",
+        "group": "Sleep Appliers"
+      }
     }
   },
   "grani": {
@@ -1447,6 +1471,12 @@
       "healing-operators": "C",
       "tanking-blocking-operators": "B",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Healers"
+      }
     }
   },
   "heidi": {
@@ -1469,6 +1499,12 @@
       "damage-buff": "B",
       "sp-battery": "C",
       "free": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Healers"
+      }
     }
   },
   "hibiscus_the_purifier": {
@@ -1514,6 +1550,12 @@
       "late-laneholder": "A",
       "tanking-blocking-operators": "B",
       "free": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "honeyberry": {
@@ -1631,6 +1673,12 @@
     "internalName": "char_338_iris",
     "nicheTiers": {
       "trash-operators": "A"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "optional",
+        "group": "Sleep Appliers"
+      }
     }
   },
   "istina": {
@@ -1692,6 +1740,12 @@
     "internalName": "char_214_kafka",
     "nicheTiers": {
       "fast-redeploy-operators": "B"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "optional",
+        "group": "Sleep Appliers"
+      }
     }
   },
   "kazemaru": {
@@ -1827,6 +1881,12 @@
     "internalName": "char_421_crow",
     "nicheTiers": {
       "late-laneholder": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "laios": {
@@ -2658,6 +2718,12 @@
       "late-laneholder": "B",
       "physical-dps": "B",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "record_keeper": {
@@ -3048,6 +3114,16 @@
     "nicheTiers": {
       "damage-buff": "B",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Healers"
+      },
+      "sleep": {
+        "role": "optional",
+        "group": "Sleep Appliers"
+      }
     }
   },
   "specter": {
@@ -3239,6 +3315,12 @@
     "nicheTiers": {
       "aoe-arts-dps": "D",
       "atk-debuff": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Healers"
+      }
     }
   },
   "tippi": {
@@ -3411,7 +3493,14 @@
     "profileImage": "/images/operators/vetochki.png",
     "niches": [],
     "cnName": "折桠",
-    "internalName": "char_4207_branch"
+    "internalName": "char_4207_branch",
+    "nicheTiers": {},
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
+    }
   },
   "vulcan": {
     "id": "vulcan",
@@ -3429,6 +3518,12 @@
     "internalName": "char_163_hpsts",
     "nicheTiers": {
       "trash-operators": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "group": "Enmities"
+      }
     }
   },
   "waai_fu": {

@@ -25,9 +25,17 @@ interface Ranking {
   notes?: string;
 }
 
+interface SynergyEntry {
+  synergy: string;
+  role: string;
+  group: string;
+  filename: string;
+}
+
 interface OperatorData {
   operator: Operator;
   rankings: Ranking[];
+  synergies?: SynergyEntry[];
 }
 
 // No tier colors needed anymore since we removed the tier system
@@ -68,7 +76,7 @@ const OperatorPage: React.FC = () => {
     return <div className="error">{error || 'Operator not found'}</div>;
   }
 
-  const { operator, rankings } = data;
+  const { operator, rankings, synergies = [] } = data;
 
   return (
     <div className="operator-page">
@@ -126,6 +134,27 @@ const OperatorPage: React.FC = () => {
       ) : (
         <div className="no-rankings">
           <p>This operator is not listed in any niche.</p>
+        </div>
+      )}
+
+      {synergies.length > 0 && (
+        <div className="synergies-section">
+          <h2>Synergies</h2>
+          <div className="synergies-grid">
+            {synergies.map((synergyEntry, index) => (
+              <div key={index} className="synergy-card">
+                <Link to={`/synergy/${encodeURIComponent(synergyEntry.filename)}`} className="synergy-name-link">
+                  <div className="synergy-name">{synergyEntry.synergy}</div>
+                </Link>
+                <div className={`synergy-role role-${synergyEntry.role}`}>
+                  {synergyEntry.role === 'core' ? 'Core' : 'Optional'}
+                </div>
+                <div className="synergy-group">
+                  {synergyEntry.group}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

@@ -12,6 +12,12 @@
     "internalName": "char_4188_confes",
     "nicheTiers": {
       "dp-generation": "D"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "optional",
+        "group": "Sleep Appliers"
+      }
     }
   },
   "castle_3": {
