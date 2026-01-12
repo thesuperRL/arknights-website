@@ -9,7 +9,7 @@
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
@@ -27,13 +27,15 @@
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .nav-links a {
     color: var(--text-light);
     text-decoration: none;
     transition: opacity 0.3s;
+    font-size: 0.95rem;
+    white-space: nowrap;
 }
 
 .nav-links a:hover {
