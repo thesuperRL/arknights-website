@@ -36,6 +36,14 @@
     "nicheTiers": {
       "healing-operators": "B",
       "stalling": "SS"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Healers"
+        ]
+      }
     }
   },
   "archetto": {
@@ -60,6 +68,20 @@
       "aoe-physical-dps": "B",
       "physical-dps": "A",
       "sp-battery": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "core",
+        "groups": [
+          "Center"
+        ]
+      }
     }
   },
   "ascalon": {
@@ -183,6 +205,14 @@
     "nicheTiers": {
       "elemental-damage": "C",
       "elemental-dps": "SS"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "optional",
+        "groups": [
+          "DPS"
+        ]
+      }
     }
   },
   "blemishine": {
@@ -207,6 +237,14 @@
       "late-laneholder": "SS",
       "tanking-blocking-operators": "SS",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "core",
+        "groups": [
+          "DPSes"
+        ]
+      }
     }
   },
   "carnelian": {
@@ -299,6 +337,14 @@
       "aoe-physical-dps": "S",
       "physical-dps": "S",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Supporters"
+        ]
+      }
     }
   },
   "chongyue": {
@@ -319,6 +365,14 @@
     "nicheTiers": {
       "late-laneholder": "S",
       "physical-dps": "A"
+    },
+    "synergies": {
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
     }
   },
   "civilight_eterna": {
@@ -343,6 +397,14 @@
       "healing-operators": "B",
       "stalling": "A",
       "true_damage": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Healers"
+        ]
+      }
     }
   },
   "crownslayer": {
@@ -433,6 +495,14 @@
       "late-laneholder": "C",
       "stalling": "B",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
     }
   },
   "ebenholz": {
@@ -502,6 +572,14 @@
       "boss-killing": "B",
       "late-laneholder": "S",
       "physical-dps": "S"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Enmities"
+        ]
+      }
     }
   },
   "eunectes": {
@@ -543,6 +621,20 @@
     "nicheTiers": {
       "late-laneholder": "S",
       "physical-dps": "S"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Enmities"
+        ]
+      },
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "exusiai": {
@@ -563,6 +655,20 @@
     "nicheTiers": {
       "anti-air-operators": "SS",
       "physical-dps": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "exusiai_the_new_covenant": {
@@ -585,6 +691,15 @@
       "boss-killing": "SS",
       "physical-dps": "SS",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Supporters",
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "eyjafjalla": {
@@ -674,6 +789,14 @@
     "internalName": "char_300_phenxi",
     "nicheTiers": {
       "aoe-physical-dps": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "flametail": {
@@ -744,6 +867,14 @@
       "shift": "S",
       "free": "A",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "gnosis": {
@@ -786,6 +917,14 @@
     "nicheTiers": {
       "arts-dps": "S",
       "global-range": "A"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "core",
+        "groups": [
+          "Global Damage"
+        ]
+      }
     }
   },
   "haruka": {
@@ -820,6 +959,14 @@
       "late-laneholder": "B",
       "tanking-blocking-operators": "B",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Enmities"
+        ]
+      }
     }
   },
   "ho_olheyak": {
@@ -865,6 +1012,14 @@
       "late-laneholder": "S",
       "physical-dps": "A",
       "tanking-blocking-operators": "A"
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "horn": {
@@ -941,6 +1096,14 @@
       "arts-dps": "A",
       "def-shred": "C",
       "res-shred": "SS"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "optional",
+        "groups": [
+          "DPS"
+        ]
+      }
     }
   },
   "ines": {
@@ -966,6 +1129,14 @@
       "early-laneholder": "SS",
       "fast-redeploy-operators": "SS",
       "stalling": "S"
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "irene": {
@@ -1081,6 +1252,14 @@
       "silence": "SS",
       "stalling": "B",
       "global-range": "A"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "core",
+        "groups": [
+          "Global Damage"
+        ]
+      }
     }
   },
   "lee": {
@@ -1149,6 +1328,14 @@
       "boss-killing": "S",
       "physical-dps": "SS",
       "global-range": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "core",
+        "groups": [
+          "Center"
+        ]
+      }
     }
   },
   "lessing": {
@@ -1216,6 +1403,14 @@
       "aoe-arts-dps": "A",
       "late-laneholder": "S",
       "stalling": "B"
+    },
+    "synergies": {
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
     }
   },
   "logos": {
@@ -1243,6 +1438,14 @@
       "boss-killing": "SS",
       "res-shred": "SS",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "necrosis": {
+        "role": "optional",
+        "groups": [
+          "Additional Appliers"
+        ]
+      }
     }
   },
   "lumen": {
@@ -1294,7 +1497,16 @@
     "niches": [],
     "cnName": "真言",
     "krName": "만트라",
-    "internalName": "char_4204_mantra"
+    "internalName": "char_4204_mantra",
+    "nicheTiers": {},
+    "synergies": {
+      "nervous-impairment": {
+        "role": "optional",
+        "groups": [
+          "DPS"
+        ]
+      }
+    }
   },
   "marcille": {
     "id": "marcille",
@@ -1379,6 +1591,14 @@
       "aoe-arts-dps": "B",
       "stalling": "A",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "mountain": {
@@ -1423,6 +1643,14 @@
       "boss-killing": "A",
       "late-laneholder": "SS",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Enmities"
+        ]
+      }
     }
   },
   "muelsyse": {
@@ -1546,9 +1774,17 @@
     "internalName": "char_450_necras",
     "nicheTiers": {
       "arts-dps": "A",
-      "boss-killing": "C",
+      "boss-killing": "A",
       "late-laneholder": "A",
       "tanking-blocking-operators": "A"
+    },
+    "synergies": {
+      "sleep": {
+        "role": "optional",
+        "groups": [
+          "Sleep Appliers"
+        ]
+      }
     }
   },
   "nian": {
@@ -1573,6 +1809,14 @@
       "late-laneholder": "S",
       "tanking-blocking-operators": "S",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
     }
   },
   "nightingale": {
@@ -1622,6 +1866,14 @@
       "elemental-damage": "A",
       "elemental-dps": "SS",
       "stalling": "SS"
+    },
+    "synergies": {
+      "necrosis": {
+        "role": "optional",
+        "groups": [
+          "DPS"
+        ]
+      }
     }
   },
   "pallas": {
@@ -1687,6 +1939,14 @@
       "boss-killing": "A",
       "late-laneholder": "SS",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Enmities"
+        ]
+      }
     }
   },
   "pepe": {
@@ -1947,6 +2207,15 @@
     "nicheTiers": {
       "late-laneholder": "S",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Supporters",
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "saria": {
@@ -2047,6 +2316,20 @@
       "res-buff": "A",
       "stalling": "SS",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Healers"
+        ]
+      },
+      "sui": {
+        "role": "core",
+        "groups": [
+          "Center"
+        ]
+      }
     }
   },
   "siege": {
@@ -2152,6 +2435,14 @@
     "nicheTiers": {
       "fast-redeploy-operators": "B",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "skadi_the_corrupting_heart": {
@@ -2175,6 +2466,20 @@
       "damage-buff": "S",
       "def-buff": "S",
       "global-range": "A"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      },
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Healers"
+        ]
+      }
     }
   },
   "specter_the_unchained": {
@@ -2198,6 +2503,14 @@
       "late-laneholder": "S",
       "stalling": "S",
       "tanking-blocking-operators": "A"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "stainless": {
@@ -2330,6 +2643,20 @@
     "nicheTiers": {
       "late-laneholder": "S",
       "physical-dps": "S"
+    },
+    "synergies": {
+      "nervous-impairment": {
+        "role": "optional",
+        "groups": [
+          "Additional Appliers"
+        ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "thorns_the_lodestar": {
@@ -2354,6 +2681,14 @@
       "atk-debuff": "A",
       "def-shred": "S",
       "res-shred": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Healers"
+        ]
+      }
     }
   },
   "togawa_sakiko": {
@@ -2388,6 +2723,20 @@
     "nicheTiers": {
       "elemental-damage": "SS",
       "stalling": "SS"
+    },
+    "synergies": {
+      "nervous-impairment": {
+        "role": "core",
+        "groups": [
+          "Appliers"
+        ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "typhon": {
@@ -2434,6 +2783,14 @@
       "late-laneholder": "SS",
       "physical-dps": "S",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "vigil": {
@@ -2495,6 +2852,20 @@
     "internalName": "char_245_cello",
     "nicheTiers": {
       "elemental-damage": "SS"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      },
+      "necrosis": {
+        "role": "core",
+        "groups": [
+          "Appliers"
+        ]
+      }
     }
   },
   "viviana": {
@@ -2515,6 +2886,14 @@
     "nicheTiers": {
       "boss-killing": "C",
       "late-laneholder": "A"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "optional",
+        "groups": [
+          "Additional Appliers"
+        ]
+      }
     }
   },
   "vulpisfoglia": {
@@ -2602,6 +2981,14 @@
       "aoe-physical-dps": "SS",
       "boss-killing": "SS",
       "physical-dps": "SS"
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "yu": {
@@ -2629,6 +3016,20 @@
       "late-laneholder": "SS",
       "stalling": "SS",
       "tanking-blocking-operators": "S"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "core",
+        "groups": [
+          "Appliers"
+        ]
+      },
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
     }
   },
   "zuo_le": {
@@ -2652,6 +3053,14 @@
       "boss-killing": "B",
       "late-laneholder": "A",
       "physical-dps": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Enmities"
+        ]
+      }
     }
   }
 }

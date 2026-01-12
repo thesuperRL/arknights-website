@@ -21,6 +21,7 @@ const Navbar: React.FC = () => {
         <div className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/tier-lists">Tier Lists</Link>
+          <Link to="/synergies">Synergies</Link>
           <Link to="/all-operators">All Operators</Link>
           {!loading && (
             <>

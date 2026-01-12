@@ -195,6 +195,78 @@
     font-size: 1.2rem;
 }
 
+.synergies-section {
+    margin-top: 2rem;
+}
+
+.synergies-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+}
+
+.synergies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.synergy-card {
+    background: rgba(22, 33, 62, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.synergy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.synergy-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+}
+
+.synergy-name-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.synergy-role {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0.5rem;
+}
+
+.synergy-role.role-core {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+}
+
+.synergy-role.role-optional {
+    background: linear-gradient(135deg, #87ceeb, #4682b4);
+}
+
+.synergy-groups {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+.synergy-group {
+    display: inline;
+}
+
 @media (max-width: 768px) {
     .operator-header {
         flex-direction: column;
@@ -217,6 +289,10 @@
     }
 
     .rankings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .synergies-grid {
         grid-template-columns: 1fr;
     }
 }

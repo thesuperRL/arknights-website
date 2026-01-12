@@ -585,6 +585,14 @@
     "nicheTiers": {
       "late-laneholder": "C",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Enmities"
+        ]
+      }
     }
   },
   "indigo": {
@@ -714,6 +722,14 @@
       "late-laneholder": "B",
       "tanking-blocking-operators": "B",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Enmities"
+        ]
+      }
     }
   },
   "matoimaru": {
@@ -870,6 +886,14 @@
     "nicheTiers": {
       "healing-operators": "A",
       "low-rarity": "A"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Healers"
+        ]
+      }
     }
   },
   "pinecone": {
@@ -1142,6 +1166,14 @@
     "internalName": "char_337_utage",
     "nicheTiers": {
       "late-laneholder": "D"
+    },
+    "synergies": {
+      "enmity-healing": {
+        "role": "core",
+        "groups": [
+          "Enmities"
+        ]
+      }
     }
   },
   "verdant": {

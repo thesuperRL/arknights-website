@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getOperatorName } from '../utils/operatorNameUtils';
@@ -63,6 +64,7 @@ const TeamBuilderPage: React.FC = () => {
   const [showPreferences, setShowPreferences] = useState(true);
   const [allOperators, setAllOperators] = useState<Record<string, Operator>>({});
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
+  const [allSynergies, setAllSynergies] = useState<Array<{filename: string; name: string; core: Record<string, string[]>; optional: Record<string, string[]>; isOnly: boolean; corePointBonus: number; optionalPointBonus: number; coreCountSeparately: boolean; optionalCountSeparately: boolean; optionalCountMinimum: number}>>([]);
   const [selectedEmptySlots, setSelectedEmptySlots] = useState<Record<number, string>>({}); // slot index -> operatorId
   const [modifiedTeam, setModifiedTeam] = useState<TeamMember[] | null>(null); // Modified team with user changes
   const [originalTeam, setOriginalTeam] = useState<TeamMember[] | null>(null); // Original generated team (for revert)
@@ -75,6 +77,7 @@ const TeamBuilderPage: React.FC = () => {
       loadNicheLists();
       loadAllOperators();
       loadOwnedOperators();
+      loadSynergies();
     }
   }, [user]);
   
@@ -322,6 +325,48 @@ const TeamBuilderPage: React.FC = () => {
     }
   };
 
+  const loadSynergies = async () => {
+    try {
+      const response = await fetch('/api/synergies');
+      if (response.ok) {
+        const data = await response.json();
+        // Fetch full synergy data for each synergy
+        const synergyPromises = data.map(async (synergy: any) => {
+          const detailResponse = await fetch(`/api/synergies/${encodeURIComponent(synergy.filename)}`);
+          if (detailResponse.ok) {
+            const fullSynergy = await detailResponse.json();
+            // Extract operator IDs from enriched data
+            const core: Record<string, string[]> = {};
+            for (const [groupName, operators] of Object.entries(fullSynergy.core)) {
+              core[groupName] = (operators as Array<{operatorId: string}>).map(op => op.operatorId);
+            }
+            const optional: Record<string, string[]> = {};
+            for (const [groupName, operators] of Object.entries(fullSynergy.optional)) {
+              optional[groupName] = (operators as Array<{operatorId: string}>).map(op => op.operatorId);
+            }
+            return {
+              filename: synergy.filename,
+              name: fullSynergy.name,
+              core,
+              optional,
+              isOnly: fullSynergy.isOnly || false,
+              corePointBonus: fullSynergy.corePointBonus || 0,
+              optionalPointBonus: fullSynergy.optionalPointBonus || 0,
+              coreCountSeparately: fullSynergy.coreCountSeparately || false,
+              optionalCountSeparately: fullSynergy.optionalCountSeparately || false,
+              optionalCountMinimum: fullSynergy.optionalCountMinimum || 0
+            };
+          }
+          return null;
+        });
+        const synergies = await Promise.all(synergyPromises);
+        setAllSynergies(synergies.filter((s: any) => s !== null));
+      }
+    } catch (err) {
+      console.error('Error loading synergies:', err);
+    }
+  };
+
   const savePreferences = async () => {
     if (!preferences) return;
     
@@ -477,6 +522,116 @@ const TeamBuilderPage: React.FC = () => {
     }
     
     return { coverage: nicheCounts, missingNiches };
+  };
+
+  // Calculate active synergies for the current team
+  const getActiveSynergies = (team: TeamMember[], emptySlots: Record<number, string>): Array<{name: string; filename: string; satisfiedOptionalGroups: number}> => {
+    const teamOperatorIds = new Set<string>();
+    
+    // Add operators from team members
+    for (const member of team) {
+      if (member && member.operatorId) {
+        teamOperatorIds.add(member.operatorId);
+      }
+    }
+    
+    // Add operators from empty slots
+    for (const operatorId of Object.values(emptySlots)) {
+      teamOperatorIds.add(operatorId);
+    }
+
+    const activeSynergies: Array<{name: string; filename: string; satisfiedOptionalGroups: number}> = [];
+
+    for (const synergy of allSynergies) {
+      // Skip IS-only synergies for normal teambuilding
+      if (synergy.isOnly) continue;
+
+      // Check if core is satisfied (at least one operator from each core group)
+      // If core is empty, consider it satisfied
+      let coreSatisfied = Object.keys(synergy.core).length === 0;
+      if (!coreSatisfied) {
+        coreSatisfied = true;
+        for (const operatorIds of Object.values(synergy.core)) {
+          const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+          if (!hasOperator) {
+            coreSatisfied = false;
+            break;
+          }
+        }
+      }
+
+      if (coreSatisfied) {
+        // Calculate actual bonus being applied
+        let actualBonus = 0;
+
+        if (synergy.coreCountSeparately) {
+          // Count each operator in core groups separately
+          for (const operatorIds of Object.values(synergy.core)) {
+            for (const operatorId of operatorIds) {
+              if (teamOperatorIds.has(operatorId)) {
+                actualBonus += synergy.corePointBonus;
+              }
+            }
+          }
+        } else {
+          // Core bonus once if all core groups satisfied
+          actualBonus += synergy.corePointBonus;
+        }
+
+        // Calculate optional bonus
+        let totalOptionalCount = 0;
+        for (const operatorIds of Object.values(synergy.optional)) {
+          for (const operatorId of operatorIds) {
+            if (teamOperatorIds.has(operatorId)) {
+              totalOptionalCount++;
+            }
+          }
+        }
+
+        const optionalCountMinimum = synergy.optionalCountMinimum || 0;
+        if (totalOptionalCount >= optionalCountMinimum) {
+          if (synergy.optionalCountSeparately) {
+            // Count each operator in optional groups separately
+            for (const operatorIds of Object.values(synergy.optional)) {
+              for (const operatorId of operatorIds) {
+                if (teamOperatorIds.has(operatorId)) {
+                  actualBonus += synergy.optionalPointBonus;
+                }
+              }
+            }
+          } else {
+            // Count satisfied optional groups
+            let satisfiedOptionalGroups = 0;
+            for (const operatorIds of Object.values(synergy.optional)) {
+              const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+              if (hasOperator) {
+                satisfiedOptionalGroups++;
+              }
+            }
+            actualBonus += satisfiedOptionalGroups * synergy.optionalPointBonus;
+          }
+        }
+
+        // Only include synergies that give a point bonus > 0
+        if (actualBonus > 0) {
+          // Count satisfied optional groups for display
+          let satisfiedOptionalGroups = 0;
+          for (const operatorIds of Object.values(synergy.optional)) {
+            const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+            if (hasOperator) {
+              satisfiedOptionalGroups++;
+            }
+          }
+          activeSynergies.push({
+            name: synergy.name,
+            filename: synergy.filename,
+            satisfiedOptionalGroups
+          });
+        }
+      }
+    }
+
+    return activeSynergies;
   };
   
   // Handle operator selection/replacement
@@ -1046,6 +1201,30 @@ const TeamBuilderPage: React.FC = () => {
                     );
                   })}
                 </div>
+                {(() => {
+                  const currentTeam = modifiedTeam || teamResult.team || [];
+                  const activeSynergies = getActiveSynergies(currentTeam, selectedEmptySlots);
+                  if (activeSynergies.length > 0) {
+                    return (
+                      <div className="synergies-section">
+                        <h3 className="synergies-header">Active Synergies</h3>
+                        <div className="synergies-list">
+                          {activeSynergies.map((synergy) => (
+                            <Link key={synergy.filename} to={`/synergy/${encodeURIComponent(synergy.filename)}`} className="synergy-item-link">
+                              <div className="synergy-item">
+                                <span className="synergy-name">{synergy.name}</span>
+                                {synergy.satisfiedOptionalGroups > 0 && (
+                                  <span className="synergy-optional-badge">+{synergy.satisfiedOptionalGroups} optional</span>
+                                )}
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
               </div>
             )}
           </div>

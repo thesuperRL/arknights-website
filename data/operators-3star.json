@@ -158,6 +158,14 @@
       "anti-air-operators": "A",
       "physical-dps": "B",
       "low-rarity": "A"
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
     }
   },
   "lava": {

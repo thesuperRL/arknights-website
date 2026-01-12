@@ -4,6 +4,7 @@
  */
 
 import { loadAllNicheLists } from './niche-list-utils';
+import { loadAllSynergies } from './synergy-utils';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -16,6 +17,7 @@ interface OperatorData {
   profileImage: string;
   niches?: string[];
   nicheTiers?: Record<string, string>;
+  synergies?: Record<string, { role: string; groups: string[] }>;
 }
 
 function getTrashOperators(): Set<string> {
@@ -161,7 +163,80 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
   return operatorNiches;
 }
 
-function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>): {
+function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<string, Record<string, { role: string; groups: string[] }>> {
+  const synergies = loadAllSynergies();
+  const operatorSynergies = new Map<string, Record<string, { role: string; groups: string[] }>>();
+  const unrecognizedOperators: Array<{ operatorId: string; synergy: string }> = [];
+
+  for (const [synergyFilename, synergy] of Object.entries(synergies)) {
+    // Check core groups
+    for (const [groupName, operatorIds] of Object.entries(synergy.core)) {
+      for (const operatorId of operatorIds) {
+        if (!allOperators[operatorId]) {
+          unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+          continue;
+        }
+
+        if (!operatorSynergies.has(operatorId)) {
+          operatorSynergies.set(operatorId, {});
+        }
+        const synergyRoles = operatorSynergies.get(operatorId)!;
+        if (!synergyRoles[synergyFilename]) {
+          synergyRoles[synergyFilename] = {
+            role: 'core',
+            groups: []
+          };
+        }
+        // Add group if not already present
+        if (!synergyRoles[synergyFilename].groups.includes(groupName)) {
+          synergyRoles[synergyFilename].groups.push(groupName);
+        }
+      }
+    }
+
+    // Check optional groups
+    for (const [groupName, operatorIds] of Object.entries(synergy.optional)) {
+      for (const operatorId of operatorIds) {
+        if (!allOperators[operatorId]) {
+          unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+          continue;
+        }
+
+        if (!operatorSynergies.has(operatorId)) {
+          operatorSynergies.set(operatorId, {});
+        }
+        const synergyRoles = operatorSynergies.get(operatorId)!;
+        // If operator is already in core, keep it as core but add the optional group
+        if (synergyRoles[synergyFilename]) {
+          // Already has an entry - add group if not present
+          if (!synergyRoles[synergyFilename].groups.includes(groupName)) {
+            synergyRoles[synergyFilename].groups.push(groupName);
+          }
+        } else {
+          // New entry - create as optional
+          synergyRoles[synergyFilename] = {
+            role: 'optional',
+            groups: [groupName]
+          };
+        }
+      }
+    }
+  }
+
+  // Report unrecognized operators
+  if (unrecognizedOperators.length > 0) {
+    console.error('\n❌ Unrecognized operator IDs found in synergies:');
+    for (const { operatorId, synergy } of unrecognizedOperators) {
+      console.error(`   - ${operatorId} in "${synergy}"`);
+    }
+    console.error('\nPlease fix these errors before building.');
+    process.exit(1);
+  }
+
+  return operatorSynergies;
+}
+
+function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>, operatorSynergies: Map<string, Record<string, { role: string; groups: string[] }>>): {
   updated: number;
   unranked: string[];
 } {
@@ -184,10 +259,12 @@ function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>
     for (const [id, operator] of Object.entries(operators)) {
       const nicheTiers = operatorNiches.get(id) || {};
       const nicheNames = Object.keys(nicheTiers);
+      const synergyRoles = operatorSynergies.get(id) || {};
 
       // Handle migration from old 'ranked' field
       const currentNiches = operator.niches || [];
       const currentNicheTiers = operator.nicheTiers || {};
+      const currentSynergies = operator.synergies || {};
 
       // Sort arrays for comparison
       const sortedNewNiches = [...nicheNames].sort();
@@ -201,17 +278,21 @@ function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>
       const nicheTiersEqual = Object.keys(nicheTiers).length === Object.keys(currentNicheTiers).length &&
         Object.keys(nicheTiers).every(key => nicheTiers[key] === currentNicheTiers[key]);
 
+      // Check if synergies mapping is different
+      const synergiesEqual = JSON.stringify(synergyRoles) === JSON.stringify(currentSynergies);
+
       // Also check if we need to remove old 'ranked' field
       const hasOldRankedField = 'ranked' in operator;
 
       // 1, 2, and 3-star operators are always globally available
       const needsGlobalFix = (rarity === 1 || rarity === 2 || rarity === 3) && operator.global === false;
 
-      if (!nichesArrayEqual || !nicheTiersEqual || hasOldRankedField || needsGlobalFix) {
+      if (!nichesArrayEqual || !nicheTiersEqual || !synergiesEqual || hasOldRankedField || needsGlobalFix) {
         const updatedOperator: any = {
           ...operator,
           niches: sortedNewNiches,
-          nicheTiers: nicheTiers
+          nicheTiers: nicheTiers,
+          synergies: synergyRoles
         };
         // Remove old 'ranked' field if it exists
         if (hasOldRankedField) {
@@ -434,6 +515,7 @@ async function main() {
 
   // Get all operator IDs and their niches (with validation)
   const operatorNiches = getOperatorNiches(allOperators);
+  const operatorSynergies = getOperatorSynergies(allOperators);
   const trashOperators = getTrashOperators();
   
   // Validate trash operators too
@@ -459,7 +541,7 @@ async function main() {
   console.log(`(Special lists: free, global-range, trash, unconventional niches, low-rarity are included)\n`);
 
   // Update operator files
-  const { updated, unranked } = updateOperatorFiles(operatorNiches);
+  const { updated, unranked } = updateOperatorFiles(operatorNiches, operatorSynergies);
 
   console.log(`\n📊 Summary:`);
   console.log(`   Updated operators: ${updated}`);

@@ -1,0 +1,18 @@
+{
+    "name": "Burn-Global Teams",
+    "description": "Operators able to deal burn elemental damage and deal bonus elemental damage based on that. Uses Yu's skill combined with global arts damage to apply burn extremely quickly",
+    "core": {
+        "Appliers": ["tragodia"]
+    },
+    "optional": {
+        "DPS": ["gracebearer", "mantra"],
+        "Additional Appliers": ["thorns"]
+    },
+    "corePointBonus": 175,
+    "optionalPointBonus": 10,
+    "isOnly": false,
+    "coreCountSeparately": false,
+    "optionalCountSeparately": true,
+    "optionalCountMinimum": 0
+  }
+  

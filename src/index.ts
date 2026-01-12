@@ -11,6 +11,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
 import { Rating } from './niche-list-types';
+import { loadAllSynergies, loadSynergy } from './synergy-utils';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
 import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse, initializeDbConnection } from './account-storage';
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
@@ -118,6 +119,78 @@ app.get('/api/niche-lists/:niche', (req, res) => {
   } catch (error) {
     console.error('Error loading operator list:', error);
     res.status(500).json({ error: 'Failed to load operator list' });
+  }
+});
+
+// API route to get all synergies
+app.get('/api/synergies', (_req, res) => {
+  try {
+    const synergies = loadAllSynergies();
+    const synergyList = Object.entries(synergies).map(([filename, synergy]) => {
+      return {
+        filename,
+        name: synergy.name,
+        description: synergy.description || ''
+      };
+    });
+    res.json(synergyList);
+  } catch (error) {
+    console.error('Error loading synergies:', error);
+    res.status(500).json({ error: 'Failed to load synergies' });
+  }
+});
+
+// API route to get a specific synergy
+app.get('/api/synergies/:synergy', (req, res) => {
+  try {
+    const synergyName = decodeURIComponent(req.params.synergy);
+    const synergy = loadSynergy(synergyName);
+    
+    if (!synergy) {
+      res.status(404).json({ error: 'Synergy not found' });
+      return;
+    }
+
+    // Load operator data to enrich the synergy
+    const operatorsData: Record<string, any> = {};
+    const rarities = [1, 2, 3, 4, 5, 6];
+    
+    for (const rarity of rarities) {
+      const filePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        const operators = JSON.parse(content);
+        Object.assign(operatorsData, operators);
+      }
+    }
+
+    // Enrich synergy with operator data
+    const enrichedCore: Record<string, Array<{ operatorId: string; operator: any }>> = {};
+    for (const [groupName, operatorIds] of Object.entries(synergy.core)) {
+      enrichedCore[groupName] = operatorIds.map(operatorId => ({
+        operatorId,
+        operator: operatorsData[operatorId] || null
+      }));
+    }
+
+    const enrichedOptional: Record<string, Array<{ operatorId: string; operator: any }>> = {};
+    for (const [groupName, operatorIds] of Object.entries(synergy.optional)) {
+      enrichedOptional[groupName] = operatorIds.map(operatorId => ({
+        operatorId,
+        operator: operatorsData[operatorId] || null
+      }));
+    }
+
+    const enrichedSynergy = {
+      ...synergy,
+      core: enrichedCore,
+      optional: enrichedOptional
+    };
+
+    res.json(enrichedSynergy);
+  } catch (error) {
+    console.error('Error loading synergy:', error);
+    res.status(500).json({ error: 'Failed to load synergy' });
   }
 });
 
@@ -410,9 +483,31 @@ app.get('/api/operators/:id', async (req, res) => {
 
     // Add normal rankings for operators not in special lists (only if no special ranking added)
 
+    // Enrich synergies with display names
+    const allSynergies = loadAllSynergies();
+    const enrichedSynergies: Array<{ synergy: string; role: string; groups: string[]; filename: string }> = [];
+    
+    if (operator.synergies) {
+      for (const [synergyFilename, synergyData] of Object.entries(operator.synergies)) {
+        const synergy = allSynergies[synergyFilename];
+        if (synergy) {
+          // Handle both old format (group) and new format (groups)
+          const data = synergyData as { role: string; group?: string; groups?: string[] };
+          const groups = data.groups || (data.group ? [data.group] : []);
+          enrichedSynergies.push({
+            synergy: synergy.name,
+            role: data.role,
+            groups: groups,
+            filename: synergyFilename
+          });
+        }
+      }
+    }
+
     res.json({
       operator,
-      rankings
+      rankings,
+      synergies: enrichedSynergies
     });
   } catch (error) {
     console.error('Error loading operator:', error);
