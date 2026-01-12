@@ -64,7 +64,7 @@ const TeamBuilderPage: React.FC = () => {
   const [showPreferences, setShowPreferences] = useState(true);
   const [allOperators, setAllOperators] = useState<Record<string, Operator>>({});
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
-  const [allSynergies, setAllSynergies] = useState<Array<{filename: string; name: string; core: Record<string, string[]>; optional: Record<string, string[]>; isOnly: boolean}>>([]);
+  const [allSynergies, setAllSynergies] = useState<Array<{filename: string; name: string; core: Record<string, string[]>; optional: Record<string, string[]>; isOnly: boolean; corePointBonus: number; optionalPointBonus: number; coreCountSeparately: boolean; optionalCountSeparately: boolean; optionalCountMinimum: number}>>([]);
   const [selectedEmptySlots, setSelectedEmptySlots] = useState<Record<number, string>>({}); // slot index -> operatorId
   const [modifiedTeam, setModifiedTeam] = useState<TeamMember[] | null>(null); // Modified team with user changes
   const [originalTeam, setOriginalTeam] = useState<TeamMember[] | null>(null); // Original generated team (for revert)
@@ -349,7 +349,12 @@ const TeamBuilderPage: React.FC = () => {
               name: fullSynergy.name,
               core,
               optional,
-              isOnly: fullSynergy.isOnly || false
+              isOnly: fullSynergy.isOnly || false,
+              corePointBonus: fullSynergy.corePointBonus || 0,
+              optionalPointBonus: fullSynergy.optionalPointBonus || 0,
+              coreCountSeparately: fullSynergy.coreCountSeparately || false,
+              optionalCountSeparately: fullSynergy.optionalCountSeparately || false,
+              optionalCountMinimum: fullSynergy.optionalCountMinimum || 0
             };
           }
           return null;
@@ -542,29 +547,87 @@ const TeamBuilderPage: React.FC = () => {
       if (synergy.isOnly) continue;
 
       // Check if core is satisfied (at least one operator from each core group)
-      let coreSatisfied = true;
-      for (const operatorIds of Object.values(synergy.core)) {
-        const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
-        if (!hasOperator) {
-          coreSatisfied = false;
-          break;
+      // If core is empty, consider it satisfied
+      let coreSatisfied = Object.keys(synergy.core).length === 0;
+      if (!coreSatisfied) {
+        coreSatisfied = true;
+        for (const operatorIds of Object.values(synergy.core)) {
+          const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+          if (!hasOperator) {
+            coreSatisfied = false;
+            break;
+          }
         }
       }
 
       if (coreSatisfied) {
-        // Count satisfied optional groups
-        let satisfiedOptionalGroups = 0;
+        // Calculate actual bonus being applied
+        let actualBonus = 0;
+
+        if (synergy.coreCountSeparately) {
+          // Count each operator in core groups separately
+          for (const operatorIds of Object.values(synergy.core)) {
+            for (const operatorId of operatorIds) {
+              if (teamOperatorIds.has(operatorId)) {
+                actualBonus += synergy.corePointBonus;
+              }
+            }
+          }
+        } else {
+          // Core bonus once if all core groups satisfied
+          actualBonus += synergy.corePointBonus;
+        }
+
+        // Calculate optional bonus
+        let totalOptionalCount = 0;
         for (const operatorIds of Object.values(synergy.optional)) {
-          const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
-          if (hasOperator) {
-            satisfiedOptionalGroups++;
+          for (const operatorId of operatorIds) {
+            if (teamOperatorIds.has(operatorId)) {
+              totalOptionalCount++;
+            }
           }
         }
-        activeSynergies.push({
-          name: synergy.name,
-          filename: synergy.filename,
-          satisfiedOptionalGroups
-        });
+
+        const optionalCountMinimum = synergy.optionalCountMinimum || 0;
+        if (totalOptionalCount >= optionalCountMinimum) {
+          if (synergy.optionalCountSeparately) {
+            // Count each operator in optional groups separately
+            for (const operatorIds of Object.values(synergy.optional)) {
+              for (const operatorId of operatorIds) {
+                if (teamOperatorIds.has(operatorId)) {
+                  actualBonus += synergy.optionalPointBonus;
+                }
+              }
+            }
+          } else {
+            // Count satisfied optional groups
+            let satisfiedOptionalGroups = 0;
+            for (const operatorIds of Object.values(synergy.optional)) {
+              const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+              if (hasOperator) {
+                satisfiedOptionalGroups++;
+              }
+            }
+            actualBonus += satisfiedOptionalGroups * synergy.optionalPointBonus;
+          }
+        }
+
+        // Only include synergies that give a point bonus > 0
+        if (actualBonus > 0) {
+          // Count satisfied optional groups for display
+          let satisfiedOptionalGroups = 0;
+          for (const operatorIds of Object.values(synergy.optional)) {
+            const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+            if (hasOperator) {
+              satisfiedOptionalGroups++;
+            }
+          }
+          activeSynergies.push({
+            name: synergy.name,
+            filename: synergy.filename,
+            satisfiedOptionalGroups
+          });
+        }
       }
     }
 
