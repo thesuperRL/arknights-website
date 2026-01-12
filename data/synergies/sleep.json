@@ -6,5 +6,8 @@
   },
   "optional": {
     "Sleep Appliers": ["sora", "kafka", "iris", "confess_47", "grain_buds", "necrass"]
-  }
+  },
+  "corePointBonus": 10,
+  "optionalPointBonus": 20,
+  "isOnly": false
 }

@@ -1308,6 +1308,12 @@
       "elemental-damage": "C",
       "elemental-dps": "A",
       "late-laneholder": "B"
+    },
+    "synergies": {
+      "nervous-impairment": {
+        "role": "optional",
+        "group": "DPS"
+      }
     }
   },
   "grain_buds": {
@@ -2486,6 +2492,12 @@
       "elemental-damage": "B",
       "late-laneholder": "A",
       "tanking-blocking-operators": "B"
+    },
+    "synergies": {
+      "necrosis": {
+        "role": "optional",
+        "group": "Additional Appliers"
+      }
     }
   },
   "platinum": {
@@ -3462,6 +3474,12 @@
     "nicheTiers": {
       "elemental-damage": "B",
       "free": "A"
+    },
+    "synergies": {
+      "necrosis": {
+        "role": "optional",
+        "group": "Additional Appliers"
+      }
     }
   },
   "vendela": {

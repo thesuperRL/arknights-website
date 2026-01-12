@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { getNichesForOperator, loadNicheList } from './niche-list-utils';
 import { getOwnedOperators, getWantToUse } from './account-storage';
+import { loadAllSynergies } from './synergy-utils';
 
 /**
  * Hope cost configuration for different rarity operators
@@ -195,6 +196,119 @@ function getOperatorNiches(operatorId: string): string[] {
   return expandedNiches;
 }
 
+/**
+ * Calculates synergy score for a team
+ * @param team Team members (operator objects)
+ * @param isIS Whether this is for Integrated Strategies (filters out non-IS synergies)
+ * @returns Total synergy bonus score
+ */
+function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
+  const synergies = loadAllSynergies();
+  const teamOperatorIds = new Set(team.map(member => member.operatorId));
+  let totalScore = 0;
+
+  for (const [, synergy] of Object.entries(synergies)) {
+    // Skip IS-only synergies for normal teambuilding, skip non-IS synergies for IS
+    if (synergy.isOnly && !isIS) continue;
+    if (!synergy.isOnly && isIS) continue;
+
+    // Check if core is satisfied (at least one operator from each core group)
+    let coreSatisfied = true;
+    for (const [, operatorIds] of Object.entries(synergy.core)) {
+      const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+      if (!hasOperator) {
+        coreSatisfied = false;
+        break;
+      }
+    }
+
+    if (coreSatisfied) {
+      // Add core bonus
+      totalScore += synergy.corePointBonus;
+
+      // Count satisfied optional groups (only if core is satisfied)
+      let satisfiedOptionalGroups = 0;
+      for (const [, operatorIds] of Object.entries(synergy.optional)) {
+        const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+        if (hasOperator) {
+          satisfiedOptionalGroups++;
+        }
+      }
+
+      // Add optional bonus for each satisfied optional group
+      totalScore += satisfiedOptionalGroups * synergy.optionalPointBonus;
+    }
+  }
+
+  return totalScore;
+}
+
+/**
+ * Calculates synergy score for a specific operator being added to a team (for IS recommendations)
+ * @param team Team members (operator objects including the new operator)
+ * @param newOperatorId The operator being evaluated
+ * @param isIS Whether this is for Integrated Strategies
+ * @returns Synergy bonus score for this operator
+ */
+function calculateSynergyScoreForOperator(team: any[], newOperatorId: string, isIS: boolean): number {
+  const synergies = loadAllSynergies();
+  const teamOperatorIds = new Set(team.map(op => op.id || op.operatorId));
+  let totalScore = 0;
+
+  for (const [, synergy] of Object.entries(synergies)) {
+    // Skip IS-only synergies for normal teambuilding, skip non-IS synergies for IS
+    if (synergy.isOnly && !isIS) continue;
+    if (!synergy.isOnly && isIS) continue;
+
+    // Check if this operator is in this synergy
+    let operatorInSynergy = false;
+    let operatorRole: 'core' | 'optional' | null = null;
+
+    // Check core groups
+    for (const [, operatorIds] of Object.entries(synergy.core)) {
+      if (operatorIds.includes(newOperatorId)) {
+        operatorInSynergy = true;
+        operatorRole = 'core';
+        break;
+      }
+    }
+
+    // Check optional groups
+    if (!operatorInSynergy) {
+      for (const [, operatorIds] of Object.entries(synergy.optional)) {
+        if (operatorIds.includes(newOperatorId)) {
+          operatorInSynergy = true;
+          operatorRole = 'optional';
+          break;
+        }
+      }
+    }
+
+    if (!operatorInSynergy) continue;
+
+    // Check if core is satisfied (at least one operator from each core group)
+    let coreSatisfied = true;
+    for (const [, operatorIds] of Object.entries(synergy.core)) {
+      const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+      if (!hasOperator) {
+        coreSatisfied = false;
+        break;
+      }
+    }
+
+    if (operatorRole === 'core') {
+      // If this operator completes the core, add core bonus
+      if (coreSatisfied) {
+        totalScore += synergy.corePointBonus;
+      }
+    } else if (operatorRole === 'optional' && coreSatisfied) {
+      // If core is satisfied and this operator is in an optional group, add optional bonus
+      totalScore += synergy.optionalPointBonus;
+    }
+  }
+
+  return totalScore;
+}
 
 /**
  * Gets the tier of an operator in a specific niche
@@ -987,6 +1101,10 @@ export async function buildTeam(
   }
   score += team.length * 10; // Bonus for filling more slots
   
+  // Calculate synergy bonuses (only for normal teambuilding, not IS)
+  const synergyBonus = calculateSynergyScore(team, false);
+  score += synergyBonus;
+  
   return {
     team,
     coverage: nicheCounts,
@@ -1137,6 +1255,14 @@ export async function getIntegratedStrategiesRecommendation(
         score -= penalty;
         reasoning.push(`⚠️ Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
       }
+    }
+
+    // Calculate synergy bonus for this operator if added to team (for IS recommendations)
+    const testTeam = [...currentTeamOperators, operator];
+    const synergyBonus = calculateSynergyScoreForOperator(testTeam, operatorId, true);
+    if (synergyBonus > 0) {
+      score += synergyBonus;
+      reasoning.push(`🔗 Synergy bonus: +${synergyBonus}`);
     }
 
     // Log each evaluated character and their scoring criteria

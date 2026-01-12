@@ -189,6 +189,12 @@
     "nicheTiers": {
       "elemental-damage": "C",
       "elemental-dps": "SS"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "optional",
+        "group": "DPS"
+      }
     }
   },
   "blemishine": {
@@ -816,6 +822,12 @@
     "nicheTiers": {
       "arts-dps": "S",
       "global-range": "A"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "core",
+        "group": "Global Damage"
+      }
     }
   },
   "haruka": {
@@ -977,6 +989,12 @@
       "arts-dps": "A",
       "def-shred": "C",
       "res-shred": "SS"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "optional",
+        "group": "DPS"
+      }
     }
   },
   "ines": {
@@ -1117,6 +1135,12 @@
       "silence": "SS",
       "stalling": "B",
       "global-range": "A"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "core",
+        "group": "Global Damage"
+      }
     }
   },
   "lee": {
@@ -1279,6 +1303,12 @@
       "boss-killing": "SS",
       "res-shred": "SS",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "necrosis": {
+        "role": "optional",
+        "group": "Additional Appliers"
+      }
     }
   },
   "lumen": {
@@ -1330,7 +1360,14 @@
     "niches": [],
     "cnName": "真言",
     "krName": "만트라",
-    "internalName": "char_4204_mantra"
+    "internalName": "char_4204_mantra",
+    "nicheTiers": {},
+    "synergies": {
+      "nervous-impairment": {
+        "role": "optional",
+        "group": "DPS"
+      }
+    }
   },
   "marcille": {
     "id": "marcille",
@@ -1670,6 +1707,12 @@
       "elemental-damage": "A",
       "elemental-dps": "SS",
       "stalling": "SS"
+    },
+    "synergies": {
+      "necrosis": {
+        "role": "optional",
+        "group": "DPS"
+      }
     }
   },
   "pallas": {
@@ -2396,6 +2439,12 @@
     "nicheTiers": {
       "late-laneholder": "S",
       "physical-dps": "S"
+    },
+    "synergies": {
+      "nervous-impairment": {
+        "role": "optional",
+        "group": "Additional Appliers"
+      }
     }
   },
   "thorns_the_lodestar": {
@@ -2460,6 +2509,12 @@
     "nicheTiers": {
       "elemental-damage": "SS",
       "stalling": "SS"
+    },
+    "synergies": {
+      "nervous-impairment": {
+        "role": "core",
+        "group": "Appliers"
+      }
     }
   },
   "typhon": {
@@ -2567,6 +2622,12 @@
     "internalName": "char_245_cello",
     "nicheTiers": {
       "elemental-damage": "SS"
+    },
+    "synergies": {
+      "necrosis": {
+        "role": "core",
+        "group": "Appliers"
+      }
     }
   },
   "viviana": {
@@ -2587,6 +2648,12 @@
     "nicheTiers": {
       "boss-killing": "C",
       "late-laneholder": "A"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "optional",
+        "group": "Additional Appliers"
+      }
     }
   },
   "vulpisfoglia": {
@@ -2701,6 +2768,12 @@
       "late-laneholder": "SS",
       "stalling": "SS",
       "tanking-blocking-operators": "S"
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "core",
+        "group": "Appliers"
+      }
     }
   },
   "zuo_le": {

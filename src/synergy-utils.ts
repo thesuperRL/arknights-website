@@ -11,6 +11,9 @@ export interface Synergy {
   description: string;
   core: Record<string, string[]>; // Dictionary of group name -> operator IDs
   optional: Record<string, string[]>; // Dictionary of group name -> operator IDs
+  corePointBonus: number; // Bonus points added if core is satisfied (at least one operator from each core group)
+  optionalPointBonus: number; // Bonus points added for each optional group satisfied IF core is already satisfied
+  isOnly: boolean; // If true, this synergy is only valid for Integrated Strategies (not normal teambuilding)
 }
 
 export interface SynergyCollection {

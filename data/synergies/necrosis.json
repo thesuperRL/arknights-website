@@ -1,0 +1,15 @@
+{
+    "name": "Necrosis Teams",
+    "description": "Operators able to deal necrosis elemental damage and deal bonus elemental damage based on that",
+    "core": {
+        "Appliers": ["virtuosa"]
+    },
+    "optional": {
+        "DPS": ["nymph"],
+        "Additional Appliers": ["valarqvin", "philae",  "logos"]
+    },
+    "corePointBonus": 0,
+    "optionalPointBonus": 50,
+    "isOnly": false
+  }
+  

@@ -6,5 +6,8 @@
     "Healers": ["angelina", "civilight_eterna", "perfumer", "sora", "heavyrain", "skadi_the_corrupting_heart", "heidi", "shu", "thorns_the_lodestar", "tin_man"]
   },
   "optional": {
-  }
+  },
+  "corePointBonus": 50,
+  "optionalPointBonus": 0,
+  "isOnly": false
 }
