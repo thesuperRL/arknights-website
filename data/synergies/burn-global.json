@@ -11,6 +11,9 @@
     },
     "corePointBonus": 175,
     "optionalPointBonus": 25,
-    "isOnly": false
+    "isOnly": false,
+    "coreCountSeparately": true,
+    "optionalCountSeparately": false,
+    "optionalCountMinimum": 0
   }
   

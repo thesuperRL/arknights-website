@@ -16,7 +16,9 @@
     "synergies": {
       "sleep": {
         "role": "optional",
-        "group": "Sleep Appliers"
+        "groups": [
+          "Sleep Appliers"
+        ]
       }
     }
   },

@@ -1,0 +1,16 @@
+{
+  "name": "Sui Team",
+  "description": "A team centered around Shu's incredible passive buff to ATK and SP.",
+  "core": {
+    "Center": ["shu"]
+  },
+  "optional": {
+    "Sui Operators": ["chongyue", "ling", "nian", "dusk", "yu"]
+  },
+  "corePointBonus": 0,
+  "optionalPointBonus": 50,
+  "isOnly": false,
+  "coreCountSeparately": false,
+  "optionalCountSeparately": false,
+  "optionalCountMinimum": 4
+}

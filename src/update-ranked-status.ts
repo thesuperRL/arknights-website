@@ -17,7 +17,7 @@ interface OperatorData {
   profileImage: string;
   niches?: string[];
   nicheTiers?: Record<string, string>;
-  synergies?: Record<string, { role: string; group: string }>;
+  synergies?: Record<string, { role: string; groups: string[] }>;
 }
 
 function getTrashOperators(): Set<string> {
@@ -163,9 +163,9 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
   return operatorNiches;
 }
 
-function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<string, Record<string, { role: string; group: string }>> {
+function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<string, Record<string, { role: string; groups: string[] }>> {
   const synergies = loadAllSynergies();
-  const operatorSynergies = new Map<string, Record<string, { role: string; group: string }>>();
+  const operatorSynergies = new Map<string, Record<string, { role: string; groups: string[] }>>();
   const unrecognizedOperators: Array<{ operatorId: string; synergy: string }> = [];
 
   for (const [synergyFilename, synergy] of Object.entries(synergies)) {
@@ -181,10 +181,16 @@ function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<s
           operatorSynergies.set(operatorId, {});
         }
         const synergyRoles = operatorSynergies.get(operatorId)!;
-        synergyRoles[synergyFilename] = {
-          role: 'core',
-          group: groupName
-        };
+        if (!synergyRoles[synergyFilename]) {
+          synergyRoles[synergyFilename] = {
+            role: 'core',
+            groups: []
+          };
+        }
+        // Add group if not already present
+        if (!synergyRoles[synergyFilename].groups.includes(groupName)) {
+          synergyRoles[synergyFilename].groups.push(groupName);
+        }
       }
     }
 
@@ -200,11 +206,17 @@ function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<s
           operatorSynergies.set(operatorId, {});
         }
         const synergyRoles = operatorSynergies.get(operatorId)!;
-        // If operator is already in core, keep it as core (don't override)
-        if (!synergyRoles[synergyFilename]) {
+        // If operator is already in core, keep it as core but add the optional group
+        if (synergyRoles[synergyFilename]) {
+          // Already has an entry - add group if not present
+          if (!synergyRoles[synergyFilename].groups.includes(groupName)) {
+            synergyRoles[synergyFilename].groups.push(groupName);
+          }
+        } else {
+          // New entry - create as optional
           synergyRoles[synergyFilename] = {
             role: 'optional',
-            group: groupName
+            groups: [groupName]
           };
         }
       }
@@ -224,7 +236,7 @@ function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<s
   return operatorSynergies;
 }
 
-function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>, operatorSynergies: Map<string, Record<string, { role: string; group: string }>>): {
+function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>, operatorSynergies: Map<string, Record<string, { role: string; groups: string[] }>>): {
   updated: number;
   unranked: string[];
 } {

@@ -589,7 +589,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -724,7 +726,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -886,7 +890,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
       }
     }
   },
@@ -1164,7 +1170,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },

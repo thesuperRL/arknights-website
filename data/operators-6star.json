@@ -40,7 +40,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
       }
     }
   },
@@ -66,6 +68,14 @@
       "aoe-physical-dps": "B",
       "physical-dps": "A",
       "sp-battery": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "ascalon": {
@@ -193,7 +203,9 @@
     "synergies": {
       "burn-global": {
         "role": "optional",
-        "group": "DPS"
+        "groups": [
+          "DPS"
+        ]
       }
     }
   },
@@ -223,7 +235,9 @@
     "synergies": {
       "sleep": {
         "role": "core",
-        "group": "DPSes"
+        "groups": [
+          "DPSes"
+        ]
       }
     }
   },
@@ -317,6 +331,14 @@
       "aoe-physical-dps": "S",
       "physical-dps": "S",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Supporters"
+        ]
+      }
     }
   },
   "chongyue": {
@@ -337,6 +359,14 @@
     "nicheTiers": {
       "late-laneholder": "S",
       "physical-dps": "A"
+    },
+    "synergies": {
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
     }
   },
   "civilight_eterna": {
@@ -365,7 +395,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
       }
     }
   },
@@ -457,6 +489,14 @@
       "late-laneholder": "C",
       "stalling": "B",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
     }
   },
   "ebenholz": {
@@ -530,7 +570,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -577,7 +619,15 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
+      },
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
       }
     }
   },
@@ -599,6 +649,14 @@
     "nicheTiers": {
       "anti-air-operators": "SS",
       "physical-dps": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "exusiai_the_new_covenant": {
@@ -621,6 +679,15 @@
       "boss-killing": "SS",
       "physical-dps": "SS",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Supporters",
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "eyjafjalla": {
@@ -710,6 +777,14 @@
     "internalName": "char_300_phenxi",
     "nicheTiers": {
       "aoe-physical-dps": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "flametail": {
@@ -780,6 +855,14 @@
       "shift": "S",
       "free": "A",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "gnosis": {
@@ -826,7 +909,9 @@
     "synergies": {
       "burn-global": {
         "role": "core",
-        "group": "Global Damage"
+        "groups": [
+          "Global Damage"
+        ]
       }
     }
   },
@@ -866,7 +951,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -993,7 +1080,9 @@
     "synergies": {
       "burn-global": {
         "role": "optional",
-        "group": "DPS"
+        "groups": [
+          "DPS"
+        ]
       }
     }
   },
@@ -1139,7 +1228,9 @@
     "synergies": {
       "burn-global": {
         "role": "core",
-        "group": "Global Damage"
+        "groups": [
+          "Global Damage"
+        ]
       }
     }
   },
@@ -1209,6 +1300,14 @@
       "boss-killing": "S",
       "physical-dps": "SS",
       "global-range": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "core",
+        "groups": [
+          "Center"
+        ]
+      }
     }
   },
   "lessing": {
@@ -1276,6 +1375,14 @@
       "aoe-arts-dps": "A",
       "late-laneholder": "S",
       "stalling": "B"
+    },
+    "synergies": {
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
     }
   },
   "logos": {
@@ -1307,7 +1414,9 @@
     "synergies": {
       "necrosis": {
         "role": "optional",
-        "group": "Additional Appliers"
+        "groups": [
+          "Additional Appliers"
+        ]
       }
     }
   },
@@ -1365,7 +1474,9 @@
     "synergies": {
       "nervous-impairment": {
         "role": "optional",
-        "group": "DPS"
+        "groups": [
+          "DPS"
+        ]
       }
     }
   },
@@ -1452,6 +1563,14 @@
       "aoe-arts-dps": "B",
       "stalling": "A",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "mountain": {
@@ -1500,7 +1619,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -1632,7 +1753,9 @@
     "synergies": {
       "sleep": {
         "role": "optional",
-        "group": "Sleep Appliers"
+        "groups": [
+          "Sleep Appliers"
+        ]
       }
     }
   },
@@ -1658,6 +1781,14 @@
       "late-laneholder": "S",
       "tanking-blocking-operators": "S",
       "unconventional-niches": "A"
+    },
+    "synergies": {
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
     }
   },
   "nightingale": {
@@ -1711,7 +1842,9 @@
     "synergies": {
       "necrosis": {
         "role": "optional",
-        "group": "DPS"
+        "groups": [
+          "DPS"
+        ]
       }
     }
   },
@@ -1782,7 +1915,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -2044,6 +2179,15 @@
     "nicheTiers": {
       "late-laneholder": "S",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Supporters",
+          "Laterano Operators"
+        ]
+      }
     }
   },
   "saria": {
@@ -2148,7 +2292,15 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
+      },
+      "sui": {
+        "role": "core",
+        "groups": [
+          "Center"
+        ]
       }
     }
   },
@@ -2255,6 +2407,14 @@
     "nicheTiers": {
       "fast-redeploy-operators": "B",
       "trash-operators": "A"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "skadi_the_corrupting_heart": {
@@ -2280,9 +2440,17 @@
       "global-range": "A"
     },
     "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      },
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
       }
     }
   },
@@ -2307,6 +2475,14 @@
       "late-laneholder": "S",
       "stalling": "S",
       "tanking-blocking-operators": "A"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "stainless": {
@@ -2443,7 +2619,9 @@
     "synergies": {
       "nervous-impairment": {
         "role": "optional",
-        "group": "Additional Appliers"
+        "groups": [
+          "Additional Appliers"
+        ]
       }
     }
   },
@@ -2473,7 +2651,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
       }
     }
   },
@@ -2513,7 +2693,9 @@
     "synergies": {
       "nervous-impairment": {
         "role": "core",
-        "group": "Appliers"
+        "groups": [
+          "Appliers"
+        ]
       }
     }
   },
@@ -2561,6 +2743,14 @@
       "late-laneholder": "SS",
       "physical-dps": "S",
       "tanking-blocking-operators": "SS"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "vigil": {
@@ -2624,9 +2814,17 @@
       "elemental-damage": "SS"
     },
     "synergies": {
+      "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      },
       "necrosis": {
         "role": "core",
-        "group": "Appliers"
+        "groups": [
+          "Appliers"
+        ]
       }
     }
   },
@@ -2652,7 +2850,9 @@
     "synergies": {
       "burn-global": {
         "role": "optional",
-        "group": "Additional Appliers"
+        "groups": [
+          "Additional Appliers"
+        ]
       }
     }
   },
@@ -2772,7 +2972,15 @@
     "synergies": {
       "burn-global": {
         "role": "core",
-        "group": "Appliers"
+        "groups": [
+          "Appliers"
+        ]
+      },
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
       }
     }
   },
@@ -2801,7 +3009,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   }

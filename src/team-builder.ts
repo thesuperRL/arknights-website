@@ -222,21 +222,93 @@ function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
       }
     }
 
-    if (coreSatisfied) {
-      // Add core bonus
-      totalScore += synergy.corePointBonus;
-
-      // Count satisfied optional groups (only if core is satisfied)
-      let satisfiedOptionalGroups = 0;
-      for (const [, operatorIds] of Object.entries(synergy.optional)) {
-        const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
-        if (hasOperator) {
-          satisfiedOptionalGroups++;
+    if (synergy.coreCountSeparately) {
+      // Count each operator in core groups separately
+      for (const [, operatorIds] of Object.entries(synergy.core)) {
+        for (const operatorId of operatorIds) {
+          if (teamOperatorIds.has(operatorId)) {
+            totalScore += synergy.corePointBonus;
+          }
         }
       }
+      // Optional bonuses still require core to be satisfied (all core groups have at least one operator)
+      if (coreSatisfied) {
+        // Count total optional operators
+        let totalOptionalCount = 0;
+        for (const [, operatorIds] of Object.entries(synergy.optional)) {
+          for (const operatorId of operatorIds) {
+            if (teamOperatorIds.has(operatorId)) {
+              totalOptionalCount++;
+            }
+          }
+        }
 
-      // Add optional bonus for each satisfied optional group
-      totalScore += satisfiedOptionalGroups * synergy.optionalPointBonus;
+        // Check if we meet the minimum threshold
+        const optionalCountMinimum = synergy.optionalCountMinimum || 0;
+        if (totalOptionalCount >= optionalCountMinimum) {
+          if (synergy.optionalCountSeparately) {
+            // Count each operator in optional groups separately
+            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+              for (const operatorId of operatorIds) {
+                if (teamOperatorIds.has(operatorId)) {
+                  totalScore += synergy.optionalPointBonus;
+                }
+              }
+            }
+          } else {
+            // Count satisfied optional groups
+            let satisfiedOptionalGroups = 0;
+            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+              const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+              if (hasOperator) {
+                satisfiedOptionalGroups++;
+              }
+            }
+            totalScore += satisfiedOptionalGroups * synergy.optionalPointBonus;
+          }
+        }
+      }
+    } else {
+      // Original behavior: core bonus once if all core groups satisfied
+      if (coreSatisfied) {
+        totalScore += synergy.corePointBonus;
+
+        // Handle optional bonuses (only if core is satisfied)
+        // Count total optional operators
+        let totalOptionalCount = 0;
+        for (const [, operatorIds] of Object.entries(synergy.optional)) {
+          for (const operatorId of operatorIds) {
+            if (teamOperatorIds.has(operatorId)) {
+              totalOptionalCount++;
+            }
+          }
+        }
+
+        // Check if we meet the minimum threshold
+        const optionalCountMinimum = synergy.optionalCountMinimum || 0;
+        if (totalOptionalCount >= optionalCountMinimum) {
+          if (synergy.optionalCountSeparately) {
+            // Count each operator in optional groups separately
+            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+              for (const operatorId of operatorIds) {
+                if (teamOperatorIds.has(operatorId)) {
+                  totalScore += synergy.optionalPointBonus;
+                }
+              }
+            }
+          } else {
+            // Count satisfied optional groups (original behavior)
+            let satisfiedOptionalGroups = 0;
+            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+              const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
+              if (hasOperator) {
+                satisfiedOptionalGroups++;
+              }
+            }
+            totalScore += satisfiedOptionalGroups * synergy.optionalPointBonus;
+          }
+        }
+      }
     }
   }
 
@@ -297,13 +369,49 @@ function calculateSynergyScoreForOperator(team: any[], newOperatorId: string, is
     }
 
     if (operatorRole === 'core') {
-      // If this operator completes the core, add core bonus
-      if (coreSatisfied) {
+      if (synergy.coreCountSeparately) {
+        // Each core operator gives bonus
         totalScore += synergy.corePointBonus;
+      } else {
+        // If this operator completes the core, add core bonus once
+        if (coreSatisfied) {
+          totalScore += synergy.corePointBonus;
+        }
       }
-    } else if (operatorRole === 'optional' && coreSatisfied) {
-      // If core is satisfied and this operator is in an optional group, add optional bonus
-      totalScore += synergy.optionalPointBonus;
+    } else if (operatorRole === 'optional') {
+      // Optional bonuses require core to be satisfied (all core groups have at least one operator)
+      if (coreSatisfied) {
+        // Count total optional operators
+        let totalOptionalCount = 0;
+        for (const [, operatorIds] of Object.entries(synergy.optional)) {
+          for (const operatorId of operatorIds) {
+            if (teamOperatorIds.has(operatorId)) {
+              totalOptionalCount++;
+            }
+          }
+        }
+
+        // Check if we meet the minimum threshold
+        const optionalCountMinimum = synergy.optionalCountMinimum || 0;
+        if (totalOptionalCount >= optionalCountMinimum) {
+          if (synergy.optionalCountSeparately) {
+            // Each optional operator gives bonus
+            totalScore += synergy.optionalPointBonus;
+          } else {
+            // Only count if this operator's group is now satisfied (first operator from this group)
+            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+              if (operatorIds.includes(newOperatorId)) {
+                const hasOtherOperator = operatorIds.some(id => id !== newOperatorId && teamOperatorIds.has(id));
+                if (!hasOtherOperator) {
+                  // This is the first operator from this group, so add bonus
+                  totalScore += synergy.optionalPointBonus;
+                }
+                break;
+              }
+            }
+          }
+        }
+      }
     }
   }
 

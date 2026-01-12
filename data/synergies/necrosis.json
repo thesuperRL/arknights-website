@@ -10,6 +10,9 @@
     },
     "corePointBonus": 0,
     "optionalPointBonus": 50,
-    "isOnly": false
+    "isOnly": false,
+    "coreCountSeparately": false,
+    "optionalCountSeparately": false,
+    "optionalCountMinimum": 0
   }
   

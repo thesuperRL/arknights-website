@@ -256,11 +256,15 @@
     background: linear-gradient(135deg, #87ceeb, #4682b4);
 }
 
-.synergy-group {
+.synergy-groups {
     font-size: 0.9rem;
     color: var(--text-muted);
     font-style: italic;
     margin-top: 0.5rem;
+}
+
+.synergy-group {
+    display: inline;
 }
 
 @media (max-width: 768px) {

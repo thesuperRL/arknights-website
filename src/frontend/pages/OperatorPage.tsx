@@ -28,7 +28,8 @@ interface Ranking {
 interface SynergyEntry {
   synergy: string;
   role: string;
-  group: string;
+  groups?: string[];
+  group?: string; // For backward compatibility
   filename: string;
 }
 
@@ -149,8 +150,17 @@ const OperatorPage: React.FC = () => {
                 <div className={`synergy-role role-${synergyEntry.role}`}>
                   {synergyEntry.role === 'core' ? 'Core' : 'Optional'}
                 </div>
-                <div className="synergy-group">
-                  {synergyEntry.group}
+                <div className="synergy-groups">
+                  {(() => {
+                    // Handle both new format (groups) and old format (group) for backward compatibility
+                    const groups = synergyEntry.groups || (synergyEntry.group ? [synergyEntry.group] : []);
+                    return groups.map((group, groupIndex) => (
+                      <span key={groupIndex} className="synergy-group">
+                        {group}
+                        {groupIndex < groups.length - 1 && ', '}
+                      </span>
+                    ));
+                  })()}
                 </div>
               </div>
             ))}

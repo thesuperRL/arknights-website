@@ -14,6 +14,9 @@ export interface Synergy {
   corePointBonus: number; // Bonus points added if core is satisfied (at least one operator from each core group)
   optionalPointBonus: number; // Bonus points added for each optional group satisfied IF core is already satisfied
   isOnly: boolean; // If true, this synergy is only valid for Integrated Strategies (not normal teambuilding)
+  coreCountSeparately: boolean; // If true, each operator in core groups gives corePointBonus (instead of once per synergy)
+  optionalCountSeparately: boolean; // If true, each operator in optional groups gives optionalPointBonus (instead of once per group)
+  optionalCountMinimum: number; // Minimum number of optional operators needed before optional bonuses start counting (default 0)
 }
 
 export interface SynergyCollection {

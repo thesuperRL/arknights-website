@@ -85,7 +85,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -165,6 +167,14 @@
     "internalName": "char_218_cuttle",
     "nicheTiers": {
       "physical-dps": "C"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "aosta": {
@@ -474,7 +484,9 @@
     "synergies": {
       "sleep": {
         "role": "core",
-        "group": "DPSes"
+        "groups": [
+          "DPSes"
+        ]
       }
     }
   },
@@ -1017,7 +1029,9 @@
     "synergies": {
       "sleep": {
         "role": "core",
-        "group": "DPSes"
+        "groups": [
+          "DPSes"
+        ]
       }
     }
   },
@@ -1312,7 +1326,9 @@
     "synergies": {
       "nervous-impairment": {
         "role": "optional",
-        "group": "DPS"
+        "groups": [
+          "DPS"
+        ]
       }
     }
   },
@@ -1337,7 +1353,9 @@
     "synergies": {
       "sleep": {
         "role": "optional",
-        "group": "Sleep Appliers"
+        "groups": [
+          "Sleep Appliers"
+        ]
       }
     }
   },
@@ -1481,7 +1499,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
       }
     }
   },
@@ -1509,7 +1529,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
       }
     }
   },
@@ -1560,7 +1582,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -1683,7 +1707,9 @@
     "synergies": {
       "sleep": {
         "role": "optional",
-        "group": "Sleep Appliers"
+        "groups": [
+          "Sleep Appliers"
+        ]
       }
     }
   },
@@ -1750,7 +1776,9 @@
     "synergies": {
       "sleep": {
         "role": "optional",
-        "group": "Sleep Appliers"
+        "groups": [
+          "Sleep Appliers"
+        ]
       }
     }
   },
@@ -1891,7 +1919,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -2496,7 +2526,9 @@
     "synergies": {
       "necrosis": {
         "role": "optional",
-        "group": "Additional Appliers"
+        "groups": [
+          "Additional Appliers"
+        ]
       }
     }
   },
@@ -2734,7 +2766,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -3130,11 +3164,15 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
       },
       "sleep": {
         "role": "optional",
-        "group": "Sleep Appliers"
+        "groups": [
+          "Sleep Appliers"
+        ]
       }
     }
   },
@@ -3157,6 +3195,14 @@
     "nicheTiers": {
       "late-laneholder": "S",
       "tanking-blocking-operators": "S"
+    },
+    "synergies": {
+      "abyssal-hunters": {
+        "role": "optional",
+        "groups": [
+          "Abyssal Hunters"
+        ]
+      }
     }
   },
   "spuria": {
@@ -3331,7 +3377,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Healers"
+        "groups": [
+          "Healers"
+        ]
       }
     }
   },
@@ -3478,7 +3526,9 @@
     "synergies": {
       "necrosis": {
         "role": "optional",
-        "group": "Additional Appliers"
+        "groups": [
+          "Additional Appliers"
+        ]
       }
     }
   },
@@ -3516,7 +3566,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
@@ -3540,7 +3592,9 @@
     "synergies": {
       "enmity-healing": {
         "role": "core",
-        "group": "Enmities"
+        "groups": [
+          "Enmities"
+        ]
       }
     }
   },
