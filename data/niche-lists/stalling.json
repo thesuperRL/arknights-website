@@ -39,8 +39,8 @@
     },
     "S": {
       "crownslayer": [
-        "Bind gets good with module, otherwise B tier",
-        ""
+        "Bind gets good with module",
+        "EXE-Y"
       ],
       "ethan": [
         "Crazy low rarity staller",
@@ -122,6 +122,10 @@
       ]
     },
     "B": {
+      "crownslayer": [
+        "Bind inconsistent before module",
+        ""
+      ],
       "dusk": [
         "Summons (kind of)",
         ""

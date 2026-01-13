@@ -148,9 +148,11 @@ const NicheListPage: React.FC = () => {
           {sortedOperators.map((entry, index) => {
             const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
             const isOwned = entry.operator ? ownedOperators.has(entry.operator.id) : false;
+            // Create unique key that includes rating and level to handle duplicate operator IDs
+            const uniqueKey = `${entry.operatorId}-${entry.rating}-${entry.level || 'base'}-${index}`;
             return (
             <div 
-              key={`${entry.operatorId}-${index}`} 
+              key={uniqueKey} 
               className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
               title={entry.note || undefined}
             >
@@ -178,7 +180,7 @@ const NicheListPage: React.FC = () => {
                   </Link>
                   <div className="operator-class">
                     {entry.operator.class} • {entry.operator.rarity}★
-                    {entry.level && (
+                    {entry.level && entry.level.trim() !== '' && (
                       <span className="operator-level-badge">
                         {entry.level === 'E2' ? 'E2' : `M:${entry.level}`}
                       </span>

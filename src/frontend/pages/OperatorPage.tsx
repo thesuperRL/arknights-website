@@ -19,10 +19,16 @@ interface Operator {
   krName?: string;
 }
 
-interface Ranking {
-  niche: string;
+interface NicheInstance {
   tier: string;
+  level: string;
   notes?: string;
+}
+
+interface NicheRanking {
+  niche: string;
+  nicheFilename?: string;
+  instances: NicheInstance[];
 }
 
 interface SynergyEntry {
@@ -35,7 +41,7 @@ interface SynergyEntry {
 
 interface OperatorData {
   operator: Operator;
-  rankings: Ranking[];
+  rankings: NicheRanking[];
   synergies?: SynergyEntry[];
 }
 
@@ -77,7 +83,7 @@ const OperatorPage: React.FC = () => {
     return <div className="error">{error || 'Operator not found'}</div>;
   }
 
-  const { operator, rankings, synergies = [] } = data;
+  const { operator, rankings = [], synergies = [] } = data;
 
   return (
     <div className="operator-page">
@@ -117,19 +123,35 @@ const OperatorPage: React.FC = () => {
         <div className="rankings-section">
           <h2>Niches</h2>
           <div className="rankings-grid">
-            {rankings.map((ranking, index) => (
-              <div key={index} className="ranking-card">
-                <Link to={`/niche-list/${encodeURIComponent(ranking.niche)}`} className="ranking-niche-link">
-                  <div className="ranking-niche">{ranking.niche}</div>
-                </Link>
-                {ranking.tier && (
-                  <div className={`ranking-tier tier-${ranking.tier}`}>{ranking.tier}</div>
-                )}
-                {ranking.notes && (
-                  <div className="ranking-notes">{ranking.notes}</div>
-                )}
-              </div>
-            ))}
+            {rankings.map((nicheRanking, nicheIndex) => {
+              // Use nicheFilename if available, otherwise fall back to generated filename
+              const nicheFilename = nicheRanking.nicheFilename || nicheRanking.niche.toLowerCase().replace(/\s+/g, '-');
+              
+              return (
+                <div key={nicheIndex} className="niche-group-card">
+                  <Link to={`/niche-list/${encodeURIComponent(nicheFilename)}`} className="ranking-niche-link">
+                    <div className="ranking-niche">{nicheRanking.niche}</div>
+                  </Link>
+                  <div className="niche-instances">
+                    {(nicheRanking.instances || []).map((instance, instanceIndex) => (
+                      <div key={instanceIndex} className="niche-instance">
+                        {instance.tier && (
+                          <div className={`ranking-tier tier-${instance.tier}`}>{instance.tier}</div>
+                        )}
+                        {instance.level && instance.level.trim() !== '' && (
+                          <div className="instance-level-badge">
+                            {instance.level === 'E2' ? 'E2' : `M:${instance.level}`}
+                          </div>
+                        )}
+                        {instance.notes && (
+                          <div className="ranking-notes">{instance.notes}</div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       ) : (

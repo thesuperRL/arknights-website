@@ -454,7 +454,15 @@ function calculateSynergyScoreForOperator(team: any[], newOperatorId: string, is
  * Gets the tier of an operator in a specific niche
  * Returns a numerical score where higher numbers = better tier
  */
-export function getOperatorTierInNiche(operatorId: string, niche: string): number {
+/**
+ * Gets the tier score for an operator in a specific niche
+ * For normal teambuilding (not IS), returns the highest tier available
+ * Returns a numerical score where higher numbers = better tier
+ * @param operatorId The operator ID
+ * @param niche The niche filename
+ * @param isIS Whether this is for Integrated Strategies (if true, considers all instances; if false, only highest tier)
+ */
+export function getOperatorTierInNiche(operatorId: string, niche: string, isIS: boolean = false): number {
   const nicheList = loadNicheList(niche);
   if (!nicheList || !nicheList.operators) {
     return 0; // Default tier if niche not found
@@ -471,14 +479,27 @@ export function getOperatorTierInNiche(operatorId: string, niche: string): numbe
     'F': 40
   };
 
+  let highestTierScore = 0;
+
   // Search through all tier groups to find the operator
   for (const [tier, operators] of Object.entries(nicheList.operators)) {
     if (operators && operatorId in operators) {
-      return tierValues[tier] || 0;
+      const tierScore = tierValues[tier] || 0;
+      
+      if (isIS) {
+        // For IS, consider all instances (but for now, just return the first one found)
+        // In the future, this could be enhanced to consider level requirements
+        return tierScore;
+      } else {
+        // For normal teambuilding, track the highest tier
+        if (tierScore > highestTierScore) {
+          highestTierScore = tierScore;
+        }
+      }
     }
   }
 
-  return 0; // Operator not found in this niche
+  return highestTierScore; // Returns highest tier for normal, or 0 if not found
 }
 
 /**
