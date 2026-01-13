@@ -4,80 +4,266 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "mudrock": "",
-      "yu": "",
-      "jessica_the_liberated": "",
-      "penance": "",
-      "ulpianus": "",
-      "blemishine": "",
-      "kal_tsit": "Mon3tr",
-      "gavial_the_invincible": ""
+      "mudrock": [
+        "",
+        ""
+      ],
+      "yu": [
+        "",
+        ""
+      ],
+      "jessica_the_liberated": [
+        "",
+        ""
+      ],
+      "penance": [
+        "",
+        ""
+      ],
+      "ulpianus": [
+        "",
+        ""
+      ],
+      "blemishine": [
+        "",
+        ""
+      ],
+      "kal_tsit": [
+        "Mon3tr",
+        ""
+      ],
+      "gavial_the_invincible": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "executor_the_ex_foedere": "",
-      "entelechia": "",
-      "mountain": "",
-      "ling": "Summons that are crazy laneholders at the cost of 2 deployment slots and Ling who is 1 more slot",
-      "shu": "",
-      "hoederer": "",
-      "degenbrecher": "",
-      "sankta_miksaparato": "",
-      "chongyue": "",
-      "thorns": "",
-      "specter": "Actually immortal (for 15 seconds)",
-      "hoshiguma": "Almost immortal",
-      "nian": "",
-      "saria": "",
-      "pepe": "",
-      "blaze": "",
-      "specter_the_unchained": ""
+      "executor_the_ex_foedere": [
+        "",
+        ""
+      ],
+      "entelechia": [
+        "",
+        ""
+      ],
+      "mountain": [
+        "",
+        ""
+      ],
+      "ling": [
+        "Summons that are crazy laneholders at the cost of 2 deployment slots and Ling who is 1 more slot",
+        ""
+      ],
+      "shu": [
+        "",
+        ""
+      ],
+      "hoederer": [
+        "",
+        ""
+      ],
+      "degenbrecher": [
+        "",
+        ""
+      ],
+      "sankta_miksaparato": [
+        "",
+        ""
+      ],
+      "chongyue": [
+        "",
+        ""
+      ],
+      "thorns": [
+        "",
+        ""
+      ],
+      "specter": [
+        "Actually immortal (for 15 seconds)",
+        ""
+      ],
+      "hoshiguma": [
+        "Almost immortal",
+        ""
+      ],
+      "nian": [
+        "",
+        ""
+      ],
+      "saria": [
+        "",
+        ""
+      ],
+      "pepe": [
+        "",
+        ""
+      ],
+      "blaze": [
+        "",
+        ""
+      ],
+      "specter_the_unchained": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "lappland": "",
-      "zuo_le": "",
-      "silverash": "",
-      "la_pluma": "",
-      "lee": "Skill 3 has infinite block against low weight enemies",
-      "highmore": "",
-      "firewhistle": "",
-      "philae": "",
-      "underflow": "",
-      "qiubai": "",
-      "necrass": "Summons",
-      "viviana": "",
-      "kazemaru": "Pretty good DPS"
+      "lappland": [
+        "",
+        ""
+      ],
+      "zuo_le": [
+        "",
+        ""
+      ],
+      "silverash": [
+        "",
+        ""
+      ],
+      "la_pluma": [
+        "",
+        ""
+      ],
+      "lee": [
+        "Skill 3 has infinite block against low weight enemies",
+        ""
+      ],
+      "highmore": [
+        "",
+        ""
+      ],
+      "firewhistle": [
+        "",
+        ""
+      ],
+      "philae": [
+        "",
+        ""
+      ],
+      "underflow": [
+        "",
+        ""
+      ],
+      "qiubai": [
+        "",
+        ""
+      ],
+      "necrass": [
+        "Summons",
+        ""
+      ],
+      "viviana": [
+        "",
+        ""
+      ],
+      "kazemaru": [
+        "Pretty good DPS",
+        ""
+      ]
     },
     "B": {
-      "rathalos_s_noir_corne": "",
-      "gummy": "",
-      "pallas": "OK laneholder using skill 1",
-      "swire_the_elegant_wit": "",
-      "lutonada": "",
-      "cuora": "Once highest defense in game",
-      "bubble": "",
-      "gracebearer": "",
-      "leto": "",
-      "hellagur": "Not a great laneholder but needs no heals with him",
-      "weedy": ""
+      "rathalos_s_noir_corne": [
+        "",
+        ""
+      ],
+      "gummy": [
+        "",
+        ""
+      ],
+      "pallas": [
+        "OK laneholder using skill 1",
+        ""
+      ],
+      "swire_the_elegant_wit": [
+        "",
+        ""
+      ],
+      "lutonada": [
+        "",
+        ""
+      ],
+      "cuora": [
+        "Once highest defense in game",
+        ""
+      ],
+      "bubble": [
+        "",
+        ""
+      ],
+      "gracebearer": [
+        "",
+        ""
+      ],
+      "leto": [
+        "",
+        ""
+      ],
+      "hellagur": [
+        "Not a great laneholder but needs no heals with him",
+        ""
+      ],
+      "weedy": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "bena": "",
-      "dur_nar": "",
-      "astesia": "Arts laneholder but not really good. Direct powercrept by Viviana",
-      "bassline": "",
-      "fuze": "",
-      "czerny": "Anti-arts",
-      "humus": "",
-      "odda": "",
-      "cutter": "",
-      "dusk": "Summons"
+      "bena": [
+        "",
+        ""
+      ],
+      "dur_nar": [
+        "",
+        ""
+      ],
+      "astesia": [
+        "Arts laneholder but not really good. Direct powercrept by Viviana",
+        ""
+      ],
+      "bassline": [
+        "",
+        ""
+      ],
+      "fuze": [
+        "",
+        ""
+      ],
+      "czerny": [
+        "Anti-arts",
+        ""
+      ],
+      "humus": [
+        "",
+        ""
+      ],
+      "odda": [
+        "",
+        ""
+      ],
+      "cutter": [
+        "",
+        ""
+      ],
+      "dusk": [
+        "Summons",
+        ""
+      ]
     },
     "D": {
-      "senshi": "",
-      "utage": ""
+      "senshi": [
+        "",
+        ""
+      ],
+      "utage": [
+        "",
+        ""
+      ]
     },
     "F": {
-      "friston_3": ""
+      "friston_3": [
+        "",
+        ""
+      ]
     }
   },
   "relatedNiches": [

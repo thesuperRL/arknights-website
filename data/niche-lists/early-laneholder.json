@@ -4,44 +4,121 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "bagpipe": "",
-      "ines": "",
-      "vulpisfoglia": "",
-      "mountain": "",
-      "saga": "",
-      "muelsyse": ""
+      "bagpipe": [
+        "",
+        ""
+      ],
+      "ines": [
+        "",
+        ""
+      ],
+      "vulpisfoglia": [
+        "",
+        ""
+      ],
+      "mountain": [
+        "",
+        ""
+      ],
+      "saga": [
+        "",
+        ""
+      ],
+      "muelsyse": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "cantabile": "",
-      "surfer": "",
-      "flametail": "",
-      "puzzle": ""
+      "cantabile": [
+        "",
+        ""
+      ],
+      "surfer": [
+        "",
+        ""
+      ],
+      "flametail": [
+        "",
+        ""
+      ],
+      "puzzle": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "blacknight": "Crazy skill 2 with SP buffs, permasleeps groups of enemies",
-      "fang_the_fire_sharpened": "",
-      "texas": "",
-      "zima": "",
-      "vigil": "",
-      "mitm": "",
-      "siege": ""
+      "blacknight": [
+        "Crazy skill 2 with SP buffs, permasleeps groups of enemies",
+        ""
+      ],
+      "fang_the_fire_sharpened": [
+        "",
+        ""
+      ],
+      "texas": [
+        "",
+        ""
+      ],
+      "zima": [
+        "",
+        ""
+      ],
+      "vigil": [
+        "",
+        ""
+      ],
+      "mitm": [
+        "",
+        ""
+      ],
+      "siege": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "courier": "",
-      "scavenger": "",
-      "beanstalk": "",
-      "poncirus": "",
-      "grani": ""
+      "courier": [
+        "",
+        ""
+      ],
+      "scavenger": [
+        "",
+        ""
+      ],
+      "beanstalk": [
+        "",
+        ""
+      ],
+      "poncirus": [
+        "",
+        ""
+      ],
+      "grani": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "kestrel": "",
-      "chilchuck": "",
-      "fang": ""
+      "kestrel": [
+        "",
+        ""
+      ],
+      "chilchuck": [
+        "",
+        ""
+      ],
+      "fang": [
+        "",
+        ""
+      ]
     },
     "D": {
-      "vanilla": ""
+      "vanilla": [
+        "",
+        ""
+      ]
     },
-    "F": {
-    }
+    "F": {}
   }
 }

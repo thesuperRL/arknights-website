@@ -4,23 +4,49 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "gnosis": "60% fragile to frozen enemies and 30% to cold enemies after module",
-      "shamare": "33% fragile to those with less tha 40% HP in attack range",
-      "suzuran": "25% fragile on skill activation in a large area"
+      "gnosis": [
+        "60% fragile to frozen enemies and 30% to cold enemies after module",
+        ""
+      ],
+      "shamare": [
+        "33% fragile to those with less tha 40% HP in attack range",
+        ""
+      ],
+      "suzuran": [
+        "25% fragile on skill activation in a large area",
+        ""
+      ]
     },
     "S": {
-      "ela": "35% fragile when trap triggered",
-      "raidian": "Applies 35% arts fragility",
-      "saria": "Applies 20% arts fragility"
+      "ela": [
+        "35% fragile when trap triggered",
+        ""
+      ],
+      "raidian": [
+        "Applies 35% arts fragility",
+        ""
+      ],
+      "saria": [
+        "Applies 20% arts fragility",
+        ""
+      ]
     },
     "A": {
-      "saileach": "15% fragile on skill activation",
-      "thrm_ex": "Explodes and inflicts 30% fragile"
+      "saileach": [
+        "15% fragile on skill activation",
+        ""
+      ],
+      "thrm_ex": [
+        "Explodes and inflicts 30% fragile",
+        ""
+      ]
     },
-    "B": {
-    },
+    "B": {},
     "C": {
-      "lucilla": "Applies 18% fragile to non-elite non-boss enemies (So the least useful group of enemies to fragile is fragiled)"
+      "lucilla": [
+        "Applies 18% fragile to non-elite non-boss enemies (So the least useful group of enemies to fragile is fragiled)",
+        ""
+      ]
     },
     "D": {},
     "F": {}

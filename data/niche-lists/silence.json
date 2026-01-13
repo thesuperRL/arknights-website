@@ -4,22 +4,45 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "lappland": "Almost permanent silence, Stultifera Navis god",
-      "lappland_the_decadenza": ""
+      "lappland": [
+        "Almost permanent silence, Stultifera Navis god",
+        ""
+      ],
+      "lappland_the_decadenza": [
+        "",
+        ""
+      ]
     },
-    "S": {
-    },
+    "S": {},
     "A": {
-      "ceobe": "Inconsistent and should not be used for it",
-      "podenco": "",
-      "jaye": ""
+      "ceobe": [
+        "Inconsistent and should not be used for it",
+        ""
+      ],
+      "podenco": [
+        "",
+        ""
+      ],
+      "jaye": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "blitz": "Limited skill uses",
-      "waai_fu": "Inconsistent silence at only 8 second duration"
+      "blitz": [
+        "Limited skill uses",
+        ""
+      ],
+      "waai_fu": [
+        "Inconsistent silence at only 8 second duration",
+        ""
+      ]
     },
     "C": {
-      "corroserum": "Bad uptime"
+      "corroserum": [
+        "Bad uptime",
+        ""
+      ]
     },
     "D": {},
     "F": {}

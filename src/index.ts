@@ -93,17 +93,32 @@ app.get('/api/niche-lists/:niche', (req, res) => {
 
     // Enrich operator list with operator data
     // Convert from rating-grouped structure to flat array for frontend
-    const operatorEntries: Array<{operatorId: string; rating: string; note: string; operator: any}> = [];
+    const operatorEntries: Array<{operatorId: string; rating: string; note: string; level: string; operator: any}> = [];
     const ratingOrder: Rating[] = ["SS", "S", "A", "B", "C", "D", "F"];
     
     for (const rating of ratingOrder) {
       if (operatorList.operators[rating]) {
         const operatorsInRating = operatorList.operators[rating]!;
-        for (const [operatorId, description] of Object.entries(operatorsInRating)) {
+        for (const [operatorId, entry] of Object.entries(operatorsInRating)) {
+          // Parse entry: can be string (backwards compatible) or [string, string] tuple
+          let note: string = '';
+          let level: string = '';
+          
+          if (typeof entry === 'string') {
+            // Old format: just description, level is empty (always has niche)
+            note = entry;
+            level = '';
+          } else if (Array.isArray(entry) && entry.length === 2) {
+            // New format: [description, level]
+            note = entry[0] || '';
+            level = entry[1] || '';
+          }
+          
           operatorEntries.push({
             operatorId: operatorId,
             rating: rating,
-            note: description,
+            note: note,
+            level: level,
             operator: operatorsData[operatorId] || null
           });
         }
@@ -165,20 +180,58 @@ app.get('/api/synergies/:synergy', (req, res) => {
     }
 
     // Enrich synergy with operator data
-    const enrichedCore: Record<string, Array<{ operatorId: string; operator: any }>> = {};
-    for (const [groupName, operatorIds] of Object.entries(synergy.core)) {
-      enrichedCore[groupName] = operatorIds.map(operatorId => ({
-        operatorId,
-        operator: operatorsData[operatorId] || null
-      }));
+    const enrichedCore: Record<string, Array<{ operatorId: string; level: string; operator: any }>> = {};
+    for (const [groupName, operatorEntries] of Object.entries(synergy.core)) {
+      enrichedCore[groupName] = operatorEntries.map(entry => {
+        // Parse entry: can be string (backwards compatible) or [string, string] tuple
+        let operatorId: string;
+        let level: string = '';
+        
+        if (typeof entry === 'string') {
+          // Old format: just operator ID, level is empty (always has synergy)
+          operatorId = entry;
+          level = '';
+        } else if (Array.isArray(entry) && entry.length === 2) {
+          // New format: [operatorId, level]
+          operatorId = entry[0] || '';
+          level = entry[1] || '';
+        } else {
+          operatorId = '';
+        }
+        
+        return {
+          operatorId,
+          level,
+          operator: operatorsData[operatorId] || null
+        };
+      });
     }
 
-    const enrichedOptional: Record<string, Array<{ operatorId: string; operator: any }>> = {};
-    for (const [groupName, operatorIds] of Object.entries(synergy.optional)) {
-      enrichedOptional[groupName] = operatorIds.map(operatorId => ({
-        operatorId,
-        operator: operatorsData[operatorId] || null
-      }));
+    const enrichedOptional: Record<string, Array<{ operatorId: string; level: string; operator: any }>> = {};
+    for (const [groupName, operatorEntries] of Object.entries(synergy.optional)) {
+      enrichedOptional[groupName] = operatorEntries.map(entry => {
+        // Parse entry: can be string (backwards compatible) or [string, string] tuple
+        let operatorId: string;
+        let level: string = '';
+        
+        if (typeof entry === 'string') {
+          // Old format: just operator ID, level is empty (always has synergy)
+          operatorId = entry;
+          level = '';
+        } else if (Array.isArray(entry) && entry.length === 2) {
+          // New format: [operatorId, level]
+          operatorId = entry[0] || '';
+          level = entry[1] || '';
+        } else {
+          operatorId = '';
+        }
+        
+        return {
+          operatorId,
+          level,
+          operator: operatorsData[operatorId] || null
+        };
+      });
     }
 
     const enrichedSynergy = {
@@ -441,10 +494,18 @@ app.get('/api/operators/:id', async (req, res) => {
         // Search through all rating groups
         for (const [rating, operatorsInRating] of Object.entries(operatorList.operators)) {
           if (operatorsInRating && operatorId in operatorsInRating) {
+            const entry = operatorsInRating[operatorId];
+            // Parse entry: can be string (backwards compatible) or [string, string] tuple
+            let notes: string | undefined = undefined;
+            if (typeof entry === 'string') {
+              notes = entry || undefined;
+            } else if (Array.isArray(entry) && entry.length >= 1) {
+              notes = entry[0] || undefined;
+            }
             rankings.push({
               niche: operatorList.niche, // Use display name for the ranking
               tier: rating,
-              notes: operatorsInRating[operatorId] || undefined
+              notes: notes
             });
             break; // Found in this niche, move to next niche
           }

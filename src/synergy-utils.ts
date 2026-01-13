@@ -6,11 +6,16 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+// Operator entry in synergies can be:
+// - string: operator ID (backwards compatible, means always has synergy)
+// - [string, string]: [operatorId, level] where level is "" (always), "E2" (elite 2), or a module code
+export type SynergyOperatorEntry = string | [string, string];
+
 export interface Synergy {
   name: string;
   description: string;
-  core: Record<string, string[]>; // Dictionary of group name -> operator IDs
-  optional: Record<string, string[]>; // Dictionary of group name -> operator IDs
+  core: Record<string, SynergyOperatorEntry[]>; // Dictionary of group name -> operator entries
+  optional: Record<string, SynergyOperatorEntry[]>; // Dictionary of group name -> operator entries
   corePointBonus: number; // Bonus points added if core is satisfied (at least one operator from each core group)
   optionalPointBonus: number; // Bonus points added for each optional group satisfied IF core is already satisfied
   isOnly: boolean; // If true, this synergy is only valid for Integrated Strategies (not normal teambuilding)

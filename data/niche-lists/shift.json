@@ -4,26 +4,68 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "weedy": ""
+      "weedy": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "gladiia": ""
+      "gladiia": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "almond": "Rope, Snowsant, Almond, and Cliffheart are all the same operator",
-      "cliffheart": "Rope, Snowsant, Almond, and Cliffheart are all the same operator",
-      "rope": "Rope, Snowsant, Almond, and Cliffheart are all the same operator",
-      "snowsant": "Rope, Snowsant, Almond, and Cliffheart are all the same operator",
-      "feater": "",
-      "shaw": "",
-      "enforcer": "",
-      "swire_the_elegant_wit": ""
+      "almond": [
+        "Rope, Snowsant, Almond, and Cliffheart are all the same operator",
+        ""
+      ],
+      "cliffheart": [
+        "Rope, Snowsant, Almond, and Cliffheart are all the same operator",
+        ""
+      ],
+      "rope": [
+        "Rope, Snowsant, Almond, and Cliffheart are all the same operator",
+        ""
+      ],
+      "snowsant": [
+        "Rope, Snowsant, Almond, and Cliffheart are all the same operator",
+        ""
+      ],
+      "feater": [
+        "",
+        ""
+      ],
+      "shaw": [
+        "",
+        ""
+      ],
+      "enforcer": [
+        "",
+        ""
+      ],
+      "swire_the_elegant_wit": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "croissant": "Small niche with skill 2",
-      "robin": "",
-      "wild_mane": "",
-      "lee": "Slight shift for skill 3"
+      "croissant": [
+        "Small niche with skill 2",
+        ""
+      ],
+      "robin": [
+        "",
+        ""
+      ],
+      "wild_mane": [
+        "",
+        ""
+      ],
+      "lee": [
+        "Slight shift for skill 3",
+        ""
+      ]
     },
     "C": {},
     "D": {},

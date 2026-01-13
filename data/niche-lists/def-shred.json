@@ -4,22 +4,42 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "shamare": "-50% DEF in curse doll area",
-      "pramanix": "Some of the best in the game"
+      "shamare": [
+        "-50% DEF in curse doll area",
+        ""
+      ],
+      "pramanix": [
+        "Some of the best in the game",
+        ""
+      ]
     },
     "S": {
-      "thorns_the_lodestar": ""
-
+      "thorns_the_lodestar": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "elysium": "",
-      "poz_mka": "Via the typewriter"
+      "elysium": [
+        "",
+        ""
+      ],
+      "poz_mka": [
+        "Via the typewriter",
+        ""
+      ]
     },
     "B": {
-      "meteor": "Good shred on mid uptime"
+      "meteor": [
+        "Good shred on mid uptime",
+        ""
+      ]
     },
     "C": {
-      "ifrit": "Flat shred"
+      "ifrit": [
+        "Flat shred",
+        ""
+      ]
     },
     "D": {},
     "F": {}

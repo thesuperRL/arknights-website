@@ -4,67 +4,210 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "eyjafjalla_the_hv_t_aska": "",
-      "mon3tr": "",
-      "blemishine": "Theoretically the most HPS in the game with skill 3"
+      "eyjafjalla_the_hv_t_aska": [
+        "",
+        ""
+      ],
+      "mon3tr": [
+        "",
+        ""
+      ],
+      "blemishine": [
+        "Theoretically the most HPS in the game with skill 3",
+        ""
+      ]
     },
     "S": {
-      "nightingale": "",
-      "reed_the_flame_shadow": "",
-      "shu": "",
-      "saria": "",
-      "sussurro": "Incredibly good heal-per-second at the cost of limited skill uses"
+      "nightingale": [
+        "",
+        ""
+      ],
+      "reed_the_flame_shadow": [
+        "",
+        ""
+      ],
+      "shu": [
+        "",
+        ""
+      ],
+      "saria": [
+        "",
+        ""
+      ],
+      "sussurro": [
+        "Incredibly good heal-per-second at the cost of limited skill uses",
+        ""
+      ]
     },
     "A": {
-      "gummy": "",
-      "nearl": "",
-      "papyrus": "",
-      "rose_salt": "",
-      "perfumer": "Global passive healing",
-      "ptilopsis": "",
-      "lumen": "",
-      "quercus": "Pretty OK healing",
-      "amiya_medic": "",
-      "mulberry": "",
-      "honeyberry": "",
-      "kal_tsit": "You don't use her for the healing, as she prioritizes Mon3tr",
-      "tuye": "",
-      "silence": "",
-      "warfarin": "",
-      "jaye": "",
-      "whisperain": ""
-      
+      "gummy": [
+        "",
+        ""
+      ],
+      "nearl": [
+        "",
+        ""
+      ],
+      "papyrus": [
+        "",
+        ""
+      ],
+      "rose_salt": [
+        "",
+        ""
+      ],
+      "perfumer": [
+        "Global passive healing",
+        ""
+      ],
+      "ptilopsis": [
+        "",
+        ""
+      ],
+      "lumen": [
+        "",
+        ""
+      ],
+      "quercus": [
+        "Pretty OK healing",
+        ""
+      ],
+      "amiya_medic": [
+        "",
+        ""
+      ],
+      "mulberry": [
+        "",
+        ""
+      ],
+      "honeyberry": [
+        "",
+        ""
+      ],
+      "kal_tsit": [
+        "You don't use her for the healing, as she prioritizes Mon3tr",
+        ""
+      ],
+      "tuye": [
+        "",
+        ""
+      ],
+      "silence": [
+        "",
+        ""
+      ],
+      "warfarin": [
+        "",
+        ""
+      ],
+      "jaye": [
+        "",
+        ""
+      ],
+      "whisperain": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "suzuran": "Not used for this niche",
-      "angelina": "Global passive healing when skill inactive",
-      "civilight_eterna": "",
-      "paprika": "",
-      "silence_the_paradigmatic": "Heals during skill",
-      "nine_colored_deer": "Heals during skill",
-      "xingzhu": "Heals during skill",
-      "shining": "",
-      "record_keeper": "",
-      "hibiscus_the_purifier": "",
-      "podenco": "Heals during skill"
+      "suzuran": [
+        "Not used for this niche",
+        ""
+      ],
+      "angelina": [
+        "Global passive healing when skill inactive",
+        ""
+      ],
+      "civilight_eterna": [
+        "",
+        ""
+      ],
+      "paprika": [
+        "",
+        ""
+      ],
+      "silence_the_paradigmatic": [
+        "Heals during skill",
+        ""
+      ],
+      "nine_colored_deer": [
+        "Heals during skill",
+        ""
+      ],
+      "xingzhu": [
+        "Heals during skill",
+        ""
+      ],
+      "shining": [
+        "",
+        ""
+      ],
+      "record_keeper": [
+        "",
+        ""
+      ],
+      "hibiscus_the_purifier": [
+        "",
+        ""
+      ],
+      "podenco": [
+        "Heals during skill",
+        ""
+      ]
     },
     "C": {
-      "heavyrain": "",
-      "ansel": "",
-      "bassline": "",
-      "gavial": "",
-      "vendela": "",
-      "senshi": "",
-      "harold": "",
-      "nowell": ""
+      "heavyrain": [
+        "",
+        ""
+      ],
+      "ansel": [
+        "",
+        ""
+      ],
+      "bassline": [
+        "",
+        ""
+      ],
+      "gavial": [
+        "",
+        ""
+      ],
+      "vendela": [
+        "",
+        ""
+      ],
+      "senshi": [
+        "",
+        ""
+      ],
+      "harold": [
+        "",
+        ""
+      ],
+      "nowell": [
+        "",
+        ""
+      ]
     },
     "D": {
-      "doc": "",
-      "cardigan": "",
-      "nightmare": "Don't use her because of this"
+      "doc": [
+        "",
+        ""
+      ],
+      "cardigan": [
+        "",
+        ""
+      ],
+      "nightmare": [
+        "Don't use her because of this",
+        ""
+      ]
     },
     "F": {
-      "lancet_2": ""
+      "lancet_2": [
+        "",
+        ""
+      ]
     }
   }
 }

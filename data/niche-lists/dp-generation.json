@@ -4,44 +4,128 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "ines": "",
-      "myrtle": "Literally the sunflower from PVZ. One of the best DP generators in the game.",
-      "elysium": "Makes more DP than Myrtle at the cost of a slower start",
-      "wanqing": "",
-      "saileach": "Kind of refunds the DP to deploy her"
+      "ines": [
+        "",
+        ""
+      ],
+      "myrtle": [
+        "Literally the sunflower from PVZ. One of the best DP generators in the game.",
+        ""
+      ],
+      "elysium": [
+        "Makes more DP than Myrtle at the cost of a slower start",
+        ""
+      ],
+      "wanqing": [
+        "",
+        ""
+      ],
+      "saileach": [
+        "Kind of refunds the DP to deploy her",
+        ""
+      ]
     },
     "S": {
-      "cantabile": "",
-      "chilchuck": "",
-      "surfer": "",
-      "puzzle": ""
+      "cantabile": [
+        "",
+        ""
+      ],
+      "chilchuck": [
+        "",
+        ""
+      ],
+      "surfer": [
+        "",
+        ""
+      ],
+      "puzzle": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "flametail": "",
-      "bagpipe": "",
-      "siege": "",
-      "texas": "",
-      "zima": "Lowers Vanguard DP Costs",
-      "chiave": "",
-      "poncirus": "Continual DP generation",
-      "saga": "",
-      "muelsyse": ""
+      "flametail": [
+        "",
+        ""
+      ],
+      "bagpipe": [
+        "",
+        ""
+      ],
+      "siege": [
+        "",
+        ""
+      ],
+      "texas": [
+        "",
+        ""
+      ],
+      "zima": [
+        "Lowers Vanguard DP Costs",
+        ""
+      ],
+      "chiave": [
+        "",
+        ""
+      ],
+      "poncirus": [
+        "Continual DP generation",
+        ""
+      ],
+      "saga": [
+        "",
+        ""
+      ],
+      "muelsyse": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "vigna": "",
-      "fang_the_fire_sharpened": "",
-      "beanstalk": "",
-      "blacknight": ""
+      "vigna": [
+        "",
+        ""
+      ],
+      "fang_the_fire_sharpened": [
+        "",
+        ""
+      ],
+      "beanstalk": [
+        "",
+        ""
+      ],
+      "blacknight": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "reed": "Vigna is better",
-      "mitm": "",
-      "kestrel": ""
+      "reed": [
+        "Vigna is better",
+        ""
+      ],
+      "mitm": [
+        "",
+        ""
+      ],
+      "kestrel": [
+        "",
+        ""
+      ]
     },
     "D": {
-      "confess_47": "",
-      "vulpisfoglia": "1DP lady",
-      "vigil": "2DP boy"
+      "confess_47": [
+        "",
+        ""
+      ],
+      "vulpisfoglia": [
+        "1DP lady",
+        ""
+      ],
+      "vigil": [
+        "2DP boy",
+        ""
+      ]
     },
     "F": {}
   }

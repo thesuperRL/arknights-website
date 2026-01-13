@@ -4,34 +4,88 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "logos": "",
-      "nymph": ""
+      "logos": [
+        "",
+        ""
+      ],
+      "nymph": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "eyjafjalla": "One of the best AOE casters as a core caster..."
+      "eyjafjalla": [
+        "One of the best AOE casters as a core caster...",
+        ""
+      ]
     },
     "A": {
-      "ifrit": "",
-      "ling": "Summons deal AOE arts damage to ground enemies",
-      "texas_the_omertosa": "",
-      "lin": ""
+      "ifrit": [
+        "",
+        ""
+      ],
+      "ling": [
+        "Summons deal AOE arts damage to ground enemies",
+        ""
+      ],
+      "texas_the_omertosa": [
+        "",
+        ""
+      ],
+      "lin": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "pudding": "",
-      "mostima": "Very large AOE arts damage and slow but at a really high SP cost",
-      "marcille": "",
-      "leonhardt": "",
-      "passenger": ""
+      "pudding": [
+        "",
+        ""
+      ],
+      "mostima": [
+        "Very large AOE arts damage and slow but at a really high SP cost",
+        ""
+      ],
+      "marcille": [
+        "",
+        ""
+      ],
+      "leonhardt": [
+        "",
+        ""
+      ],
+      "passenger": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "astgenne": "",
-      "thorns_the_lodestar": "",
-      "dusk": ""
+      "astgenne": [
+        "",
+        ""
+      ],
+      "thorns_the_lodestar": [
+        "",
+        ""
+      ],
+      "dusk": [
+        "",
+        ""
+      ]
     },
     "D": {
-      "asbestos": "",
-      "lava_the_purgatory": "",
-      "tin_man": ""
+      "asbestos": [
+        "",
+        ""
+      ],
+      "lava_the_purgatory": [
+        "",
+        ""
+      ],
+      "tin_man": [
+        "",
+        ""
+      ]
     },
     "F": {}
   },

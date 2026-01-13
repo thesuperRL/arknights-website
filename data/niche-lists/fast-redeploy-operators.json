@@ -4,31 +4,88 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "crownslayer": "",
-      "ines": "",
-      "kirin_r_yato": "",
-      "texas_the_omertosa": ""
+      "crownslayer": [
+        "",
+        ""
+      ],
+      "ines": [
+        "",
+        ""
+      ],
+      "kirin_r_yato": [
+        "",
+        ""
+      ],
+      "texas_the_omertosa": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "chilchuck": "Used for his passive that allows absolute elemental damage and environmental damage immunity",
-      "cantabile": "",
-      "surfer": "",
-      "gravel": "Soaks damage well",
-      "puzzle": ""
+      "chilchuck": [
+        "Used for his passive that allows absolute elemental damage and environmental damage immunity",
+        ""
+      ],
+      "cantabile": [
+        "",
+        ""
+      ],
+      "surfer": [
+        "",
+        ""
+      ],
+      "gravel": [
+        "Soaks damage well",
+        ""
+      ],
+      "puzzle": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "april": "",
-      "phantom": "Essentially two fast-redeploys with his shadow", 
-      "projekt_red": "",
-      "jaye": "",
-      "swire_the_elegant_wit": ""
+      "april": [
+        "",
+        ""
+      ],
+      "phantom": [
+        "Essentially two fast-redeploys with his shadow",
+        ""
+      ],
+      "projekt_red": [
+        "",
+        ""
+      ],
+      "jaye": [
+        "",
+        ""
+      ],
+      "swire_the_elegant_wit": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "figurino": "",
-      "kafka": "",
-      "waai_fu": "",
-      "yato": "A pseudo-fast-redeploy that works when you have nothing else",
-      "skadi": "Redeployment is much longer than the rest of people here"
+      "figurino": [
+        "",
+        ""
+      ],
+      "kafka": [
+        "",
+        ""
+      ],
+      "waai_fu": [
+        "",
+        ""
+      ],
+      "yato": [
+        "A pseudo-fast-redeploy that works when you have nothing else",
+        ""
+      ],
+      "skadi": [
+        "Redeployment is much longer than the rest of people here",
+        ""
+      ]
     },
     "C": {},
     "D": {},

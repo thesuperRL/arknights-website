@@ -4,44 +4,124 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "ascalon": "",
-      "wi_adel": ""
+      "ascalon": [
+        "",
+        ""
+      ],
+      "wi_adel": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "silverash": "",
-      "degenbrecher": "",
-      "pepe": "",
-      "ethan": "",
-      "leizi_the_thunderbringer": "",
-      "m_ynar": "",
-      "ch_en_the_holungday": ""
+      "silverash": [
+        "",
+        ""
+      ],
+      "degenbrecher": [
+        "",
+        ""
+      ],
+      "pepe": [
+        "",
+        ""
+      ],
+      "ethan": [
+        "",
+        ""
+      ],
+      "leizi_the_thunderbringer": [
+        "",
+        ""
+      ],
+      "m_ynar": [
+        "",
+        ""
+      ],
+      "ch_en_the_holungday": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "kirin_r_yato": "",
-      "w": "",
-      "mizuki": "",
-      "fiammetta": "",
-      "horn": "",
-      "narantuya": "Slightly, via loopshooter bouncing",
-      "firewhistle": ""
+      "kirin_r_yato": [
+        "",
+        ""
+      ],
+      "w": [
+        "",
+        ""
+      ],
+      "mizuki": [
+        "",
+        ""
+      ],
+      "fiammetta": [
+        "",
+        ""
+      ],
+      "horn": [
+        "",
+        ""
+      ],
+      "narantuya": [
+        "Slightly, via loopshooter bouncing",
+        ""
+      ],
+      "firewhistle": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "rosmontis": "Ground AOE",
-      "pinecone": "",
-      "jieyun": "",
-      "greyy_the_lightningbearer": "",
-      "shirayuki": "",
-      "archetto": "Good at swarm clearing"
+      "rosmontis": [
+        "Ground AOE",
+        ""
+      ],
+      "pinecone": [
+        "",
+        ""
+      ],
+      "jieyun": [
+        "",
+        ""
+      ],
+      "greyy_the_lightningbearer": [
+        "",
+        ""
+      ],
+      "shirayuki": [
+        "",
+        ""
+      ],
+      "archetto": [
+        "Good at swarm clearing",
+        ""
+      ]
     },
     "C": {
-      "ashlock": "Only hits ground",
-      "tequila": "",
-      "odda": "",
-      "stainless": "",
-      "executor": ""
+      "ashlock": [
+        "Only hits ground",
+        ""
+      ],
+      "tequila": [
+        "",
+        ""
+      ],
+      "odda": [
+        "",
+        ""
+      ],
+      "stainless": [
+        "",
+        ""
+      ],
+      "executor": [
+        "",
+        ""
+      ]
     },
-    "D": {
-    },
+    "D": {},
     "F": {}
   },
   "relatedNiches": [

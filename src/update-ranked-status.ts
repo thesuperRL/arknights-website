@@ -5,6 +5,7 @@
 
 import { loadAllNicheLists } from './niche-list-utils';
 import { loadAllSynergies } from './synergy-utils';
+import { OperatorEntry } from './niche-list-types';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -170,10 +171,14 @@ function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<s
 
   for (const [synergyFilename, synergy] of Object.entries(synergies)) {
     // Check core groups
-    for (const [groupName, operatorIds] of Object.entries(synergy.core)) {
-      for (const operatorId of operatorIds) {
-        if (!allOperators[operatorId]) {
-          unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+    for (const [groupName, operatorEntries] of Object.entries(synergy.core)) {
+      for (const entry of operatorEntries) {
+        // Extract operator ID from entry (handles both string and [string, string] formats)
+        const operatorId = typeof entry === 'string' ? entry : (Array.isArray(entry) && entry.length >= 1 ? entry[0] : '');
+        if (!operatorId || !allOperators[operatorId]) {
+          if (operatorId) {
+            unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+          }
           continue;
         }
 
@@ -195,10 +200,14 @@ function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<s
     }
 
     // Check optional groups
-    for (const [groupName, operatorIds] of Object.entries(synergy.optional)) {
-      for (const operatorId of operatorIds) {
-        if (!allOperators[operatorId]) {
-          unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+    for (const [groupName, operatorEntries] of Object.entries(synergy.optional)) {
+      for (const entry of operatorEntries) {
+        // Extract operator ID from entry (handles both string and [string, string] formats)
+        const operatorId = typeof entry === 'string' ? entry : (Array.isArray(entry) && entry.length >= 1 ? entry[0] : '');
+        if (!operatorId || !allOperators[operatorId]) {
+          if (operatorId) {
+            unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+          }
           continue;
         }
 
@@ -456,19 +465,35 @@ function capitalizeAllNotes(): void {
     if (!operatorList.operators) continue;
 
     let fileUpdated = false;
-    const updatedOperators: Partial<Record<string, Record<string, string>>> = {};
+    const updatedOperators: Partial<Record<string, Record<string, OperatorEntry>>> = {};
 
     // Process each rating group
     for (const [rating, operatorsInRating] of Object.entries(operatorList.operators)) {
       if (operatorsInRating) {
-        const updatedOperatorsInRating: Record<string, string> = {};
-        for (const [operatorId, description] of Object.entries(operatorsInRating)) {
+        const updatedOperatorsInRating: Record<string, OperatorEntry> = {};
+        for (const [operatorId, entry] of Object.entries(operatorsInRating)) {
+          // Parse entry: can be string (backwards compatible) or [string, string] tuple
+          let description: string = '';
+          let level: string = '';
+          
+          if (typeof entry === 'string') {
+            // Old format: just description, level is empty (always has niche)
+            description = entry;
+            level = '';
+          } else if (Array.isArray(entry) && entry.length === 2) {
+            // New format: [description, level]
+            description = entry[0] || '';
+            level = entry[1] || '';
+          }
+          
           const capitalizedDescription = capitalizeFirst(description || '');
           if (capitalizedDescription !== description) {
             fileUpdated = true;
-            updatedOperatorsInRating[operatorId] = capitalizedDescription;
+            // Preserve the level, update description
+            updatedOperatorsInRating[operatorId] = [capitalizedDescription, level];
           } else {
-            updatedOperatorsInRating[operatorId] = description;
+            // No change needed, keep original entry
+            updatedOperatorsInRating[operatorId] = entry;
           }
         }
         updatedOperators[rating] = updatedOperatorsInRating;

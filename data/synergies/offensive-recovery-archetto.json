@@ -2,10 +2,52 @@
   "name": "Archetto Offensive Recovery Team",
   "description": "A team centered around Archetto's IS module and its ability to recover SP extremely quickly for offensive recovery operators",
   "core": {
-    "Center": ["archetto"]
+    "Center": [
+      [
+        "archetto",
+        ""
+      ]
+    ]
   },
   "optional": {
-    "Offensive Recovery Operators": ["hoederer", "ines", "tragodia", "exusiai", "kroos", "thorns", "blue_poison", "wi_adel", "lappland"]
+    "Offensive Recovery Operators": [
+      [
+        "hoederer",
+        ""
+      ],
+      [
+        "ines",
+        ""
+      ],
+      [
+        "tragodia",
+        ""
+      ],
+      [
+        "exusiai",
+        ""
+      ],
+      [
+        "kroos",
+        ""
+      ],
+      [
+        "thorns",
+        ""
+      ],
+      [
+        "blue_poison",
+        ""
+      ],
+      [
+        "wi_adel",
+        ""
+      ],
+      [
+        "lappland",
+        ""
+      ]
+    ]
   },
   "corePointBonus": 100,
   "optionalPointBonus": 30,

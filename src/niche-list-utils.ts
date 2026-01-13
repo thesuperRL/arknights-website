@@ -174,6 +174,19 @@ export function validateNicheList(operatorList: OperatorList, operatorsData: Rec
 }
 
 /**
+ * Helper function to extract operator ID from an operator entry
+ * Handles both old format (string) and new format ([string, string])
+ */
+export function getOperatorIdFromEntry(entry: string | [string, string]): string {
+  if (typeof entry === 'string') {
+    return entry;
+  } else if (Array.isArray(entry) && entry.length >= 1) {
+    return entry[0];
+  }
+  return '';
+}
+
+/**
  * Gets the filename (without .json) for a niche display name
  * @deprecated Use filename codes directly. This function is kept for backwards compatibility.
  */
@@ -217,9 +230,12 @@ export function getNichesForOperator(operatorId: string, dataDir: string = path.
     if (operatorList.operators) {
       // Search through all rating groups
       for (const operatorsInRating of Object.values(operatorList.operators)) {
-        if (operatorsInRating && operatorId in operatorsInRating) {
-          niches.push(filename);
-          break; // Found in this niche, move to next niche
+        if (operatorsInRating) {
+          // Check if operatorId exists as a key (works for both old and new format)
+          if (operatorId in operatorsInRating) {
+            niches.push(filename);
+            break; // Found in this niche, move to next niche
+          }
         }
       }
     }

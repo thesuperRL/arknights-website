@@ -4,31 +4,65 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "mon3tr": "",
-      "aak": "Hard to tank the buff for operators but if tanked is very good",
-      "warfarin": "For one target applies a pretty hefty buff"
+      "mon3tr": [
+        "",
+        ""
+      ],
+      "aak": [
+        "Hard to tank the buff for operators but if tanked is very good",
+        ""
+      ],
+      "warfarin": [
+        "For one target applies a pretty hefty buff",
+        ""
+      ]
     },
     "S": {
-      "skadi_the_corrupting_heart": ""
+      "skadi_the_corrupting_heart": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "civilight_eterna": "",
-      "pallas": "Usefulness of buff hindered by high SP costs"
+      "civilight_eterna": [
+        "",
+        ""
+      ],
+      "pallas": [
+        "Usefulness of buff hindered by high SP costs",
+        ""
+      ]
     },
     "B": {
-      "heidi": "At the price of -3 block for operators who receive this buff (which is a pretty hefty price)",
-      "spuria": "The side effects of this buff is not worth it",
-      "sora": ""
+      "heidi": [
+        "At the price of -3 block for operators who receive this buff (which is a pretty hefty price)",
+        ""
+      ],
+      "spuria": [
+        "The side effects of this buff is not worth it",
+        ""
+      ],
+      "sora": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "alanna": "",
-      "swire": "Buffs melee operators in surrounding tiles with bad uptime",
-      "whislash": "For melee operators"
+      "alanna": [
+        "",
+        ""
+      ],
+      "swire": [
+        "Buffs melee operators in surrounding tiles with bad uptime",
+        ""
+      ],
+      "whislash": [
+        "For melee operators",
+        ""
+      ]
     },
-    "D": {
-    },
+    "D": {},
     "F": {}
   },
-  "relatedNiches": [
-  ]
+  "relatedNiches": []
 }

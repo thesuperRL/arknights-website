@@ -18,6 +18,7 @@ interface OperatorListEntry {
   operatorId: string;
   rating: string;
   note: string;
+  level: string; // "" (always), "E2" (elite 2), or module code
   operator: Operator | null;
 }
 
@@ -177,6 +178,11 @@ const NicheListPage: React.FC = () => {
                   </Link>
                   <div className="operator-class">
                     {entry.operator.class} • {entry.operator.rarity}★
+                    {entry.level && (
+                      <span className="operator-level-badge">
+                        {entry.level === 'E2' ? 'E2' : `M:${entry.level}`}
+                      </span>
+                    )}
                   </div>
                   {entry.note && (
                     <div className="operator-note-tooltip">{entry.note}</div>

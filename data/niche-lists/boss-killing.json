@@ -4,48 +4,146 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "wi_adel": "",
-      "logos": "",
-      "exusiai_the_new_covenant": ""
+      "wi_adel": [
+        "",
+        ""
+      ],
+      "logos": [
+        "",
+        ""
+      ],
+      "exusiai_the_new_covenant": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "leizi_the_thunderbringer": "",
-      "m_ynar": "",
-      "surtr": "",
-      "typhon": "",
-      "ray": "",
-      "ceobe": "",
-      "eyjafjalla": "",
-      "degenbrecher": "",
-      "mon3tr": "",
-      "lemuen": ""
+      "leizi_the_thunderbringer": [
+        "",
+        ""
+      ],
+      "m_ynar": [
+        "",
+        ""
+      ],
+      "surtr": [
+        "",
+        ""
+      ],
+      "typhon": [
+        "",
+        ""
+      ],
+      "ray": [
+        "",
+        ""
+      ],
+      "ceobe": [
+        "",
+        ""
+      ],
+      "eyjafjalla": [
+        "",
+        ""
+      ],
+      "degenbrecher": [
+        "",
+        ""
+      ],
+      "mon3tr": [
+        "",
+        ""
+      ],
+      "lemuen": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "vina_victoria": "",
-      "ulpianus": "",
-      "narantuya": "",
-      "kal_tsit": "",
-      "penance": "",
-      "mudrock": "",
-      "necrass": "Summons",
-      "rosa": ""
-      
+      "vina_victoria": [
+        "",
+        ""
+      ],
+      "ulpianus": [
+        "",
+        ""
+      ],
+      "narantuya": [
+        "",
+        ""
+      ],
+      "kal_tsit": [
+        "",
+        ""
+      ],
+      "penance": [
+        "",
+        ""
+      ],
+      "mudrock": [
+        "",
+        ""
+      ],
+      "necrass": [
+        "Summons",
+        ""
+      ],
+      "rosa": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "eunectes": "Hard to use effectively, but if you can, S3 is very good",
-      "schwarz": "",
-      "poz_mka": "High attack and defense shredding",
-      "silverash": "",
-      "gavial_the_invincible": "",
-      "entelechia": "",
-      "ebenholz": "",
-      "hoederer": "",
-      "zuo_le": ""
+      "eunectes": [
+        "Hard to use effectively, but if you can, S3 is very good",
+        ""
+      ],
+      "schwarz": [
+        "",
+        ""
+      ],
+      "poz_mka": [
+        "High attack and defense shredding",
+        ""
+      ],
+      "silverash": [
+        "",
+        ""
+      ],
+      "gavial_the_invincible": [
+        "",
+        ""
+      ],
+      "entelechia": [
+        "",
+        ""
+      ],
+      "ebenholz": [
+        "",
+        ""
+      ],
+      "hoederer": [
+        "",
+        ""
+      ],
+      "zuo_le": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "ash": "",
-      "viviana": "",
-      "lessing": ""
+      "ash": [
+        "",
+        ""
+      ],
+      "viviana": [
+        "",
+        ""
+      ],
+      "lessing": [
+        "",
+        ""
+      ]
     },
     "D": {},
     "F": {}

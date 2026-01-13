@@ -4,47 +4,140 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "ceobe": "",
-      "eyjafjalla": "",
-      "surtr": "",
-      "lappland_the_decadenza": "",
-      "logos": ""
+      "ceobe": [
+        "",
+        ""
+      ],
+      "eyjafjalla": [
+        "",
+        ""
+      ],
+      "surtr": [
+        "",
+        ""
+      ],
+      "lappland_the_decadenza": [
+        "",
+        ""
+      ],
+      "logos": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "nymph": "",
-      "goldenglow": "Arts shreds for herself",
-      "raidian": ""
+      "nymph": [
+        "",
+        ""
+      ],
+      "goldenglow": [
+        "Arts shreds for herself",
+        ""
+      ],
+      "raidian": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "lappland": "Can turn damage into arts",
-      "reed_the_flame_shadow": "",
-      "necrass": "",
-      "ebenholz": "",
-      "ascalon": "",
-      "ifrit": ""
+      "lappland": [
+        "Can turn damage into arts",
+        ""
+      ],
+      "reed_the_flame_shadow": [
+        "",
+        ""
+      ],
+      "necrass": [
+        "",
+        ""
+      ],
+      "ebenholz": [
+        "",
+        ""
+      ],
+      "ascalon": [
+        "",
+        ""
+      ],
+      "ifrit": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "amiya_medic": "",
-      "click": "",
-      "ho_olheyak": "",
-      "rockrock": "",
-      "harmonie": ""
+      "amiya_medic": [
+        "",
+        ""
+      ],
+      "click": [
+        "",
+        ""
+      ],
+      "ho_olheyak": [
+        "",
+        ""
+      ],
+      "rockrock": [
+        "",
+        ""
+      ],
+      "harmonie": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "delphine": "",
-      "ethan": "",
-      "astesia": "",
-      "amiya_guard": "",
-      "dur_nar": "Decent arts damage",
-      "santalla": "",
-      "tecno": "",
-      "minimalist": "",
-      "qanipalaat": "",
-      "arene": "Can turn damage into arts"
+      "delphine": [
+        "",
+        ""
+      ],
+      "ethan": [
+        "",
+        ""
+      ],
+      "astesia": [
+        "",
+        ""
+      ],
+      "amiya_guard": [
+        "",
+        ""
+      ],
+      "dur_nar": [
+        "Decent arts damage",
+        ""
+      ],
+      "santalla": [
+        "",
+        ""
+      ],
+      "tecno": [
+        "",
+        ""
+      ],
+      "minimalist": [
+        "",
+        ""
+      ],
+      "qanipalaat": [
+        "",
+        ""
+      ],
+      "arene": [
+        "Can turn damage into arts",
+        ""
+      ]
     },
     "D": {
-      "midnight": "Can turn damage into arts",
-      "hibiscus_the_purifier": ""
+      "midnight": [
+        "Can turn damage into arts",
+        ""
+      ],
+      "hibiscus_the_purifier": [
+        "",
+        ""
+      ]
     },
     "F": {}
   },

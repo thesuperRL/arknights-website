@@ -93,6 +93,7 @@
     "profileImage": "/images/operators/ascalon.png",
     "niches": [
       "aoe-physical-dps",
+      "arts-dps",
       "physical-dps",
       "stalling"
     ],
@@ -103,9 +104,11 @@
     "internalName": "char_4132_ascln",
     "nicheTiers": {
       "aoe-physical-dps": "SS",
+      "arts-dps": "A",
       "physical-dps": "S",
       "stalling": "SS"
-    }
+    },
+    "synergies": {}
   },
   "ash": {
     "id": "ash",

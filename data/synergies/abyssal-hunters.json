@@ -1,10 +1,38 @@
 {
   "name": "Abyssal Hunters Team",
   "description": "A team centered around Abyssal Hunter faction buffs.",
-  "core": {
-  },
+  "core": {},
   "optional": {
-    "Abyssal Hunters": ["andreana", "gladiia", "skadi", "skadi_the_corrupting_heart", "specter", "specter_the_unchained", "ulpianus"]
+    "Abyssal Hunters": [
+      [
+        "andreana",
+        ""
+      ],
+      [
+        "gladiia",
+        ""
+      ],
+      [
+        "skadi",
+        ""
+      ],
+      [
+        "skadi_the_corrupting_heart",
+        ""
+      ],
+      [
+        "specter",
+        ""
+      ],
+      [
+        "specter_the_unchained",
+        ""
+      ],
+      [
+        "ulpianus",
+        ""
+      ]
+    ]
   },
   "corePointBonus": 0,
   "optionalPointBonus": 30,

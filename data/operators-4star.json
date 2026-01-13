@@ -409,6 +409,7 @@
     "profileImage": "/images/operators/ethan.png",
     "niches": [
       "aoe-physical-dps",
+      "arts-dps",
       "low-rarity",
       "physical-dps",
       "stalling"
@@ -419,10 +420,12 @@
     "internalName": "char_355_ethan",
     "nicheTiers": {
       "aoe-physical-dps": "S",
+      "arts-dps": "C",
       "physical-dps": "A",
       "stalling": "S",
       "low-rarity": "A"
-    }
+    },
+    "synergies": {}
   },
   "frostleaf": {
     "id": "frostleaf",
