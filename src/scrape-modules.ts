@@ -199,77 +199,93 @@ async function scrapeModules(): Promise<void> {
   const html = await fetchHtml(url);
   const $ = cheerio.load(html);
 
-  const modules: ModuleInfo[] = [];
+  // Use a Map to handle duplicates (last one wins)
+  const modulesMap = new Map<string, ModuleInfo>();
 
-  // Find the section with class "tabber__section"
-  const section = $('section.tabber__section').first();
+  // Find all sections with class "tabber__section"
+  const sections = $('section.tabber__section');
   
-  if (section.length === 0) {
+  if (sections.length === 0) {
     console.error('❌ Could not find tabber__section');
     return;
   }
 
-  console.log('📋 Found tabber section, searching for modules...');
+  console.log(`📋 Found ${sections.length} tabber section(s), searching for modules...`);
 
-  // Find all article elements with class "tabber__panel" within the section
-  section.find('article.tabber__panel').each((_, panel) => {
-    const $panel = $(panel);
+  // Process each section
+  sections.each((sectionIndex, section) => {
+    const $section = $(section);
+    console.log(`\n  Processing section ${sectionIndex + 1}...`);
     
-    // Find all td elements with the specific style
-    $panel.find('td[style*="background:var(--theme-th-background)"]').each((_, td) => {
-      const $td = $(td);
+    // Find all article elements with class "tabber__panel" within the section
+    $section.find('article.tabber__panel').each((_, panel) => {
+      const $panel = $(panel);
       
-      // Find the img tag
-      const $img = $td.find('img').first();
-      if ($img.length === 0) return;
-      
-      // Get image source
-      let imageUrl = $img.attr('src') || $img.attr('data-src') || '';
-      if (!imageUrl) return;
-      
-      // Get the full resolution image URL from srcset if available
-      const srcset = $img.attr('srcset');
-      if (srcset) {
-        // srcset format: "url1 1.5x, url2 2x"
-        // Try to get the 2x version for better quality
-        const matches = srcset.match(/([^\s,]+)\s+2x/);
-        if (matches && matches[1]) {
-          imageUrl = matches[1];
-        } else {
-          // Fall back to first URL in srcset
-          const firstMatch = srcset.match(/([^\s,]+)/);
-          if (firstMatch && firstMatch[1]) {
-            imageUrl = firstMatch[1];
+      // Find all td elements with the specific style
+      $panel.find('td[style*="background:var(--theme-th-background)"]').each((_, td) => {
+        const $td = $(td);
+        
+        // Find the img tag
+        const $img = $td.find('img').first();
+        if ($img.length === 0) return;
+        
+        // Get image source
+        let imageUrl = $img.attr('src') || $img.attr('data-src') || '';
+        if (!imageUrl) return;
+        
+        // Get the full resolution image URL from srcset if available
+        const srcset = $img.attr('srcset');
+        if (srcset) {
+          // srcset format: "url1 1.5x, url2 2x"
+          // Try to get the 2x version for better quality
+          const matches = srcset.match(/([^\s,]+)\s+2x/);
+          if (matches && matches[1]) {
+            imageUrl = matches[1];
+          } else {
+            // Fall back to first URL in srcset
+            const firstMatch = srcset.match(/([^\s,]+)/);
+            if (firstMatch && firstMatch[1]) {
+              imageUrl = firstMatch[1];
+            }
           }
         }
-      }
-      
-      // Find the div with the module code (the one with <b> tag)
-      // The module code div should be the one with margin-top:5px style
-      const $div = $td.find('div[style*="margin-top:5px"]').first();
-      
-      if ($div.length === 0) return;
-      
-      const moduleCode = $div.find('b').first().text().trim();
-      if (!moduleCode) return;
-      
-      // Filter out class names - module codes are typically 3-4 letters followed by -X, -Y, or -Δ
-      // Examples: CHA-X, SPC-Y, MSC-Δ, CCR-X, etc.
-      // Class names are longer and don't match this pattern
-      const moduleCodePattern = /^[A-Z]{2,4}-[XYΔ]$/;
-      if (!moduleCodePattern.test(moduleCode)) {
-        // Skip class names, only keep module codes
-        return;
-      }
-      
-      modules.push({
-        code: moduleCode,
-        imageUrl: imageUrl
+        
+        // Find the div with the module code (the one with <b> tag)
+        // The module code div should be the one with margin-top:5px style
+        const $div = $td.find('div[style*="margin-top:5px"]').first();
+        
+        if ($div.length === 0) return;
+        
+        const moduleCode = $div.find('b').first().text().trim();
+        if (!moduleCode) return;
+        
+        // Filter out class names - module codes are typically 3-4 letters followed by -X, -Y, or -Δ
+        // Examples: CHA-X, SPC-Y, MSC-Δ, CCR-X, etc.
+        // Class names are longer and don't match this pattern
+        const moduleCodePattern = /^[A-Z]{2,4}-[XYΔ]$/;
+        if (!moduleCodePattern.test(moduleCode)) {
+          // Skip class names, only keep module codes
+          return;
+        }
+        
+        // Store in map (duplicates will be replaced)
+        const isDuplicate = modulesMap.has(moduleCode);
+        modulesMap.set(moduleCode, {
+          code: moduleCode,
+          imageUrl: imageUrl
+        });
+        
+        if (isDuplicate) {
+          console.log(`  Found module: ${moduleCode} (replacing duplicate)`);
+        } else {
+          console.log(`  Found module: ${moduleCode}`);
+        }
       });
-      
-      console.log(`  Found module: ${moduleCode}`);
     });
   });
+
+  // Convert map to array
+  const modules = Array.from(modulesMap.values());
 
   console.log(`\n📦 Found ${modules.length} modules`);
   console.log('📥 Downloading images...\n');
