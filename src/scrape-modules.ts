@@ -250,23 +250,35 @@ async function scrapeModules(): Promise<void> {
           }
         }
         
-        // Find the div with the module code (the one with <b> tag)
-        // The module code div should be the one with margin-top:5px style
-        const $div = $td.find('div[style*="margin-top:5px"]').first();
+        let moduleCode: string | null = null;
         
-        if ($div.length === 0) return;
-        
-        const moduleCode = $div.find('b').first().text().trim();
-        if (!moduleCode) return;
-        
-        // Filter out class names - module codes are typically 3-4 letters followed by -X, -Y, or -Δ
-        // Examples: CHA-X, SPC-Y, MSC-Δ, CCR-X, etc.
-        // Class names are longer and don't match this pattern
-        const moduleCodePattern = /^[A-Z]{2,4}-[XYΔ]$/;
-        if (!moduleCodePattern.test(moduleCode)) {
-          // Skip class names, only keep module codes
-          return;
+        // Method 1: Try to get module code from alt attribute (for section 2 / Integrated Strategies)
+        const altText = $img.attr('alt') || '';
+        if (altText && altText.includes('module')) {
+          // Extract module code from alt like "ISW-α module.png" -> "ISW-α"
+          const altMatch = altText.match(/^([A-Z]{2,4}-[A-Zα-ωΑ-ΩΔ])\s+module/i);
+          if (altMatch && altMatch[1]) {
+            moduleCode = altMatch[1];
+          }
         }
+        
+        // Method 2: Try to get module code from div with bold text (for section 1)
+        if (!moduleCode) {
+          const $div = $td.find('div[style*="margin-top:5px"]').first();
+          if ($div.length > 0) {
+            const codeFromDiv = $div.find('b').first().text().trim();
+            if (codeFromDiv) {
+              // Filter out class names - module codes are typically 3-4 letters followed by -X, -Y, -Δ, or Greek letters
+              // Examples: CHA-X, SPC-Y, MSC-Δ, ISW-α, etc.
+              const moduleCodePattern = /^[A-Z]{2,4}-[XYΔα-ωΑ-Ω]$/;
+              if (moduleCodePattern.test(codeFromDiv)) {
+                moduleCode = codeFromDiv;
+              }
+            }
+          }
+        }
+        
+        if (!moduleCode) return;
         
         // Store in map (duplicates will be replaced)
         const isDuplicate = modulesMap.has(moduleCode);
