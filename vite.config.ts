@@ -34,7 +34,8 @@ export default defineConfig({
           if (!fs.existsSync(imagesDir)) {
             fs.mkdirSync(imagesDir, { recursive: true });
           }
-          // Restore images
+          
+          // Restore operators directory
           const operatorsDir = path.join(imagesDir, 'operators');
           if (fs.existsSync(operatorsDir)) {
             fs.rmSync(operatorsDir, { recursive: true, force: true });
@@ -46,15 +47,33 @@ export default defineConfig({
             const fileCount = fs.readdirSync(operatorsDir).length;
             console.log(`✅ Restored ${fileCount} operator images`);
           }
+          
+          // Restore modules directory
+          const modulesDir = path.join(imagesDir, 'modules');
+          if (fs.existsSync(modulesDir)) {
+            fs.rmSync(modulesDir, { recursive: true, force: true });
+          }
+          const backupModulesDir = path.join(backupDir, 'modules');
+          if (fs.existsSync(backupModulesDir)) {
+            fs.mkdirSync(modulesDir, { recursive: true });
+            fs.cpSync(backupModulesDir, modulesDir, { recursive: true });
+            const fileCount = fs.readdirSync(modulesDir).length;
+            console.log(`✅ Restored ${fileCount} module images`);
+          }
+          
           // Clean up backup
           fs.rmSync(backupDir, { recursive: true, force: true });
         } else {
           // Ensure images directory exists even if no backup
           const operatorsDir = path.resolve(__dirname, 'public/images/operators');
+          const modulesDir = path.resolve(__dirname, 'public/images/modules');
           if (!fs.existsSync(operatorsDir)) {
             fs.mkdirSync(operatorsDir, { recursive: true });
-            console.log('⚠️  No backup found, created empty images directory');
           }
+          if (!fs.existsSync(modulesDir)) {
+            fs.mkdirSync(modulesDir, { recursive: true });
+          }
+          console.log('⚠️  No backup found, created empty images directories');
         }
       }
     }
