@@ -345,7 +345,7 @@
 .operator-level-badge-overlay {
     position: absolute;
     top: 0.25rem;
-    right: 0.25rem;
+    left: 0.25rem;
     z-index: 15;
     pointer-events: none;
 }
@@ -354,9 +354,9 @@
 .operator-e2-badge {
     background: linear-gradient(135deg, #ffd700, #ffed4e);
     color: #333;
-    font-size: 0.7rem;
+    font-size: 1rem;
     font-weight: bold;
-    padding: 0.125rem 0.375rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 4px;
     text-shadow: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -365,9 +365,9 @@
 
 /* Module badge image styling */
 .operator-module-badge {
-    width: 24px;
+    width: 36px;
     height: auto;
-    max-height: 32px;
+    max-height: 48px;
     object-fit: contain;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
     pointer-events: none;

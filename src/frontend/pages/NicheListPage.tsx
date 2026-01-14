@@ -202,11 +202,6 @@ const NicheListPage: React.FC = () => {
                   </Link>
                   <div className="operator-class">
                     {entry.operator.class} • {entry.operator.rarity}★
-                    {entry.level && entry.level.trim() !== '' && (
-                      <span className="operator-level-badge">
-                        {entry.level === 'E2' ? 'E2' : `M:${entry.level}`}
-                      </span>
-                    )}
                   </div>
                   {entry.note && (
                     <div className="operator-note-tooltip">{entry.note}</div>
