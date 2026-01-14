@@ -1,22 +1,18 @@
 {
   "ryanli1366@gmail.com": {
     "selectedOperators": [
-      "kal_tsit",
-      "cantabile",
-      "jaye",
-      "amiya_medic",
-      "warfarin",
-      "ascalon",
-      "lappland",
-      "shu",
-      "tragodia"
+      {
+        "operatorId": "kal_tsit",
+        "selectionCount": 2
+      }
     ],
-    "currentHope": 11,
+    "currentHope": 6,
     "hopeCosts": {
       "4": 0,
-      "5": 2,
+      "5": 3,
       "6": 6
     },
-    "teamSize": 7
+    "promotionCost": 3,
+    "teamSize": 8
   }
 }

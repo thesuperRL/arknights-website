@@ -74,19 +74,150 @@ function getTierNameFromValue(tierValue: number): string {
   return tierMap[tierValue] || 'Unknown';
 }
 
+// Helper function to check if operator has E2 or module levels available
+async function hasOperatorPromotionLevels(operatorId: string, niches: string[]): Promise<boolean> {
+  for (const niche of niches) {
+    // Check if operator has tiers at E2 or module levels (not level 0)
+    if (!nicheListCache[niche]) {
+      try {
+        const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+        if (response.ok) {
+          const data = await response.json();
+          nicheListCache[niche] = data;
+        } else {
+          continue;
+        }
+      } catch (error) {
+        continue;
+      }
+    }
+    
+    const nicheList = nicheListCache[niche];
+    if (!nicheList || !nicheList.operators) continue;
+    
+    for (const entry of nicheList.operators) {
+      if (entry.operatorId === operatorId && entry.level && entry.level.trim() !== '') {
+        return true; // Found an E2 or module level requirement
+      }
+    }
+  }
+  return false;
+}
+
+// Helper function to get operator tier at level 0 (empty string level)
+async function getOperatorTierInNicheAtLevel0(operatorId: string, niche: string): Promise<number> {
+  if (!nicheListCache[niche]) {
+    try {
+      const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+      if (response.ok) {
+        const data = await response.json();
+        nicheListCache[niche] = data;
+      } else {
+        return 0;
+      }
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  const nicheList = nicheListCache[niche];
+  if (!nicheList || !nicheList.operators) {
+    return 0;
+  }
+
+  const tierValues: Record<string, number> = {
+    'SS': 120,
+    'S': 90,
+    'A': 75,
+    'B': 50,
+    'C': 30,
+    'D': 15,
+    'F': 5
+  };
+
+  let highestTier = 0;
+
+  // Find highest tier at level 0 (empty string)
+  for (const entry of nicheList.operators) {
+    if (entry.operatorId === operatorId) {
+      const entryLevel = entry.level || '';
+      if (entryLevel === '') {
+        const tierScore = tierValues[entry.rating] || 0;
+        if (tierScore > highestTier) {
+          highestTier = tierScore;
+        }
+      }
+    }
+  }
+
+  return highestTier;
+}
+
+// Helper function to get new tiers at promotion level (E2 or modules) that are better than level 0
+async function getOperatorNewTiersAtPromotion(operatorId: string, niche: string): Promise<number> {
+  if (!nicheListCache[niche]) {
+    try {
+      const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+      if (response.ok) {
+        const data = await response.json();
+        nicheListCache[niche] = data;
+      } else {
+        return 0;
+      }
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  const nicheList = nicheListCache[niche];
+  if (!nicheList || !nicheList.operators) {
+    return 0;
+  }
+
+  const tierValues: Record<string, number> = {
+    'SS': 120,
+    'S': 90,
+    'A': 75,
+    'B': 50,
+    'C': 30,
+    'D': 15,
+    'F': 5
+  };
+
+  const level0Tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
+  let highestNewTier = 0;
+
+  // Find highest tier at E2/module levels that's better than level 0
+  for (const entry of nicheList.operators) {
+    if (entry.operatorId === operatorId) {
+      const entryLevel = entry.level || '';
+      if (entryLevel !== '') {
+        // This is an E2 or module level
+        const tierScore = tierValues[entry.rating] || 0;
+        if (tierScore > level0Tier && tierScore > highestNewTier) {
+          highestNewTier = tierScore;
+        }
+      }
+    }
+  }
+
+  return highestNewTier;
+}
+
 // Local recommendation algorithm - ONLY considers raised/deployable operators
 async function getIntegratedStrategiesRecommendation(
   allOperators: Record<string, Operator>,
   raisedOperatorIds: string[], // ONLY raised operators that user can deploy
-  currentTeamOperatorIds: string[],
+  currentTeamOperators: SelectedOperator[], // Full team with selection counts
   requiredClasses: string[],
   preferences: TeamPreferences,
   temporaryRecruitment?: string,
   currentHope?: number,
   hopeCosts?: Record<number, number>,
   trashOperators?: Set<string>,
-  teamSize?: number
-): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number }> {
+  teamSize?: number,
+  promotionCost?: number
+): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number; isPromotion?: boolean }> {
   // Helper functions for hope costs
   const getHopeCost = (rarity: number): number => {
     return hopeCosts?.[rarity] ?? 0;
@@ -107,14 +238,43 @@ async function getIntegratedStrategiesRecommendation(
   // ONLY use raised operators (user's deployable collection)
   let availableOperatorIds = effectiveRaisedOperators.filter(id => allOperators[id]);
 
+  // Create a map of operator selection counts
+  const selectionCounts = new Map<string, number>();
+  for (const teamOp of currentTeamOperators) {
+    const count = selectionCounts.get(teamOp.operatorId) || 0;
+    selectionCounts.set(teamOp.operatorId, count + (teamOp.selectionCount || 1));
+  }
+
   // Filter to only operators of the required classes
   let availableOperators = availableOperatorIds
     .filter(id => requiredClasses.includes(allOperators[id].class))
-    .filter(id => !currentTeamOperatorIds.includes(id)); // Exclude operators already in team
+    .filter(id => {
+      const selectionCount = selectionCounts.get(id) || 0;
+      // Allow operator if:
+      // 1. Not selected yet (selectionCount === 0) - can recruit
+      // 2. Selected once and has promotion levels available (selectionCount === 1) - can promote
+      if (selectionCount === 0) return true;
+      if (selectionCount === 1) {
+        const operator = allOperators[id];
+        if (!operator || !operator.niches) return false;
+        // Check if operator has promotion levels and sufficient hope
+        const actualPromotionCost = promotionCost ?? 3;
+        if (currentHope !== undefined && currentHope < actualPromotionCost) {
+          return false; // Insufficient hope for promotion
+        }
+        return hasOperatorPromotionLevels(id, operator.niches);
+      }
+      return false; // Already selected twice
+    });
 
-  // Filter based on hope requirements
+  // Filter based on hope requirements for first selection (recruit)
+  // Promotions are already filtered above
   if (currentHope !== undefined) {
     availableOperators = availableOperators.filter(id => {
+      const selectionCount = selectionCounts.get(id) || 0;
+      // Promotions already filtered above
+      if (selectionCount === 1) return true;
+      
       const operator = allOperators[id];
       // Temporary recruitment costs 0 hope
       if (temporaryRecruitment === id) {
@@ -129,7 +289,7 @@ async function getIntegratedStrategiesRecommendation(
     const classText = requiredClasses.length === 1
       ? requiredClasses[0]
       : `${requiredClasses.join(' or ')}`;
-    const teamCondition = currentTeamOperatorIds.length > 0 ? ' and aren\'t already in your team' : '';
+    const teamCondition = currentTeamOperators.length > 0 ? ' and aren\'t already in your team (or already promoted)' : '';
     return {
       recommendedOperator: null,
       reasoning: `No ${classText} raised operators available${teamCondition}.`,
@@ -137,21 +297,39 @@ async function getIntegratedStrategiesRecommendation(
     };
   }
 
-  // Load current team operators and their niches
-  const currentTeamOperators = currentTeamOperatorIds.map(id => allOperators[id]).filter(Boolean);
+  // Load current team niches based on selection counts
+  // For level 0 selections, use level 0 tiers; for promotions, use new tiers
   const currentTeamNiches: string[] = [];
+  const currentTeamNichesByLevel: Record<string, Set<string>> = {}; // niche -> set of operator IDs at level 0
 
-  for (const operator of currentTeamOperators) {
+  for (const teamOp of currentTeamOperators) {
+    const operator = teamOp.operator;
+    const selectionCount = teamOp.selectionCount || 1;
+    
     if (operator && operator.niches) {
-      currentTeamNiches.push(...operator.niches);
+      if (selectionCount === 1) {
+        // First selection: use level 0 tiers
+        for (const niche of operator.niches) {
+          currentTeamNiches.push(niche);
+          if (!currentTeamNichesByLevel[niche]) {
+            currentTeamNichesByLevel[niche] = new Set();
+          }
+          currentTeamNichesByLevel[niche].add(teamOp.operatorId);
+        }
+      }
+      // For promotions (selectionCount === 2), we don't add to currentTeamNiches
+      // because we'll only count NEW tiers in scoring
     }
   }
 
-  // Count current niche coverage
+  // Count current niche coverage (only from level 0 selections)
   const nicheCounts: Record<string, number> = {};
   for (const niche of currentTeamNiches) {
     nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
   }
+  
+  // Note: Promotions don't contribute to nicheCounts because they only add NEW tiers
+  // The scoring logic will handle promotions separately by checking for new tiers
 
   // Adjust niche requirements based on team size if provided
   // Scale down requirements proportionally to team size (assuming default team size is 12)
@@ -202,7 +380,7 @@ async function getIntegratedStrategiesRecommendation(
   ].filter(niche => !isExcludedNiches.has(niche)));
 
   // Score each available operator
-  const operatorScores: Array<{ operatorId: string; score: number; reasoning: string[] }> = [];
+  const operatorScores: Array<{ operatorId: string; score: number; reasoning: string[]; isPromotion: boolean }> = [];
 
   for (const operatorId of availableOperators) {
     const operator = allOperators[operatorId];
@@ -210,6 +388,10 @@ async function getIntegratedStrategiesRecommendation(
 
     let score = 0;
     const reasoning: string[] = [];
+
+    // Determine if this is a first selection (recruit) or second (promotion)
+    const selectionCount = selectionCounts.get(operatorId) || 0;
+    const isPromotion = selectionCount === 1;
 
     // Tier-based scoring - VERY significant, should outweigh hope penalties
     // Calculate tier scores across all niches the operator has
@@ -224,13 +406,32 @@ async function getIntegratedStrategiesRecommendation(
 
       const currentCount = nicheCounts[niche] || 0;
 
-      const tier = await getOperatorTierInNiche(operatorId, niche);
-      if (tier == 0) {
-        continue;
+      // Get tier based on selection type
+      let tier = 0;
+      let tierName = '';
+      
+      if (isPromotion) {
+        // Second selection (promotion): only count NEW tiers from E2/module levels
+        // Find tiers at E2/module levels that are better than level 0
+        const level0Tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
+        const promotionTier = await getOperatorNewTiersAtPromotion(operatorId, niche);
+        
+        if (promotionTier > level0Tier) {
+          tier = promotionTier;
+          tierName = getTierNameFromValue(tier);
+        } else {
+          continue; // No new tiers at promotion level
+        }
+      } else {
+        // First selection (recruit): use level 0 tiers only
+        tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
+        if (tier === 0) {
+          continue;
+        }
+        tierName = getTierNameFromValue(tier);
       }
 
       const tierPoints = tier;
-      const tierName = getTierNameFromValue(tier);
 
       if (importantNiches.has(niche)) {
         const requiredRange = defaultPreferences.requiredNiches[niche];
@@ -242,17 +443,17 @@ async function getIntegratedStrategiesRecommendation(
             // Filling a missing required niche
             const bonus = tierPoints * 5;
             score +=  bonus;
-            reasoning.push(`🎯 Fills missing required niche: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`🎯 ${isPromotion ? 'Adds new capability' : 'Fills missing required niche'}: ${niche} at ${tierName} tier (+${bonus})`);
           } else if (currentCount < requiredRange.max) {
             // Filling an under-covered required niche
             const bonus = tierPoints * 2.5;
             score += bonus;
-            reasoning.push(`➕ Strengthens required niche: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`➕ ${isPromotion ? 'Enhances capability' : 'Strengthens required niche'}: ${niche} at ${tierName} tier (+${bonus})`);
           } else {
             // Over-covered required niche (negativevalue)
             const bonus = tierPoints * (1.25);
             score += bonus;
-            reasoning.push(`⚠️ Over-specializes in: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`⚠️ ${isPromotion ? 'Adds over-specialization' : 'Over-specializes in'}: ${niche} at ${tierName} tier (+${bonus})`);
           }
         } else if (preferredRange) {
           // Preferred niche
@@ -260,17 +461,17 @@ async function getIntegratedStrategiesRecommendation(
             // Filling a missing preferred niche
             const bonus = tierPoints * 3.5;
             score += bonus;
-            reasoning.push(`🎯 Fills missing preferred niche: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`🎯 ${isPromotion ? 'Adds new capability' : 'Fills missing preferred niche'}: ${niche} at ${tierName} tier (+${bonus})`);
           } else if (currentCount < preferredRange.max) {
             // Filling an under-covered preferred niche
             const bonus = tierPoints * 1.5;
             score += bonus;
-            reasoning.push(`➕ Strengthens preferred niche: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`➕ ${isPromotion ? 'Enhances capability' : 'Strengthens preferred niche'}: ${niche} at ${tierName} tier (+${bonus})`);
           } else {
             // Over-covered preferred niche (negative value)
             const bonus = tierPoints * (0.75);
             score += bonus;
-            reasoning.push(`⚠️ Over-specializes in: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`⚠️ ${isPromotion ? 'Adds over-specialization' : 'Over-specializes in'}: ${niche} at ${tierName} tier (+${bonus})`);
           }
         }
       } else if (niche == "trash-operators") {
@@ -285,8 +486,23 @@ async function getIntegratedStrategiesRecommendation(
       }
     }
 
-    // Apply hope cost penalty - higher hope cost operators are penalized when their niches are already well-covered
-    const hopeCost = getActualHopeCost(operator.rarity || 1);
+    // Apply hope cost penalty
+    // For promotions (second selection), use configured promotion cost
+    // For first selection (recruit), use normal rarity-based hope cost
+    let hopeCost: number;
+    if (isPromotion) {
+      hopeCost = promotionCost ?? 3; // Promotion cost
+      reasoning.push(`🔄 This is a promotion (second selection)`);
+    } else {
+      hopeCost = getActualHopeCost(operator.rarity || 1);
+    }
+
+    // Filter based on hope requirements
+    if (currentHope !== undefined && currentHope < hopeCost) {
+      // Skip this operator if insufficient hope
+      continue;
+    }
+
     // Calculate how much the operator's niches are needed (0 = not needed, higher = more needed)
     let nicheNeedFactor = 0;
 
@@ -314,7 +530,7 @@ async function getIntegratedStrategiesRecommendation(
     }
 
     // Apply large hope cost penalty - always present, discourages expensive operators
-    const hopePenalty = hopeCost * 42; // Large multiplier to make hope cost very significant
+    const hopePenalty = hopeCost * 30; // Large multiplier to make hope cost very significant
     score -= hopePenalty;
     reasoning.push(`💎 Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
 
@@ -329,7 +545,8 @@ async function getIntegratedStrategiesRecommendation(
     operatorScores.push({
       operatorId,
       score,
-      reasoning
+      reasoning,
+      isPromotion
     });
   }
 
@@ -367,15 +584,24 @@ async function getIntegratedStrategiesRecommendation(
 
   const bestOperator = operatorScores[0];
   const operator = allOperators[bestOperator.operatorId];
+  const isPromotion = bestOperator.isPromotion || false;
 
   // Create detailed reasoning with better formatting
   const classText = requiredClasses.length === 1
     ? requiredClasses[0]
     : `${requiredClasses.slice(0, -1).join(', ')} or ${requiredClasses[requiredClasses.length - 1]}`;
 
+  const actionType = isPromotion ? 'Promotion' : 'Recruitment';
+  const actualPromotionCost = promotionCost ?? 3;
   const reasoningParts = [
-    `🏆 **Recommended ${classText} Operator**`,
+    `🏆 **Recommended ${classText} ${actionType}**`,
     '',
+    ...(isPromotion ? [
+      `🔄 **This is a promotion (second selection)**`,
+      `💎 **Cost: ${actualPromotionCost} hope**`,
+      `✨ **Adds new tiers from E2/module levels only**`,
+      ''
+    ] : []),
     ...(temporaryRecruitment ? [
       `💫 **Temporary recruitment: ${allOperators[temporaryRecruitment]?.name || 'Unknown Operator'} (considered owned & raised)**`,
       ''
@@ -385,13 +611,16 @@ async function getIntegratedStrategiesRecommendation(
     '',
     `**Final Score: ${bestOperator.score}**`,
     '',
-    '*This operator was selected because it best complements your current team composition and fills important gaps.*'
+    isPromotion 
+      ? '*This promotion adds new capabilities (E2/module tiers) that weren\'t available at level 0.*'
+      : '*This operator was selected because it best complements your current team composition and fills important gaps.*'
   ];
 
   return {
     recommendedOperator: operator,
     reasoning: reasoningParts.join('\n'),
-    score: bestOperator.score
+    score: bestOperator.score,
+    isPromotion: isPromotion
   };
 }
 
@@ -459,12 +688,14 @@ interface Operator {
 interface SelectedOperator {
   operatorId: string;
   operator: Operator;
+  selectionCount?: number; // 1 = recruited at level 0, 2 = promoted (for IS only)
 }
 
 interface RecommendationResult {
   recommendedOperator: Operator | null;
   reasoning: string;
   score: number;
+  isPromotion?: boolean; // True if this is a promotion (second selection)
 }
 
 const CLASS_OPTIONS = [
@@ -489,6 +720,8 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [selectedOperators, setSelectedOperators] = useState<SelectedOperator[]>([]);
   const [requiredClasses, setRequiredClasses] = useState<Set<string>>(new Set());
   const [recommendation, setRecommendation] = useState<RecommendationResult | null>(null);
+  const [allRecommendations, setAllRecommendations] = useState<RecommendationResult[]>([]);
+  const [currentRecommendationIndex, setCurrentRecommendationIndex] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showOperatorSelectModal, setShowOperatorSelectModal] = useState(false);
@@ -503,6 +736,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     5: 3,
     4: 0
   });
+  const [promotionCost, setPromotionCost] = useState<number>(3);
   const [trashOperators, setTrashOperators] = useState<Set<string>>(new Set());
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
   const [teamSize, setTeamSize] = useState<number>(8);
@@ -548,7 +782,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     if (user && Object.keys(allOperators).length > 0 && !isInitialLoad) {
       saveISTeamState();
     }
-  }, [selectedOperators, currentHope, hopeCosts, teamSize, user, allOperators, isInitialLoad]);
+  }, [selectedOperators, currentHope, hopeCosts, promotionCost, teamSize, user, allOperators, isInitialLoad]);
 
   const loadPreferences = async () => {
     try {
@@ -598,6 +832,10 @@ const IntegratedStrategiesPage: React.FC = () => {
             if (data.hopeCosts) {
               setHopeCosts(data.hopeCosts);
             }
+            
+            if (data.promotionCost !== undefined) {
+              setPromotionCost(data.promotionCost);
+            }
             return; // Early return if only loading hope
           }
           
@@ -610,6 +848,10 @@ const IntegratedStrategiesPage: React.FC = () => {
             setHopeCosts(data.hopeCosts);
           }
           
+          if (data.promotionCost !== undefined) {
+            setPromotionCost(data.promotionCost);
+          }
+          
           // Restore team size
           if (data.teamSize !== undefined) {
             setTeamSize(data.teamSize);
@@ -618,11 +860,26 @@ const IntegratedStrategiesPage: React.FC = () => {
           // Restore selected operators only after allOperators is loaded
           if (Object.keys(allOperators).length > 0) {
             if (data.selectedOperators && Array.isArray(data.selectedOperators)) {
+              // Handle both old format (array of strings) and new format (array of objects with selectionCount)
               const operators = data.selectedOperators
-                .map((opId: string) => {
+                .map((item: any) => {
+                  let opId: string;
+                  let selectionCount: number = 1;
+                  
+                  if (typeof item === 'string') {
+                    // Old format: just operator ID
+                    opId = item;
+                  } else if (item && typeof item === 'object' && item.operatorId) {
+                    // New format: object with operatorId and selectionCount
+                    opId = item.operatorId;
+                    selectionCount = item.selectionCount || 1;
+                  } else {
+                    return null;
+                  }
+                  
                   const op = allOperators[opId];
                   if (op) {
-                    return { operatorId: opId, operator: op };
+                    return { operatorId: opId, operator: op, selectionCount };
                   }
                   return null;
                 })
@@ -963,9 +1220,13 @@ const IntegratedStrategiesPage: React.FC = () => {
     
     try {
       const teamState = {
-        selectedOperators: selectedOperators.map(s => s.operatorId),
+        selectedOperators: selectedOperators.map(s => ({
+          operatorId: s.operatorId,
+          selectionCount: s.selectionCount || 1
+        })),
         currentHope,
         hopeCosts,
+        promotionCost,
         teamSize
       };
       
@@ -1004,6 +1265,7 @@ const IntegratedStrategiesPage: React.FC = () => {
         5: 3,
         4: 0
       });
+      setPromotionCost(3);
       setTeamSize(8);
       setOptimalTeam(new Set());
       setRecommendation(null);
@@ -1070,29 +1332,59 @@ const IntegratedStrategiesPage: React.FC = () => {
     }
   };
 
-  const addOperator = (operatorId: string) => {
+  const addOperator = async (operatorId: string, isPromotion: boolean = false) => {
     const operator = allOperators[operatorId];
     if (!operator) return;
 
-    // Don't add if already selected
-    if (selectedOperators.some(selected => selected.operatorId === operatorId)) {
-      return;
-    }
-
-    // Calculate hope cost for this operator
-    const operatorRarity = operator.rarity || 1;
-    const operatorHopeCost = hopeCosts[operatorRarity] || 0;
-
-    // Decrease current hope by the operator's cost (don't go below 0)
-    setCurrentHope(prev => Math.max(0, prev - operatorHopeCost));
-
-    setSelectedOperators(prev => [...prev, { operatorId, operator }]);
+    setSelectedOperators(prev => {
+      const existing = prev.find(s => s.operatorId === operatorId);
+      
+      if (existing) {
+        // Operator already selected
+        if (existing.selectionCount === 1 && isPromotion) {
+          // Promotion: second selection
+          // No hope check or subtraction for manual additions
+          
+          // Update to selection count 2 (promotion)
+          return prev.map(s => 
+            s.operatorId === operatorId 
+              ? { ...s, selectionCount: 2 }
+              : s
+          );
+        }
+        // Already promoted or invalid state
+        return prev;
+      } else {
+        // First selection (recruit at level 0)
+        // No hope check or subtraction for manual additions
+        
+        return [...prev, { operatorId, operator, selectionCount: 1 }];
+      }
+    });
+    
     setRecommendation(null); // Clear recommendation when team changes
     setError(null); // Clear any previous error
   };
 
   const removeOperator = (operatorId: string) => {
-    setSelectedOperators(prev => prev.filter(selected => selected.operatorId !== operatorId));
+    setSelectedOperators(prev => {
+      const existing = prev.find(s => s.operatorId === operatorId);
+      if (!existing) return prev;
+      
+      if (existing.selectionCount === 2) {
+        // If removing a promotion, downgrade to level 0 (selectionCount = 1)
+        // No hope refund for manual removals
+        return prev.map(s => 
+          s.operatorId === operatorId 
+            ? { ...s, selectionCount: 1 }
+            : s
+        );
+      } else {
+        // Remove completely if it's the first selection
+        // No hope refund for manual removals
+        return prev.filter(selected => selected.operatorId !== operatorId);
+      }
+    });
     setRecommendation(null); // Clear recommendation when team changes
   };
 
@@ -1120,29 +1412,98 @@ const IntegratedStrategiesPage: React.FC = () => {
       const raisedOpsArray = Array.from(raisedOperators); // raisedOperators are the deployable operators
 
       // Use optimal team for recommendations if team size is set
-      const teamForRecommendation = teamSize > 0 && optimalTeam.size > 0 
-        ? Array.from(optimalTeam)
-        : operatorIds;
+      // Convert optimal team IDs back to SelectedOperator objects with selection counts
+      let teamForRecommendation: SelectedOperator[];
+      if (teamSize > 0 && optimalTeam.size > 0) {
+        // Map optimal team IDs to SelectedOperator objects, preserving selection counts
+        teamForRecommendation = Array.from(optimalTeam).map(opId => {
+          const existing = selectedOperators.find(s => s.operatorId === opId);
+          if (existing) {
+            return existing;
+          }
+          // If not in selectedOperators, create new entry (shouldn't happen, but handle it)
+          return {
+            operatorId: opId,
+            operator: allOperators[opId],
+            selectionCount: 1
+          };
+        });
+      } else {
+        // Use selectedOperators directly (already has selection counts)
+        teamForRecommendation = selectedOperators;
+      }
 
-      const result = await getIntegratedStrategiesRecommendation(
-        allOperators,
-        raisedOpsArray, // ONLY raised operators
-        teamForRecommendation,
-        Array.from(requiredClasses),
-        preferences,
-        temporaryRecruitment || undefined,
-        currentHope,
-        hopeCosts,
-        trashOperators,
-        teamSize
-      );
+      // Get multiple recommendations (top 10) by temporarily excluding previous recommendations
+      const recommendations: RecommendationResult[] = [];
+      const excludedOperators = new Set<string>();
+      const maxRecommendations = 10;
 
-      setRecommendation(result);
+      for (let i = 0; i < maxRecommendations; i++) {
+        // Create a modified raised operators array that excludes already recommended operators
+        const filteredRaisedOps = raisedOpsArray.filter(id => !excludedOperators.has(id));
+        
+        if (filteredRaisedOps.length === 0) {
+          break; // No more operators to recommend
+        }
+
+        const result = await getIntegratedStrategiesRecommendation(
+          allOperators,
+          filteredRaisedOps,
+          teamForRecommendation,
+          Array.from(requiredClasses),
+          preferences,
+          temporaryRecruitment || undefined,
+          currentHope,
+          hopeCosts,
+          trashOperators,
+          teamSize,
+          promotionCost
+        );
+
+        if (result.recommendedOperator) {
+          recommendations.push(result);
+          excludedOperators.add(result.recommendedOperator.id);
+        } else {
+          // No more valid recommendations
+          break;
+        }
+      }
+
+      if (recommendations.length > 0) {
+        setAllRecommendations(recommendations);
+        setCurrentRecommendationIndex(0);
+        setRecommendation(recommendations[0]);
+      } else {
+        // No recommendations found
+        setAllRecommendations([]);
+        setCurrentRecommendationIndex(0);
+        setRecommendation({
+          recommendedOperator: null,
+          reasoning: 'No suitable operators found for your team composition.',
+          score: 0
+        });
+      }
     } catch (err: any) {
       console.error('Error getting recommendation:', err);
       setError(err.message || 'Failed to get recommendation');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const goToPreviousRecommendation = () => {
+    if (currentRecommendationIndex > 0) {
+      const newIndex = currentRecommendationIndex - 1;
+      setCurrentRecommendationIndex(newIndex);
+      setRecommendation(allRecommendations[newIndex]);
+    }
+  };
+
+  const goToNextRecommendation = () => {
+    if (currentRecommendationIndex < allRecommendations.length - 1) {
+      const newIndex = currentRecommendationIndex + 1;
+      setCurrentRecommendationIndex(newIndex);
+      setRecommendation(allRecommendations[newIndex]);
     }
   };
 
@@ -1202,10 +1563,22 @@ const IntegratedStrategiesPage: React.FC = () => {
         <p>Select operators you already own and plan to use in your Integrated Strategies team. Optimal team members are highlighted.</p>
 
         <div className="selected-operators">
-          {selectedOperators.map(selected => (
+          {selectedOperators.map(selected => {
+            const selectionCount = selected.selectionCount || 1;
+            // Check if operator has promotion levels (synchronously check cache)
+            const hasPromotions = selected.operator.niches && selected.operator.niches.some(niche => {
+              const nicheList = nicheListCache[niche];
+              if (!nicheList || !nicheList.operators) return false;
+              return nicheList.operators.some((entry: any) => 
+                entry.operatorId === selected.operatorId && entry.level && entry.level.trim() !== ''
+              );
+            });
+            const canPromote = selectionCount === 1 && hasPromotions;
+            
+            return (
             <div 
               key={selected.operatorId} 
-              className={`selected-operator-card ${optimalTeam.has(selected.operatorId) ? 'optimal-team-member' : ''}`}
+              className={`selected-operator-card ${optimalTeam.has(selected.operatorId) ? 'optimal-team-member' : ''} ${selectionCount === 2 ? 'promoted' : ''}`}
             >
               <img
                 src={selected.operator.profileImage || '/images/operators/placeholder.png'}
@@ -1213,19 +1586,35 @@ const IntegratedStrategiesPage: React.FC = () => {
                 className="operator-image"
               />
               <div className="operator-info">
-                <div className="operator-name">{getOperatorName(selected.operator, language)}</div>
+                <div className="operator-name">
+                  {getOperatorName(selected.operator, language)}
+                  {selectionCount === 2 && <span className="promote-badge">↑</span>}
+                </div>
                 <Stars rarity={selected.operator.rarity} size="small" />
                 <div className="operator-class">{selected.operator.class}</div>
+                {canPromote && (
+                  <button
+                    onClick={() => {
+                      addOperator(selected.operatorId, true);
+                    }}
+                    className="promote-btn"
+                    disabled={currentHope !== undefined && currentHope < promotionCost}
+                    title={`Promote operator (costs ${promotionCost} hope)`}
+                  >
+                    🔄 Promote ({promotionCost} hope)
+                  </button>
+                )}
               </div>
               <button
                 className="remove-operator-btn"
                 onClick={() => removeOperator(selected.operatorId)}
-                title="Remove from team"
+                title={selectionCount === 2 ? "Remove promotion (downgrade to level 0)" : "Remove from team"}
               >
                 ×
               </button>
             </div>
-          ))}
+            );
+          })}
 
           <div
             className="add-operator-card"
@@ -1327,6 +1716,22 @@ const IntegratedStrategiesPage: React.FC = () => {
                 onChange={(e) => {
                   const value = parseInt(e.target.value) || 0;
                   setHopeCosts(prev => ({ ...prev, 4: value }));
+                  setRecommendation(null); // Clear recommendation when costs change
+                }}
+                className="hope-cost-input"
+              />
+            </div>
+            <div className="hope-cost-input-group">
+              <label htmlFor="promotion-cost">Promotion Cost:</label>
+              <input
+                id="promotion-cost"
+                type="number"
+                min="0"
+                max="20"
+                value={promotionCost}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value) || 0;
+                  setPromotionCost(value);
                   setRecommendation(null); // Clear recommendation when costs change
                 }}
                 className="hope-cost-input"
@@ -1446,7 +1851,32 @@ const IntegratedStrategiesPage: React.FC = () => {
 
         {recommendation && (
           <div className="recommendation-result">
-            <h3>Recommended Next Operator</h3>
+            <div className="recommendation-header">
+              <h3>Recommended Next Operator</h3>
+              {allRecommendations.length > 1 && (
+                <div className="recommendation-navigation">
+                  <button
+                    onClick={goToPreviousRecommendation}
+                    disabled={currentRecommendationIndex === 0}
+                    className="nav-btn prev-btn"
+                    title="Previous recommendation"
+                  >
+                    ← Previous
+                  </button>
+                  <span className="recommendation-counter">
+                    {currentRecommendationIndex + 1} / {allRecommendations.length}
+                  </span>
+                  <button
+                    onClick={goToNextRecommendation}
+                    disabled={currentRecommendationIndex === allRecommendations.length - 1}
+                    className="nav-btn next-btn"
+                    title="Next recommendation"
+                  >
+                    Next →
+                  </button>
+                </div>
+              )}
+            </div>
 
             {recommendation.recommendedOperator ? (
               <>
@@ -1470,12 +1900,12 @@ const IntegratedStrategiesPage: React.FC = () => {
                 <div className="recommendation-actions">
                   <button
                     onClick={() => {
-                      addOperator(recommendation.recommendedOperator!.id);
+                      addOperator(recommendation.recommendedOperator!.id, recommendation.isPromotion || false);
                       setRecommendation(null); // Clear recommendation after adding
                     }}
                     className="add-recommended-btn primary"
                   >
-                    ➕ Add to Team
+                    ➕ {recommendation.isPromotion ? 'Promote Operator' : 'Add to Team'}
                   </button>
                 </div>
               </>
