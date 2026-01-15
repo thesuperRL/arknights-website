@@ -161,14 +161,17 @@
 }
 
 .instance-level-badge {
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    background: linear-gradient(135deg, #9b59b6, #8e44ad);
-    color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.level-badge-image {
+    width: 28px;
+    height: auto;
+    max-height: 36px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
 }
 
 .ranking-niche {

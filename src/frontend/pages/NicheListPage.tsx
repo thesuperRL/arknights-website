@@ -178,7 +178,11 @@ const NicheListPage: React.FC = () => {
                       {entry.level && entry.level.trim() !== '' && (
                         <div className="operator-level-badge-overlay">
                           {entry.level === 'E2' ? (
-                            <div className="operator-e2-badge">E2</div>
+                            <img
+                              src="/images/E2.png"
+                              alt="E2"
+                              className="operator-e2-badge"
+                            />
                           ) : (
                             <img
                               src={`/images/modules/${entry.level}_module.png`}
