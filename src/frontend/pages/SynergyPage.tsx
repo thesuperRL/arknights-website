@@ -21,6 +21,7 @@ interface Operator {
 
 interface OperatorEntry {
   operatorId: string;
+  level?: string; // "" (always), "E2" (elite 2), or module code
   operator: Operator | null;
 }
 
@@ -141,19 +142,41 @@ const SynergyPage: React.FC = () => {
                         {entry.operator ? (
                           <>
                             <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
-                              <img
-                                src={entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`}
-                                alt={entry.operator.name}
-                                className="operator-image"
-                                onError={(e) => {
-                                  const target = e.target as HTMLImageElement;
-                                  if (target && !target.src.includes('data:image')) {
-                                    target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
-                                    target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                                  }
-                                }}
-                                loading="lazy"
-                              />
+                              <div className="operator-image-container">
+                                <img
+                                  src={entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`}
+                                  alt={entry.operator.name}
+                                  className="operator-image"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target && !target.src.includes('data:image')) {
+                                      target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                                      target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                                    }
+                                  }}
+                                  loading="lazy"
+                                />
+                                {entry.level && entry.level.trim() !== '' && (
+                                  <div className="operator-level-badge-overlay">
+                                    {entry.level === 'E2' ? (
+                                      <div className="operator-e2-badge">E2</div>
+                                    ) : (
+                                      <img
+                                        src={`/images/modules/${entry.level}_module.png`}
+                                        alt={entry.level}
+                                        className="operator-module-badge"
+                                        onError={(e) => {
+                                          // Hide badge if image doesn't exist
+                                          const target = e.target as HTMLImageElement;
+                                          if (target && target.parentElement) {
+                                            target.parentElement.style.display = 'none';
+                                          }
+                                        }}
+                                      />
+                                    )}
+                                  </div>
+                                )}
+                              </div>
                             </Link>
                             <Link to={`/operator/${entry.operator.id}`} className="operator-name-link">
                               <div className="operator-name">{getOperatorName(entry.operator, language)}</div>
@@ -198,19 +221,41 @@ const SynergyPage: React.FC = () => {
                         {entry.operator ? (
                           <>
                             <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
-                              <img
-                                src={entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`}
-                                alt={entry.operator.name}
-                                className="operator-image"
-                                onError={(e) => {
-                                  const target = e.target as HTMLImageElement;
-                                  if (target && !target.src.includes('data:image')) {
-                                    target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
-                                    target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                                  }
-                                }}
-                                loading="lazy"
-                              />
+                              <div className="operator-image-container">
+                                <img
+                                  src={entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`}
+                                  alt={entry.operator.name}
+                                  className="operator-image"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target && !target.src.includes('data:image')) {
+                                      target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                                      target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                                    }
+                                  }}
+                                  loading="lazy"
+                                />
+                                {entry.level && entry.level.trim() !== '' && (
+                                  <div className="operator-level-badge-overlay">
+                                    {entry.level === 'E2' ? (
+                                      <div className="operator-e2-badge">E2</div>
+                                    ) : (
+                                      <img
+                                        src={`/images/modules/${entry.level}_module.png`}
+                                        alt={entry.level}
+                                        className="operator-module-badge"
+                                        onError={(e) => {
+                                          // Hide badge if image doesn't exist
+                                          const target = e.target as HTMLImageElement;
+                                          if (target && target.parentElement) {
+                                            target.parentElement.style.display = 'none';
+                                          }
+                                        }}
+                                      />
+                                    )}
+                                  </div>
+                                )}
+                              </div>
                             </Link>
                             <Link to={`/operator/${entry.operator.id}`} className="operator-name-link">
                               <div className="operator-name">{getOperatorName(entry.operator, language)}</div>

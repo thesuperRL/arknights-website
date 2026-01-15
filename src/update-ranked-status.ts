@@ -5,6 +5,7 @@
 
 import { loadAllNicheLists } from './niche-list-utils';
 import { loadAllSynergies } from './synergy-utils';
+import { OperatorEntry } from './niche-list-types';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -72,9 +73,15 @@ function loadAllOperators(): Record<string, OperatorData> {
   return operators;
 }
 
-function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<string, Record<string, string>> {
+// Structure to store all niche instances for an operator
+interface NicheInstance {
+  tier: string;
+  level: string; // "" (always), "E2" (elite 2), or module code
+}
+
+function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<string, Record<string, NicheInstance[]>> {
   const operatorLists = loadAllNicheLists();
-  const operatorNiches = new Map<string, Record<string, string>>();
+  const operatorNiches = new Map<string, Record<string, NicheInstance[]>>();
   const unrecognizedOperators: Array<{ operatorId: string; niche: string }> = [];
 
   // Add special operator lists as if they were regular niche lists
@@ -130,19 +137,35 @@ function getOperatorNiches(allOperators: Record<string, OperatorData>): Map<stri
     // Iterate through rating groups (tiers)
     for (const [tier, operatorsInTier] of Object.entries(operatorList.operators)) {
       if (operatorsInTier) {
-        for (const operatorId of Object.keys(operatorsInTier)) {
+        for (const [operatorId, entry] of Object.entries(operatorsInTier)) {
           // Validate that operator ID exists
           if (!allOperators[operatorId]) {
             unrecognizedOperators.push({ operatorId, niche: operatorList.niche });
             continue; // Skip unrecognized operators
           }
 
+          // Parse entry to extract level information
+          let level: string = '';
+          if (typeof entry === 'string') {
+            // Old format: just description, level is empty (always has niche)
+            level = '';
+          } else if (Array.isArray(entry) && entry.length === 2) {
+            // New format: [description, level]
+            level = entry[1] || '';
+          }
+
           if (!operatorNiches.has(operatorId)) {
             operatorNiches.set(operatorId, {});
           }
-          const nicheTiers = operatorNiches.get(operatorId)!;
-          // Store filename to tier mapping
-          nicheTiers[filename] = tier;
+          const nicheInstances = operatorNiches.get(operatorId)!;
+          
+          // Initialize array for this niche if it doesn't exist
+          if (!nicheInstances[filename]) {
+            nicheInstances[filename] = [];
+          }
+          
+          // Add this instance (tier and level) to the array
+          nicheInstances[filename].push({ tier, level });
         }
       }
     }
@@ -170,10 +193,14 @@ function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<s
 
   for (const [synergyFilename, synergy] of Object.entries(synergies)) {
     // Check core groups
-    for (const [groupName, operatorIds] of Object.entries(synergy.core)) {
-      for (const operatorId of operatorIds) {
-        if (!allOperators[operatorId]) {
-          unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+    for (const [groupName, operatorEntries] of Object.entries(synergy.core)) {
+      for (const entry of operatorEntries) {
+        // Extract operator ID from entry (handles both string and [string, string] formats)
+        const operatorId = typeof entry === 'string' ? entry : (Array.isArray(entry) && entry.length >= 1 ? entry[0] : '');
+        if (!operatorId || !allOperators[operatorId]) {
+          if (operatorId) {
+            unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+          }
           continue;
         }
 
@@ -195,10 +222,14 @@ function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<s
     }
 
     // Check optional groups
-    for (const [groupName, operatorIds] of Object.entries(synergy.optional)) {
-      for (const operatorId of operatorIds) {
-        if (!allOperators[operatorId]) {
-          unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+    for (const [groupName, operatorEntries] of Object.entries(synergy.optional)) {
+      for (const entry of operatorEntries) {
+        // Extract operator ID from entry (handles both string and [string, string] formats)
+        const operatorId = typeof entry === 'string' ? entry : (Array.isArray(entry) && entry.length >= 1 ? entry[0] : '');
+        if (!operatorId || !allOperators[operatorId]) {
+          if (operatorId) {
+            unrecognizedOperators.push({ operatorId, synergy: synergy.name });
+          }
           continue;
         }
 
@@ -236,7 +267,7 @@ function getOperatorSynergies(allOperators: Record<string, OperatorData>): Map<s
   return operatorSynergies;
 }
 
-function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>, operatorSynergies: Map<string, Record<string, { role: string; groups: string[] }>>): {
+function updateOperatorFiles(operatorNiches: Map<string, Record<string, NicheInstance[]>>, operatorSynergies: Map<string, Record<string, { role: string; groups: string[] }>>): {
   updated: number;
   unranked: string[];
 } {
@@ -257,13 +288,13 @@ function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>
     let fileUpdated = false;
 
     for (const [id, operator] of Object.entries(operators)) {
-      const nicheTiers = operatorNiches.get(id) || {};
-      const nicheNames = Object.keys(nicheTiers);
+      const nicheInstancesMap = operatorNiches.get(id) || {};
+      const nicheNames = Object.keys(nicheInstancesMap);
       const synergyRoles = operatorSynergies.get(id) || {};
 
       // Handle migration from old 'ranked' field
       const currentNiches = operator.niches || [];
-      const currentNicheTiers = operator.nicheTiers || {};
+      const currentNicheInstances = (operator as any).nicheInstances || {};
       const currentSynergies = operator.synergies || {};
 
       // Sort arrays for comparison
@@ -274,9 +305,12 @@ function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>
       const nichesArrayEqual = sortedNewNiches.length === sortedCurrentNiches.length &&
         sortedNewNiches.every((val, idx) => val === sortedCurrentNiches[idx]);
 
-      // Check if nicheTiers mapping is different
-      const nicheTiersEqual = Object.keys(nicheTiers).length === Object.keys(currentNicheTiers).length &&
-        Object.keys(nicheTiers).every(key => nicheTiers[key] === currentNicheTiers[key]);
+      // Check if nicheInstances mapping is different
+      const nicheInstancesEqual = JSON.stringify(nicheInstancesMap) === JSON.stringify(currentNicheInstances);
+      
+      // nicheTiers is no longer needed - we use nicheInstances instead
+      // Remove it if it exists
+      const hasNicheTiers = 'nicheTiers' in operator;
 
       // Check if synergies mapping is different
       const synergiesEqual = JSON.stringify(synergyRoles) === JSON.stringify(currentSynergies);
@@ -287,13 +321,17 @@ function updateOperatorFiles(operatorNiches: Map<string, Record<string, string>>
       // 1, 2, and 3-star operators are always globally available
       const needsGlobalFix = (rarity === 1 || rarity === 2 || rarity === 3) && operator.global === false;
 
-      if (!nichesArrayEqual || !nicheTiersEqual || !synergiesEqual || hasOldRankedField || needsGlobalFix) {
+      if (!nichesArrayEqual || !nicheInstancesEqual || !synergiesEqual || hasOldRankedField || hasNicheTiers || needsGlobalFix) {
         const updatedOperator: any = {
           ...operator,
           niches: sortedNewNiches,
-          nicheTiers: nicheTiers,
+          nicheInstances: nicheInstancesMap, // New format: all instances with tier and level
           synergies: synergyRoles
         };
+        // Remove old nicheTiers field if it exists
+        if (hasNicheTiers) {
+          delete updatedOperator.nicheTiers;
+        }
         // Remove old 'ranked' field if it exists
         if (hasOldRankedField) {
           delete updatedOperator.ranked;
@@ -456,19 +494,35 @@ function capitalizeAllNotes(): void {
     if (!operatorList.operators) continue;
 
     let fileUpdated = false;
-    const updatedOperators: Partial<Record<string, Record<string, string>>> = {};
+    const updatedOperators: Partial<Record<string, Record<string, OperatorEntry>>> = {};
 
     // Process each rating group
     for (const [rating, operatorsInRating] of Object.entries(operatorList.operators)) {
       if (operatorsInRating) {
-        const updatedOperatorsInRating: Record<string, string> = {};
-        for (const [operatorId, description] of Object.entries(operatorsInRating)) {
+        const updatedOperatorsInRating: Record<string, OperatorEntry> = {};
+        for (const [operatorId, entry] of Object.entries(operatorsInRating)) {
+          // Parse entry: can be string (backwards compatible) or [string, string] tuple
+          let description: string = '';
+          let level: string = '';
+          
+          if (typeof entry === 'string') {
+            // Old format: just description, level is empty (always has niche)
+            description = entry;
+            level = '';
+          } else if (Array.isArray(entry) && entry.length === 2) {
+            // New format: [description, level]
+            description = entry[0] || '';
+            level = entry[1] || '';
+          }
+          
           const capitalizedDescription = capitalizeFirst(description || '');
           if (capitalizedDescription !== description) {
             fileUpdated = true;
-            updatedOperatorsInRating[operatorId] = capitalizedDescription;
+            // Preserve the level, update description
+            updatedOperatorsInRating[operatorId] = [capitalizedDescription, level];
           } else {
-            updatedOperatorsInRating[operatorId] = description;
+            // No change needed, keep original entry
+            updatedOperatorsInRating[operatorId] = entry;
           }
         }
         updatedOperators[rating] = updatedOperatorsInRating;

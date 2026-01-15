@@ -4,22 +4,54 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "nightingale": "Hands down the best resistance buff in the game, removes the concept of arts damage"
+      "nightingale": [
+        "Hands down the best resistance buff in the game, essentially removes the concept of arts damage",
+        "E2"
+      ]
     },
-    "S": {},
+    "S": {
+      "nightingale": [
+        "Hands down the best resistance buff in the game, removes the concept of arts damage",
+        ""
+      ]
+    },
     "A": {
-      "shu": "Sanctuary",
-      "nine_colored_deer": "Sanctuary",
-      "quercus": "Sanctuary",
-      "silence_the_paradigmatic": "Sanctuary"
+      "shu": [
+        "Sanctuary",
+        ""
+      ],
+      "nine_colored_deer": [
+        "Sanctuary",
+        ""
+      ],
+      "quercus": [
+        "Sanctuary",
+        ""
+      ],
+      "silence_the_paradigmatic": [
+        "Sanctuary",
+        ""
+      ]
     },
     "B": {
-      "bassline": "Kind of, with an arts shield"
+      "bassline": [
+        "Kind of, with an arts shield",
+        ""
+      ]
     },
     "C": {
-      "tsukinogi": "Sanctuary",
-      "xingzhu": "Sanctuary",
-      "croissant": "OK arts dodge buff, can share to close-by allies"
+      "tsukinogi": [
+        "Sanctuary",
+        ""
+      ],
+      "xingzhu": [
+        "Sanctuary",
+        ""
+      ],
+      "croissant": [
+        "OK arts dodge buff, can share to close-by allies",
+        ""
+      ]
     },
     "D": {},
     "F": {}

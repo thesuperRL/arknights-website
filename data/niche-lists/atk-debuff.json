@@ -5,14 +5,26 @@
   "operators": {
     "SS": {},
     "S": {
-      "shamare": ""
+      "shamare": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "thorns_the_lodestar": "",
-      "tin_man": ""
+      "thorns_the_lodestar": [
+        "",
+        "E2"
+      ],
+      "tin_man": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "mousse": ""
+      "mousse": [
+        "",
+        ""
+      ]
     },
     "C": {},
     "D": {},

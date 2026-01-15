@@ -6,7 +6,27 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { getNichesForOperator, loadNicheList } from './niche-list-utils';
 import { getOwnedOperators, getWantToUse } from './account-storage';
-import { loadAllSynergies } from './synergy-utils';
+import { loadAllSynergies, SynergyOperatorEntry } from './synergy-utils';
+
+/**
+ * Helper function to extract operator ID from a synergy entry
+ * Handles both old format (string) and new format ([string, string])
+ */
+function getOperatorIdFromSynergyEntry(entry: SynergyOperatorEntry): string {
+  if (typeof entry === 'string') {
+    return entry;
+  } else if (Array.isArray(entry) && entry.length >= 1) {
+    return entry[0];
+  }
+  return '';
+}
+
+/**
+ * Helper function to extract all operator IDs from an array of synergy entries
+ */
+function getOperatorIdsFromSynergyEntries(entries: SynergyOperatorEntry[]): string[] {
+  return entries.map(getOperatorIdFromSynergyEntry);
+}
 
 /**
  * Hope cost configuration for different rarity operators
@@ -214,7 +234,8 @@ function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
 
     // Check if core is satisfied (at least one operator from each core group)
     let coreSatisfied = true;
-    for (const [, operatorIds] of Object.entries(synergy.core)) {
+    for (const [, operatorEntries] of Object.entries(synergy.core)) {
+      const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
       const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
       if (!hasOperator) {
         coreSatisfied = false;
@@ -224,7 +245,8 @@ function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
 
     if (synergy.coreCountSeparately) {
       // Count each operator in core groups separately
-      for (const [, operatorIds] of Object.entries(synergy.core)) {
+      for (const [, operatorEntries] of Object.entries(synergy.core)) {
+        const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
         for (const operatorId of operatorIds) {
           if (teamOperatorIds.has(operatorId)) {
             totalScore += synergy.corePointBonus;
@@ -235,7 +257,8 @@ function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
       if (coreSatisfied) {
         // Count total optional operators
         let totalOptionalCount = 0;
-        for (const [, operatorIds] of Object.entries(synergy.optional)) {
+        for (const [, operatorEntries] of Object.entries(synergy.optional)) {
+          const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
           for (const operatorId of operatorIds) {
             if (teamOperatorIds.has(operatorId)) {
               totalOptionalCount++;
@@ -248,7 +271,8 @@ function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
         if (totalOptionalCount >= optionalCountMinimum) {
           if (synergy.optionalCountSeparately) {
             // Count each operator in optional groups separately
-            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+            for (const [, operatorEntries] of Object.entries(synergy.optional)) {
+              const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
               for (const operatorId of operatorIds) {
                 if (teamOperatorIds.has(operatorId)) {
                   totalScore += synergy.optionalPointBonus;
@@ -258,7 +282,8 @@ function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
           } else {
             // Count satisfied optional groups
             let satisfiedOptionalGroups = 0;
-            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+            for (const [, operatorEntries] of Object.entries(synergy.optional)) {
+              const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
               const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
               if (hasOperator) {
                 satisfiedOptionalGroups++;
@@ -276,7 +301,8 @@ function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
         // Handle optional bonuses (only if core is satisfied)
         // Count total optional operators
         let totalOptionalCount = 0;
-        for (const [, operatorIds] of Object.entries(synergy.optional)) {
+        for (const [, operatorEntries] of Object.entries(synergy.optional)) {
+          const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
           for (const operatorId of operatorIds) {
             if (teamOperatorIds.has(operatorId)) {
               totalOptionalCount++;
@@ -289,7 +315,8 @@ function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
         if (totalOptionalCount >= optionalCountMinimum) {
           if (synergy.optionalCountSeparately) {
             // Count each operator in optional groups separately
-            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+            for (const [, operatorEntries] of Object.entries(synergy.optional)) {
+              const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
               for (const operatorId of operatorIds) {
                 if (teamOperatorIds.has(operatorId)) {
                   totalScore += synergy.optionalPointBonus;
@@ -299,7 +326,8 @@ function calculateSynergyScore(team: TeamMember[], isIS: boolean): number {
           } else {
             // Count satisfied optional groups (original behavior)
             let satisfiedOptionalGroups = 0;
-            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+            for (const [, operatorEntries] of Object.entries(synergy.optional)) {
+              const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
               const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
               if (hasOperator) {
                 satisfiedOptionalGroups++;
@@ -337,7 +365,8 @@ function calculateSynergyScoreForOperator(team: any[], newOperatorId: string, is
     let operatorRole: 'core' | 'optional' | null = null;
 
     // Check core groups
-    for (const [, operatorIds] of Object.entries(synergy.core)) {
+    for (const [, operatorEntries] of Object.entries(synergy.core)) {
+      const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
       if (operatorIds.includes(newOperatorId)) {
         operatorInSynergy = true;
         operatorRole = 'core';
@@ -347,7 +376,8 @@ function calculateSynergyScoreForOperator(team: any[], newOperatorId: string, is
 
     // Check optional groups
     if (!operatorInSynergy) {
-      for (const [, operatorIds] of Object.entries(synergy.optional)) {
+      for (const [, operatorEntries] of Object.entries(synergy.optional)) {
+        const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
         if (operatorIds.includes(newOperatorId)) {
           operatorInSynergy = true;
           operatorRole = 'optional';
@@ -360,7 +390,8 @@ function calculateSynergyScoreForOperator(team: any[], newOperatorId: string, is
 
     // Check if core is satisfied (at least one operator from each core group)
     let coreSatisfied = true;
-    for (const [, operatorIds] of Object.entries(synergy.core)) {
+    for (const [, operatorEntries] of Object.entries(synergy.core)) {
+      const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
       const hasOperator = operatorIds.some(id => teamOperatorIds.has(id));
       if (!hasOperator) {
         coreSatisfied = false;
@@ -399,7 +430,8 @@ function calculateSynergyScoreForOperator(team: any[], newOperatorId: string, is
             totalScore += synergy.optionalPointBonus;
           } else {
             // Only count if this operator's group is now satisfied (first operator from this group)
-            for (const [, operatorIds] of Object.entries(synergy.optional)) {
+            for (const [, operatorEntries] of Object.entries(synergy.optional)) {
+              const operatorIds = getOperatorIdsFromSynergyEntries(operatorEntries);
               if (operatorIds.includes(newOperatorId)) {
                 const hasOtherOperator = operatorIds.some(id => id !== newOperatorId && teamOperatorIds.has(id));
                 if (!hasOtherOperator) {
@@ -422,7 +454,136 @@ function calculateSynergyScoreForOperator(team: any[], newOperatorId: string, is
  * Gets the tier of an operator in a specific niche
  * Returns a numerical score where higher numbers = better tier
  */
-export function getOperatorTierInNiche(operatorId: string, niche: string): number {
+/**
+ * Gets the tier score for an operator in a specific niche at a specific level
+ * @param operatorId The operator ID
+ * @param niche The niche filename
+ * @param level The level requirement: "" (level 0), "E2" (elite 2), or module code
+ * @returns The tier score, or 0 if not found at that level
+ */
+export function getOperatorTierInNicheAtLevel(operatorId: string, niche: string, level: string): number {
+  const nicheList = loadNicheList(niche);
+  if (!nicheList || !nicheList.operators) {
+    return 0;
+  }
+
+  // Define tier values (higher = better)
+  const tierValues: Record<string, number> = {
+    'SS': 100,
+    'S': 90,
+    'A': 80,
+    'B': 70,
+    'C': 60,
+    'D': 50,
+    'F': 40
+  };
+
+  // Search through all tier groups to find the operator at the specified level
+  for (const [tier, operators] of Object.entries(nicheList.operators)) {
+    if (operators && operatorId in operators) {
+      const entry = operators[operatorId];
+      let entryLevel = '';
+      
+      // Extract level from entry
+      if (typeof entry === 'string') {
+        entryLevel = ''; // Old format, always available
+      } else if (Array.isArray(entry) && entry.length >= 2) {
+        entryLevel = entry[1] || '';
+      }
+      
+      // Match level requirement
+      if (entryLevel === level) {
+        return tierValues[tier] || 0;
+      }
+    }
+  }
+
+  return 0; // Not found at this level
+}
+
+/**
+ * Gets all tiers for an operator in a niche at level 0 (empty string)
+ * Returns the highest tier score available at level 0
+ */
+export function getOperatorTierAtLevel0(operatorId: string, niche: string): number {
+  return getOperatorTierInNicheAtLevel(operatorId, niche, '');
+}
+
+/**
+ * Gets all new tiers for an operator in a niche that require E2 or modules
+ * Returns the highest tier score from E2/module levels (excluding level 0)
+ */
+export function getOperatorNewTiersAtPromotion(operatorId: string, niche: string): number {
+  const nicheList = loadNicheList(niche);
+  if (!nicheList || !nicheList.operators) {
+    return 0;
+  }
+
+  // Define tier values (higher = better)
+  const tierValues: Record<string, number> = {
+    'SS': 100,
+    'S': 90,
+    'A': 80,
+    'B': 70,
+    'C': 60,
+    'D': 50,
+    'F': 40
+  };
+
+  let highestTierScore = 0;
+  const level0Tier = getOperatorTierAtLevel0(operatorId, niche);
+
+  // Search through all tier groups to find the operator at E2/module levels
+  for (const [tier, operators] of Object.entries(nicheList.operators)) {
+    if (operators && operatorId in operators) {
+      const entry = operators[operatorId];
+      let entryLevel = '';
+      
+      // Extract level from entry
+      if (typeof entry === 'string') {
+        entryLevel = ''; // Old format, always available
+      } else if (Array.isArray(entry) && entry.length >= 2) {
+        entryLevel = entry[1] || '';
+      }
+      
+      // Only consider E2 or module levels (not level 0)
+      if (entryLevel !== '') {
+        const tierScore = tierValues[tier] || 0;
+        // Only count if this tier is better than level 0 tier (new capability)
+        if (tierScore > level0Tier) {
+          if (tierScore > highestTierScore) {
+            highestTierScore = tierScore;
+          }
+        }
+      }
+    }
+  }
+
+  return highestTierScore; // Returns highest new tier, or 0 if no promotions available
+}
+
+/**
+ * Checks if an operator has E2 or module levels available in any niche
+ */
+export function hasOperatorPromotionLevels(operatorId: string, allNiches: string[]): boolean {
+  for (const niche of allNiches) {
+    const newTiers = getOperatorNewTiersAtPromotion(operatorId, niche);
+    if (newTiers > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Gets the tier score for an operator in a specific niche
+ * For normal teambuilding (not IS), returns the highest tier available (excluding RA-, ISW-, SO- modules)
+ * Returns a numerical score where higher numbers = better tier
+ * @param operatorId The operator ID
+ * @param niche The niche filename
+ * @param isIS Whether this is for Integrated Strategies (if true, considers all instances; if false, only highest tier)
+ */
+export function getOperatorTierInNiche(operatorId: string, niche: string, isIS: boolean = false): number {
   const nicheList = loadNicheList(niche);
   if (!nicheList || !nicheList.operators) {
     return 0; // Default tier if niche not found
@@ -439,14 +600,41 @@ export function getOperatorTierInNiche(operatorId: string, niche: string): numbe
     'F': 40
   };
 
+  // Modules to exclude for normal teambuilding (Integrated Strategies and Stationary Security Service modules)
+  const excludedModulePrefixes = ['RA-', 'ISW-', 'SO-'];
+
+  let highestTierScore = 0;
+
   // Search through all tier groups to find the operator
   for (const [tier, operators] of Object.entries(nicheList.operators)) {
     if (operators && operatorId in operators) {
-      return tierValues[tier] || 0;
+      const entry = operators[operatorId];
+      const tierScore = tierValues[tier] || 0;
+      
+      if (isIS) {
+        // For IS, consider all instances (but for now, just return the first one found)
+        // In the future, this could be enhanced to consider level requirements
+        return tierScore;
+      } else {
+        // For normal teambuilding, exclude entries with RA-, ISW-, or SO- modules
+        let shouldExclude = false;
+        
+        if (Array.isArray(entry) && entry.length >= 2) {
+          const module = entry[1] || '';
+          if (module) {
+            shouldExclude = excludedModulePrefixes.some(prefix => module.startsWith(prefix));
+          }
+        }
+        
+        // Track the highest tier, excluding IS/SSS-only modules
+        if (!shouldExclude && tierScore > highestTierScore) {
+          highestTierScore = tierScore;
+        }
+      }
     }
   }
 
-  return 0; // Operator not found in this niche
+  return highestTierScore; // Returns highest tier for normal, or 0 if not found
 }
 
 /**

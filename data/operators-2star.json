@@ -10,9 +10,15 @@
       "tanking-blocking-operators"
     ],
     "internalName": "char_009_12fce",
-    "nicheTiers": {
-      "tanking-blocking-operators": "C"
-    }
+    "nicheInstances": {
+      "tanking-blocking-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "durin": {
     "id": "durin",
@@ -28,9 +34,15 @@
     "jpName": "ドゥリン",
     "krName": "두린",
     "internalName": "char_501_durin",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "noir_corne": {
     "id": "noir_corne",
@@ -46,9 +58,15 @@
     "jpName": "ノイルホーン",
     "krName": "느와르 코르네",
     "internalName": "char_500_noirc",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "rangers": {
     "id": "rangers",
@@ -64,9 +82,15 @@
     "jpName": "レンジャー",
     "krName": "레인저",
     "internalName": "char_503_rang",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "yato": {
     "id": "yato",
@@ -82,8 +106,14 @@
     "jpName": "ヤトウ",
     "krName": "야토",
     "internalName": "char_502_nblade",
-    "nicheTiers": {
-      "fast-redeploy-operators": "B"
-    }
+    "nicheInstances": {
+      "fast-redeploy-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   }
 }

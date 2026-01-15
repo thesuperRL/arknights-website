@@ -2,11 +2,62 @@
   "name": "Lemuen Laterano Team",
   "description": "A team centered around Lemuen and how Laterano operators can allow her semi-global range. Supporters can boost her damage and ammo usage.",
   "core": {
-    "Center": ["lemuen"]
+    "Center": [
+      [
+        "lemuen",
+        ""
+      ]
+    ]
   },
   "optional": {
-    "Supporters": ["sankta_miksaparato", "ch_en_the_holungday", "exusiai_the_new_covenant"],
-    "Laterano Operators": ["executor_the_ex_foedere", "sankta_miksaparato", "exusiai", "exusiai_the_new_covenant", "archetto", "fiammetta", "mostima", "virtuosa"]
+    "Supporters": [
+      [
+        "sankta_miksaparato",
+        ""
+      ],
+      [
+        "ch_en_the_holungday",
+        ""
+      ],
+      [
+        "exusiai_the_new_covenant",
+        ""
+      ]
+    ],
+    "Laterano Operators": [
+      [
+        "executor_the_ex_foedere",
+        ""
+      ],
+      [
+        "sankta_miksaparato",
+        ""
+      ],
+      [
+        "exusiai",
+        ""
+      ],
+      [
+        "exusiai_the_new_covenant",
+        ""
+      ],
+      [
+        "archetto",
+        ""
+      ],
+      [
+        "fiammetta",
+        ""
+      ],
+      [
+        "mostima",
+        ""
+      ],
+      [
+        "virtuosa",
+        ""
+      ]
+    ]
   },
   "corePointBonus": 0,
   "optionalPointBonus": 20,

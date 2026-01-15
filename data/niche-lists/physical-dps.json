@@ -4,85 +4,300 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "exusiai_the_new_covenant": "",
-      "wi_adel": "",
-      "lemuen": ""
+      "exusiai_the_new_covenant": [
+        "",
+        ""
+      ],
+      "wi_adel": [
+        "",
+        "E2"
+      ],
+      "lemuen": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "ascalon": "",
-      "degenbrecher": "",
-      "ch_en_the_holungday": "",
-      "narantuya": "Especially good against swarms with bounce",
-      "pepe": "'Ground Wis'adel'",
-      "thorns": "Consistent AFK skill damage",
-      "m_ynar": "",
-      "leizi_the_thunderbringer": "",
-      "ulpianus": "",
-      "ray": "",
-      "rosa": "",
-      "typhon": "",
-      "ela": "",
-      "entelechia": "",
-      "executor_the_ex_foedere": ""
+      "chongyue": [
+        "With adequate setup",
+        "E2"
+      ],
+      "wi_adel": [
+        "",
+        ""
+      ],
+      "ascalon": [
+        "",
+        ""
+      ],
+      "degenbrecher": [
+        "",
+        ""
+      ],
+      "ch_en_the_holungday": [
+        "",
+        ""
+      ],
+      "narantuya": [
+        "Especially good against swarms with bounce",
+        ""
+      ],
+      "pepe": [
+        "'Ground Wis'adel'",
+        ""
+      ],
+      "thorns": [
+        "Consistent AFK skill damage",
+        ""
+      ],
+      "m_ynar": [
+        "",
+        ""
+      ],
+      "leizi_the_thunderbringer": [
+        "",
+        ""
+      ],
+      "ulpianus": [
+        "",
+        ""
+      ],
+      "ray": [
+        "",
+        ""
+      ],
+      "rosa": [
+        "",
+        ""
+      ],
+      "typhon": [
+        "",
+        ""
+      ],
+      "ela": [
+        "",
+        ""
+      ],
+      "entelechia": [
+        "",
+        ""
+      ],
+      "executor_the_ex_foedere": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "blaze": "",
-      "ceobe": "When using skill 3",
-      "ethan": "",
-      "exusiai": "",
-      "kroos_the_keen_glint": "Slightly worse Exusiai",
-      "greythroat": "Slightly worse Exusiai",
-      "platinum": "Deals more damage the lower her attack speed, meaning cold debuffs are actually a buff",
-      "blue_poison": "",
-      "jessica_the_liberated": "",
-      "ash": "",
-      "schwarz": "Against high-defense targets + when Pozy cannot be used well",
-      "poz_mka": "",
-      "archetto": "",
-      "qiubai": "",
-      "silverash": "",
-      "chongyue": "",
-      "hoederer": "",
-      "w": "",
-      "gavial_the_invincible": "",
-      "zuo_le": ""
+      "blaze": [
+        "",
+        ""
+      ],
+      "ceobe": [
+        "When using skill 3",
+        "E2"
+      ],
+      "ethan": [
+        "",
+        ""
+      ],
+      "exusiai": [
+        "",
+        ""
+      ],
+      "kroos_the_keen_glint": [
+        "Slightly worse Exusiai",
+        ""
+      ],
+      "greythroat": [
+        "Slightly worse Exusiai",
+        ""
+      ],
+      "platinum": [
+        "Deals more damage the lower her attack speed, meaning cold debuffs are actually a buff",
+        ""
+      ],
+      "blue_poison": [
+        "",
+        ""
+      ],
+      "jessica_the_liberated": [
+        "",
+        ""
+      ],
+      "ash": [
+        "",
+        ""
+      ],
+      "schwarz": [
+        "Against high-defense targets + when Pozy cannot be used well with deployment locations",
+        ""
+      ],
+      "poz_mka": [
+        "",
+        ""
+      ],
+      "archetto": [
+        "",
+        ""
+      ],
+      "qiubai": [
+        "",
+        ""
+      ],
+      "silverash": [
+        "",
+        ""
+      ],
+      "chongyue": [
+        "",
+        ""
+      ],
+      "hoederer": [
+        "",
+        ""
+      ],
+      "w": [
+        "",
+        ""
+      ],
+      "gavial_the_invincible": [
+        "",
+        ""
+      ],
+      "zuo_le": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "windscoot": "",
-      "frost": "",
-      "caper": "",
-      "totter": "",
-      "brigid": "",
-      "kroos": "Surprising damage for a 3-star",
-      "fartooth": "OK damage in her infinite length line but hard to make use of it",
-      "melantha": "",
-      "ch_en": "",
-      "vigna": "Pretty crazy dps for a 4-star",
-      "lappland": "",
-      "aosta": "",
-      "leto": "",
-      "rathalos_s_noir_corne": "",
-      "fuze": ""
+      "windscoot": [
+        "",
+        ""
+      ],
+      "frost": [
+        "",
+        ""
+      ],
+      "caper": [
+        "",
+        ""
+      ],
+      "totter": [
+        "",
+        ""
+      ],
+      "brigid": [
+        "",
+        ""
+      ],
+      "kroos": [
+        "Surprising damage for a 3-star",
+        ""
+      ],
+      "fartooth": [
+        "OK damage in her infinite length line but hard to make use of it",
+        ""
+      ],
+      "melantha": [
+        "",
+        ""
+      ],
+      "ch_en": [
+        "",
+        ""
+      ],
+      "vigna": [
+        "Pretty crazy dps for a 4-star",
+        ""
+      ],
+      "lappland": [
+        "",
+        ""
+      ],
+      "aosta": [
+        "",
+        ""
+      ],
+      "leto": [
+        "",
+        ""
+      ],
+      "rathalos_s_noir_corne": [
+        "",
+        ""
+      ],
+      "fuze": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "andreana": "",
-      "melanite": "",
-      "firewatch": "Comfortable to use but not good enough to be worth using",
-      "luo_xiaohei": "",
-      "odda": "",
-      "jessica": "Kroos has better DPS until you E2 her",
-      "ambriel": "Awkward targeting priority",
-      "greyy_the_lightningbearer": "",
-      "shirayuki": "",
-      "coldshot": ""
+      "andreana": [
+        "",
+        ""
+      ],
+      "melanite": [
+        "",
+        ""
+      ],
+      "firewatch": [
+        "Comfortable to use but not good enough to be worth using",
+        ""
+      ],
+      "luo_xiaohei": [
+        "",
+        ""
+      ],
+      "odda": [
+        "",
+        ""
+      ],
+      "jessica": [
+        "Kroos has better DPS until you E2 her",
+        ""
+      ],
+      "ambriel": [
+        "Awkward targeting priority",
+        ""
+      ],
+      "greyy_the_lightningbearer": [
+        "",
+        ""
+      ],
+      "shirayuki": [
+        "",
+        ""
+      ],
+      "coldshot": [
+        "",
+        ""
+      ]
     },
     "D": {
-      "arene": "",
-      "reed": "",
-      "midnight": "",
-      "erato": "",
-      "lunacub": "",
-      "insider": ""
+      "arene": [
+        "",
+        ""
+      ],
+      "reed": [
+        "",
+        ""
+      ],
+      "midnight": [
+        "",
+        ""
+      ],
+      "erato": [
+        "",
+        ""
+      ],
+      "lunacub": [
+        "",
+        ""
+      ],
+      "insider": [
+        "",
+        ""
+      ]
     },
     "F": {}
   },

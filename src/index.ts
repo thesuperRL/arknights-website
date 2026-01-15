@@ -93,17 +93,32 @@ app.get('/api/niche-lists/:niche', (req, res) => {
 
     // Enrich operator list with operator data
     // Convert from rating-grouped structure to flat array for frontend
-    const operatorEntries: Array<{operatorId: string; rating: string; note: string; operator: any}> = [];
+    const operatorEntries: Array<{operatorId: string; rating: string; note: string; level: string; operator: any}> = [];
     const ratingOrder: Rating[] = ["SS", "S", "A", "B", "C", "D", "F"];
     
     for (const rating of ratingOrder) {
       if (operatorList.operators[rating]) {
         const operatorsInRating = operatorList.operators[rating]!;
-        for (const [operatorId, description] of Object.entries(operatorsInRating)) {
+        for (const [operatorId, entry] of Object.entries(operatorsInRating)) {
+          // Parse entry: can be string (backwards compatible) or [string, string] tuple
+          let note: string = '';
+          let level: string = '';
+          
+          if (typeof entry === 'string') {
+            // Old format: just description, level is empty (always has niche)
+            note = entry;
+            level = '';
+          } else if (Array.isArray(entry) && entry.length === 2) {
+            // New format: [description, level]
+            note = entry[0] || '';
+            level = entry[1] || '';
+          }
+          
           operatorEntries.push({
             operatorId: operatorId,
             rating: rating,
-            note: description,
+            note: note,
+            level: level,
             operator: operatorsData[operatorId] || null
           });
         }
@@ -165,20 +180,58 @@ app.get('/api/synergies/:synergy', (req, res) => {
     }
 
     // Enrich synergy with operator data
-    const enrichedCore: Record<string, Array<{ operatorId: string; operator: any }>> = {};
-    for (const [groupName, operatorIds] of Object.entries(synergy.core)) {
-      enrichedCore[groupName] = operatorIds.map(operatorId => ({
-        operatorId,
-        operator: operatorsData[operatorId] || null
-      }));
+    const enrichedCore: Record<string, Array<{ operatorId: string; level: string; operator: any }>> = {};
+    for (const [groupName, operatorEntries] of Object.entries(synergy.core)) {
+      enrichedCore[groupName] = operatorEntries.map(entry => {
+        // Parse entry: can be string (backwards compatible) or [string, string] tuple
+        let operatorId: string;
+        let level: string = '';
+        
+        if (typeof entry === 'string') {
+          // Old format: just operator ID, level is empty (always has synergy)
+          operatorId = entry;
+          level = '';
+        } else if (Array.isArray(entry) && entry.length === 2) {
+          // New format: [operatorId, level]
+          operatorId = entry[0] || '';
+          level = entry[1] || '';
+        } else {
+          operatorId = '';
+        }
+        
+        return {
+          operatorId,
+          level,
+          operator: operatorsData[operatorId] || null
+        };
+      });
     }
 
-    const enrichedOptional: Record<string, Array<{ operatorId: string; operator: any }>> = {};
-    for (const [groupName, operatorIds] of Object.entries(synergy.optional)) {
-      enrichedOptional[groupName] = operatorIds.map(operatorId => ({
-        operatorId,
-        operator: operatorsData[operatorId] || null
-      }));
+    const enrichedOptional: Record<string, Array<{ operatorId: string; level: string; operator: any }>> = {};
+    for (const [groupName, operatorEntries] of Object.entries(synergy.optional)) {
+      enrichedOptional[groupName] = operatorEntries.map(entry => {
+        // Parse entry: can be string (backwards compatible) or [string, string] tuple
+        let operatorId: string;
+        let level: string = '';
+        
+        if (typeof entry === 'string') {
+          // Old format: just operator ID, level is empty (always has synergy)
+          operatorId = entry;
+          level = '';
+        } else if (Array.isArray(entry) && entry.length === 2) {
+          // New format: [operatorId, level]
+          operatorId = entry[0] || '';
+          level = entry[1] || '';
+        } else {
+          operatorId = '';
+        }
+        
+        return {
+          operatorId,
+          level,
+          operator: operatorsData[operatorId] || null
+        };
+      });
     }
 
     const enrichedSynergy = {
@@ -431,22 +484,84 @@ app.get('/api/operators/:id', async (req, res) => {
       return;
     }
 
-    // Load all niche lists to find where this operator is listed
+    // Load all niche lists to get display names and create bidirectional mapping
     const operatorLists = loadAllNicheLists();
-    const rankings: Array<{ niche: string; tier: string; notes?: string }> = [];
+    const nicheDisplayNames: Record<string, string> = {}; // filename -> display name
+    const nicheFilenames: Record<string, string> = {}; // display name -> filename
+    for (const [filename, operatorList] of Object.entries(operatorLists)) {
+      nicheDisplayNames[filename] = operatorList.niche;
+      nicheFilenames[operatorList.niche] = filename;
+    }
 
-    // Collection is now keyed by filename
-    for (const [_filename, operatorList] of Object.entries(operatorLists)) {
-      if (operatorList.operators) {
-        // Search through all rating groups
-        for (const [rating, operatorsInRating] of Object.entries(operatorList.operators)) {
-          if (operatorsInRating && operatorId in operatorsInRating) {
-            rankings.push({
-              niche: operatorList.niche, // Use display name for the ranking
-              tier: rating,
-              notes: operatorsInRating[operatorId] || undefined
-            });
-            break; // Found in this niche, move to next niche
+    // Use nicheInstances from operator object if available, otherwise fall back to old method
+    const nicheInstances = (operator as any).nicheInstances;
+    const rankingsByNiche: Record<string, Array<{ tier: string; level: string; notes?: string }>> = {};
+
+    // Process nicheInstances to group by niche (new format)
+    if (nicheInstances && typeof nicheInstances === 'object' && !Array.isArray(nicheInstances)) {
+      for (const [nicheFilename, instances] of Object.entries(nicheInstances)) {
+        if (Array.isArray(instances)) {
+          const nicheDisplayName = nicheDisplayNames[nicheFilename] || nicheFilename;
+          rankingsByNiche[nicheDisplayName] = [];
+          
+          for (const instance of instances) {
+            if (instance && typeof instance === 'object' && 'tier' in instance) {
+              // Get notes from the niche list
+              let notes: string | undefined = undefined;
+              const operatorList = loadNicheList(nicheFilename);
+              if (operatorList && operatorList.operators) {
+                const tierOperators = operatorList.operators[instance.tier as keyof typeof operatorList.operators];
+                if (tierOperators && operatorId in tierOperators) {
+                  const entry = tierOperators[operatorId];
+                  if (typeof entry === 'string') {
+                    notes = entry || undefined;
+                  } else if (Array.isArray(entry) && entry.length >= 1) {
+                    notes = entry[0] || undefined;
+                  }
+                }
+              }
+              
+              rankingsByNiche[nicheDisplayName].push({
+                tier: instance.tier,
+                level: instance.level || '',
+                notes: notes
+              });
+            }
+          }
+        }
+      }
+    }
+
+    // Fall back to old method if nicheInstances is not available (backwards compatibility)
+    // This should not happen if operators have been updated, but we keep it for safety
+    if (Object.keys(rankingsByNiche).length === 0) {
+      for (const [, operatorList] of Object.entries(operatorLists)) {
+        if (operatorList.operators) {
+          for (const [rating, operatorsInRating] of Object.entries(operatorList.operators)) {
+            if (operatorsInRating && operatorId in operatorsInRating) {
+              const entry = operatorsInRating[operatorId];
+              let notes: string | undefined = undefined;
+              let level: string = '';
+              
+              if (typeof entry === 'string') {
+                notes = entry || undefined;
+                level = '';
+              } else if (Array.isArray(entry) && entry.length >= 1) {
+                notes = entry[0] || undefined;
+                level = entry.length >= 2 ? (entry[1] || '') : '';
+              }
+              
+              const nicheDisplayName = operatorList.niche;
+              if (!rankingsByNiche[nicheDisplayName]) {
+                rankingsByNiche[nicheDisplayName] = [];
+              }
+              rankingsByNiche[nicheDisplayName].push({
+                tier: rating,
+                level: level,
+                notes: notes
+              });
+              // Don't break - allow multiple instances per niche
+            }
           }
         }
       }
@@ -469,9 +584,12 @@ app.get('/api/operators/:id', async (req, res) => {
           const specialContent = fs.readFileSync(specialFilePath, 'utf-8');
           const specialData = JSON.parse(specialContent);
           if (specialData.operators && operatorId in specialData.operators) {
-            rankings.push({
-              niche: specialList.name,
+            if (!rankingsByNiche[specialList.name]) {
+              rankingsByNiche[specialList.name] = [];
+            }
+            rankingsByNiche[specialList.name].push({
               tier: '', // Empty tier - will display niche name without ranking
+              level: '',
               notes: specialData.operators[operatorId] || undefined
             });
           }
@@ -481,7 +599,14 @@ app.get('/api/operators/:id', async (req, res) => {
       }
     }
 
-    // Add normal rankings for operators not in special lists (only if no special ranking added)
+    // Convert rankingsByNiche to the format expected by frontend
+    const rankings = Object.entries(rankingsByNiche)
+      .filter(([, instances]) => instances && Array.isArray(instances) && instances.length > 0)
+      .map(([niche, instances]) => ({
+        niche,
+        nicheFilename: nicheFilenames[niche] || niche.toLowerCase().replace(/\s+/g, '-'),
+        instances: instances || []
+      }));
 
     // Enrich synergies with display names
     const allSynergies = loadAllSynergies();

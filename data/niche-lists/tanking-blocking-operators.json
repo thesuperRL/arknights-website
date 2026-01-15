@@ -4,76 +4,254 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "blemishine": "",
-      "mudrock": "",
-      "kal_tsit": "Mon3tr",
-      "sankta_miksaparato": "Can be immortal for limited numbers of hits",
-      "gavial_the_invincible": "",
-      "jessica_the_liberated": "",
-      "penance": "",
-      "ulpianus": "",
-      "saria": "",
-      "shu": ""
+      "blemishine": [
+        "",
+        ""
+      ],
+      "mudrock": [
+        "",
+        ""
+      ],
+      "kal_tsit": [
+        "Mon3tr. It also deploys more quickly than most operators",
+        ""
+      ],
+      "sankta_miksaparato": [
+        "Can be immortal for limited numbers of hits",
+        ""
+      ],
+      "gavial_the_invincible": [
+        "",
+        ""
+      ],
+      "jessica_the_liberated": [
+        "",
+        ""
+      ],
+      "penance": [
+        "",
+        ""
+      ],
+      "ulpianus": [
+        "",
+        ""
+      ],
+      "saria": [
+        "",
+        ""
+      ],
+      "shu": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "nian": "Absorbs more damage than Hoshiguma with skill use",
-      "hoshiguma": "Almost immortal",
-      "gummy": "",
-      "yu": "",
-      "specter": "Actually immortal (for 15 seconds)"
+      "nian": [
+        "Absorbs more damage than Hoshiguma with skill use",
+        ""
+      ],
+      "hoshiguma": [
+        "Almost immortal",
+        ""
+      ],
+      "gummy": [
+        "",
+        ""
+      ],
+      "yu": [
+        "",
+        ""
+      ],
+      "specter": [
+        "Actually immortal (for 15 seconds)",
+        ""
+      ]
     },
     "A": {
-      "m_ynar": "Ranged tank with limited effectiveness",
-      "cuora": "Once highest defense in game",
-      "bubble": "",
-      "lin": "Ranged tank",
-      "necrass": "Summons",
-      "hoederer": "",
-      "blaze": "Revive",
-      "eunectes": "",
-      "specter_the_unchained": "As a dollkeeper, perma tank ranged damage. Can also siphon HP from operators in case of urgent need",
-      "mountain": "Self-heal",
-      "liskarm": "",
-      "nightingale": "Literally has 2 Gravels, but they don't block",
-      "gravel": "Soaks damage well",
-      "nearl": ""
+      "vina_victoria": [
+        "Lots of summons",
+        "E2"
+      ],
+      "m_ynar": [
+        "Ranged tank with limited effectiveness",
+        ""
+      ],
+      "cuora": [
+        "Once highest defense in game",
+        ""
+      ],
+      "bubble": [
+        "",
+        ""
+      ],
+      "lin": [
+        "Ranged tank",
+        ""
+      ],
+      "necrass": [
+        "Summons",
+        ""
+      ],
+      "hoederer": [
+        "",
+        ""
+      ],
+      "blaze": [
+        "Revive",
+        ""
+      ],
+      "eunectes": [
+        "",
+        ""
+      ],
+      "specter_the_unchained": [
+        "As a dollkeeper, perma tank ranged damage. Can also siphon HP from operators in case of urgent need",
+        ""
+      ],
+      "mountain": [
+        "Self-heal",
+        ""
+      ],
+      "liskarm": [
+        "",
+        ""
+      ],
+      "nightingale": [
+        "Literally has 2 Gravels, but they don't block",
+        ""
+      ],
+      "gravel": [
+        "Soaks damage well",
+        ""
+      ],
+      "nearl": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "matterhorn": "Near immune to arts damage",
-      "asbestos": "",
-      "underflow": "",
-      "croissant": "",
-      "beeswax": "High ground tank",
-      "tequila": "Deals reflect damage, diet Mlynar",
-      "bison": "Cuora but a little worse",
-      "hellagur": "Really good dodge on skill 2",
-      "heavyrain": "",
-      "firewhistle": "",
-      "bena": "As a dollkeeper, perma tank ranged damage, Annie (the doll) in particular takes less damage too",
-      "kazemaru": "As a dollkeeper, perma tank ranged damage",
-      "philae": "Anti-Elemental damage enemies",
-      "highmore": "Self-heals elemental damage",
-      "lutonada": "",
-      "czerny": "Anti-arts enemies",
-      "bassline": "Arts tank"
+      "matterhorn": [
+        "Near immune to arts damage",
+        ""
+      ],
+      "asbestos": [
+        "",
+        ""
+      ],
+      "underflow": [
+        "",
+        ""
+      ],
+      "croissant": [
+        "",
+        ""
+      ],
+      "beeswax": [
+        "High ground tank",
+        ""
+      ],
+      "tequila": [
+        "Deals reflect damage, diet Mlynar",
+        ""
+      ],
+      "bison": [
+        "Cuora but a little worse",
+        ""
+      ],
+      "hellagur": [
+        "Really good dodge on skill 2",
+        ""
+      ],
+      "heavyrain": [
+        "",
+        ""
+      ],
+      "firewhistle": [
+        "",
+        ""
+      ],
+      "bena": [
+        "As a dollkeeper, perma tank ranged damage, Annie (the doll) in particular takes less damage too",
+        ""
+      ],
+      "kazemaru": [
+        "As a dollkeeper, perma tank ranged damage",
+        ""
+      ],
+      "philae": [
+        "Anti-Elemental damage enemies",
+        ""
+      ],
+      "highmore": [
+        "Self-heals elemental damage",
+        ""
+      ],
+      "lutonada": [
+        "",
+        ""
+      ],
+      "czerny": [
+        "Anti-arts enemies",
+        ""
+      ],
+      "bassline": [
+        "Arts tank",
+        ""
+      ]
     },
     "C": {
-      "flametail": "Dodge tank",
-      "cement": "",
-      "matoimaru": "Pretty chonky low-rarity operator",
-      "blitz": "",
-      "12f": "50% physical dodge"
+      "flametail": [
+        "Dodge tank",
+        ""
+      ],
+      "cement": [
+        "",
+        ""
+      ],
+      "matoimaru": [
+        "Pretty chonky low-rarity operator",
+        ""
+      ],
+      "blitz": [
+        "",
+        ""
+      ],
+      "12f": [
+        "50% physical dodge",
+        ""
+      ]
     },
     "D": {
-      "mint": "Worse than Beeswax",
-      "roberta": "",
-      "sideroca": "OK self-sustain",
-      "cardigan": "Low-rarity self-sustaining tank",
-      "senshi": "",
-      "swire_the_elegant_wit": "Limited self-heal with setup, but often too squishy to tank a lot"
+      "mint": [
+        "Worse than Beeswax",
+        ""
+      ],
+      "roberta": [
+        "",
+        ""
+      ],
+      "sideroca": [
+        "OK self-sustain",
+        ""
+      ],
+      "cardigan": [
+        "Low-rarity self-sustaining tank",
+        ""
+      ],
+      "senshi": [
+        "",
+        ""
+      ],
+      "swire_the_elegant_wit": [
+        "Limited self-heal with setup, but often too squishy to tank a lot",
+        ""
+      ]
     },
     "F": {
-      "friston_3": ""
+      "friston_3": [
+        "",
+        ""
+      ]
     }
   },
   "relatedNiches": [

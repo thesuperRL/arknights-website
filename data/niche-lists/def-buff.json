@@ -4,31 +4,90 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "nian": "",
-      "shining": "Strongest defense buff"
+      "nian": [
+        "",
+        "E2"
+      ],
+      "shining": [
+        "Strongest defense buff",
+        "E2"
+      ]
     },
     "S": {
-      "skadi_the_corrupting_heart": "",
-      "shu": "Sanctuary"
+      "skadi_the_corrupting_heart": [
+        "",
+        ""
+      ],
+      "shu": [
+        "Sanctuary",
+        ""
+      ],
+      "nian": [
+        "Passive buff to defenders",
+        ""
+      ],
+      "shining": [
+        "Shields",
+        ""
+      ]
     },
     "A": {
-      "zima": "Buffs Vanguards",
-      "pallas": "Usefulness of buff hindered by high SP costs",
-      "catherine": "",
-      "nine_colored_deer": "Sanctuary",
-      "quercus": "Sanctuary",
-      "silence_the_paradigmatic": "Sanctuary"
+      "zima": [
+        "Buffs Vanguards",
+        ""
+      ],
+      "pallas": [
+        "Usefulness of buff hindered by high SP costs",
+        "E2"
+      ],
+      "catherine": [
+        "",
+        ""
+      ],
+      "nine_colored_deer": [
+        "Sanctuary",
+        ""
+      ],
+      "quercus": [
+        "Sanctuary",
+        ""
+      ],
+      "silence_the_paradigmatic": [
+        "Sanctuary",
+        ""
+      ]
     },
     "B": {
-      "croissant": "OK arts dodge buff, can share to close-by allies",
-      "alanna": "",
-      "tsukinogi": "Sanctuary",
-      "xingzhu": "Sanctuary",
-      "bryophyta": ""
+      "croissant": [
+        "OK arts dodge buff, can share to close-by allies",
+        ""
+      ],
+      "alanna": [
+        "",
+        ""
+      ],
+      "tsukinogi": [
+        "Sanctuary",
+        ""
+      ],
+      "xingzhu": [
+        "Sanctuary",
+        ""
+      ],
+      "bryophyta": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "whislash": "For melee operators",
-      "castle_3": "Buffs melee units while not using a deployment slot"
+      "whislash": [
+        "For melee operators",
+        ""
+      ],
+      "castle_3": [
+        "Buffs melee units while not using a deployment slot",
+        ""
+      ]
     },
     "D": {},
     "F": {}

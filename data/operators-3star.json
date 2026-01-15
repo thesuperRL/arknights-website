@@ -14,9 +14,15 @@
     "jpName": "アドナキエル",
     "krName": "아드나키엘",
     "characters": "char_211_adnach",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "ansel": {
     "id": "ansel",
@@ -34,10 +40,21 @@
     "jpName": "アンセル",
     "krName": "안셀",
     "characters": "char_212_ansel",
-    "nicheTiers": {
-      "healing-operators": "C",
-      "low-rarity": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "beagle": {
     "id": "beagle",
@@ -54,9 +71,15 @@
     "jpName": "ビーグル",
     "krName": "비글",
     "characters": "char_122_beagle",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "cardigan": {
     "id": "cardigan",
@@ -75,11 +98,27 @@
     "jpName": "カーディ",
     "krName": "카디건",
     "characters": "char_209_ardign",
-    "nicheTiers": {
-      "healing-operators": "D",
-      "tanking-blocking-operators": "D",
-      "low-rarity": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "catapult": {
     "id": "catapult",
@@ -95,9 +134,15 @@
     "jpName": "カタパルト",
     "krName": "캐터펄트",
     "characters": "char_282_catap",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "fang": {
     "id": "fang",
@@ -114,10 +159,21 @@
     "jpName": "フェン",
     "krName": "팽",
     "characters": "char_123_fang",
-    "nicheTiers": {
-      "early-laneholder": "C",
-      "low-rarity": "A"
-    }
+    "nicheInstances": {
+      "early-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "hibiscus": {
     "id": "hibiscus",
@@ -133,9 +189,15 @@
     "jpName": "ハイビスカス",
     "krName": "히비스커스",
     "characters": "char_120_hibisc",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "kroos": {
     "id": "kroos",
@@ -154,11 +216,6 @@
     "jpName": "クルース",
     "krName": "크루스",
     "characters": "char_124_kroos",
-    "nicheTiers": {
-      "anti-air-operators": "A",
-      "physical-dps": "B",
-      "low-rarity": "A"
-    },
     "synergies": {
       "offensive-recovery-archetto": {
         "role": "optional",
@@ -166,6 +223,26 @@
           "Offensive Recovery Operators"
         ]
       }
+    },
+    "nicheInstances": {
+      "anti-air-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "lava": {
@@ -182,9 +259,15 @@
     "jpName": "ラヴァ",
     "krName": "라바",
     "characters": "char_121_lava",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "melantha": {
     "id": "melantha",
@@ -202,10 +285,21 @@
     "jpName": "メランサ",
     "krName": "멜란사",
     "characters": "char_208_melan",
-    "nicheTiers": {
-      "physical-dps": "B",
-      "low-rarity": "A"
-    }
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "midnight": {
     "id": "midnight",
@@ -224,11 +318,27 @@
     "jpName": "ミッドナイト",
     "krName": "미드나이트",
     "characters": "char_283_midn",
-    "nicheTiers": {
-      "arts-dps": "D",
-      "physical-dps": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "orchid": {
     "id": "orchid",
@@ -245,9 +355,15 @@
     "jpName": "オーキッド",
     "krName": "오키드",
     "characters": "char_278_orchid",
-    "nicheTiers": {
-      "low-rarity": "A"
-    }
+    "nicheInstances": {
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "plume": {
     "id": "plume",
@@ -263,9 +379,15 @@
     "jpName": "プリュム",
     "krName": "플룸",
     "characters": "char_192_falco",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "popukar": {
     "id": "popukar",
@@ -281,9 +403,15 @@
     "jpName": "ポプカル",
     "krName": "포푸카",
     "characters": "char_281_popka",
-    "nicheTiers": {
-      "low-rarity": "A"
-    }
+    "nicheInstances": {
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "spot": {
     "id": "spot",
@@ -300,9 +428,15 @@
     "jpName": "スポット",
     "krName": "스팟",
     "characters": "char_284_spot",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "steward": {
     "id": "steward",
@@ -320,10 +454,21 @@
     "jpName": "スチュワード",
     "krName": "스튜어드",
     "characters": "char_210_stward",
-    "nicheTiers": {
-      "trash-operators": "A",
-      "low-rarity": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "vanilla": {
     "id": "vanilla",
@@ -340,9 +485,20 @@
     "jpName": "バニラ",
     "krName": "바닐라",
     "characters": "char_240_wyvern",
-    "nicheTiers": {
-      "early-laneholder": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "early-laneholder": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   }
 }

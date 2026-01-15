@@ -4,27 +4,66 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "exusiai": "",
-      "archetto": ""
+      "exusiai": [
+        "",
+        ""
+      ],
+      "archetto": [
+        "",
+        ""
+      ]
     },
     "S": {
-      "kroos_the_keen_glint": ""
+      "kroos_the_keen_glint": [
+        "Diet Exusiai",
+        ""
+      ]
     },
     "A": {
-      "blue_poison": "",
-      "platinum": "",
-      "kroos": "Surprising damage for a 3-star",
-      "greythroat": "Exusiai but worse",
-      "april": "April's camoflage lets her deal with high-damage aerial enemies well",
-      "ash": ""
+      "blue_poison": [
+        "",
+        ""
+      ],
+      "platinum": [
+        "",
+        ""
+      ],
+      "kroos": [
+        "Surprising damage for a 3-star",
+        ""
+      ],
+      "greythroat": [
+        "Exusiai but worse",
+        ""
+      ],
+      "april": [
+        "April's camoflage lets her deal with high-damage aerial enemies well",
+        ""
+      ],
+      "ash": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "jessica": "Kroos has better DPS until you E2 her",
-      "may": "",
-      "vermeil": ""
+      "jessica": [
+        "Kroos has better DPS until you E2 her",
+        ""
+      ],
+      "may": [
+        "",
+        ""
+      ],
+      "vermeil": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "glaucus": "Anti-drone niche but not very useful otherwise"
+      "glaucus": [
+        "Anti-drone niche but not very useful otherwise",
+        ""
+      ]
     },
     "D": {},
     "F": {}

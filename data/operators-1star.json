@@ -10,9 +10,6 @@
       "dp-generation"
     ],
     "internalName": "char_4188_confes",
-    "nicheTiers": {
-      "dp-generation": "D"
-    },
     "synergies": {
       "sleep": {
         "role": "optional",
@@ -20,6 +17,14 @@
           "Sleep Appliers"
         ]
       }
+    },
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ]
     }
   },
   "castle_3": {
@@ -33,9 +38,15 @@
       "def-buff"
     ],
     "internalName": "char_286_cast3",
-    "nicheTiers": {
-      "def-buff": "C"
-    }
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "friston_3": {
     "id": "friston_3",
@@ -50,11 +61,27 @@
       "trash-operators"
     ],
     "internalName": "char_4093_frston",
-    "nicheTiers": {
-      "late-laneholder": "F",
-      "tanking-blocking-operators": "F",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "F",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "F",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "justice_knight": {
     "id": "justice_knight",
@@ -70,9 +97,15 @@
     "jpName": "ジャスティスナイト",
     "krName": "저스티스 나이트",
     "internalName": "char_4000_jnight",
-    "nicheTiers": {
-      "unconventional-niches": "A"
-    }
+    "nicheInstances": {
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "lancet_2": {
     "id": "lancet_2",
@@ -85,9 +118,15 @@
       "healing-operators"
     ],
     "internalName": "char_285_medic2",
-    "nicheTiers": {
-      "healing-operators": "F"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "F",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "phonor_0": {
     "id": "phonor_0",
@@ -100,9 +139,15 @@
       "elemental-damage"
     ],
     "internalName": "char_4136_phonor",
-    "nicheTiers": {
-      "elemental-damage": "F"
-    }
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "F",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "thrm_ex": {
     "id": "thrm_ex",
@@ -115,9 +160,15 @@
       "fragile"
     ],
     "internalName": "char_376_therex",
-    "nicheTiers": {
-      "fragile": "A"
-    }
+    "nicheInstances": {
+      "fragile": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "terra_research_commission": {
     "id": "terra_research_commission",
@@ -134,9 +185,15 @@
     "jpName": "テラ大陸調査団",
     "krName": "테라 대륙 조사단",
     "internalName": "char_4077_palico",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "u_official": {
     "id": "u_official",
@@ -150,9 +207,20 @@
       "trash-operators"
     ],
     "internalName": "char_4091_ulika",
-    "nicheTiers": {
-      "stalling": "F",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "F",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   }
 }

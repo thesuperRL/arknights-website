@@ -2,10 +2,48 @@
   "name": "Sleep",
   "description": "Uses sleep appliers to stall, and DPSes who can attack sleeping targets",
   "core": {
-    "DPSes": ["blacknight", "erato", "blemishine"]
+    "DPSes": [
+      [
+        "blacknight",
+        ""
+      ],
+      [
+        "erato",
+        ""
+      ],
+      [
+        "blemishine",
+        ""
+      ]
+    ]
   },
   "optional": {
-    "Sleep Appliers": ["sora", "kafka", "iris", "confess_47", "grain_buds", "necrass"]
+    "Sleep Appliers": [
+      [
+        "sora",
+        ""
+      ],
+      [
+        "kafka",
+        ""
+      ],
+      [
+        "iris",
+        ""
+      ],
+      [
+        "confess_47",
+        ""
+      ],
+      [
+        "grain_buds",
+        ""
+      ],
+      [
+        "necrass",
+        ""
+      ]
+    ]
   },
   "corePointBonus": 10,
   "optionalPointBonus": 20,

@@ -1,19 +1,54 @@
 {
-    "name": "Burn-Global Teams",
-    "description": "Operators able to deal burn elemental damage and deal bonus elemental damage based on that. Uses Yu's skill combined with global arts damage to apply burn extremely quickly",
-    "core": {
-        "Appliers": ["yu"],
-        "Global Damage": ["lappland_the_decadenza", "goldenglow"]
-    },
-    "optional": {
-        "DPS": ["blaze_the_igniting_spark", "ifrit"],
-        "Additional Appliers": ["viviana"]
-    },
-    "corePointBonus": 175,
-    "optionalPointBonus": 25,
-    "isOnly": false,
-    "coreCountSeparately": true,
-    "optionalCountSeparately": false,
-    "optionalCountMinimum": 0
-  }
-  
+  "name": "Burn-Global Teams",
+  "description": "Operators able to deal burn elemental damage and deal bonus elemental damage based on that. Uses Yu's skill combined with global arts damage to apply burn extremely quickly",
+  "core": {
+    "Appliers": [
+      [
+        "yu",
+        ""
+      ]
+    ],
+    "Global Damage": [
+      [
+        "lappland_the_decadenza",
+        "E2"
+      ],
+      [
+        "goldenglow",
+        "E2"
+      ]
+    ]
+  },
+  "optional": {
+    "DPS": [
+      [
+        "blaze_the_igniting_spark",
+        ""
+      ],
+      [
+        "ifrit",
+        "BLA-Δ"
+      ]
+    ],
+    "Additional Appliers": [
+      [
+        "reed_the_flame_shadow",
+        ""
+      ],
+      [
+        "viviana",
+        "AFT-Δ"
+      ],
+      [
+        "ifrit",
+        "BLA-Δ"
+      ]
+    ]
+  },
+  "corePointBonus": 175,
+  "optionalPointBonus": 25,
+  "isOnly": false,
+  "coreCountSeparately": true,
+  "optionalCountSeparately": false,
+  "optionalCountMinimum": 0
+}

@@ -4,44 +4,148 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "ascalon": "",
-      "wi_adel": ""
+      "ascalon": [
+        "",
+        ""
+      ],
+      "wi_adel": [
+        "",
+        "E2"
+      ]
     },
     "S": {
-      "silverash": "",
-      "degenbrecher": "",
-      "pepe": "",
-      "ethan": "",
-      "leizi_the_thunderbringer": "",
-      "m_ynar": "",
-      "ch_en_the_holungday": ""
+      "silverash": [
+        "",
+        "E2"
+      ],
+      "degenbrecher": [
+        "",
+        "E2"
+      ],
+      "pepe": [
+        "",
+        ""
+      ],
+      "leizi_the_thunderbringer": [
+        "",
+        "E2"
+      ],
+      "m_ynar": [
+        "",
+        "E2"
+      ],
+      "ch_en_the_holungday": [
+        "",
+        "E2"
+      ],
+      "wi_adel": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "kirin_r_yato": "",
-      "w": "",
-      "mizuki": "",
-      "fiammetta": "",
-      "horn": "",
-      "narantuya": "Slightly, via loopshooter bouncing",
-      "firewhistle": ""
+      "leizi_the_thunderbringer": [
+        "",
+        ""
+      ],
+      "m_ynar": [
+        "",
+        ""
+      ],
+      "degenbrecher": [
+        "",
+        ""
+      ],
+      "kirin_r_yato": [
+        "",
+        ""
+      ],
+      "w": [
+        "",
+        ""
+      ],
+      "mizuki": [
+        "",
+        ""
+      ],
+      "ethan": [
+        "",
+        ""
+      ],
+      "fiammetta": [
+        "",
+        "E2"
+      ],
+      "horn": [
+        "",
+        ""
+      ],
+      "narantuya": [
+        "Slightly, via loopshooter bouncing",
+        ""
+      ],
+      "firewhistle": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "rosmontis": "Ground AOE",
-      "pinecone": "",
-      "jieyun": "",
-      "greyy_the_lightningbearer": "",
-      "shirayuki": "",
-      "archetto": "Good at swarm clearing"
+      "ch_en_the_holungday": [
+        "",
+        ""
+      ],
+      "rosmontis": [
+        "Ground AOE",
+        ""
+      ],
+      "pinecone": [
+        "",
+        ""
+      ],
+      "jieyun": [
+        "",
+        ""
+      ],
+      "greyy_the_lightningbearer": [
+        "",
+        ""
+      ],
+      "shirayuki": [
+        "",
+        ""
+      ],
+      "archetto": [
+        "Good at swarm clearing with bounce, but not really AOE",
+        ""
+      ]
     },
     "C": {
-      "ashlock": "Only hits ground",
-      "tequila": "",
-      "odda": "",
-      "stainless": "",
-      "executor": ""
+      "fiammetta": [
+        "",
+        ""
+      ],
+      "ashlock": [
+        "Only hits ground",
+        ""
+      ],
+      "tequila": [
+        "",
+        ""
+      ],
+      "odda": [
+        "",
+        ""
+      ],
+      "stainless": [
+        "",
+        ""
+      ],
+      "executor": [
+        "",
+        ""
+      ]
     },
-    "D": {
-    },
+    "D": {},
     "F": {}
   },
   "relatedNiches": [

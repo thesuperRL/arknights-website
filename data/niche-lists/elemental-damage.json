@@ -4,31 +4,73 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "yu": "He can make your best arts dpses deal burn too",
-      "virtuosa": "",
-      "tragodia": ""
+      "yu": [
+        "He can make your best arts dpses deal burn too",
+        "E2"
+      ],
+      "virtuosa": [
+        "",
+        "E2"
+      ],
+      "tragodia": [
+        "Cat means essentially global range",
+        ""
+      ]
     },
     "S": {
+      "virtuosa": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "nymph": "",
-      "bobbing": ""
+      "nymph": [
+        "",
+        ""
+      ],
+      "bobbing": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "valarqvin": "Bad application of elemental damage outside of IS",
-      "philae": ""
+      "valarqvin": [
+        "Bad application of elemental damage outside of IS",
+        ""
+      ],
+      "philae": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "diamante": "",
-      "warmy": "",
-      "gracebearer": "",
-      "miss_christine": "",
-      "blaze_the_igniting_spark": ""
+      "diamante": [
+        "",
+        ""
+      ],
+      "warmy": [
+        "",
+        ""
+      ],
+      "gracebearer": [
+        "",
+        ""
+      ],
+      "miss_christine": [
+        "",
+        ""
+      ],
+      "blaze_the_igniting_spark": [
+        "",
+        ""
+      ]
     },
-    "D": {
-    },
+    "D": {},
     "F": {
-      "phonor_0": ""
+      "phonor_0": [
+        "",
+        ""
+      ]
     }
   }
 }

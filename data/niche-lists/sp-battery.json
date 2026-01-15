@@ -4,27 +4,74 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "ptilopsis": "Passive SP generation and not many requirements for it too"
+      "archetto": [
+        "Incredible recovery for all offensive recovery operators",
+        "ISW-α"
+      ],
+      "ptilopsis": [
+        "Passive SP generation and not many requirements for it too",
+        ""
+      ]
     },
     "S": {
-      "bagpipe": "Boosts for vanguards, especially enabling fast flagbearer strategies",
-      "liskarm": "",
-      "warfarin": "Small SP battery when enemies in range are killed",
-      "saria": "Small SP battery when giving heals",
-      "saga": "Teammates killing wounded enemies"
+      "bagpipe": [
+        "Boosts for vanguards, especially enabling fast flagbearer strategies",
+        "CHG-X"
+      ],
+      "liskarm": [
+        "",
+        ""
+      ],
+      "warfarin": [
+        "Small SP battery when enemies in range are killed",
+        ""
+      ],
+      "saria": [
+        "Small SP battery when giving heals",
+        ""
+      ],
+      "saga": [
+        "Teammates killing wounded enemies",
+        ""
+      ]
     },
     "A": {
-      "archetto": "For offensive recovery snipers",
-      "quercus": "1SP for every heal on allies",
-      "suzuran": "For Supporters",
-      "stainless": "Via machines"
+      "bagpipe": [
+        "Boosts for vanguards, especially enabling fast flagbearer strategies",
+        ""
+      ],
+      "archetto": [
+        "For offensive recovery snipers",
+        ""
+      ],
+      "quercus": [
+        "1SP for every heal on allies",
+        ""
+      ],
+      "suzuran": [
+        "For Supporters",
+        ""
+      ],
+      "stainless": [
+        "Via machines",
+        ""
+      ]
     },
     "B": {
-      "ch_en": "Small auto sp battery for offensive/defensive recovery",
-      "luo_xiaohei": "Very limited critically wounded"
+      "ch_en": [
+        "Small auto sp battery for offensive/defensive recovery",
+        ""
+      ],
+      "luo_xiaohei": [
+        "Very limited critically wounded",
+        ""
+      ]
     },
     "C": {
-      "heidi": "In chapter 10 only"
+      "heidi": [
+        "In chapter 10 only",
+        ""
+      ]
     },
     "D": {},
     "F": {}

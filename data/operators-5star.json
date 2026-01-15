@@ -11,16 +11,32 @@
     "jpName": "アーミヤ",
     "krName": "아미야",
     "internalName": "char_1001_amiya2",
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "true_damage": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {},
     "niches": [
       "arts-dps",
       "trash-operators",
       "true_damage"
-    ],
-    "nicheTiers": {
-      "arts-dps": "C",
-      "true_damage": "B",
-      "trash-operators": "A"
-    }
+    ]
   },
   "amiya_medic": {
     "id": "amiya_medic",
@@ -34,16 +50,32 @@
     "jpName": "アーミヤ",
     "krName": "아미야",
     "internalName": "char_1037_amiya3",
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "true_damage": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {},
     "niches": [
       "arts-dps",
       "healing-operators",
       "true_damage"
-    ],
-    "nicheTiers": {
-      "arts-dps": "B",
-      "healing-operators": "A",
-      "true_damage": "A"
-    }
+    ]
   },
   "absinthe": {
     "id": "absinthe",
@@ -60,10 +92,21 @@
     "jpName": "アブサント",
     "krName": "압생트",
     "internalName": "char_405_absin",
-    "nicheTiers": {
-      "free": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "akafuyu": {
     "id": "akafuyu",
@@ -79,9 +122,6 @@
     "jpName": "アカフユ",
     "krName": "아카후유",
     "internalName": "char_475_akafyu",
-    "nicheTiers": {
-      "trash-operators": "A"
-    },
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -89,6 +129,14 @@
           "Enmities"
         ]
       }
+    },
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "alanna": {
@@ -108,11 +156,27 @@
     "jpName": "アランナ",
     "krName": "알라나",
     "internalName": "char_4178_alanna",
-    "nicheTiers": {
-      "damage-buff": "C",
-      "def-buff": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "def-buff": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "almond": {
     "id": "almond",
@@ -128,9 +192,15 @@
     "jpName": "アーモンド",
     "krName": "아몬드",
     "internalName": "char_4105_almond",
-    "nicheTiers": {
-      "shift": "A"
-    }
+    "nicheInstances": {
+      "shift": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "amiya": {
     "id": "amiya",
@@ -147,9 +217,15 @@
     "jpName": "アーミヤ",
     "krName": "아미야",
     "internalName": "char_002_amiya",
-    "nicheTiers": {
-      "true_damage": "B"
-    }
+    "nicheInstances": {
+      "true_damage": [
+        {
+          "tier": "B",
+          "level": "E2"
+        }
+      ]
+    },
+    "synergies": {}
   },
   "andreana": {
     "id": "andreana",
@@ -165,9 +241,6 @@
     "jpName": "アンドレアナ",
     "krName": "안드레아나",
     "internalName": "char_218_cuttle",
-    "nicheTiers": {
-      "physical-dps": "C"
-    },
     "synergies": {
       "abyssal-hunters": {
         "role": "optional",
@@ -175,6 +248,14 @@
           "Abyssal Hunters"
         ]
       }
+    },
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
     }
   },
   "aosta": {
@@ -193,10 +274,21 @@
     "jpName": "アオスタ",
     "krName": "아오스타",
     "internalName": "char_346_aosta",
-    "nicheTiers": {
-      "physical-dps": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "april": {
     "id": "april",
@@ -214,11 +306,27 @@
     "jpName": "エイプリル",
     "krName": "에이프릴",
     "internalName": "char_365_aprl",
-    "nicheTiers": {
-      "anti-air-operators": "A",
-      "fast-redeploy-operators": "A",
-      "unconventional-niches": "A"
-    }
+    "nicheInstances": {
+      "anti-air-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "fast-redeploy-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "aroma": {
     "id": "aroma",
@@ -236,10 +344,21 @@
     "jpName": "アロマ",
     "krName": "아로마",
     "internalName": "char_446_aroma",
-    "nicheTiers": {
-      "stalling": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "asbestos": {
     "id": "asbestos",
@@ -256,10 +375,21 @@
     "jpName": "アスベストス",
     "krName": "아스베스토스",
     "internalName": "char_378_asbest",
-    "nicheTiers": {
-      "aoe-arts-dps": "D",
-      "tanking-blocking-operators": "B"
-    }
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "ashlock": {
     "id": "ashlock",
@@ -275,9 +405,15 @@
     "jpName": "アッシュロック",
     "krName": "애쉬락",
     "internalName": "char_431_ashlok",
-    "nicheTiers": {
-      "aoe-physical-dps": "C"
-    }
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "astesia": {
     "id": "astesia",
@@ -295,10 +431,21 @@
     "jpName": "アステシア",
     "krName": "아스테시아",
     "internalName": "char_274_astesi",
-    "nicheTiers": {
-      "arts-dps": "C",
-      "late-laneholder": "C"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "astgenne": {
     "id": "astgenne",
@@ -315,10 +462,21 @@
     "jpName": "アステジーニ",
     "krName": "아스트젠",
     "internalName": "char_135_halo",
-    "nicheTiers": {
-      "aoe-arts-dps": "C",
-      "free": "A"
-    }
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "aurora": {
     "id": "aurora",
@@ -335,9 +493,15 @@
     "jpName": "オーロラ",
     "krName": "오로라",
     "internalName": "char_422_aurora",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "ayerscarpe": {
     "id": "ayerscarpe",
@@ -354,9 +518,15 @@
     "jpName": "エアースカーペ",
     "krName": "에이어스카르페",
     "internalName": "char_294_ayer",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "bassline": {
     "id": "bassline",
@@ -375,12 +545,33 @@
     "jpName": "ベースライン",
     "krName": "베이스라인",
     "internalName": "char_4109_baslin",
-    "nicheTiers": {
-      "healing-operators": "C",
-      "late-laneholder": "C",
-      "res-buff": "B",
-      "tanking-blocking-operators": "B"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "beeswax": {
     "id": "beeswax",
@@ -397,9 +588,15 @@
     "jpName": "ビーズワクス",
     "krName": "비즈왁스",
     "internalName": "char_344_beewax",
-    "nicheTiers": {
-      "tanking-blocking-operators": "B"
-    }
+    "nicheInstances": {
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "bena": {
     "id": "bena",
@@ -417,10 +614,21 @@
     "jpName": "ベナ",
     "krName": "베나",
     "internalName": "char_369_bena",
-    "nicheTiers": {
-      "late-laneholder": "C",
-      "tanking-blocking-operators": "B"
-    }
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "bibeak": {
     "id": "bibeak",
@@ -437,10 +645,21 @@
     "jpName": "バイビーク",
     "krName": "바이비크",
     "internalName": "char_252_bibeak",
-    "nicheTiers": {
-      "stalling": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "bison": {
     "id": "bison",
@@ -457,10 +676,21 @@
     "jpName": "バイソン",
     "krName": "바이슨",
     "internalName": "char_325_bison",
-    "nicheTiers": {
-      "tanking-blocking-operators": "B",
-      "free": "A"
-    }
+    "nicheInstances": {
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "blacknight": {
     "id": "blacknight",
@@ -477,10 +707,6 @@
     "jpName": "ブラックナイト",
     "krName": "블랙나이트",
     "internalName": "char_476_blkngt",
-    "nicheTiers": {
-      "dp-generation": "B",
-      "early-laneholder": "A"
-    },
     "synergies": {
       "sleep": {
         "role": "core",
@@ -488,6 +714,20 @@
           "DPSes"
         ]
       }
+    },
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "blitz": {
@@ -508,12 +748,33 @@
     "jpName": "ブリッツ",
     "krName": "블리츠",
     "internalName": "char_457_blitz",
-    "nicheTiers": {
-      "silence": "B",
-      "stalling": "C",
-      "tanking-blocking-operators": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "silence": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "blue_poison": {
     "id": "blue_poison",
@@ -531,10 +792,6 @@
     "jpName": "アズリウス",
     "krName": "블루포이즌",
     "internalName": "char_129_bluep",
-    "nicheTiers": {
-      "anti-air-operators": "A",
-      "physical-dps": "A"
-    },
     "synergies": {
       "offensive-recovery-archetto": {
         "role": "optional",
@@ -542,6 +799,20 @@
           "Offensive Recovery Operators"
         ]
       }
+    },
+    "nicheInstances": {
+      "anti-air-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "bobbing": {
@@ -559,10 +830,21 @@
     "jpName": "ボビング",
     "krName": "보빙",
     "internalName": "char_487_bobb",
-    "nicheTiers": {
-      "elemental-damage": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "breeze": {
     "id": "breeze",
@@ -579,9 +861,15 @@
     "jpName": "ブリーズ",
     "krName": "브리즈",
     "internalName": "char_275_breeze",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "brigid": {
     "id": "brigid",
@@ -596,9 +884,15 @@
     "cnName": "水灯心",
     "jpName": "ブリギッド",
     "internalName": "char_4177_brigid",
-    "nicheTiers": {
-      "physical-dps": "B"
-    }
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "broca": {
     "id": "broca",
@@ -614,9 +908,15 @@
     "jpName": "ブローカ",
     "krName": "브로카",
     "internalName": "char_356_broca",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "bryophyta": {
     "id": "bryophyta",
@@ -634,10 +934,21 @@
     "jpName": "ブライオフャイタ",
     "krName": "브라이오피타",
     "internalName": "char_4106_bryota",
-    "nicheTiers": {
-      "def-buff": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "cairn": {
     "id": "cairn",
@@ -667,11 +978,27 @@
     "jpName": "カンタービレ",
     "krName": "칸타빌레",
     "internalName": "char_497_ctable",
-    "nicheTiers": {
-      "dp-generation": "S",
-      "early-laneholder": "S",
-      "fast-redeploy-operators": "S"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "fast-redeploy-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "catherine": {
     "id": "catherine",
@@ -689,10 +1016,21 @@
     "jpName": "キャサリン",
     "krName": "캐서린",
     "internalName": "char_4162_cathy",
-    "nicheTiers": {
-      "def-buff": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "cement": {
     "id": "cement",
@@ -709,10 +1047,21 @@
     "jpName": "セメント",
     "krName": "시멘트",
     "internalName": "char_464_cement",
-    "nicheTiers": {
-      "tanking-blocking-operators": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "tanking-blocking-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "ceylon": {
     "id": "ceylon",
@@ -730,10 +1079,21 @@
     "jpName": "セイロン",
     "krName": "실론",
     "internalName": "char_348_ceylon",
-    "nicheTiers": {
-      "free": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "chiave": {
     "id": "chiave",
@@ -751,10 +1111,21 @@
     "jpName": "キアーベ",
     "krName": "키아베",
     "internalName": "char_349_chiave",
-    "nicheTiers": {
-      "dp-generation": "A",
-      "res-shred": "C"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "res-shred": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "chilchuck": {
     "id": "chilchuck",
@@ -774,12 +1145,33 @@
     "jpName": "チルチャック",
     "krName": "칠책",
     "internalName": "char_4144_chilc",
-    "nicheTiers": {
-      "dp-generation": "S",
-      "early-laneholder": "C",
-      "elemental_damage_healers": "C",
-      "fast-redeploy-operators": "S"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "elemental_damage_healers": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "fast-redeploy-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "cliffheart": {
     "id": "cliffheart",
@@ -796,10 +1188,21 @@
     "jpName": "クリフハート",
     "krName": "클리프하트",
     "internalName": "char_173_slchan",
-    "nicheTiers": {
-      "shift": "A",
-      "free": "A"
-    }
+    "nicheInstances": {
+      "shift": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "coldshot": {
     "id": "coldshot",
@@ -818,11 +1221,27 @@
     "jpName": "コールドショット",
     "krName": "콜드샷",
     "internalName": "char_4104_coldst",
-    "nicheTiers": {
-      "physical-dps": "C",
-      "free": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "corroserum": {
     "id": "corroserum",
@@ -840,10 +1259,21 @@
     "jpName": "コロセラム",
     "krName": "코로세럼",
     "internalName": "char_489_serum",
-    "nicheTiers": {
-      "silence": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "silence": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "croissant": {
     "id": "croissant",
@@ -863,12 +1293,33 @@
     "jpName": "クロワッサン",
     "krName": "크루아상",
     "internalName": "char_201_moeshd",
-    "nicheTiers": {
-      "def-buff": "B",
-      "res-buff": "C",
-      "shift": "B",
-      "tanking-blocking-operators": "B"
-    }
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "shift": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "czerny": {
     "id": "czerny",
@@ -887,11 +1338,27 @@
     "jpName": "ツェルニー",
     "krName": "체르니",
     "internalName": "char_4047_pianst",
-    "nicheTiers": {
-      "late-laneholder": "C",
-      "tanking-blocking-operators": "B",
-      "unconventional-niches": "A"
-    }
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "dagda": {
     "id": "dagda",
@@ -908,9 +1375,15 @@
     "jpName": "ダグザ",
     "krName": "다그다",
     "internalName": "char_157_dagda",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "delphine": {
     "id": "delphine",
@@ -927,10 +1400,21 @@
     "jpName": "デルフィーン",
     "krName": "델핀",
     "internalName": "char_4110_delphn",
-    "nicheTiers": {
-      "arts-dps": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "diamante": {
     "id": "diamante",
@@ -948,11 +1432,27 @@
     "jpName": "ディアマンテ",
     "krName": "디아만테",
     "internalName": "char_499_kaitou",
-    "nicheTiers": {
-      "elemental-damage": "C",
-      "elemental-dps": "S",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "elemental-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "doc": {
     "id": "doc",
@@ -970,10 +1470,21 @@
     "jpName": "ドック",
     "krName": "닥",
     "internalName": "char_4125_rdoc",
-    "nicheTiers": {
-      "healing-operators": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "elysium": {
     "id": "elysium",
@@ -991,10 +1502,21 @@
     "jpName": "エリジウム",
     "krName": "엘리시움",
     "internalName": "char_401_elysm",
-    "nicheTiers": {
-      "def-shred": "A",
-      "dp-generation": "SS"
-    }
+    "nicheInstances": {
+      "def-shred": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "dp-generation": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "enforcer": {
     "id": "enforcer",
@@ -1011,9 +1533,15 @@
     "jpName": "エンフォーサー",
     "krName": "인포서",
     "internalName": "char_4036_forcer",
-    "nicheTiers": {
-      "shift": "A"
-    }
+    "nicheInstances": {
+      "shift": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "erato": {
     "id": "erato",
@@ -1030,10 +1558,6 @@
     "jpName": "エラト",
     "krName": "에라토",
     "internalName": "char_4043_erato",
-    "nicheTiers": {
-      "physical-dps": "D",
-      "trash-operators": "A"
-    },
     "synergies": {
       "sleep": {
         "role": "core",
@@ -1041,6 +1565,20 @@
           "DPSes"
         ]
       }
+    },
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "executor": {
@@ -1058,10 +1596,21 @@
     "jpName": "イグゼキュター",
     "krName": "이그제큐터",
     "internalName": "char_279_excu",
-    "nicheTiers": {
-      "aoe-physical-dps": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "fang_the_fire_sharpened": {
     "id": "fang_the_fire_sharpened",
@@ -1079,10 +1628,21 @@
     "jpName": "歴陣鋭槍れきじんえいそうフェン",
     "krName": "팽 더 파이어 샤픈드",
     "internalName": "char_1036_fang2",
-    "nicheTiers": {
-      "dp-generation": "B",
-      "early-laneholder": "A"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "feater": {
     "id": "feater",
@@ -1099,9 +1659,15 @@
     "jpName": "エフイーター",
     "krName": "에프이터",
     "internalName": "char_241_panda",
-    "nicheTiers": {
-      "shift": "A"
-    }
+    "nicheInstances": {
+      "shift": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "figurino": {
     "id": "figurino",
@@ -1118,10 +1684,21 @@
     "jpName": "フィグリーノ",
     "krName": "피구리노",
     "internalName": "char_4155_talr",
-    "nicheTiers": {
-      "fast-redeploy-operators": "B",
-      "stalling": "B"
-    }
+    "nicheInstances": {
+      "fast-redeploy-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "firewatch": {
     "id": "firewatch",
@@ -1138,10 +1715,21 @@
     "jpName": "ファイヤーウォッチ",
     "krName": "파이어워치",
     "internalName": "char_158_milu",
-    "nicheTiers": {
-      "physical-dps": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "firewhistle": {
     "id": "firewhistle",
@@ -1159,11 +1747,27 @@
     "jpName": "ファイヤーホイッスル",
     "krName": "파이어휘슬",
     "internalName": "char_493_firwhl",
-    "nicheTiers": {
-      "aoe-physical-dps": "A",
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "B"
-    }
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "flamebringer": {
     "id": "flamebringer",
@@ -1180,10 +1784,21 @@
     "jpName": "エンカク",
     "krName": "플레임브링어",
     "internalName": "char_131_flameb",
-    "nicheTiers": {
-      "free": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "flint": {
     "id": "flint",
@@ -1200,10 +1815,21 @@
     "jpName": "フリント",
     "krName": "플린트",
     "internalName": "char_415_flint",
-    "nicheTiers": {
-      "stalling": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "folinic": {
     "id": "folinic",
@@ -1220,9 +1846,15 @@
     "jpName": "フォリニック",
     "krName": "폴리닉",
     "internalName": "char_345_folnic",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "franka": {
     "id": "franka",
@@ -1240,10 +1872,21 @@
     "jpName": "フランカ",
     "krName": "프란카",
     "internalName": "char_106_franka",
-    "nicheTiers": {
-      "true_damage": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "true_damage": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "frost": {
     "id": "frost",
@@ -1261,10 +1904,21 @@
     "jpName": "フロスト",
     "krName": "프로스트",
     "internalName": "char_458_rfrost",
-    "nicheTiers": {
-      "physical-dps": "B",
-      "stalling": "A"
-    }
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "fuze": {
     "id": "fuze",
@@ -1283,11 +1937,27 @@
     "jpName": "フューズ",
     "krName": "퓨즈",
     "internalName": "char_4126_fuze",
-    "nicheTiers": {
-      "late-laneholder": "C",
-      "physical-dps": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "glaucus": {
     "id": "glaucus",
@@ -1305,10 +1975,21 @@
     "jpName": "グラウコス",
     "krName": "글라우쿠스",
     "internalName": "char_326_glacus",
-    "nicheTiers": {
-      "anti-air-operators": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "anti-air-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "gracebearer": {
     "id": "gracebearer",
@@ -1326,11 +2007,6 @@
     "jpName": "グレースベアラー",
     "krName": "그레이스베어러",
     "internalName": "char_4187_graceb",
-    "nicheTiers": {
-      "elemental-damage": "C",
-      "elemental-dps": "A",
-      "late-laneholder": "B"
-    },
     "synergies": {
       "nervous-impairment": {
         "role": "optional",
@@ -1338,6 +2014,26 @@
           "DPS"
         ]
       }
+    },
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "elemental-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
     }
   },
   "grain_buds": {
@@ -1355,9 +2051,6 @@
     "jpName": "グレインバッズ",
     "krName": "그레인버즈",
     "internalName": "char_4122_grabds",
-    "nicheTiers": {
-      "stalling": "C"
-    },
     "synergies": {
       "sleep": {
         "role": "optional",
@@ -1365,6 +2058,14 @@
           "Sleep Appliers"
         ]
       }
+    },
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
     }
   },
   "grani": {
@@ -1383,11 +2084,27 @@
     "jpName": "グラニ",
     "krName": "그라니",
     "internalName": "char_220_grani",
-    "nicheTiers": {
-      "early-laneholder": "B",
-      "free": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "early-laneholder": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "greythroat": {
     "id": "greythroat",
@@ -1404,10 +2121,21 @@
     "jpName": "グレースロート",
     "krName": "그레이스롯",
     "internalName": "char_367_swllow",
-    "nicheTiers": {
-      "anti-air-operators": "A",
-      "physical-dps": "A"
-    }
+    "nicheInstances": {
+      "anti-air-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "greyy_the_lightningbearer": {
     "id": "greyy_the_lightningbearer",
@@ -1424,10 +2152,21 @@
     "jpName": "承しょう曦ぎグレイ",
     "krName": "그레이 더 라이트닝베어러",
     "internalName": "char_1027_greyy2",
-    "nicheTiers": {
-      "aoe-physical-dps": "B",
-      "physical-dps": "C"
-    }
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "hadiya": {
     "id": "hadiya",
@@ -1456,10 +2195,21 @@
     "jpName": "ハーモニー[note 2]",
     "krName": "아르모니",
     "internalName": "char_297_hamoni",
-    "nicheTiers": {
-      "arts-dps": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "harold": {
     "id": "harold",
@@ -1477,11 +2227,27 @@
     "jpName": "ハロルド",
     "krName": "해럴드",
     "internalName": "char_4114_harold",
-    "nicheTiers": {
-      "elemental_damage_healers": "B",
-      "healing-operators": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "elemental_damage_healers": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "heavyrain": {
     "id": "heavyrain",
@@ -1499,11 +2265,6 @@
     "jpName": "ヘビーレイン",
     "krName": "헤비레인",
     "internalName": "char_304_zebra",
-    "nicheTiers": {
-      "healing-operators": "C",
-      "tanking-blocking-operators": "B",
-      "unconventional-niches": "A"
-    },
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -1511,6 +2272,26 @@
           "Healers"
         ]
       }
+    },
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "heidi": {
@@ -1529,11 +2310,6 @@
     "jpName": "ハイディ",
     "krName": "하이디",
     "internalName": "char_4045_heidi",
-    "nicheTiers": {
-      "damage-buff": "B",
-      "sp-battery": "C",
-      "free": "A"
-    },
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -1541,6 +2317,26 @@
           "Healers"
         ]
       }
+    },
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "sp-battery": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "hibiscus_the_purifier": {
@@ -1560,11 +2356,27 @@
     "jpName": "濯たく塵じんハイビスカス",
     "krName": "히비스커스 더 퓨리파이어",
     "internalName": "char_1024_hbisc2",
-    "nicheTiers": {
-      "arts-dps": "D",
-      "healing-operators": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "highmore": {
     "id": "highmore",
@@ -1582,11 +2394,6 @@
     "jpName": "ハイモア",
     "krName": "하이모어",
     "internalName": "char_4066_highmo",
-    "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "B",
-      "free": "A"
-    },
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -1594,6 +2401,26 @@
           "Enmities"
         ]
       }
+    },
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "honeyberry": {
@@ -1612,11 +2439,27 @@
     "jpName": "ハニーベリー",
     "krName": "허니베리",
     "internalName": "char_449_glider",
-    "nicheTiers": {
-      "elemental_damage_healers": "A",
-      "healing-operators": "A",
-      "free": "A"
-    }
+    "nicheInstances": {
+      "elemental_damage_healers": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "hung": {
     "id": "hung",
@@ -1632,9 +2475,15 @@
     "jpName": "ウン",
     "krName": "훔",
     "internalName": "char_226_hmau",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "iana": {
     "id": "iana",
@@ -1650,9 +2499,15 @@
     "jpName": "イアナ",
     "krName": "야나",
     "internalName": "char_4124_iana",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "indra": {
     "id": "indra",
@@ -1669,9 +2524,15 @@
     "jpName": "インドラ",
     "krName": "인드라",
     "internalName": "char_155_tiger",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "insider": {
     "id": "insider",
@@ -1689,10 +2550,21 @@
     "jpName": "インサイダー",
     "krName": "인사이더",
     "internalName": "char_498_inside",
-    "nicheTiers": {
-      "physical-dps": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "iris": {
     "id": "iris",
@@ -1709,9 +2581,6 @@
     "jpName": "アイリス",
     "krName": "아이리스",
     "internalName": "char_338_iris",
-    "nicheTiers": {
-      "trash-operators": "A"
-    },
     "synergies": {
       "sleep": {
         "role": "optional",
@@ -1719,6 +2588,14 @@
           "Sleep Appliers"
         ]
       }
+    },
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "istina": {
@@ -1736,10 +2613,21 @@
     "jpName": "イースチナ",
     "krName": "이스티나",
     "internalName": "char_195_glassb",
-    "nicheTiers": {
-      "stalling": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "jieyun": {
     "id": "jieyun",
@@ -1758,11 +2646,27 @@
     "jpName": "ジエユン",
     "krName": "지에윈",
     "internalName": "char_4078_bdhkgt",
-    "nicheTiers": {
-      "aoe-physical-dps": "B",
-      "free": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "kafka": {
     "id": "kafka",
@@ -1778,9 +2682,6 @@
     "jpName": "カフカ",
     "krName": "카프카",
     "internalName": "char_214_kafka",
-    "nicheTiers": {
-      "fast-redeploy-operators": "B"
-    },
     "synergies": {
       "sleep": {
         "role": "optional",
@@ -1788,6 +2689,14 @@
           "Sleep Appliers"
         ]
       }
+    },
+    "nicheInstances": {
+      "fast-redeploy-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
     }
   },
   "kazemaru": {
@@ -1806,10 +2715,21 @@
     "jpName": "カゼマル",
     "krName": "카제마루",
     "internalName": "char_4016_kazema",
-    "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "B"
-    }
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "kestrel": {
     "id": "kestrel",
@@ -1828,11 +2748,27 @@
     "jpName": "ケストレル",
     "krName": "케스트럴",
     "internalName": "char_4023_rfalcn",
-    "nicheTiers": {
-      "dp-generation": "C",
-      "early-laneholder": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "kichisei": {
     "id": "kichisei",
@@ -1861,9 +2797,15 @@
     "jpName": "キララ",
     "krName": "키라라",
     "internalName": "char_478_kirara",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "kjera": {
     "id": "kjera",
@@ -1879,9 +2821,15 @@
     "jpName": "イェラ",
     "krName": "쉐라",
     "internalName": "char_4013_kjera",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "kroos_the_keen_glint": {
     "id": "kroos_the_keen_glint",
@@ -1900,11 +2848,27 @@
     "jpName": "寒かん芒ぼうクルース",
     "krName": "크루스 더 킨 글린트",
     "internalName": "char_1021_kroos2",
-    "nicheTiers": {
-      "anti-air-operators": "S",
-      "physical-dps": "A",
-      "stalling": "C"
-    }
+    "nicheInstances": {
+      "anti-air-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "la_pluma": {
     "id": "la_pluma",
@@ -1921,9 +2885,6 @@
     "jpName": "ラ・プルマ",
     "krName": "라 플루마",
     "internalName": "char_421_crow",
-    "nicheTiers": {
-      "late-laneholder": "A"
-    },
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -1931,6 +2892,14 @@
           "Enmities"
         ]
       }
+    },
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "laios": {
@@ -1948,9 +2917,15 @@
     "jpName": "ライオス",
     "krName": "라이오스",
     "internalName": "char_4142_laios",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "lappland": {
     "id": "lappland",
@@ -1970,12 +2945,6 @@
     "jpName": "ラップランド",
     "krName": "라플란드",
     "internalName": "char_140_whitew",
-    "nicheTiers": {
-      "arts-dps": "A",
-      "late-laneholder": "A",
-      "physical-dps": "B",
-      "silence": "SS"
-    },
     "synergies": {
       "offensive-recovery-archetto": {
         "role": "optional",
@@ -1983,6 +2952,32 @@
           "Offensive Recovery Operators"
         ]
       }
+    },
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "silence": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ]
     }
   },
   "lava_the_purgatory": {
@@ -2001,10 +2996,21 @@
     "jpName": "炎えん獄ごくラヴァ",
     "krName": "라바 더 퍼거토리",
     "internalName": "char_1011_lava2",
-    "nicheTiers": {
-      "aoe-arts-dps": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "leizi": {
     "id": "leizi",
@@ -2021,9 +3027,15 @@
     "jpName": "レイズ",
     "krName": "레이즈",
     "internalName": "char_306_leizi",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "leonhardt": {
     "id": "leonhardt",
@@ -2040,9 +3052,15 @@
     "jpName": "レオンハルト",
     "krName": "레온하르트",
     "internalName": "char_373_lionhd",
-    "nicheTiers": {
-      "aoe-arts-dps": "B"
-    }
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "leto": {
     "id": "leto",
@@ -2059,10 +3077,21 @@
     "jpName": "リェータ",
     "krName": "레토",
     "internalName": "char_194_leto",
-    "nicheTiers": {
-      "late-laneholder": "B",
-      "physical-dps": "B"
-    }
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "liskarm": {
     "id": "liskarm",
@@ -2079,10 +3108,21 @@
     "jpName": "リスカム",
     "krName": "리스캄",
     "internalName": "char_107_liskam",
-    "nicheTiers": {
-      "sp-battery": "S",
-      "tanking-blocking-operators": "A"
-    }
+    "nicheInstances": {
+      "sp-battery": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "lucilla": {
     "id": "lucilla",
@@ -2099,10 +3139,21 @@
     "jpName": "ルシーラ",
     "krName": "루실라",
     "internalName": "char_4079_haini",
-    "nicheTiers": {
-      "fragile": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "fragile": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "lunacub": {
     "id": "lunacub",
@@ -2118,10 +3169,21 @@
     "cnName": "子月",
     "jpName": "ルナカブ",
     "internalName": "char_4014_lunacu",
-    "nicheTiers": {
-      "physical-dps": "D",
-      "unconventional-niches": "A"
-    }
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "manticore": {
     "id": "manticore",
@@ -2138,9 +3200,15 @@
     "jpName": "マンティコア",
     "krName": "맨티코어",
     "internalName": "char_215_mantic",
-    "nicheTiers": {
-      "stalling": "A"
-    }
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "matsukiri": {
     "id": "matsukiri",
@@ -2169,9 +3237,15 @@
     "jpName": "メイヤー",
     "krName": "메이어",
     "internalName": "char_242_otter",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "melanite": {
     "id": "melanite",
@@ -2188,10 +3262,21 @@
     "jpName": "メラナイト",
     "krName": "멜라나이트",
     "internalName": "char_4006_melnte",
-    "nicheTiers": {
-      "physical-dps": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "meteorite": {
     "id": "meteorite",
@@ -2208,9 +3293,15 @@
     "jpName": "メテオリーテ",
     "krName": "메테오라이트",
     "internalName": "char_219_meteo",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "minimalist": {
     "id": "minimalist",
@@ -2228,10 +3319,21 @@
     "jpName": "ミニマリスト",
     "krName": "미니멀리스트",
     "internalName": "char_4054_malist",
-    "nicheTiers": {
-      "arts-dps": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "mint": {
     "id": "mint",
@@ -2249,10 +3351,21 @@
     "jpName": "ミント",
     "krName": "민트",
     "internalName": "char_388_mint",
-    "nicheTiers": {
-      "tanking-blocking-operators": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "tanking-blocking-operators": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "miss_christine": {
     "id": "miss_christine",
@@ -2269,11 +3382,27 @@
     "jpName": "ミス・クリスティーン",
     "krName": "미스 크리스틴",
     "internalName": "char_4198_christ",
-    "nicheTiers": {
-      "elemental-damage": "C",
-      "elemental-dps": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "elemental-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "misumi_uika": {
     "id": "misumi_uika",
@@ -2305,11 +3434,27 @@
     "jpName": "ミトム",
     "krName": "님프",
     "internalName": "char_4147_mitm",
-    "nicheTiers": {
-      "dp-generation": "C",
-      "early-laneholder": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "morgan": {
     "id": "morgan",
@@ -2324,9 +3469,15 @@
     "cnName": "摩根",
     "jpName": "モーガン",
     "internalName": "char_154_morgan",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "mr_nothing": {
     "id": "mr_nothing",
@@ -2343,9 +3494,15 @@
     "jpName": "ウユウ",
     "krName": "우요우",
     "internalName": "char_455_nothin",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "mulberry": {
     "id": "mulberry",
@@ -2362,10 +3519,21 @@
     "jpName": "マルベリー",
     "krName": "멀베리",
     "internalName": "char_473_mberry",
-    "nicheTiers": {
-      "elemental_damage_healers": "A",
-      "healing-operators": "A"
-    }
+    "nicheInstances": {
+      "elemental_damage_healers": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "nearl": {
     "id": "nearl",
@@ -2383,10 +3551,21 @@
     "jpName": "ニアール",
     "krName": "니어",
     "internalName": "char_148_nearl",
-    "nicheTiers": {
-      "healing-operators": "A",
-      "tanking-blocking-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "nightmare": {
     "id": "nightmare",
@@ -2404,11 +3583,27 @@
     "jpName": "ナイトメア",
     "krName": "나이트메어",
     "internalName": "char_164_nightm",
-    "nicheTiers": {
-      "healing-operators": "D",
-      "stalling": "F",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "F",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "nine_colored_deer": {
     "id": "nine_colored_deer",
@@ -2427,12 +3622,33 @@
     "jpName": "九く色しき鹿ろく",
     "krName": "나인컬러드 디어",
     "internalName": "char_4019_ncdeer",
-    "nicheTiers": {
-      "def-buff": "A",
-      "healing-operators": "B",
-      "res-buff": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "nowell": {
     "id": "nowell",
@@ -2450,10 +3666,21 @@
     "jpName": "ノウエル",
     "krName": "노웰",
     "internalName": "char_4173_nowell",
-    "nicheTiers": {
-      "healing-operators": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "odda": {
     "id": "odda",
@@ -2473,12 +3700,33 @@
     "jpName": "オッダ",
     "krName": "오다",
     "internalName": "char_4131_odda",
-    "nicheTiers": {
-      "aoe-physical-dps": "C",
-      "late-laneholder": "C",
-      "physical-dps": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "paprika": {
     "id": "paprika",
@@ -2495,10 +3743,21 @@
     "jpName": "パプリカ",
     "krName": "파프리카",
     "internalName": "char_4071_peper",
-    "nicheTiers": {
-      "healing-operators": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "papyrus": {
     "id": "papyrus",
@@ -2514,9 +3773,15 @@
     "jpName": "パピルス",
     "krName": "파피루스",
     "internalName": "char_4139_papyrs",
-    "nicheTiers": {
-      "healing-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "philae": {
     "id": "philae",
@@ -2534,11 +3799,6 @@
     "jpName": "フィラエ",
     "krName": "필라에",
     "internalName": "char_4148_philae",
-    "nicheTiers": {
-      "elemental-damage": "B",
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "B"
-    },
     "synergies": {
       "necrosis": {
         "role": "optional",
@@ -2546,6 +3806,26 @@
           "Additional Appliers"
         ]
       }
+    },
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
     }
   },
   "platinum": {
@@ -2563,10 +3843,21 @@
     "jpName": "プラチナ",
     "krName": "플래티넘",
     "internalName": "char_204_platnm",
-    "nicheTiers": {
-      "anti-air-operators": "A",
-      "physical-dps": "A"
-    }
+    "nicheInstances": {
+      "anti-air-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "poncirus": {
     "id": "poncirus",
@@ -2584,11 +3875,27 @@
     "jpName": "ポンシラス",
     "krName": "폰사이러스",
     "internalName": "char_488_buildr",
-    "nicheTiers": {
-      "dp-generation": "A",
-      "early-laneholder": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "pramanix": {
     "id": "pramanix",
@@ -2605,10 +3912,21 @@
     "jpName": "プラマニクス",
     "krName": "프라마닉스",
     "internalName": "char_174_slbell",
-    "nicheTiers": {
-      "def-shred": "SS",
-      "res-shred": "S"
-    }
+    "nicheInstances": {
+      "def-shred": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "res-shred": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "projekt_red": {
     "id": "projekt_red",
@@ -2625,9 +3943,15 @@
     "jpName": "レッド",
     "krName": "레드",
     "internalName": "char_144_red",
-    "nicheTiers": {
-      "fast-redeploy-operators": "A"
-    }
+    "nicheInstances": {
+      "fast-redeploy-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "provence": {
     "id": "provence",
@@ -2644,9 +3968,15 @@
     "jpName": "プロヴァンス",
     "krName": "프로방스",
     "internalName": "char_145_prove",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "proviso": {
     "id": "proviso",
@@ -2663,9 +3993,15 @@
     "jpName": "プロヴァイゾ",
     "krName": "프로바이조",
     "internalName": "char_4032_provs",
-    "nicheTiers": {
-      "stalling": "A"
-    }
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "ptilopsis": {
     "id": "ptilopsis",
@@ -2683,10 +4019,21 @@
     "jpName": "フィリオプシス",
     "krName": "프틸롭시스",
     "internalName": "char_128_plosis",
-    "nicheTiers": {
-      "healing-operators": "A",
-      "sp-battery": "SS"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "sp-battery": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "puzzle": {
     "id": "puzzle",
@@ -2705,11 +4052,27 @@
     "jpName": "パズル",
     "krName": "퍼즐",
     "internalName": "char_4017_puzzle",
-    "nicheTiers": {
-      "dp-generation": "S",
-      "early-laneholder": "S",
-      "fast-redeploy-operators": "S"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "fast-redeploy-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "qanipalaat": {
     "id": "qanipalaat",
@@ -2727,10 +4090,21 @@
     "jpName": "カニパラート",
     "krName": "카니팔라트",
     "internalName": "char_466_qanik",
-    "nicheTiers": {
-      "arts-dps": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "quercus": {
     "id": "quercus",
@@ -2750,12 +4124,33 @@
     "jpName": "クエルクス",
     "krName": "퀘르쿠스",
     "internalName": "char_492_quercu",
-    "nicheTiers": {
-      "def-buff": "A",
-      "healing-operators": "A",
-      "res-buff": "A",
-      "sp-battery": "A"
-    }
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "sp-battery": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "rathalos_s_noir_corne": {
     "id": "rathalos_s_noir_corne",
@@ -2774,11 +4169,6 @@
     "jpName": "レウスSノイルホーン",
     "krName": "레우스S 느와르 코르네",
     "internalName": "char_1030_noirc2",
-    "nicheTiers": {
-      "late-laneholder": "B",
-      "physical-dps": "B",
-      "trash-operators": "A"
-    },
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -2786,6 +4176,26 @@
           "Enmities"
         ]
       }
+    },
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "record_keeper": {
@@ -2804,10 +4214,21 @@
     "jpName": "レコードキーパー",
     "krName": "레코드키퍼",
     "internalName": "char_4196_reckpr",
-    "nicheTiers": {
-      "healing-operators": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "reed": {
     "id": "reed",
@@ -2826,11 +4247,27 @@
     "jpName": "リード",
     "krName": "리드",
     "internalName": "char_261_sddrag",
-    "nicheTiers": {
-      "dp-generation": "C",
-      "physical-dps": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "robin": {
     "id": "robin",
@@ -2848,10 +4285,21 @@
     "jpName": "ロビン",
     "krName": "로빈",
     "internalName": "char_451_robin",
-    "nicheTiers": {
-      "shift": "B",
-      "stalling": "A"
-    }
+    "nicheInstances": {
+      "shift": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "rockrock": {
     "id": "rockrock",
@@ -2867,9 +4315,15 @@
     "jpName": "ロックロック",
     "krName": "락락",
     "internalName": "char_4040_rockr",
-    "nicheTiers": {
-      "arts-dps": "B"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "rose_salt": {
     "id": "rose_salt",
@@ -2885,9 +4339,15 @@
     "jpName": "ローズソルト",
     "krName": "로즈솔트",
     "internalName": "char_4163_rosesa",
-    "nicheTiers": {
-      "healing-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "sand_reckoner": {
     "id": "sand_reckoner",
@@ -2904,10 +4364,21 @@
     "jpName": "サンドレコナー",
     "krName": "샌드레코너",
     "internalName": "char_4140_lasher",
-    "nicheTiers": {
-      "stalling": "F",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "F",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "santalla": {
     "id": "santalla",
@@ -2924,10 +4395,21 @@
     "jpName": "サンタラ",
     "krName": "산탈라",
     "internalName": "char_341_sntlla",
-    "nicheTiers": {
-      "arts-dps": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "savage": {
     "id": "savage",
@@ -2943,9 +4425,15 @@
     "jpName": "サベージ",
     "krName": "새비지",
     "internalName": "char_230_savage",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "scene": {
     "id": "scene",
@@ -2961,9 +4449,15 @@
     "jpName": "シーン",
     "krName": "씬",
     "internalName": "char_336_folivo",
-    "nicheTiers": {
-      "unconventional-niches": "A"
-    }
+    "nicheInstances": {
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "senshi": {
     "id": "senshi",
@@ -2983,12 +4477,33 @@
     "jpName": "センシ",
     "krName": "센시",
     "internalName": "char_4143_sensi",
-    "nicheTiers": {
-      "healing-operators": "C",
-      "late-laneholder": "D",
-      "tanking-blocking-operators": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "sesa": {
     "id": "sesa",
@@ -3006,10 +4521,21 @@
     "jpName": "シェーシャ",
     "krName": "세사",
     "internalName": "char_379_sesa",
-    "nicheTiers": {
-      "trash-operators": "A",
-      "unconventional-niches": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "shalem": {
     "id": "shalem",
@@ -3026,10 +4552,21 @@
     "jpName": "シャレム",
     "krName": "샬렘",
     "internalName": "char_4025_aprot2",
-    "nicheTiers": {
-      "free": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "shamare": {
     "id": "shamare",
@@ -3049,12 +4586,33 @@
     "jpName": "シャマレ",
     "krName": "샤마르",
     "internalName": "char_254_vodfox",
-    "nicheTiers": {
-      "atk-debuff": "S",
-      "def-shred": "SS",
-      "fragile": "SS",
-      "global-range": "A"
-    }
+    "nicheInstances": {
+      "atk-debuff": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "def-shred": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "fragile": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "global-range": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "sideroca": {
     "id": "sideroca",
@@ -3072,11 +4630,27 @@
     "jpName": "シデロカ",
     "krName": "시데로카",
     "internalName": "char_333_sidero",
-    "nicheTiers": {
-      "tanking-blocking-operators": "D",
-      "free": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "tanking-blocking-operators": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "silence": {
     "id": "silence",
@@ -3094,11 +4668,27 @@
     "jpName": "サイレンス",
     "krName": "사일런스",
     "internalName": "char_108_silent",
-    "nicheTiers": {
-      "healing-operators": "A",
-      "global-range": "A",
-      "unconventional-niches": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "global-range": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "skybox": {
     "id": "skybox",
@@ -3125,9 +4715,15 @@
     "jpName": "スカイフレア",
     "krName": "스카이파이어",
     "internalName": "char_166_skfire",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "snow_hunter": {
     "id": "snow_hunter",
@@ -3154,9 +4750,15 @@
     "jpName": "スノーズント",
     "krName": "스노우상트",
     "internalName": "char_383_snsant",
-    "nicheTiers": {
-      "shift": "A"
-    }
+    "nicheInstances": {
+      "shift": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "sora": {
     "id": "sora",
@@ -3173,10 +4775,6 @@
     "jpName": "ソラ",
     "krName": "소라",
     "internalName": "char_101_sora",
-    "nicheTiers": {
-      "damage-buff": "B",
-      "trash-operators": "A"
-    },
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -3190,6 +4788,20 @@
           "Sleep Appliers"
         ]
       }
+    },
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "specter": {
@@ -3208,10 +4820,6 @@
     "jpName": "スペクター",
     "krName": "스펙터",
     "internalName": "char_143_ghost",
-    "nicheTiers": {
-      "late-laneholder": "S",
-      "tanking-blocking-operators": "S"
-    },
     "synergies": {
       "abyssal-hunters": {
         "role": "optional",
@@ -3219,6 +4827,20 @@
           "Abyssal Hunters"
         ]
       }
+    },
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
     }
   },
   "spuria": {
@@ -3237,10 +4859,21 @@
     "jpName": "スプリア",
     "krName": "스푸리아",
     "internalName": "char_4015_spuria",
-    "nicheTiers": {
-      "damage-buff": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "surfer": {
     "id": "surfer",
@@ -3258,11 +4891,27 @@
     "jpName": "サーファー",
     "krName": "서퍼",
     "internalName": "char_4052_surfer",
-    "nicheTiers": {
-      "dp-generation": "S",
-      "early-laneholder": "S",
-      "fast-redeploy-operators": "S"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "fast-redeploy-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "swire": {
     "id": "swire",
@@ -3280,10 +4929,21 @@
     "jpName": "スワイヤー",
     "krName": "스와이어",
     "internalName": "char_308_swire",
-    "nicheTiers": {
-      "damage-buff": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "tachanka": {
     "id": "tachanka",
@@ -3300,9 +4960,15 @@
     "jpName": "タチャンカ",
     "krName": "타찬카",
     "internalName": "char_459_tachak",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "tecno": {
     "id": "tecno",
@@ -3320,11 +4986,27 @@
     "jpName": "テクノ",
     "krName": "테크노",
     "internalName": "char_4164_tecno",
-    "nicheTiers": {
-      "arts-dps": "C",
-      "stalling": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "tequila": {
     "id": "tequila",
@@ -3342,10 +5024,21 @@
     "jpName": "テキーラ",
     "krName": "테킬라",
     "internalName": "char_486_takila",
-    "nicheTiers": {
-      "aoe-physical-dps": "C",
-      "tanking-blocking-operators": "B"
-    }
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "texas": {
     "id": "texas",
@@ -3364,11 +5057,27 @@
     "jpName": "テキサス",
     "krName": "텍사스",
     "internalName": "char_102_texas",
-    "nicheTiers": {
-      "dp-generation": "A",
-      "early-laneholder": "A",
-      "stalling": "C"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "tin_man": {
     "id": "tin_man",
@@ -3386,10 +5095,6 @@
     "jpName": "ブリキ",
     "krName": "틴맨",
     "internalName": "char_4151_tinman",
-    "nicheTiers": {
-      "aoe-arts-dps": "D",
-      "atk-debuff": "A"
-    },
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -3397,6 +5102,20 @@
           "Healers"
         ]
       }
+    },
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "atk-debuff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "tippi": {
@@ -3414,10 +5133,21 @@
     "jpName": "ティッピ",
     "krName": "티피",
     "internalName": "char_4191_tippi",
-    "nicheTiers": {
-      "trash-operators": "A",
-      "unconventional-niches": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "toddifons": {
     "id": "toddifons",
@@ -3434,10 +5164,21 @@
     "jpName": "トギフォンス",
     "krName": "토디폰스",
     "internalName": "char_363_toddi",
-    "nicheTiers": {
-      "trash-operators": "A",
-      "unconventional-niches": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "tomimi": {
     "id": "tomimi",
@@ -3454,10 +5195,21 @@
     "jpName": "トミミ",
     "krName": "토미미",
     "internalName": "char_411_tomimi",
-    "nicheTiers": {
-      "free": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "tsukinogi": {
     "id": "tsukinogi",
@@ -3475,11 +5227,27 @@
     "jpName": "ツキノギ",
     "krName": "츠키노기",
     "internalName": "char_343_tknogi",
-    "nicheTiers": {
-      "def-buff": "B",
-      "res-buff": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "tuye": {
     "id": "tuye",
@@ -3496,9 +5264,15 @@
     "jpName": "トゥイエ",
     "krName": "투예",
     "internalName": "char_402_tuye",
-    "nicheTiers": {
-      "healing-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "underflow": {
     "id": "underflow",
@@ -3514,10 +5288,21 @@
     "cnName": "深巡",
     "jpName": "アンダーフロー",
     "internalName": "char_4137_udflow",
-    "nicheTiers": {
-      "late-laneholder": "A",
-      "tanking-blocking-operators": "B"
-    }
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "valarqvin": {
     "id": "valarqvin",
@@ -3535,10 +5320,6 @@
     "jpName": "ヴァラルクビン",
     "krName": "발라크빈",
     "internalName": "char_4102_threye",
-    "nicheTiers": {
-      "elemental-damage": "B",
-      "free": "A"
-    },
     "synergies": {
       "necrosis": {
         "role": "optional",
@@ -3546,6 +5327,20 @@
           "Additional Appliers"
         ]
       }
+    },
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "free": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "vendela": {
@@ -3563,10 +5358,21 @@
     "jpName": "ヴァンデラ",
     "krName": "벤델라",
     "internalName": "char_494_vendla",
-    "nicheTiers": {
-      "healing-operators": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "vetochki": {
     "id": "vetochki",
@@ -3578,7 +5384,6 @@
     "niches": [],
     "cnName": "折桠",
     "internalName": "char_4207_branch",
-    "nicheTiers": {},
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -3586,7 +5391,8 @@
           "Enmities"
         ]
       }
-    }
+    },
+    "nicheInstances": {}
   },
   "vulcan": {
     "id": "vulcan",
@@ -3602,9 +5408,6 @@
     "jpName": "ヴァルカン",
     "krName": "벌컨",
     "internalName": "char_163_hpsts",
-    "nicheTiers": {
-      "trash-operators": "A"
-    },
     "synergies": {
       "enmity-healing": {
         "role": "core",
@@ -3612,6 +5415,14 @@
           "Enmities"
         ]
       }
+    },
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
     }
   },
   "waai_fu": {
@@ -3630,11 +5441,27 @@
     "jpName": "ワイフー",
     "krName": "와이후",
     "internalName": "char_243_waaifu",
-    "nicheTiers": {
-      "fast-redeploy-operators": "B",
-      "silence": "B",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "fast-redeploy-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "silence": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "wakaba_mutsumi": {
     "id": "wakaba_mutsumi",
@@ -3665,9 +5492,15 @@
     "jpName": "ワンチィン",
     "krName": "완칭",
     "internalName": "char_4119_wanqin",
-    "nicheTiers": {
-      "dp-generation": "SS"
-    }
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "warfarin": {
     "id": "warfarin",
@@ -3686,11 +5519,27 @@
     "jpName": "ワルファリン",
     "krName": "와파린",
     "internalName": "char_171_bldsk",
-    "nicheTiers": {
-      "damage-buff": "SS",
-      "healing-operators": "A",
-      "sp-battery": "S"
-    }
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "sp-battery": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "warmy": {
     "id": "warmy",
@@ -3709,11 +5558,27 @@
     "jpName": "ウォーミー",
     "krName": "워미",
     "internalName": "char_4081_warmy",
-    "nicheTiers": {
-      "elemental-damage": "C",
-      "elemental-dps": "S",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "elemental-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "whislash": {
     "id": "whislash",
@@ -3730,10 +5595,21 @@
     "jpName": "ウィスラッシュ",
     "krName": "위슬래시",
     "internalName": "char_265_sophia",
-    "nicheTiers": {
-      "damage-buff": "C",
-      "def-buff": "C"
-    }
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "def-buff": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "whisperain": {
     "id": "whisperain",
@@ -3750,10 +5626,21 @@
     "jpName": "ウィスパーレイン",
     "krName": "위스퍼레인",
     "internalName": "char_436_whispr",
-    "nicheTiers": {
-      "healing-operators": "A",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "wild_mane": {
     "id": "wild_mane",
@@ -3771,11 +5658,27 @@
     "jpName": "ワイルドメイン",
     "krName": "와일드메인",
     "internalName": "char_496_wildmn",
-    "nicheTiers": {
-      "shift": "B",
-      "stalling": "D",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "shift": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "wind_chimes": {
     "id": "wind_chimes",
@@ -3792,9 +5695,15 @@
     "jpName": "ウィンドチャイム",
     "krName": "윈드차임스",
     "internalName": "char_4083_chimes",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "windflit": {
     "id": "windflit",
@@ -3811,9 +5720,15 @@
     "jpName": "ウィンドフリット",
     "krName": "윈드플릿",
     "internalName": "char_433_windft",
-    "nicheTiers": {
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "wulfenite": {
     "id": "wulfenite",
@@ -3830,10 +5745,21 @@
     "jpName": "ウルフェナイト",
     "krName": "울페나이트",
     "internalName": "char_4171_wulfen",
-    "nicheTiers": {
-      "stalling": "A",
-      "global-range": "A"
-    }
+    "nicheInstances": {
+      "stalling": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "global-range": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "xingzhu": {
     "id": "xingzhu",
@@ -3852,12 +5778,33 @@
     "jpName": "シィンズゥ",
     "krName": "싱주",
     "internalName": "char_4172_xingzh",
-    "nicheTiers": {
-      "def-buff": "B",
-      "healing-operators": "B",
-      "res-buff": "C",
-      "trash-operators": "A"
-    }
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "yahata_umiri": {
     "id": "yahata_umiri",
@@ -3903,10 +5850,26 @@
     "jpName": "ズィマー",
     "krName": "지마",
     "internalName": "char_115_headbr",
-    "nicheTiers": {
-      "def-buff": "A",
-      "dp-generation": "A",
-      "early-laneholder": "A"
-    }
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "dp-generation": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   }
 }

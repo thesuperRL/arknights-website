@@ -4,24 +4,38 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "nymph": "",
-      "blaze_the_igniting_spark": ""
+      "nymph": [
+        "",
+        "E2"
+      ],
+      "blaze_the_igniting_spark": [
+        "",
+        "E2"
+      ]
     },
     "S": {
-      "diamante": "",
-      "warmy": ""
+      "diamante": [
+        "",
+        ""
+      ],
+      "warmy": [
+        "",
+        ""
+      ]
     },
     "A": {
-      "gracebearer": "",
-      "miss_christine": ""
+      "gracebearer": [
+        "",
+        ""
+      ],
+      "miss_christine": [
+        "",
+        ""
+      ]
     },
-    "B": {
-    },
-    "C": {
-    },
-    "D": {
-    },
-    "F": {
-    }
+    "B": {},
+    "C": {},
+    "D": {},
+    "F": {}
   }
 }

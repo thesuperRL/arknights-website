@@ -112,12 +112,51 @@
     margin-bottom: 0.5rem;
 }
 
+.operator-image-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
 .operator-image {
     width: 100%;
     height: auto;
     border-radius: 8px;
     aspect-ratio: 1;
     object-fit: cover;
+}
+
+/* Badge overlay positioning */
+.operator-level-badge-overlay {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    z-index: 15;
+    pointer-events: none;
+}
+
+/* E2 badge styling */
+.operator-e2-badge {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    text-shadow: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Module badge image styling */
+.operator-module-badge {
+    width: 36px;
+    height: auto;
+    max-height: 48px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+    pointer-events: none;
 }
 
 .operator-name-link {

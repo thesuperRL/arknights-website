@@ -4,48 +4,202 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "wi_adel": "",
-      "logos": "",
-      "exusiai_the_new_covenant": ""
+      "wi_adel": [
+        "",
+        "E2"
+      ],
+      "logos": [
+        "",
+        ""
+      ],
+      "exusiai_the_new_covenant": [
+        "",
+        ""
+      ],
+      "lemuen": [
+        "",
+        "E2"
+      ]
     },
     "S": {
-      "leizi_the_thunderbringer": "",
-      "m_ynar": "",
-      "surtr": "",
-      "typhon": "",
-      "ray": "",
-      "ceobe": "",
-      "eyjafjalla": "",
-      "degenbrecher": "",
-      "mon3tr": "",
-      "lemuen": ""
+      "leizi_the_thunderbringer": [
+        "",
+        ""
+      ],
+      "m_ynar": [
+        "",
+        "E2"
+      ],
+      "surtr": [
+        "",
+        "E2"
+      ],
+      "typhon": [
+        "",
+        "E2"
+      ],
+      "ray": [
+        "",
+        "E2"
+      ],
+      "ceobe": [
+        "",
+        ""
+      ],
+      "eyjafjalla": [
+        "",
+        "E2"
+      ],
+      "degenbrecher": [
+        "",
+        "E2"
+      ],
+      "mon3tr": [
+        "",
+        "E2"
+      ],
+      "kal_tsit": [
+        "IS module boosts Mon3tr damage by a significant amount",
+        "ISW-α"
+      ],
+      "lemuen": [
+        "",
+        ""
+      ],
+      "ulpianus": [
+        "",
+        "E2"
+      ]
     },
     "A": {
-      "vina_victoria": "",
-      "ulpianus": "",
-      "narantuya": "",
-      "kal_tsit": "",
-      "penance": "",
-      "mudrock": "",
-      "necrass": "Summons",
-      "rosa": ""
-      
+      "eyjafjalla": [
+        "",
+        ""
+      ],
+      "ray": [
+        "",
+        ""
+      ],
+      "typhon": [
+        "",
+        ""
+      ],
+      "wi_adel": [
+        "",
+        ""
+      ],
+      "vina_victoria": [
+        "",
+        "E2"
+      ],
+      "ulpianus": [
+        "",
+        ""
+      ],
+      "narantuya": [
+        "",
+        "E2"
+      ],
+      "kal_tsit": [
+        "",
+        "E2"
+      ],
+      "penance": [
+        "",
+        ""
+      ],
+      "mudrock": [
+        "",
+        ""
+      ],
+      "necrass": [
+        "Summons",
+        ""
+      ],
+      "rosa": [
+        "",
+        ""
+      ]
     },
     "B": {
-      "eunectes": "Hard to use effectively, but if you can, S3 is very good",
-      "schwarz": "",
-      "poz_mka": "High attack and defense shredding",
-      "silverash": "",
-      "gavial_the_invincible": "",
-      "entelechia": "",
-      "ebenholz": "",
-      "hoederer": "",
-      "zuo_le": ""
+      "kal_tsit": [
+        "",
+        ""
+      ],
+      "narantuya": [
+        "",
+        ""
+      ],
+      "degenbrecher": [
+        "",
+        ""
+      ],
+      "m_ynar": [
+        "",
+        ""
+      ],
+      "eunectes": [
+        "Hard to use effectively, but if you can, S3 is very good",
+        ""
+      ],
+      "schwarz": [
+        "",
+        ""
+      ],
+      "poz_mka": [
+        "High attack and defense shredding",
+        ""
+      ],
+      "silverash": [
+        "",
+        "E2"
+      ],
+      "gavial_the_invincible": [
+        "",
+        ""
+      ],
+      "entelechia": [
+        "",
+        ""
+      ],
+      "ebenholz": [
+        "",
+        "E2"
+      ],
+      "hoederer": [
+        "",
+        "E2"
+      ],
+      "zuo_le": [
+        "",
+        ""
+      ]
     },
     "C": {
-      "ash": "",
-      "viviana": "",
-      "lessing": ""
+      "ash": [
+        "",
+        ""
+      ],
+      "silverash": [
+        "",
+        ""
+      ],
+      "viviana": [
+        "",
+        ""
+      ],
+      "lessing": [
+        "",
+        ""
+      ],
+      "ebenholz": [
+        "",
+        ""
+      ],
+      "hoederer": [
+        "",
+        ""
+      ]
     },
     "D": {},
     "F": {}
