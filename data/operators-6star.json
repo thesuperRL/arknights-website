@@ -3432,6 +3432,7 @@
     "global": true,
     "profileImage": "/images/operators/reed_the_flame_shadow.png",
     "niches": [
+      "aoe-arts-dps",
       "arts-dps",
       "healing-operators"
     ],
@@ -3441,6 +3442,12 @@
     "krName": "리드 더 플레임 섀도우",
     "internalName": "char_1020_reed2",
     "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "A",
+          "level": "E2"
+        }
+      ],
       "arts-dps": [
         {
           "tier": "A",

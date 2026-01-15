@@ -75,7 +75,14 @@ function getTierNameFromValue(tierValue: number): string {
 }
 
 // Helper function to check if operator has E2 or module levels available
-async function hasOperatorPromotionLevels(operatorId: string, niches: string[]): Promise<boolean> {
+// All 4-star, 5-star, and 6-star operators can be promoted
+async function hasOperatorPromotionLevels(operatorId: string, niches: string[], operator: any): Promise<boolean> {
+  // 4-star, 5-star, and 6-star operators can always be promoted
+  if (operator && operator.rarity && operator.rarity >= 4) {
+    return true;
+  }
+  
+  // For lower rarity operators, check if they have E2/module levels in niche lists
   for (const niche of niches) {
     // Check if operator has tiers at E2 or module levels (not level 0)
     if (!nicheListCache[niche]) {
@@ -262,7 +269,7 @@ async function getIntegratedStrategiesRecommendation(
         if (currentHope !== undefined && currentHope < actualPromotionCost) {
           return false; // Insufficient hope for promotion
         }
-        return hasOperatorPromotionLevels(id, operator.niches);
+        return hasOperatorPromotionLevels(id, operator.niches, operator);
       }
       return false; // Already selected twice
     });
@@ -1338,9 +1345,19 @@ const IntegratedStrategiesPage: React.FC = () => {
     }
   };
 
-  const addOperator = async (operatorId: string, isPromotion: boolean = false) => {
+  const addOperator = async (operatorId: string, isPromotion: boolean = false, fromRecommendation: boolean = false) => {
     const operator = allOperators[operatorId];
     if (!operator) return;
+
+    // Calculate hope cost if this is from a recommendation
+    let hopeCostToDeduct = 0;
+    if (fromRecommendation) {
+      if (isPromotion) {
+        hopeCostToDeduct = promotionCost;
+      } else {
+        hopeCostToDeduct = getHopeCost(operator.rarity || 1);
+      }
+    }
 
     setSelectedOperators(prev => {
       const existing = prev.find(s => s.operatorId === operatorId);
@@ -1367,6 +1384,11 @@ const IntegratedStrategiesPage: React.FC = () => {
         return [...prev, { operatorId, operator, selectionCount: 1 }];
       }
     });
+    
+    // Deduct hope cost if this is from a recommendation
+    if (fromRecommendation && hopeCostToDeduct > 0) {
+      setCurrentHope(prev => Math.max(0, prev - hopeCostToDeduct));
+    }
     
     setRecommendation(null); // Clear recommendation when team changes
     setError(null); // Clear any previous error
@@ -1571,14 +1593,21 @@ const IntegratedStrategiesPage: React.FC = () => {
         <div className="selected-operators">
           {selectedOperators.map(selected => {
             const selectionCount = selected.selectionCount || 1;
-            // Check if operator has promotion levels (synchronously check cache)
-            const hasPromotions = selected.operator.niches && selected.operator.niches.some(niche => {
-              const nicheList = nicheListCache[niche];
-              if (!nicheList || !nicheList.operators) return false;
-              return nicheList.operators.some((entry: any) => 
-                entry.operatorId === selected.operatorId && entry.level && entry.level.trim() !== ''
-              );
-            });
+            // Check if operator has promotion levels
+            // All 4-star, 5-star, and 6-star operators can be promoted
+            let hasPromotions = false;
+            if (selected.operator.rarity && selected.operator.rarity >= 4) {
+              hasPromotions = true;
+            } else {
+              // For lower rarity, check cache for E2/module levels
+              hasPromotions = selected.operator.niches && selected.operator.niches.some(niche => {
+                const nicheList = nicheListCache[niche];
+                if (!nicheList || !nicheList.operators) return false;
+                return nicheList.operators.some((entry: any) => 
+                  entry.operatorId === selected.operatorId && entry.level && entry.level.trim() !== ''
+                );
+              });
+            }
             const canPromote = selectionCount === 1 && hasPromotions;
             
             return (
@@ -1604,10 +1633,9 @@ const IntegratedStrategiesPage: React.FC = () => {
                       addOperator(selected.operatorId, true);
                     }}
                     className="promote-btn"
-                    disabled={currentHope !== undefined && currentHope < promotionCost}
-                    title={`Promote operator (costs ${promotionCost} hope)`}
+                    title="Promote operator to E2/Module"
                   >
-                    🔄 Promote ({promotionCost} hope)
+                    🔄 Promote
                   </button>
                 )}
               </div>
@@ -1906,8 +1934,10 @@ const IntegratedStrategiesPage: React.FC = () => {
                 <div className="recommendation-actions">
                   <button
                     onClick={() => {
-                      addOperator(recommendation.recommendedOperator!.id, recommendation.isPromotion || false);
+                      addOperator(recommendation.recommendedOperator!.id, recommendation.isPromotion || false, true);
                       setRecommendation(null); // Clear recommendation after adding
+                      setAllRecommendations([]); // Clear all recommendations after accepting one
+                      setCurrentRecommendationIndex(0);
                     }}
                     className="add-recommended-btn primary"
                   >
