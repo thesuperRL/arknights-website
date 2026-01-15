@@ -140,7 +140,26 @@ const OperatorPage: React.FC = () => {
                         )}
                         {instance.level && instance.level.trim() !== '' && (
                           <div className="instance-level-badge">
-                            {instance.level === 'E2' ? 'E2' : `M:${instance.level}`}
+                            {instance.level === 'E2' ? (
+                              <img
+                                src="/images/E2.png"
+                                alt="E2"
+                                className="level-badge-image"
+                              />
+                            ) : (
+                              <img
+                                src={`/images/modules/${instance.level}_module.png`}
+                                alt={instance.level}
+                                className="level-badge-image"
+                                onError={(e) => {
+                                  // Fallback to text if image doesn't exist
+                                  const target = e.target as HTMLImageElement;
+                                  if (target && target.parentElement) {
+                                    target.parentElement.textContent = `M:${instance.level}`;
+                                  }
+                                }}
+                              />
+                            )}
                           </div>
                         )}
                         {instance.notes && (

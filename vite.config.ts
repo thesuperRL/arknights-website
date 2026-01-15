@@ -61,6 +61,13 @@ export default defineConfig({
             console.log(`✅ Restored ${fileCount} module images`);
           }
           
+          // Restore E2.png and other root-level images
+          const backupE2 = path.join(backupDir, 'E2.png');
+          if (fs.existsSync(backupE2)) {
+            fs.copyFileSync(backupE2, path.join(imagesDir, 'E2.png'));
+            console.log('✅ Restored E2.png badge');
+          }
+          
           // Clean up backup
           fs.rmSync(backupDir, { recursive: true, force: true });
         } else {

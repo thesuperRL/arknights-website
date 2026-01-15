@@ -350,17 +350,14 @@
     pointer-events: none;
 }
 
-/* E2 badge styling */
+/* E2 badge image styling */
 .operator-e2-badge {
-    background: linear-gradient(135deg, #ffd700, #ffed4e);
-    color: #333;
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    text-shadow: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 36px;
+    height: auto;
+    max-height: 48px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+    pointer-events: none;
 }
 
 /* Module badge image styling */
