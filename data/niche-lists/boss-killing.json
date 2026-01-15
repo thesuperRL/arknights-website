@@ -6,7 +6,7 @@
     "SS": {
       "wi_adel": [
         "",
-        ""
+        "E2"
       ],
       "logos": [
         "",
@@ -15,6 +15,10 @@
       "exusiai_the_new_covenant": [
         "",
         ""
+      ],
+      "lemuen": [
+        "",
+        "E2"
       ]
     },
     "S": {
@@ -24,19 +28,19 @@
       ],
       "m_ynar": [
         "",
-        ""
+        "E2"
       ],
       "surtr": [
         "",
-        ""
+        "E2"
       ],
       "typhon": [
         "",
-        ""
+        "E2"
       ],
       "ray": [
         "",
-        ""
+        "E2"
       ],
       "ceobe": [
         "",
@@ -44,15 +48,15 @@
       ],
       "eyjafjalla": [
         "",
-        ""
+        "E2"
       ],
       "degenbrecher": [
         "",
-        ""
+        "E2"
       ],
       "mon3tr": [
         "",
-        ""
+        "E2"
       ],
       "kal_tsit": [
         "IS module boosts Mon3tr damage by a significant amount",
@@ -61,12 +65,32 @@
       "lemuen": [
         "",
         ""
+      ],
+      "ulpianus": [
+        "",
+        "E2"
       ]
     },
     "A": {
-      "vina_victoria": [
+      "eyjafjalla": [
         "",
         ""
+      ],
+      "ray": [
+        "",
+        ""
+      ],
+      "typhon": [
+        "",
+        ""
+      ],
+      "wi_adel": [
+        "",
+        ""
+      ],
+      "vina_victoria": [
+        "",
+        "E2"
       ],
       "ulpianus": [
         "",
@@ -74,11 +98,11 @@
       ],
       "narantuya": [
         "",
-        ""
+        "E2"
       ],
       "kal_tsit": [
         "",
-        ""
+        "E2"
       ],
       "penance": [
         "",
@@ -98,6 +122,22 @@
       ]
     },
     "B": {
+      "kal_tsit": [
+        "",
+        ""
+      ],
+      "narantuya": [
+        "",
+        ""
+      ],
+      "degenbrecher": [
+        "",
+        ""
+      ],
+      "m_ynar": [
+        "",
+        ""
+      ],
       "eunectes": [
         "Hard to use effectively, but if you can, S3 is very good",
         ""
@@ -112,7 +152,7 @@
       ],
       "silverash": [
         "",
-        ""
+        "E2"
       ],
       "gavial_the_invincible": [
         "",
@@ -124,11 +164,11 @@
       ],
       "ebenholz": [
         "",
-        ""
+        "E2"
       ],
       "hoederer": [
         "",
-        ""
+        "E2"
       ],
       "zuo_le": [
         "",
@@ -140,11 +180,23 @@
         "",
         ""
       ],
+      "silverash": [
+        "",
+        ""
+      ],
       "viviana": [
         "",
         ""
       ],
       "lessing": [
+        "",
+        ""
+      ],
+      "ebenholz": [
+        "",
+        ""
+      ],
+      "hoederer": [
         "",
         ""
       ]

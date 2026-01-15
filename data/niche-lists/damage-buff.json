@@ -10,7 +10,7 @@
       ],
       "aak": [
         "Hard to tank the buff for operators but if tanked is very good",
-        ""
+        "E2"
       ],
       "warfarin": [
         "For one target applies a pretty hefty buff",
@@ -20,17 +20,21 @@
     "S": {
       "skadi_the_corrupting_heart": [
         "",
-        ""
+        "E2"
       ]
     },
     "A": {
+      "skadi_the_corrupting_heart": [
+        "",
+        ""
+      ],
       "civilight_eterna": [
         "",
         ""
       ],
       "pallas": [
         "Usefulness of buff hindered by high SP costs",
-        ""
+        "E2"
       ]
     },
     "B": {

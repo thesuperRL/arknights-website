@@ -10,26 +10,40 @@
       ],
       "wi_adel": [
         "",
-        ""
+        "E2"
       ]
     },
     "S": {
       "silverash": [
         "",
-        ""
+        "E2"
       ],
       "degenbrecher": [
         "",
-        ""
+        "E2"
       ],
       "pepe": [
         "",
         ""
       ],
-      "ethan": [
+      "leizi_the_thunderbringer": [
+        "",
+        "E2"
+      ],
+      "m_ynar": [
+        "",
+        "E2"
+      ],
+      "ch_en_the_holungday": [
+        "",
+        "E2"
+      ],
+      "wi_adel": [
         "",
         ""
-      ],
+      ]
+    },
+    "A": {
       "leizi_the_thunderbringer": [
         "",
         ""
@@ -38,12 +52,10 @@
         "",
         ""
       ],
-      "ch_en_the_holungday": [
+      "degenbrecher": [
         "",
         ""
-      ]
-    },
-    "A": {
+      ],
       "kirin_r_yato": [
         "",
         ""
@@ -56,9 +68,13 @@
         "",
         ""
       ],
-      "fiammetta": [
+      "ethan": [
         "",
         ""
+      ],
+      "fiammetta": [
+        "",
+        "E2"
       ],
       "horn": [
         "",
@@ -74,6 +90,10 @@
       ]
     },
     "B": {
+      "ch_en_the_holungday": [
+        "",
+        ""
+      ],
       "rosmontis": [
         "Ground AOE",
         ""
@@ -95,11 +115,15 @@
         ""
       ],
       "archetto": [
-        "Good at swarm clearing",
+        "Good at swarm clearing with bounce, but not really AOE",
         ""
       ]
     },
     "C": {
+      "fiammetta": [
+        "",
+        ""
+      ],
       "ashlock": [
         "Only hits ground",
         ""

@@ -6,7 +6,7 @@
     "SS": {
       "gnosis": [
         "60% fragile to frozen enemies and 30% to cold enemies after module",
-        ""
+        "UMD-X"
       ],
       "shamare": [
         "33% fragile to those with less tha 40% HP in attack range",
@@ -18,23 +18,27 @@
       ]
     },
     "S": {
+      "gnosis": [
+        "30% ish fragile to frozen enemies and 15% to cold enemies",
+        ""
+      ],
       "ela": [
         "35% fragile when trap triggered",
-        ""
+        "E2"
       ],
       "raidian": [
         "Applies 35% arts fragility",
-        ""
+        "E2"
       ],
       "saria": [
-        "Applies 20% arts fragility",
-        ""
+        "Applies +20% arts damage taken",
+        "E2"
       ]
     },
     "A": {
       "saileach": [
         "15% fragile on skill activation",
-        ""
+        "E2"
       ],
       "thrm_ex": [
         "Explodes and inflicts 30% fragile",

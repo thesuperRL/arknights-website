@@ -30,7 +30,7 @@
       ],
       "texas_the_omertosa": [
         "",
-        ""
+        "E2"
       ],
       "lin": [
         "",
@@ -44,7 +44,7 @@
       ],
       "mostima": [
         "Very large AOE arts damage and slow but at a really high SP cost",
-        ""
+        "E2"
       ],
       "marcille": [
         "",
@@ -60,6 +60,10 @@
       ]
     },
     "C": {
+      "mostima": [
+        "",
+        ""
+      ],
       "astgenne": [
         "",
         ""

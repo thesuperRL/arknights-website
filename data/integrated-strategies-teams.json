@@ -2,17 +2,41 @@
   "ryanli1366@gmail.com": {
     "selectedOperators": [
       {
-        "operatorId": "kal_tsit",
-        "selectionCount": 2
+        "operatorId": "hoederer",
+        "selectionCount": 1
+      },
+      {
+        "operatorId": "blue_poison",
+        "selectionCount": 1
+      },
+      {
+        "operatorId": "click",
+        "selectionCount": 1
+      },
+      {
+        "operatorId": "podenco",
+        "selectionCount": 1
+      },
+      {
+        "operatorId": "gavial_the_invincible",
+        "selectionCount": 1
+      },
+      {
+        "operatorId": "reed_the_flame_shadow",
+        "selectionCount": 1
+      },
+      {
+        "operatorId": "eyjafjalla_the_hv_t_aska",
+        "selectionCount": 1
       }
     ],
-    "currentHope": 6,
+    "currentHope": 8,
     "hopeCosts": {
       "4": 0,
-      "5": 3,
+      "5": 2,
       "6": 6
     },
     "promotionCost": 3,
-    "teamSize": 8
+    "teamSize": 7
   }
 }

@@ -20,13 +20,17 @@
       ],
       "vina_victoria": [
         "",
-        ""
+        "E2"
       ]
     },
     "A": {
-      "nearl_the_radiant_knight": [
+      "vina_victoria": [
         "",
         ""
+      ],
+      "nearl_the_radiant_knight": [
+        "",
+        "E2"
       ],
       "amiya_medic": [
         "Limited skill uses but deals more of it",
@@ -40,7 +44,7 @@
     "B": {
       "amiya": [
         "Limited skill uses",
-        ""
+        "E2"
       ],
       "amiya_guard": [
         "Limited skill uses",

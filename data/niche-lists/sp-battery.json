@@ -4,6 +4,10 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
+      "archetto": [
+        "Incredible recovery for all offensive recovery operators",
+        "ISW-α"
+      ],
       "ptilopsis": [
         "Passive SP generation and not many requirements for it too",
         ""
@@ -12,7 +16,7 @@
     "S": {
       "bagpipe": [
         "Boosts for vanguards, especially enabling fast flagbearer strategies",
-        ""
+        "CHG-X"
       ],
       "liskarm": [
         "",
@@ -32,6 +36,10 @@
       ]
     },
     "A": {
+      "bagpipe": [
+        "Boosts for vanguards, especially enabling fast flagbearer strategies",
+        ""
+      ],
       "archetto": [
         "For offensive recovery snipers",
         ""

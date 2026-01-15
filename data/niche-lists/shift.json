@@ -6,10 +6,14 @@
     "SS": {
       "weedy": [
         "",
-        ""
+        "E2"
       ]
     },
     "S": {
+      "weedy": [
+        "",
+        ""
+      ],
       "gladiia": [
         "",
         ""
@@ -45,8 +49,8 @@
         ""
       ],
       "swire_the_elegant_wit": [
-        "",
-        ""
+        "S3 can kind of shift",
+        "E2"
       ]
     },
     "B": {
@@ -64,7 +68,7 @@
       ],
       "lee": [
         "Slight shift for skill 3",
-        ""
+        "E2"
       ]
     },
     "C": {},

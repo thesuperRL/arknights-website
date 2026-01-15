@@ -6,11 +6,11 @@
     "SS": {
       "nian": [
         "",
-        ""
+        "E2"
       ],
       "shining": [
         "Strongest defense buff",
-        ""
+        "E2"
       ]
     },
     "S": {
@@ -21,6 +21,14 @@
       "shu": [
         "Sanctuary",
         ""
+      ],
+      "nian": [
+        "Passive buff to defenders",
+        ""
+      ],
+      "shining": [
+        "Shields",
+        ""
       ]
     },
     "A": {
@@ -30,7 +38,7 @@
       ],
       "pallas": [
         "Usefulness of buff hindered by high SP costs",
-        ""
+        "E2"
       ],
       "catherine": [
         "",

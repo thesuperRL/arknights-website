@@ -10,7 +10,7 @@
       ],
       "shu": [
         "Teleporting unlimited numbers of enemies back",
-        ""
+        "E2"
       ],
       "tragodia": [
         "S1 bind, S2 controlling enemies, and S3 locking them in place",
@@ -34,25 +34,25 @@
       ],
       "saria": [
         "",
-        ""
+        "E2"
+      ],
+      "mostima": [
+        "Massive slow but at a really high SP cost",
+        "SPC-Y"
+      ],
+      "mizuki": [
+        "Incredible staller in IS with suck module",
+        "ISW-α"
       ]
     },
     "S": {
       "crownslayer": [
-        "Bind gets good with module",
+        "Stun gets good with module",
         "EXE-Y"
-      ],
-      "ethan": [
-        "Crazy low rarity staller",
-        ""
-      ],
-      "mizuki": [
-        "Bad stall outside of IS",
-        ""
       ],
       "gnosis": [
         "",
-        ""
+        "E2"
       ],
       "ines": [
         "",
@@ -70,16 +70,32 @@
         "",
         ""
       ],
+      "ethan": [
+        "Module makes bind consistent AND passively slows",
+        "AMB-X"
+      ]
+    },
+    "A": {
       "muelsyse": [
-        "Ground operator copy and skill 3 has a small suck",
+        "Ground operator copy in skill 3 has a small suck",
+        "E2"
+      ],
+      "gnosis": [
+        "",
         ""
       ],
       "specter_the_unchained": [
         "Doll slows",
         ""
-      ]
-    },
-    "A": {
+      ],
+      "ethan": [
+        "Crazy low rarity staller",
+        ""
+      ],
+      "mizuki": [
+        "Bad stall outside of IS",
+        ""
+      ],
       "civilight_eterna": [
         "Skill 2 has bind",
         ""
@@ -123,8 +139,8 @@
     },
     "B": {
       "crownslayer": [
-        "Bind inconsistent before module",
-        ""
+        "Stun inconsistent before module",
+        "E2"
       ],
       "dusk": [
         "Summons (kind of)",

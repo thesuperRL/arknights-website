@@ -11,11 +11,11 @@
     "Global Damage": [
       [
         "lappland_the_decadenza",
-        ""
+        "E2"
       ],
       [
         "goldenglow",
-        ""
+        "E2"
       ]
     ]
   },
@@ -27,13 +27,21 @@
       ],
       [
         "ifrit",
-        ""
+        "BLA-Δ"
       ]
     ],
     "Additional Appliers": [
       [
-        "viviana",
+        "reed_the_flame_shadow",
         ""
+      ],
+      [
+        "viviana",
+        "AFT-Δ"
+      ],
+      [
+        "ifrit",
+        "BLA-Δ"
       ]
     ]
   },

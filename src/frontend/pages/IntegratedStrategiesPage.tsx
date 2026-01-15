@@ -530,9 +530,15 @@ async function getIntegratedStrategiesRecommendation(
     }
 
     // Apply large hope cost penalty - always present, discourages expensive operators
-    const hopePenalty = hopeCost * 30; // Large multiplier to make hope cost very significant
-    score -= hopePenalty;
-    reasoning.push(`💎 Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
+    // Exception: temporary recruitment operators don't incur a hope penalty
+    const isTemporaryRecruitment = operatorId === temporaryRecruitment;
+    if (!isTemporaryRecruitment) {
+      const hopePenalty = hopeCost * 30; // Large multiplier to make hope cost very significant
+      score -= hopePenalty;
+      reasoning.push(`💎 Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
+    } else {
+      reasoning.push(`✨ Temporary recruitment: No hope penalty applied!`);
+    }
 
     // Log each evaluated character and their scoring criteria
     console.log(`\n=== Integrated Strategies Evaluation: ${operator.name || operatorId} ===`);
