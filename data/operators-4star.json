@@ -631,7 +631,7 @@
     "nicheInstances": {
       "aoe-physical-dps": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ],
@@ -650,6 +650,10 @@
       "stalling": [
         {
           "tier": "S",
+          "level": "AMB-X"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],

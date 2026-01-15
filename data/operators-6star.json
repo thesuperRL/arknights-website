@@ -17,7 +17,7 @@
       "damage-buff": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ]
     },
@@ -113,6 +113,10 @@
         }
       ],
       "sp-battery": [
+        {
+          "tier": "SS",
+          "level": "ISW-α"
+        },
         {
           "tier": "A",
           "level": ""
@@ -236,6 +240,10 @@
     "nicheInstances": {
       "dp-generation": [
         {
+          "tier": "S",
+          "level": "CHG-X"
+        },
+        {
           "tier": "A",
           "level": ""
         }
@@ -249,6 +257,10 @@
       "sp-battery": [
         {
           "tier": "S",
+          "level": "CHG-X"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ]
@@ -327,7 +339,7 @@
       "elemental-dps": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ]
     }
@@ -361,7 +373,7 @@
       "healing-operators": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ],
       "late-laneholder": [
@@ -431,6 +443,10 @@
       "arts-dps": [
         {
           "tier": "SS",
+          "level": "CCR-X"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ],
@@ -443,7 +459,7 @@
       "physical-dps": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ],
       "silence": [
@@ -535,6 +551,10 @@
       "aoe-physical-dps": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "B",
           "level": ""
         }
       ],
@@ -579,10 +599,14 @@
       "late-laneholder": [
         {
           "tier": "S",
-          "level": ""
+          "level": "E2"
         }
       ],
       "physical-dps": [
+        {
+          "tier": "S",
+          "level": "E2"
+        },
         {
           "tier": "A",
           "level": ""
@@ -672,7 +696,7 @@
         },
         {
           "tier": "B",
-          "level": ""
+          "level": "E2"
         }
       ]
     }
@@ -699,12 +723,20 @@
       "aoe-physical-dps": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
       "boss-killing": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "B",
           "level": ""
         }
       ],
@@ -834,6 +866,10 @@
       "boss-killing": [
         {
           "tier": "B",
+          "level": "E2"
+        },
+        {
+          "tier": "C",
           "level": ""
         }
       ],
@@ -867,7 +903,7 @@
       "fragile": [
         {
           "tier": "S",
-          "level": ""
+          "level": "E2"
         }
       ],
       "physical-dps": [
@@ -1128,13 +1164,17 @@
       ],
       "arts-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
       "boss-killing": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
@@ -1252,6 +1292,10 @@
       "aoe-physical-dps": [
         {
           "tier": "A",
+          "level": "E2"
+        },
+        {
+          "tier": "C",
           "level": ""
         }
       ]
@@ -1407,12 +1451,20 @@
       "fragile": [
         {
           "tier": "SS",
+          "level": "UMD-X"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ],
       "stalling": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ]
@@ -1576,6 +1628,10 @@
       "boss-killing": [
         {
           "tier": "B",
+          "level": "E2"
+        },
+        {
+          "tier": "C",
           "level": ""
         }
       ],
@@ -1694,7 +1750,8 @@
       "burn-global": {
         "role": "optional",
         "groups": [
-          "DPS"
+          "DPS",
+          "Additional Appliers"
         ]
       }
     },
@@ -1720,7 +1777,7 @@
       "res-shred": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ]
     }
@@ -1876,6 +1933,10 @@
         },
         {
           "tier": "A",
+          "level": "E2"
+        },
+        {
+          "tier": "B",
           "level": ""
         }
       ],
@@ -2022,13 +2083,13 @@
       "late-laneholder": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ],
       "shift": [
         {
           "tier": "B",
-          "level": ""
+          "level": "E2"
         }
       ],
       "unconventional-niches": [
@@ -2060,6 +2121,10 @@
       "aoe-physical-dps": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
@@ -2105,6 +2170,10 @@
     },
     "nicheInstances": {
       "boss-killing": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        },
         {
           "tier": "S",
           "level": ""
@@ -2235,7 +2304,7 @@
       "late-laneholder": [
         {
           "tier": "S",
-          "level": ""
+          "level": "E2"
         }
       ],
       "stalling": [
@@ -2439,7 +2508,11 @@
       ],
       "stalling": [
         {
-          "tier": "S",
+          "tier": "SS",
+          "level": "ISW-α"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ]
@@ -2464,7 +2537,7 @@
       "boss-killing": [
         {
           "tier": "S",
-          "level": ""
+          "level": "E2"
         }
       ],
       "damage-buff": [
@@ -2517,10 +2590,18 @@
       "aoe-arts-dps": [
         {
           "tier": "B",
+          "level": "E2"
+        },
+        {
+          "tier": "C",
           "level": ""
         }
       ],
       "stalling": [
+        {
+          "tier": "SS",
+          "level": "SPC-Y"
+        },
         {
           "tier": "A",
           "level": ""
@@ -2649,8 +2730,8 @@
       ],
       "stalling": [
         {
-          "tier": "S",
-          "level": ""
+          "tier": "A",
+          "level": "E2"
         }
       ]
     },
@@ -2678,12 +2759,20 @@
       "aoe-physical-dps": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
       "boss-killing": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "B",
           "level": ""
         }
       ],
@@ -2728,6 +2817,10 @@
       "boss-killing": [
         {
           "tier": "A",
+          "level": "E2"
+        },
+        {
+          "tier": "B",
           "level": ""
         }
       ],
@@ -2772,7 +2865,7 @@
       "true_damage": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ]
     },
@@ -2859,6 +2952,10 @@
       "def-buff": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ],
@@ -2909,6 +3006,10 @@
       "res-buff": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ],
@@ -2969,7 +3070,7 @@
       "elemental-dps": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ],
       "stalling": [
@@ -3001,13 +3102,13 @@
       "damage-buff": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ],
       "def-buff": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ],
       "late-laneholder": [
@@ -3191,7 +3292,7 @@
       "def-shred": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ],
       "physical-dps": [
@@ -3271,13 +3372,17 @@
       "arts-dps": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
       "fragile": [
         {
           "tier": "S",
-          "level": ""
+          "level": "E2"
         }
       ]
     },
@@ -3303,6 +3408,10 @@
       "boss-killing": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
@@ -3345,7 +3454,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "burn-global": {
+        "role": "optional",
+        "groups": [
+          "Additional Appliers"
+        ]
+      }
+    }
   },
   "rosa": {
     "id": "rosa",
@@ -3465,7 +3581,7 @@
       "fragile": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ]
     },
@@ -3534,7 +3650,7 @@
       "fragile": [
         {
           "tier": "S",
-          "level": ""
+          "level": "E2"
         }
       ],
       "healing-operators": [
@@ -3558,7 +3674,7 @@
       "stalling": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ],
       "tanking-blocking-operators": [
@@ -3622,6 +3738,10 @@
       "def-buff": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ],
@@ -3701,7 +3821,7 @@
       "stalling": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ],
       "tanking-blocking-operators": [
@@ -3819,12 +3939,16 @@
       "aoe-physical-dps": [
         {
           "tier": "S",
-          "level": ""
+          "level": "E2"
         }
       ],
       "boss-killing": [
         {
           "tier": "B",
+          "level": "E2"
+        },
+        {
+          "tier": "C",
           "level": ""
         }
       ],
@@ -3886,6 +4010,10 @@
     "nicheInstances": {
       "fast-redeploy-operators": [
         {
+          "tier": "A",
+          "level": "DRE-X"
+        },
+        {
           "tier": "B",
           "level": ""
         }
@@ -3933,6 +4061,10 @@
       "damage-buff": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
@@ -3984,7 +4116,7 @@
       ],
       "stalling": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ],
@@ -4048,13 +4180,17 @@
       "arts-dps": [
         {
           "tier": "SS",
+          "level": "AFT-X"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ],
       "boss-killing": [
         {
           "tier": "S",
-          "level": ""
+          "level": "E2"
         }
       ]
     },
@@ -4088,7 +4224,7 @@
       "healing-operators": [
         {
           "tier": "B",
-          "level": ""
+          "level": "E2"
         }
       ],
       "sp-battery": [
@@ -4140,7 +4276,7 @@
       "shift": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ],
       "tanking-blocking-operators": [
@@ -4171,7 +4307,7 @@
       "aoe-arts-dps": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ],
       "fast-redeploy-operators": [
@@ -4216,6 +4352,10 @@
       "late-laneholder": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
@@ -4262,7 +4402,7 @@
       "atk-debuff": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ],
       "def-shred": [
@@ -4274,7 +4414,7 @@
       "res-shred": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
         }
       ]
     }
@@ -4357,6 +4497,10 @@
       "boss-killing": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
@@ -4397,6 +4541,10 @@
     },
     "nicheInstances": {
       "boss-killing": [
+        {
+          "tier": "S",
+          "level": "E2"
+        },
         {
           "tier": "A",
           "level": ""
@@ -4469,6 +4617,7 @@
     "profileImage": "/images/operators/vina_victoria.png",
     "niches": [
       "boss-killing",
+      "tanking-blocking-operators",
       "true_damage"
     ],
     "cnName": "维娜·维多利亚",
@@ -4480,12 +4629,22 @@
       "boss-killing": [
         {
           "tier": "A",
-          "level": ""
+          "level": "E2"
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "A",
+          "level": "E2"
         }
       ],
       "true_damage": [
         {
           "tier": "S",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ]
@@ -4524,6 +4683,10 @@
       "elemental-damage": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ]
@@ -4592,6 +4755,10 @@
       "early-laneholder": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ]
@@ -4661,6 +4828,10 @@
       "shift": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ],
@@ -4708,18 +4879,30 @@
       "aoe-physical-dps": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ],
       "boss-killing": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ],
       "physical-dps": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ]
@@ -4762,18 +4945,22 @@
       "elemental-damage": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ],
       "elemental_damage_healers": [
         {
           "tier": "B",
-          "level": ""
+          "level": "E2"
         }
       ],
       "late-laneholder": [
         {
           "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
           "level": ""
         }
       ],
