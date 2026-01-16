@@ -2723,7 +2723,7 @@
     "name": "Kichisei",
     "rarity": 5,
     "class": "Sniper",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/kichisei.png",
     "niches": [
       "aoe-physical-dps",
@@ -3188,7 +3188,7 @@
     "name": "Matsukiri",
     "rarity": 5,
     "class": "Vanguard",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/matsukiri.png",
     "niches": [
       "damage-buff",

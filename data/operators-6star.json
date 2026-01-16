@@ -1755,7 +1755,7 @@
     "name": "Hoshiguma the Breacher",
     "rarity": 6,
     "class": "Defender",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/hoshiguma_the_breacher.png",
     "niches": [
       "aoe-arts-dps",
