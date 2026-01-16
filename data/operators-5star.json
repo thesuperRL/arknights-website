@@ -10,33 +10,7 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1001_amiya2",
-    "nicheInstances": {
-      "arts-dps": [
-        {
-          "tier": "C",
-          "level": ""
-        }
-      ],
-      "true_damage": [
-        {
-          "tier": "B",
-          "level": ""
-        }
-      ],
-      "trash-operators": [
-        {
-          "tier": "A",
-          "level": ""
-        }
-      ]
-    },
-    "synergies": {},
-    "niches": [
-      "arts-dps",
-      "trash-operators",
-      "true_damage"
-    ]
+    "internalName": "char_1001_amiya2"
   },
   "amiya_medic": {
     "id": "amiya_medic",
@@ -49,33 +23,7 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1037_amiya3",
-    "nicheInstances": {
-      "arts-dps": [
-        {
-          "tier": "B",
-          "level": ""
-        }
-      ],
-      "healing-operators": [
-        {
-          "tier": "A",
-          "level": ""
-        }
-      ],
-      "true_damage": [
-        {
-          "tier": "A",
-          "level": ""
-        }
-      ]
-    },
-    "synergies": {},
-    "niches": [
-      "arts-dps",
-      "healing-operators",
-      "true_damage"
-    ]
+    "internalName": "char_1037_amiya3"
   },
   "absinthe": {
     "id": "absinthe",
@@ -5914,5 +5862,27 @@
       ]
     },
     "synergies": {}
+  },
+  "perfumer_the_distilled": {
+    "id": "perfumer_the_distilled",
+    "name": "Perfumer the Distilled",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": false,
+    "profileImage": "/images/operators/perfumer_the_distilled.png",
+    "niches": [],
+    "cnName": "撷英调香师",
+    "internalName": "char_1022_flwr2"
+  },
+  "vark_ris": {
+    "id": "vark_ris",
+    "name": "Varkáris",
+    "rarity": 5,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/vark_ris.png",
+    "niches": [],
+    "cnName": "摆渡人",
+    "internalName": "char_4166_varkis"
   }
 }
