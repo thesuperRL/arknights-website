@@ -1515,7 +1515,7 @@
     "name": "Haruka",
     "rarity": 6,
     "class": "Supporter",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/haruka.png",
     "niches": [
       "def-buff",
