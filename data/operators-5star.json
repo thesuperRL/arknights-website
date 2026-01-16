@@ -2777,10 +2777,35 @@
     "class": "Sniper",
     "global": false,
     "profileImage": "/images/operators/kichisei.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "stalling",
+      "trash-operators"
+    ],
     "cnName": "吉星",
     "jpName": "キチセイ",
-    "internalName": "char_4203_kichi"
+    "internalName": "char_4203_kichi",
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "kirara": {
     "id": "kirara",
@@ -3111,7 +3136,7 @@
     "nicheInstances": {
       "sp-battery": [
         {
-          "tier": "S",
+          "tier": "SS",
           "level": ""
         }
       ],
@@ -3217,10 +3242,28 @@
     "class": "Vanguard",
     "global": false,
     "profileImage": "/images/operators/matsukiri.png",
-    "niches": [],
+    "niches": [
+      "damage-buff",
+      "dp-generation"
+    ],
     "cnName": "松桐",
     "jpName": "マツキリ",
-    "internalName": "char_4199_makiri"
+    "internalName": "char_4199_makiri",
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "dp-generation": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "mayer": {
     "id": "mayer",

@@ -729,6 +729,8 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [allOperators, setAllOperators] = useState<Record<string, Operator>>({});
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
   const [raisedOperators, setRaisedOperators] = useState<Set<string>>(new Set());
+  const [originalRaisedOperators, setOriginalRaisedOperators] = useState<Set<string>>(new Set());
+  const [allClassesAvailable, setAllClassesAvailable] = useState<boolean>(false);
   const [rawUserData, setRawUserData] = useState<any>(null);
   const [selectedOperators, setSelectedOperators] = useState<SelectedOperator[]>([]);
   const [requiredClasses, setRequiredClasses] = useState<Set<string>>(new Set());
@@ -1338,7 +1340,9 @@ const IntegratedStrategiesPage: React.FC = () => {
         const data = await response.json();
         setRawUserData(data);
         setOwnedOperators(new Set(data.ownedOperators || []));
-        setRaisedOperators(new Set(data.raisedOperators || [])); // raisedOperators comes from wantToUse field
+        const raisedOps = new Set<string>(data.raisedOperators || []);
+        setRaisedOperators(raisedOps); // raisedOperators comes from wantToUse field
+        setOriginalRaisedOperators(new Set<string>(raisedOps)); // Store original state
       }
     } catch (err) {
       console.error('Error loading owned operators:', err);
@@ -1600,13 +1604,13 @@ const IntegratedStrategiesPage: React.FC = () => {
               hasPromotions = true;
             } else {
               // For lower rarity, check cache for E2/module levels
-              hasPromotions = selected.operator.niches && selected.operator.niches.some(niche => {
+              hasPromotions = !!(selected.operator.niches && selected.operator.niches.some(niche => {
                 const nicheList = nicheListCache[niche];
                 if (!nicheList || !nicheList.operators) return false;
                 return nicheList.operators.some((entry: any) => 
                   entry.operatorId === selected.operatorId && entry.level && entry.level.trim() !== ''
                 );
-              });
+              }));
             }
             const canPromote = selectionCount === 1 && hasPromotions;
             
@@ -1868,6 +1872,83 @@ const IntegratedStrategiesPage: React.FC = () => {
                     </div>
                   )}
                 </div>
+              </div>
+              {requiredClasses.size > 0 && (
+                <div className="selected-classes-indicator">
+                  <span className="indicator-label">Selected Classes:</span>
+                  <div className="class-chips">
+                    {Array.from(requiredClasses).map(className => (
+                      <span key={className} className="class-chip">{className}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div className="advanced-option-toggle">
+                <label 
+                  className={`toggle-container ${!allClassesAvailable && requiredClasses.size === 0 ? 'disabled' : ''}`}
+                  title={allClassesAvailable 
+                    ? `Toggle off to restore your original raised operators list`
+                    : requiredClasses.size > 0 
+                      ? `Add all ${Array.from(requiredClasses).join(', ')} operators to available pool (simulates IS run start)`
+                      : 'Select at least one class first'
+                  }
+                >
+                  <input
+                    type="checkbox"
+                    checked={allClassesAvailable}
+                    disabled={!allClassesAvailable && requiredClasses.size === 0}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        // Activate: Add all operators of the required classes
+                        if (requiredClasses.size === 0) {
+                          setError('Please select at least one required class first');
+                          return;
+                        }
+                        
+                        // Store current raised operators as original
+                        setOriginalRaisedOperators(new Set(raisedOperators));
+                        
+                        // Add all operators of the required classes to raised operators
+                        const classArray = Array.from(requiredClasses);
+                        const operatorsToAdd = Object.keys(allOperators).filter(id => {
+                          const operator = allOperators[id];
+                          return operator && classArray.includes(operator.class);
+                        });
+                        
+                        setRaisedOperators(prev => {
+                          const newSet = new Set(prev);
+                          operatorsToAdd.forEach(id => newSet.add(id));
+                          return newSet;
+                        });
+                        
+                        setAllClassesAvailable(true);
+                        setRecommendation(null);
+                        setError(null);
+                        
+                        // Show success message
+                        const addedCount = operatorsToAdd.filter(id => !raisedOperators.has(id)).length;
+                        if (addedCount > 0) {
+                          console.log(`Added ${addedCount} operators of classes: ${classArray.join(', ')}`);
+                        }
+                      } else {
+                        // Deactivate: Restore original raised operators
+                        setRaisedOperators(new Set(originalRaisedOperators));
+                        setAllClassesAvailable(false);
+                        setRecommendation(null);
+                        setError(null);
+                        console.log('Restored original raised operators');
+                      }
+                    }}
+                    className="toggle-checkbox"
+                  />
+                  <span className="toggle-slider"></span>
+                  <span className="toggle-label">
+                    {requiredClasses.size > 0 
+                      ? `Add All ${Array.from(requiredClasses).join('/')} Operators`
+                      : 'Add All Selected Class Operators'
+                    }
+                  </span>
+                </label>
               </div>
             </div>
           </div>

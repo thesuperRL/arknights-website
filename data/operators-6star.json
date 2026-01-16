@@ -1517,10 +1517,42 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/haruka.png",
-    "niches": [],
+    "niches": [
+      "def-buff",
+      "healing-operators",
+      "res-buff",
+      "sp-battery"
+    ],
     "cnName": "遥",
     "jpName": "ハルカ",
-    "internalName": "char_4202_haruka"
+    "internalName": "char_4202_haruka",
+    "nicheInstances": {
+      "def-buff": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        }
+      ],
+      "sp-battery": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ]
+    },
+    "synergies": {}
   },
   "hellagur": {
     "id": "hellagur",
@@ -1725,9 +1757,55 @@
     "class": "Defender",
     "global": false,
     "profileImage": "/images/operators/hoshiguma_the_breacher.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "arts-dps",
+      "boss-killing",
+      "tanking-blocking-operators",
+      "unconventional-niches"
+    ],
     "cnName": "斩业星熊",
-    "internalName": "char_1044_hsgma2"
+    "internalName": "char_1044_hsgma2",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "arts-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
+    }
   },
   "ifrit": {
     "id": "ifrit",

@@ -1,5 +1,5 @@
-Unranked Operators (21 total)
-Generated: 2026-01-15T20:08:46.244Z
+Unranked Operators (17 total)
+Generated: 2026-01-16T20:32:37.709Z
 
 === NON-GLOBAL OPERATORS ===
 
@@ -10,7 +10,6 @@ pramanix_the_prerita (Pramanix the Prerita)
 
 --- Defender ---
 cairn (Cairn)
-hoshiguma_the_breacher (Hoshiguma the Breacher)
 vetochki (Vetochki)
 
 --- Guard ---
@@ -19,7 +18,6 @@ togawa_sakiko (Togawa Sakiko)
 y_tenji_nyamu (Yūtenji Nyamu)
 
 --- Sniper ---
-kichisei (Kichisei)
 skybox (Skybox)
 snow_hunter (Snow Hunter)
 
@@ -29,11 +27,9 @@ yahata_umiri (Yahata Umiri)
 
 --- Supporter ---
 astgenne_the_lightchaser (Astgenne the Lightchaser)
-haruka (Haruka)
 misumi_uika (Misumi Uika)
 nasti (Nasti)
 
 --- Vanguard ---
-matsukiri (Matsukiri)
 silverash_the_reignfrost (SilverAsh the Reignfrost)
 snegurochka (Snegurochka)

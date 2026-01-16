@@ -8,19 +8,23 @@
         "Incredible recovery for all offensive recovery operators",
         "ISW-α"
       ],
+      "liskarm": [
+        "",
+        ""
+      ],
       "ptilopsis": [
         "Passive SP generation and not many requirements for it too",
         ""
       ]
     },
     "S": {
+      "haruka": [
+        "SP battery when bubbles pop",
+        "E2"
+      ],
       "bagpipe": [
         "Boosts for vanguards, especially enabling fast flagbearer strategies",
         "CHG-X"
-      ],
-      "liskarm": [
-        "",
-        ""
       ],
       "warfarin": [
         "Small SP battery when enemies in range are killed",
