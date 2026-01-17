@@ -458,6 +458,10 @@
     "nicheInstances": {
       "late-laneholder": [
         {
+          "tier": "B",
+          "level": "SWO-Y"
+        },
+        {
           "tier": "C",
           "level": ""
         }

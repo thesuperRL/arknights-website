@@ -292,7 +292,7 @@
       ],
       "physical-dps": [
         {
-          "tier": "A",
+          "tier": "B",
           "level": ""
         }
       ],
@@ -764,6 +764,7 @@
     "profileImage": "/images/operators/dorothy.png",
     "niches": [
       "global-range",
+      "physical-dps",
       "stalling"
     ],
     "cnName": "多萝西",
@@ -772,6 +773,12 @@
     "krName": "도로시",
     "internalName": "char_4048_doroth",
     "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "A",
+          "level": "TRP-Y"
+        }
+      ],
       "stalling": [
         {
           "tier": "S",
@@ -2335,6 +2342,10 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
+          "tier": "S",
+          "level": "PLX-X"
+        },
+        {
           "tier": "A",
           "level": ""
         }
@@ -3566,6 +3577,10 @@
     "nicheInstances": {
       "boss-killing": [
         {
+          "tier": "S",
+          "level": "SIE-X"
+        },
+        {
           "tier": "A",
           "level": ""
         }
@@ -3573,6 +3588,10 @@
       "physical-dps": [
         {
           "tier": "S",
+          "level": "SIE-X"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ]
