@@ -448,8 +448,8 @@ async function getIntegratedStrategiesRecommendation(
 
     // Tier-based scoring - VERY significant, should outweigh hope penalties
     // Calculate tier scores across all niches the operator has
-    // Skip "low-rarity" as it's not a tier list
-    const excludedFromTierScoring = new Set(['low-rarity']);
+    // Skip special lists that don't have tier-based scoring
+    const excludedFromTierScoring = new Set(['low-rarity', 'unconventional-niches']);
 
     // Bonus for filling important niches that are missing or under-covered
     for (const niche of operator.niches) {

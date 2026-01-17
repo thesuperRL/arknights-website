@@ -1,5 +1,5 @@
-Unranked Operators (20 total)
-Generated: 2026-01-17T20:28:02.284Z
+Unranked Operators (14 total)
+Generated: 2026-01-17T20:52:10.049Z
 
 === NON-GLOBAL OPERATORS ===
 
@@ -14,24 +14,14 @@ vetochki (Vetochki)
 
 --- Guard ---
 hadiya (Hadiya)
-togawa_sakiko (Togawa Sakiko)
 vark_ris (Varkáris)
-y_tenji_nyamu (Yūtenji Nyamu)
-
---- Medic ---
-titi (Titi)
 
 --- Sniper ---
 skybox (Skybox)
 snow_hunter (Snow Hunter)
 
---- Specialist ---
-wakaba_mutsumi (Wakaba Mutsumi)
-yahata_umiri (Yahata Umiri)
-
 --- Supporter ---
 astgenne_the_lightchaser (Astgenne the Lightchaser)
-misumi_uika (Misumi Uika)
 nasti (Nasti)
 perfumer_the_distilled (Perfumer the Distilled)
 

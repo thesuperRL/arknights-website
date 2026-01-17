@@ -3454,12 +3454,37 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/misumi_uika.png",
-    "niches": [],
+    "niches": [
+      "damage-buff",
+      "healing-operators"
+    ],
     "cnName": "三角初华",
     "twName": "三角初華",
     "jpName": "三角みすみ 初華ういか",
     "krName": "미스미 우이카",
-    "internalName": "char_4184_dolris"
+    "internalName": "char_4184_dolris",
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "optional",
+        "groups": [
+          "Ave Mujica"
+        ]
+      }
+    }
   },
   "mitm": {
     "id": "mitm",
@@ -5513,12 +5538,44 @@
     "class": "Specialist",
     "global": false,
     "profileImage": "/images/operators/wakaba_mutsumi.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "若叶睦",
     "twName": "若葉睦",
     "jpName": "若葉わかば 睦むつき",
     "krName": "와카바 무츠미",
-    "internalName": "char_4183_mortis"
+    "internalName": "char_4183_mortis",
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "optional",
+        "groups": [
+          "Ave Mujica"
+        ]
+      }
+    }
   },
   "wanqing": {
     "id": "wanqing",
@@ -5856,12 +5913,37 @@
     "class": "Specialist",
     "global": false,
     "profileImage": "/images/operators/yahata_umiri.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "stalling"
+    ],
     "cnName": "八幡海铃",
     "twName": "八幡海鈴",
     "jpName": "八幡やはた 海鈴うみり",
     "krName": "야하타 우미리",
-    "internalName": "char_4186_tmoris"
+    "internalName": "char_4186_tmoris",
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "optional",
+        "groups": [
+          "Ave Mujica"
+        ]
+      }
+    }
   },
   "y_tenji_nyamu": {
     "id": "y_tenji_nyamu",
@@ -5870,12 +5952,30 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/y_tenji_nyamu.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "祐天寺若麦",
     "twName": "祐天寺若麥",
     "jpName": "祐天寺ゆうてんじ にゃむ",
     "krName": "유텐지 냐무",
-    "internalName": "char_4185_amoris"
+    "internalName": "char_4185_amoris",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "optional",
+        "groups": [
+          "Ave Mujica"
+        ]
+      }
+    }
   },
   "zima": {
     "id": "zima",
