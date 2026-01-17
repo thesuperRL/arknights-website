@@ -1,5 +1,5 @@
 Unranked Operators (20 total)
-Generated: 2026-01-17T19:57:13.133Z
+Generated: 2026-01-17T20:11:24.601Z
 
 === NON-GLOBAL OPERATORS ===
 

@@ -1035,14 +1035,14 @@ export async function buildTeam(
   const trashOperators = loadTrashOperators();
   const freeOperators = loadFreeOperators();
   
-  // Get user's owned operators and want-to-use operators from SQL database
-  const ownedOperatorIds = await getOwnedOperators(email);
+  // Get user's want-to-use (raised) operators from SQL database
+  // Normal teambuilding ONLY uses raised operators
   const wantToUseOperatorIds = await getWantToUse(email);
   
-  // Use owned operators as the available pool
-  // Want-to-use operators will be given priority/preference in scoring
+  // Use ONLY raised (want-to-use) operators as the available pool for normal teambuilding
+  // This ensures only operators marked as "want to use" are considered
   // Sort operators by rarity preference order (with shuffling within each rarity group for randomness)
-  const baseAvailableOperators = ownedOperatorIds.filter(id => allOperators[id]);
+  const baseAvailableOperators = wantToUseOperatorIds.filter(id => allOperators[id]);
   const rarityRanking = preferences.rarityRanking || [6, 4, 5, 3, 2, 1];
   const availableOperators = sortOperatorsByRarityPreference(baseAvailableOperators, allOperators, rarityRanking);
   const wantToUseSet = new Set(wantToUseOperatorIds);
