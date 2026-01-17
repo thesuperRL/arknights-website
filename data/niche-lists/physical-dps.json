@@ -72,7 +72,7 @@
       ],
       "rosa": [
         "",
-        ""
+        "SIE-X"
       ],
       "typhon": [
         "",
@@ -92,7 +92,7 @@
       ]
     },
     "A": {
-      "blaze": [
+      "rosa": [
         "",
         ""
       ],
@@ -168,12 +168,20 @@
         "",
         ""
       ],
+      "dorothy": [
+        "Mines can crit now",
+        "TRP-Y"
+      ],
       "zuo_le": [
         "",
         ""
       ]
     },
     "B": {
+      "blaze": [
+        "",
+        ""
+      ],
       "windscoot": [
         "",
         ""

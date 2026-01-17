@@ -160,6 +160,52 @@ async function getOperatorTierInNicheAtLevel0(operatorId: string, niche: string)
   return highestTier;
 }
 
+// Helper function to get the highest tier across ALL levels (including level 0)
+async function getOperatorMaxTierInNiche(operatorId: string, niche: string): Promise<number> {
+  if (!nicheListCache[niche]) {
+    try {
+      const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+      if (response.ok) {
+        const data = await response.json();
+        nicheListCache[niche] = data;
+      } else {
+        return 0;
+      }
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  const nicheList = nicheListCache[niche];
+  if (!nicheList || !nicheList.operators) {
+    return 0;
+  }
+
+  const tierValues: Record<string, number> = {
+    'SS': 120,
+    'S': 90,
+    'A': 75,
+    'B': 50,
+    'C': 30,
+    'D': 15,
+    'F': 5
+  };
+
+  let highestTier = 0;
+
+  // Find highest tier across ALL levels
+  for (const entry of nicheList.operators) {
+    if (entry.operatorId === operatorId) {
+      const tierScore = tierValues[entry.rating] || 0;
+      if (tierScore > highestTier) {
+        highestTier = tierScore;
+      }
+    }
+  }
+
+  return highestTier;
+}
+
 // Helper function to get new tiers at promotion level (E2 or modules) that are better than level 0
 async function getOperatorNewTiersAtPromotion(operatorId: string, niche: string): Promise<number> {
   if (!nicheListCache[niche]) {
@@ -418,24 +464,24 @@ async function getIntegratedStrategiesRecommendation(
       let tierName = '';
       
       if (isPromotion) {
-        // Second selection (promotion): only count NEW tiers from E2/module levels
-        // Find tiers at E2/module levels that are better than level 0
-        const level0Tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
-        const promotionTier = await getOperatorNewTiersAtPromotion(operatorId, niche);
-        
-        if (promotionTier > level0Tier) {
-          tier = promotionTier;
-          tierName = getTierNameFromValue(tier);
-        } else {
-          continue; // No new tiers at promotion level
-        }
-      } else {
-        // First selection (recruit): use level 0 tiers only
-        tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
+        // Second selection (promotion): use max tier across ALL levels (including level 0)
+        tier = await getOperatorMaxTierInNiche(operatorId, niche);
         if (tier === 0) {
           continue;
         }
         tierName = getTierNameFromValue(tier);
+      } else {
+        // First selection (recruit): use level 0 tier + 20% of full potential
+        const level0Tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
+        const maxTier = await getOperatorMaxTierInNiche(operatorId, niche);
+        
+        // Give 100% of level 0 tier + 20% of the difference to max tier
+        tier = level0Tier + (maxTier - level0Tier) * 0.2;
+        
+        if (tier === 0) {
+          continue;
+        }
+        tierName = getTierNameFromValue(level0Tier); // Use level 0 tier name for display
       }
 
       const tierPoints = tier;
