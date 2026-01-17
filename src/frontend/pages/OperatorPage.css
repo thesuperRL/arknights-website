@@ -21,6 +21,7 @@
 
 .operator-header {
     display: flex;
+    align-items: center;
     gap: 3rem;
     margin-bottom: 3rem;
     background: rgba(22, 33, 62, 0.8);

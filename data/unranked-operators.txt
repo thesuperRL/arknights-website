@@ -1,5 +1,5 @@
-Unranked Operators (17 total)
-Generated: 2026-01-16T20:47:45.587Z
+Unranked Operators (20 total)
+Generated: 2026-01-17T19:37:09.097Z
 
 === NON-GLOBAL OPERATORS ===
 
@@ -15,7 +15,11 @@ vetochki (Vetochki)
 --- Guard ---
 hadiya (Hadiya)
 togawa_sakiko (Togawa Sakiko)
+vark_ris (Varkáris)
 y_tenji_nyamu (Yūtenji Nyamu)
+
+--- Medic ---
+titi (Titi)
 
 --- Sniper ---
 skybox (Skybox)
@@ -29,6 +33,7 @@ yahata_umiri (Yahata Umiri)
 astgenne_the_lightchaser (Astgenne the Lightchaser)
 misumi_uika (Misumi Uika)
 nasti (Nasti)
+perfumer_the_distilled (Perfumer the Distilled)
 
 --- Vanguard ---
 silverash_the_reignfrost (SilverAsh the Reignfrost)

@@ -60,7 +60,7 @@
     ]
   },
   "corePointBonus": 0,
-  "optionalPointBonus": 20,
+  "optionalPointBonus": 15,
   "isOnly": false,
   "coreCountSeparately": false,
   "optionalCountSeparately": true,
