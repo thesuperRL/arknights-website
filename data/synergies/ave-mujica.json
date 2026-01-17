@@ -1,0 +1,38 @@
+{
+  "name": "Ave Mujica Team",
+  "description": "A team centered around various ways to support Sakiko.",
+  "core": {
+    "Center": [
+      [
+        "togawa_sakiko",
+        ""
+      ]
+    ]
+  },
+  "optional": {
+    "Ave Mujica": [
+      [
+        "yahata_umiri",
+        ""
+      ],
+      [
+        "misumi_uika",
+        ""
+      ],
+      [
+        "y_tenji_nyamu",
+        ""
+      ],
+      [
+        "wakaba_mutsumi",
+        ""
+      ]
+    ]
+  },
+  "corePointBonus": 0,
+  "optionalPointBonus": 15,
+  "isOnly": false,
+  "coreCountSeparately": false,
+  "optionalCountSeparately": true,
+  "optionalCountMinimum": 0
+}

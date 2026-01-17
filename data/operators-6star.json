@@ -4511,12 +4511,58 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/togawa_sakiko.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "boss-killing",
+      "late-laneholder",
+      "physical-dps",
+      "unconventional-niches"
+    ],
     "cnName": "丰川祥子",
     "twName": "豐川祥子",
     "jpName": "豊川とがわ 祥子さきこ",
     "krName": "토가와 사키코",
-    "internalName": "char_4182_oblvns"
+    "internalName": "char_4182_oblvns",
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "core",
+        "groups": [
+          "Center"
+        ]
+      }
+    }
   },
   "tragodia": {
     "id": "tragodia",
@@ -5116,6 +5162,32 @@
     "class": "Medic",
     "global": false,
     "profileImage": "/images/operators/titi.png",
-    "niches": []
+    "niches": [
+      "arts-dps",
+      "healing-operators"
+    ],
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "sleep": {
+        "role": "core",
+        "groups": [
+          "DPSes",
+          "Sleep Appliers"
+        ]
+      }
+    }
   }
 }

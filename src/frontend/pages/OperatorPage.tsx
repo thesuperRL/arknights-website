@@ -133,9 +133,13 @@ const OperatorPage: React.FC = () => {
                     <div className="ranking-niche">{nicheRanking.niche}</div>
                   </Link>
                   <div className="niche-instances">
-                    {(nicheRanking.instances || []).map((instance, instanceIndex) => (
+                    {(nicheRanking.instances || []).map((instance, instanceIndex) => {
+                      // Don't show tier for special lists (Unconventional Niches, Free Operators, etc.)
+                      const isSpecialList = ['Unconventional Niches', 'Free Operators', 'Global Range Operators', 'Good Low-Rarity Operators'].includes(nicheRanking.niche);
+                      
+                      return (
                       <div key={instanceIndex} className="niche-instance">
-                        {instance.tier && (
+                        {instance.tier && !isSpecialList && (
                           <div className={`ranking-tier tier-${instance.tier}`}>{instance.tier}</div>
                         )}
                         {instance.level && instance.level.trim() !== '' && (
@@ -166,7 +170,8 @@ const OperatorPage: React.FC = () => {
                           <div className="ranking-notes">{instance.notes}</div>
                         )}
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               );
