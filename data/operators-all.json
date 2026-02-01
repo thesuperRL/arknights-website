@@ -340,6 +340,508 @@
     },
     "synergies": {}
   },
+  "adnachiel": {
+    "id": "adnachiel",
+    "name": "Adnachiel",
+    "rarity": 3,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/adnachiel.png",
+    "niches": [
+      "trash-operators"
+    ],
+    "cnName": "安德切尔",
+    "twName": "安德切爾",
+    "jpName": "アドナキエル",
+    "krName": "아드나키엘",
+    "characters": "char_211_adnach",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "ansel": {
+    "id": "ansel",
+    "name": "Ansel",
+    "rarity": 3,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/ansel.png",
+    "niches": [
+      "healing-operators",
+      "low-rarity"
+    ],
+    "cnName": "安赛尔",
+    "twName": "安賽爾",
+    "jpName": "アンセル",
+    "krName": "안셀",
+    "characters": "char_212_ansel",
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "beagle": {
+    "id": "beagle",
+    "name": "Beagle",
+    "rarity": 3,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/beagle.png",
+    "niches": [
+      "trash-operators"
+    ],
+    "cnName": "米格鲁",
+    "twName": "米格魯",
+    "jpName": "ビーグル",
+    "krName": "비글",
+    "characters": "char_122_beagle",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "cardigan": {
+    "id": "cardigan",
+    "name": "Cardigan",
+    "rarity": 3,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/cardigan.png",
+    "niches": [
+      "healing-operators",
+      "low-rarity",
+      "tanking-blocking-operators"
+    ],
+    "cnName": "卡缇",
+    "twName": "卡緹",
+    "jpName": "カーディ",
+    "krName": "카디건",
+    "characters": "char_209_ardign",
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "catapult": {
+    "id": "catapult",
+    "name": "Catapult",
+    "rarity": 3,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/catapult.png",
+    "niches": [
+      "trash-operators"
+    ],
+    "cnName": "空爆",
+    "jpName": "カタパルト",
+    "krName": "캐터펄트",
+    "characters": "char_282_catap",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "fang": {
+    "id": "fang",
+    "name": "Fang",
+    "rarity": 3,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/fang.png",
+    "niches": [
+      "early-laneholder",
+      "low-rarity"
+    ],
+    "cnName": "芬",
+    "jpName": "フェン",
+    "krName": "팽",
+    "characters": "char_123_fang",
+    "nicheInstances": {
+      "early-laneholder": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "hibiscus": {
+    "id": "hibiscus",
+    "name": "Hibiscus",
+    "rarity": 3,
+    "class": "Medic",
+    "global": true,
+    "profileImage": "/images/operators/hibiscus.png",
+    "niches": [
+      "trash-operators"
+    ],
+    "cnName": "芙蓉",
+    "jpName": "ハイビスカス",
+    "krName": "히비스커스",
+    "characters": "char_120_hibisc",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "kroos": {
+    "id": "kroos",
+    "name": "Kroos",
+    "rarity": 3,
+    "class": "Sniper",
+    "global": true,
+    "profileImage": "/images/operators/kroos.png",
+    "niches": [
+      "anti-air-operators",
+      "low-rarity",
+      "physical-dps"
+    ],
+    "cnName": "克洛丝",
+    "twName": "克洛絲",
+    "jpName": "クルース",
+    "krName": "크루스",
+    "characters": "char_124_kroos",
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
+    },
+    "nicheInstances": {
+      "anti-air-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    }
+  },
+  "lava": {
+    "id": "lava",
+    "name": "Lava",
+    "rarity": 3,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/lava.png",
+    "niches": [
+      "trash-operators"
+    ],
+    "cnName": "炎熔",
+    "jpName": "ラヴァ",
+    "krName": "라바",
+    "characters": "char_121_lava",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "melantha": {
+    "id": "melantha",
+    "name": "Melantha",
+    "rarity": 3,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/melantha.png",
+    "niches": [
+      "low-rarity",
+      "physical-dps"
+    ],
+    "cnName": "玫兰莎",
+    "twName": "玫蘭莎",
+    "jpName": "メランサ",
+    "krName": "멜란사",
+    "characters": "char_208_melan",
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "midnight": {
+    "id": "midnight",
+    "name": "Midnight",
+    "rarity": 3,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/midnight.png",
+    "niches": [
+      "arts-dps",
+      "physical-dps",
+      "trash-operators"
+    ],
+    "cnName": "月见夜",
+    "twName": "月見夜",
+    "jpName": "ミッドナイト",
+    "krName": "미드나이트",
+    "characters": "char_283_midn",
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "orchid": {
+    "id": "orchid",
+    "name": "Orchid",
+    "rarity": 3,
+    "class": "Supporter",
+    "global": true,
+    "profileImage": "/images/operators/orchid.png",
+    "niches": [
+      "low-rarity"
+    ],
+    "cnName": "梓兰",
+    "twName": "梓蘭",
+    "jpName": "オーキッド",
+    "krName": "오키드",
+    "characters": "char_278_orchid",
+    "nicheInstances": {
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "plume": {
+    "id": "plume",
+    "name": "Plume",
+    "rarity": 3,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/plume.png",
+    "niches": [
+      "trash-operators"
+    ],
+    "cnName": "翎羽",
+    "jpName": "プリュム",
+    "krName": "플룸",
+    "characters": "char_192_falco",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "popukar": {
+    "id": "popukar",
+    "name": "Popukar",
+    "rarity": 3,
+    "class": "Guard",
+    "global": true,
+    "profileImage": "/images/operators/popukar.png",
+    "niches": [
+      "low-rarity"
+    ],
+    "cnName": "泡普卡",
+    "jpName": "ポプカル",
+    "krName": "포푸카",
+    "characters": "char_281_popka",
+    "nicheInstances": {
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "spot": {
+    "id": "spot",
+    "name": "Spot",
+    "rarity": 3,
+    "class": "Defender",
+    "global": true,
+    "profileImage": "/images/operators/spot.png",
+    "niches": [
+      "trash-operators"
+    ],
+    "cnName": "斑点",
+    "twName": "斑點",
+    "jpName": "スポット",
+    "krName": "스팟",
+    "characters": "char_284_spot",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "steward": {
+    "id": "steward",
+    "name": "Steward",
+    "rarity": 3,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/steward.png",
+    "niches": [
+      "low-rarity",
+      "trash-operators"
+    ],
+    "cnName": "史都华德",
+    "twName": "史都華德",
+    "jpName": "スチュワード",
+    "krName": "스튜어드",
+    "characters": "char_210_stward",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "low-rarity": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
+  "vanilla": {
+    "id": "vanilla",
+    "name": "Vanilla",
+    "rarity": 3,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/vanilla.png",
+    "niches": [
+      "early-laneholder",
+      "trash-operators"
+    ],
+    "cnName": "香草",
+    "jpName": "バニラ",
+    "krName": "바닐라",
+    "characters": "char_240_wyvern",
+    "nicheInstances": {
+      "early-laneholder": [
+        {
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
+  },
   "aciddrop": {
     "id": "aciddrop",
     "name": "Aciddrop",
@@ -798,6 +1300,10 @@
     "internalName": "char_301_cutter",
     "nicheInstances": {
       "late-laneholder": [
+        {
+          "tier": "B",
+          "level": "SWO-Y"
+        },
         {
           "tier": "C",
           "level": ""
@@ -4973,7 +5479,7 @@
     "name": "Kichisei",
     "rarity": 5,
     "class": "Sniper",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/kichisei.png",
     "niches": [
       "aoe-physical-dps",
@@ -5438,7 +5944,7 @@
     "name": "Matsukiri",
     "rarity": 5,
     "class": "Vanguard",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/matsukiri.png",
     "niches": [
       "damage-buff",
@@ -5652,12 +6158,37 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/misumi_uika.png",
-    "niches": [],
+    "niches": [
+      "damage-buff",
+      "healing-operators"
+    ],
     "cnName": "三角初华",
     "twName": "三角初華",
     "jpName": "三角みすみ 初華ういか",
     "krName": "미스미 우이카",
-    "internalName": "char_4184_dolris"
+    "internalName": "char_4184_dolris",
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "optional",
+        "groups": [
+          "Ave Mujica"
+        ]
+      }
+    }
   },
   "mitm": {
     "id": "mitm",
@@ -7711,12 +8242,44 @@
     "class": "Specialist",
     "global": false,
     "profileImage": "/images/operators/wakaba_mutsumi.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "若叶睦",
     "twName": "若葉睦",
     "jpName": "若葉わかば 睦むつき",
     "krName": "와카바 무츠미",
-    "internalName": "char_4183_mortis"
+    "internalName": "char_4183_mortis",
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "optional",
+        "groups": [
+          "Ave Mujica"
+        ]
+      }
+    }
   },
   "wanqing": {
     "id": "wanqing",
@@ -8054,12 +8617,37 @@
     "class": "Specialist",
     "global": false,
     "profileImage": "/images/operators/yahata_umiri.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "stalling"
+    ],
     "cnName": "八幡海铃",
     "twName": "八幡海鈴",
     "jpName": "八幡やはた 海鈴うみり",
     "krName": "야하타 우미리",
-    "internalName": "char_4186_tmoris"
+    "internalName": "char_4186_tmoris",
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "optional",
+        "groups": [
+          "Ave Mujica"
+        ]
+      }
+    }
   },
   "y_tenji_nyamu": {
     "id": "y_tenji_nyamu",
@@ -8068,12 +8656,30 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/y_tenji_nyamu.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "祐天寺若麦",
     "twName": "祐天寺若麥",
     "jpName": "祐天寺ゆうてんじ にゃむ",
     "krName": "유텐지 냐무",
-    "internalName": "char_4185_amoris"
+    "internalName": "char_4185_amoris",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "optional",
+        "groups": [
+          "Ave Mujica"
+        ]
+      }
+    }
   },
   "zima": {
     "id": "zima",
@@ -8428,7 +9034,7 @@
       ],
       "physical-dps": [
         {
-          "tier": "A",
+          "tier": "B",
           "level": ""
         }
       ],
@@ -8900,6 +9506,7 @@
     "profileImage": "/images/operators/dorothy.png",
     "niches": [
       "global-range",
+      "physical-dps",
       "stalling"
     ],
     "cnName": "多萝西",
@@ -8908,6 +9515,12 @@
     "krName": "도로시",
     "internalName": "char_4048_doroth",
     "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "A",
+          "level": "TRP-Y"
+        }
+      ],
       "stalling": [
         {
           "tier": "S",
@@ -9651,7 +10264,7 @@
     "name": "Haruka",
     "rarity": 6,
     "class": "Supporter",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/haruka.png",
     "niches": [
       "def-buff",
@@ -9684,7 +10297,7 @@
       "sp-battery": [
         {
           "tier": "S",
-          "level": "E2"
+          "level": "BLS-Y"
         }
       ]
     },
@@ -9891,7 +10504,7 @@
     "name": "Hoshiguma the Breacher",
     "rarity": 6,
     "class": "Defender",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/hoshiguma_the_breacher.png",
     "niches": [
       "aoe-arts-dps",
@@ -10470,6 +11083,10 @@
     "internalName": "char_4080_lin",
     "nicheInstances": {
       "aoe-arts-dps": [
+        {
+          "tier": "S",
+          "level": "PLX-X"
+        },
         {
           "tier": "A",
           "level": ""
@@ -11702,6 +12319,10 @@
     "nicheInstances": {
       "boss-killing": [
         {
+          "tier": "S",
+          "level": "SIE-X"
+        },
+        {
           "tier": "A",
           "level": ""
         }
@@ -11709,6 +12330,10 @@
       "physical-dps": [
         {
           "tier": "S",
+          "level": "SIE-X"
+        },
+        {
+          "tier": "A",
           "level": ""
         }
       ]
@@ -12647,12 +13272,58 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/togawa_sakiko.png",
-    "niches": [],
+    "niches": [
+      "arts-dps",
+      "boss-killing",
+      "late-laneholder",
+      "physical-dps",
+      "unconventional-niches"
+    ],
     "cnName": "丰川祥子",
     "twName": "豐川祥子",
     "jpName": "豊川とがわ 祥子さきこ",
     "krName": "토가와 사키코",
-    "internalName": "char_4182_oblvns"
+    "internalName": "char_4182_oblvns",
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "ave-mujica": {
+        "role": "core",
+        "groups": [
+          "Center"
+        ]
+      }
+    }
   },
   "tragodia": {
     "id": "tragodia",
@@ -13252,6 +13923,36 @@
     "class": "Medic",
     "global": false,
     "profileImage": "/images/operators/titi.png",
-    "niches": []
+    "niches": [
+      "arts-dps",
+      "healing-operators"
+    ],
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "sleep": {
+        "role": "core",
+        "groups": [
+          "DPSes",
+          "Sleep Appliers"
+        ]
+      }
+    },
+    "cnName": "缇缇",
+    "jpName": "ティティ",
+    "krName": "티티",
+    "internalName": "char_4056_titi"
   }
 }
