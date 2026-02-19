@@ -1,9 +1,9 @@
-name: Monthly Operator Scrape
+name: Biweekly Operator Scrape
 
 on:
   schedule:
-    # Run on the 1st day of every month at 00:00 UTC
-    - cron: '0 0 1 * *'
+    # Biweekly: 10th and 24th of every month at 00:00 UTC (first run Feb 24, 2026)
+    - cron: '0 0 8,24 * *'
   workflow_dispatch: # Allow manual triggering
 
 permissions:
@@ -95,6 +95,6 @@ jobs:
           git add data/operators-*.json data/operators-all.json
           git add public/images/operators/*.png 2>/dev/null || true
           DATE=$(date +'%Y-%m-%d')
-          git commit -m "chore: update operator data from monthly scrape ($DATE) [skip ci]" || exit 0
+          git commit -m "chore: update operator data from biweekly scrape ($DATE) [skip ci]" || exit 0
           git push
 
