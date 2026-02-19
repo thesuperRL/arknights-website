@@ -3400,7 +3400,7 @@
     "name": "Misumi Uika",
     "rarity": 5,
     "class": "Supporter",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/misumi_uika.png",
     "niches": [
       "damage-buff",
@@ -5484,7 +5484,7 @@
     "name": "Wakaba Mutsumi",
     "rarity": 5,
     "class": "Specialist",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/wakaba_mutsumi.png",
     "niches": [
       "arts-dps",
@@ -5859,7 +5859,7 @@
     "name": "Yahata Umiri",
     "rarity": 5,
     "class": "Specialist",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/yahata_umiri.png",
     "niches": [
       "aoe-physical-dps",
@@ -5898,7 +5898,7 @@
     "name": "Yūtenji Nyamu",
     "rarity": 5,
     "class": "Guard",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/y_tenji_nyamu.png",
     "niches": [
       "trash-operators"

@@ -90,6 +90,16 @@ The frontend can be hosted on GitHub Pages while the backend runs elsewhere (e.g
 
 The backend is already configured for cross-origin auth when **CORS_ORIGIN** is set: it uses `SameSite=None; Secure` for the session cookie so login works from GitHub Pages.
 
+### 5. Account storage (Heroku Postgres)
+
+Login and accounts use **PostgreSQL** only. Set **DATABASE_URL** on the backend (e.g. Heroku Postgres):
+
+- Add the [Heroku Postgres](https://devcenter.heroku.com/articles/heroku-postgresql) add-on to your app, or use any PostgreSQL provider.
+- Set `DATABASE_URL` to your Postgres connection string (Heroku sets this automatically when you add the add-on).
+- The app creates the `accounts` table automatically on startup. See [Connecting to Heroku Postgres](https://devcenter.heroku.com/articles/connecting-heroku-postgres) for connection details.
+
+**DATABASE_URL is required** for sign-up, login, and account features. To seed the database from a backup, use `npm run upload:accounts:pg` (expects a file at `data/accounts.json`; create it from a backup if needed).
+
 ## Project Structure
 
 ```

@@ -20,6 +20,7 @@
     "fix:global": "ts-node src/fix-global-status.ts",
     "rename:internalname": "ts-node src/rename-characters-to-internalname.ts",
     "upload:accounts": "ts-node src/upload-accounts-to-sql.ts",
+    "upload:accounts:pg": "ts-node src/upload-accounts-to-pg.ts",
     "migrate:niches": "ts-node src/migrate-niches-to-sql.ts",
     "migrate:niches:from-sql": "ts-node src/migrate-niches-from-sql.ts"
   },
@@ -40,6 +41,7 @@
     "@types/express": "^5.0.6",
     "@types/mssql": "^9.1.8",
     "@types/node": "^25.0.3",
+    "@types/pg": "^8.11.10",
     "@types/puppeteer": "^5.4.7",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
@@ -61,6 +63,7 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "mssql": "^11.0.1",
+    "pg": "^8.13.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.11.0"

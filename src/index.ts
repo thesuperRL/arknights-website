@@ -842,7 +842,9 @@ app.post('/api/auth/local-login', async (req, res) => {
     console.error(`Login error after ${duration}ms:`, sanitizeErrorMessage(error));
 
     // Provide more specific error messages based on error type
-    if (error.message?.includes('timeout') || error.code === 'ETIMEOUT') {
+    if (!process.env.DATABASE_URL || error.message?.includes('DATABASE_URL')) {
+      res.status(503).json({ error: 'Login is unavailable: database not configured (DATABASE_URL).' });
+    } else if (error.message?.includes('timeout') || error.code === 'ETIMEOUT') {
       res.status(503).json({ error: 'Login service temporarily unavailable. Please try again.' });
     } else if (error.message?.includes('connection')) {
       res.status(503).json({ error: 'Database connection issue. Please try again.' });

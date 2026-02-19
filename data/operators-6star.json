@@ -4528,7 +4528,7 @@
     "name": "Togawa Sakiko",
     "rarity": 6,
     "class": "Guard",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/togawa_sakiko.png",
     "niches": [
       "arts-dps",

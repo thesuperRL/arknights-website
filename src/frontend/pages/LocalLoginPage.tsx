@@ -31,10 +31,18 @@ const LocalLoginPage: React.FC = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
+      let data: { error?: string };
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Login failed');
+        const message =
+          data.error ||
+          (response.status === 401 ? 'Invalid email or password.' : response.status === 503 ? 'Login service unavailable. Try again later.' : 'Login failed.');
+        throw new Error(message);
       }
 
       // Update auth state directly with data from login response (avoid redundant API call)
