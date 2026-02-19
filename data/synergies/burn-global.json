@@ -45,7 +45,7 @@
       ]
     ]
   },
-  "corePointBonus": 175,
+  "corePointBonus": 200,
   "optionalPointBonus": 25,
   "isOnly": false,
   "coreCountSeparately": true,
