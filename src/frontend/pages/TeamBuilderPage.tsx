@@ -14,9 +14,8 @@ interface NicheRange {
 }
 
 interface TeamPreferences {
-  requiredNiches: Record<string, NicheRange>; // Niche filename -> range of operators
-  preferredNiches: Record<string, NicheRange>; // Niche filename -> range of operators
-  rarityRanking?: number[]; // Rarity preference order (e.g., [6, 4, 5, 3, 2, 1])
+  requiredNiches: Record<string, NicheRange>;
+  preferredNiches: Record<string, NicheRange>;
   allowDuplicates?: boolean;
 }
 
@@ -65,12 +64,14 @@ const TeamBuilderPage: React.FC = () => {
   const [showPreferences, setShowPreferences] = useState(true);
   const [allOperators, setAllOperators] = useState<Record<string, Operator>>({});
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
+  const [wantToUseOperatorIds, setWantToUseOperatorIds] = useState<Set<string>>(new Set());
   const [allSynergies, setAllSynergies] = useState<Array<{filename: string; name: string; core: Record<string, string[]>; optional: Record<string, string[]>; isOnly: boolean; corePointBonus: number; optionalPointBonus: number; coreCountSeparately: boolean; optionalCountSeparately: boolean; optionalCountMinimum: number}>>([]);
   const [selectedEmptySlots, setSelectedEmptySlots] = useState<Record<number, string>>({}); // slot index -> operatorId
   const [modifiedTeam, setModifiedTeam] = useState<TeamMember[] | null>(null); // Modified team with user changes
   const [originalTeam, setOriginalTeam] = useState<TeamMember[] | null>(null); // Original generated team (for revert)
-  const [showOperatorSelectModal, setShowOperatorSelectModal] = useState<{ type: 'replace' | 'empty'; operatorId?: string; slotIndex?: number } | null>(null); // Modal state with operator ID or slot index
+  const [showOperatorSelectModal, setShowOperatorSelectModal] = useState<{ type: 'replace' | 'empty' | 'lock'; operatorId?: string; slotIndex?: number } | null>(null);
   const [operatorSelectSearch, setOperatorSelectSearch] = useState('');
+  const [lockedOperatorIds, setLockedOperatorIds] = useState<string[]>([]);
 
   useEffect(() => {
     if (user) {
@@ -112,6 +113,7 @@ const TeamBuilderPage: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         setOwnedOperators(new Set(data.ownedOperators || []));
+        setWantToUseOperatorIds(new Set(data.wantToUse || []));
       }
     } catch (err) {
       console.error('Error loading owned operators:', err);
@@ -185,20 +187,9 @@ const TeamBuilderPage: React.FC = () => {
       migrated.preferredNiches = prefs.preferredNiches || {};
     }
     
-    // Migrate prioritizeRarity to rarityRanking
-    if (prefs.prioritizeRarity !== undefined) {
-      // Convert old boolean to ranking array
-      if (prefs.prioritizeRarity) {
-        migrated.rarityRanking = [6, 4, 5, 3, 2, 1]; // Default ranking
-      } else {
-        migrated.rarityRanking = []; // No preference
-      }
-      delete migrated.prioritizeRarity;
-    } else if (!prefs.rarityRanking) {
-      // Set default ranking if not present
-      migrated.rarityRanking = [6, 4, 5, 3, 2, 1];
-    }
-    migrated.allowDuplicates = true; // Always allow duplicates
+    if (prefs.prioritizeRarity !== undefined) delete migrated.prioritizeRarity;
+    if ((migrated as any).rarityRanking !== undefined) delete (migrated as any).rarityRanking;
+    migrated.allowDuplicates = true;
     
     // Remove old properties
     delete migrated.minOperatorsPerNiche;
@@ -410,8 +401,7 @@ const TeamBuilderPage: React.FC = () => {
       const response = await apiFetch('/api/team/build', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ preferences }),
-        credentials: 'include'
+        body: JSON.stringify({ preferences, lockedOperatorIds }),
       });
       
       if (!response.ok) {
@@ -635,29 +625,39 @@ const TeamBuilderPage: React.FC = () => {
   
   // Handle operator selection/replacement
   const handleOperatorSelect = (operatorId: string) => {
-    if (!teamResult || !preferences) return;
-    
     const modalState = showOperatorSelectModal;
     if (modalState === null) return;
-    
+
     const operator = allOperators[operatorId];
     if (!operator) return;
-    
+
+    if (modalState.type === 'lock') {
+      setLockedOperatorIds(prev => {
+        if (prev.includes(operatorId) || prev.length >= 12) return prev;
+        return [...prev, operatorId];
+      });
+      setShowOperatorSelectModal(null);
+      setOperatorSelectSearch('');
+      return;
+    }
+
+    if (!teamResult || !preferences) return;
+
     // Get niches for this operator from the operator's niches property or fetch from API
     const operatorNiches = operator.niches || [];
-    
+
     // Create new team member
     const newMember: TeamMember = {
       operatorId: operator.id,
       operator: operator,
       niches: operatorNiches,
-      isTrash: false // Could check trash operators list if needed
+      isTrash: false
     };
-    
+
     // Get current team (use modified team if available, otherwise use original)
     const currentTeam = modifiedTeam || teamResult.team;
     let newTeam: TeamMember[];
-    
+
     if (modalState.type === 'empty') {
       // Empty slot - add to selectedEmptySlots
       const slotIndex = modalState.slotIndex!;
@@ -812,52 +812,40 @@ const TeamBuilderPage: React.FC = () => {
         {showPreferences && (
           <div className="preferences-section-content">
             <h2>Team Preferences</h2>
-            
-            <div className="preference-group">
-              <label className="preference-label">Rarity Preference Order</label>
-              <div className="rarity-ranking-container">
-                <div className="rarity-ranking-list">
-                  {(preferences.rarityRanking || [6, 4, 5, 3, 2, 1]).map((rarity, index) => (
-                    <div key={rarity} className="rarity-ranking-item">
-                      <span className="rarity-rank-number">{index + 1}</span>
-                      <span className="rarity-star">{rarity}★</span>
+
+            <div className="preference-group locked-operators-group">
+              <label className="preference-label">Locked operators</label>
+              <p className="help-text">Locked operators always appear in your team; the builder fills the remaining slots. Only raised (want-to-use) operators can be locked.</p>
+              <div className="locked-operators-list">
+                {lockedOperatorIds.map(id => {
+                  const op = allOperators[id];
+                  if (!op) return null;
+                  return (
+                    <div key={id} className="locked-operator-chip">
+                      <img src={getImageUrl(op.profileImage || '/images/operators/placeholder.png')} alt="" className="locked-operator-chip-img" />
+                      <span className="locked-operator-chip-name">{getOperatorName(op, language)}</span>
                       <button
-                        className="rarity-move-btn"
-                        onClick={() => {
-                          if (index > 0) {
-                            const newRanking = [...(preferences.rarityRanking || [6, 4, 5, 3, 2, 1])];
-                            [newRanking[index - 1], newRanking[index]] = [newRanking[index], newRanking[index - 1]];
-                            setPreferences({ ...preferences, rarityRanking: newRanking });
-                          }
-                        }}
-                        disabled={index === 0}
+                        type="button"
+                        className="locked-operator-unlock"
+                        onClick={() => setLockedOperatorIds(prev => prev.filter(x => x !== id))}
+                        title="Unlock"
                       >
-                        ↑
-                      </button>
-                      <button
-                        className="rarity-move-btn"
-                        onClick={() => {
-                          const ranking = preferences.rarityRanking || [6, 4, 5, 3, 2, 1];
-                          if (index < ranking.length - 1) {
-                            const newRanking = [...ranking];
-                            [newRanking[index], newRanking[index + 1]] = [newRanking[index + 1], newRanking[index]];
-                            setPreferences({ ...preferences, rarityRanking: newRanking });
-                          }
-                        }}
-                        disabled={index === (preferences.rarityRanking || [6, 4, 5, 3, 2, 1]).length - 1}
-                      >
-                        ↓
+                        ×
                       </button>
                     </div>
-                  ))}
-                </div>
-                <div className="rarity-ranking-help">
-                  Higher position = higher priority. Use arrows to reorder.
-                </div>
+                  );
+                })}
               </div>
+              {lockedOperatorIds.length < 12 && (
+                <button
+                  type="button"
+                  className="add-locked-btn"
+                  onClick={() => setShowOperatorSelectModal({ type: 'lock' })}
+                >
+                  + Add locked operator
+                </button>
+              )}
             </div>
-
-
 
         {/* Temporarily removed required and preferred niches sections */}
         {/* 
@@ -1235,7 +1223,7 @@ const TeamBuilderPage: React.FC = () => {
         <div className="modal-overlay" onClick={() => setShowOperatorSelectModal(null)}>
           <div className="modal-content operator-select-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Select Operator</h2>
+              <h2>{showOperatorSelectModal?.type === 'lock' ? 'Select operator to lock' : 'Select Operator'}</h2>
               <button className="modal-close" onClick={() => setShowOperatorSelectModal(null)}>×</button>
             </div>
             <div className="modal-body">
@@ -1248,35 +1236,29 @@ const TeamBuilderPage: React.FC = () => {
               />
               <div className="operator-select-grid">
                 {(() => {
-                  // Get all operator IDs currently in the team
-                  const currentTeam = modifiedTeam || teamResult.team || [];
-                  const teamOperatorIds = new Set(currentTeam.map(member => member.operatorId));
-                  
-                  // Get operator IDs from selected empty slots
-                  const emptySlotOperatorIds = new Set(Object.values(selectedEmptySlots));
-                  
-                  // Combine all used operator IDs
-                  const usedOperatorIds = new Set([...teamOperatorIds, ...emptySlotOperatorIds]);
-                  
-                  // If we're replacing an operator, allow selecting the same operator (it will be replaced)
                   const modalState = showOperatorSelectModal;
+                  const isLock = modalState?.type === 'lock';
+
+                  const currentTeam = modifiedTeam || teamResult?.team || [];
+                  const teamOperatorIds = new Set(currentTeam.map(member => member.operatorId));
+                  const emptySlotOperatorIds = new Set(Object.values(selectedEmptySlots));
+                  const usedOperatorIds = new Set([...teamOperatorIds, ...emptySlotOperatorIds]);
                   let operatorToReplace: string | null = null;
                   if (modalState !== null && modalState.type === 'replace' && modalState.operatorId) {
                     operatorToReplace = modalState.operatorId;
                   }
-                  
+                  const lockedSet = new Set(lockedOperatorIds);
+
                   return Object.values(allOperators)
                     .filter(op => {
-                      // Only show owned operators
-                      if (!ownedOperators.has(op.id)) {
+                      if (!ownedOperators.has(op.id)) return false;
+                      if (isLock) {
+                        if (lockedSet.has(op.id)) return false;
+                        if (!wantToUseOperatorIds.has(op.id)) return false; // Backend only accepts locked from want-to-use
+                      } else if (usedOperatorIds.has(op.id) && op.id !== operatorToReplace) {
                         return false;
                       }
-                      
-                      // Exclude operators already in the team (unless we're replacing that same operator)
-                      if (usedOperatorIds.has(op.id) && op.id !== operatorToReplace) {
-                        return false;
-                      }
-                      
+
                       // Apply search filter
                       if (operatorSelectSearch) {
                         const displayName = getOperatorName(op, language);

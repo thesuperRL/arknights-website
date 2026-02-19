@@ -253,6 +253,11 @@
     background: rgba(0, 0, 0, 0.6);
 }
 
+.synergy-page .operator-card.non-global .operator-image {
+    filter: blur(6px);
+    transition: filter 0.3s;
+}
+
 .synergy-page .operator-card.non-global .operator-name {
     color: rgba(255, 255, 255, 0.7);
 }
@@ -260,6 +265,10 @@
 .synergy-page .operator-card.non-global:hover {
     border-color: rgba(0, 0, 0, 1);
     background: rgba(0, 0, 0, 0.7);
+}
+
+.synergy-page .operator-card.non-global:hover .operator-image {
+    filter: blur(0);
 }
 
 .synergy-page .operator-card.non-global:hover .operator-name {

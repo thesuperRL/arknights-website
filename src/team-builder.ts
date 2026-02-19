@@ -642,7 +642,7 @@ export function getOperatorTierInNiche(operatorId: string, niche: string, isIS: 
  * If primaryNiche is provided, heavily prioritizes operator tier in that niche
  */
 export function scoreOperator(
-  operator: any,
+  _operator: any,
   operatorId: string,
   niches: string[],
   preferences: TeamPreferences,
@@ -659,23 +659,7 @@ export function scoreOperator(
   if (isTrash) {
     score -= 1000; // Massive penalty that outweighs any tier score (tier max is 100 * 10 = 1000)
   }
-  
-  // Base score from rarity ranking
-  // Higher position in ranking = higher score
-  // This ensures rarity preference has significant weight in selection
-  if (preferences.rarityRanking && preferences.rarityRanking.length > 0) {
-    const rarity = operator.rarity || 0;
-    const rankingIndex = preferences.rarityRanking.indexOf(rarity);
-    if (rankingIndex !== -1) {
-      // Score based on position in ranking (first = highest score)
-      // Score decreases by 20 for each position down the ranking
-      // Increased from 10 to 20 to give rarity preference more weight
-      const baseScore = 100;
-      const positionScore = baseScore - (rankingIndex * 20);
-      score += Math.max(0, positionScore); // Ensure non-negative
-    }
-  }
-  
+
   // Calculate current niche counts in existing team (using normalized niches)
   const normalizeNiche = (niche: string): string => {
     // Normalize AOE niches to their DPS equivalents for counting purposes
@@ -877,41 +861,8 @@ export function scoreOperator(
 }
 
 /**
- * Sorts operators by rarity preference order
- * This ensures we always examine operators in rarity preference order for optimal selection
- */
-function sortOperatorsByRarityPreference(
-  operatorIds: string[],
-  allOperators: Record<string, any>,
-  rarityRanking: number[] = [6, 4, 5, 3, 2, 1]
-): string[] {
-  // Create a map of rarity -> position in ranking (lower number = higher priority)
-  const rarityPriority: Record<number, number> = {};
-  rarityRanking.forEach((rarity, index) => {
-    rarityPriority[rarity] = index;
-  });
-  
-  // Default priority for rarities not in ranking (put them at the end)
-  const defaultPriority = rarityRanking.length;
-  
-  // Sort operators by rarity priority
-  return [...operatorIds].sort((a, b) => {
-    const operatorA = allOperators[a];
-    const operatorB = allOperators[b];
-    if (!operatorA || !operatorB) return 0;
-    
-    const rarityA = operatorA.rarity || 0;
-    const rarityB = operatorB.rarity || 0;
-    const priorityA = rarityPriority[rarityA] !== undefined ? rarityPriority[rarityA] : defaultPriority;
-    const priorityB = rarityPriority[rarityB] !== undefined ? rarityPriority[rarityB] : defaultPriority;
-    
-    return priorityA - priorityB;
-  });
-}
-
-/**
  * Finds the best operator to fill a specific niche
- * Always prioritizes operators by rarity preference order and score for optimal selection
+ * Selection is based on score only (rarity is disregarded).
  */
 function findBestOperatorForNiche(
   niche: string,
@@ -925,16 +876,12 @@ function findBestOperatorForNiche(
   freeOperators?: Set<string>,
   wantToUseSet?: Set<string>
 ): { operatorId: string; operator: any; niches: string[] } | null {
-  // Sort operators by rarity preference order for optimal examination
-  const rarityRanking = preferences.rarityRanking || [6, 4, 5, 3, 2, 1];
-  const sortedOperators = sortOperatorsByRarityPreference(availableOperators, allOperators, rarityRanking);
-  
   let bestOperator: { operatorId: string; operator: any; niches: string[] } | null = null;
   let bestScore = -Infinity;
   const candidates: Array<{ operatorId: string; operator: any; niches: string[]; score: number }> = [];
-  
+
   // First pass: only consider non-trash and non-free operators
-  for (const operatorId of sortedOperators) {
+  for (const operatorId of availableOperators) {
     if (trashOperators && trashOperators.has(operatorId)) continue; // Skip trash operators in first pass
     if (freeOperators && freeOperators.has(operatorId)) continue; // Skip free operators in first pass
 
@@ -960,7 +907,7 @@ function findBestOperatorForNiche(
   
   // If no non-trash operator found, consider trash operators as last resort
   if (!bestOperator && trashOperators) {
-    for (const operatorId of sortedOperators) {
+    for (const operatorId of availableOperators) {
       if (!trashOperators.has(operatorId)) continue; // Only consider trash operators now
 
       const operator = allOperators[operatorId];
@@ -984,70 +931,49 @@ function findBestOperatorForNiche(
     }
   }
   
-  // If we have multiple candidates with similar scores, prioritize by rarity preference order and score
-  // Select the optimal operator based on rarity preference and score
+  // If we have multiple candidates with similar scores, pick by score only (higher first)
   if (candidates.length > 1 && bestScore > -Infinity) {
     const topCandidates = candidates.filter(c => c.score >= bestScore * 0.95);
     if (topCandidates.length > 1) {
-      // Sort by rarity preference order first, then by score
-      const rarityRanking = preferences.rarityRanking || [6, 4, 5, 3, 2, 1];
-      const rarityPriority: Record<number, number> = {};
-      rarityRanking.forEach((rarity, index) => {
-        rarityPriority[rarity] = index;
-      });
-      const defaultPriority = rarityRanking.length;
-      
-      topCandidates.sort((a, b) => {
-        const rarityA = allOperators[a.operatorId]?.rarity || 0;
-        const rarityB = allOperators[b.operatorId]?.rarity || 0;
-        const priorityA = rarityPriority[rarityA] !== undefined ? rarityPriority[rarityA] : defaultPriority;
-        const priorityB = rarityPriority[rarityB] !== undefined ? rarityPriority[rarityB] : defaultPriority;
-        
-        // First sort by rarity priority (lower number = higher priority)
-        if (priorityA !== priorityB) {
-          return priorityA - priorityB;
-        }
-        
-        // If same rarity priority, sort by score (higher first)
-        return b.score - a.score;
-      });
-      
-      // Pick the first one (highest rarity preference, highest score)
+      topCandidates.sort((a, b) => b.score - a.score);
       const selected = topCandidates[0];
       return { operatorId: selected.operatorId, operator: selected.operator, niches: selected.niches };
     }
   }
-  
+
   return bestOperator;
 }
 
 /**
- * Builds a team of 12 operators based on preferences
+ * Builds a team of 12 operators based on preferences.
+ * lockedOperatorIds: operators that are always in the team (order preserved); remaining slots filled by algorithm.
  */
 export async function buildTeam(
   email: string,
-  preferences: TeamPreferences
+  preferences: TeamPreferences,
+  lockedOperatorIds: string[] = []
 ): Promise<TeamResult> {
   // Load all operators
   const allOperators = loadAllOperators();
-  
+
   // Load trash operators and free operators to apply penalty (but not exclude them)
   const trashOperators = loadTrashOperators();
   const freeOperators = loadFreeOperators();
-  
+
   // Get user's want-to-use (raised) operators from SQL database
-  // Normal teambuilding ONLY uses raised operators
   const wantToUseOperatorIds = await getWantToUse(email);
-  
-  // Use ONLY raised (want-to-use) operators as the available pool for normal teambuilding
-  // This ensures only operators marked as "want to use" are considered
-  // Sort operators by rarity preference order (with shuffling within each rarity group for randomness)
-  const baseAvailableOperators = wantToUseOperatorIds.filter(id => allOperators[id]);
-  const rarityRanking = preferences.rarityRanking || [6, 4, 5, 3, 2, 1];
-  const availableOperators = sortOperatorsByRarityPreference(baseAvailableOperators, allOperators, rarityRanking);
   const wantToUseSet = new Set(wantToUseOperatorIds);
-  
-  if (availableOperators.length === 0) {
+
+  // Locked operators must be in want-to-use and valid; dedupe and truncate to 12
+  const locked = lockedOperatorIds.filter(id => allOperators[id] && wantToUseSet.has(id));
+  const lockedSet = new Set(locked);
+  const maxLocked = Math.min(locked.length, 12);
+
+  // Available pool = want-to-use minus locked (rarity is disregarded)
+  const baseAvailableOperators = wantToUseOperatorIds.filter(id => allOperators[id] && !lockedSet.has(id));
+  const availableOperators = [...baseAvailableOperators];
+
+  if (maxLocked === 0 && availableOperators.length === 0) {
     return {
       team: [],
       coverage: {},
@@ -1056,14 +982,33 @@ export async function buildTeam(
       emptySlots: 0
     };
   }
-  
+
   // Convert to sets for faster lookup
   const requiredNiches = new Set(Object.keys(preferences.requiredNiches));
   const preferredNiches = new Set(Object.keys(preferences.preferredNiches));
-  
+
   const team: TeamMember[] = [];
   const usedOperatorIds = new Set<string>();
   const nicheCounts: Record<string, number> = {};
+
+  // Add locked operators first and account for their niches
+  for (let i = 0; i < maxLocked; i++) {
+    const operatorId = locked[i];
+    const operator = allOperators[operatorId];
+    if (!operator) continue;
+    const niches = getOperatorNiches(operatorId);
+    team.push({
+      operatorId,
+      operator,
+      niches,
+      primaryNiche: undefined,
+      isTrash: trashOperators.has(operatorId)
+    });
+    usedOperatorIds.add(operatorId);
+    for (const opNiche of niches) {
+      nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
+    }
+  }
   
   // First pass: Fill required niches to minimum
   for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
@@ -1251,19 +1196,15 @@ export async function buildTeam(
     ? Math.max(0, 12 - team.length)
     : 0;
   
-  // Fifth pass: Fill remaining slots with best available operators
-  // Only fill if not all niches are filled to their maximum
-  // First try to fill with non-trash operators only
-  // Sort remaining operators by rarity preference order for optimal selection
+  // Fifth pass: Fill remaining slots with best available operators (rarity disregarded)
   const remainingOperators = availableOperators.filter(id => !usedOperatorIds.has(id));
-  const sortedRemainingOperators = sortOperatorsByRarityPreference(remainingOperators, allOperators, rarityRanking);
-  
-  while (team.length < 12 && sortedRemainingOperators.length > 0 && !(allRequiredNichesFilled && allPreferredNichesFilled)) {
+
+  while (team.length < 12 && remainingOperators.length > 0 && !(allRequiredNichesFilled && allPreferredNichesFilled)) {
     let bestCandidate: { operatorId: string; operator: any; niches: string[]; score: number } | null = null;
     const candidates: Array<{ operatorId: string; operator: any; niches: string[]; score: number }> = [];
-    
-    // First pass: only consider non-trash and non-free operators (already sorted by rarity preference)
-    for (const operatorId of sortedRemainingOperators) {
+
+    // Consider non-trash and non-free operators first
+    for (const operatorId of remainingOperators) {
       if (usedOperatorIds.has(operatorId)) continue;
       if (trashOperators.has(operatorId)) continue; // Skip trash operators in first pass
       if (freeOperators.has(operatorId)) continue; // Skip free operators in first pass
@@ -1283,7 +1224,7 @@ export async function buildTeam(
     
     // If no non-trash candidate found, allow trash operators as last resort
     if (!bestCandidate) {
-      for (const operatorId of sortedRemainingOperators) {
+      for (const operatorId of remainingOperators) {
         if (usedOperatorIds.has(operatorId)) continue;
         if (!trashOperators.has(operatorId)) continue; // Only consider trash operators now
 
@@ -1301,38 +1242,15 @@ export async function buildTeam(
       }
     }
     
-    // If we have multiple candidates with similar scores, prioritize by rarity preference order and score
-    // Select the optimal operator based on rarity preference and score
+    // Tie-break by score only (higher first)
     if (bestCandidate && candidates.length > 1) {
       const topCandidates = candidates.filter(c => c.score >= bestCandidate!.score * 0.95);
       if (topCandidates.length > 1) {
-        // Sort by rarity preference order first, then by score
-        const rarityPriority: Record<number, number> = {};
-        rarityRanking.forEach((rarity, index) => {
-          rarityPriority[rarity] = index;
-        });
-        const defaultPriority = rarityRanking.length;
-        
-        topCandidates.sort((a, b) => {
-          const rarityA = allOperators[a.operatorId]?.rarity || 0;
-          const rarityB = allOperators[b.operatorId]?.rarity || 0;
-          const priorityA = rarityPriority[rarityA] !== undefined ? rarityPriority[rarityA] : defaultPriority;
-          const priorityB = rarityPriority[rarityB] !== undefined ? rarityPriority[rarityB] : defaultPriority;
-          
-          // First sort by rarity priority (lower number = higher priority)
-          if (priorityA !== priorityB) {
-            return priorityA - priorityB;
-          }
-          
-          // If same rarity priority, sort by score (higher first)
-          return b.score - a.score;
-        });
-        
-        // Pick the first one (highest rarity preference, highest score)
+        topCandidates.sort((a, b) => b.score - a.score);
         bestCandidate = topCandidates[0];
       }
     }
-    
+
     if (bestCandidate) {
       team.push({
         operatorId: bestCandidate.operatorId,
@@ -1341,16 +1259,16 @@ export async function buildTeam(
         isTrash: trashOperators.has(bestCandidate.operatorId)
       });
       usedOperatorIds.add(bestCandidate.operatorId);
-      
+
       // Update niche counts
       for (const niche of bestCandidate.niches) {
         nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
       }
-      
-      // Remove the selected operator from sortedRemainingOperators
-      const index = sortedRemainingOperators.indexOf(bestCandidate.operatorId);
+
+      // Remove the selected operator from remainingOperators
+      const index = remainingOperators.indexOf(bestCandidate.operatorId);
       if (index > -1) {
-        sortedRemainingOperators.splice(index, 1);
+        remainingOperators.splice(index, 1);
       }
     } else {
       break; // No more candidates

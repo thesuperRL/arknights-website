@@ -999,8 +999,9 @@ app.post('/api/team/build', async (req, res) => {
     }
 
     const preferences: TeamPreferences = req.body.preferences || getDefaultPreferences();
-    const result = await buildTeam(session.email, preferences);
-    
+    const lockedOperatorIds: string[] = Array.isArray(req.body.lockedOperatorIds) ? req.body.lockedOperatorIds : [];
+    const result = await buildTeam(session.email, preferences, lockedOperatorIds);
+
     res.json(result);
   } catch (error: any) {
     console.error('Error building team:', error);

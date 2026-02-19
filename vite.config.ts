@@ -85,7 +85,7 @@ export default defineConfig({
           console.log('⚠️  No backup found, created empty images directories');
         }
       }
-    }
+    },
   ],
   root: 'src/frontend',
   build: {
@@ -97,8 +97,15 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
+        // Don't proxy /api.ts — it's a frontend source file; let Vite 404 it instead of hitting the backend
+        bypass(req, _res) {
+          return req.url === '/api.ts' ? req.url : undefined;
+        },
+      },
+      '/images': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
       },
     },
   },
 });
-
