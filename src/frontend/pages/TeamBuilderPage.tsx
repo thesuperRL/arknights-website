@@ -5,7 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
-import { apiFetch } from '../api';
+import { apiFetch, getImageUrl } from '../api';
 import './TeamBuilderPage.css';
 
 interface NicheRange {
@@ -1068,7 +1068,7 @@ const TeamBuilderPage: React.FC = () => {
                           style={{ cursor: 'pointer' }}
                         >
                           <img
-                            src={selectedOperator.profileImage || '/images/operators/placeholder.png'}
+                            src={getImageUrl(selectedOperator.profileImage || '/images/operators/placeholder.png')}
                             alt={getOperatorName(selectedOperator, language)}
                             className="operator-image"
                           />
@@ -1133,7 +1133,7 @@ const TeamBuilderPage: React.FC = () => {
                       style={{ cursor: 'pointer' }}
                     >
                       <img
-                        src={member.operator.profileImage || '/images/operators/placeholder.png'}
+                        src={getImageUrl(member.operator.profileImage || '/images/operators/placeholder.png')}
                         alt={getOperatorName(member.operator, language)}
                         className="operator-image"
                       />
@@ -1307,7 +1307,7 @@ const TeamBuilderPage: React.FC = () => {
                         onClick={() => handleOperatorSelect(op.id)}
                       >
                         <img
-                          src={op.profileImage || '/images/operators/placeholder.png'}
+                          src={getImageUrl(op.profileImage || '/images/operators/placeholder.png')}
                           alt={getOperatorName(op, language)}
                           className="operator-select-image"
                         />

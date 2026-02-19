@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import Stars from '../components/Stars';
 import { getOperatorName } from '../utils/operatorNameUtils';
-import { apiFetch } from '../api';
+import { apiFetch, getImageUrl } from '../api';
 import './OperatorPage.css';
 
 interface Operator {
@@ -95,7 +95,7 @@ const OperatorPage: React.FC = () => {
       <div className="operator-header">
         <div className="operator-image-container">
           <img
-            src={operator.profileImage || `/images/operators/${operator.id}.png`}
+            src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
             alt={operator.name}
             className="operator-profile-image"
             onError={(e) => {
@@ -147,13 +147,13 @@ const OperatorPage: React.FC = () => {
                           <div className="instance-level-badge">
                             {instance.level === 'E2' ? (
                               <img
-                                src="/images/E2.png"
+                                src={getImageUrl('/images/E2.png')}
                                 alt="E2"
                                 className="level-badge-image"
                               />
                             ) : (
                               <img
-                                src={`/images/modules/${instance.level}_module.png`}
+                                src={getImageUrl(`/images/modules/${instance.level}_module.png`)}
                                 alt={instance.level}
                                 className="level-badge-image"
                                 onError={(e) => {

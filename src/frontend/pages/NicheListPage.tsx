@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
-import { apiFetch } from '../api';
+import { apiFetch, getImageUrl } from '../api';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
 
@@ -161,7 +161,7 @@ const NicheListPage: React.FC = () => {
                   <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
                     <div className="operator-image-container">
                       <img
-                        src={entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`}
+                        src={getImageUrl(entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`)}
                         alt={entry.operator.name}
                         className="operator-image"
                         onError={(e) => {
@@ -178,13 +178,13 @@ const NicheListPage: React.FC = () => {
                         <div className="operator-level-badge-overlay">
                           {entry.level === 'E2' ? (
                             <img
-                              src="/images/E2.png"
+                              src={getImageUrl('/images/E2.png')}
                               alt="E2"
                               className="operator-e2-badge"
                             />
                           ) : (
                             <img
-                              src={`/images/modules/${entry.level}_module.png`}
+                              src={getImageUrl(`/images/modules/${entry.level}_module.png`)}
                               alt={entry.level}
                               className="operator-module-badge"
                               onError={(e) => {

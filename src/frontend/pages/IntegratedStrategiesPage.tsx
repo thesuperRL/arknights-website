@@ -4,7 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
-import { apiFetch } from '../api';
+import { apiFetch, getImageUrl } from '../api';
 import './IntegratedStrategiesPage.css';
 
 interface TeamPreferences {
@@ -1659,7 +1659,7 @@ const IntegratedStrategiesPage: React.FC = () => {
               className={`selected-operator-card ${optimalTeam.has(selected.operatorId) ? 'optimal-team-member' : ''} ${selectionCount === 2 ? 'promoted' : ''}`}
             >
               <img
-                src={selected.operator.profileImage || '/images/operators/placeholder.png'}
+                src={getImageUrl(selected.operator.profileImage || '/images/operators/placeholder.png')}
                 alt={getOperatorName(selected.operator, language)}
                 className="operator-image"
               />
@@ -1878,7 +1878,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                   {temporaryRecruitment ? (
                     <div className="selected-temp-operator-card">
                       <img
-                        src={allOperators[temporaryRecruitment]?.profileImage || '/images/operators/placeholder.png'}
+                        src={getImageUrl(allOperators[temporaryRecruitment]?.profileImage || '/images/operators/placeholder.png')}
                         alt={getOperatorName(allOperators[temporaryRecruitment], language)}
                         className="temp-operator-image"
                       />
@@ -2036,7 +2036,7 @@ const IntegratedStrategiesPage: React.FC = () => {
               <>
                 <div className="recommended-operator-card">
                   <img
-                    src={recommendation.recommendedOperator.profileImage || '/images/operators/placeholder.png'}
+                    src={getImageUrl(recommendation.recommendedOperator.profileImage || '/images/operators/placeholder.png')}
                     alt={getOperatorName(recommendation.recommendedOperator, language)}
                     className="operator-image"
                   />
@@ -2155,7 +2155,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                       }}
                     >
                       <img
-                        src={op.profileImage || '/images/operators/placeholder.png'}
+                        src={getImageUrl(op.profileImage || '/images/operators/placeholder.png')}
                         alt={getOperatorName(op, language)}
                         className="operator-select-image"
                       />
@@ -2223,7 +2223,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                       }}
                     >
                       <img
-                        src={op.profileImage || '/images/operators/placeholder.png'}
+                        src={getImageUrl(op.profileImage || '/images/operators/placeholder.png')}
                         alt={getOperatorName(op, language)}
                         className="operator-select-image"
                       />

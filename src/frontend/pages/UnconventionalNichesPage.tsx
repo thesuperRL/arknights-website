@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
-import { apiFetch } from '../api';
+import { apiFetch, getImageUrl } from '../api';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import './UnconventionalNichesPage.css';
@@ -138,7 +138,7 @@ const UnconventionalNichesPage: React.FC = () => {
                   <>
                     <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
                       <img
-                        src={entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`}
+                        src={getImageUrl(entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`)}
                         alt={entry.operator.name}
                         className="operator-image"
                         onError={(e) => {

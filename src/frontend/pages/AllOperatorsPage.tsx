@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
-import { apiFetch } from '../api';
+import { apiFetch, getImageUrl } from '../api';
 
 interface Operator {
   id: string;
@@ -206,7 +206,7 @@ const AllOperatorsPage: React.FC = () => {
               className={`operator-card ${!operator.global ? 'non-global' : ''} ${rarityClass} ${!isOwned ? 'unowned' : ''}`}
             >
               <img
-                src={operator.profileImage || `/images/operators/${operator.id}.png`}
+                src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
                 alt={operator.name}
                 className="operator-image"
                 onError={(e) => {

@@ -17,3 +17,14 @@ export function apiFetch(input: string, init?: RequestInit): Promise<Response> {
     credentials: 'include',
   });
 }
+
+/**
+ * Resolve image path for img src. When API base is set (e.g. GitHub Pages),
+ * images are loaded from the backend so operator images work.
+ */
+export function getImageUrl(path: string): string {
+  if (!path) return path;
+  if (path.startsWith('http')) return path;
+  const base = getApiBase();
+  return base ? base + (path.startsWith('/') ? path : '/' + path) : path;
+}

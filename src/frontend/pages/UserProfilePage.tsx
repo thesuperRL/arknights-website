@@ -5,7 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import Stars from '../components/Stars';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
-import { apiFetch } from '../api';
+import { apiFetch, getImageUrl } from '../api';
 import './UserProfilePage.css';
 
 interface UserData {
@@ -403,7 +403,7 @@ const UserProfilePage: React.FC = () => {
                     style={{ textDecoration: 'none', color: 'inherit' }}
                   >
                     <img
-                      src={operator.profileImage || `/images/operators/${operator.id}.png`}
+                      src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
                       alt={operator.name}
                       className="operator-image"
                       onError={(e) => {
@@ -623,7 +623,7 @@ const UserProfilePage: React.FC = () => {
                     }}
                   >
                     <img
-                      src={operator.profileImage || `/images/operators/${operator.id}.png`}
+                      src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
                       alt={operator.name}
                       className="operator-image"
                       onError={(e) => {
