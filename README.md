@@ -66,6 +66,30 @@ npm run build:frontend # Build React frontend with Vite
 npm start
 ```
 
+## Deploying to GitHub Pages
+
+The frontend can be hosted on GitHub Pages while the backend runs elsewhere (e.g. Render, Railway).
+
+### 1. Backend (required for full functionality)
+
+- Deploy the Node/Express server to a host that runs Node (Render, Railway, Fly.io, etc.).
+- Set environment variables (database, etc.) on that host.
+- Set **CORS_ORIGIN** on the backend to your GitHub Pages origin, e.g. `https://<your-username>.github.io` (no trailing slash). This allows the browser to send cookies and use the API from the Pages site.
+
+### 2. GitHub repo configuration
+
+- **Settings → Pages**: Source = **GitHub Actions**.
+- **Settings → Secrets and variables → Actions**: Add secret **VITE_API_BASE** = your backend URL (e.g. `https://your-app.onrender.com`) with no trailing slash. The frontend build uses this to call your API when served from GitHub Pages.
+
+### 3. Deploy
+
+- Pushing to `main` runs the **Deploy to GitHub Pages** workflow: it builds the frontend and deploys the `public/` output to GitHub Pages.
+- The site will be at `https://<your-username>.github.io/arknights-website/`.
+
+### 4. Cookie/auth (cross-origin)
+
+The backend is already configured for cross-origin auth when **CORS_ORIGIN** is set: it uses `SameSite=None; Secure` for the session cookie so login works from GitHub Pages.
+
 ## Project Structure
 
 ```

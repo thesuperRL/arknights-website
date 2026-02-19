@@ -4,6 +4,8 @@ import path from 'path';
 import * as fs from 'fs';
 
 export default defineConfig({
+  // GitHub Pages: /arknights-website/ ; local dev: /
+  base: process.env.NODE_ENV === 'production' ? '/arknights-website/' : '/',
   plugins: [
     react(),
     // Plugin to preserve images directory during build

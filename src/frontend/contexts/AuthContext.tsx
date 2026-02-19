@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { apiFetch } from '../api';
 
 interface UserInfo {
   nickname: string;
@@ -33,9 +34,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('/api/auth/user', {
-        credentials: 'include'
-      });
+      const response = await apiFetch('/api/auth/user');
       if (response.ok) {
         const data = await response.json();
         setUser({ 
@@ -59,10 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout', { 
-        method: 'POST',
-        credentials: 'include'
-      });
+      await apiFetch('/api/auth/logout', { method: 'POST' });
       setUser(null);
     } catch (err) {
       console.error('Error logging out:', err);

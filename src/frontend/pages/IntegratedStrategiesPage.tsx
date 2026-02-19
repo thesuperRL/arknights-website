@@ -4,6 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
+import { apiFetch } from '../api';
 import './IntegratedStrategiesPage.css';
 
 interface TeamPreferences {
@@ -21,7 +22,7 @@ async function getOperatorTierInNiche(operatorId: string, niche: string): Promis
   // Check cache first
   if (!nicheListCache[niche]) {
     try {
-      const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+      const response = await apiFetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
       if (response.ok) {
         const data = await response.json();
         nicheListCache[niche] = data;
@@ -87,7 +88,7 @@ async function hasOperatorPromotionLevels(operatorId: string, niches: string[], 
     // Check if operator has tiers at E2 or module levels (not level 0)
     if (!nicheListCache[niche]) {
       try {
-        const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+        const response = await apiFetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
         if (response.ok) {
           const data = await response.json();
           nicheListCache[niche] = data;
@@ -115,7 +116,7 @@ async function hasOperatorPromotionLevels(operatorId: string, niches: string[], 
 async function getOperatorTierInNicheAtLevel0(operatorId: string, niche: string): Promise<number> {
   if (!nicheListCache[niche]) {
     try {
-      const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+      const response = await apiFetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
       if (response.ok) {
         const data = await response.json();
         nicheListCache[niche] = data;
@@ -164,7 +165,7 @@ async function getOperatorTierInNicheAtLevel0(operatorId: string, niche: string)
 async function getOperatorMaxTierInNiche(operatorId: string, niche: string): Promise<number> {
   if (!nicheListCache[niche]) {
     try {
-      const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+      const response = await apiFetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
       if (response.ok) {
         const data = await response.json();
         nicheListCache[niche] = data;
@@ -210,7 +211,7 @@ async function getOperatorMaxTierInNiche(operatorId: string, niche: string): Pro
 async function getOperatorNewTiersAtPromotion(operatorId: string, niche: string): Promise<number> {
   if (!nicheListCache[niche]) {
     try {
-      const response = await fetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+      const response = await apiFetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
       if (response.ok) {
         const data = await response.json();
         nicheListCache[niche] = data;
@@ -847,15 +848,13 @@ const IntegratedStrategiesPage: React.FC = () => {
 
   const loadPreferences = async () => {
     try {
-      const response = await fetch('/api/team/preferences', {
-        credentials: 'include'
-      });
+      const response = await apiFetch('/api/team/preferences');
       if (response.ok) {
         const data = await response.json();
         setPreferences(data);
       } else {
         // Load defaults if no saved preferences
-        const defaultResponse = await fetch('/api/team/preferences/default');
+        const defaultResponse = await apiFetch('/api/team/preferences/default');
         if (defaultResponse.ok) {
           const defaultData = await defaultResponse.json();
           setPreferences(defaultData);
@@ -865,7 +864,7 @@ const IntegratedStrategiesPage: React.FC = () => {
       console.error('Error loading preferences:', err);
       // Load defaults on error
       try {
-        const defaultResponse = await fetch('/api/team/preferences/default');
+        const defaultResponse = await apiFetch('/api/team/preferences/default');
         if (defaultResponse.ok) {
           const defaultData = await defaultResponse.json();
           setPreferences(defaultData);
@@ -878,9 +877,7 @@ const IntegratedStrategiesPage: React.FC = () => {
 
   const loadISTeamState = async (loadOnlyHope: boolean = false) => {
     try {
-      const response = await fetch('/api/integrated-strategies/team', {
-        credentials: 'include'
-      });
+      const response = await apiFetch('/api/integrated-strategies/team');
       if (response.ok) {
         const data = await response.json();
         if (data) {
@@ -1291,12 +1288,11 @@ const IntegratedStrategiesPage: React.FC = () => {
         teamSize
       };
       
-      await fetch('/api/integrated-strategies/team', {
+      await apiFetch('/api/integrated-strategies/team', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        credentials: 'include',
         body: JSON.stringify(teamState)
       });
     } catch (err) {
@@ -1313,9 +1309,8 @@ const IntegratedStrategiesPage: React.FC = () => {
     
     try {
       // Clear saved state on server
-      await fetch('/api/integrated-strategies/team', {
-        method: 'DELETE',
-        credentials: 'include'
+      await apiFetch('/api/integrated-strategies/team', {
+        method: 'DELETE'
       });
       
       // Reset local state to defaults
@@ -1339,7 +1334,7 @@ const IntegratedStrategiesPage: React.FC = () => {
 
   const loadTrashOperators = async () => {
     try {
-      const response = await fetch('/api/trash-operators');
+      const response = await apiFetch('/api/trash-operators');
       if (response.ok) {
         const data = await response.json();
         const trashIds = new Set<string>((data.operators || []).map((op: any) => op.id).filter((id: any): id is string => typeof id === 'string'));
@@ -1357,7 +1352,7 @@ const IntegratedStrategiesPage: React.FC = () => {
       const allOps: Record<string, Operator> = {};
 
       for (const rarity of rarities) {
-        const response = await fetch(`/api/operators/rarity/${rarity}`);
+        const response = await apiFetch(`/api/operators/rarity/${rarity}`);
         if (response.ok) {
           const operators = await response.json() as Record<string, Operator>;
           Object.assign(allOps, operators);
@@ -1379,9 +1374,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/auth/user', {
-        credentials: 'include'
-      });
+      const response = await apiFetch('/api/auth/user');
       if (response.ok) {
         const data = await response.json();
         setRawUserData(data);

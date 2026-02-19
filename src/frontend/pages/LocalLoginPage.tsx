@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { apiFetch } from '../api';
 import './AuthPage.css';
 
 const LocalLoginPage: React.FC = () => {
@@ -24,11 +25,10 @@ const LocalLoginPage: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch('/api/auth/local-login', {
+      const response = await apiFetch('/api/auth/local-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
-        credentials: 'include'
       });
 
       const data = await response.json();

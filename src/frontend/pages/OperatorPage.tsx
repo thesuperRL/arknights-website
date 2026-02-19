@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import Stars from '../components/Stars';
 import { getOperatorName } from '../utils/operatorNameUtils';
+import { apiFetch } from '../api';
 import './OperatorPage.css';
 
 interface Operator {
@@ -62,7 +63,7 @@ const OperatorPage: React.FC = () => {
 
   const loadOperator = async (operatorId: string) => {
     try {
-      const response = await fetch(`/api/operators/${encodeURIComponent(operatorId)}`);
+      const response = await apiFetch(`/api/operators/${encodeURIComponent(operatorId)}`);
       if (!response.ok) {
         throw new Error('Failed to load operator');
       }

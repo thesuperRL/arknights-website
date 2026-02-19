@@ -28,7 +28,7 @@ import './pages/SynergyPage.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AuthProvider>
         <LanguageProvider>
           <div className="app">

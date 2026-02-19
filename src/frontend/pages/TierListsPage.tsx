@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { apiFetch } from '../api';
 import './TierListsPage.css';
 
 interface NicheListInfo {
@@ -21,7 +22,7 @@ const TierListsPage: React.FC = () => {
 
   const loadNicheLists = async () => {
     try {
-      const response = await fetch('/api/niche-lists');
+      const response = await apiFetch('/api/niche-lists');
       if (!response.ok) {
         throw new Error('Failed to load niche lists');
       }

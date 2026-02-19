@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
+import { apiFetch } from '../api';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import './TrashOperatorsPage.css';
@@ -51,9 +52,7 @@ const TrashOperatorsPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/auth/user', {
-        credentials: 'include'
-      });
+      const response = await apiFetch('/api/auth/user');
       if (response.ok) {
         const data = await response.json();
         setOwnedOperators(new Set(data.ownedOperators || []));
@@ -65,7 +64,7 @@ const TrashOperatorsPage: React.FC = () => {
 
   const loadTrashOperators = async () => {
     try {
-      const response = await fetch('/api/trash-operators');
+      const response = await apiFetch('/api/trash-operators');
       if (!response.ok) {
         throw new Error('Failed to load trash operators');
       }

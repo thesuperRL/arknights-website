@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
+import { apiFetch } from '../api';
 import './TeamBuilderPage.css';
 
 interface NicheRange {
@@ -87,7 +88,7 @@ const TeamBuilderPage: React.FC = () => {
       const allOps: Record<string, Operator> = {};
 
       for (const rarity of rarities) {
-        const response = await fetch(`/api/operators/rarity/${rarity}`);
+        const response = await apiFetch(`/api/operators/rarity/${rarity}`);
         if (response.ok) {
           const operators = await response.json() as Record<string, Operator>;
           Object.assign(allOps, operators);
@@ -107,9 +108,7 @@ const TeamBuilderPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/auth/user', {
-        credentials: 'include'
-      });
+      const response = await apiFetch('/api/auth/user');
       if (response.ok) {
         const data = await response.json();
         setOwnedOperators(new Set(data.ownedOperators || []));
@@ -209,7 +208,7 @@ const TeamBuilderPage: React.FC = () => {
 
   const loadPreferences = async () => {
     try {
-      const response = await fetch('/api/team/preferences', {
+      const response = await apiFetch('/api/team/preferences', {
         credentials: 'include'
       });
       if (response.ok) {
@@ -227,7 +226,7 @@ const TeamBuilderPage: React.FC = () => {
         setError('Please log in to use team preferences');
       } else {
         // Load defaults if no saved preferences (404 or other error)
-        const defaultResponse = await fetch('/api/team/preferences/default');
+        const defaultResponse = await apiFetch('/api/team/preferences/default');
         if (defaultResponse.ok) {
           const defaultData = await defaultResponse.json();
           // Wait for nicheFilenameMap if needed
@@ -243,7 +242,7 @@ const TeamBuilderPage: React.FC = () => {
       console.error('Error loading preferences:', err);
       // Load defaults on error
       try {
-        const defaultResponse = await fetch('/api/team/preferences/default');
+        const defaultResponse = await apiFetch('/api/team/preferences/default');
         if (defaultResponse.ok) {
           const defaultData = await defaultResponse.json();
           // Wait for nicheFilenameMap if needed
@@ -304,7 +303,7 @@ const TeamBuilderPage: React.FC = () => {
 
   const loadNicheLists = async () => {
     try {
-      const response = await fetch('/api/niche-lists');
+      const response = await apiFetch('/api/niche-lists');
       if (response.ok) {
         const data = await response.json();
         const niches = data.map((n: any) => ({
@@ -327,12 +326,12 @@ const TeamBuilderPage: React.FC = () => {
 
   const loadSynergies = async () => {
     try {
-      const response = await fetch('/api/synergies');
+      const response = await apiFetch('/api/synergies');
       if (response.ok) {
         const data = await response.json();
         // Fetch full synergy data for each synergy
         const synergyPromises = data.map(async (synergy: any) => {
-          const detailResponse = await fetch(`/api/synergies/${encodeURIComponent(synergy.filename)}`);
+          const detailResponse = await apiFetch(`/api/synergies/${encodeURIComponent(synergy.filename)}`);
           if (detailResponse.ok) {
             const fullSynergy = await detailResponse.json();
             // Extract operator IDs from enriched data
@@ -378,7 +377,7 @@ const TeamBuilderPage: React.FC = () => {
         ? migratePreferences({ ...preferences })
         : preferences;
       
-      const response = await fetch('/api/team/preferences', {
+      const response = await apiFetch('/api/team/preferences', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ preferences: prefsToSave }),
@@ -408,7 +407,7 @@ const TeamBuilderPage: React.FC = () => {
     setError(null);
     
     try {
-      const response = await fetch('/api/team/build', {
+      const response = await apiFetch('/api/team/build', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ preferences }),

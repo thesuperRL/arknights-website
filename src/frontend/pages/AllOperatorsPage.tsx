@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
+import { apiFetch } from '../api';
 
 interface Operator {
   id: string;
@@ -46,7 +47,7 @@ const AllOperatorsPage: React.FC = () => {
       const allOperators: Record<string, Operator> = {};
 
       for (const rarity of rarities) {
-        const response = await fetch(`/api/operators/rarity/${rarity}`);
+        const response = await apiFetch(`/api/operators/rarity/${rarity}`);
         if (response.ok) {
           const operators = await response.json() as Record<string, Operator>;
           Object.assign(allOperators, operators);
@@ -68,9 +69,7 @@ const AllOperatorsPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/auth/user', {
-        credentials: 'include'
-      });
+      const response = await apiFetch('/api/auth/user');
       if (response.ok) {
         const data = await response.json();
         setOwnedOperators(new Set(data.ownedOperators || []));

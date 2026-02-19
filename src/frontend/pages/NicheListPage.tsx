@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
+import { apiFetch } from '../api';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
 
@@ -52,9 +53,7 @@ const NicheListPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/auth/user', {
-        credentials: 'include'
-      });
+      const response = await apiFetch('/api/auth/user');
       if (response.ok) {
         const data = await response.json();
         setOwnedOperators(new Set(data.ownedOperators || []));
@@ -66,7 +65,7 @@ const NicheListPage: React.FC = () => {
 
   const loadOperatorList = async (nicheName: string) => {
     try {
-      const response = await fetch(`/api/niche-lists/${encodeURIComponent(nicheName)}`);
+      const response = await apiFetch(`/api/niche-lists/${encodeURIComponent(nicheName)}`);
       if (!response.ok) {
         throw new Error('Failed to load operator list');
       }

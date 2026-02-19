@@ -34,9 +34,36 @@ function sanitizeErrorMessage(error: any): string {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Cookie options: when CORS_ORIGIN is set (e.g. GitHub Pages), use SameSite=None; Secure for cross-origin
+const sessionCookieOptions = () => {
+  const crossOrigin = !!process.env.CORS_ORIGIN;
+  return {
+    httpOnly: true,
+    secure: crossOrigin || process.env.NODE_ENV === 'production',
+    sameSite: (crossOrigin ? 'none' : 'lax') as 'lax' | 'none',
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  };
+};
+
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+
+// CORS for GitHub Pages / cross-origin: allow specific origin and credentials
+const corsOrigin = process.env.CORS_ORIGIN; // e.g. https://thesuperRL.github.io
+if (corsOrigin) {
+  app.use((_req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', corsOrigin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
+    if (_req.method === 'OPTIONS') {
+      res.sendStatus(204);
+      return;
+    }
+    next();
+  });
+}
 
 // Serve static files from the public directory (React build output)
 app.use(express.static(path.join(__dirname, '../public')));
@@ -735,12 +762,7 @@ app.post('/api/auth/register', async (req, res) => {
     });
 
     // Set cookie
-    res.cookie('sessionId', sessionId, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
-    });
+    res.cookie('sessionId', sessionId, sessionCookieOptions());
 
     res.json({ 
       success: true, 
@@ -802,12 +824,7 @@ app.post('/api/auth/local-login', async (req, res) => {
     });
 
     // Set cookie
-    res.cookie('sessionId', sessionId, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 30 * 24 * 60 * 60 * 60 * 1000 // 30 days
-    });
+    res.cookie('sessionId', sessionId, sessionCookieOptions());
 
     const totalDuration = Date.now() - startTime;
     console.log(`Login successful for ${email} (${totalDuration}ms total, ${passwordDuration}ms password)`);
@@ -844,7 +861,8 @@ app.post('/api/auth/logout', (req, res) => {
       deleteSession(sessionId);
     }
 
-    res.clearCookie('sessionId');
+    const opts = sessionCookieOptions();
+    res.clearCookie('sessionId', { httpOnly: opts.httpOnly, secure: opts.secure, sameSite: opts.sameSite });
     res.json({ success: true });
   } catch (error: any) {
     console.error('Error logging out:', error);

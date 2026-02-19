@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { apiFetch } from '../api';
 import './SynergiesPage.css';
 
 interface SynergyInfo {
@@ -19,7 +20,7 @@ const SynergiesPage: React.FC = () => {
 
   const loadSynergies = async () => {
     try {
-      const response = await fetch('/api/synergies');
+      const response = await apiFetch('/api/synergies');
       if (!response.ok) {
         throw new Error('Failed to load synergies');
       }

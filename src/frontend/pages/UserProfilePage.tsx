@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import Stars from '../components/Stars';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
+import { apiFetch } from '../api';
 import './UserProfilePage.css';
 
 interface UserData {
@@ -51,9 +52,7 @@ const UserProfilePage: React.FC = () => {
 
   const loadUserData = async () => {
     try {
-      const response = await fetch('/api/auth/user', {
-        credentials: 'include'
-      });
+      const response = await apiFetch('/api/auth/user');
       if (response.status === 401) {
         navigate('/login');
         return;
@@ -76,7 +75,7 @@ const UserProfilePage: React.FC = () => {
       const allOperators: Record<string, Operator> = {};
 
       for (const rarity of rarities) {
-        const response = await fetch(`/api/operators/rarity/${rarity}`);
+        const response = await apiFetch(`/api/operators/rarity/${rarity}`);
         if (response.ok) {
           const operators = await response.json() as Record<string, Operator>;
           Object.assign(allOperators, operators);
@@ -157,11 +156,10 @@ const UserProfilePage: React.FC = () => {
 
   const handleAddOperator = async (operatorId: string) => {
     try {
-      const response = await fetch('/api/auth/add-operator', {
+      const response = await apiFetch('/api/auth/add-operator', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ operatorId }),
-        credentials: 'include'
       });
 
       const data = await response.json();
@@ -180,11 +178,10 @@ const UserProfilePage: React.FC = () => {
 
   const handleRemoveOperator = async (operatorId: string) => {
     try {
-      const response = await fetch('/api/auth/remove-operator', {
+      const response = await apiFetch('/api/auth/remove-operator', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ operatorId }),
-        credentials: 'include'
       });
 
       const data = await response.json();
@@ -209,14 +206,13 @@ const UserProfilePage: React.FC = () => {
     
     try {
       console.log('Calling toggle-want-to-use API for:', operatorId);
-      const response = await fetch('/api/auth/toggle-want-to-use', {
+      const response = await apiFetch('/api/auth/toggle-want-to-use', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         body: JSON.stringify({ operatorId }),
-        credentials: 'include'
       });
 
       console.log('Response status:', response.status);
