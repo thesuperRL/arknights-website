@@ -106,14 +106,16 @@
 
 .operator-image-link {
     width: 100%;
-    display: block;
+    display: flex;
+    justify-content: center;
     margin-bottom: 0.5rem;
 }
 
 .operator-image-container {
     position: relative;
-    display: inline-block;
+    display: block;
     width: 100%;
+    margin: 0 auto;
 }
 
 .operator-image {
@@ -122,6 +124,7 @@
     border-radius: 8px;
     aspect-ratio: 1;
     object-fit: cover;
+    object-position: center center;
     display: block;
 }
 

@@ -108,7 +108,7 @@
     ]
   },
   "optional": {},
-  "corePointBonus": 50,
+  "corePointBonus": 0,
   "optionalPointBonus": 0,
   "isOnly": false,
   "coreCountSeparately": false,
