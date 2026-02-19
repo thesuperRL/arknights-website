@@ -5984,5 +5984,27 @@
     "niches": [],
     "cnName": "摆渡人",
     "internalName": "char_4166_varkis"
+  },
+  "ju": {
+    "id": "ju",
+    "name": "Ju",
+    "rarity": 5,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/ju.png",
+    "niches": [],
+    "cnName": "矩",
+    "internalName": "char_4221_ju"
+  },
+  "taraxacum": {
+    "id": "taraxacum",
+    "name": "Taraxacum",
+    "rarity": 5,
+    "class": "Medic",
+    "global": false,
+    "profileImage": "/images/operators/taraxacum.png",
+    "niches": [],
+    "cnName": "风絮",
+    "internalName": "char_4222_taraxa"
   }
 }

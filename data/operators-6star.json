@@ -5212,5 +5212,29 @@
     "jpName": "ティティ",
     "krName": "티티",
     "internalName": "char_4056_titi"
+  },
+  "ch_en_the_dawnstreak": {
+    "id": "ch_en_the_dawnstreak",
+    "name": "Ch'en the Dawnstreak",
+    "rarity": 6,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/ch_en_the_dawnstreak.png",
+    "niches": [],
+    "cnName": "赤刃明霄陈",
+    "internalName": "char_1050_chen3"
+  },
+  "wang": {
+    "id": "wang",
+    "name": "Wang",
+    "rarity": 6,
+    "class": "Specialist",
+    "global": false,
+    "profileImage": "/images/operators/wang.png",
+    "niches": [],
+    "cnName": "望",
+    "jpName": "ウァン",
+    "krName": "왕",
+    "internalName": "char_2027_wang"
   }
 }
