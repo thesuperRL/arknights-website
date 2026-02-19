@@ -124,7 +124,8 @@
     border-radius: 8px;
     aspect-ratio: 1;
     object-fit: cover;
-    object-position: center center;
+    /* Shift crop left so portraits appear centered (source art often has face right of center) */
+    object-position: 40% center;
     display: block;
 }
 
