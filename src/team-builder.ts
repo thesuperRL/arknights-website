@@ -221,6 +221,38 @@ function getOperatorNiches(operatorId: string): string[] {
 }
 
 /**
+ * Parses a niche key that may contain multiple niches separated by '|'
+ * Returns an array of individual niches
+ */
+function parseNicheGroup(nicheKey: string): string[] {
+  return nicheKey.split('|').map(n => n.trim());
+}
+
+/**
+ * Checks if a niche key is a group (contains '|')
+ */
+function isNicheGroup(nicheKey: string): boolean {
+  return nicheKey.includes('|');
+}
+
+/**
+ * Checks if an operator fills any niche in a niche group
+ * Also handles AOE variants (aoe-arts-dps counts for arts-dps, etc.)
+ */
+function operatorFillsNicheGroup(operatorNiches: string[], nicheKey: string): boolean {
+  const groupNiches = parseNicheGroup(nicheKey);
+  
+  for (const niche of groupNiches) {
+    if (operatorNiches.includes(niche)) return true;
+    // Handle AOE variants
+    if (niche === 'arts-dps' && operatorNiches.includes('aoe-arts-dps')) return true;
+    if (niche === 'physical-dps' && operatorNiches.includes('aoe-physical-dps')) return true;
+  }
+  
+  return false;
+}
+
+/**
  * Calculates synergy score for a team
  * @param team Team members (operator objects)
  * @param isIS Whether this is for Integrated Strategies (filters out non-IS synergies)
@@ -852,11 +884,12 @@ export function scoreOperator(
 }
 
 /**
- * Finds the best operator to fill a specific niche
+ * Finds the best operator to fill a specific niche (or niche group)
  * Selection is based on score only (rarity is disregarded).
+ * nicheKey can be a single niche or a group separated by '|' (e.g., "arts-dps|physical-dps")
  */
 function findBestOperatorForNiche(
-  niche: string,
+  nicheKey: string,
   availableOperators: string[],
   allOperators: Record<string, any>,
   existingTeam: TeamMember[],
@@ -866,58 +899,76 @@ function findBestOperatorForNiche(
   trashOperators?: Set<string>,
   freeOperators?: Set<string>,
   wantToUseSet?: Set<string>
-): { operatorId: string; operator: any; niches: string[] } | null {
-  let bestOperator: { operatorId: string; operator: any; niches: string[] } | null = null;
+): { operatorId: string; operator: any; niches: string[]; primaryNiche: string } | null {
+  let bestOperator: { operatorId: string; operator: any; niches: string[]; primaryNiche: string } | null = null;
   let bestScore = -Infinity;
-  const candidates: Array<{ operatorId: string; operator: any; niches: string[]; score: number }> = [];
+  const candidates: Array<{ operatorId: string; operator: any; niches: string[]; score: number; primaryNiche: string }> = [];
 
   // First pass: only consider non-trash and non-free operators
   for (const operatorId of availableOperators) {
-    if (trashOperators && trashOperators.has(operatorId)) continue; // Skip trash operators in first pass
-    if (freeOperators && freeOperators.has(operatorId)) continue; // Skip free operators in first pass
+    if (trashOperators && trashOperators.has(operatorId)) continue;
+    if (freeOperators && freeOperators.has(operatorId)) continue;
 
     const operator = allOperators[operatorId];
     if (!operator) continue;
 
     const niches = getOperatorNiches(operatorId);
-    // Check if operator fills the niche (including AOE variants)
-    const fillsNiche = niches.includes(niche) ||
-                      (niche === 'arts-dps' && niches.includes('aoe-arts-dps')) ||
-                      (niche === 'physical-dps' && niches.includes('aoe-physical-dps'));
-    if (!fillsNiche) continue;
+    
+    // Check if operator fills any niche in the group
+    if (!operatorFillsNicheGroup(niches, nicheKey)) continue;
 
-    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, niche, false);
+    // For scoring, use the best niche in the group that the operator fills
+    const groupNiches = parseNicheGroup(nicheKey);
+    let bestNicheForScoring = groupNiches[0];
+    let bestTierForScoring = 0;
+    for (const niche of groupNiches) {
+      const tier = getOperatorTierInNiche(operatorId, niche);
+      if (tier > bestTierForScoring) {
+        bestTierForScoring = tier;
+        bestNicheForScoring = niche;
+      }
+    }
 
-    candidates.push({ operatorId, operator, niches, score });
+    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, bestNicheForScoring, false);
+
+    candidates.push({ operatorId, operator, niches, score, primaryNiche: bestNicheForScoring });
 
     if (score > bestScore) {
       bestScore = score;
-      bestOperator = { operatorId, operator, niches };
+      bestOperator = { operatorId, operator, niches, primaryNiche: bestNicheForScoring };
     }
   }
   
   // If no non-trash operator found, consider trash operators as last resort
   if (!bestOperator && trashOperators) {
     for (const operatorId of availableOperators) {
-      if (!trashOperators.has(operatorId)) continue; // Only consider trash operators now
+      if (!trashOperators.has(operatorId)) continue;
 
       const operator = allOperators[operatorId];
       if (!operator) continue;
 
       const niches = getOperatorNiches(operatorId);
-      // Check if operator fills the niche (including AOE variants)
-      const fillsNiche = niches.includes(niche) ||
-                        (niche === 'arts-dps' && niches.includes('aoe-arts-dps')) ||
-                        (niche === 'physical-dps' && niches.includes('aoe-physical-dps'));
-      if (!fillsNiche) continue;
+      
+      if (!operatorFillsNicheGroup(niches, nicheKey)) continue;
 
-      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, niche, true);
+      const groupNiches = parseNicheGroup(nicheKey);
+      let bestNicheForScoring = groupNiches[0];
+      let bestTierForScoring = 0;
+      for (const niche of groupNiches) {
+        const tier = getOperatorTierInNiche(operatorId, niche);
+        if (tier > bestTierForScoring) {
+          bestTierForScoring = tier;
+          bestNicheForScoring = niche;
+        }
+      }
 
-      candidates.push({ operatorId, operator, niches, score });
+      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, bestNicheForScoring, true);
+
+      candidates.push({ operatorId, operator, niches, score, primaryNiche: bestNicheForScoring });
 
       if (score > bestScore) {
         bestScore = score;
-        bestOperator = { operatorId, operator, niches };
+        bestOperator = { operatorId, operator, niches, primaryNiche: bestNicheForScoring };
       }
     }
   }
@@ -928,7 +979,7 @@ function findBestOperatorForNiche(
     if (topCandidates.length > 1) {
       topCandidates.sort((a, b) => b.score - a.score);
       const selected = topCandidates[0];
-      return { operatorId: selected.operatorId, operator: selected.operator, niches: selected.niches };
+      return { operatorId: selected.operatorId, operator: selected.operator, niches: selected.niches, primaryNiche: selected.primaryNiche };
     }
   }
 
@@ -980,7 +1031,25 @@ export async function buildTeam(
 
   const team: TeamMember[] = [];
   const usedOperatorIds = new Set<string>();
-  const nicheCounts: Record<string, number> = {};
+  const nicheCounts: Record<string, number> = {};  // Tracks individual niche counts
+  const nicheKeyCounts: Record<string, number> = {};  // Tracks niche group key counts
+  
+  // All niche keys (both required and preferred) for group count updates
+  const allNicheKeys = [...Object.keys(preferences.requiredNiches), ...Object.keys(preferences.preferredNiches)];
+  
+  // Helper to update all counts when an operator is added
+  const updateAllCounts = (operatorNiches: string[]) => {
+    // Update individual niche counts
+    for (const opNiche of operatorNiches) {
+      nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
+    }
+    // Update group counts for ALL niche groups this operator fills
+    for (const nicheKey of allNicheKeys) {
+      if (isNicheGroup(nicheKey) && operatorFillsNicheGroup(operatorNiches, nicheKey)) {
+        nicheKeyCounts[nicheKey] = (nicheKeyCounts[nicheKey] || 0) + 1;
+      }
+    }
+  };
 
   // Add locked operators first and account for their niches
   for (let i = 0; i < maxLocked; i++) {
@@ -996,22 +1065,23 @@ export async function buildTeam(
       isTrash: trashOperators.has(operatorId)
     });
     usedOperatorIds.add(operatorId);
-    for (const opNiche of niches) {
-      nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
-    }
+    updateAllCounts(niches);
   }
   
   // First pass: Fill required niches to minimum
-  for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
-    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
+  for (const [nicheKey, range] of Object.entries(preferences.requiredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(nicheKey)) continue;
     const minCount = range.min;
     
     // Fill up to minimum
     while (team.length < 12) {
-      const currentCount = nicheCounts[niche] || 0;
+      const currentCount = isNicheGroup(nicheKey) 
+        ? (nicheKeyCounts[nicheKey] || 0)
+        : (nicheCounts[nicheKey] || 0);
       if (currentCount >= minCount) break;
+      
       const candidate = findBestOperatorForNiche(
-        niche,
+        nicheKey,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
         team,
@@ -1028,15 +1098,11 @@ export async function buildTeam(
           operatorId: candidate.operatorId,
           operator: candidate.operator,
           niches: candidate.niches,
-          primaryNiche: niche,
+          primaryNiche: candidate.primaryNiche,
           isTrash: trashOperators.has(candidate.operatorId)
         });
         usedOperatorIds.add(candidate.operatorId);
-        
-        // Update niche counts
-        for (const opNiche of candidate.niches) {
-          nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
-        }
+        updateAllCounts(candidate.niches);
       } else {
         break; // No more operators available for this niche
       }
@@ -1044,18 +1110,21 @@ export async function buildTeam(
   }
   
   // Second pass: Fill required niches up to maximum (optional)
-  for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
-    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
+  for (const [nicheKey, range] of Object.entries(preferences.requiredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(nicheKey)) continue;
     if (team.length >= 12) break;
     
     const maxCount = range.max;
     
     // Fill up to maximum if we have space
     while (team.length < 12) {
-      const currentCount = nicheCounts[niche] || 0;
+      const currentCount = isNicheGroup(nicheKey) 
+        ? (nicheKeyCounts[nicheKey] || 0)
+        : (nicheCounts[nicheKey] || 0);
       if (currentCount >= maxCount) break;
+      
       const candidate = findBestOperatorForNiche(
-        niche,
+        nicheKey,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
         team,
@@ -1072,15 +1141,11 @@ export async function buildTeam(
           operatorId: candidate.operatorId,
           operator: candidate.operator,
           niches: candidate.niches,
-          primaryNiche: niche,
+          primaryNiche: candidate.primaryNiche,
           isTrash: trashOperators.has(candidate.operatorId)
         });
         usedOperatorIds.add(candidate.operatorId);
-        
-        // Update niche counts
-        for (const opNiche of candidate.niches) {
-          nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
-        }
+        updateAllCounts(candidate.niches);
       } else {
         break; // No more operators available for this niche
       }
@@ -1088,18 +1153,21 @@ export async function buildTeam(
   }
   
   // Third pass: Fill preferred niches to minimum
-  for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
-    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
+  for (const [nicheKey, range] of Object.entries(preferences.preferredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(nicheKey)) continue;
     if (team.length >= 12) break;
     
     const minCount = range.min;
     
     // Fill up to minimum
     while (team.length < 12) {
-      const currentCount = nicheCounts[niche] || 0;
+      const currentCount = isNicheGroup(nicheKey) 
+        ? (nicheKeyCounts[nicheKey] || 0)
+        : (nicheCounts[nicheKey] || 0);
       if (currentCount >= minCount) break;
+      
       const candidate = findBestOperatorForNiche(
-        niche,
+        nicheKey,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
         team,
@@ -1116,15 +1184,11 @@ export async function buildTeam(
           operatorId: candidate.operatorId,
           operator: candidate.operator,
           niches: candidate.niches,
-          primaryNiche: niche,
+          primaryNiche: candidate.primaryNiche,
           isTrash: trashOperators.has(candidate.operatorId)
         });
         usedOperatorIds.add(candidate.operatorId);
-        
-        // Update niche counts
-        for (const opNiche of candidate.niches) {
-          nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
-        }
+        updateAllCounts(candidate.niches);
       } else {
         break; // No more operators available for this niche
       }
@@ -1132,18 +1196,21 @@ export async function buildTeam(
   }
   
   // Fourth pass: Fill preferred niches up to maximum (optional)
-  for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
-    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
+  for (const [nicheKey, range] of Object.entries(preferences.preferredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(nicheKey)) continue;
     if (team.length >= 12) break;
     
     const maxCount = range.max;
     
     // Fill up to maximum if we have space
     while (team.length < 12) {
-      const currentCount = nicheCounts[niche] || 0;
+      const currentCount = isNicheGroup(nicheKey) 
+        ? (nicheKeyCounts[nicheKey] || 0)
+        : (nicheCounts[nicheKey] || 0);
       if (currentCount >= maxCount) break;
+      
       const candidate = findBestOperatorForNiche(
-        niche,
+        nicheKey,
         availableOperators.filter(id => !usedOperatorIds.has(id)),
         allOperators,
         team,
@@ -1160,33 +1227,33 @@ export async function buildTeam(
           operatorId: candidate.operatorId,
           operator: candidate.operator,
           niches: candidate.niches,
-          primaryNiche: niche,
+          primaryNiche: candidate.primaryNiche,
           isTrash: trashOperators.has(candidate.operatorId)
         });
         usedOperatorIds.add(candidate.operatorId);
-        
-        // Update niche counts
-        for (const opNiche of candidate.niches) {
-          nicheCounts[opNiche] = (nicheCounts[opNiche] || 0) + 1;
-        }
+        updateAllCounts(candidate.niches);
       } else {
         break; // No more operators available for this niche
       }
     }
   }
   
-  // Check if all required and preferred niches are filled to their maximum (exclude teambuild-excluded niches)
+  // Check if all required and preferred niches are filled to their maximum (handles groups)
   const allRequiredNichesFilled = Object.entries(preferences.requiredNiches)
-    .filter(([niche]) => !TEAMBUILD_EXCLUDED_NICHES.has(niche))
-    .every(([niche, range]) => {
-      const currentCount = nicheCounts[niche] || 0;
+    .filter(([nicheKey]) => !TEAMBUILD_EXCLUDED_NICHES.has(nicheKey))
+    .every(([nicheKey, range]) => {
+      const currentCount = isNicheGroup(nicheKey) 
+        ? (nicheKeyCounts[nicheKey] || 0)
+        : (nicheCounts[nicheKey] || 0);
       return currentCount >= range.max;
     });
   
   const allPreferredNichesFilled = Object.entries(preferences.preferredNiches)
-    .filter(([niche]) => !TEAMBUILD_EXCLUDED_NICHES.has(niche))
-    .every(([niche, range]) => {
-      const currentCount = nicheCounts[niche] || 0;
+    .filter(([nicheKey]) => !TEAMBUILD_EXCLUDED_NICHES.has(nicheKey))
+    .every(([nicheKey, range]) => {
+      const currentCount = isNicheGroup(nicheKey) 
+        ? (nicheKeyCounts[nicheKey] || 0)
+        : (nicheCounts[nicheKey] || 0);
       return currentCount >= range.max;
     });
   
@@ -1258,11 +1325,7 @@ export async function buildTeam(
         isTrash: trashOperators.has(bestCandidate.operatorId)
       });
       usedOperatorIds.add(bestCandidate.operatorId);
-
-      // Update niche counts
-      for (const niche of bestCandidate.niches) {
-        nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
-      }
+      updateAllCounts(bestCandidate.niches);
 
       // Remove the selected operator from remainingOperators
       const index = remainingOperators.indexOf(bestCandidate.operatorId);
@@ -1274,21 +1337,25 @@ export async function buildTeam(
     }
   }
   
-  // Calculate missing niches (exclude teambuild-excluded niches)
+  // Calculate missing niches (handles niche groups)
   const missingNiches: string[] = [];
-  for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
-    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
-    const currentCount = nicheCounts[niche] || 0;
+  for (const [nicheKey, range] of Object.entries(preferences.requiredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(nicheKey)) continue;
+    const currentCount = isNicheGroup(nicheKey) 
+      ? (nicheKeyCounts[nicheKey] || 0)
+      : (nicheCounts[nicheKey] || 0);
     if (currentCount < range.min) {
-      missingNiches.push(`${niche} (${currentCount}/${range.min}-${range.max})`);
+      missingNiches.push(`${nicheKey} (${currentCount}/${range.min}-${range.max})`);
     }
   }
   
-  // Calculate team score (exclude teambuild-excluded niches)
+  // Calculate team score (handles niche groups)
   let score = 0;
-  for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
-    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
-    const currentCount = nicheCounts[niche] || 0;
+  for (const [nicheKey, range] of Object.entries(preferences.requiredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(nicheKey)) continue;
+    const currentCount = isNicheGroup(nicheKey) 
+      ? (nicheKeyCounts[nicheKey] || 0)
+      : (nicheCounts[nicheKey] || 0);
     if (currentCount >= range.min) {
       // Full points for meeting minimum requirement
       score += 100;
@@ -1301,9 +1368,11 @@ export async function buildTeam(
       score += (currentCount / range.min) * 100;
     }
   }
-  for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
-    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
-    const currentCount = nicheCounts[niche] || 0;
+  for (const [nicheKey, range] of Object.entries(preferences.preferredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(nicheKey)) continue;
+    const currentCount = isNicheGroup(nicheKey) 
+      ? (nicheKeyCounts[nicheKey] || 0)
+      : (nicheCounts[nicheKey] || 0);
     if (currentCount > 0) {
       // Score based on how well we meet the preferred range
       if (currentCount >= range.min && currentCount <= range.max) {

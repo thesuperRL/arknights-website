@@ -6,17 +6,17 @@
     },
     "late-laneholder": {
       "min": 2,
-      "max": 2
+      "max": 3
     },
     "healing-operators": {
       "min": 2,
-      "max": 3
+      "max": 2
     },
-    "arts-dps": {
+    "arts-dps|aoe-arts-dps": {
       "min": 3,
       "max": 4
     },
-    "physical-dps": {
+    "physical-dps|aoe-physical-dps": {
       "min": 3,
       "max": 4
     }
@@ -39,10 +39,6 @@
       "max": 2
     },
     "stalling": {
-      "min": 0,
-      "max": 1
-    },
-    "anti-air-operators": {
       "min": 0,
       "max": 1
     },

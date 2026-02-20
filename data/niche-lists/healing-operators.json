@@ -15,10 +15,6 @@
       "haruka": [
         "The Wis'adel of healing, keeps 3 targets very well healed",
         ""
-      ],
-      "blemishine": [
-        "Theoretically the most HPS in the game with skill 3",
-        "E2"
       ]
     },
     "S": {
@@ -27,10 +23,6 @@
         ""
       ],
       "titi": [
-        "",
-        ""
-      ],
-      "reed_the_flame_shadow": [
         "",
         ""
       ],
@@ -46,12 +38,20 @@
         "She can now function as a healer, and heal two targets (though most often one would be Mon3tr)",
         "ISW-α"
       ],
-      "sussurro": [
-        "Incredibly good heal-per-second at the cost of limited skill uses",
-        ""
+      "blemishine": [
+        "Theoretically the most HPS in the game with skill 3",
+        "E2"
       ]
     },
     "A": {
+      "reed_the_flame_shadow": [
+        "Main risk is not being able to attack enemies to heal if there aren't any in range",
+        ""
+      ],
+      "sussurro": [
+        "Incredibly good heal-per-second at the cost of limited skill uses",
+        ""
+      ],
       "gummy": [
         "",
         ""
@@ -96,10 +96,6 @@
         "",
         ""
       ],
-      "kal_tsit": [
-        "You don't use her for the healing at this level, as she prioritizes Mon3tr",
-        ""
-      ],
       "tuye": [
         "",
         ""
@@ -116,16 +112,20 @@
         "",
         ""
       ],
-      "misumi_uika": [
-        "Quite good healing during skill, otherwise not great (typical of bards)",
-        ""
-      ],
       "whisperain": [
         "",
         ""
       ]
     },
     "B": {
+      "kal_tsit": [
+        "You don't use her for the healing at this level, as she prioritizes Mon3tr",
+        ""
+      ],
+      "misumi_uika": [
+        "Quite good healing during skill, otherwise not great (typical of bards)",
+        ""
+      ],
       "suzuran": [
         "Not used for this niche",
         "E2"

@@ -379,7 +379,7 @@
     "nicheInstances": {
       "healing-operators": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": "E2"
         }
       ],
@@ -1056,7 +1056,7 @@
       ],
       "physical-dps": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ]
@@ -1784,7 +1784,7 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "A",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -2045,7 +2045,7 @@
           "level": "ISW-α"
         },
         {
-          "tier": "A",
+          "tier": "B",
           "level": ""
         }
       ],
@@ -2061,7 +2061,7 @@
       ],
       "tanking-blocking-operators": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -2209,6 +2209,7 @@
     "profileImage": "/images/operators/leizi_the_thunderbringer.png",
     "niches": [
       "aoe-physical-dps",
+      "arts-dps",
       "boss-killing",
       "physical-dps"
     ],
@@ -2222,6 +2223,12 @@
           "tier": "S",
           "level": "E2"
         },
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "arts-dps": [
         {
           "tier": "A",
           "level": ""
@@ -3154,7 +3161,7 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -3287,7 +3294,7 @@
       ],
       "late-laneholder": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -3559,7 +3566,7 @@
       ],
       "healing-operators": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ]

@@ -24,6 +24,7 @@ interface TeamMember {
   operator: any;
   niches: string[];
   primaryNiche?: string;
+  isTrash?: boolean;
 }
 
 interface TeamResult {
@@ -476,18 +477,52 @@ const TeamBuilderPage: React.FC = () => {
     return recalculateCoverageWithEmptySlots(team, selectedEmptySlots);
   };
 
+  // Helper to check if a niche key is a group (contains '|')
+  const isNicheGroup = (nicheKey: string): boolean => nicheKey.includes('|');
+  
+  // Helper to parse a niche group into individual niches
+  const parseNicheGroup = (nicheKey: string): string[] => nicheKey.split('|').map(n => n.trim());
+  
+  // Helper to check if an operator fills any niche in a group
+  const operatorFillsNicheGroup = (operatorNiches: string[], nicheKey: string): boolean => {
+    const groupNiches = parseNicheGroup(nicheKey);
+    for (const niche of groupNiches) {
+      if (operatorNiches.includes(niche)) return true;
+      // Handle AOE variants
+      if (niche === 'arts-dps' && operatorNiches.includes('aoe-arts-dps')) return true;
+      if (niche === 'physical-dps' && operatorNiches.includes('aoe-physical-dps')) return true;
+    }
+    return false;
+  };
+
   // Recalculate niche coverage including empty slots
   const recalculateCoverageWithEmptySlots = (team: TeamMember[], emptySlots: Record<number, string>): { coverage: Record<string, number>; missingNiches: string[] } => {
     if (!preferences) return { coverage: {}, missingNiches: [] };
     
-    const nicheCounts: Record<string, number> = {};
+    const nicheCounts: Record<string, number> = {};  // Individual niche counts
+    const nicheGroupCounts: Record<string, number> = {};  // Group counts
+    
+    // All niche keys for group counting
+    const allNicheKeys = [...Object.keys(preferences.requiredNiches), ...Object.keys(preferences.preferredNiches)];
+    
+    // Helper to update all counts for an operator
+    const updateCounts = (operatorNiches: string[]) => {
+      // Update individual niche counts
+      for (const niche of operatorNiches) {
+        nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
+      }
+      // Update group counts
+      for (const nicheKey of allNicheKeys) {
+        if (isNicheGroup(nicheKey) && operatorFillsNicheGroup(operatorNiches, nicheKey)) {
+          nicheGroupCounts[nicheKey] = (nicheGroupCounts[nicheKey] || 0) + 1;
+        }
+      }
+    };
     
     // Count niches from all team members
     for (const member of team) {
       if (member && member.niches) {
-        for (const niche of member.niches) {
-          nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
-        }
+        updateCounts(member.niches);
       }
     }
     
@@ -495,18 +530,18 @@ const TeamBuilderPage: React.FC = () => {
     for (const operatorId of Object.values(emptySlots)) {
       const operator = allOperators[operatorId];
       if (operator && operator.niches) {
-        for (const niche of operator.niches) {
-          nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
-        }
+        updateCounts(operator.niches);
       }
     }
     
-    // Calculate missing niches
+    // Calculate missing niches (handles groups)
     const missingNiches: string[] = [];
-    for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
-      const currentCount = nicheCounts[niche] || 0;
+    for (const [nicheKey, range] of Object.entries(preferences.requiredNiches)) {
+      const currentCount = isNicheGroup(nicheKey) 
+        ? (nicheGroupCounts[nicheKey] || 0)
+        : (nicheCounts[nicheKey] || 0);
       if (currentCount < range.min) {
-        missingNiches.push(`${niche} (${currentCount}/${range.min}-${range.max})`);
+        missingNiches.push(`${nicheKey} (${currentCount}/${range.min}-${range.max})`);
       }
     }
     
@@ -753,6 +788,8 @@ const TeamBuilderPage: React.FC = () => {
 
   // Revert an empty slot selection
   const handleRevertEmptySlot = (slotIndex: number) => {
+    if (!teamResult) return;
+    
     const newSelected = { ...selectedEmptySlots };
     delete newSelected[slotIndex];
     setSelectedEmptySlots(newSelected);
