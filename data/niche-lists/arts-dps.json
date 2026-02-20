@@ -4,10 +4,6 @@
   "lastUpdated": "2025-12-25",
   "operators": {
     "SS": {
-      "ceobe": [
-        "",
-        "CCR-X"
-      ],
       "surtr": [
         "",
         "AFT-X"
@@ -22,15 +18,15 @@
       ]
     },
     "S": {
+      "ceobe": [
+        "",
+        "CCR-X"
+      ],
       "hoshiguma_the_breacher": [
         "",
         ""
       ],
       "surtr": [
-        "",
-        ""
-      ],
-      "ceobe": [
         "",
         ""
       ],
@@ -52,6 +48,10 @@
       ]
     },
     "A": {
+      "ceobe": [
+        "",
+        ""
+      ],
       "lappland": [
         "Can turn damage into arts",
         ""

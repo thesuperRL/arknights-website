@@ -58,13 +58,18 @@ const OperatorPage: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      loadOperator(id);
+      loadOperator(id, showLevelOverlays);
     }
-  }, [id]);
+  }, [id, showLevelOverlays]);
 
-  const loadOperator = async (operatorId: string) => {
+  const loadOperator = async (operatorId: string, allLevels: boolean = false) => {
+    const isInitialLoad = !data || data.operator?.id !== operatorId;
+    if (isInitialLoad) setLoading(true);
     try {
-      const response = await apiFetch(`/api/operators/${encodeURIComponent(operatorId)}`);
+      const url = allLevels
+        ? `/api/operators/${encodeURIComponent(operatorId)}?allLevels=1`
+        : `/api/operators/${encodeURIComponent(operatorId)}`;
+      const response = await apiFetch(url);
       if (!response.ok) {
         throw new Error('Failed to load operator');
       }
@@ -138,14 +143,16 @@ const OperatorPage: React.FC = () => {
             {rankings.map((nicheRanking, nicheIndex) => {
               // Use nicheFilename if available, otherwise fall back to generated filename
               const nicheFilename = nicheRanking.nicheFilename || nicheRanking.niche.toLowerCase().replace(/\s+/g, '-');
-              
+              // API returns all instances when fetched with allLevels=1 (toggle on), peak-only otherwise.
+              const instances = nicheRanking.instances || [];
+
               return (
                 <div key={nicheIndex} className="niche-group-card">
                   <Link to={`/niche-list/${encodeURIComponent(nicheFilename)}`} className="ranking-niche-link">
                     <div className="ranking-niche">{nicheRanking.niche}</div>
                   </Link>
                   <div className="niche-instances">
-                    {(nicheRanking.instances || []).map((instance, instanceIndex) => {
+                    {instances.map((instance, instanceIndex) => {
                       // Don't show tier for special lists (Unconventional Niches, Free Operators, etc.)
                       const isSpecialList = ['Unconventional Niches', 'Free Operators', 'Global Range Operators', 'Good Low-Rarity Operators'].includes(nicheRanking.niche);
                       

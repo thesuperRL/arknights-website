@@ -351,6 +351,9 @@ async function getIntegratedStrategiesRecommendation(
     };
   }
 
+  // Niches excluded from all teambuilding (not used for filling, scoring, or coverage)
+  const teambuildExcludedNiches = new Set(['unconventional-niches']);
+
   // Load current team niches based on selection counts
   // For level 0 selections, use level 0 tiers; for promotions, use new tiers
   const currentTeamNiches: string[] = [];
@@ -362,8 +365,9 @@ async function getIntegratedStrategiesRecommendation(
     
     if (operator && operator.niches) {
       if (selectionCount === 1) {
-        // First selection: use level 0 tiers
+        // First selection: use level 0 tiers (exclude teambuild-excluded niches)
         for (const niche of operator.niches) {
+          if (teambuildExcludedNiches.has(niche)) continue;
           currentTeamNiches.push(niche);
           if (!currentTeamNichesByLevel[niche]) {
             currentTeamNichesByLevel[niche] = new Set();
@@ -975,6 +979,7 @@ const IntegratedStrategiesPage: React.FC = () => {
       const op = allOperators[opId];
       if (op && op.niches) {
         for (const niche of op.niches) {
+          if (isExcludedNiches.has(niche)) continue;
           nicheCounts[niche] = (nicheCounts[niche] || 0) + 1;
         }
       }

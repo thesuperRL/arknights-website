@@ -196,12 +196,16 @@ function loadAllOperators(): Record<string, any> {
   return operators;
 }
 
+/** Niches excluded from all teambuilding (not used for filling, scoring, or coverage). */
+const TEAMBUILD_EXCLUDED_NICHES = new Set(['unconventional-niches']);
+
 /**
- * Gets niches for an operator, with AOE niches merged into DPS niches
+ * Gets niches for an operator, with AOE niches merged into DPS niches.
+ * Excludes niches that are not used in teambuilding (e.g. unconventional-niches).
  */
 function getOperatorNiches(operatorId: string): string[] {
   const niches = getNichesForOperator(operatorId);
-  const expandedNiches = [...niches];
+  const expandedNiches = niches.filter(n => !TEAMBUILD_EXCLUDED_NICHES.has(n));
   
   // Add arts-dps if operator has aoe-arts-dps but not arts-dps
   if (niches.includes('aoe-arts-dps') && !niches.includes('arts-dps')) {
@@ -977,7 +981,7 @@ export async function buildTeam(
     return {
       team: [],
       coverage: {},
-      missingNiches: Object.keys(preferences.requiredNiches),
+      missingNiches: Object.keys(preferences.requiredNiches).filter(n => !TEAMBUILD_EXCLUDED_NICHES.has(n)),
       score: 0,
       emptySlots: 0
     };
@@ -1012,6 +1016,7 @@ export async function buildTeam(
   
   // First pass: Fill required niches to minimum
   for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
     const minCount = range.min;
     
     // Fill up to minimum
@@ -1053,6 +1058,7 @@ export async function buildTeam(
   
   // Second pass: Fill required niches up to maximum (optional)
   for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
     if (team.length >= 12) break;
     
     const maxCount = range.max;
@@ -1096,6 +1102,7 @@ export async function buildTeam(
   
   // Third pass: Fill preferred niches to minimum
   for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
     if (team.length >= 12) break;
     
     const minCount = range.min;
@@ -1139,6 +1146,7 @@ export async function buildTeam(
   
   // Fourth pass: Fill preferred niches up to maximum (optional)
   for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
     if (team.length >= 12) break;
     
     const maxCount = range.max;
@@ -1180,16 +1188,20 @@ export async function buildTeam(
     }
   }
   
-  // Check if all required and preferred niches are filled to their maximum
-  const allRequiredNichesFilled = Object.entries(preferences.requiredNiches).every(([niche, range]) => {
-    const currentCount = nicheCounts[niche] || 0;
-    return currentCount >= range.max;
-  });
+  // Check if all required and preferred niches are filled to their maximum (exclude teambuild-excluded niches)
+  const allRequiredNichesFilled = Object.entries(preferences.requiredNiches)
+    .filter(([niche]) => !TEAMBUILD_EXCLUDED_NICHES.has(niche))
+    .every(([niche, range]) => {
+      const currentCount = nicheCounts[niche] || 0;
+      return currentCount >= range.max;
+    });
   
-  const allPreferredNichesFilled = Object.entries(preferences.preferredNiches).every(([niche, range]) => {
-    const currentCount = nicheCounts[niche] || 0;
-    return currentCount >= range.max;
-  });
+  const allPreferredNichesFilled = Object.entries(preferences.preferredNiches)
+    .filter(([niche]) => !TEAMBUILD_EXCLUDED_NICHES.has(niche))
+    .every(([niche, range]) => {
+      const currentCount = nicheCounts[niche] || 0;
+      return currentCount >= range.max;
+    });
   
   // Calculate empty slots (only fill remaining slots if niches aren't all filled)
   const emptySlots = allRequiredNichesFilled && allPreferredNichesFilled 
@@ -1275,18 +1287,20 @@ export async function buildTeam(
     }
   }
   
-  // Calculate missing niches
+  // Calculate missing niches (exclude teambuild-excluded niches)
   const missingNiches: string[] = [];
   for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
     const currentCount = nicheCounts[niche] || 0;
     if (currentCount < range.min) {
       missingNiches.push(`${niche} (${currentCount}/${range.min}-${range.max})`);
     }
   }
   
-  // Calculate team score
+  // Calculate team score (exclude teambuild-excluded niches)
   let score = 0;
   for (const [niche, range] of Object.entries(preferences.requiredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
     const currentCount = nicheCounts[niche] || 0;
     if (currentCount >= range.min) {
       // Full points for meeting minimum requirement
@@ -1301,6 +1315,7 @@ export async function buildTeam(
     }
   }
   for (const [niche, range] of Object.entries(preferences.preferredNiches)) {
+    if (TEAMBUILD_EXCLUDED_NICHES.has(niche)) continue;
     const currentCount = nicheCounts[niche] || 0;
     if (currentCount > 0) {
       // Score based on how well we meet the preferred range
@@ -1367,13 +1382,15 @@ export async function getIntegratedStrategiesRecommendation(
     };
   }
 
-  // Load current team operators and their niches
+  // Load current team operators and their niches (exclude teambuild-excluded niches)
   const currentTeamOperators = currentTeamOperatorIds.map(id => allOperators[id]).filter(Boolean);
   const currentTeamNiches: string[] = [];
 
   for (const operator of currentTeamOperators) {
     if (operator && operator.niches) {
-      currentTeamNiches.push(...operator.niches);
+      for (const niche of operator.niches) {
+        if (!TEAMBUILD_EXCLUDED_NICHES.has(niche)) currentTeamNiches.push(niche);
+      }
     }
   }
 

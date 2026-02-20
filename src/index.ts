@@ -104,13 +104,15 @@ app.get('/api/niche-lists', (_req, res) => {
 });
 
 // API route to get a specific niche list
+// Query: allLevels=1 returns every (tier, level) evaluation; otherwise returns peak-only (one per operator).
 app.get('/api/niche-lists/:niche', (req, res) => {
   try {
     const niche = decodeURIComponent(req.params.niche);
-    
+    const allLevels = req.query.allLevels === '1' || req.query.allLevels === 'true';
+
     // Load by filename (the parameter should be a filename code)
     const operatorList = loadNicheList(niche);
-    
+
     if (!operatorList) {
       res.status(404).json({ error: 'Operator list not found' });
       return;
@@ -119,7 +121,7 @@ app.get('/api/niche-lists/:niche', (req, res) => {
     // Load operator data to enrich the operator list
     const operatorsData: Record<string, any> = {};
     const rarities = [1, 2, 3, 4, 5, 6];
-    
+
     for (const rarity of rarities) {
       const filePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
       if (fs.existsSync(filePath)) {
@@ -133,7 +135,7 @@ app.get('/api/niche-lists/:niche', (req, res) => {
     // Convert from rating-grouped structure to flat array for frontend
     const operatorEntries: Array<{operatorId: string; rating: string; note: string; level: string; operator: any}> = [];
     const ratingOrder: Rating[] = ["SS", "S", "A", "B", "C", "D", "F"];
-    
+
     for (const rating of ratingOrder) {
       if (operatorList.operators[rating]) {
         const operatorsInRating = operatorList.operators[rating]!;
@@ -141,7 +143,7 @@ app.get('/api/niche-lists/:niche', (req, res) => {
           // Parse entry: can be string (backwards compatible) or [string, string] tuple
           let note: string = '';
           let level: string = '';
-          
+
           if (typeof entry === 'string') {
             // Old format: just description, level is empty (always has niche)
             note = entry;
@@ -151,7 +153,7 @@ app.get('/api/niche-lists/:niche', (req, res) => {
             note = entry[0] || '';
             level = entry[1] || '';
           }
-          
+
           operatorEntries.push({
             operatorId: operatorId,
             rating: rating,
@@ -163,12 +165,12 @@ app.get('/api/niche-lists/:niche', (req, res) => {
       }
     }
 
-    // By default rank operators at their peak only: one entry per operator (module > E2 > base)
-    const peakOnlyEntries = keepPeakEntriesOnly(operatorEntries);
-    
+    // When allLevels=1, return every evaluation; otherwise return peak-only (one per operator).
+    const operatorsToSend = allLevels ? operatorEntries : keepPeakEntriesOnly(operatorEntries);
+
     const enrichedOperatorList = {
       ...operatorList,
-      operators: peakOnlyEntries
+      operators: operatorsToSend
     };
 
     res.json(enrichedOperatorList);
@@ -501,10 +503,12 @@ app.get('/api/low-rarity-operators', (_req, res) => {
 });
 
 // API route to get a specific operator by ID with their rankings
+// Query: allLevels=1 returns every (tier, level) evaluation per niche; otherwise peak-only.
 // This must come BEFORE the rarity route to avoid conflicts
 app.get('/api/operators/:id', async (req, res) => {
   try {
     const operatorId = req.params.id;
+    const allLevels = req.query.allLevels === '1' || req.query.allLevels === 'true';
     
     // Load all operators
     const operatorsData: Record<string, any> = {};
@@ -534,77 +538,37 @@ app.get('/api/operators/:id', async (req, res) => {
       nicheFilenames[operatorList.niche] = filename;
     }
 
-    // Use nicheInstances from operator object if available, otherwise fall back to old method
-    const nicheInstances = (operator as any).nicheInstances;
+    // Always build rankings by scanning niche list files so every (tier, level) evaluation appears
     const rankingsByNiche: Record<string, Array<{ tier: string; level: string; notes?: string }>> = {};
 
-    // Process nicheInstances to group by niche (new format)
-    if (nicheInstances && typeof nicheInstances === 'object' && !Array.isArray(nicheInstances)) {
-      for (const [nicheFilename, instances] of Object.entries(nicheInstances)) {
-        if (Array.isArray(instances)) {
-          const nicheDisplayName = nicheDisplayNames[nicheFilename] || nicheFilename;
-          rankingsByNiche[nicheDisplayName] = [];
-          
-          for (const instance of instances) {
-            if (instance && typeof instance === 'object' && 'tier' in instance) {
-              // Get notes from the niche list
-              let notes: string | undefined = undefined;
-              const operatorList = loadNicheList(nicheFilename);
-              if (operatorList && operatorList.operators) {
-                const tierOperators = operatorList.operators[instance.tier as keyof typeof operatorList.operators];
-                if (tierOperators && operatorId in tierOperators) {
-                  const entry = tierOperators[operatorId];
-                  if (typeof entry === 'string') {
-                    notes = entry || undefined;
-                  } else if (Array.isArray(entry) && entry.length >= 1) {
-                    notes = entry[0] || undefined;
-                  }
-                }
-              }
-              
-              rankingsByNiche[nicheDisplayName].push({
-                tier: instance.tier,
-                level: instance.level || '',
-                notes: notes
-              });
-            }
-          }
-        }
-      }
-    }
+    for (const [filename, operatorList] of Object.entries(operatorLists)) {
+      if (filename.startsWith('synergies/')) continue; // Synergies use core/optional, not tier lists
+      if (!operatorList.operators || typeof operatorList.operators !== 'object') continue;
 
-    // Fall back to old method if nicheInstances is not available (backwards compatibility)
-    // This should not happen if operators have been updated, but we keep it for safety
-    if (Object.keys(rankingsByNiche).length === 0) {
-      for (const [, operatorList] of Object.entries(operatorLists)) {
-        if (operatorList.operators) {
-          for (const [rating, operatorsInRating] of Object.entries(operatorList.operators)) {
-            if (operatorsInRating && operatorId in operatorsInRating) {
-              const entry = operatorsInRating[operatorId];
-              let notes: string | undefined = undefined;
-              let level: string = '';
-              
-              if (typeof entry === 'string') {
-                notes = entry || undefined;
-                level = '';
-              } else if (Array.isArray(entry) && entry.length >= 1) {
-                notes = entry[0] || undefined;
-                level = entry.length >= 2 ? (entry[1] || '') : '';
-              }
-              
-              const nicheDisplayName = operatorList.niche;
-              if (!rankingsByNiche[nicheDisplayName]) {
-                rankingsByNiche[nicheDisplayName] = [];
-              }
-              rankingsByNiche[nicheDisplayName].push({
-                tier: rating,
-                level: level,
-                notes: notes
-              });
-              // Don't break - allow multiple instances per niche
-            }
-          }
+      for (const [rating, operatorsInRating] of Object.entries(operatorList.operators)) {
+        if (!operatorsInRating || !(operatorId in operatorsInRating)) continue;
+
+        const entry = operatorsInRating[operatorId];
+        let notes: string | undefined = undefined;
+        let level: string = '';
+
+        if (typeof entry === 'string') {
+          notes = entry || undefined;
+          level = '';
+        } else if (Array.isArray(entry) && entry.length >= 1) {
+          notes = entry[0] || undefined;
+          level = entry.length >= 2 ? (entry[1] || '') : '';
         }
+
+        const nicheDisplayName = nicheDisplayNames[filename] || operatorList.niche;
+        if (!rankingsByNiche[nicheDisplayName]) {
+          rankingsByNiche[nicheDisplayName] = [];
+        }
+        rankingsByNiche[nicheDisplayName].push({
+          tier: rating,
+          level: level,
+          notes: notes
+        });
       }
     }
 
@@ -640,13 +604,12 @@ app.get('/api/operators/:id', async (req, res) => {
       }
     }
 
-    // By default show only peak instance per niche (module > E2 > base)
     const rankings = Object.entries(rankingsByNiche)
       .filter(([, instances]) => instances && Array.isArray(instances) && instances.length > 0)
       .map(([niche, instances]) => ({
         niche,
         nicheFilename: nicheFilenames[niche] || niche.toLowerCase().replace(/\s+/g, '-'),
-        instances: keepPeakInstanceOnly(instances || [])
+        instances: allLevels ? (instances || []) : keepPeakInstanceOnly(instances || [])
       }));
 
     // Enrich synergies with display names

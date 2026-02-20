@@ -42,10 +42,10 @@ const NicheListPage: React.FC = () => {
 
   useEffect(() => {
     if (niche) {
-      loadOperatorList(niche);
+      loadOperatorList(niche, showLevelOverlays);
     }
     loadOwnedOperators();
-  }, [niche]);
+  }, [niche, showLevelOverlays]);
 
   const loadOwnedOperators = async () => {
     if (!user) {
@@ -64,9 +64,14 @@ const NicheListPage: React.FC = () => {
     }
   };
 
-  const loadOperatorList = async (nicheName: string) => {
+  const loadOperatorList = async (nicheName: string, allLevels: boolean = false) => {
+    const isInitialLoad = !operatorList || niche !== nicheName;
+    if (isInitialLoad) setLoading(true);
     try {
-      const response = await apiFetch(`/api/niche-lists/${encodeURIComponent(nicheName)}`);
+      const url = allLevels
+        ? `/api/niche-lists/${encodeURIComponent(nicheName)}?allLevels=1`
+        : `/api/niche-lists/${encodeURIComponent(nicheName)}`;
+      const response = await apiFetch(url);
       if (!response.ok) {
         throw new Error('Failed to load operator list');
       }
@@ -87,11 +92,15 @@ const NicheListPage: React.FC = () => {
     return <div className="error">{error || 'Operator list not found'}</div>;
   }
 
+  // When level badges are on we fetch with allLevels=1 so operators array has every evaluation.
+  // When off we fetch without it so API returns peak-only; no need to filter again.
+  const displayedOperators = operatorList.operators;
+
   // Rating order: SS > S > A > B > C > D > F
   const ratingOrder: Record<string, number> = { 'SS': 0, 'S': 1, 'A': 2, 'B': 3, 'C': 4, 'D': 5, 'F': 6 };
   
   // Sort operators: by rating (SS first), then by rarity (higher first), then by global status, then by name
-  const sortedOperators = [...operatorList.operators].sort((a, b) => {
+  const sortedOperators = [...displayedOperators].sort((a, b) => {
     // Sort by rating first
     const aRating = ratingOrder[a.rating] ?? 999;
     const bRating = ratingOrder[b.rating] ?? 999;
