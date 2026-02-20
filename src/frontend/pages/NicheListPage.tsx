@@ -38,6 +38,7 @@ const NicheListPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
+  const [showLevelOverlays, setShowLevelOverlays] = useState(false);
 
   useEffect(() => {
     if (niche) {
@@ -123,6 +124,14 @@ const NicheListPage: React.FC = () => {
         </Link>
         <h1>{operatorList.niche}</h1>
         <p>{operatorList.description || ''}</p>
+        <label className="niche-list-toggle">
+          <input
+            type="checkbox"
+            checked={showLevelOverlays}
+            onChange={(e) => setShowLevelOverlays(e.target.checked)}
+          />
+          <span>Show level badges (E2 / module)</span>
+        </label>
       </div>
 
       {operatorList.relatedNiches && operatorList.relatedNiches.length > 0 && (
@@ -174,7 +183,7 @@ const NicheListPage: React.FC = () => {
                         }}
                         loading="lazy"
                       />
-                      {entry.level && entry.level.trim() !== '' && (
+                      {showLevelOverlays && entry.level && entry.level.trim() !== '' && (
                         <div className="operator-level-badge-overlay">
                           {entry.level === 'E2' ? (
                             <img

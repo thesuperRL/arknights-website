@@ -41,6 +41,7 @@ const SynergyPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
+  const [showLevelOverlays, setShowLevelOverlays] = useState(false);
 
   useEffect(() => {
     if (synergy) {
@@ -119,6 +120,14 @@ const SynergyPage: React.FC = () => {
         </Link>
         <h1>{synergyData.name}</h1>
         <p>{synergyData.description || ''}</p>
+        <label className="synergy-page-toggle">
+          <input
+            type="checkbox"
+            checked={showLevelOverlays}
+            onChange={(e) => setShowLevelOverlays(e.target.checked)}
+          />
+          <span>Show level badges (E2 / module)</span>
+        </label>
       </div>
 
       {coreGroups.length > 0 && (
@@ -155,7 +164,7 @@ const SynergyPage: React.FC = () => {
                                   }}
                                   loading="lazy"
                                 />
-                                {entry.level && entry.level.trim() !== '' && (
+                                {showLevelOverlays && entry.level && entry.level.trim() !== '' && (
                                   <div className="operator-level-badge-overlay">
                                     {entry.level === 'E2' ? (
                                       <img
@@ -238,7 +247,7 @@ const SynergyPage: React.FC = () => {
                                   }}
                                   loading="lazy"
                                 />
-                                {entry.level && entry.level.trim() !== '' && (
+                                {showLevelOverlays && entry.level && entry.level.trim() !== '' && (
                                   <div className="operator-level-badge-overlay">
                                     {entry.level === 'E2' ? (
                                       <img

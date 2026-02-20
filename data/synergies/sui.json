@@ -34,7 +34,7 @@
     ]
   },
   "corePointBonus": 0,
-  "optionalPointBonus": 50,
+  "optionalPointBonus": 100,
   "isOnly": false,
   "coreCountSeparately": false,
   "optionalCountSeparately": false,

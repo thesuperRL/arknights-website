@@ -11,11 +11,22 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import { loadAllNicheLists, loadNicheList } from './niche-list-utils';
 import { Rating } from './niche-list-types';
+import { keepPeakEntriesOnly, keepPeakInstanceOnly } from './peak-level-utils';
 import { loadAllSynergies, loadSynergy } from './synergy-utils';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
 import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse, initializeDbConnection } from './account-storage';
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
+import {
+  getAccountTeamData,
+  saveNormalPreferences,
+  saveNormalTeambuild,
+  saveISTeamState,
+  deleteISTeamState,
+  initializeTeamDataTable
+} from './team-data-pg';
 import * as fs from 'fs';
+
+const useTeamDataDb = () => !!process.env.DATABASE_URL;
 
 /**
  * Sanitize error messages to remove sensitive server information
@@ -151,10 +162,13 @@ app.get('/api/niche-lists/:niche', (req, res) => {
         }
       }
     }
+
+    // By default rank operators at their peak only: one entry per operator (module > E2 > base)
+    const peakOnlyEntries = keepPeakEntriesOnly(operatorEntries);
     
     const enrichedOperatorList = {
       ...operatorList,
-      operators: operatorEntries
+      operators: peakOnlyEntries
     };
 
     res.json(enrichedOperatorList);
@@ -626,13 +640,13 @@ app.get('/api/operators/:id', async (req, res) => {
       }
     }
 
-    // Convert rankingsByNiche to the format expected by frontend
+    // By default show only peak instance per niche (module > E2 > base)
     const rankings = Object.entries(rankingsByNiche)
       .filter(([, instances]) => instances && Array.isArray(instances) && instances.length > 0)
       .map(([niche, instances]) => ({
         niche,
         nicheFilename: nicheFilenames[niche] || niche.toLowerCase().replace(/\s+/g, '-'),
-        instances: instances || []
+        instances: keepPeakInstanceOnly(instances || [])
       }));
 
     // Enrich synergies with display names
@@ -1004,6 +1018,11 @@ app.post('/api/team/build', async (req, res) => {
     const lockedOperatorIds: string[] = Array.isArray(req.body.lockedOperatorIds) ? req.body.lockedOperatorIds : [];
     const result = await buildTeam(session.email, preferences, lockedOperatorIds);
 
+    if (useTeamDataDb()) {
+      const lastTeamOperatorIds = result.team?.map((m: { operatorId: string }) => m.operatorId) ?? [];
+      await saveNormalTeambuild(session.email, { lockedOperatorIds, lastTeamOperatorIds });
+    }
+
     res.json(result);
   } catch (error: any) {
     console.error('Error building team:', error);
@@ -1021,7 +1040,7 @@ app.get('/api/team/preferences/default', (_req, res) => {
   }
 });
 
-// GET /api/team/preferences - Get user's saved team preferences
+// GET /api/team/preferences - Get user's saved team preferences (and optional normal teambuild state)
 app.get('/api/team/preferences', async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
@@ -1036,10 +1055,23 @@ app.get('/api/team/preferences', async (req, res) => {
       return;
     }
 
-    // Load preferences from file (per-user preferences)
+    if (useTeamDataDb()) {
+      const data = await getAccountTeamData(session.email);
+      const prefs: TeamPreferences = (data?.normalPreferences as TeamPreferences | null | undefined) ?? getDefaultPreferences();
+      if (!data?.normalPreferences) {
+        await saveNormalPreferences(session.email, prefs as unknown as Record<string, unknown>);
+      }
+      const response: Record<string, unknown> = { ...prefs };
+      if (data?.normalTeambuild) {
+        response.normalTeambuild = data.normalTeambuild;
+      }
+      res.json(response);
+      return;
+    }
+
+    // File fallback
     const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
     let preferences: Record<string, TeamPreferences> = {};
-    
     if (fs.existsSync(preferencesFile)) {
       try {
         const content = fs.readFileSync(preferencesFile, 'utf-8');
@@ -1048,29 +1080,21 @@ app.get('/api/team/preferences', async (req, res) => {
         console.error('Error loading preferences:', error);
       }
     }
-    
-    // If user has no saved preferences, use defaults and auto-save them
     if (!preferences[session.email]) {
       const defaultPrefs = getDefaultPreferences();
       preferences[session.email] = defaultPrefs;
-      
-      // Save defaults to file so they persist across rebuilds
       const dir = path.dirname(preferencesFile);
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-      }
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
       fs.writeFileSync(preferencesFile, JSON.stringify(preferences, null, 2));
     }
-    
-    const userPreferences = preferences[session.email];
-    res.json(userPreferences);
+    res.json(preferences[session.email]);
   } catch (error: any) {
     console.error('Error getting preferences:', error);
     res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get preferences' });
   }
 });
 
-// POST /api/team/preferences - Save user's team preferences
+// POST /api/team/preferences - Save user's team preferences (and optional normal teambuild state)
 app.post('/api/team/preferences', async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
@@ -1091,10 +1115,18 @@ app.post('/api/team/preferences', async (req, res) => {
       return;
     }
 
-    // Load existing preferences
+    if (useTeamDataDb()) {
+      await saveNormalPreferences(session.email, preferences as unknown as Record<string, unknown>);
+      const normalTeambuild = req.body.normalTeambuild as { lockedOperatorIds?: string[]; lastTeamOperatorIds?: string[] } | undefined;
+      if (normalTeambuild) {
+        await saveNormalTeambuild(session.email, normalTeambuild);
+      }
+      res.json({ success: true, preferences });
+      return;
+    }
+
     const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
     let allPreferences: Record<string, TeamPreferences> = {};
-
     if (fs.existsSync(preferencesFile)) {
       try {
         const content = fs.readFileSync(preferencesFile, 'utf-8');
@@ -1103,18 +1135,10 @@ app.post('/api/team/preferences', async (req, res) => {
         console.error('Error loading preferences:', error);
       }
     }
-
-    // Save user's preferences
     allPreferences[session.email] = preferences;
-
-    // Ensure directory exists
     const dir = path.dirname(preferencesFile);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(preferencesFile, JSON.stringify(allPreferences, null, 2));
-
     res.json({ success: true, preferences });
   } catch (error: any) {
     console.error('Error saving preferences:', error);
@@ -1137,10 +1161,14 @@ app.get('/api/integrated-strategies/team', async (req, res) => {
       return;
     }
 
-    // Load IS team state from file (per-user)
+    if (useTeamDataDb()) {
+      const data = await getAccountTeamData(session.email);
+      res.json(data?.isTeamState ?? null);
+      return;
+    }
+
     const isTeamFile = path.join(__dirname, '../data/integrated-strategies-teams.json');
     let allTeamStates: Record<string, any> = {};
-    
     if (fs.existsSync(isTeamFile)) {
       try {
         const content = fs.readFileSync(isTeamFile, 'utf-8');
@@ -1149,9 +1177,7 @@ app.get('/api/integrated-strategies/team', async (req, res) => {
         console.error('Error loading IS team states:', error);
       }
     }
-    
-    const userTeamState = allTeamStates[session.email] || null;
-    res.json(userTeamState);
+    res.json(allTeamStates[session.email] || null);
   } catch (error: any) {
     console.error('Error getting IS team state:', error);
     res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get IS team state' });
@@ -1179,10 +1205,14 @@ app.post('/api/integrated-strategies/team', async (req, res) => {
       return;
     }
 
-    // Load existing team states
+    if (useTeamDataDb()) {
+      await saveISTeamState(session.email, teamState as Record<string, unknown>);
+      res.json({ success: true, teamState });
+      return;
+    }
+
     const isTeamFile = path.join(__dirname, '../data/integrated-strategies-teams.json');
     let allTeamStates: Record<string, any> = {};
-
     if (fs.existsSync(isTeamFile)) {
       try {
         const content = fs.readFileSync(isTeamFile, 'utf-8');
@@ -1191,18 +1221,10 @@ app.post('/api/integrated-strategies/team', async (req, res) => {
         console.error('Error loading IS team states:', error);
       }
     }
-
-    // Save user's team state
     allTeamStates[session.email] = teamState;
-
-    // Ensure directory exists
     const dir = path.dirname(isTeamFile);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(isTeamFile, JSON.stringify(allTeamStates, null, 2));
-
     res.json({ success: true, teamState });
   } catch (error: any) {
     console.error('Error saving IS team state:', error);
@@ -1225,10 +1247,14 @@ app.delete('/api/integrated-strategies/team', async (req, res) => {
       return;
     }
 
-    // Load existing team states
+    if (useTeamDataDb()) {
+      await deleteISTeamState(session.email);
+      res.json({ success: true });
+      return;
+    }
+
     const isTeamFile = path.join(__dirname, '../data/integrated-strategies-teams.json');
     let allTeamStates: Record<string, any> = {};
-
     if (fs.existsSync(isTeamFile)) {
       try {
         const content = fs.readFileSync(isTeamFile, 'utf-8');
@@ -1237,18 +1263,10 @@ app.delete('/api/integrated-strategies/team', async (req, res) => {
         console.error('Error loading IS team states:', error);
       }
     }
-
-    // Remove user's team state
     delete allTeamStates[session.email];
-
-    // Ensure directory exists
     const dir = path.dirname(isTeamFile);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(isTeamFile, JSON.stringify(allTeamStates, null, 2));
-
     res.json({ success: true });
   } catch (error: any) {
     console.error('Error deleting IS team state:', error);
@@ -1271,6 +1289,9 @@ app.use((req, res, next) => {
 // Initialize database connection before starting server
 (async () => {
   await initializeDbConnection();
+  if (process.env.DATABASE_URL) {
+    await initializeTeamDataTable();
+  }
 
   // Start the server
   app.listen(PORT, () => {

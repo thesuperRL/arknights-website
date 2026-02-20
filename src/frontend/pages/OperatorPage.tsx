@@ -54,6 +54,7 @@ const OperatorPage: React.FC = () => {
   const [data, setData] = useState<OperatorData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showLevelOverlays, setShowLevelOverlays] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -122,7 +123,17 @@ const OperatorPage: React.FC = () => {
 
       {rankings.length > 0 ? (
         <div className="rankings-section">
-          <h2>Niches</h2>
+          <div className="rankings-section-header">
+            <h2>Niches</h2>
+            <label className="operator-page-toggle">
+              <input
+                type="checkbox"
+                checked={showLevelOverlays}
+                onChange={(e) => setShowLevelOverlays(e.target.checked)}
+              />
+              <span>Show level badges (E2 / module)</span>
+            </label>
+          </div>
           <div className="rankings-grid">
             {rankings.map((nicheRanking, nicheIndex) => {
               // Use nicheFilename if available, otherwise fall back to generated filename
@@ -143,7 +154,7 @@ const OperatorPage: React.FC = () => {
                         {instance.tier && !isSpecialList && (
                           <div className={`ranking-tier tier-${instance.tier}`}>{instance.tier}</div>
                         )}
-                        {instance.level && instance.level.trim() !== '' && (
+                        {showLevelOverlays && instance.level && instance.level.trim() !== '' && (
                           <div className="instance-level-badge">
                             {instance.level === 'E2' ? (
                               <img
