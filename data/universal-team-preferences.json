@@ -1,0 +1,59 @@
+{
+  "requiredNiches": {
+    "dp-generation": {
+      "min": 1,
+      "max": 2
+    },
+    "late-laneholder": {
+      "min": 2,
+      "max": 2
+    },
+    "healing-operators": {
+      "min": 2,
+      "max": 3
+    },
+    "arts-dps": {
+      "min": 3,
+      "max": 4
+    },
+    "physical-dps": {
+      "min": 3,
+      "max": 4
+    }
+  },
+  "preferredNiches": {
+    "elemental-damage": {
+      "min": 1,
+      "max": 1
+    },
+    "early-laneholder": {
+      "min": 1,
+      "max": 1
+    },
+    "boss-killing": {
+      "min": 1,
+      "max": 1
+    },
+    "tanking-blocking-operators": {
+      "min": 1,
+      "max": 2
+    },
+    "stalling": {
+      "min": 0,
+      "max": 1
+    },
+    "anti-air-operators": {
+      "min": 0,
+      "max": 1
+    },
+    "aoe-arts-dps": {
+      "min": 0,
+      "max": 1
+    },
+    "aoe-physical-dps": {
+      "min": 0,
+      "max": 1
+    }
+  },
+  "allowDuplicates": false
+}

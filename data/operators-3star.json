@@ -310,8 +310,7 @@
     "profileImage": "/images/operators/midnight.png",
     "niches": [
       "arts-dps",
-      "physical-dps",
-      "trash-operators"
+      "physical-dps"
     ],
     "cnName": "月见夜",
     "twName": "月見夜",
@@ -328,12 +327,6 @@
       "physical-dps": [
         {
           "tier": "D",
-          "level": ""
-        }
-      ],
-      "trash-operators": [
-        {
-          "tier": "A",
           "level": ""
         }
       ]
@@ -373,16 +366,23 @@
     "global": true,
     "profileImage": "/images/operators/plume.png",
     "niches": [
-      "trash-operators"
+      "dp-generation",
+      "early-laneholder"
     ],
     "cnName": "翎羽",
     "jpName": "プリュム",
     "krName": "플룸",
     "characters": "char_192_falco",
     "nicheInstances": {
-      "trash-operators": [
+      "dp-generation": [
         {
-          "tier": "A",
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "C",
           "level": ""
         }
       ]
@@ -421,7 +421,8 @@
     "global": true,
     "profileImage": "/images/operators/spot.png",
     "niches": [
-      "trash-operators"
+      "healing-operators",
+      "tanking-blocking-operators"
     ],
     "cnName": "斑点",
     "twName": "斑點",
@@ -429,9 +430,15 @@
     "krName": "스팟",
     "characters": "char_284_spot",
     "nicheInstances": {
-      "trash-operators": [
+      "healing-operators": [
         {
-          "tier": "A",
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "D",
           "level": ""
         }
       ]
@@ -446,8 +453,7 @@
     "global": true,
     "profileImage": "/images/operators/steward.png",
     "niches": [
-      "low-rarity",
-      "trash-operators"
+      "low-rarity"
     ],
     "cnName": "史都华德",
     "twName": "史都華德",
@@ -455,12 +461,6 @@
     "krName": "스튜어드",
     "characters": "char_210_stward",
     "nicheInstances": {
-      "trash-operators": [
-        {
-          "tier": "A",
-          "level": ""
-        }
-      ],
       "low-rarity": [
         {
           "tier": "A",

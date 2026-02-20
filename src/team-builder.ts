@@ -772,44 +772,34 @@ export function scoreOperator(
         // Count after adding this operator would be currentCount + 1
         const newCount = currentCount + 1;
 
-        // Calculate niche coverage score with diminishing returns and negative penalties
+        // Calculate niche coverage score with diminishing returns (no penalty for exceeding max)
         if (isRequired && requiredRange) {
           const maxCount = requiredRange.max;
           const minCount = requiredRange.min;
 
           if (newCount < minCount) {
             // Below minimum: full score (we need more operators)
-            nicheCoverageScore += 50; // Reduced from 100 since tier is now primary
+            nicheCoverageScore += 50;
           } else if (newCount <= maxCount) {
             // Between min and max: diminishing returns
-            // Full score at min, linearly decreases to 0 at max
             if (maxCount === minCount) {
-              // If min == max, give full score when we reach it
               nicheCoverageScore += 50;
             } else {
-              // Calculate diminishing score based on how close we are to max
-              // At min: full score (50)
-              // At max: 0 score
-              // Linear interpolation
               const progress = (newCount - minCount) / (maxCount - minCount);
               const diminishingScore = 50 * (1 - progress);
               nicheCoverageScore += diminishingScore;
             }
-          } else {
-            // Negative penalty for exceeding max
-            // Penalty increases with how much we exceed
-            const excess = newCount - maxCount;
-            nicheCoverageScore -= 25 * excess; // -25 per operator over max (reduced penalty)
           }
+          // Exceeding max: no bonus, but no penalty either
         } else if (isPreferred && preferredRange) {
           const maxCount = preferredRange.max;
           const minCount = preferredRange.min;
 
           if (newCount < minCount) {
             // Below minimum: full score (we need more operators)
-            nicheCoverageScore += 25; // Reduced from 50 since tier is now primary
+            nicheCoverageScore += 25;
           } else if (newCount <= maxCount) {
-            // Diminishing returns for preferred niches (lower base score)
+            // Diminishing returns for preferred niches
             if (maxCount === minCount) {
               nicheCoverageScore += 25;
             } else {
@@ -817,11 +807,8 @@ export function scoreOperator(
               const diminishingScore = 25 * (1 - progress);
               nicheCoverageScore += diminishingScore;
             }
-          } else {
-            // Negative penalty for exceeding preferred max
-            const excess = newCount - maxCount;
-            nicheCoverageScore -= 12.5 * excess; // -12.5 per operator over max (reduced penalty)
           }
+          // Exceeding max: no bonus, but no penalty either
         }
       }
     }
@@ -1561,29 +1548,23 @@ export async function getIntegratedStrategiesRecommendation(
  * otherwise falls back to hardcoded defaults
  */
 export function getDefaultPreferences(): TeamPreferences {
-  const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
+  const preferencesFile = path.join(__dirname, '../data/universal-team-preferences.json');
   
-  // Try to load from file
+  // Load from universal config file
   if (fs.existsSync(preferencesFile)) {
     try {
       const content = fs.readFileSync(preferencesFile, 'utf-8');
-      const allPreferences: Record<string, TeamPreferences> = JSON.parse(content);
+      const prefs: Partial<TeamPreferences> = JSON.parse(content);
       
-      // Use the first user's preferences if available
-      const firstUserEmail = Object.keys(allPreferences)[0];
-      if (firstUserEmail && allPreferences[firstUserEmail]) {
-        const userPrefs = allPreferences[firstUserEmail];
-        // Ensure all required fields are present
-        return {
-          requiredNiches: userPrefs.requiredNiches || {},
-          preferredNiches: userPrefs.preferredNiches || {},
-          rarityRanking: userPrefs.rarityRanking || [6, 4, 5, 3, 2, 1],
-          allowDuplicates: userPrefs.allowDuplicates !== undefined ? userPrefs.allowDuplicates : true,
-          hopeCosts: userPrefs.hopeCosts || { ...HOPE_COST_CONFIG }
-        };
-      }
+      return {
+        requiredNiches: prefs.requiredNiches || {},
+        preferredNiches: prefs.preferredNiches || {},
+        rarityRanking: prefs.rarityRanking || [6, 4, 5, 3, 2, 1],
+        allowDuplicates: prefs.allowDuplicates !== undefined ? prefs.allowDuplicates : false,
+        hopeCosts: prefs.hopeCosts || { ...HOPE_COST_CONFIG }
+      };
     } catch (error) {
-      console.error('Error loading team preferences from file:', error);
+      console.error('Error loading universal team preferences:', error);
     }
   }
   
@@ -1591,21 +1572,22 @@ export function getDefaultPreferences(): TeamPreferences {
   return {
     requiredNiches: {
         'dp-generation': { min: 1, max: 2 },
-        'early-laneholder': { min: 1, max: 2 },
-        'late-laneholder': { min: 1, max: 2 },
-        'healing-operators': { min: 2, max: 3 },
-        'arts-dps': { min: 1, max: 2 },
-        'physical-dps': { min: 1, max: 2 },
+        'late-laneholder': { min: 2, max: 2 },
+        'healing-operators': { min: 2, max: 2 },
+        'arts-dps': { min: 3, max: 4 },
+        'physical-dps': { min: 3, max: 4 },
     },
     preferredNiches: {
-        'anti-air-operators': { min: 1, max: 1 },
+        'elemental-damage': { min: 1, max: 1 },
+        'early-laneholder': { min: 1, max: 1 },
+        'boss-killing': { min: 1, max: 1 },
         'tanking-blocking-operators': { min: 1, max: 2 },
         'stalling': { min: 0, max: 1 },
-        'fast-redeploy-operators': { min: 0, max: 1 }
+        'anti-air-operators': { min: 0, max: 1 }
     },
-    rarityRanking: [6, 4, 5, 3, 2, 1], // Default: 6 > 4 > 5 > 3 > 2 > 1
-    allowDuplicates: true,
-    hopeCosts: { ...HOPE_COST_CONFIG } // Use default hope costs
+    rarityRanking: [6, 4, 5, 3, 2, 1],
+    allowDuplicates: false,
+    hopeCosts: { ...HOPE_COST_CONFIG }
   };
 }
 

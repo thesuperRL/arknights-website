@@ -18,7 +18,6 @@ import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, add
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
 import {
   getAccountTeamData,
-  saveNormalPreferences,
   saveNormalTeambuild,
   saveISTeamState,
   deleteISTeamState,
@@ -1003,7 +1002,7 @@ app.get('/api/team/preferences/default', (_req, res) => {
   }
 });
 
-// GET /api/team/preferences - Get user's saved team preferences (and optional normal teambuild state)
+// GET /api/team/preferences - Get universal team preferences (and optional user's teambuild state)
 app.get('/api/team/preferences', async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
@@ -1018,46 +1017,26 @@ app.get('/api/team/preferences', async (req, res) => {
       return;
     }
 
+    // Always use universal preferences
+    const prefs = getDefaultPreferences();
+    const response: Record<string, unknown> = { ...prefs };
+
+    // Include user's teambuild state (locked operators, last team) if available
     if (useTeamDataDb()) {
       const data = await getAccountTeamData(session.email);
-      const prefs: TeamPreferences = (data?.normalPreferences as TeamPreferences | null | undefined) ?? getDefaultPreferences();
-      if (!data?.normalPreferences) {
-        await saveNormalPreferences(session.email, prefs as unknown as Record<string, unknown>);
-      }
-      const response: Record<string, unknown> = { ...prefs };
       if (data?.normalTeambuild) {
         response.normalTeambuild = data.normalTeambuild;
       }
-      res.json(response);
-      return;
     }
 
-    // File fallback
-    const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
-    let preferences: Record<string, TeamPreferences> = {};
-    if (fs.existsSync(preferencesFile)) {
-      try {
-        const content = fs.readFileSync(preferencesFile, 'utf-8');
-        preferences = JSON.parse(content);
-      } catch (error) {
-        console.error('Error loading preferences:', error);
-      }
-    }
-    if (!preferences[session.email]) {
-      const defaultPrefs = getDefaultPreferences();
-      preferences[session.email] = defaultPrefs;
-      const dir = path.dirname(preferencesFile);
-      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(preferencesFile, JSON.stringify(preferences, null, 2));
-    }
-    res.json(preferences[session.email]);
+    res.json(response);
   } catch (error: any) {
     console.error('Error getting preferences:', error);
     res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get preferences' });
   }
 });
 
-// POST /api/team/preferences - Save user's team preferences (and optional normal teambuild state)
+// POST /api/team/preferences - Save user's teambuild state (locked operators, last team)
 app.post('/api/team/preferences', async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
@@ -1072,40 +1051,20 @@ app.post('/api/team/preferences', async (req, res) => {
       return;
     }
 
-    const preferences: TeamPreferences = req.body.preferences;
-    if (!preferences) {
-      res.status(400).json({ error: 'Preferences are required' });
-      return;
-    }
-
+    // Only save teambuild state, not preferences (preferences are universal now)
     if (useTeamDataDb()) {
-      await saveNormalPreferences(session.email, preferences as unknown as Record<string, unknown>);
       const normalTeambuild = req.body.normalTeambuild as { lockedOperatorIds?: string[]; lastTeamOperatorIds?: string[] } | undefined;
       if (normalTeambuild) {
         await saveNormalTeambuild(session.email, normalTeambuild);
       }
-      res.json({ success: true, preferences });
-      return;
     }
 
-    const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
-    let allPreferences: Record<string, TeamPreferences> = {};
-    if (fs.existsSync(preferencesFile)) {
-      try {
-        const content = fs.readFileSync(preferencesFile, 'utf-8');
-        allPreferences = JSON.parse(content);
-      } catch (error) {
-        console.error('Error loading preferences:', error);
-      }
-    }
-    allPreferences[session.email] = preferences;
-    const dir = path.dirname(preferencesFile);
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(preferencesFile, JSON.stringify(allPreferences, null, 2));
-    res.json({ success: true, preferences });
+    // Return universal preferences
+    const prefs = getDefaultPreferences();
+    res.json({ success: true, preferences: prefs });
   } catch (error: any) {
-    console.error('Error saving preferences:', error);
-    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to save preferences' });
+    console.error('Error saving teambuild state:', error);
+    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to save teambuild state' });
   }
 });
 

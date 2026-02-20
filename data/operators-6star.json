@@ -146,7 +146,7 @@
     "nicheInstances": {
       "aoe-physical-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -265,7 +265,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Pipe"
+        ]
+      }
+    }
   },
   "blaze": {
     "id": "blaze",
@@ -442,11 +449,11 @@
     "nicheInstances": {
       "arts-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": "CCR-X"
         },
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ],
@@ -1768,6 +1775,7 @@
       "aoe-arts-dps",
       "arts-dps",
       "boss-killing",
+      "late-laneholder",
       "tanking-blocking-operators",
       "unconventional-niches"
     ],
@@ -1787,6 +1795,12 @@
         }
       ],
       "boss-killing": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
         {
           "tier": "SS",
           "level": ""
@@ -2266,7 +2280,7 @@
       ],
       "physical-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -3689,7 +3703,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Flag"
+        ]
+      }
+    }
   },
   "sankta_miksaparato": {
     "id": "sankta_miksaparato",

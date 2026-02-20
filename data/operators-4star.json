@@ -891,8 +891,7 @@
     "global": true,
     "profileImage": "/images/operators/humus.png",
     "niches": [
-      "late-laneholder",
-      "trash-operators"
+      "late-laneholder"
     ],
     "cnName": "休谟斯",
     "twName": "休謨斯",
@@ -911,12 +910,6 @@
       "late-laneholder": [
         {
           "tier": "C",
-          "level": ""
-        }
-      ],
-      "trash-operators": [
-        {
-          "tier": "A",
           "level": ""
         }
       ]
@@ -1334,7 +1327,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Flag"
+        ]
+      }
+    }
   },
   "perfumer": {
     "id": "perfumer",

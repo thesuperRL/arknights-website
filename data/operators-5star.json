@@ -10,7 +10,33 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1001_amiya2"
+    "internalName": "char_1001_amiya2",
+    "niches": [
+      "arts-dps",
+      "trash-operators",
+      "true_damage"
+    ],
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "true_damage": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "amiya_medic": {
     "id": "amiya_medic",
@@ -23,7 +49,33 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1037_amiya3"
+    "internalName": "char_1037_amiya3",
+    "niches": [
+      "arts-dps",
+      "healing-operators",
+      "true_damage"
+    ],
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "true_damage": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "absinthe": {
     "id": "absinthe",
@@ -1464,7 +1516,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Flag"
+        ]
+      }
+    }
   },
   "enforcer": {
     "id": "enforcer",
@@ -2168,8 +2227,7 @@
     "profileImage": "/images/operators/harold.png",
     "niches": [
       "elemental_damage_healers",
-      "healing-operators",
-      "trash-operators"
+      "healing-operators"
     ],
     "cnName": "哈洛德",
     "jpName": "ハロルド",
@@ -2185,12 +2243,6 @@
       "healing-operators": [
         {
           "tier": "C",
-          "level": ""
-        }
-      ],
-      "trash-operators": [
-        {
-          "tier": "A",
           "level": ""
         }
       ]
@@ -4561,8 +4613,7 @@
     "global": true,
     "profileImage": "/images/operators/shalem.png",
     "niches": [
-      "free",
-      "trash-operators"
+      "free"
     ],
     "cnName": "暮落",
     "jpName": "シャレム",
@@ -4570,12 +4621,6 @@
     "internalName": "char_4025_aprot2",
     "nicheInstances": {
       "free": [
-        {
-          "tier": "A",
-          "level": ""
-        }
-      ],
-      "trash-operators": [
         {
           "tier": "A",
           "level": ""
@@ -5449,6 +5494,7 @@
     "global": true,
     "profileImage": "/images/operators/waai_fu.png",
     "niches": [
+      "atk-debuff",
       "fast-redeploy-operators",
       "silence",
       "trash-operators"
@@ -5458,6 +5504,12 @@
     "krName": "와이후",
     "internalName": "char_243_waaifu",
     "nicheInstances": {
+      "atk-debuff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
       "fast-redeploy-operators": [
         {
           "tier": "B",
@@ -5548,7 +5600,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Flag"
+        ]
+      }
+    }
   },
   "warfarin": {
     "id": "warfarin",
