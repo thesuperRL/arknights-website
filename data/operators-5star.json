@@ -210,6 +210,7 @@
     "global": true,
     "profileImage": "/images/operators/amiya.png",
     "niches": [
+      "arts-dps",
       "true_damage"
     ],
     "cnName": "阿米娅",
@@ -218,6 +219,12 @@
     "krName": "아미야",
     "internalName": "char_002_amiya",
     "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
       "true_damage": [
         {
           "tier": "B",

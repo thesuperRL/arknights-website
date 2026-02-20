@@ -27,6 +27,15 @@ export default defineConfig({
         }
       },
       closeBundle() {
+        // GitHub Pages: serve SPA for any path so client-side routing works (no 404 on /profile etc.)
+        const outDir = path.resolve(__dirname, 'public');
+        const indexPath = path.join(outDir, 'index.html');
+        const notFoundPath = path.join(outDir, '404.html');
+        if (fs.existsSync(indexPath)) {
+          fs.copyFileSync(indexPath, notFoundPath);
+          console.log('✅ 404.html created for client-side routing');
+        }
+
         // Restore images directory after build completes
         const imagesDir = path.resolve(__dirname, 'public/images');
         const backupDir = path.resolve(__dirname, '.images-backup');

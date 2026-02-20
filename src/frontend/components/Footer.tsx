@@ -11,6 +11,7 @@ const Footer: React.FC = () => {
     <footer className="footer">
       <div className="footer-content">
         <Link to="/user-guide" className="footer-guide-link">User Guide</Link>
+        <Link to="/changelog" className="footer-guide-link">Changelog</Link>
         <LanguageSelector />
         <a
           href={FEEDBACK_FORM_URL}

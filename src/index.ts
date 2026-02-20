@@ -59,15 +59,29 @@ const sessionCookieOptions = () => {
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS for GitHub Pages / cross-origin: allow specific origin and credentials
-const corsOrigin = process.env.CORS_ORIGIN; // e.g. https://thesuperRL.github.io
-if (corsOrigin) {
-  app.use((_req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', corsOrigin);
+// CORS for GitHub Pages / cross-origin: allow specific origin(s) and credentials
+// CORS_ORIGIN can be a single URL or comma-separated list (e.g. https://thesuperrl.github.io,https://username.github.io)
+// Request origin is echoed back when it matches an allowed origin (case-insensitive) so CORS works.
+const corsOriginEnv = process.env.CORS_ORIGIN || '';
+const allowedOrigins = corsOriginEnv
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+const allowedOriginsLower = new Set(allowedOrigins.map((o) => o.toLowerCase()));
+
+if (allowedOrigins.length > 0) {
+  app.use((req, res, next) => {
+    const requestOrigin = req.get('Origin');
+    const originAllowed =
+      requestOrigin && allowedOriginsLower.has(requestOrigin.toLowerCase());
+    if (originAllowed) {
+      // Echo the request origin so the browser accepts the response (required when using credentials)
+      res.setHeader('Access-Control-Allow-Origin', requestOrigin!);
+    }
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
-    if (_req.method === 'OPTIONS') {
+    if (req.method === 'OPTIONS') {
       res.sendStatus(204);
       return;
     }
@@ -328,6 +342,24 @@ app.get('/api/trash-operators', (_req, res) => {
   } catch (error) {
     console.error('Error loading trash operators:', error);
     res.status(500).json({ error: 'Failed to load trash operators' });
+  }
+});
+
+// API route to get tier changelog
+app.get('/api/changelog', (_req, res) => {
+  try {
+    const filePath = path.join(__dirname, '../data', 'tier-changelog.json');
+    if (!fs.existsSync(filePath)) {
+      res.json({ entries: [] });
+      return;
+    }
+
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const changelog = JSON.parse(content);
+    res.json(changelog);
+  } catch (error) {
+    console.error('Error loading changelog:', error);
+    res.status(500).json({ error: 'Failed to load changelog' });
   }
 });
 
