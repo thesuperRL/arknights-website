@@ -20,6 +20,7 @@ import RegisterPage from './pages/RegisterPage';
 import UserProfilePage from './pages/UserProfilePage';
 import TeamBuilderPage from './pages/TeamBuilderPage';
 import IntegratedStrategiesPage from './pages/IntegratedStrategiesPage';
+import UserGuidePage from './pages/UserGuidePage';
 import './App.css';
 import './pages/AllOperatorsPage.css';
 import './pages/NicheListPage.css';
@@ -52,6 +53,7 @@ function App() {
               <Route path="/profile" element={<UserProfilePage />} />
               <Route path="/team-builder" element={<TeamBuilderPage />} />
               <Route path="/integrated-strategies" element={<IntegratedStrategiesPage />} />
+              <Route path="/user-guide" element={<UserGuidePage />} />
               </Routes>
             </main>
             <Footer />

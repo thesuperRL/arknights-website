@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 import './Footer.css';
 
@@ -9,6 +10,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
+        <Link to="/user-guide" className="footer-guide-link">User Guide</Link>
         <LanguageSelector />
         <a
           href={FEEDBACK_FORM_URL}
