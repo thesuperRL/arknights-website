@@ -1,0 +1,37 @@
+{
+  "name": "Flagpipe",
+  "description": "Exploits Bagpipe's SP buffs to Flagbearer Vanguards for incredible DP recovery",
+  "core": {
+    "Flag": [
+      [
+        "saileach",
+        ""
+      ],
+      [
+        "myrtle",
+        ""
+      ],
+      [
+        "wanqing",
+        ""
+      ],
+      [
+        "elysium",
+        ""
+      ]
+    ],
+    "Pipe": [
+      [
+        "bagpipe",
+        ""
+      ]
+    ]
+  },
+  "optional": {},
+  "corePointBonus": 100,
+  "optionalPointBonus": 0,
+  "isOnly": false,
+  "coreCountSeparately": false,
+  "optionalCountSeparately": true,
+  "optionalCountMinimum": 0
+}
