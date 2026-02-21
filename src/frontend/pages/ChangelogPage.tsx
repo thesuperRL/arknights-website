@@ -14,6 +14,7 @@ interface ChangelogEntry {
   oldLevel: string;
   newLevel: string;
   justification: string;
+  global?: boolean;
 }
 
 const ChangelogPage: React.FC = () => {
@@ -218,9 +219,11 @@ const ChangelogPage: React.FC = () => {
                   <tr key={`${entry.operatorId}-${entry.nicheFilename}-${entry.date}-${idx}`} className={`change-row ${getChangeType(entry)}`}>
                     <td className="col-date">{formatDate(entry.date)}</td>
                     <td className="col-operator">
-                      <Link to={`/operator/${entry.operatorId}`} className="operator-name">
-                        {entry.operatorName}
-                      </Link>
+                      <span className={entry.global === false ? 'changelog-blur' : ''}>
+                        <Link to={`/operator/${entry.operatorId}`} className="operator-name">
+                          {entry.operatorName}
+                        </Link>
+                      </span>
                     </td>
                     <td className="col-change">{renderChangeCell(entry)}</td>
                     <td className="col-niche">
@@ -240,7 +243,11 @@ const ChangelogPage: React.FC = () => {
                         {getChangeType(entry)}
                       </span>
                     </td>
-                    <td className="col-justification">{entry.justification || '—'}</td>
+                    <td className="col-justification">
+                      <span className={entry.global === false ? 'changelog-blur' : ''}>
+                        {entry.justification || '—'}
+                      </span>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -284,6 +284,12 @@
   font-size: 0.8rem;
 }
 
+/* Non-global operator names and justifications are blurred */
+.changelog-blur {
+  filter: blur(4px);
+  user-select: none;
+  display: inline-block;
+}
 
 .no-changes {
   text-align: center;

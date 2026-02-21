@@ -345,7 +345,7 @@ app.get('/api/trash-operators', (_req, res) => {
   }
 });
 
-// API route to get tier changelog
+// API route to get tier changelog (enriches entries with global flag for blurring non-global names/justifications)
 app.get('/api/changelog', (_req, res) => {
   try {
     const filePath = path.join(__dirname, '../data', 'tier-changelog.json');
@@ -355,8 +355,27 @@ app.get('/api/changelog', (_req, res) => {
     }
 
     const content = fs.readFileSync(filePath, 'utf-8');
-    const changelog = JSON.parse(content);
-    res.json(changelog);
+    const changelog = JSON.parse(content) as { entries: Array<Record<string, unknown>> };
+    const entries = changelog.entries || [];
+
+    // Load operator global status from all operator files
+    const operatorGlobal: Record<string, boolean> = {};
+    for (const rarity of [1, 2, 3, 4, 5, 6]) {
+      const opPath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
+      if (fs.existsSync(opPath)) {
+        const opData = JSON.parse(fs.readFileSync(opPath, 'utf-8')) as Record<string, { global?: boolean }>;
+        for (const [id, op] of Object.entries(opData)) {
+          operatorGlobal[id] = op?.global ?? true;
+        }
+      }
+    }
+
+    const enrichedEntries = entries.map((entry: Record<string, unknown>) => ({
+      ...entry,
+      global: operatorGlobal[entry.operatorId as string] ?? true,
+    }));
+
+    res.json({ entries: enrichedEntries });
   } catch (error) {
     console.error('Error loading changelog:', error);
     res.status(500).json({ error: 'Failed to load changelog' });
