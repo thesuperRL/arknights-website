@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { apiFetch } from '../api';
 import './ChangelogPage.css';
 
 interface ChangelogEntry {
@@ -23,7 +24,7 @@ const ChangelogPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    fetch('/api/changelog')
+    apiFetch('/api/changelog')
       .then(res => {
         if (!res.ok) throw new Error('Failed to load changelog');
         return res.json();
