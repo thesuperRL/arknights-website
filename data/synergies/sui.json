@@ -42,5 +42,5 @@
   "isOnly": false,
   "coreCountSeparately": false,
   "optionalCountSeparately": false,
-  "optionalCountMinimum": 4
+  "optionalCountMinimum": 3
 }
