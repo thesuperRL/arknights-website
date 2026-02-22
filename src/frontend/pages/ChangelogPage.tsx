@@ -51,7 +51,13 @@ const ChangelogPage: React.FC = () => {
     return newRank > oldRank ? 'upgrade' : 'downgrade';
   };
 
+  const CHANGELOG_CUTOFF = new Date('2026-02-22T01:30:00').getTime();
+
   const filteredEntries = entries.filter(entry => {
+    const time = entry.time || '20:00';
+    const entryMs = new Date(entry.date + 'T' + time + ':00').getTime();
+    if (entryMs <= CHANGELOG_CUTOFF) return false;
+
     if (filter !== 'all') {
       const changeType = getChangeType(entry);
       if (filter === 'upgrades' && changeType !== 'upgrade') return false;

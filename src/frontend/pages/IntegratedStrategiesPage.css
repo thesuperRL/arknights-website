@@ -1126,7 +1126,7 @@
 }
 
 .operator-select-card.non-global .operator-select-image {
-  filter: blur(4px);
+  filter: blur(14px);
   opacity: 0.6;
 }
 

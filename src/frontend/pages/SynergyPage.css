@@ -275,7 +275,7 @@
 }
 
 .synergy-page .operator-card.non-global .operator-image {
-    filter: blur(6px);
+    filter: blur(14px);
     transition: filter 0.3s;
 }
 

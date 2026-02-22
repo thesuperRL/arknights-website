@@ -242,7 +242,7 @@
 }
 
 .all-operators-page .operator-card.non-global .operator-image {
-    filter: blur(10px) grayscale(0.6) brightness(0.5);
+    filter: blur(14px) grayscale(0.6) brightness(0.5);
     transform: scale(1.1);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }

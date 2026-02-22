@@ -189,7 +189,7 @@
 
 /* Import blur styles for non-global operators */
 .operator-card.non-global {
-    filter: blur(8px);
+    filter: blur(14px);
     opacity: 0.5;
 }
 
