@@ -353,6 +353,7 @@ function getChangelogPath(): string {
   return fromCwd;
 }
 
+// Changelog entries come from data/tier-changelog.json; we add .global from operator data so the page can blur non-global
 app.get('/api/changelog', (_req, res) => {
   try {
     const filePath = getChangelogPath();
@@ -360,7 +361,6 @@ app.get('/api/changelog', (_req, res) => {
       res.json({ entries: [] });
       return;
     }
-
     const content = fs.readFileSync(filePath, 'utf-8');
     let changelog: { entries: Array<Record<string, unknown>> };
     try {
@@ -370,11 +370,10 @@ app.get('/api/changelog', (_req, res) => {
       return;
     }
     const entries = Array.isArray(changelog.entries) ? changelog.entries : [];
-
-    // Load operator global status from all operator files
+    const dataDir = path.dirname(filePath);
     const operatorGlobal: Record<string, boolean> = {};
     for (const rarity of [1, 2, 3, 4, 5, 6]) {
-      const opPath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
+      const opPath = path.join(dataDir, `operators-${rarity}star.json`);
       if (fs.existsSync(opPath)) {
         const opData = JSON.parse(fs.readFileSync(opPath, 'utf-8')) as Record<string, { global?: boolean }>;
         for (const [id, op] of Object.entries(opData)) {
@@ -382,13 +381,11 @@ app.get('/api/changelog', (_req, res) => {
         }
       }
     }
-
-    const enrichedEntries = entries.map((entry: Record<string, unknown>) => ({
-      ...entry,
-      global: operatorGlobal[entry.operatorId as string] ?? true,
+    const withGlobal = entries.map((e: Record<string, unknown>) => ({
+      ...e,
+      global: e.global !== undefined ? e.global : (operatorGlobal[String(e.operatorId)] ?? true),
     }));
-
-    res.json({ entries: enrichedEntries });
+    res.json({ entries: withGlobal });
   } catch (error) {
     console.error('Error loading changelog:', error);
     res.status(500).json({ error: 'Failed to load changelog' });

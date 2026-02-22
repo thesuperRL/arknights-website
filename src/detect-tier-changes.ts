@@ -11,6 +11,7 @@ interface NicheList {
 
 interface ChangelogEntry {
   date: string;
+  time?: string; // HH:mm (24h); missing = assume 20:00 for past entries
   operatorId: string;
   operatorName: string;
   niche: string;
@@ -20,6 +21,7 @@ interface ChangelogEntry {
   oldLevel: string;
   newLevel: string;
   justification: string;
+  global?: boolean;
 }
 
 interface Changelog {
@@ -31,17 +33,19 @@ const NICHE_LISTS_DIR = path.join(DATA_DIR, 'niche-lists');
 const CHANGELOG_PATH = path.join(DATA_DIR, 'tier-changelog.json');
 const OPERATORS_FILES = [1, 2, 3, 4, 5, 6].map(r => path.join(DATA_DIR, `operators-${r}star.json`));
 
-function loadOperatorNames(): Record<string, string> {
+function loadOperatorData(): { names: Record<string, string>; global: Record<string, boolean> } {
   const names: Record<string, string> = {};
+  const global: Record<string, boolean> = {};
   for (const filePath of OPERATORS_FILES) {
     if (fs.existsSync(filePath)) {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as Record<string, { name?: string; global?: boolean }>;
       for (const [id, op] of Object.entries(data)) {
-        names[id] = (op as any).name || id;
+        names[id] = op?.name || id;
+        global[id] = op?.global ?? true;
       }
     }
   }
-  return names;
+  return { names, global };
 }
 
 function parseNicheList(content: string): NicheList | null {
@@ -92,38 +96,40 @@ function getCommittedFileContent(filePath: string): string | null {
 
 function detectChanges(): ChangelogEntry[] {
   const changes: ChangelogEntry[] = [];
-  const operatorNames = loadOperatorNames();
-  const today = new Date().toISOString().split('T')[0];
-  
+  const { names: operatorNames, global: operatorGlobal } = loadOperatorData();
+  const now = new Date();
+  const today = now.toISOString().split('T')[0];
+  const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
   const nicheFiles = fs.readdirSync(NICHE_LISTS_DIR)
     .filter(f => f.endsWith('.json'));
-  
+
   for (const filename of nicheFiles) {
     const filePath = path.join(NICHE_LISTS_DIR, filename);
     const nicheFilename = filename.replace('.json', '');
-    
+
     const currentContent = fs.readFileSync(filePath, 'utf-8');
     const currentList = parseNicheList(currentContent);
     if (!currentList) continue;
-    
+
     const committedContent = getCommittedFileContent(filePath);
     const committedList = committedContent ? parseNicheList(committedContent) : null;
-    
+
     const currentTiers = extractTiers(currentList);
     const committedTiers = committedList ? extractTiers(committedList) : new Map();
-    
-    // Find changes
+
     const allKeys = new Set([...currentTiers.keys(), ...committedTiers.keys()]);
-    
+
     for (const key of allKeys) {
       const [operatorId] = key.split(':');
       const current = currentTiers.get(key);
       const committed = committedTiers.get(key);
-      
+      const isGlobal = operatorGlobal[operatorId] ?? true;
+
       if (!current && committed) {
-        // Operator removed from niche
         changes.push({
           date: today,
+          time: timeStr,
           operatorId,
           operatorName: operatorNames[operatorId] || operatorId,
           niche: currentList.niche,
@@ -132,12 +138,13 @@ function detectChanges(): ChangelogEntry[] {
           newTier: null,
           oldLevel: committed.level,
           newLevel: '',
-          justification: ''
+          justification: '',
+          global: isGlobal,
         });
       } else if (current && !committed) {
-        // Operator added to niche
         changes.push({
           date: today,
+          time: timeStr,
           operatorId,
           operatorName: operatorNames[operatorId] || operatorId,
           niche: currentList.niche,
@@ -146,12 +153,13 @@ function detectChanges(): ChangelogEntry[] {
           newTier: current.tier,
           oldLevel: '',
           newLevel: current.level,
-          justification: ''
+          justification: '',
+          global: isGlobal,
         });
       } else if (current && committed && current.tier !== committed.tier) {
-        // Tier changed
         changes.push({
           date: today,
+          time: timeStr,
           operatorId,
           operatorName: operatorNames[operatorId] || operatorId,
           niche: currentList.niche,
@@ -160,12 +168,13 @@ function detectChanges(): ChangelogEntry[] {
           newTier: current.tier,
           oldLevel: committed.level,
           newLevel: current.level,
-          justification: ''
+          justification: '',
+          global: isGlobal,
         });
       }
     }
   }
-  
+
   return changes;
 }
 

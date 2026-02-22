@@ -5,6 +5,7 @@ import './ChangelogPage.css';
 
 interface ChangelogEntry {
   date: string;
+  time?: string; // HH:mm; missing = 8 PM for past entries
   operatorId: string;
   operatorName: string;
   niche: string;
@@ -70,10 +71,14 @@ const ChangelogPage: React.FC = () => {
     return true;
   });
 
-  // Sort by date desc, then operator name
+  // Sort by date desc, then time desc (missing = 20:00), then operator name
   const sortedEntries = [...filteredEntries].sort((a, b) => {
     const dateCmp = b.date.localeCompare(a.date);
     if (dateCmp !== 0) return dateCmp;
+    const timeA = a.time || '20:00';
+    const timeB = b.time || '20:00';
+    const timeCmp = timeB.localeCompare(timeA);
+    if (timeCmp !== 0) return timeCmp;
     return a.operatorName.localeCompare(b.operatorName);
   });
 
@@ -217,8 +222,8 @@ const ChangelogPage: React.FC = () => {
               </thead>
               <tbody>
                 {sortedEntries.map((entry, idx) => (
-                  <tr key={`${entry.operatorId}-${entry.nicheFilename}-${entry.date}-${idx}`} className={`change-row ${getChangeType(entry)}`}>
-                    <td className="col-date">{formatDate(entry.date)}</td>
+                  <tr key={`${entry.operatorId}-${entry.nicheFilename}-${entry.date}-${idx}`} className={`change-row ${getChangeType(entry)} ${entry.global === false ? 'non-global' : ''}`}>
+                    <td className="col-date">{formatEntryDate(entry)}</td>
                     <td className="col-operator">
                       <span className={entry.global === false ? 'changelog-blur' : ''}>
                         <Link to={`/operator/${entry.operatorId}`} className="operator-name">
@@ -260,13 +265,19 @@ const ChangelogPage: React.FC = () => {
   );
 };
 
-function formatDate(dateStr: string): string {
-  const date = new Date(dateStr + 'T00:00:00');
-  return date.toLocaleDateString('en-US', { 
+/** Past entries without time are shown as 8:00 PM. */
+function formatEntryDate(entry: ChangelogEntry): string {
+  const time = entry.time || '20:00'; // 8 PM for legacy date-only entries
+  const date = new Date(entry.date + 'T' + time + ':00');
+  return date.toLocaleDateString('en-US', {
     weekday: 'long',
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }) + ' at ' + date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
   });
 }
 

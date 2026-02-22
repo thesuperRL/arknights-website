@@ -284,11 +284,18 @@
   font-size: 0.8rem;
 }
 
-/* Non-global operator names and justifications are blurred */
-.changelog-blur {
-  filter: blur(4px);
+/* Non-global: heavy blur on operator name and justification cells, dispelled only on row hover */
+.changelog-table tbody tr.non-global td.col-operator,
+.changelog-table tbody tr.non-global td.col-justification {
+  filter: blur(14px);
   user-select: none;
-  display: inline-block;
+  transition: filter 0.25s ease;
+  pointer-events: auto;
+}
+
+.changelog-table tbody tr.non-global:hover td.col-operator,
+.changelog-table tbody tr.non-global:hover td.col-justification {
+  filter: blur(0);
 }
 
 .no-changes {

@@ -275,6 +275,16 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
+/* Non-global: heavy blur on portrait, dispelled only on hover */
+.niche-list-page .operator-card.non-global .operator-image {
+    filter: blur(14px);
+    transition: filter 0.25s ease;
+}
+
+.niche-list-page .operator-card.non-global:hover .operator-image {
+    filter: blur(0);
+}
+
 .niche-list-page .operator-card.non-global:hover {
     border-color: rgba(0, 0, 0, 1);
     background: rgba(0, 0, 0, 0.7);
