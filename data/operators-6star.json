@@ -222,9 +222,38 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/astgenne_the_lightchaser.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "fragile",
+      "stalling"
+    ],
     "cnName": "溯光星源",
-    "internalName": "char_1047_halo2"
+    "internalName": "char_1047_halo2",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "A",
+          "level": "E2"
+        },
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "fragile": [
+        {
+          "tier": "A",
+          "level": "E2"
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "bagpipe": {
     "id": "bagpipe",
@@ -5405,7 +5434,7 @@
       "aoe-arts-dps": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         },
         {
           "tier": "S",

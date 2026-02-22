@@ -40,6 +40,10 @@
         "15% fragile on skill activation",
         "E2"
       ],
+      "astgenne_the_lightchaser": [
+        "16% fragile for enemies in her range",
+        "E2"
+      ],
       "thrm_ex": [
         "Explodes and inflicts 30% fragile",
         ""

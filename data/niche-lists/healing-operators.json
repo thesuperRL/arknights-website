@@ -150,6 +150,10 @@
         "Heals during skill",
         ""
       ],
+      "perfumer_the_distilled": [
+        "Heals quickly during skill but also has slight HP drain",
+        ""
+      ],
       "nine_colored_deer": [
         "Heals during skill",
         ""

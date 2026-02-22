@@ -6117,9 +6117,41 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/perfumer_the_distilled.png",
-    "niches": [],
+    "niches": [
+      "damage-buff",
+      "def-buff",
+      "healing-operators",
+      "res-buff"
+    ],
     "cnName": "撷英调香师",
-    "internalName": "char_1022_flwr2"
+    "internalName": "char_1022_flwr2",
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "def-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "vark_ris": {
     "id": "vark_ris",
