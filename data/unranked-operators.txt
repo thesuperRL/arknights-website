@@ -1,36 +1,19 @@
-Unranked Operators (18 total)
-Generated: 2026-02-21T19:50:41.400Z
+Unranked Operators (9 total)
+Generated: 2026-02-22T00:47:11.444Z
 
 === NON-GLOBAL OPERATORS ===
 
 --- Caster ---
-akkord (Akkord)
 mantra (Mantra)
 pramanix_the_prerita (Pramanix the Prerita)
-
---- Defender ---
-cairn (Cairn)
-vetochki (Vetochki)
-
---- Guard ---
-ch_en_the_dawnstreak (Ch'en the Dawnstreak)
-hadiya (Hadiya)
-vark_ris (Varkáris)
-
---- Medic ---
-taraxacum (Taraxacum)
 
 --- Sniper ---
 ju (Ju)
 skybox (Skybox)
 snow_hunter (Snow Hunter)
 
---- Specialist ---
-wang (Wang)
-
 --- Supporter ---
 astgenne_the_lightchaser (Astgenne the Lightchaser)
-nasti (Nasti)
 perfumer_the_distilled (Perfumer the Distilled)
 
 --- Vanguard ---

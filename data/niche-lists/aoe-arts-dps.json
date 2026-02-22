@@ -7,12 +7,24 @@
       "logos": [
         "",
         ""
+      ],
+      "wang": [
+        "E2",
+        ""
       ]
     },
     "S": {
       "eyjafjalla": [
         "One of the best AOE casters as a core caster...",
         ""
+      ],
+      "wang": [
+        "",
+        ""
+      ],
+      "ch_en_the_dawnstreak": [
+        "Adaptable weakness damage",
+        "E2"
       ],
       "hoshiguma_the_breacher": [
         "",
@@ -28,6 +40,10 @@
       ]
     },
     "A": {
+      "mostima": [
+        "Very large AOE arts damage and slow but at a really high SP cost",
+        "E2"
+      ],
       "reed_the_flame_shadow": [
         "",
         "E2"
@@ -50,13 +66,21 @@
       ]
     },
     "B": {
+      "mostima": [
+        "",
+        ""
+      ],
+      "dusk": [
+        "",
+        ""
+      ],
       "pudding": [
         "",
         ""
       ],
-      "mostima": [
-        "Very large AOE arts damage and slow but at a really high SP cost",
-        "E2"
+      "akkord": [
+        "",
+        ""
       ],
       "marcille": [
         "",
@@ -72,19 +96,11 @@
       ]
     },
     "C": {
-      "mostima": [
-        "",
-        ""
-      ],
       "astgenne": [
         "",
         ""
       ],
       "thorns_the_lodestar": [
-        "",
-        ""
-      ],
-      "dusk": [
         "",
         ""
       ]

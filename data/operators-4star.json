@@ -30,9 +30,20 @@
     "class": "Caster",
     "global": false,
     "profileImage": "/images/operators/akkord.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps"
+    ],
     "cnName": "协律",
-    "internalName": "char_4051_akkord"
+    "internalName": "char_4051_akkord",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "ambriel": {
     "id": "ambriel",

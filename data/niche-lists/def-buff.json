@@ -22,9 +22,9 @@
         "",
         ""
       ],
-      "shu": [
-        "Sanctuary",
-        ""
+      "nasti": [
+        "Kinda massive sanctuary for all ranged operators",
+        "E2"
       ],
       "nian": [
         "Passive buff to defenders",
@@ -36,6 +36,10 @@
       ]
     },
     "A": {
+      "shu": [
+        "Sanctuary",
+        ""
+      ],
       "zima": [
         "Buffs Vanguards",
         ""

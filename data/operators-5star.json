@@ -964,9 +964,27 @@
     "class": "Defender",
     "global": false,
     "profileImage": "/images/operators/cairn.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage",
+      "tanking-blocking-operators"
+    ],
     "cnName": "响石",
-    "internalName": "char_4214_cairn"
+    "internalName": "char_4214_cairn",
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "cantabile": {
     "id": "cantabile",
@@ -2189,10 +2207,21 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/hadiya.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "哈蒂娅",
     "jpName": "ハディヤ",
-    "internalName": "char_394_hadiya"
+    "internalName": "char_394_hadiya",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "harmonie": {
     "id": "harmonie",
@@ -5449,7 +5478,10 @@
     "class": "Defender",
     "global": false,
     "profileImage": "/images/operators/vetochki.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "折桠",
     "internalName": "char_4207_branch",
     "synergies": {
@@ -5460,7 +5492,20 @@
         ]
       }
     },
-    "nicheInstances": {}
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    }
   },
   "vulcan": {
     "id": "vulcan",
@@ -5564,7 +5609,7 @@
       ],
       "late-laneholder": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ],
@@ -5636,7 +5681,7 @@
     "nicheInstances": {
       "damage-buff": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -6047,9 +6092,47 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/vark_ris.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "摆渡人",
-    "internalName": "char_4166_varkis"
+    "internalName": "char_4166_varkis",
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Minos Buffer"
+        ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
+    }
   },
   "ju": {
     "id": "ju",
@@ -6069,8 +6152,19 @@
     "class": "Medic",
     "global": false,
     "profileImage": "/images/operators/taraxacum.png",
-    "niches": [],
+    "niches": [
+      "healing-operators"
+    ],
     "cnName": "风絮",
-    "internalName": "char_4222_taraxa"
+    "internalName": "char_4222_taraxa",
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   }
 }

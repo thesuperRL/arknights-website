@@ -1,0 +1,75 @@
+{
+    "name": "Minos-Sargon Team",
+    "description": "A team centered around Minos faction buffs from Titi and Varkaris.",
+    "core": {
+      "Center": [
+        [
+          "Titi",
+          ""
+        ]
+      ]
+    },
+    "optional": {
+      "Minos Buffer": [
+        [
+          "vark_ris",
+          ""
+        ]
+      ],
+      "Supporters": [
+        [
+          "sankta_miksaparato",
+          ""
+        ],
+        [
+          "ch_en_the_holungday",
+          ""
+        ],
+        [
+          "exusiai_the_new_covenant",
+          ""
+        ]
+      ],
+      "Laterano Operators": [
+        [
+          "executor_the_ex_foedere",
+          ""
+        ],
+        [
+          "sankta_miksaparato",
+          ""
+        ],
+        [
+          "exusiai",
+          ""
+        ],
+        [
+          "exusiai_the_new_covenant",
+          ""
+        ],
+        [
+          "archetto",
+          ""
+        ],
+        [
+          "fiammetta",
+          ""
+        ],
+        [
+          "mostima",
+          ""
+        ],
+        [
+          "virtuosa",
+          ""
+        ]
+      ]
+    },
+    "corePointBonus": 0,
+    "optionalPointBonus": 15,
+    "isOnly": false,
+    "coreCountSeparately": false,
+    "optionalCountSeparately": true,
+    "optionalCountMinimum": 0
+  }
+  

@@ -86,6 +86,12 @@
           "Laterano Operators"
         ]
       },
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      },
       "offensive-recovery-archetto": {
         "role": "core",
         "groups": [
@@ -552,6 +558,12 @@
         "groups": [
           "Supporters"
         ]
+      },
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Supporters"
+        ]
       }
     },
     "nicheInstances": {
@@ -829,7 +841,7 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "C",
+          "tier": "B",
           "level": ""
         }
       ],
@@ -1045,6 +1057,12 @@
         "groups": [
           "Laterano Operators"
         ]
+      },
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
       }
     },
     "nicheInstances": {
@@ -1079,6 +1097,12 @@
     "internalName": "char_103_angel",
     "synergies": {
       "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      },
+      "minos": {
         "role": "optional",
         "groups": [
           "Laterano Operators"
@@ -1124,6 +1148,13 @@
     "internalName": "char_1041_angel2",
     "synergies": {
       "laterano": {
+        "role": "optional",
+        "groups": [
+          "Supporters",
+          "Laterano Operators"
+        ]
+      },
+      "minos": {
         "role": "optional",
         "groups": [
           "Supporters",
@@ -1296,6 +1327,12 @@
     "internalName": "char_300_phenxi",
     "synergies": {
       "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      },
+      "minos": {
         "role": "optional",
         "groups": [
           "Laterano Operators"
@@ -2652,7 +2689,7 @@
       ],
       "damage-buff": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -2694,16 +2731,22 @@
         "groups": [
           "Laterano Operators"
         ]
+      },
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
       }
     },
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "B",
+          "tier": "A",
           "level": "E2"
         },
         {
-          "tier": "C",
+          "tier": "B",
           "level": ""
         }
       ],
@@ -2950,11 +2993,43 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/nasti.png",
-    "niches": [],
+    "niches": [
+      "damage-buff",
+      "def-buff",
+      "res-buff",
+      "unconventional-niches"
+    ],
     "cnName": "娜斯提",
     "jpName": "ナスティ",
     "krName": "내스티",
-    "internalName": "char_4212_nasti"
+    "internalName": "char_4212_nasti",
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        }
+      ],
+      "def-buff": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "nearl_the_radiant_knight": {
     "id": "nearl_the_radiant_knight",
@@ -3741,6 +3816,13 @@
           "Supporters",
           "Laterano Operators"
         ]
+      },
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Supporters",
+          "Laterano Operators"
+        ]
       }
     },
     "nicheInstances": {
@@ -3928,7 +4010,7 @@
     "nicheInstances": {
       "def-buff": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ],
@@ -4484,10 +4566,6 @@
       "late-laneholder": [
         {
           "tier": "S",
-          "level": "E2"
-        },
-        {
-          "tier": "A",
           "level": ""
         }
       ],
@@ -4845,6 +4923,12 @@
     "internalName": "char_245_cello",
     "synergies": {
       "laterano": {
+        "role": "optional",
+        "groups": [
+          "Laterano Operators"
+        ]
+      },
+      "minos": {
         "role": "optional",
         "groups": [
           "Laterano Operators"
@@ -5228,6 +5312,12 @@
       ]
     },
     "synergies": {
+      "minos": {
+        "role": "core",
+        "groups": [
+          "Center"
+        ]
+      },
       "sleep": {
         "role": "core",
         "groups": [
@@ -5248,9 +5338,48 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/ch_en_the_dawnstreak.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "arts-dps",
+      "boss-killing",
+      "physical-dps",
+      "silence"
+    ],
     "cnName": "赤刃明霄陈",
-    "internalName": "char_1050_chen3"
+    "internalName": "char_1050_chen3",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "arts-dps": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "silence": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "wang": {
     "id": "wang",
@@ -5259,10 +5388,39 @@
     "class": "Specialist",
     "global": false,
     "profileImage": "/images/operators/wang.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "arts-dps",
+      "stalling"
+    ],
     "cnName": "望",
     "jpName": "ウァン",
     "krName": "왕",
-    "internalName": "char_2027_wang"
+    "internalName": "char_2027_wang",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "SS",
+          "level": ""
+        },
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "arts-dps": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   }
 }
