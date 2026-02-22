@@ -86,12 +86,6 @@
           "Laterano Operators"
         ]
       },
-      "minos": {
-        "role": "optional",
-        "groups": [
-          "Laterano Operators"
-        ]
-      },
       "offensive-recovery-archetto": {
         "role": "core",
         "groups": [
@@ -587,12 +581,6 @@
         "groups": [
           "Supporters"
         ]
-      },
-      "minos": {
-        "role": "optional",
-        "groups": [
-          "Supporters"
-        ]
       }
     },
     "nicheInstances": {
@@ -1056,7 +1044,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "executor_the_ex_foedere": {
     "id": "executor_the_ex_foedere",
@@ -1082,12 +1077,6 @@
         ]
       },
       "laterano": {
-        "role": "optional",
-        "groups": [
-          "Laterano Operators"
-        ]
-      },
-      "minos": {
         "role": "optional",
         "groups": [
           "Laterano Operators"
@@ -1126,12 +1115,6 @@
     "internalName": "char_103_angel",
     "synergies": {
       "laterano": {
-        "role": "optional",
-        "groups": [
-          "Laterano Operators"
-        ]
-      },
-      "minos": {
         "role": "optional",
         "groups": [
           "Laterano Operators"
@@ -1177,13 +1160,6 @@
     "internalName": "char_1041_angel2",
     "synergies": {
       "laterano": {
-        "role": "optional",
-        "groups": [
-          "Supporters",
-          "Laterano Operators"
-        ]
-      },
-      "minos": {
         "role": "optional",
         "groups": [
           "Supporters",
@@ -1360,12 +1336,6 @@
         "groups": [
           "Laterano Operators"
         ]
-      },
-      "minos": {
-        "role": "optional",
-        "groups": [
-          "Laterano Operators"
-        ]
       }
     },
     "nicheInstances": {
@@ -1463,7 +1433,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "gladiia": {
     "id": "gladiia",
@@ -2619,6 +2596,12 @@
     "krName": "만트라",
     "internalName": "char_4204_mantra",
     "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      },
       "nervous-impairment": {
         "role": "optional",
         "groups": [
@@ -2756,12 +2739,6 @@
     "internalName": "char_213_mostma",
     "synergies": {
       "laterano": {
-        "role": "optional",
-        "groups": [
-          "Laterano Operators"
-        ]
-      },
-      "minos": {
         "role": "optional",
         "groups": [
           "Laterano Operators"
@@ -3013,7 +2990,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "nasti": {
     "id": "nasti",
@@ -3338,7 +3322,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "core",
+        "groups": [
+          "Minos Attack Buff"
+        ]
+      }
+    }
   },
   "passenger": {
     "id": "passenger",
@@ -3363,7 +3354,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "penance": {
     "id": "penance",
@@ -3453,7 +3451,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "phantom": {
     "id": "phantom",
@@ -3840,13 +3845,6 @@
     "internalName": "char_4194_rmixer",
     "synergies": {
       "laterano": {
-        "role": "optional",
-        "groups": [
-          "Supporters",
-          "Laterano Operators"
-        ]
-      },
-      "minos": {
         "role": "optional",
         "groups": [
           "Supporters",
@@ -4961,12 +4959,6 @@
           "Laterano Operators"
         ]
       },
-      "minos": {
-        "role": "optional",
-        "groups": [
-          "Laterano Operators"
-        ]
-      },
       "necrosis": {
         "role": "core",
         "groups": [
@@ -5348,7 +5340,7 @@
       "minos": {
         "role": "core",
         "groups": [
-          "Center"
+          "Minos/Sargon ASPD Buff"
         ]
       },
       "sleep": {

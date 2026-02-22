@@ -2,73 +2,79 @@
     "name": "Minos-Sargon Team",
     "description": "A team centered around Minos faction buffs from Titi and Varkaris.",
     "core": {
-      "Center": [
+      "Minos/Sargon ASPD Buff": [
         [
           "titi",
           ""
         ]
-      ]
-    },
-    "optional": {
-      "Minos Buffer": [
+      ],
+      "Minos Damage Buffer": [
         [
           "vark_ris",
           ""
         ]
       ],
-      "Supporters": [
+      "Minos Attack Buff": [
         [
-          "sankta_miksaparato",
-          ""
-        ],
-        [
-          "ch_en_the_holungday",
-          ""
-        ],
-        [
-          "exusiai_the_new_covenant",
-          ""
-        ]
-      ],
-      "Laterano Operators": [
-        [
-          "executor_the_ex_foedere",
-          ""
-        ],
-        [
-          "sankta_miksaparato",
-          ""
-        ],
-        [
-          "exusiai",
-          ""
-        ],
-        [
-          "exusiai_the_new_covenant",
-          ""
-        ],
-        [
-          "archetto",
-          ""
-        ],
-        [
-          "fiammetta",
-          ""
-        ],
-        [
-          "mostima",
-          ""
-        ],
-        [
-          "virtuosa",
+          "pallas",
           ""
         ]
       ]
     },
-    "corePointBonus": 0,
-    "optionalPointBonus": 15,
+    "optional": {
+      "Minos Operators (Worth Buffing)": [
+        [
+          "perfumer_the_distilled",
+          ""
+        ],
+        [
+          "perfumer",
+          ""
+        ]
+      ],
+      "Sargon Operators (Worth Buffing)": [
+        [
+          "pepe",
+          ""
+        ],
+        [
+          "narantuya",
+          ""
+        ],
+        [
+          "eunectes",
+          ""
+        ],
+        [
+          "papyrus",
+          ""
+        ],
+        [
+          "passenger",
+          ""
+        ],
+        [
+          "philae",
+          ""
+        ],
+        [
+          "gavial_the_invincible",
+          ""
+        ],
+        [
+          "mantra",
+          ""
+        ],
+        [
+          "liskarm",
+          ""
+        ]
+      ]
+    },
+    "corePointBonus": 75,
+    "optionalPointBonus": 20,
     "isOnly": false,
-    "coreCountSeparately": false,
+    "coreCountSeparately": true,
     "optionalCountSeparately": true,
     "optionalCountMinimum": 0
   }

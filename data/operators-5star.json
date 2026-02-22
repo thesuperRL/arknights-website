@@ -3183,7 +3183,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "lucilla": {
     "id": "lucilla",
@@ -3885,7 +3892,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "philae": {
     "id": "philae",
@@ -3904,6 +3918,12 @@
     "krName": "필라에",
     "internalName": "char_4148_philae",
     "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      },
       "necrosis": {
         "role": "optional",
         "groups": [
@@ -6151,7 +6171,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Minos Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "vark_ris": {
     "id": "vark_ris",
@@ -6189,9 +6216,9 @@
     },
     "synergies": {
       "minos": {
-        "role": "optional",
+        "role": "core",
         "groups": [
-          "Minos Buffer"
+          "Minos Damage Buffer"
         ]
       },
       "offensive-recovery-archetto": {
