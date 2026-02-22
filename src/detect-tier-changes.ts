@@ -26,14 +26,10 @@ interface Changelog {
   entries: ChangelogEntry[];
 }
 
-const NICHE_LISTS_DIR = path.join(__dirname, '../data/niche-lists');
-const CHANGELOG_PATH = path.join(__dirname, '../data/tier-changelog.json');
-const OPERATORS_FILES = [
-  path.join(__dirname, '../data/operators-6star.json'),
-  path.join(__dirname, '../data/operators-5star.json'),
-  path.join(__dirname, '../data/operators-4star.json'),
-  path.join(__dirname, '../data/operators-3star.json'),
-];
+const DATA_DIR = path.join(__dirname, '../data');
+const NICHE_LISTS_DIR = path.join(DATA_DIR, 'niche-lists');
+const CHANGELOG_PATH = path.join(DATA_DIR, 'tier-changelog.json');
+const OPERATORS_FILES = [1, 2, 3, 4, 5, 6].map(r => path.join(DATA_DIR, `operators-${r}star.json`));
 
 function loadOperatorNames(): Record<string, string> {
   const names: Record<string, string> = {};
@@ -70,12 +66,23 @@ function extractTiers(nicheList: NicheList): Map<string, { tier: string; level: 
   return tiers;
 }
 
+function getRepoRoot(): string {
+  try {
+    return execSync('git rev-parse --show-toplevel', { encoding: 'utf-8' }).trim();
+  } catch {
+    return path.resolve(__dirname, '..');
+  }
+}
+
 function getCommittedFileContent(filePath: string): string | null {
   try {
-    const relativePath = path.relative(process.cwd(), filePath);
-    const result = execSync(`git show HEAD:"${relativePath}"`, { 
+    const repoRoot = getRepoRoot();
+    const relativePath = path.relative(repoRoot, filePath);
+    if (relativePath.startsWith('..')) return null;
+    const result = execSync(`git show HEAD:"${relativePath}"`, {
       encoding: 'utf-8',
-      stdio: ['pipe', 'pipe', 'pipe']
+      stdio: ['pipe', 'pipe', 'pipe'],
+      cwd: repoRoot,
     });
     return result;
   } catch {
@@ -164,13 +171,22 @@ function detectChanges(): ChangelogEntry[] {
 
 function loadChangelog(): Changelog {
   if (fs.existsSync(CHANGELOG_PATH)) {
-    return JSON.parse(fs.readFileSync(CHANGELOG_PATH, 'utf-8'));
+    try {
+      const data = JSON.parse(fs.readFileSync(CHANGELOG_PATH, 'utf-8'));
+      return Array.isArray(data.entries) ? data : { entries: [] };
+    } catch {
+      return { entries: [] };
+    }
   }
   return { entries: [] };
 }
 
 function saveChangelog(changelog: Changelog): void {
-  fs.writeFileSync(CHANGELOG_PATH, JSON.stringify(changelog, null, 2));
+  const dir = path.dirname(CHANGELOG_PATH);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  fs.writeFileSync(CHANGELOG_PATH, JSON.stringify(changelog, null, 2), 'utf-8');
 }
 
 function main(): void {

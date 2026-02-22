@@ -4794,9 +4794,34 @@
     "class": "Sniper",
     "global": false,
     "profileImage": "/images/operators/skybox.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "physical-dps",
+      "silence"
+    ],
     "cnName": "天空盒",
-    "internalName": "char_4213_skybx"
+    "internalName": "char_4213_skybx",
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "silence": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "skyfire": {
     "id": "skyfire",
@@ -4829,9 +4854,20 @@
     "class": "Sniper",
     "global": false,
     "profileImage": "/images/operators/snow_hunter.png",
-    "niches": [],
+    "niches": [
+      "physical-dps"
+    ],
     "cnName": "雪猎",
-    "internalName": "char_4211_snhunt"
+    "internalName": "char_4211_snhunt",
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "snowsant": {
     "id": "snowsant",
@@ -6141,9 +6177,27 @@
     "class": "Sniper",
     "global": false,
     "profileImage": "/images/operators/ju.png",
-    "niches": [],
+    "niches": [
+      "physical-dps",
+      "sp-battery"
+    ],
     "cnName": "矩",
-    "internalName": "char_4221_ju"
+    "internalName": "char_4221_ju",
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "sp-battery": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "taraxacum": {
     "id": "taraxacum",

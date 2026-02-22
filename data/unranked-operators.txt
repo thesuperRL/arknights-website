@@ -1,5 +1,5 @@
-Unranked Operators (9 total)
-Generated: 2026-02-22T00:47:11.444Z
+Unranked Operators (5 total)
+Generated: 2026-02-22T01:03:25.398Z
 
 === NON-GLOBAL OPERATORS ===
 
@@ -7,15 +7,9 @@ Generated: 2026-02-22T00:47:11.444Z
 mantra (Mantra)
 pramanix_the_prerita (Pramanix the Prerita)
 
---- Sniper ---
-ju (Ju)
-skybox (Skybox)
-snow_hunter (Snow Hunter)
-
 --- Supporter ---
 astgenne_the_lightchaser (Astgenne the Lightchaser)
 perfumer_the_distilled (Perfumer the Distilled)
 
 --- Vanguard ---
 silverash_the_reignfrost (SilverAsh the Reignfrost)
-snegurochka (Snegurochka)

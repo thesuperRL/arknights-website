@@ -1704,9 +1704,34 @@
     "class": "Vanguard",
     "global": false,
     "profileImage": "/images/operators/snegurochka.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "stalling"
+    ],
     "cnName": "冬时",
-    "internalName": "char_4208_wintim"
+    "internalName": "char_4208_wintim",
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
+    }
   },
   "sussurro": {
     "id": "sussurro",

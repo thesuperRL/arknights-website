@@ -345,18 +345,31 @@ app.get('/api/trash-operators', (_req, res) => {
   }
 });
 
-// API route to get tier changelog (enriches entries with global flag for blurring non-global names/justifications)
+// Changelog: single source of truth is data/tier-changelog.json (updated by detect-tier-changes when niche lists change)
+function getChangelogPath(): string {
+  const fromDir = path.join(__dirname, '..', 'data', 'tier-changelog.json');
+  if (fs.existsSync(fromDir)) return fromDir;
+  const fromCwd = path.join(process.cwd(), 'data', 'tier-changelog.json');
+  return fromCwd;
+}
+
 app.get('/api/changelog', (_req, res) => {
   try {
-    const filePath = path.join(__dirname, '../data', 'tier-changelog.json');
+    const filePath = getChangelogPath();
     if (!fs.existsSync(filePath)) {
       res.json({ entries: [] });
       return;
     }
 
     const content = fs.readFileSync(filePath, 'utf-8');
-    const changelog = JSON.parse(content) as { entries: Array<Record<string, unknown>> };
-    const entries = changelog.entries || [];
+    let changelog: { entries: Array<Record<string, unknown>> };
+    try {
+      changelog = JSON.parse(content);
+    } catch {
+      res.json({ entries: [] });
+      return;
+    }
+    const entries = Array.isArray(changelog.entries) ? changelog.entries : [];
 
     // Load operator global status from all operator files
     const operatorGlobal: Record<string, boolean> = {};

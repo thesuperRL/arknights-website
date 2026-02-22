@@ -145,8 +145,9 @@ const ChangelogPage: React.FC = () => {
         <Link to="/" className="back-button">← Back to Home</Link>
         <h1>Tier Changelog</h1>
         <p className="changelog-intro">
-          A history of all operator tier changes across niche lists. Each entry shows the operator, 
-          the affected niche, and the tier change with optional justification.
+          History of operator tier changes from <code>data/tier-changelog.json</code>. Entries are
+          recorded when niche lists change (run <code>npm run update:ranked</code> or commit). Add
+          justifications in the JSON file before committing.
         </p>
       </div>
 
