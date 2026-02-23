@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useTranslation } from '../translations';
 import Stars from '../components/Stars';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { apiFetch, getImageUrl } from '../api';
@@ -46,11 +47,19 @@ interface OperatorData {
   synergies?: SynergyEntry[];
 }
 
-// No tier colors needed anymore since we removed the tier system
+// Routes for special tier lists (not under /niche-list/:niche). Keys must match API nicheFilename.
+const SPECIAL_LIST_ROUTES: Record<string, string> = {
+  'trash-operators': '/trash-operators',
+  'free': '/free-operators',
+  'global-range': '/global-range-operators',
+  'unconventional-niches': '/unconventional-niches-operators',
+  'low-rarity': '/low-rarity-operators'
+};
 
 const OperatorPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { language } = useLanguage();
+  const { t, getNicheName, translateClass } = useTranslation();
   const [data, setData] = useState<OperatorData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -71,23 +80,23 @@ const OperatorPage: React.FC = () => {
         : `/api/operators/${encodeURIComponent(operatorId)}`;
       const response = await apiFetch(url);
       if (!response.ok) {
-        throw new Error('Failed to load operator');
+        throw new Error(t('operatorPage.notFound'));
       }
       const operatorData = await response.json() as OperatorData;
       setData(operatorData);
       setLoading(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load operator');
+      setError(err instanceof Error ? err.message : t('operatorPage.notFound'));
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <div className="loading">Loading operator...</div>;
+    return <div className="loading">{t('operatorPage.loading')}</div>;
   }
 
   if (error || !data) {
-    return <div className="error">{error || 'Operator not found'}</div>;
+    return <div className="error">{error || t('operatorPage.notFound')}</div>;
   }
 
   const { operator, rankings = [], synergies = [] } = data;
@@ -95,7 +104,7 @@ const OperatorPage: React.FC = () => {
   return (
     <div className="operator-page">
       <Link to="/all-operators" className="back-button">
-        ← Back to All Operators
+        {t('operatorPage.backToAllOperators')}
       </Link>
 
       <div className="operator-header">
@@ -118,9 +127,9 @@ const OperatorPage: React.FC = () => {
             <div className="operator-rarity">
               <Stars rarity={operator.rarity} size="large" />
             </div>
-            <div className="operator-class">{operator.class}</div>
+            <div className="operator-class">{translateClass(operator.class)}</div>
             <div className={`operator-global ${operator.global ? 'global-available' : 'global-unavailable'}`}>
-              {operator.global ? '✓ Global Available' : '✗ Global Unavailable'}
+              {operator.global ? t('operatorPage.globalAvailable') : t('operatorPage.globalUnavailable')}
             </div>
           </div>
         </div>
@@ -129,32 +138,34 @@ const OperatorPage: React.FC = () => {
       {rankings.length > 0 ? (
         <div className="rankings-section">
           <div className="rankings-section-header">
-            <h2>Niches</h2>
+            <h2>{t('operatorPage.niches')}</h2>
             <label className="operator-page-toggle">
               <input
                 type="checkbox"
                 checked={showLevelOverlays}
                 onChange={(e) => setShowLevelOverlays(e.target.checked)}
               />
-              <span>Show level badges (E2 / module)</span>
+              <span>{t('nicheList.showLevelBadges')}</span>
             </label>
           </div>
           <div className="rankings-grid">
             {rankings.map((nicheRanking, nicheIndex) => {
               // Use nicheFilename if available, otherwise fall back to generated filename
               const nicheFilename = nicheRanking.nicheFilename || nicheRanking.niche.toLowerCase().replace(/\s+/g, '-');
+              // Special lists use their own routes; normal niches use /niche-list/:niche
+              const linkTo = SPECIAL_LIST_ROUTES[nicheFilename] ?? `/niche-list/${encodeURIComponent(nicheFilename)}`;
               // API returns all instances when fetched with allLevels=1 (toggle on), peak-only otherwise.
               const instances = nicheRanking.instances || [];
 
               return (
                 <div key={nicheIndex} className="niche-group-card">
-                  <Link to={`/niche-list/${encodeURIComponent(nicheFilename)}`} className="ranking-niche-link">
-                    <div className="ranking-niche">{nicheRanking.niche}</div>
+                  <Link to={linkTo} className="ranking-niche-link">
+                    <div className="ranking-niche">{getNicheName(nicheFilename, nicheRanking.niche)}</div>
                   </Link>
                   <div className="niche-instances">
                     {instances.map((instance, instanceIndex) => {
                       // Don't show tier for special lists (Unconventional Niches, Free Operators, etc.)
-                      const isSpecialList = ['Unconventional Niches', 'Free Operators', 'Global Range Operators', 'Good Low-Rarity Operators'].includes(nicheRanking.niche);
+                      const isSpecialList = ['unconventional-niches', 'free', 'global-range', 'low-rarity', 'trash-operators'].includes(nicheFilename);
                       
                       return (
                       <div key={instanceIndex} className="niche-instance">
@@ -199,32 +210,35 @@ const OperatorPage: React.FC = () => {
         </div>
       ) : (
         <div className="no-rankings">
-          <p>This operator is not listed in any niche.</p>
+          <p>{t('operatorPage.noRankings')}</p>
         </div>
       )}
 
       {synergies.length > 0 && (
         <div className="synergies-section">
-          <h2>Synergies</h2>
+          <h2>{t('operatorPage.synergies')}</h2>
           <div className="synergies-grid">
             {synergies.map((synergyEntry, index) => (
               <div key={index} className="synergy-card">
                 <Link to={`/synergy/${encodeURIComponent(synergyEntry.filename)}`} className="synergy-name-link">
-                  <div className="synergy-name">{synergyEntry.synergy}</div>
+                  <div className="synergy-name">{getNicheName(synergyEntry.filename, synergyEntry.synergy)}</div>
                 </Link>
                 <div className={`synergy-role role-${synergyEntry.role}`}>
-                  {synergyEntry.role === 'core' ? 'Core' : 'Optional'}
+                  {synergyEntry.role === 'core' ? t('operatorPage.coreRole') : t('operatorPage.optionalRole')}
                 </div>
                 <div className="synergy-groups">
                   {(() => {
                     // Handle both new format (groups) and old format (group) for backward compatibility
                     const groups = synergyEntry.groups || (synergyEntry.group ? [synergyEntry.group] : []);
-                    return groups.map((group, groupIndex) => (
-                      <span key={groupIndex} className="synergy-group">
-                        {group}
-                        {groupIndex < groups.length - 1 && ', '}
-                      </span>
-                    ));
+                    return groups.map((group, groupIndex) => {
+                      const label = translateClass(group).startsWith('class_') ? group : translateClass(group);
+                      return (
+                        <span key={groupIndex} className="synergy-group">
+                          {label}
+                          {groupIndex < groups.length - 1 && ', '}
+                        </span>
+                      );
+                    });
                   })()}
                 </div>
               </div>

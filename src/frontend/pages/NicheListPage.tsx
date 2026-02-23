@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { apiFetch, getImageUrl } from '../api';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
+import { useTranslation } from '../translations';
 import '../components/OperatorCardStandard.css';
 
 interface Operator {
@@ -24,17 +25,25 @@ interface OperatorListEntry {
   operator: Operator | null;
 }
 
+interface RelatedNicheResolved {
+  filename: string;
+  displayName: string;
+}
+
 interface OperatorList {
   niche: string;
   description: string;
   operators: OperatorListEntry[];
   relatedNiches?: string[];
+  /** Resolved by API: filename + displayName for links and translations */
+  relatedNichesResolved?: RelatedNicheResolved[];
 }
 
 const NicheListPage: React.FC = () => {
   const { niche } = useParams<{ niche: string }>();
   const { language } = useLanguage();
   const { user } = useAuth();
+  const { t, translateClass, translateRating, vocab, getNicheName, getNicheDescription } = useTranslation();
   const [operatorList, setOperatorList] = useState<OperatorList | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -74,23 +83,23 @@ const NicheListPage: React.FC = () => {
         : `/api/niche-lists/${encodeURIComponent(nicheName)}`;
       const response = await apiFetch(url);
       if (!response.ok) {
-        throw new Error('Failed to load operator list');
+        throw new Error(t('nicheList.loadError'));
       }
       const data = await response.json() as OperatorList;
       setOperatorList(data);
       setLoading(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load operator list');
+      setError(err instanceof Error ? err.message : t('nicheList.loadError'));
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <div className="loading">Loading operator list...</div>;
+    return <div className="loading">{t('nicheList.loading')}</div>;
   }
 
   if (error || !operatorList) {
-    return <div className="error">{error || 'Operator list not found'}</div>;
+    return <div className="error">{error || t('nicheList.notFound')}</div>;
   }
 
   // When level badges are on we fetch with allLevels=1 so operators array has every evaluation.
@@ -130,33 +139,36 @@ const NicheListPage: React.FC = () => {
     <div className="niche-list-page">
       <div className="niche-list-header">
         <Link to="/tier-lists" className="back-button">
-          ← Back to Tier Lists
+          {t('nicheList.backToTierLists')}
         </Link>
-        <h1>{operatorList.niche}</h1>
-        <p>{operatorList.description || ''}</p>
+        <h1>{niche ? getNicheName(niche, operatorList.niche) : operatorList.niche}</h1>
+        <p>{niche ? getNicheDescription(niche, operatorList.description || '') : (operatorList.description || '')}</p>
         <label className="niche-list-toggle">
           <input
             type="checkbox"
             checked={showLevelOverlays}
             onChange={(e) => setShowLevelOverlays(e.target.checked)}
           />
-          <span>Show level badges (E2 / module)</span>
+          <span>{t('nicheList.showLevelBadges')}</span>
         </label>
       </div>
 
-      {operatorList.relatedNiches && operatorList.relatedNiches.length > 0 && (
+      {((operatorList.relatedNichesResolved && operatorList.relatedNichesResolved.length > 0) ||
+        (operatorList.relatedNiches && operatorList.relatedNiches.length > 0)) && (
         <div className="related-niches-section">
-          <h2>Related Niches</h2>
+          <h2>{t('nicheList.relatedNiches')}</h2>
           <div className="related-niches-list">
-            {operatorList.relatedNiches.map((relatedNiche) => (
-              <Link
-                key={relatedNiche}
-                to={`/niche-list/${encodeURIComponent(relatedNiche)}`}
-                className="related-niche-link"
-              >
-                {relatedNiche}
-              </Link>
-            ))}
+            {(operatorList.relatedNichesResolved ?? operatorList.relatedNiches!.map((displayName) => ({ filename: displayName, displayName }))).map(
+              (item: RelatedNicheResolved) => (
+                <Link
+                  key={item.filename}
+                  to={`/niche-list/${encodeURIComponent(item.filename)}`}
+                  className="related-niche-link"
+                >
+                  {getNicheName(item.filename, item.displayName)}
+                </Link>
+              )
+            )}
           </div>
         </div>
       )}
@@ -176,7 +188,7 @@ const NicheListPage: React.FC = () => {
             >
               {entry.operator ? (
                 <>
-                  <div className={`operator-rating rating-${entry.rating}`}>{entry.rating}</div>
+                  <div className={`operator-rating rating-${entry.rating}`}>{translateRating(entry.rating)}</div>
                   <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
                     <div className="operator-image-container">
                       <img
@@ -223,7 +235,7 @@ const NicheListPage: React.FC = () => {
                     <div className="operator-name">{getOperatorName(entry.operator, language)}</div>
                   </Link>
                   <div className="operator-class">
-                    {entry.operator.class} • {entry.operator.rarity}★
+                    {translateClass(entry.operator.class)} • {entry.operator.rarity}{vocab('star')}
                   </div>
                   {entry.note && (
                     <div className="operator-note-tooltip">{entry.note}</div>
@@ -231,9 +243,9 @@ const NicheListPage: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <div className={`operator-rating rating-${entry.rating}`}>{entry.rating}</div>
+                  <div className={`operator-rating rating-${entry.rating}`}>{translateRating(entry.rating)}</div>
                   <div className="operator-name">{entry.operatorId}</div>
-                  <div className="operator-class">Operator not found</div>
+                  <div className="operator-class">{vocab('operator_not_found')}</div>
                 </>
               )}
             </div>

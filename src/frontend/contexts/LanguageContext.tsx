@@ -23,14 +23,15 @@ interface LanguageProviderProps {
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
-    // Load from localStorage or default to English
-    const saved = localStorage.getItem('operatorLanguage');
+    // App language: UI and operator names. Prefer appLanguage; fall back to legacy operatorLanguage.
+    const saved =
+      localStorage.getItem('appLanguage') || localStorage.getItem('operatorLanguage');
     return (saved as Language) || 'en';
   });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('operatorLanguage', lang);
+    localStorage.setItem('appLanguage', lang);
   };
 
   return (

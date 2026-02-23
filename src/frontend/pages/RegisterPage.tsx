@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { apiFetch } from '../api';
+import { useTranslation } from '../translations';
 import './AuthPage.css';
 
 const RegisterPage: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,13 +29,13 @@ const RegisterPage: React.FC = () => {
 
     // Validation
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('auth.passwordsNoMatch'));
       setLoading(false);
       return;
     }
 
     if (password.length < 8) {
-      setError('Password must be at least 8 characters long');
+      setError(t('auth.passwordTooShort'));
       setLoading(false);
       return;
     }
@@ -48,7 +50,7 @@ const RegisterPage: React.FC = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Registration failed');
+        throw new Error(data.error || t('auth.registerFailed'));
       }
 
       // Refresh auth state
@@ -57,7 +59,7 @@ const RegisterPage: React.FC = () => {
       // Redirect to profile page
       navigate('/profile');
     } catch (err: any) {
-      setError(err.message || 'Registration failed');
+      setError(err.message || t('auth.registerFailed'));
     } finally {
       setLoading(false);
     }
@@ -66,16 +68,14 @@ const RegisterPage: React.FC = () => {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h1>Create Account</h1>
-        <p className="login-description">
-          Create a local account to access the website features.
-        </p>
+        <h1>{t('auth.createAccount')}</h1>
+        <p className="login-description">{t('auth.registerDesc')}</p>
 
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleRegister} className="login-form">
           <div className="form-group">
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email">{t('auth.email')}:</label>
             <input
               id="email"
               type="email"
@@ -87,7 +87,7 @@ const RegisterPage: React.FC = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">{t('auth.password')}:</label>
             <input
               id="password"
               type="password"
@@ -98,10 +98,10 @@ const RegisterPage: React.FC = () => {
               required
               minLength={8}
             />
-            <p className="form-hint">Password must be at least 8 characters long</p>
+            <p className="form-hint">{t('auth.passwordTooShort')}</p>
           </div>
           <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password:</label>
+            <label htmlFor="confirmPassword">{t('auth.confirmPassword')}:</label>
             <input
               id="confirmPassword"
               type="password"
@@ -114,12 +114,12 @@ const RegisterPage: React.FC = () => {
             />
           </div>
           <button type="submit" className="login-button" disabled={loading}>
-            {loading ? 'Creating Account...' : 'Register'}
+            {loading ? t('auth.creatingAccount') : t('auth.submitRegister')}
           </button>
         </form>
 
         <p className="login-info" style={{ marginTop: '1.5rem' }}>
-          Already have an account? <Link to="/login" style={{ color: '#5aee90' }}>Login here</Link>
+          {t('auth.haveAccount')} <Link to="/login" style={{ color: '#5aee90' }}>{t('auth.loginHere')}</Link>
         </p>
       </div>
     </div>

@@ -6,6 +6,7 @@ import Stars from '../components/Stars';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { apiFetch, getImageUrl } from '../api';
+import { useTranslation } from '../translations';
 import '../components/OperatorCardCollection.css';
 import './UserProfilePage.css';
 
@@ -33,6 +34,7 @@ interface Operator {
 const UserProfilePage: React.FC = () => {
   const { logout: authLogout } = useAuth();
   const { language } = useLanguage();
+  const { t, translateClass, vocab, interpolate } = useTranslation();
   const navigate = useNavigate();
   const [user, setUser] = useState<UserData | null>(null);
   const [operators, setOperators] = useState<Record<string, Operator>>({});
@@ -285,7 +287,7 @@ const UserProfilePage: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="loading">Loading profile...</div>;
+    return <div className="loading">{t('profile.loading')}</div>;
   }
 
   if (error) {
@@ -306,15 +308,15 @@ const UserProfilePage: React.FC = () => {
           <h1>{user.nickname}</h1>
           <div className="profile-details">
             <span className="profile-detail">
-              <strong>Operators:</strong> {user.ownedOperators.length}
+              <strong>{t('profile.operatorsLabel')}:</strong> {user.ownedOperators.length}
             </span>
             <Link to="/team-builder" className="team-builder-link">
-              🎯 Team Builder
+              🎯 {t('profile.teamBuilder')}
             </Link>
           </div>
         </div>
         <button onClick={handleLogout} className="logout-button">
-          Logout
+          {t('profile.logout')}
         </button>
       </div>
 
@@ -322,35 +324,35 @@ const UserProfilePage: React.FC = () => {
         <div className="search-box">
           <input
             type="text"
-            placeholder="Search operators..."
+            placeholder={t('common.searchOperators')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
         </div>
         <div className="filter-group">
-          <label>Rarity:</label>
+          <label>{t('common.rarity')}:</label>
           <select
             value={filterRarity || ''}
             onChange={(e) => setFilterRarity(e.target.value ? parseInt(e.target.value) : null)}
             className="filter-select"
           >
-            <option value="">All</option>
+            <option value="">{t('common.all')}</option>
             {[6, 5, 4, 3, 2, 1].map(rarity => (
-              <option key={rarity} value={rarity}>{rarity}★</option>
+              <option key={rarity} value={rarity}>{rarity}{vocab('star')}</option>
             ))}
           </select>
         </div>
         <div className="filter-group">
-          <label>Class:</label>
+          <label>{t('common.class')}:</label>
           <select
             value={filterClass || ''}
             onChange={(e) => setFilterClass(e.target.value || null)}
             className="filter-select"
           >
-            <option value="">All</option>
+            <option value="">{t('common.all')}</option>
             {uniqueClasses.map(className => (
-              <option key={className} value={className}>{className}</option>
+              <option key={className} value={className}>{translateClass(className)}</option>
             ))}
           </select>
         </div>
@@ -363,7 +365,7 @@ const UserProfilePage: React.FC = () => {
             }}
             className="clear-filters"
           >
-            Clear Filters
+            {t('common.clearFilters')}
           </button>
         )}
         <button
@@ -381,19 +383,19 @@ const UserProfilePage: React.FC = () => {
             transition: 'all 0.3s'
           }}
         >
-          + Add Operators
+          {t('profile.addOperators')}
         </button>
       </div>
 
       {user.ownedOperators.length > 0 ? (
         <>
           <div className="operators-count">
-            Showing {filteredOperators.length} of {user.ownedOperators.length} operators
+            {interpolate(t('common.showingCount'), { count: filteredOperators.length, total: user.ownedOperators.length })}
           </div>
 
           <div className="operators-grid operator-cards-collection">
             {filteredOperators.length === 0 ? (
-              <div className="no-results">No operators found matching your filters.</div>
+              <div className="no-results">{t('profile.noMatch')}</div>
             ) : (
               filteredOperators.map((operator) => {
                 const rarityClass = getRarityClass(operator.rarity);
@@ -419,7 +421,7 @@ const UserProfilePage: React.FC = () => {
                       <div className="operator-name">{getOperatorName(operator, language)}</div>
                       <div className="operator-meta">
                         <Stars rarity={operator.rarity} size="small" />
-                        <span className="operator-class">{operator.class}</span>
+                        <span className="operator-class">{translateClass(operator.class)}</span>
                       </div>
                     </div>
                   </Link>
@@ -589,7 +591,7 @@ const UserProfilePage: React.FC = () => {
                 >
                   <option value="">All</option>
                   {[6, 5, 4, 3, 2, 1].map(rarity => (
-                    <option key={rarity} value={rarity}>{rarity}★</option>
+                    <option key={rarity} value={rarity}>{rarity}{vocab('star')}</option>
                   ))}
                 </select>
               </div>
@@ -639,7 +641,7 @@ const UserProfilePage: React.FC = () => {
                       <div className="operator-name">{getOperatorName(operator, language)}</div>
                       <div className="operator-meta">
                         <Stars rarity={operator.rarity} size="small" />
-                        <span className="operator-class">{operator.class}</span>
+                        <span className="operator-class">{translateClass(operator.class)}</span>
                       </div>
                     </div>
                     <div

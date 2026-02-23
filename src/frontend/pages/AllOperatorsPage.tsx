@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { apiFetch, getImageUrl } from '../api';
+import { useTranslation } from '../translations';
 import '../components/OperatorCardStandard.css';
 
 interface Operator {
@@ -24,6 +25,7 @@ interface Operator {
 const AllOperatorsPage: React.FC = () => {
   const { user } = useAuth();
   const { language } = useLanguage();
+  const { t, vocab, translateClass, interpolate } = useTranslation();
   const [operators, setOperators] = useState<Record<string, Operator>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,7 +59,7 @@ const AllOperatorsPage: React.FC = () => {
       setOperators(allOperators);
       setLoading(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load operators');
+      setError(err instanceof Error ? err.message : t('allOperators.loadError'));
       setLoading(false);
     }
   };
@@ -121,7 +123,7 @@ const AllOperatorsPage: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="loading">Loading operators...</div>;
+    return <div className="loading">{t('allOperators.loading')}</div>;
   }
 
   if (error) {
@@ -134,43 +136,43 @@ const AllOperatorsPage: React.FC = () => {
   return (
     <div className="all-operators-page">
       <div className="page-header">
-        <h1>All Operators</h1>
-        <p>Browse all {Object.keys(operators).length} operators</p>
+        <h1>{t('allOperators.title')}</h1>
+        <p>{interpolate(t('allOperators.browseCount'), { count: Object.keys(operators).length })}</p>
       </div>
 
       <div className="filters">
         <div className="search-box">
           <input
             type="text"
-            placeholder="Search operators..."
+            placeholder={t('common.searchOperators')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
         </div>
         <div className="filter-group">
-          <label>Rarity:</label>
+          <label>{t('common.rarity')}:</label>
           <select
             value={filterRarity || ''}
             onChange={(e) => setFilterRarity(e.target.value ? parseInt(e.target.value) : null)}
             className="filter-select"
           >
-            <option value="">All</option>
+            <option value="">{t('common.all')}</option>
             {[6, 5, 4, 3, 2, 1].map(rarity => (
               <option key={rarity} value={rarity}>{rarity}★</option>
             ))}
           </select>
         </div>
         <div className="filter-group">
-          <label>Class:</label>
+          <label>{t('common.class')}:</label>
           <select
             value={filterClass || ''}
             onChange={(e) => setFilterClass(e.target.value || null)}
             className="filter-select"
           >
-            <option value="">All</option>
+            <option value="">{t('common.all')}</option>
             {uniqueClasses.map(className => (
-              <option key={className} value={className}>{className}</option>
+              <option key={className} value={className}>{translateClass(className)}</option>
             ))}
           </select>
         </div>
@@ -183,18 +185,18 @@ const AllOperatorsPage: React.FC = () => {
             }}
             className="clear-filters"
           >
-            Clear Filters
+            {t('common.clearFilters')}
           </button>
         )}
       </div>
 
       <div className="operators-count">
-        Showing {filteredOperators.length} of {Object.keys(operators).length} operators
+        {interpolate(t('common.showingCount'), { count: filteredOperators.length, total: Object.keys(operators).length })}
       </div>
 
       <div className="operators-grid operator-cards-standard">
         {filteredOperators.length === 0 ? (
-          <div className="no-results">No operators found matching your filters.</div>
+          <div className="no-results">{t('allOperators.noMatch')}</div>
         ) : (
           filteredOperators.map((operator) => {
             const isOwned = ownedOperators.has(operator.id);
@@ -224,13 +226,13 @@ const AllOperatorsPage: React.FC = () => {
                 <div className="operator-name">{getOperatorName(operator, language)}</div>
               </Link>
               <div className="operator-class">
-                {operator.class} • {operator.rarity}★
+                {translateClass(operator.class)} • {operator.rarity}{vocab('star')}
               </div>
               {operator.niches && operator.niches.length > 0 && (
-                <div className="ranked-badge">Ranked</div>
+                <div className="ranked-badge">{vocab('ranked')}</div>
               )}
               {(!operator.niches || operator.niches.length === 0) && (
-                <div className="unranked-badge">Unranked</div>
+                <div className="unranked-badge">{vocab('unranked')}</div>
               )}
             </div>
             );

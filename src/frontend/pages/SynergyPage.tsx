@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { apiFetch, getImageUrl } from '../api';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
+import { useTranslation } from '../translations';
 import '../components/OperatorCardStandard.css';
 import './SynergyPage.css';
 
@@ -38,6 +39,7 @@ const SynergyPage: React.FC = () => {
   const { synergy } = useParams<{ synergy: string }>();
   const { language } = useLanguage();
   const { user } = useAuth();
+  const { t, translateClass, vocab, getNicheName, getNicheDescription } = useTranslation();
   const [synergyData, setSynergyData] = useState<Synergy | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -72,13 +74,13 @@ const SynergyPage: React.FC = () => {
     try {
       const response = await apiFetch(`/api/synergies/${encodeURIComponent(synergyName)}`);
       if (!response.ok) {
-        throw new Error('Failed to load synergy');
+        throw new Error(t('synergies.loadError'));
       }
       const data = await response.json() as Synergy;
       setSynergyData(data);
       setLoading(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load synergy');
+      setError(err instanceof Error ? err.message : t('synergies.loadError'));
       setLoading(false);
     }
   };
@@ -103,11 +105,11 @@ const SynergyPage: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="loading">Loading synergy...</div>;
+    return <div className="loading">{t('synergies.loading')}</div>;
   }
 
   if (error || !synergyData) {
-    return <div className="error">{error || 'Synergy not found'}</div>;
+    return <div className="error">{error || t('synergies.loadError')}</div>;
   }
 
   const coreGroups = Object.entries(synergyData.core);
@@ -117,28 +119,28 @@ const SynergyPage: React.FC = () => {
     <div className="synergy-page">
       <div className="synergy-header">
         <Link to="/synergies" className="back-button">
-          ← Back to Synergies
+          {t('synergies.backToSynergies')}
         </Link>
-        <h1>{synergyData.name}</h1>
-        <p>{synergyData.description || ''}</p>
+        <h1>{synergy ? getNicheName(synergy, synergyData.name) : synergyData.name}</h1>
+        <p>{synergy ? getNicheDescription(synergy, synergyData.description || '') : (synergyData.description || '')}</p>
         <label className="synergy-page-toggle">
           <input
             type="checkbox"
             checked={showLevelOverlays}
             onChange={(e) => setShowLevelOverlays(e.target.checked)}
           />
-          <span>Show level badges (E2 / module)</span>
+          <span>{t('nicheList.showLevelBadges')}</span>
         </label>
       </div>
 
       {coreGroups.length > 0 && (
         <div className="synergy-section">
-          <h2>Core Operators</h2>
-          <p className="section-description">At least one operator from each group is required</p>
+          <h2>{t('synergies.coreOperators')}</h2>
+          <p className="section-description">{t('synergies.coreDescription')}</p>
           <div className="synergy-groups">
             {coreGroups.map(([groupName, operators]) => (
               <div key={groupName} className="synergy-group">
-                <h3 className="group-title">{groupName}</h3>
+                <h3 className="group-title">{translateClass(groupName).startsWith('class_') ? groupName : translateClass(groupName)}</h3>
                 <div className="operators-grid operator-cards-standard">
                   {sortOperators(operators).map((entry, index) => {
                     const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
@@ -195,13 +197,13 @@ const SynergyPage: React.FC = () => {
                               <div className="operator-name">{getOperatorName(entry.operator, language)}</div>
                             </Link>
                             <div className="operator-class">
-                              {entry.operator.class} • {entry.operator.rarity}★
+                              {translateClass(entry.operator.class)} • {entry.operator.rarity}{vocab('star')}
                             </div>
                           </>
                         ) : (
                           <>
                             <div className="operator-name">{entry.operatorId}</div>
-                            <div className="operator-class">Operator not found</div>
+                            <div className="operator-class">{vocab('operator_not_found')}</div>
                           </>
                         )}
                       </div>
@@ -216,12 +218,12 @@ const SynergyPage: React.FC = () => {
 
       {optionalGroups.length > 0 && (
         <div className="synergy-section">
-          <h2>Optional Operators</h2>
-          <p className="section-description">Optional operators that complement the synergy</p>
+          <h2>{t('synergies.optionalOperators')}</h2>
+          <p className="section-description">{t('synergies.optionalDescription')}</p>
           <div className="synergy-groups">
             {optionalGroups.map(([groupName, operators]) => (
               <div key={groupName} className="synergy-group">
-                <h3 className="group-title">{groupName}</h3>
+                <h3 className="group-title">{translateClass(groupName).startsWith('class_') ? groupName : translateClass(groupName)}</h3>
                 <div className="operators-grid operator-cards-standard">
                   {sortOperators(operators).map((entry, index) => {
                     const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
@@ -278,13 +280,13 @@ const SynergyPage: React.FC = () => {
                               <div className="operator-name">{getOperatorName(entry.operator, language)}</div>
                             </Link>
                             <div className="operator-class">
-                              {entry.operator.class} • {entry.operator.rarity}★
+                              {translateClass(entry.operator.class)} • {entry.operator.rarity}{vocab('star')}
                             </div>
                           </>
                         ) : (
                           <>
                             <div className="operator-name">{entry.operatorId}</div>
-                            <div className="operator-class">Operator not found</div>
+                            <div className="operator-class">{vocab('operator_not_found')}</div>
                           </>
                         )}
                       </div>

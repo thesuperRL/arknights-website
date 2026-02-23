@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useTranslation } from '../translations/useTranslation';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
@@ -52,6 +53,7 @@ interface Operator {
 const TeamBuilderPage: React.FC = () => {
   const { user } = useAuth();
   const { language } = useLanguage();
+  const { t, getNicheName } = useTranslation();
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
   const [allNiches, setAllNiches] = useState<Array<{filename: string; displayName: string}>>([]);
   const [nicheFilenameMap, setNicheFilenameMap] = useState<Record<string, string>>({});
@@ -215,7 +217,7 @@ const TeamBuilderPage: React.FC = () => {
         }
       } else if (response.status === 401) {
         // Not authenticated, can't load preferences
-        setError('Please log in to use team preferences');
+        setError(t('teamBuilder.pleaseLogIn'));
       } else {
         // Load defaults if no saved preferences (404 or other error)
         const defaultResponse = await apiFetch('/api/team/preferences/default');
@@ -246,7 +248,7 @@ const TeamBuilderPage: React.FC = () => {
           }
         }
       } catch (e) {
-        setError('Failed to load preferences');
+        setError(t('teamBuilder.failedLoadPreferences'));
       }
     }
   };
@@ -377,16 +379,16 @@ const TeamBuilderPage: React.FC = () => {
       });
       
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: 'Failed to save preferences' }));
-        throw new Error(errorData.error || 'Failed to save preferences');
+        const errorData = await response.json().catch(() => ({ error: t('teamBuilder.failedSavePreferences') }));
+        throw new Error(errorData.error || t('teamBuilder.failedSavePreferences'));
       }
       
       const result = await response.json();
       setPreferences(result.preferences || prefsToSave);
-      alert('Preferences saved successfully!');
+      alert(t('teamBuilder.preferencesSaved'));
     } catch (err: any) {
       console.error('Error saving preferences:', err);
-      setError(err.message || 'Failed to save preferences');
+      setError(err.message || t('teamBuilder.failedSavePreferences'));
     } finally {
       setSaving(false);
     }
@@ -406,7 +408,7 @@ const TeamBuilderPage: React.FC = () => {
       });
       
       if (!response.ok) {
-        throw new Error('Failed to build team');
+        throw new Error(t('teamBuilder.failedBuildTeam'));
       }
       
       const data = await response.json();
@@ -418,7 +420,7 @@ const TeamBuilderPage: React.FC = () => {
       // Auto-collapse preferences when team is generated
       setShowPreferences(false);
     } catch (err: any) {
-      setError(err.message || 'Failed to build team');
+      setError(err.message || t('teamBuilder.failedBuildTeam'));
     } finally {
       setLoading(false);
     }
@@ -822,19 +824,19 @@ const TeamBuilderPage: React.FC = () => {
   if (!user) {
     return (
       <div className="team-builder-page">
-        <div className="error">Please log in to use the team builder</div>
+        <div className="error">{t('teamBuilder.loginRequired')}</div>
       </div>
     );
   }
 
   if (!preferences) {
-    return <div className="team-builder-page"><div className="loading">Loading preferences...</div></div>;
+    return <div className="team-builder-page"><div className="loading">{t('teamBuilder.loading')}</div></div>;
   }
 
   return (
     <div className="team-builder-page">
-      <h1>Team Builder</h1>
-      <p className="subtitle">Build a 12-operator team from your raised operators</p>
+      <h1>{t('teamBuilder.title')}</h1>
+      <p className="subtitle">{t('teamBuilder.subtitle')}</p>
 
       {error && <div className="error">{error}</div>}
 
@@ -843,16 +845,16 @@ const TeamBuilderPage: React.FC = () => {
           className="preferences-section-toggle"
           onClick={() => setShowPreferences(!showPreferences)}
         >
-          <span>Team Preferences</span>
+          <span>{t('teamBuilder.teamPreferences')}</span>
           <span className="toggle-icon">{showPreferences ? '▼' : '▶'}</span>
         </button>
         {showPreferences && (
           <div className="preferences-section-content">
-            <h2>Team Preferences</h2>
+            <h2>{t('teamBuilder.teamPreferences')}</h2>
 
             <div className="preference-group locked-operators-group">
-              <label className="preference-label">Locked operators</label>
-              <p className="help-text">Locked operators always appear in your team; the builder fills the remaining slots. Only raised (want-to-use) operators can be locked.</p>
+              <label className="preference-label">{t('teamBuilder.lockedOperators')}</label>
+              <p className="help-text">{t('teamBuilder.lockedOperatorsHelp')}</p>
               <div className="locked-operators-list">
                 {lockedOperatorIds.map(id => {
                   const op = allOperators[id];
@@ -865,7 +867,7 @@ const TeamBuilderPage: React.FC = () => {
                         type="button"
                         className="locked-operator-unlock"
                         onClick={() => setLockedOperatorIds(prev => prev.filter(x => x !== id))}
-                        title="Unlock"
+                        title={t('teamBuilder.unlock')}
                       >
                         ×
                       </button>
@@ -879,7 +881,7 @@ const TeamBuilderPage: React.FC = () => {
                   className="add-locked-btn"
                   onClick={() => setShowOperatorSelectModal({ type: 'lock' })}
                 >
-                  + Add locked operator
+                  {t('teamBuilder.addLockedOperator')}
                 </button>
               )}
             </div>
@@ -991,10 +993,10 @@ const TeamBuilderPage: React.FC = () => {
 
             <div className="action-buttons">
               <button onClick={savePreferences} disabled={saving}>
-                {saving ? 'Saving...' : 'Save Preferences'}
+                {saving ? t('teamBuilder.saving') : t('teamBuilder.savePreferences')}
               </button>
               <button onClick={buildTeam} disabled={loading} className="primary">
-                {loading ? 'Building Team...' : 'Build Team'}
+                {loading ? t('teamBuilder.buildingTeam') : t('teamBuilder.buildTeam')}
               </button>
             </div>
           </div>
@@ -1004,7 +1006,7 @@ const TeamBuilderPage: React.FC = () => {
       {teamResult && (
         <div className="team-result">
           <div className="team-result-header">
-            <h2>Generated Team ({(modifiedTeam || teamResult.team).length}/12)</h2>
+            <h2>{t('teamBuilder.generatedTeam')} ({(modifiedTeam || teamResult.team).length}/12)</h2>
           </div>
           {(() => {
             const currentTeam = modifiedTeam || teamResult.team;
@@ -1012,10 +1014,10 @@ const TeamBuilderPage: React.FC = () => {
             return missingNiches.length > 0 && (
               <div className="team-stats">
                 <div className="stat warning">
-                  <strong>Missing Niches:</strong> {missingNiches.map(niche => {
+                  <strong>{t('teamBuilder.missingNiches')}:</strong> {missingNiches.map(niche => {
                     // Handle format like "niche (1/2)" or just "niche"
                     const [nicheName] = niche.split(' (');
-                    return nicheFilenameMap[nicheName] || niche;
+                    return getNicheName(nicheName, nicheFilenameMap[nicheName] || nicheName);
                   }).join(', ')}
                 </div>
               </div>
@@ -1109,9 +1111,9 @@ const TeamBuilderPage: React.FC = () => {
                                 e.stopPropagation();
                                 handleRevertEmptySlot(slotIndex);
                               }}
-                              title="Remove operator from empty slot"
+                              title={t('teamBuilder.removeFromEmptySlot')}
                             >
-                              ↶ Revert
+                              {t('teamBuilder.revert')}
                             </button>
                           </div>
                         </div>
@@ -1121,9 +1123,9 @@ const TeamBuilderPage: React.FC = () => {
                           onClick={() => setShowOperatorSelectModal({ type: 'empty', slotIndex })}
                         >
                           <div className="empty-slot-content">
-                            <div className="free-choice-badge">Free Choice</div>
+                            <div className="free-choice-badge">{t('teamBuilder.freeChoice')}</div>
                             <span className="empty-slot-icon">+</span>
-                            <span className="empty-slot-text">Select Any Operator</span>
+                            <span className="empty-slot-text">{t('teamBuilder.selectAnyOperator')}</span>
                           </div>
                         </div>
                       )}
@@ -1170,13 +1172,13 @@ const TeamBuilderPage: React.FC = () => {
                         <div className="operator-class">{member.operator.class}</div>
                         {!wasChanged && (
                           <div className="primary-niche">
-                            {displayPrimaryNiche ? (nicheFilenameMap[displayPrimaryNiche] || displayPrimaryNiche) : '\u00A0'}
+                            {displayPrimaryNiche ? getNicheName(displayPrimaryNiche, nicheFilenameMap[displayPrimaryNiche] || displayPrimaryNiche) : '\u00A0'}
                           </div>
                         )}
                         {displayNiches.length > 0 && (
                           <div className="operator-niches">
                             {displayNiches.slice(0, 3).map(niche => (
-                              <span key={niche} className="niche-tag">{nicheFilenameMap[niche] || niche}</span>
+                              <span key={niche} className="niche-tag">{getNicheName(niche, nicheFilenameMap[niche] || niche)}</span>
                             ))}
                           </div>
                         )}
@@ -1187,9 +1189,9 @@ const TeamBuilderPage: React.FC = () => {
                               e.stopPropagation();
                               handleRevertOperator(member.operatorId);
                             }}
-                            title="Revert to original generated operator"
+                            title={t('teamBuilder.revertToOriginal')}
                           >
-                            ↶ Revert
+                            {t('teamBuilder.revert')}
                           </button>
                         )}
                       </div>
@@ -1205,7 +1207,7 @@ const TeamBuilderPage: React.FC = () => {
               className="coverage-toggle"
               onClick={() => setShowCoverage(!showCoverage)}
             >
-              <span>Niche Coverage</span>
+              <span>{t('teamBuilder.nicheCoverage')}</span>
               <span className="toggle-icon">{showCoverage ? '▼' : '▶'}</span>
             </button>
             {showCoverage && (
@@ -1216,7 +1218,7 @@ const TeamBuilderPage: React.FC = () => {
                     const hasChanges = modifiedTeam !== null || Object.keys(selectedEmptySlots).length > 0;
                     return hasChanges ? recalculateCoverage(currentTeam).coverage : teamResult.coverage;
                   })()).map(([niche, count]) => {
-                    const displayName = nicheFilenameMap[niche] || niche;
+                    const displayName = getNicheName(niche, nicheFilenameMap[niche] || niche);
                     return (
                       <div key={niche} className="coverage-item">
                         <span className="niche-name">{displayName}</span>
@@ -1231,14 +1233,14 @@ const TeamBuilderPage: React.FC = () => {
                   if (activeSynergies.length > 0) {
                     return (
                       <div className="synergies-section">
-                        <h3 className="synergies-header">Active Synergies</h3>
+                        <h3 className="synergies-header">{t('teamBuilder.activeSynergies')}</h3>
                         <div className="synergies-list">
                           {activeSynergies.map((synergy) => (
                             <Link key={synergy.filename} to={`/synergy/${encodeURIComponent(synergy.filename)}`} className="synergy-item-link">
                               <div className="synergy-item">
                                 <span className="synergy-name">{synergy.name}</span>
                                 {synergy.satisfiedOptionalGroups > 0 && (
-                                  <span className="synergy-optional-badge">+{synergy.satisfiedOptionalGroups} optional</span>
+                                  <span className="synergy-optional-badge">+{synergy.satisfiedOptionalGroups} {t('teamBuilder.optional')}</span>
                                 )}
                               </div>
                             </Link>
@@ -1260,13 +1262,13 @@ const TeamBuilderPage: React.FC = () => {
         <div className="modal-overlay" onClick={() => setShowOperatorSelectModal(null)}>
           <div className="modal-content operator-select-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>{showOperatorSelectModal?.type === 'lock' ? 'Select operator to lock' : 'Select Operator'}</h2>
+              <h2>{showOperatorSelectModal?.type === 'lock' ? t('teamBuilder.selectOperatorToLock') : t('teamBuilder.selectOperator')}</h2>
               <button className="modal-close" onClick={() => setShowOperatorSelectModal(null)}>×</button>
             </div>
             <div className="modal-body">
               <input
                 type="text"
-                placeholder="Search operators..."
+                placeholder={t('teamBuilder.searchOperators')}
                 value={operatorSelectSearch}
                 onChange={(e) => setOperatorSelectSearch(e.target.value)}
                 className="operator-search-input"

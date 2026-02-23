@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useTranslation } from '../translations';
 import { apiFetch } from '../api';
 import './ChangelogPage.css';
+
+const SPECIAL_LIST_ROUTES: Record<string, string> = {
+  'trash-operators': '/trash-operators',
+  'free': '/free-operators',
+  'global-range': '/global-range-operators',
+  'unconventional-niches': '/unconventional-niches-operators',
+  'low-rarity': '/low-rarity-operators',
+};
 
 interface ChangelogEntry {
   date: string;
@@ -21,6 +31,8 @@ interface ChangelogEntry {
 
 const ChangelogPage: React.FC = () => {
   const { user } = useAuth();
+  const { language } = useLanguage();
+  const { t, getNicheName } = useTranslation();
   const [entries, setEntries] = useState<ChangelogEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,9 +52,9 @@ const ChangelogPage: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
-    apiFetch('/api/changelog')
+    apiFetch(`/api/changelog?language=${encodeURIComponent(language)}`)
       .then(res => {
-        if (!res.ok) throw new Error('Failed to load changelog');
+        if (!res.ok) throw new Error(t('changelog.loadError'));
         return res.json();
       })
       .then(data => {
@@ -53,7 +65,7 @@ const ChangelogPage: React.FC = () => {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  }, [language]);
 
   const tierOrder: Record<string, number> = { 'SS': 5, 'S': 4, 'A': 3, 'B': 2, 'C': 1 };
 
@@ -111,7 +123,7 @@ const ChangelogPage: React.FC = () => {
     if (changeType === 'addition') {
       return (
         <span className="tier-change">
-          <span className="change-label addition">NEW</span>
+          <span className="change-label addition">{t('changelog.labelNew')}</span>
           <span className={getTierBadgeClass(entry.newTier)}>{entry.newTier}</span>
         </span>
       );
@@ -121,7 +133,7 @@ const ChangelogPage: React.FC = () => {
       return (
         <span className="tier-change">
           <span className={getTierBadgeClass(entry.oldTier)}>{entry.oldTier}</span>
-          <span className="change-label removal">REMOVED</span>
+          <span className="change-label removal">{t('changelog.labelRemoved')}</span>
         </span>
       );
     }
@@ -135,14 +147,16 @@ const ChangelogPage: React.FC = () => {
     );
   };
 
+  const locale = language === 'cn' ? 'zh-CN' : language === 'tw' ? 'zh-TW' : 'en-US';
+
   if (loading) {
     return (
       <div className="changelog-page">
         <div className="changelog-header">
-          <Link to="/" className="back-button">← Back to Home</Link>
-          <h1>Tier Changelog</h1>
+          <Link to="/" className="back-button">{t('changelog.backToHome')}</Link>
+          <h1>{t('changelog.pageTitle')}</h1>
         </div>
-        <div className="loading">Loading changelog...</div>
+        <div className="loading">{t('changelog.loading')}</div>
       </div>
     );
   }
@@ -151,10 +165,10 @@ const ChangelogPage: React.FC = () => {
     return (
       <div className="changelog-page">
         <div className="changelog-header">
-          <Link to="/" className="back-button">← Back to Home</Link>
-          <h1>Tier Changelog</h1>
+          <Link to="/" className="back-button">{t('changelog.backToHome')}</Link>
+          <h1>{t('changelog.pageTitle')}</h1>
         </div>
-        <div className="error">Error: {error}</div>
+        <div className="error">{t('changelog.errorPrefix')}: {error}</div>
       </div>
     );
   }
@@ -162,12 +176,10 @@ const ChangelogPage: React.FC = () => {
   return (
     <div className="changelog-page">
       <div className="changelog-header">
-        <Link to="/" className="back-button">← Back to Home</Link>
-        <h1>Tier Changelog</h1>
+        <Link to="/" className="back-button">{t('changelog.backToHome')}</Link>
+        <h1>{t('changelog.pageTitle')}</h1>
         <p className="changelog-intro">
-          History of operator tier changes from the tier changelog (stored in the database). New
-          entries are added when niche lists change (run <code>npm run update:ranked</code>) or via
-          the API. Add or edit justifications via the database or API.
+          {t('changelog.intro')}
         </p>
       </div>
 
@@ -175,7 +187,7 @@ const ChangelogPage: React.FC = () => {
         <div className="search-box">
           <input
             type="text"
-            placeholder="Search operator or niche..."
+            placeholder={t('changelog.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -185,31 +197,31 @@ const ChangelogPage: React.FC = () => {
             className={filter === 'all' ? 'active' : ''} 
             onClick={() => setFilter('all')}
           >
-            All
+            {t('changelog.filterAll')}
           </button>
           <button 
             className={filter === 'upgrades' ? 'active upgrade' : ''} 
             onClick={() => setFilter('upgrades')}
           >
-            Upgrades
+            {t('changelog.filterUpgrades')}
           </button>
           <button 
             className={filter === 'downgrades' ? 'active downgrade' : ''} 
             onClick={() => setFilter('downgrades')}
           >
-            Downgrades
+            {t('changelog.filterDowngrades')}
           </button>
           <button 
             className={filter === 'additions' ? 'active addition' : ''} 
             onClick={() => setFilter('additions')}
           >
-            Additions
+            {t('changelog.filterAdditions')}
           </button>
           <button 
             className={filter === 'removals' ? 'active removal' : ''} 
             onClick={() => setFilter('removals')}
           >
-            Removals
+            {t('changelog.filterRemovals')}
           </button>
         </div>
       </div>
@@ -218,27 +230,27 @@ const ChangelogPage: React.FC = () => {
         {sortedEntries.length === 0 ? (
           <div className="no-changes">
             {entries.length === 0 
-              ? 'No tier changes recorded yet.' 
-              : 'No changes match your filter.'}
+              ? t('changelog.noChanges') 
+              : t('changelog.noMatch')}
           </div>
         ) : (
           <div className="changelog-table-wrap">
             <table className="changelog-table">
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Operator</th>
-                  <th>Change</th>
-                  <th>Niche</th>
-                  <th>Level</th>
-                  <th>Type</th>
-                  <th>Justification</th>
+                  <th>{t('changelog.colDate')}</th>
+                  <th>{t('changelog.colOperator')}</th>
+                  <th>{t('changelog.colChange')}</th>
+                  <th>{t('changelog.colNiche')}</th>
+                  <th>{t('changelog.colLevel')}</th>
+                  <th>{t('changelog.colType')}</th>
+                  <th>{t('changelog.colJustification')}</th>
                 </tr>
               </thead>
               <tbody>
                 {sortedEntries.map((entry, idx) => (
                   <tr key={`${entry.operatorId}-${entry.nicheFilename}-${entry.date}-${idx}`} className={`change-row ${getChangeType(entry)} ${entry.global === false && !ownedOperatorIds.has(entry.operatorId) ? 'non-global' : ''}`}>
-                    <td className="col-date">{formatEntryDate(entry)}</td>
+                    <td className="col-date">{formatEntryDate(entry, locale, t('changelog.dateAt'))}</td>
                     <td className="col-operator">
                       <span className={entry.global === false ? 'changelog-blur' : ''}>
                         <Link to={`/operator/${entry.operatorId}`} className="operator-name">
@@ -248,25 +260,25 @@ const ChangelogPage: React.FC = () => {
                     </td>
                     <td className="col-change">{renderChangeCell(entry)}</td>
                     <td className="col-niche">
-                      <Link to={`/niche-list/${entry.nicheFilename}`} className="niche-link">
-                        {entry.niche}
+                      <Link to={SPECIAL_LIST_ROUTES[entry.nicheFilename] ?? `/niche-list/${encodeURIComponent(entry.nicheFilename)}`} className="niche-link">
+                        {getNicheName(entry.nicheFilename, entry.niche)}
                       </Link>
                     </td>
                     <td className="col-level">
                       {(entry.newLevel || entry.oldLevel) ? (
                         <span className="level-badge">{entry.newLevel || entry.oldLevel}</span>
                       ) : (
-                        '—'
+                        t('changelog.emptyCell')
                       )}
                     </td>
                     <td className="col-type">
                       <span className={`type-pill ${getChangeType(entry)}`}>
-                        {getChangeType(entry)}
+                        {t(`changelog.type${getChangeType(entry).charAt(0).toUpperCase() + getChangeType(entry).slice(1)}`)}
                       </span>
                     </td>
                     <td className="col-justification">
                       <span className={entry.global === false ? 'changelog-blur' : ''}>
-                        {entry.justification || '—'}
+                        {entry.justification || t('changelog.emptyCell')}
                       </span>
                     </td>
                   </tr>
@@ -281,18 +293,19 @@ const ChangelogPage: React.FC = () => {
 };
 
 /** Past entries without time are shown as 8:00 PM. */
-function formatEntryDate(entry: ChangelogEntry): string {
+function formatEntryDate(entry: ChangelogEntry, locale: string, dateAt: string): string {
   const time = entry.time || '20:00'; // 8 PM for legacy date-only entries
   const date = new Date(entry.date + 'T' + time + ':00');
-  return date.toLocaleDateString('en-US', {
+  const hour12 = locale.startsWith('en');
+  return date.toLocaleDateString(locale, {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  }) + ' at ' + date.toLocaleTimeString('en-US', {
+  }) + dateAt + date.toLocaleTimeString(locale, {
     hour: 'numeric',
     minute: '2-digit',
-    hour12: true,
+    hour12,
   });
 }
 

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { getImageUrl } from '../api';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
+import { useTranslation } from '../translations';
 import type { Language } from '../utils/operatorNameUtils';
 
 const PLACEHOLDER_IMG = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
@@ -33,6 +34,7 @@ interface SpecialListOperatorCardProps {
 
 /** Standard operator card (same structure as niche/synergy lists) for the 5 special lists */
 export function SpecialListOperatorCard({ entry, language, isOwned }: SpecialListOperatorCardProps) {
+  const { translateClass, vocab } = useTranslation();
   const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
   const nonGlobal = entry.operator && !entry.operator.global;
   const unowned = !isOwned;
@@ -65,7 +67,7 @@ export function SpecialListOperatorCard({ entry, language, isOwned }: SpecialLis
             <div className="operator-name">{getOperatorName(entry.operator, language)}</div>
           </Link>
           <div className="operator-class">
-            {entry.operator.class} • {entry.operator.rarity}★
+            {translateClass(entry.operator.class)} • {entry.operator.rarity}{vocab('star')}
           </div>
           {entry.note && (
             <div className="operator-note-tooltip">{entry.note}</div>
@@ -74,7 +76,7 @@ export function SpecialListOperatorCard({ entry, language, isOwned }: SpecialLis
       ) : (
         <>
           <div className="operator-name">{entry.operatorId}</div>
-          <div className="operator-class">Operator not found</div>
+          <div className="operator-class">{vocab('operator_not_found')}</div>
         </>
       )}
     </div>

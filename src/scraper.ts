@@ -338,25 +338,25 @@ class ArknightsScraper {
       const html = await this.fetchHtmlWithRetry(operatorUrl);
       const $ = cheerio.load(html);
 
-      // Extract names from the druid-data elements
+      // Extract names from the druid-data elements (strip [note 1], [note 2], etc.)
       const cnElement = $('.druid-data-cnname.druid-data-nonempty').first();
       if (cnElement.length > 0) {
-        names.cnName = cnElement.text().trim();
+        names.cnName = this.stripNoteReferences(cnElement.text().trim());
       }
 
       const twElement = $('.druid-data-twname.druid-data-nonempty').first();
       if (twElement.length > 0) {
-        names.twName = twElement.text().trim();
+        names.twName = this.stripNoteReferences(twElement.text().trim());
       }
 
       const jpElement = $('.druid-data-jpname.druid-data-nonempty').first();
       if (jpElement.length > 0) {
-        names.jpName = jpElement.text().trim();
+        names.jpName = this.stripNoteReferences(jpElement.text().trim());
       }
 
       const krElement = $('.druid-data-krname.druid-data-nonempty').first();
       if (krElement.length > 0) {
-        names.krName = krElement.text().trim();
+        names.krName = this.stripNoteReferences(krElement.text().trim());
       }
 
       // Extract internal name/filename
@@ -533,7 +533,7 @@ class ArknightsScraper {
         let name = '';
         const nameCell = cells.eq(nameColumnIndex);
         const nameLink = nameCell.find('a').first();
-        name = nameLink.text().trim() || nameCell.text().trim();
+        name = this.stripNoteReferences(nameLink.text().trim() || nameCell.text().trim());
         
         // If no name found, try all cells for links
         if (!name || name.length === 0) {
@@ -542,7 +542,7 @@ class ArknightsScraper {
             const link = $cell.find('a').first();
             const linkText = link.text().trim();
             if (linkText && linkText.length > 0 && linkText.length < 50) { // Reasonable name length
-              name = linkText;
+              name = this.stripNoteReferences(linkText);
               break;
             }
           }
@@ -644,7 +644,7 @@ class ArknightsScraper {
       const img = $el.find('img').first();
       const imageUrl = img.attr('src') || img.attr('data-src') || '';
       const nameLink = $el.find('a').first();
-      const name = nameLink.text().trim() || $el.find('strong, .name').first().text().trim();
+      const name = this.stripNoteReferences(nameLink.text().trim() || $el.find('strong, .name').first().text().trim());
       
       // Extract class from image
       let operatorClass = 'Unknown';
@@ -692,6 +692,14 @@ class ArknightsScraper {
     });
 
     return operators;
+  }
+
+  /**
+   * Removes wiki footnote references like [note 1], [note 2] from names
+   */
+  private stripNoteReferences(text: string): string {
+    if (!text || typeof text !== 'string') return text;
+    return text.replace(/\s*\[note\s*\d+\]\s*/gi, '').trim();
   }
 
   /**
@@ -974,23 +982,23 @@ class ArknightsScraper {
         
         // Check if operator already exists with all names and internalName
         if (existingOperator && this.hasAllNames(existingOperator) && existingOperator.internalName) {
-          // Copy existing names and internalName to current operator
-          operator.cnName = existingOperator.cnName;
-          operator.twName = existingOperator.twName;
-          operator.jpName = existingOperator.jpName;
-          operator.krName = existingOperator.krName;
+          // Copy existing names and internalName to current operator (strip any [note N] refs)
+          operator.cnName = existingOperator.cnName ? this.stripNoteReferences(existingOperator.cnName) : undefined;
+          operator.twName = existingOperator.twName ? this.stripNoteReferences(existingOperator.twName) : undefined;
+          operator.jpName = existingOperator.jpName ? this.stripNoteReferences(existingOperator.jpName) : undefined;
+          operator.krName = existingOperator.krName ? this.stripNoteReferences(existingOperator.krName) : undefined;
           operator.internalName = existingOperator.internalName;
           namesAlreadyExist++;
           console.log(`[${i + 1}/${operators.length}] ⏭️  Skipping ${operator.name} (names and internalName already exist)`);
           continue;
         }
         
-        // Check if operator exists but is missing some names - merge what we have
+        // Check if operator exists but is missing some names - merge what we have (strip [note N] refs)
         if (existingOperator) {
-          operator.cnName = existingOperator.cnName || operator.cnName;
-          operator.twName = existingOperator.twName || operator.twName;
-          operator.jpName = existingOperator.jpName || operator.jpName;
-          operator.krName = existingOperator.krName || operator.krName;
+          operator.cnName = (existingOperator.cnName ? this.stripNoteReferences(existingOperator.cnName) : undefined) || operator.cnName;
+          operator.twName = (existingOperator.twName ? this.stripNoteReferences(existingOperator.twName) : undefined) || operator.twName;
+          operator.jpName = (existingOperator.jpName ? this.stripNoteReferences(existingOperator.jpName) : undefined) || operator.jpName;
+          operator.krName = (existingOperator.krName ? this.stripNoteReferences(existingOperator.krName) : undefined) || operator.krName;
           operator.internalName = existingOperator.internalName || operator.internalName;
         }
         

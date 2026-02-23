@@ -188,9 +188,23 @@ app.get('/api/niche-lists/:niche', (req, res) => {
     // When allLevels=1, return every evaluation; otherwise return peak-only (one per operator).
     const operatorsToSend = allLevels ? operatorEntries : keepPeakEntriesOnly(operatorEntries);
 
+    // Resolve relatedNiches (display names) to filenames so the frontend can link and translate.
+    const allLists = loadAllNicheLists();
+    const displayNameToFilename: Record<string, string> = {};
+    for (const [filename, list] of Object.entries(allLists)) {
+      if (list.niche) displayNameToFilename[list.niche] = filename;
+    }
+    const relatedNichesResolved = (operatorList.relatedNiches || [])
+      .map((displayName: string) => ({
+        displayName,
+        filename: displayNameToFilename[displayName]
+      }))
+      .filter((item: { filename?: string }) => item.filename) as Array<{ displayName: string; filename: string }>;
+
     const enrichedOperatorList = {
       ...operatorList,
-      operators: operatorsToSend
+      operators: operatorsToSend,
+      relatedNichesResolved
     };
 
     res.json(enrichedOperatorList);
@@ -367,15 +381,65 @@ function getOperatorGlobalMap(dataDir: string): Record<string, boolean> {
   return operatorGlobal;
 }
 
-app.get('/api/changelog', async (_req, res) => {
+type OperatorNameLang = 'en' | 'cn' | 'tw' | 'jp' | 'kr';
+interface OperatorNames {
+  name: string;
+  cnName?: string;
+  twName?: string;
+  jpName?: string;
+  krName?: string;
+}
+
+function getOperatorNamesMap(dataDir: string): Record<string, OperatorNames> {
+  const map: Record<string, OperatorNames> = {};
+  for (const rarity of [1, 2, 3, 4, 5, 6]) {
+    const opPath = path.join(dataDir, `operators-${rarity}star.json`);
+    if (fs.existsSync(opPath)) {
+      const opData = JSON.parse(fs.readFileSync(opPath, 'utf-8')) as Record<string, OperatorNames & { global?: boolean }>;
+      for (const [id, op] of Object.entries(opData)) {
+        if (op && typeof op.name === 'string') {
+          map[id] = { name: op.name, cnName: op.cnName, twName: op.twName, jpName: op.jpName, krName: op.krName };
+        }
+      }
+    }
+  }
+  return map;
+}
+
+function getOperatorNameForLanguage(op: OperatorNames | null, fallback: string, lang: OperatorNameLang): string {
+  if (!op) return fallback;
+  switch (lang) {
+    case 'cn':
+      return (op.cnName && op.cnName.trim()) || op.name;
+    case 'tw':
+      return (op.twName && op.twName.trim()) || (op.cnName && op.cnName.trim()) || op.name;
+    case 'jp':
+      return (op.jpName && op.jpName.trim()) || op.name;
+    case 'kr':
+      return (op.krName && op.krName.trim()) || op.name;
+    case 'en':
+    default:
+      return op.name;
+  }
+}
+
+app.get('/api/changelog', async (req, res) => {
   try {
     const dataDir = path.join(__dirname, '../data');
     const operatorGlobal = getOperatorGlobalMap(dataDir);
+    const lang = (req.query.language as OperatorNameLang) || 'en';
+    const validLang: OperatorNameLang[] = ['en', 'cn', 'tw', 'jp', 'kr'];
+    const language = validLang.includes(lang) ? lang : 'en';
+    const operatorNames = getOperatorNamesMap(dataDir);
+
+    const resolveName = (operatorId: string, currentName: string): string =>
+      getOperatorNameForLanguage(operatorNames[operatorId] || null, currentName, language);
 
     if (process.env.DATABASE_URL) {
       const entries = await getChangelogEntries();
       const withGlobal = entries.map((e: ChangelogEntryRow) => ({
         ...e,
+        operatorName: resolveName(e.operatorId, e.operatorName),
         global: e.global !== undefined ? e.global : (operatorGlobal[e.operatorId] ?? true),
       }));
       res.json({ entries: withGlobal });
@@ -397,10 +461,15 @@ app.get('/api/changelog', async (_req, res) => {
       return;
     }
     const entries = Array.isArray(changelog.entries) ? changelog.entries : [];
-    const withGlobal = entries.map((e: Record<string, unknown>) => ({
-      ...e,
-      global: e.global !== undefined ? e.global : (operatorGlobal[String(e.operatorId)] ?? true),
-    }));
+    const withGlobal = entries.map((e: Record<string, unknown>) => {
+      const operatorId = String(e.operatorId ?? '');
+      const operatorName = String(e.operatorName ?? '');
+      return {
+        ...e,
+        operatorName: resolveName(operatorId, operatorName),
+        global: e.global !== undefined ? e.global : (operatorGlobal[operatorId] ?? true),
+      };
+    });
     res.json({ entries: withGlobal });
   } catch (error) {
     console.error('Error loading changelog:', error);
@@ -686,14 +755,19 @@ app.get('/api/operators/:id', async (req, res) => {
     }
 
     // Check if operator is in special lists (free, global-range, trash, unconventional, low-rarity)
-    // These operators show niche name but no ranking tier
+    // These operators show niche name but no ranking tier.
+    // Canonical nicheFilename must match frontend routes and translation keys (niche-translations.json).
     const specialLists = [
-      { file: 'free.json', name: 'Free Operators' },
-      { file: 'global-range.json', name: 'Global Range Operators' },
-      { file: 'trash-operators.json', name: 'Trash Operators' },
-      { file: 'unconventional-niches.json', name: 'Unconventional Niches' },
-      { file: 'low-rarity.json', name: 'Good Low-Rarity Operators' }
+      { file: 'free.json', name: 'Free Operators', nicheFilename: 'free' },
+      { file: 'global-range.json', name: 'Global Range Operators', nicheFilename: 'global-range' },
+      { file: 'trash-operators.json', name: 'Trash Operators', nicheFilename: 'trash-operators' },
+      { file: 'unconventional-niches.json', name: 'Unconventional Niches', nicheFilename: 'unconventional-niches' },
+      { file: 'low-rarity.json', name: 'Good Low-Rarity Operators', nicheFilename: 'low-rarity' }
     ];
+    const specialListNicheFilenames: Record<string, string> = {};
+    for (const sl of specialLists) {
+      specialListNicheFilenames[sl.name] = sl.nicheFilename;
+    }
 
     for (const specialList of specialLists) {
       const specialFilePath = path.join(__dirname, '../data', specialList.file);
@@ -721,7 +795,7 @@ app.get('/api/operators/:id', async (req, res) => {
       .filter(([, instances]) => instances && Array.isArray(instances) && instances.length > 0)
       .map(([niche, instances]) => ({
         niche,
-        nicheFilename: nicheFilenames[niche] || niche.toLowerCase().replace(/\s+/g, '-'),
+        nicheFilename: specialListNicheFilenames[niche] || nicheFilenames[niche] || niche.toLowerCase().replace(/\s+/g, '-'),
         instances: allLevels ? (instances || []) : keepPeakInstanceOnly(instances || [])
       }));
 

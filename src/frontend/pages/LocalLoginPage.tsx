@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { apiFetch } from '../api';
+import { useTranslation } from '../translations';
 import './AuthPage.css';
 
 const LocalLoginPage: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -41,7 +43,7 @@ const LocalLoginPage: React.FC = () => {
       if (!response.ok) {
         const message =
           data.error ||
-          (response.status === 401 ? 'Invalid email or password.' : response.status === 503 ? 'Login service unavailable. Try again later.' : 'Login failed.');
+          (response.status === 401 ? t('auth.invalidEmailPassword') : response.status === 503 ? t('auth.serviceUnavailable') : t('auth.loginFailed'));
         throw new Error(message);
       }
 
@@ -56,7 +58,7 @@ const LocalLoginPage: React.FC = () => {
       // Redirect to profile page
       navigate('/profile');
     } catch (err: any) {
-      setError(err.message || 'Login failed');
+      setError(err.message || t('auth.loginFailed'));
     } finally {
       setLoading(false);
     }
@@ -65,16 +67,14 @@ const LocalLoginPage: React.FC = () => {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h1>Login</h1>
-        <p className="login-description">
-          Login with your local account.
-        </p>
+        <h1>{t('auth.login')}</h1>
+        <p className="login-description">{t('auth.loginDesc')}</p>
 
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleLogin} className="login-form">
           <div className="form-group">
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email">{t('auth.email')}:</label>
             <input
               id="email"
               type="email"
@@ -86,7 +86,7 @@ const LocalLoginPage: React.FC = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">{t('auth.password')}:</label>
             <input
               id="password"
               type="password"
@@ -98,12 +98,12 @@ const LocalLoginPage: React.FC = () => {
             />
           </div>
           <button type="submit" className="login-button" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? t('auth.loggingIn') : t('auth.submitLogin')}
           </button>
         </form>
 
         <p className="login-info" style={{ marginTop: '1.5rem' }}>
-          Don't have an account? <Link to="/register" style={{ color: '#5aee90' }}>Register here</Link>
+          {t('auth.noAccount')} <Link to="/register" style={{ color: '#5aee90' }}>{t('auth.registerHere')}</Link>
         </p>
       </div>
     </div>

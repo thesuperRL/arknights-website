@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { apiFetch } from '../api';
+import { useTranslation } from '../translations';
 import './SynergiesPage.css';
 
 interface SynergyInfo {
@@ -10,6 +11,7 @@ interface SynergyInfo {
 }
 
 const SynergiesPage: React.FC = () => {
+  const { t, getNicheName, getNicheDescription } = useTranslation();
   const [synergies, setSynergies] = useState<SynergyInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,19 +24,19 @@ const SynergiesPage: React.FC = () => {
     try {
       const response = await apiFetch('/api/synergies');
       if (!response.ok) {
-        throw new Error('Failed to load synergies');
+        throw new Error(t('synergies.loadError'));
       }
       const data = await response.json() as SynergyInfo[];
       setSynergies(data);
       setLoading(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load synergies');
+      setError(err instanceof Error ? err.message : t('synergies.loadError'));
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <div className="loading">Loading synergies...</div>;
+    return <div className="loading">{t('synergies.loading')}</div>;
   }
 
   if (error) {
@@ -44,13 +46,13 @@ const SynergiesPage: React.FC = () => {
   return (
     <div className="synergies-page">
       <div className="hero">
-        <h1>Operator Synergies</h1>
-        <p>Discover operator combinations that work well together</p>
+        <h1>{t('synergies.title')}</h1>
+        <p>{t('synergies.subtitle')}</p>
       </div>
 
       <div className="synergies-grid">
         {synergies.length === 0 ? (
-          <div className="error">No synergies found</div>
+          <div className="error">{t('synergies.noSynergies')}</div>
         ) : (
           synergies.map((synergy) => (
             <Link
@@ -58,8 +60,8 @@ const SynergiesPage: React.FC = () => {
               to={`/synergy/${encodeURIComponent(synergy.filename)}`}
               className="synergy-card"
             >
-              <h2>{synergy.name}</h2>
-              <p>{synergy.description || 'No description available'}</p>
+              <h2>{getNicheName(synergy.filename, synergy.name)}</h2>
+              <p>{getNicheDescription(synergy.filename, synergy.description || '') || t('common.noDescription')}</p>
             </Link>
           ))
         )}

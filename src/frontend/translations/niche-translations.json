@@ -1,0 +1,179 @@
+{
+  "_comment": "Translations for niche list and synergy names and descriptions. Key = filename (e.g. def-buff or burn-global). Add name and/or description for cn and tw. The app imports this file directly.",
+  "def-buff": {
+    "cn": { "name": "防御/生存增益", "description": "提升友方防御和/或生存率的干员（注：该需求在现代明日方舟中整体用处不大）" },
+    "tw": { "name": "防禦/生存增益", "description": "提升友方防禦和/或生存率的幹員（註：該需求在現代明日方舟中整體用處不大）" }
+  },
+  "burn-global": {
+    "cn": { "name": "灼烧全局队", "description": "能造成灼烧元素伤害并据此造成额外元素伤害的干员。搭配余的技能与全局法伤可极速叠灼烧" },
+    "tw": { "name": "灼燒全局隊", "description": "能造成灼燒元素傷害並據此造成額外元素傷害的幹員。搭配餘的技能與全局法傷可極速疊灼燒" }
+  },
+  "healing-operators": {
+    "cn": { "name": "医疗干员", "description": "能为友方恢复生命值的干员" },
+    "tw": { "name": "醫療幹員", "description": "能為友方恢復生命值的幹員" }
+  },
+  "tanking-blocking-operators": {
+    "cn": { "name": "承伤/阻挡干员", "description": "能承伤并阻挡敌人的干员。SS 为承伤与自愈兼优或承伤极强；S 多为尚可承伤但缺治疗；再往下则短板更多。" },
+    "tw": { "name": "承傷/阻擋幹員", "description": "能承傷並阻擋敵人的幹員。SS 為承傷與自癒兼優或承傷極強；S 多為尚可承傷但缺治療；再往下則短板更多。" }
+  },
+  "boss-killing": {
+    "cn": { "name": "Boss 击杀", "description": "对 Boss 与高属性精英敌表现优秀的干员" },
+    "tw": { "name": "Boss 擊殺", "description": "對 Boss 與高屬性精英敵表現優秀的幹員" }
+  },
+  "arts-dps": {
+    "cn": { "name": "法术输出", "description": "能造成高法术伤害的干员" },
+    "tw": { "name": "法術輸出", "description": "能造成高法術傷害的幹員" }
+  },
+  "aoe-arts-dps": {
+    "cn": { "name": "群体法术输出", "description": "能对范围内造成高法术伤害的干员" },
+    "tw": { "name": "群體法術輸出", "description": "能對範圍內造成高法術傷害的幹員" }
+  },
+  "late-laneholder": {
+    "cn": { "name": "后期占线", "description": "后期能稳定占线的干员。SS 为能阻挡多敌并适时清掉以迎接下一波；S 多为优质坦或输出之一；再往下问题更多。" },
+    "tw": { "name": "後期佔線", "description": "後期能穩定佔線的幹員。SS 為能阻擋多敵並適時清掉以迎接下一波；S 多為優質坦或輸出之一；再往下問題更多。" }
+  },
+  "stalling": {
+    "cn": { "name": "控场", "description": "能对敌人进行控场（定身等）的干员" },
+    "tw": { "name": "控場", "description": "能對敵人進行控場（定身等）的幹員" }
+  },
+  "early-laneholder": {
+    "cn": { "name": "前期占线", "description": "低费用（暂定 18 费以下）、能前期放置并稳住成批基础敌人的干员" },
+    "tw": { "name": "前期佔線", "description": "低費用（暫定 18 費以下）、能前期放置並穩住成批基礎敵人的幹員" }
+  },
+  "fragile": {
+    "cn": { "name": "脆弱/易伤", "description": "能施加脆弱等易伤 debuff、使敌人受到更多伤害的干员" },
+    "tw": { "name": "脆弱/易傷", "description": "能施加脆弱等易傷 debuff、使敵人受到更多傷害的幹員" }
+  },
+  "dp-generation": {
+    "cn": { "name": "费用回复", "description": "用于产生部署费用的干员" },
+    "tw": { "name": "費用回覆", "description": "用於產生部署費用的幹員" }
+  },
+  "aoe-physical-dps": {
+    "cn": { "name": "群体物理输出", "description": "能对范围内造成高物理伤害的干员" },
+    "tw": { "name": "群體物理輸出", "description": "能對範圍內造成高物理傷害的幹員" }
+  },
+  "elemental-damage": {
+    "cn": { "name": "元素伤害", "description": "能较好施加元素伤害（爆条等）的干员" },
+    "tw": { "name": "元素傷害", "description": "能較好施加元素傷害（爆條等）的幹員" }
+  },
+  "elemental-dps": {
+    "cn": { "name": "元素输出", "description": "能造成高元素伤害的干员（多依赖敌人已被爆条）" },
+    "tw": { "name": "元素輸出", "description": "能造成高元素傷害的幹員（多依賴敵人已被爆條）" }
+  },
+  "res-shred": {
+    "cn": { "name": "法抗削弱", "description": "能降低敌人法术抗性的干员" },
+    "tw": { "name": "法抗削弱", "description": "能降低敵人法術抗性的幹員" }
+  },
+  "damage-buff": {
+    "cn": { "name": "伤害增益", "description": "能提升友方攻击或攻速的干员。注：增伤/减防类在现代环境中式微，因多带一名输出往往优于带拐。" },
+    "tw": { "name": "傷害增益", "description": "能提升友方攻擊或攻速的幹員。註：增傷/減防類在現代環境中式微，因多帶一名輸出往往優於帶拐。" }
+  },
+  "res-buff": {
+    "cn": { "name": "法抗增益", "description": "能提升友方抗性的干员" },
+    "tw": { "name": "法抗增益", "description": "能提升友方抗性的幹員" }
+  },
+  "physical-dps": {
+    "cn": { "name": "物理输出", "description": "能造成高物理伤害的干员" },
+    "tw": { "name": "物理輸出", "description": "能造成高物理傷害的幹員" }
+  },
+  "silence": {
+    "cn": { "name": "沉默", "description": "能使敌人沉默的干员" },
+    "tw": { "name": "沉默", "description": "能使敵人沉默的幹員" }
+  },
+  "sp-battery": {
+    "cn": { "name": "技力回复", "description": "能为其他干员大量回复技力的干员" },
+    "tw": { "name": "技力回覆", "description": "能為其他幹員大量回覆技力的幹員" }
+  },
+  "atk-debuff": {
+    "cn": { "name": "攻击削弱", "description": "能降低敌人攻击的干员" },
+    "tw": { "name": "攻擊削弱", "description": "能降低敵人攻擊的幹員" }
+  },
+  "true_damage": {
+    "cn": { "name": "真实伤害", "description": "能造成真实伤害或等效伤害的干员" },
+    "tw": { "name": "真實傷害", "description": "能造成真實傷害或等效傷害的幹員" }
+  },
+  "shift": {
+    "cn": { "name": "拖拽", "description": "能拉动或推动敌人的干员" },
+    "tw": { "name": "拖拽", "description": "能拉動或推動敵人的幹員" }
+  },
+  "fast-redeploy-operators": {
+    "cn": { "name": "快速复活", "description": "再部署快、上场即能完成任务的干员" },
+    "tw": { "name": "快速復活", "description": "再部署快、上場即能完成任務的幹員" }
+  },
+  "elemental_damage_healers": {
+    "cn": { "name": "元素损伤治疗", "description": "能缓解元素损伤的干员" },
+    "tw": { "name": "元素損傷治療", "description": "能緩解元素損傷的幹員" }
+  },
+  "def-shred": {
+    "cn": { "name": "物防削弱", "description": "能降低敌人防御的干员" },
+    "tw": { "name": "物防削弱", "description": "能降低敵人防禦的幹員" }
+  },
+  "anti-air-operators": {
+    "cn": { "name": "对空", "description": "能有效攻击空中单位的干员" },
+    "tw": { "name": "對空", "description": "能有效攻擊空中單位的幹員" }
+  },
+  "sui": {
+    "cn": { "name": "岁", "description": "以黍的被动（攻防与技力加成）为核心的编队" },
+    "tw": { "name": "歲", "description": "以黍的被動（攻防與技力加成）為核心的編隊" }
+  },
+  "minos": {
+    "cn": { "name": "弥诺斯", "description": "以弥诺斯阵营增益（提提等）为核心的编队" },
+    "tw": { "name": "彌諾斯", "description": "以彌諾斯陣營增益（提提等）為核心的編隊" }
+  },
+  "offensive-recovery-archetto": {
+    "cn": { "name": "攻击回复（空弦）", "description": "以空弦的集成战略模组为核心，为攻击回复干员极速回复技力的编队" },
+    "tw": { "name": "攻擊回覆（空弦）", "description": "以空弦的集成戰略模組為核心，為攻擊回覆幹員極速回覆技力的編隊" }
+  },
+  "flagpipe": {
+    "cn": { "name": "旗枪（风笛+执旗手）", "description": "利用风笛对执旗手先锋的技力加成实现极强费用回复的搭配" },
+    "tw": { "name": "旗槍（風笛+執旗手）", "description": "利用風笛對執旗手先鋒的技力加成實現極強費用回覆的搭配" }
+  },
+  "nervous-impairment": {
+    "cn": { "name": "神经损伤", "description": "能造成神经损伤元素伤害并基于此造成额外元素伤害的干员" },
+    "tw": { "name": "神經損傷", "description": "能造成神經損傷元素傷害並基於此造成額外元素傷害的幹員" }
+  },
+  "enmity-healing": {
+    "cn": { "name": "不屈者恢复", "description": "能治疗「不可治疗」单位（如送葬人、泥岩、煌等）的干员" },
+    "tw": { "name": "不屈者恢復", "description": "能治療「不可治療」單位（如送葬人、泥岩、煌等）的幹員" }
+  },
+  "sleep": {
+    "cn": { "name": "睡眠", "description": "用睡眠施加者控场，并由能攻击睡眠目标的输出造成伤害" },
+    "tw": { "name": "睡眠", "description": "用睡眠施加者控場，並由能攻擊睡眠目標的輸出造成傷害" }
+  },
+  "ave-mujica": {
+    "cn": { "name": "Ave Mujica", "description": "以多种方式辅助祥子为核心的编队" },
+    "tw": { "name": "Ave Mujica", "description": "以多種方式輔助詳子為核心的編隊" }
+  },
+  "laterano": {
+    "cn": { "name": "拉特兰", "description": "以蕾缪安为核心，利用拉特兰干员赋予其准全局射程；辅助可提升其伤害与弹药利用" },
+    "tw": { "name": "拉特蘭", "description": "以蕾繆安為核心，利用拉特蘭幹員賦予其準全局射程；輔助可提升其傷害與彈藥利用" }
+  },
+  "necrosis": {
+    "cn": { "name": "凋亡损伤", "description": "能造成凋亡损伤元素伤害并基于此造成额外元素伤害的干员" },
+    "tw": { "name": "凋亡損傷", "description": "能造成凋亡損傷元素傷害並基於此造成額外元素傷害的幹員" }
+  },
+  "abyssal-hunters": {
+    "cn": { "name": "深海猎人", "description": "以深海猎人阵营增益为核心的编队" },
+    "tw": { "name": "深海獵人", "description": "以深海獵人陣營增益為核心的編隊" }
+  },
+  "trash-operators": {
+    "cn": { "name": "没用的干员", "description": "暂无最优用途的干员" },
+    "tw": { "name": "沒用的幹員", "description": "暫無最優用途的幹員" }
+  },
+  "free": {
+    "cn": { "name": "免费干员", "description": "可免费获取的干员" },
+    "tw": { "name": "免費幹員", "description": "可免費獲取的幹員" }
+  },
+  "global-range": {
+    "cn": { "name": "全图干员", "description": "能影响地图上任意位置的干员" },
+    "tw": { "name": "全圖幹員", "description": "能影響地圖上任意位置的幹員" }
+  },
+  "unconventional-niches": {
+    "cn": { "name": "非常规能力", "description": "其他榜单未覆盖的独特能力" },
+    "tw": { "name": "非常規能力", "description": "其他榜單未覆蓋的獨特能力" }
+  },
+  "low-rarity": {
+    "cn": { "name": "低星推荐", "description": "值得练的低星干员，适合前期或集成战略（低希望、值得招募）" },
+    "tw": { "name": "低星推薦", "description": "值得練的低星幹員，適合前期或集成戰略（低希望、值得招募）" }
+  }
+}

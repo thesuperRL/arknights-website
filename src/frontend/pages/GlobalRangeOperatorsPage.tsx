@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from '../translations';
 import { apiFetch } from '../api';
 import { SpecialListOperatorCard, type SpecialListEntry } from '../components/SpecialListOperatorCard';
 import '../components/OperatorCardStandard.css';
@@ -35,6 +36,7 @@ interface Operator {
 const GlobalRangeOperatorsPage: React.FC = () => {
   const { language } = useLanguage();
   const { user } = useAuth();
+  const { t, getNicheName, getNicheDescription } = useTranslation();
   const [data, setData] = useState<GlobalRangeOperatorsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -109,12 +111,12 @@ const GlobalRangeOperatorsPage: React.FC = () => {
     <div className="global-range-operators-page">
       <div className="global-range-operators-header">
         <Link to="/tier-lists" className="back-button">
-          ← Back to Tier Lists
+          {t('nicheList.backToTierLists')}
         </Link>
-        <h1>{data.niche}</h1>
-        <p>{data.description}</p>
+        <h1>{getNicheName('global-range', data.niche)}</h1>
+        <p>{getNicheDescription('global-range', data.description)}</p>
         <div className="meta">
-          Last updated: {data.lastUpdated} • {data.operators.length} operators
+          {t('common.lastUpdated')}: {data.lastUpdated} • {data.operators.length} {t('common.operators')}
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useTranslation } from '../translations/useTranslation';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
@@ -776,6 +777,7 @@ const CLASS_OPTIONS = [
 const IntegratedStrategiesPage: React.FC = () => {
   const { user } = useAuth();
   const { language } = useLanguage();
+  const { t, translateClass, interpolate } = useTranslation();
 
   const [allOperators, setAllOperators] = useState<Record<string, Operator>>({});
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
@@ -1308,7 +1310,7 @@ const IntegratedStrategiesPage: React.FC = () => {
   const resetISTeamState = async () => {
     if (!user) return;
     
-    if (!confirm('Are you sure you want to reset all saved data? This will clear your team, hope, and settings.')) {
+    if (!confirm(t('isTeamBuilder.resetConfirm'))) {
       return;
     }
     
@@ -1466,17 +1468,17 @@ const IntegratedStrategiesPage: React.FC = () => {
 
   const getRecommendation = async () => {
     if (!user) {
-      setError('Please log in to get recommendations');
+      setError(t('isTeamBuilder.pleaseLogIn'));
       return;
     }
 
     if (requiredClasses.size === 0) {
-      setError('Please choose at least one required class');
+      setError(t('isTeamBuilder.selectOneClass'));
       return;
     }
 
     if (!preferences) {
-      setError('Please wait for preferences to load');
+      setError(t('isTeamBuilder.waitForPreferences'));
       return;
     }
 
@@ -1555,13 +1557,13 @@ const IntegratedStrategiesPage: React.FC = () => {
         setCurrentRecommendationIndex(0);
         setRecommendation({
           recommendedOperator: null,
-          reasoning: 'No suitable operators found for your team composition.',
+          reasoning: t('isTeamBuilder.noSuitableFound'),
           score: 0
         });
       }
     } catch (err: any) {
       console.error('Error getting recommendation:', err);
-      setError(err.message || 'Failed to get recommendation');
+      setError(err.message || t('isTeamBuilder.failedRecommendation'));
     } finally {
       setLoading(false);
     }
@@ -1586,7 +1588,7 @@ const IntegratedStrategiesPage: React.FC = () => {
   if (!user) {
     return (
       <div className="integrated-strategies-page">
-        <div className="error">Please log in to use the Integrated Strategies team builder</div>
+        <div className="error">{t('isTeamBuilder.loginRequired')}</div>
       </div>
     );
   }
@@ -1594,25 +1596,25 @@ const IntegratedStrategiesPage: React.FC = () => {
   return (
     <div className="integrated-strategies-page">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-        <h1 style={{ margin: 0 }}>Integrated Strategies Team Builder</h1>
+        <h1 style={{ margin: 0 }}>{t('isTeamBuilder.title')}</h1>
         <button
           onClick={resetISTeamState}
           className="reset-team-btn"
-          title="Reset all saved data"
+          title={t('isTeamBuilder.resetAllTitle')}
         >
-          Reset All
+          {t('isTeamBuilder.resetAll')}
         </button>
       </div>
-      <p className="subtitle">Select your current operators and get recommendations for the next operator to add</p>
+      <p className="subtitle">{t('isTeamBuilder.subtitle')}</p>
 
       {error && <div className="error">{error}</div>}
 
       <div className="team-selection-section">
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
-          <h2 style={{ margin: 0 }}>Your Current Team</h2>
+          <h2 style={{ margin: 0 }}>{t('isTeamBuilder.yourCurrentTeam')}</h2>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <label htmlFor="team-size-input" style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>
-              Team Size:
+              {t('isTeamBuilder.teamSize')}:
             </label>
             <input
               id="team-size-input"
@@ -1636,7 +1638,7 @@ const IntegratedStrategiesPage: React.FC = () => {
             />
           </div>
         </div>
-        <p>Select operators you already own and plan to use in your Integrated Strategies team. Optimal team members are highlighted.</p>
+        <p>{t('isTeamBuilder.selectOperatorsHelp')}</p>
 
         <div className="selected-operators">
           {selectedOperators.map(selected => {
@@ -1674,23 +1676,23 @@ const IntegratedStrategiesPage: React.FC = () => {
                   {selectionCount === 2 && <span className="promote-badge">↑</span>}
                 </div>
                 <Stars rarity={selected.operator.rarity} size="small" />
-                <div className="operator-class">{selected.operator.class}</div>
+                <div className="operator-class">{translateClass(selected.operator.class)}</div>
                 {canPromote && (
                   <button
                     onClick={() => {
                       addOperator(selected.operatorId, true);
                     }}
                     className="promote-btn"
-                    title="Promote operator to E2/Module"
+                    title={t('isTeamBuilder.promoteToE2')}
                   >
-                    🔄 Promote
+                    {t('isTeamBuilder.promote')}
                   </button>
                 )}
               </div>
               <button
                 className="remove-operator-btn"
                 onClick={() => removeOperator(selected.operatorId)}
-                title={selectionCount === 2 ? "Remove promotion (downgrade to level 0)" : "Remove from team"}
+                title={selectionCount === 2 ? t('isTeamBuilder.removePromotion') : t('isTeamBuilder.removeFromTeam')}
               >
                 ×
               </button>
@@ -1704,18 +1706,18 @@ const IntegratedStrategiesPage: React.FC = () => {
           >
             <div className="add-operator-content">
               <span className="add-icon">+</span>
-              <span className="add-text">Add Operator</span>
+              <span className="add-text">{t('isTeamBuilder.addOperator')}</span>
             </div>
           </div>
         </div>
       </div>
 
       <div className="hope-section">
-        <h2>Hope System</h2>
-        <p>Enter your current hope amount. Operators require specific hope amounts to be recommended.</p>
+        <h2>{t('isTeamBuilder.hopeSystem')}</h2>
+        <p>{t('isTeamBuilder.hopeHelp')}</p>
 
         <div className="hope-input-container">
-          <label htmlFor="hope-input" className="hope-label">Current Hope:</label>
+          <label htmlFor="hope-input" className="hope-label">{t('isTeamBuilder.currentHope')}:</label>
           <input
             id="hope-input"
             type="number"
@@ -1731,32 +1733,32 @@ const IntegratedStrategiesPage: React.FC = () => {
           <div className="hope-requirements">
             <div className="hope-requirement">
               <span className="hope-stars">★★★★★★</span>
-              <span className="hope-cost">{hopeCosts[6]} hope</span>
+              <span className="hope-cost">{hopeCosts[6]} {t('isTeamBuilder.hope')}</span>
             </div>
             <div className="hope-requirement">
               <span className="hope-stars">★★★★★</span>
-              <span className="hope-cost">{hopeCosts[5]} hope</span>
+              <span className="hope-cost">{hopeCosts[5]} {t('isTeamBuilder.hope')}</span>
             </div>
             <div className="hope-requirement">
               <span className="hope-stars">★★★★</span>
-              <span className="hope-cost">{hopeCosts[4]} hope</span>
+              <span className="hope-cost">{hopeCosts[4]} {t('isTeamBuilder.hope')}</span>
             </div>
             <div className="hope-requirement">
-              <span className="hope-stars">★★★ and below</span>
-              <span className="hope-cost">0 hope</span>
+              <span className="hope-stars">{t('isTeamBuilder.starsAndBelow')}</span>
+              <span className="hope-cost">0 {t('isTeamBuilder.hope')}</span>
             </div>
             <div className="hope-requirement">
-              <span className="hope-stars">💫 Temporary Recruitment</span>
-              <span className="hope-cost">0 hope</span>
+              <span className="hope-stars">{t('isTeamBuilder.tempRecruitment')}</span>
+              <span className="hope-cost">0 {t('isTeamBuilder.hope')}</span>
             </div>
           </div>
         </div>
 
         <div className="hope-cost-config-section">
-          <h3>Hope Cost Configuration</h3>
+          <h3>{t('isTeamBuilder.hopeCostConfig')}</h3>
           <div className="hope-cost-config">
             <div className="hope-cost-input-group">
-              <label htmlFor="hope-cost-6star">6★ Cost:</label>
+              <label htmlFor="hope-cost-6star">{t('isTeamBuilder.cost6')}:</label>
               <input
                 id="hope-cost-6star"
                 type="number"
@@ -1772,7 +1774,7 @@ const IntegratedStrategiesPage: React.FC = () => {
               />
             </div>
             <div className="hope-cost-input-group">
-              <label htmlFor="hope-cost-5star">5★ Cost:</label>
+              <label htmlFor="hope-cost-5star">{t('isTeamBuilder.cost5')}:</label>
               <input
                 id="hope-cost-5star"
                 type="number"
@@ -1788,7 +1790,7 @@ const IntegratedStrategiesPage: React.FC = () => {
               />
             </div>
             <div className="hope-cost-input-group">
-              <label htmlFor="hope-cost-4star">4★ Cost:</label>
+              <label htmlFor="hope-cost-4star">{t('isTeamBuilder.cost4')}:</label>
               <input
                 id="hope-cost-4star"
                 type="number"
@@ -1804,7 +1806,7 @@ const IntegratedStrategiesPage: React.FC = () => {
               />
             </div>
             <div className="hope-cost-input-group">
-              <label htmlFor="promotion-cost">Promotion Cost:</label>
+              <label htmlFor="promotion-cost">{t('isTeamBuilder.promotionCost')}:</label>
               <input
                 id="promotion-cost"
                 type="number"
@@ -1824,8 +1826,8 @@ const IntegratedStrategiesPage: React.FC = () => {
       </div>
 
       <div className="class-constraint-section">
-        <h2>Required Classes</h2>
-        <p>Select one or more classes for your next operator</p>
+        <h2>{t('isTeamBuilder.requiredClasses')}</h2>
+        <p>{t('isTeamBuilder.requiredClassesHelp')}</p>
 
         <div className="class-options">
           {CLASS_OPTIONS.map(className => (
@@ -1843,7 +1845,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                 setRecommendation(null); // Clear recommendation when classes change
               }}
             >
-              {className}
+              {translateClass(className)}
             </button>
           ))}
           <div className="select-all-container">
@@ -1860,7 +1862,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                 setRecommendation(null);
               }}
             >
-              {requiredClasses.size === CLASS_OPTIONS.length ? 'Deselect All' : 'Select All'}
+              {requiredClasses.size === CLASS_OPTIONS.length ? t('isTeamBuilder.deselectAll') : t('isTeamBuilder.selectAll')}
             </button>
           </div>
         </div>
@@ -1871,13 +1873,13 @@ const IntegratedStrategiesPage: React.FC = () => {
           className="advanced-options-toggle"
           onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
         >
-          <span>Advanced Options</span>
+          <span>{t('isTeamBuilder.advancedOptions')}</span>
           <span className="toggle-icon">{showAdvancedOptions ? '▼' : '▶'}</span>
         </button>
         {showAdvancedOptions && (
           <div className="advanced-options-content">
             <div className="advanced-option-group">
-              <label className="advanced-option-label">Temporary Recruitment</label>
+              <label className="advanced-option-label">{t('isTeamBuilder.temporaryRecruitment')}</label>
               <div className="temporary-recruitment-selector">
                 <div className="temp-recruitment-container">
                   {temporaryRecruitment ? (
@@ -1891,7 +1893,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                         <div className="temp-operator-name">{getOperatorName(allOperators[temporaryRecruitment], language)}</div>
                         <Stars rarity={allOperators[temporaryRecruitment]?.rarity} />
                         <div className="temp-operator-class">{allOperators[temporaryRecruitment]?.class}</div>
-                        <div className="temp-recruitment-note">Will be considered owned & raised</div>
+                        <div className="temp-recruitment-note">{t('isTeamBuilder.tempRecruitmentNote')}</div>
                       </div>
                       <button
                         className="remove-temp-operator-btn"
@@ -1899,7 +1901,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                           setTemporaryRecruitment('');
                           setRecommendation(null);
                         }}
-                        title="Remove temporary recruitment"
+                        title={t('isTeamBuilder.removeTempRecruitment')}
                       >
                         ×
                       </button>
@@ -1911,7 +1913,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                     >
                       <div className="add-temp-operator-content">
                         <span className="add-icon">💫</span>
-                        <span className="add-text">Select Temporary Recruitment</span>
+                        <span className="add-text">{t('isTeamBuilder.selectTempRecruitment')}</span>
                       </div>
                     </div>
                   )}
@@ -1919,10 +1921,10 @@ const IntegratedStrategiesPage: React.FC = () => {
               </div>
               {requiredClasses.size > 0 && (
                 <div className="selected-classes-indicator">
-                  <span className="indicator-label">Selected Classes:</span>
+                  <span className="indicator-label">{t('isTeamBuilder.selectedClasses')}:</span>
                   <div className="class-chips">
                     {Array.from(requiredClasses).map(className => (
-                      <span key={className} className="class-chip">{className}</span>
+                      <span key={className} className="class-chip">{translateClass(className)}</span>
                     ))}
                   </div>
                 </div>
@@ -1945,7 +1947,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                       if (e.target.checked) {
                         // Activate: Add all operators of the required classes
                         if (requiredClasses.size === 0) {
-                          setError('Please select at least one required class first');
+                          setError(t('isTeamBuilder.selectOneClassFirst'));
                           return;
                         }
                         
@@ -1988,8 +1990,8 @@ const IntegratedStrategiesPage: React.FC = () => {
                   <span className="toggle-slider"></span>
                   <span className="toggle-label">
                     {requiredClasses.size > 0 
-                      ? `Add All ${Array.from(requiredClasses).join('/')} Operators`
-                      : 'Add All Selected Class Operators'
+                      ? `${t('isTeamBuilder.addAllOperators')} ${Array.from(requiredClasses).map(c => translateClass(c)).join('/')}`
+                      : t('isTeamBuilder.addAllClassOperators')
                     }
                   </span>
                 </label>
@@ -2005,22 +2007,22 @@ const IntegratedStrategiesPage: React.FC = () => {
           disabled={loading || !user || requiredClasses.size === 0}
           className="recommend-btn primary"
         >
-          {loading ? 'Getting Recommendation...' : 'Get Recommendation'}
+          {loading ? t('isTeamBuilder.gettingRecommendation') : t('isTeamBuilder.getRecommendation')}
         </button>
 
         {recommendation && (
           <div className="recommendation-result">
             <div className="recommendation-header">
-              <h3>Recommended Next Operator</h3>
+              <h3>{t('isTeamBuilder.recommendedNext')}</h3>
               {allRecommendations.length > 1 && (
                 <div className="recommendation-navigation">
                   <button
                     onClick={goToPreviousRecommendation}
                     disabled={currentRecommendationIndex === 0}
                     className="nav-btn prev-btn"
-                    title="Previous recommendation"
+                    title={t('isTeamBuilder.previousTitle')}
                   >
-                    ← Previous
+                    {t('isTeamBuilder.previous')}
                   </button>
                   <span className="recommendation-counter">
                     {currentRecommendationIndex + 1} / {allRecommendations.length}
@@ -2029,9 +2031,9 @@ const IntegratedStrategiesPage: React.FC = () => {
                     onClick={goToNextRecommendation}
                     disabled={currentRecommendationIndex === allRecommendations.length - 1}
                     className="nav-btn next-btn"
-                    title="Next recommendation"
+                    title={t('isTeamBuilder.nextTitle')}
                   >
-                    Next →
+                    {t('isTeamBuilder.next')}
                   </button>
                 </div>
               )}
@@ -2048,10 +2050,10 @@ const IntegratedStrategiesPage: React.FC = () => {
                   <div className="operator-info">
                     <div className="operator-name">{getOperatorName(recommendation.recommendedOperator, language)}</div>
                     <Stars rarity={recommendation.recommendedOperator.rarity} />
-                    <div className="operator-class">{recommendation.recommendedOperator.class}</div>
-                    <div className="recommendation-score">Score: {recommendation.score.toFixed(1)}</div>
+                    <div className="operator-class">{translateClass(recommendation.recommendedOperator.class)}</div>
+                    <div className="recommendation-score">{t('isTeamBuilder.score')}: {recommendation.score.toFixed(1)}</div>
                     <div className="operator-hope-cost">
-                      Hope Cost: {getHopeCost(recommendation.recommendedOperator.rarity || 1)}
+                      {t('isTeamBuilder.hopeCost')}: {getHopeCost(recommendation.recommendedOperator.rarity || 1)}
                     </div>
                   </div>
                 </div>
@@ -2066,35 +2068,35 @@ const IntegratedStrategiesPage: React.FC = () => {
                     }}
                     className="add-recommended-btn primary"
                   >
-                    ➕ {recommendation.isPromotion ? 'Promote Operator' : 'Add to Team'}
+                    ➕ {recommendation.isPromotion ? t('isTeamBuilder.promoteOperator') : t('isTeamBuilder.addToTeam')}
                   </button>
                 </div>
               </>
             ) : (
               <div className="no-recommendation">
-                <p>No suitable operator found for the selected class and team composition.</p>
+                <p>{t('isTeamBuilder.noSuitableOperator')}</p>
                 {raisedOperators.size === 0 ? (
                   <div className="no-raised-operators-notice">
-                    <p><strong>Note:</strong> You haven't marked any operators as raised/deployable.</p>
-                    <p>To get recommendations, mark operators as "want to use" in your profile or operator pages.</p>
+                    <p><strong>{t('isTeamBuilder.noRaisedNote')}</strong></p>
+                    <p>{t('isTeamBuilder.noRaisedHelp')}</p>
                   </div>
                 ) : (
                   <div className="raised-operators-count">
-                    <p>You have {raisedOperators.size} raised operator{raisedOperators.size !== 1 ? 's' : ''} available for recommendations.</p>
+                    <p>{interpolate(t('isTeamBuilder.raisedCount'), { count: String(raisedOperators.size) })}</p>
                   </div>
                 )}
                 <button
                   onClick={() => setRecommendation(null)}
                   className="try-again-btn secondary"
                 >
-                  Try Different Class
+                  {t('isTeamBuilder.tryDifferentClass')}
                 </button>
               </div>
             )}
 
             {recommendation.recommendedOperator && (
               <div className="recommendation-reasoning">
-                <h4>Reasoning</h4>
+                <h4>{t('isTeamBuilder.reasoning')}</h4>
                 <FormattedReasoning text={recommendation.reasoning} />
               </div>
             )}
@@ -2107,13 +2109,13 @@ const IntegratedStrategiesPage: React.FC = () => {
         <div className="modal-overlay" onClick={() => setShowOperatorSelectModal(false)}>
           <div className="modal-content operator-select-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Select Operator to Add</h2>
+              <h2>{t('isTeamBuilder.addOperator')}</h2>
               <button className="modal-close" onClick={() => setShowOperatorSelectModal(false)}>×</button>
             </div>
             <div className="modal-body">
               <input
                 type="text"
-                placeholder="Search operators..."
+                placeholder={t('teamBuilder.searchOperators')}
                 value={operatorSelectSearch}
                 onChange={(e) => setOperatorSelectSearch(e.target.value)}
                 className="operator-search-input"
@@ -2179,13 +2181,13 @@ const IntegratedStrategiesPage: React.FC = () => {
         <div className="modal-overlay" onClick={() => setShowTempRecruitmentModal(false)}>
           <div className="modal-content operator-select-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Select Temporary Recruitment</h2>
+              <h2>{t('isTeamBuilder.selectTempRecruitment')}</h2>
               <button className="modal-close" onClick={() => setShowTempRecruitmentModal(false)}>×</button>
             </div>
             <div className="modal-body">
               <input
                 type="text"
-                placeholder="Search operators..."
+                placeholder={t('teamBuilder.searchOperators')}
                 value={tempRecruitmentSearch}
                 onChange={(e) => setTempRecruitmentSearch(e.target.value)}
                 className="operator-search-input"
