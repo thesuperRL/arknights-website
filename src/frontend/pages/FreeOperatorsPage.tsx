@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
-import { apiFetch, getImageUrl } from '../api';
-import { getRarityClass } from '../utils/rarityUtils';
-import { getOperatorName } from '../utils/operatorNameUtils';
+import { apiFetch } from '../api';
+import { SpecialListOperatorCard, type SpecialListEntry } from '../components/SpecialListOperatorCard';
+import '../components/OperatorCardStandard.css';
 import './FreeOperatorsPage.css';
 
 interface FreeOperatorEntry {
@@ -17,7 +17,7 @@ interface FreeOperatorsData {
   niche: string;
   description: string;
   lastUpdated: string;
-  operators: TrashOperatorEntry[];
+  operators: FreeOperatorEntry[];
 }
 
 interface Operator {
@@ -124,52 +124,15 @@ const FreeOperatorsPage: React.FC = () => {
             No free operators listed.
           </div>
         ) : (
-          <div className="operators-grid">
-            {sortedOperators.map((entry, index) => {
-              const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
-              const isOwned = entry.operator ? ownedOperators.has(entry.operator.id) : false;
-              return (
-              <div 
-                key={`${entry.operatorId}-${index}`} 
-                className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
-                title={entry.note || undefined}
-              >
-                {entry.operator ? (
-                  <>
-                    <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
-                      <img
-                        src={getImageUrl(entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`)}
-                        alt={entry.operator.name}
-                        className="operator-image"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target && !target.src.includes('data:image')) {
-                            target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
-                            target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                          }
-                        }}
-                        loading="lazy"
-                      />
-                    </Link>
-                    <Link to={`/operator/${entry.operator.id}`} className="operator-name-link">
-                      <div className="operator-name">{getOperatorName(entry.operator, language)}</div>
-                    </Link>
-                    <div className="operator-class">
-                      {entry.operator.class} • {entry.operator.rarity}★
-                    </div>
-                    {entry.note && (
-                      <div className="operator-note-tooltip">{entry.note}</div>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <div className="operator-name">{entry.operatorId}</div>
-                    <div className="operator-class">Operator not found</div>
-                  </>
-                )}
-              </div>
-              );
-            })}
+          <div className="operators-grid operator-cards-standard">
+            {sortedOperators.map((entry, index) => (
+              <SpecialListOperatorCard
+                key={`${entry.operatorId}-${index}`}
+                entry={entry as SpecialListEntry}
+                language={language}
+                isOwned={entry.operator ? ownedOperators.has(entry.operator.id) : false}
+              />
+            ))}
           </div>
         )}
       </div>

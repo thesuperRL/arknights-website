@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { apiFetch, getImageUrl } from '../api';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
+import '../components/OperatorCardStandard.css';
 import './SynergyPage.css';
 
 interface Operator {
@@ -138,7 +139,7 @@ const SynergyPage: React.FC = () => {
             {coreGroups.map(([groupName, operators]) => (
               <div key={groupName} className="synergy-group">
                 <h3 className="group-title">{groupName}</h3>
-                <div className="operators-grid">
+                <div className="operators-grid operator-cards-standard">
                   {sortOperators(operators).map((entry, index) => {
                     const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
                     const isOwned = entry.operator ? ownedOperators.has(entry.operator.id) : false;
@@ -221,7 +222,7 @@ const SynergyPage: React.FC = () => {
             {optionalGroups.map(([groupName, operators]) => (
               <div key={groupName} className="synergy-group">
                 <h3 className="group-title">{groupName}</h3>
-                <div className="operators-grid">
+                <div className="operators-grid operator-cards-standard">
                   {sortOperators(operators).map((entry, index) => {
                     const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
                     const isOwned = entry.operator ? ownedOperators.has(entry.operator.id) : false;

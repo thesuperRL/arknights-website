@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { apiFetch, getImageUrl } from '../api';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
+import '../components/OperatorCardStandard.css';
 
 interface Operator {
   id: string;
@@ -161,7 +162,7 @@ const NicheListPage: React.FC = () => {
       )}
 
       <div className="niche-list-container">
-        <div className="operators-grid">
+        <div className="operators-grid operator-cards-standard">
           {sortedOperators.map((entry, index) => {
             const rarityClass = entry.operator ? getRarityClass(entry.operator.rarity) : '';
             const isOwned = entry.operator ? ownedOperators.has(entry.operator.id) : false;

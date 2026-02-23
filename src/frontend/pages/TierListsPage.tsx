@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { apiFetch } from '../api';
 import './TierListsPage.css';
 
+/** Set to true to show the Free Operators card on the Tier Lists page */
+const SHOW_FREE_OPERATORS = false;
+
 interface NicheListInfo {
   niche?: string;
   filename?: string;
@@ -75,10 +78,12 @@ const TierListsPage: React.FC = () => {
           <h2>Trash Operators</h2>
           <p>Operators with no optimal use</p>
         </Link>
-        <Link to="/free-operators" className="special-card free-card">
-          <h2>Free Operators</h2>
-          <p>Operators that are free to obtain</p>
-        </Link>
+        {SHOW_FREE_OPERATORS && (
+          <Link to="/free-operators" className="special-card free-card">
+            <h2>Free Operators</h2>
+            <p>Operators that are free to obtain</p>
+          </Link>
+        )}
         <Link to="/global-range-operators" className="special-card global-range-card">
           <h2>Global Range Operators</h2>
           <p>Operators that can hit anywhere on the map</p>

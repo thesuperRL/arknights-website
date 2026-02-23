@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './UserGuidePage.css';
 
+/** Set to true to show Free Operators in the special lists section */
+const SHOW_FREE_OPERATORS = false;
+
 const UserGuidePage: React.FC = () => {
   return (
     <div className="user-guide-page">
@@ -138,7 +141,7 @@ const UserGuidePage: React.FC = () => {
           <h3>Special lists (from Tier Lists page)</h3>
           <ul>
             <li><Link to="/trash-operators">Trash Operators</Link> — Operators with no optimal use.</li>
-            <li><Link to="/free-operators">Free Operators</Link> — Operators that are free to obtain.</li>
+            {SHOW_FREE_OPERATORS && <li><Link to="/free-operators">Free Operators</Link> — Operators that are free to obtain.</li>}
             <li><Link to="/global-range-operators">Global Range Operators</Link> — Operators with global range.</li>
             <li><Link to="/unconventional-niches-operators">Unconventional Niches</Link> — Operators that fill unusual roles.</li>
             <li><Link to="/low-rarity-operators">Good Low-Rarity Operators</Link> — Strong low-rarity options.</li>
