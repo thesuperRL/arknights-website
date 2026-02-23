@@ -24,7 +24,8 @@
     "upload:accounts:pg": "ts-node src/upload-accounts-to-pg.ts",
     "migrate:niches": "ts-node src/migrate-niches-to-sql.ts",
     "migrate:niches:from-sql": "ts-node src/migrate-niches-from-sql.ts",
-    "upload:changelog": "ts-node src/upload-changelog-to-sql.ts"
+    "upload:changelog": "ts-node src/upload-changelog-to-sql.ts",
+    "remove:changelog-additions": "ts-node src/remove-changelog-additions.ts"
   },
   "repository": {
     "type": "git",

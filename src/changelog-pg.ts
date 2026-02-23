@@ -151,6 +151,18 @@ export async function hasChangelogEntries(): Promise<boolean> {
 }
 
 /**
+ * Delete "first ranking" / addition rows (old_tier IS NULL, new_tier IS NOT NULL) from the table.
+ * Returns the number of rows deleted. Use to keep only real tier changes and removals.
+ */
+export async function deleteChangelogAdditionEntries(): Promise<number> {
+  await ensureTable();
+  const res = await getPool().query(
+    `DELETE FROM tier_changelog WHERE old_tier IS NULL AND new_tier IS NOT NULL`
+  );
+  return res.rowCount ?? 0;
+}
+
+/**
  * Check if an entry with the same key fields already exists (avoids duplicate inserts).
  */
 export async function changelogEntryExists(entry: ChangelogEntryRow): Promise<boolean> {

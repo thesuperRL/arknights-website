@@ -1,6 +1,6 @@
 /**
- * One-time: upload data/tier-changelog.json to tier_changelog table, then delete the JSON file.
- * Requires DATABASE_URL.
+ * One-time: upload data/changelog.json (or tier-changelog.json) to tier_changelog table, then delete the JSON file.
+ * Clears the table first (TRUNCATE) so there are no duplicate rows. Requires DATABASE_URL.
  */
 import dotenv from 'dotenv';
 import * as fs from 'fs';
@@ -10,7 +10,10 @@ import { replaceChangelogWithJson } from './changelog-pg';
 dotenv.config();
 
 const DATA_DIR = path.join(__dirname, '../data');
-const JSON_PATH = path.join(DATA_DIR, 'tier-changelog.json');
+// Prefer changelog.json, fall back to tier-changelog.json
+const JSON_PATH = fs.existsSync(path.join(DATA_DIR, 'changelog.json'))
+  ? path.join(DATA_DIR, 'changelog.json')
+  : path.join(DATA_DIR, 'tier-changelog.json');
 
 async function main(): Promise<void> {
   if (!process.env.DATABASE_URL) {
@@ -26,7 +29,7 @@ async function main(): Promise<void> {
   console.log(`Uploaded ${count} changelog entries to tier_changelog.`);
 
   fs.unlinkSync(JSON_PATH);
-  console.log('Deleted data/tier-changelog.json');
+  console.log('Deleted', path.basename(JSON_PATH));
 }
 
 main().catch((err) => {
