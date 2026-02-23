@@ -1892,7 +1892,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                       <div className="temp-operator-info">
                         <div className="temp-operator-name">{getOperatorName(allOperators[temporaryRecruitment], language)}</div>
                         <Stars rarity={allOperators[temporaryRecruitment]?.rarity} />
-                        <div className="temp-operator-class">{allOperators[temporaryRecruitment]?.class}</div>
+                        <div className="temp-operator-class">{allOperators[temporaryRecruitment]?.class ? translateClass(allOperators[temporaryRecruitment].class) : ''}</div>
                         <div className="temp-recruitment-note">{t('isTeamBuilder.tempRecruitmentNote')}</div>
                       </div>
                       <button

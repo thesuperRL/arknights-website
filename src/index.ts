@@ -27,7 +27,7 @@ import {
   getChangelogEntries,
   insertChangelogEntry,
   initializeChangelogTable,
-  migrateChangelogFromJson,
+  deleteChangelogAdditionEntries,
   ChangelogEntryRow
 } from './changelog-pg';
 import * as fs from 'fs';
@@ -446,31 +446,8 @@ app.get('/api/changelog', async (req, res) => {
       return;
     }
 
-    // Fallback when no DB: read from JSON (e.g. local dev)
-    const filePath = path.join(dataDir, 'tier-changelog.json');
-    if (!fs.existsSync(filePath)) {
-      res.json({ entries: [] });
-      return;
-    }
-    const content = fs.readFileSync(filePath, 'utf-8');
-    let changelog: { entries: Array<Record<string, unknown>> };
-    try {
-      changelog = JSON.parse(content);
-    } catch {
-      res.json({ entries: [] });
-      return;
-    }
-    const entries = Array.isArray(changelog.entries) ? changelog.entries : [];
-    const withGlobal = entries.map((e: Record<string, unknown>) => {
-      const operatorId = String(e.operatorId ?? '');
-      const operatorName = String(e.operatorName ?? '');
-      return {
-        ...e,
-        operatorName: resolveName(operatorId, operatorName),
-        global: e.global !== undefined ? e.global : (operatorGlobal[operatorId] ?? true),
-      };
-    });
-    res.json({ entries: withGlobal });
+    // No DB: changelog is SQL-only; return empty so UI still works
+    res.json({ entries: [] });
   } catch (error) {
     console.error('Error loading changelog:', error);
     res.status(500).json({ error: 'Failed to load changelog' });
@@ -1402,7 +1379,10 @@ app.use((req, res, next) => {
   if (process.env.DATABASE_URL) {
     await initializeTeamDataTable();
     await initializeChangelogTable();
-    await migrateChangelogFromJson();
+    const removed = await deleteChangelogAdditionEntries();
+    if (removed > 0) {
+      console.log(`Changelog: removed ${removed} "first change" (addition) entries from tier_changelog.`);
+    }
   }
 
   // Start the server

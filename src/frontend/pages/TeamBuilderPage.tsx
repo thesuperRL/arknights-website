@@ -53,7 +53,7 @@ interface Operator {
 const TeamBuilderPage: React.FC = () => {
   const { user } = useAuth();
   const { language } = useLanguage();
-  const { t, getNicheName } = useTranslation();
+  const { t, getNicheName, translateClass } = useTranslation();
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
   const [allNiches, setAllNiches] = useState<Array<{filename: string; displayName: string}>>([]);
   const [nicheFilenameMap, setNicheFilenameMap] = useState<Record<string, string>>({});
@@ -1104,7 +1104,7 @@ const TeamBuilderPage: React.FC = () => {
                             <div className="stars-wrapper">
                               <Stars rarity={selectedOperator.rarity} />
                             </div>
-                            <div className="operator-class">{selectedOperator.class}</div>
+                            <div className="operator-class">{translateClass(selectedOperator.class)}</div>
                             <button 
                               className="revert-operator-btn"
                               onClick={(e) => {
@@ -1169,7 +1169,7 @@ const TeamBuilderPage: React.FC = () => {
                         <div className="stars-wrapper">
                           <Stars rarity={member.operator.rarity} />
                         </div>
-                        <div className="operator-class">{member.operator.class}</div>
+                        <div className="operator-class">{translateClass(member.operator.class)}</div>
                         {!wasChanged && (
                           <div className="primary-niche">
                             {displayPrimaryNiche ? getNicheName(displayPrimaryNiche, nicheFilenameMap[displayPrimaryNiche] || displayPrimaryNiche) : '\u00A0'}
