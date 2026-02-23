@@ -2498,7 +2498,7 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -2511,7 +2511,7 @@
       "boss-killing": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ],
       "res-shred": [
@@ -5416,6 +5416,8 @@
     "niches": [
       "aoe-arts-dps",
       "arts-dps",
+      "boss-killing",
+      "res-shred",
       "stalling"
     ],
     "cnName": "望",
@@ -5434,6 +5436,18 @@
         }
       ],
       "arts-dps": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        }
+      ],
+      "res-shred": [
         {
           "tier": "SS",
           "level": ""

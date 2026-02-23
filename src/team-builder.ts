@@ -995,7 +995,7 @@ export async function buildTeam(
   preferences: TeamPreferences,
   lockedOperatorIds: string[] = []
 ): Promise<TeamResult> {
-  // Load all operators
+  // Load all operators (no restriction by global release; CN/unreleased operators are allowed)
   const allOperators = loadAllOperators();
 
   // Load trash operators and free operators to apply penalty (but not exclude them)
@@ -1409,7 +1409,7 @@ export async function getIntegratedStrategiesRecommendation(
   requiredClasses: string[],
   temporaryRecruitment?: string
 ): Promise<{ recommendedOperator: any | null; reasoning: string; score: number }> {
-  // Load all operators and user's data
+  // Load all operators and user's data (no restriction by global release)
   const allOperators = loadAllOperators();
   const ownedOperatorIds = await getOwnedOperators(email);
 

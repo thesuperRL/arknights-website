@@ -203,7 +203,7 @@ const AllOperatorsPage: React.FC = () => {
             <Link
               key={operator.id}
               to={`/operator/${operator.id}`}
-              className={`operator-card ${!operator.global ? 'non-global' : ''} ${rarityClass} ${!isOwned ? 'unowned' : ''}`}
+              className={`operator-card ${!operator.global && !isOwned ? 'non-global' : ''} ${rarityClass} ${!isOwned ? 'unowned' : ''}`}
             >
               <img
                 src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}

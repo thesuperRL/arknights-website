@@ -145,7 +145,7 @@ const SynergyPage: React.FC = () => {
                     return (
                       <div
                         key={`${entry.operatorId}-${index}`}
-                        className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
+                        className={`operator-card ${rarityClass} ${!entry.operator?.global && !isOwned ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
                       >
                         {entry.operator ? (
                           <>
@@ -228,7 +228,7 @@ const SynergyPage: React.FC = () => {
                     return (
                       <div
                         key={`${entry.operatorId}-${index}`}
-                        className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
+                        className={`operator-card ${rarityClass} ${!entry.operator?.global && !isOwned ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
                       >
                         {entry.operator ? (
                           <>

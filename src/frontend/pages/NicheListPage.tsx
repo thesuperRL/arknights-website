@@ -170,7 +170,7 @@ const NicheListPage: React.FC = () => {
             return (
             <div 
               key={uniqueKey} 
-              className={`operator-card ${rarityClass} ${!entry.operator?.global ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
+              className={`operator-card ${rarityClass} ${!entry.operator?.global && !isOwned ? 'non-global' : ''} ${!isOwned ? 'unowned' : ''}`}
               title={entry.note || undefined}
             >
               {entry.operator ? (

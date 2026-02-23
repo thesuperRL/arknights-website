@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { apiFetch } from '../api';
 import './ChangelogPage.css';
 
@@ -19,11 +20,24 @@ interface ChangelogEntry {
 }
 
 const ChangelogPage: React.FC = () => {
+  const { user } = useAuth();
   const [entries, setEntries] = useState<ChangelogEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'upgrades' | 'downgrades' | 'additions' | 'removals'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [ownedOperatorIds, setOwnedOperatorIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (user) {
+      apiFetch('/api/auth/user')
+        .then(res => res.ok ? res.json() : null)
+        .then(data => setOwnedOperatorIds(new Set(data?.ownedOperators || [])))
+        .catch(() => setOwnedOperatorIds(new Set()));
+    } else {
+      setOwnedOperatorIds(new Set());
+    }
+  }, [user]);
 
   useEffect(() => {
     apiFetch('/api/changelog')
@@ -228,7 +242,7 @@ const ChangelogPage: React.FC = () => {
               </thead>
               <tbody>
                 {sortedEntries.map((entry, idx) => (
-                  <tr key={`${entry.operatorId}-${entry.nicheFilename}-${entry.date}-${idx}`} className={`change-row ${getChangeType(entry)} ${entry.global === false ? 'non-global' : ''}`}>
+                  <tr key={`${entry.operatorId}-${entry.nicheFilename}-${entry.date}-${idx}`} className={`change-row ${getChangeType(entry)} ${entry.global === false && !ownedOperatorIds.has(entry.operatorId) ? 'non-global' : ''}`}>
                     <td className="col-date">{formatEntryDate(entry)}</td>
                     <td className="col-operator">
                       <span className={entry.global === false ? 'changelog-blur' : ''}>

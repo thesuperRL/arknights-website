@@ -2152,7 +2152,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                   .map(op => (
                     <div
                       key={op.id}
-                      className={`operator-select-card rarity-${op.rarity} ${!op.global ? 'non-global' : ''}`}
+                      className={`operator-select-card rarity-${op.rarity}`}
                       onClick={() => {
                         addOperator(op.id);
                         setShowOperatorSelectModal(false);
