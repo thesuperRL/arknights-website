@@ -6,6 +6,7 @@ import Stars from '../components/Stars';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { apiFetch, getImageUrl } from '../api';
+import '../components/OperatorCardCollection.css';
 import './UserProfilePage.css';
 
 interface UserData {
@@ -390,7 +391,7 @@ const UserProfilePage: React.FC = () => {
             Showing {filteredOperators.length} of {user.ownedOperators.length} operators
           </div>
 
-          <div className="operators-grid">
+          <div className="operators-grid operator-cards-collection">
             {filteredOperators.length === 0 ? (
               <div className="no-results">No operators found matching your filters.</div>
             ) : (

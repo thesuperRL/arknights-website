@@ -140,12 +140,18 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-.operator-cards-standard .operator-card.non-global .operator-image {
+.operator-cards-standard .operator-card.non-global .operator-image,
+.operator-cards-standard .operator-card.non-global .operator-name-link,
+.operator-cards-standard .operator-card.non-global .operator-name,
+.operator-cards-standard .operator-card.non-global .operator-class {
   filter: blur(14px);
   transition: filter 0.25s ease;
 }
 
-.operator-cards-standard .operator-card.non-global:hover .operator-image {
+.operator-cards-standard .operator-card.non-global:hover .operator-image,
+.operator-cards-standard .operator-card.non-global:hover .operator-name-link,
+.operator-cards-standard .operator-card.non-global:hover .operator-name,
+.operator-cards-standard .operator-card.non-global:hover .operator-class {
   filter: blur(0);
 }
 
@@ -206,15 +212,16 @@
   margin-bottom: 0.0625rem;
   color: var(--text-light);
   font-size: 0.95rem;
-  min-height: 1rem;
-  max-height: calc(1rem * 2);
+  line-height: 1.2;
+  /* Allow 2 full lines: font-size * line-height * 2 */
+  min-height: calc(0.95rem * 1.2);
+  max-height: calc(0.95rem * 1.2 * 2);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   overflow-wrap: break-word;
   word-break: break-word;
-  line-height: 1.15;
   overflow: hidden;
   text-align: center;
   padding: 0 0.0625rem;

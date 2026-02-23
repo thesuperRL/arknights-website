@@ -1,0 +1,182 @@
+/* Collection-style operator cards for All Operators and Profile pages (larger than niche-list standard) */
+
+.operator-cards-collection.operators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.operator-cards-collection .operator-card {
+  position: relative;
+  background: rgba(22, 33, 62, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s, opacity 0.3s;
+  text-decoration: none;
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 2px solid transparent;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.operator-cards-collection .operator-card.rarity-6 {
+  border-color: rgba(255, 150, 0, 0.9);
+  background: rgba(255, 165, 0, 0.35);
+}
+
+.operator-cards-collection .operator-card.rarity-5 {
+  border-color: rgba(255, 215, 0, 0.9);
+  background: rgba(255, 215, 0, 0.35);
+}
+
+.operator-cards-collection .operator-card.rarity-4 {
+  border-color: rgba(230, 230, 250, 0.9);
+  background: rgba(230, 230, 250, 0.35);
+}
+
+.operator-cards-collection .operator-card.rarity-3 {
+  border-color: rgba(0, 191, 255, 0.9);
+  background: rgba(0, 191, 255, 0.35);
+}
+
+.operator-cards-collection .operator-card.rarity-2 {
+  border-color: rgba(154, 205, 50, 0.9);
+  background: rgba(154, 205, 50, 0.35);
+}
+
+.operator-cards-collection .operator-card.rarity-1 {
+  border-color: rgba(128, 128, 128, 0.9);
+  background: rgba(128, 128, 128, 0.35);
+}
+
+.operator-cards-collection .operator-card.non-global.rarity-6,
+.operator-cards-collection .operator-card.non-global.rarity-5,
+.operator-cards-collection .operator-card.non-global.rarity-4,
+.operator-cards-collection .operator-card.non-global.rarity-3,
+.operator-cards-collection .operator-card.non-global.rarity-2,
+.operator-cards-collection .operator-card.non-global.rarity-1 {
+  border-color: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.operator-cards-collection .operator-card.unowned {
+  opacity: 0.6;
+  filter: brightness(0.7);
+}
+
+.operator-cards-collection .operator-card.unowned:hover {
+  opacity: 0.8;
+  filter: brightness(0.85);
+}
+
+.operator-cards-collection .operator-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.operator-cards-collection .operator-card.non-global {
+  border-color: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.operator-cards-collection .operator-card.non-global .operator-name {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Blur name, stars (meta), and class when card is non-global */
+.operator-cards-collection .operator-card.non-global .operator-image,
+.operator-cards-collection .operator-card.non-global .operator-name,
+.operator-cards-collection .operator-card.non-global .operator-meta,
+.operator-cards-collection .operator-card.non-global .operator-class {
+  filter: blur(14px);
+  transition: filter 0.25s ease;
+}
+
+.operator-cards-collection .operator-card.non-global:hover .operator-image,
+.operator-cards-collection .operator-card.non-global:hover .operator-name,
+.operator-cards-collection .operator-card.non-global:hover .operator-meta,
+.operator-cards-collection .operator-card.non-global:hover .operator-class {
+  filter: blur(0);
+}
+
+.operator-cards-collection .operator-card.non-global:hover {
+  border-color: rgba(0, 0, 0, 1);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.operator-cards-collection .operator-card.non-global:hover .operator-name {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.operator-cards-collection .operator-image {
+  width: 100%;
+  max-width: 100%;
+  height: 200px;
+  min-height: 200px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.operator-cards-collection .operator-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.operator-cards-collection .operator-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  color: var(--text-light);
+  line-height: 1.35;
+  /* Allow 2 full lines: font-size * line-height * 2 (was 1.3rem*2 and clipped second line) */
+  min-height: calc(1.2rem * 1.35);
+  max-height: calc(1.2rem * 1.35 * 2);
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-word;
+  width: 100%;
+  box-sizing: border-box;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-align: center;
+  padding: 0 0.5rem;
+  flex-shrink: 0;
+}
+
+.operator-cards-collection .operator-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.operator-cards-collection .operator-class {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .operator-cards-collection.operators-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+}

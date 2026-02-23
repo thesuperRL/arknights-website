@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Stars from '../components/Stars';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getRarityClass } from '../utils/rarityUtils';
 import { getOperatorName } from '../utils/operatorNameUtils';
 import { apiFetch, getImageUrl } from '../api';
+import '../components/OperatorCardStandard.css';
 
 interface Operator {
   id: string;
@@ -192,7 +192,7 @@ const AllOperatorsPage: React.FC = () => {
         Showing {filteredOperators.length} of {Object.keys(operators).length} operators
       </div>
 
-      <div className="operators-grid">
+      <div className="operators-grid operator-cards-standard">
         {filteredOperators.length === 0 ? (
           <div className="no-results">No operators found matching your filters.</div>
         ) : (
@@ -200,37 +200,39 @@ const AllOperatorsPage: React.FC = () => {
             const isOwned = ownedOperators.has(operator.id);
             const rarityClass = getRarityClass(operator.rarity);
             return (
-            <Link
+            <div
               key={operator.id}
-              to={`/operator/${operator.id}`}
               className={`operator-card ${!operator.global && !isOwned ? 'non-global' : ''} ${rarityClass} ${!isOwned ? 'unowned' : ''}`}
             >
-              <img
-                src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
-                alt={operator.name}
-                className="operator-image"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  if (target && !target.src.includes('data:image')) {
-                    target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
-                  }
-                }}
-                loading="lazy"
-              />
-              <div className="operator-info">
-                <div className="operator-name">{getOperatorName(operator, language)}</div>
-                <div className="operator-meta">
-                  <Stars rarity={operator.rarity} size="tiny" />
-                  <span className="operator-class">{operator.class}</span>
+              <Link to={`/operator/${operator.id}`} className="operator-image-link">
+                <div className="operator-image-container">
+                  <img
+                    src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
+                    alt={operator.name}
+                    className="operator-image"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (target && !target.src.includes('data:image')) {
+                        target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                      }
+                    }}
+                    loading="lazy"
+                  />
                 </div>
-                {operator.niches && operator.niches.length > 0 && (
-                  <div className="ranked-badge">Ranked</div>
-                )}
-                {(!operator.niches || operator.niches.length === 0) && (
-                  <div className="unranked-badge">Unranked</div>
-                )}
+              </Link>
+              <Link to={`/operator/${operator.id}`} className="operator-name-link">
+                <div className="operator-name">{getOperatorName(operator, language)}</div>
+              </Link>
+              <div className="operator-class">
+                {operator.class} • {operator.rarity}★
               </div>
-            </Link>
+              {operator.niches && operator.niches.length > 0 && (
+                <div className="ranked-badge">Ranked</div>
+              )}
+              {(!operator.niches || operator.niches.length === 0) && (
+                <div className="unranked-badge">Unranked</div>
+              )}
+            </div>
             );
           })
         )}
