@@ -1,11 +1,2 @@
-Unranked Operators (3 total)
-Generated: 2026-02-23T19:15:19.885Z
-
-=== NON-GLOBAL OPERATORS ===
-
---- Caster ---
-mantra (Mantra)
-pramanix_the_prerita (Pramanix the Prerita)
-
---- Vanguard ---
-silverash_the_reignfrost (SilverAsh the Reignfrost)
+All operators are ranked!
+Generated: 2026-02-23T20:00:07.712Z

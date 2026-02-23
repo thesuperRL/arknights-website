@@ -2591,7 +2591,13 @@
     "class": "Caster",
     "global": false,
     "profileImage": "/images/operators/mantra.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "boss-killing",
+      "def-buff",
+      "elemental-damage",
+      "elemental-dps"
+    ],
     "cnName": "真言",
     "krName": "만트라",
     "internalName": "char_4204_mantra",
@@ -2609,7 +2615,38 @@
         ]
       }
     },
-    "nicheInstances": {}
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "def-buff": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "elemental-damage": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "elemental-dps": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ]
+    }
   },
   "marcille": {
     "id": "marcille",
@@ -3530,9 +3567,62 @@
     "class": "Caster",
     "global": false,
     "profileImage": "/images/operators/pramanix_the_prerita.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "arts-dps",
+      "boss-killing",
+      "late-laneholder",
+      "stalling",
+      "tanking-blocking-operators"
+    ],
     "cnName": "圣聆初雪",
-    "internalName": "char_1046_sbell2"
+    "internalName": "char_1046_sbell2",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "arts-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "core",
+        "groups": [
+          "Global Damage"
+        ]
+      }
+    }
   },
   "qiubai": {
     "id": "qiubai",
@@ -3745,7 +3835,7 @@
     "nicheInstances": {
       "aoe-physical-dps": [
         {
-          "tier": "B",
+          "tier": "A",
           "level": ""
         }
       ]
@@ -4221,9 +4311,41 @@
     "class": "Vanguard",
     "global": false,
     "profileImage": "/images/operators/silverash_the_reignfrost.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "dp-generation",
+      "early-laneholder",
+      "fragile"
+    ],
     "cnName": "凛御银灰",
-    "internalName": "char_1045_svash2"
+    "internalName": "char_1045_svash2",
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "dp-generation": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "fragile": [
+        {
+          "tier": "A",
+          "level": "E2"
+        }
+      ]
+    },
+    "synergies": {}
   },
   "skadi": {
     "id": "skadi",
