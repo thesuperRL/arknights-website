@@ -65,13 +65,8 @@ const ChangelogPage: React.FC = () => {
     return newRank > oldRank ? 'upgrade' : 'downgrade';
   };
 
-  const CHANGELOG_CUTOFF = new Date('2026-02-22T01:30:00').getTime();
-
+  // Only entries from tier-changelog.json are shown; no extra entries and no date cutoff
   const filteredEntries = entries.filter(entry => {
-    const time = entry.time || '20:00';
-    const entryMs = new Date(entry.date + 'T' + time + ':00').getTime();
-    if (entryMs <= CHANGELOG_CUTOFF) return false;
-
     if (filter !== 'all') {
       const changeType = getChangeType(entry);
       if (filter === 'upgrades' && changeType !== 'upgrade') return false;
@@ -170,9 +165,9 @@ const ChangelogPage: React.FC = () => {
         <Link to="/" className="back-button">← Back to Home</Link>
         <h1>Tier Changelog</h1>
         <p className="changelog-intro">
-          History of operator tier changes from <code>data/tier-changelog.json</code>. Entries are
-          recorded when niche lists change (run <code>npm run update:ranked</code> or commit). Add
-          justifications in the JSON file before committing.
+          History of operator tier changes from the tier changelog (stored in the database). New
+          entries are added when niche lists change (run <code>npm run update:ranked</code>) or via
+          the API. Add or edit justifications via the database or API.
         </p>
       </div>
 

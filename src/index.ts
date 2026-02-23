@@ -23,6 +23,13 @@ import {
   deleteISTeamState,
   initializeTeamDataTable
 } from './team-data-pg';
+import {
+  getChangelogEntries,
+  insertChangelogEntry,
+  initializeChangelogTable,
+  migrateChangelogFromJson,
+  ChangelogEntryRow
+} from './changelog-pg';
 import * as fs from 'fs';
 
 const useTeamDataDb = () => !!process.env.DATABASE_URL;
@@ -345,18 +352,38 @@ app.get('/api/trash-operators', (_req, res) => {
   }
 });
 
-// Changelog: single source of truth is data/tier-changelog.json (updated by detect-tier-changes when niche lists change)
-function getChangelogPath(): string {
-  const fromDir = path.join(__dirname, '..', 'data', 'tier-changelog.json');
-  if (fs.existsSync(fromDir)) return fromDir;
-  const fromCwd = path.join(process.cwd(), 'data', 'tier-changelog.json');
-  return fromCwd;
+// Changelog: single source of truth is tier_changelog SQL table when DATABASE_URL is set
+function getOperatorGlobalMap(dataDir: string): Record<string, boolean> {
+  const operatorGlobal: Record<string, boolean> = {};
+  for (const rarity of [1, 2, 3, 4, 5, 6]) {
+    const opPath = path.join(dataDir, `operators-${rarity}star.json`);
+    if (fs.existsSync(opPath)) {
+      const opData = JSON.parse(fs.readFileSync(opPath, 'utf-8')) as Record<string, { global?: boolean }>;
+      for (const [id, op] of Object.entries(opData)) {
+        operatorGlobal[id] = op?.global ?? true;
+      }
+    }
+  }
+  return operatorGlobal;
 }
 
-// Changelog entries come from data/tier-changelog.json; we add .global from operator data so the page can blur non-global
-app.get('/api/changelog', (_req, res) => {
+app.get('/api/changelog', async (_req, res) => {
   try {
-    const filePath = getChangelogPath();
+    const dataDir = path.join(__dirname, '../data');
+    const operatorGlobal = getOperatorGlobalMap(dataDir);
+
+    if (process.env.DATABASE_URL) {
+      const entries = await getChangelogEntries();
+      const withGlobal = entries.map((e: ChangelogEntryRow) => ({
+        ...e,
+        global: e.global !== undefined ? e.global : (operatorGlobal[e.operatorId] ?? true),
+      }));
+      res.json({ entries: withGlobal });
+      return;
+    }
+
+    // Fallback when no DB: read from JSON (e.g. local dev)
+    const filePath = path.join(dataDir, 'tier-changelog.json');
     if (!fs.existsSync(filePath)) {
       res.json({ entries: [] });
       return;
@@ -370,17 +397,6 @@ app.get('/api/changelog', (_req, res) => {
       return;
     }
     const entries = Array.isArray(changelog.entries) ? changelog.entries : [];
-    const dataDir = path.dirname(filePath);
-    const operatorGlobal: Record<string, boolean> = {};
-    for (const rarity of [1, 2, 3, 4, 5, 6]) {
-      const opPath = path.join(dataDir, `operators-${rarity}star.json`);
-      if (fs.existsSync(opPath)) {
-        const opData = JSON.parse(fs.readFileSync(opPath, 'utf-8')) as Record<string, { global?: boolean }>;
-        for (const [id, op] of Object.entries(opData)) {
-          operatorGlobal[id] = op?.global ?? true;
-        }
-      }
-    }
     const withGlobal = entries.map((e: Record<string, unknown>) => ({
       ...e,
       global: e.global !== undefined ? e.global : (operatorGlobal[String(e.operatorId)] ?? true),
@@ -389,6 +405,43 @@ app.get('/api/changelog', (_req, res) => {
   } catch (error) {
     console.error('Error loading changelog:', error);
     res.status(500).json({ error: 'Failed to load changelog' });
+  }
+});
+
+app.post('/api/changelog', async (req, res) => {
+  try {
+    if (!process.env.DATABASE_URL) {
+      res.status(503).json({ error: 'Changelog is stored in database; DATABASE_URL is not set' });
+      return;
+    }
+    const body = req.body as Record<string, unknown>;
+    const entry: ChangelogEntryRow = {
+      date: String(body.date ?? ''),
+      time: body.time != null ? String(body.time) : undefined,
+      operatorId: String(body.operatorId ?? ''),
+      operatorName: String(body.operatorName ?? ''),
+      niche: String(body.niche ?? ''),
+      nicheFilename: String(body.nicheFilename ?? ''),
+      oldTier: body.oldTier != null ? String(body.oldTier) : null,
+      newTier: body.newTier != null ? String(body.newTier) : null,
+      oldLevel: String(body.oldLevel ?? ''),
+      newLevel: String(body.newLevel ?? ''),
+      justification: String(body.justification ?? ''),
+      global: body.global !== undefined ? Boolean(body.global) : undefined,
+    };
+    if (!entry.date || !entry.operatorId || !entry.nicheFilename) {
+      res.status(400).json({ error: 'date, operatorId, and nicheFilename are required' });
+      return;
+    }
+    const id = await insertChangelogEntry(entry);
+    if (id == null) {
+      res.status(500).json({ error: 'Failed to insert changelog entry' });
+      return;
+    }
+    res.status(201).json({ success: true, id });
+  } catch (error: unknown) {
+    console.error('Error adding changelog entry:', error);
+    res.status(500).json({ error: 'Failed to add changelog entry' });
   }
 });
 
@@ -1274,6 +1327,8 @@ app.use((req, res, next) => {
   await initializeDbConnection();
   if (process.env.DATABASE_URL) {
     await initializeTeamDataTable();
+    await initializeChangelogTable();
+    await migrateChangelogFromJson();
   }
 
   // Start the server

@@ -1,6 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 interface NicheList {
   niche: string;
@@ -24,13 +27,8 @@ interface ChangelogEntry {
   global?: boolean;
 }
 
-interface Changelog {
-  entries: ChangelogEntry[];
-}
-
 const DATA_DIR = path.join(__dirname, '../data');
 const NICHE_LISTS_DIR = path.join(DATA_DIR, 'niche-lists');
-const CHANGELOG_PATH = path.join(DATA_DIR, 'tier-changelog.json');
 const OPERATORS_FILES = [1, 2, 3, 4, 5, 6].map(r => path.join(DATA_DIR, `operators-${r}star.json`));
 
 function loadOperatorData(): { names: Record<string, string>; global: Record<string, boolean> } {
@@ -178,70 +176,60 @@ function detectChanges(): ChangelogEntry[] {
   return changes;
 }
 
-function loadChangelog(): Changelog {
-  if (fs.existsSync(CHANGELOG_PATH)) {
-    try {
-      const data = JSON.parse(fs.readFileSync(CHANGELOG_PATH, 'utf-8'));
-      return Array.isArray(data.entries) ? data : { entries: [] };
-    } catch {
-      return { entries: [] };
-    }
-  }
-  return { entries: [] };
-}
-
-function saveChangelog(changelog: Changelog): void {
-  const dir = path.dirname(CHANGELOG_PATH);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-  fs.writeFileSync(CHANGELOG_PATH, JSON.stringify(changelog, null, 2), 'utf-8');
-}
-
-function main(): void {
+async function main(): Promise<void> {
   const changes = detectChanges();
-  
+
   if (changes.length === 0) {
     console.log('No tier changes detected.');
     return;
   }
-  
+
   console.log(`\n📋 Detected ${changes.length} tier change(s):\n`);
-  
-  const changelog = loadChangelog();
-  
-  for (const change of changes) {
-    const tierChange = change.oldTier && change.newTier 
-      ? `${change.oldTier} → ${change.newTier}`
-      : change.newTier 
-        ? `Added as ${change.newTier}`
-        : `Removed (was ${change.oldTier})`;
-    
-    const levelInfo = change.newLevel || change.oldLevel 
-      ? ` [${change.newLevel || change.oldLevel}]` 
-      : '';
-    
-    console.log(`  • ${change.operatorName}: ${tierChange}${levelInfo} in ${change.nicheFilename}`);
-    
-    // Check if this exact change already exists (avoid duplicates)
-    const exists = changelog.entries.some(e => 
-      e.date === change.date &&
-      e.operatorId === change.operatorId &&
-      e.nicheFilename === change.nicheFilename &&
-      e.oldTier === change.oldTier &&
-      e.newTier === change.newTier &&
-      e.oldLevel === change.oldLevel &&
-      e.newLevel === change.newLevel
-    );
-    
-    if (!exists) {
-      changelog.entries.unshift(change);
+
+  let written = 0;
+  if (process.env.DATABASE_URL) {
+    const { insertChangelogEntry, changelogEntryExists } = await import('./changelog-pg');
+    for (const change of changes) {
+      const tierChange = change.oldTier && change.newTier
+        ? `${change.oldTier} → ${change.newTier}`
+        : change.newTier
+          ? `Added as ${change.newTier}`
+          : `Removed (was ${change.oldTier})`;
+
+      const levelInfo = change.newLevel || change.oldLevel
+        ? ` [${change.newLevel || change.oldLevel}]`
+        : '';
+
+      console.log(`  • ${change.operatorName}: ${tierChange}${levelInfo} in ${change.nicheFilename}`);
+
+      const exists = await changelogEntryExists(change);
+      if (!exists) {
+        await insertChangelogEntry(change);
+        written++;
+      }
     }
+    if (written > 0) {
+      console.log(`\n✅ Wrote ${written} new entry/entries to tier_changelog table.`);
+    } else {
+      console.log('\n💡 All detected changes already exist in the changelog table.');
+    }
+  } else {
+    for (const change of changes) {
+      const tierChange = change.oldTier && change.newTier
+        ? `${change.oldTier} → ${change.newTier}`
+        : change.newTier
+          ? `Added as ${change.newTier}`
+          : `Removed (was ${change.oldTier})`;
+
+      const levelInfo = change.newLevel || change.oldLevel
+        ? ` [${change.newLevel || change.oldLevel}]`
+        : '';
+
+      console.log(`  • ${change.operatorName}: ${tierChange}${levelInfo} in ${change.nicheFilename}`);
+    }
+    console.log('\n💡 Set DATABASE_URL to write entries to the tier_changelog table.');
   }
-  
-  saveChangelog(changelog);
-  console.log('\n✅ Changelog updated at data/tier-changelog.json');
-  console.log('💡 Add justifications by editing the changelog file before committing.\n');
+  console.log('');
 }
 
 main();

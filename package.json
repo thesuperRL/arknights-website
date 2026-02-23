@@ -23,7 +23,8 @@
     "upload:accounts": "ts-node src/upload-accounts-to-sql.ts",
     "upload:accounts:pg": "ts-node src/upload-accounts-to-pg.ts",
     "migrate:niches": "ts-node src/migrate-niches-to-sql.ts",
-    "migrate:niches:from-sql": "ts-node src/migrate-niches-from-sql.ts"
+    "migrate:niches:from-sql": "ts-node src/migrate-niches-from-sql.ts",
+    "upload:changelog": "ts-node src/upload-changelog-to-sql.ts"
   },
   "repository": {
     "type": "git",
