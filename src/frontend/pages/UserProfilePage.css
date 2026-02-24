@@ -170,7 +170,7 @@
     font-size: 1rem;
 }
 
-/* Add-operators modal: make cards clickable */
+/* Add-operators modal: use same card layout as profile collection */
 .add-operators-modal .operator-cards-collection .operator-card {
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -179,6 +179,34 @@
 .add-operators-modal .operator-cards-collection .operator-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.add-operators-modal .add-operator-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(90, 238, 144, 0.9);
+    color: #0D0D0D;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.add-operators-modal .add-operator-button:hover {
+    background: rgba(90, 238, 144, 1);
+    transform: scale(1.08);
 }
 
 /* Profile: non-global operator – blur image, name, meta (stars), and class */

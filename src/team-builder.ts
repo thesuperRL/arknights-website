@@ -41,6 +41,13 @@ export const HOPE_COST_CONFIG = {
 };
 
 /**
+ * Weight for synergy score in normal team building.
+ * 0 = ignore synergy in final score, 1 = full weight, 0.5 = half weight, etc.
+ * Tune this to control how much synergy affects the reported team score.
+ */
+export const NORMAL_TEAM_SYNERGY_WEIGHT = 0.52;
+
+/**
  * Get the hope cost for a given rarity using configured values
  */
 export function getConfiguredHopeCost(rarity: number, hopeCosts?: Record<number, number>): number {
@@ -929,7 +936,9 @@ function findBestOperatorForNiche(
       }
     }
 
-    const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, bestNicheForScoring, false);
+    const baseScore = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, bestNicheForScoring, false);
+    const synergyBonus = calculateSynergyScoreForOperator(existingTeam, operatorId, false);
+    const score = baseScore + synergyBonus * NORMAL_TEAM_SYNERGY_WEIGHT;
 
     candidates.push({ operatorId, operator, niches, score, primaryNiche: bestNicheForScoring });
 
@@ -962,7 +971,9 @@ function findBestOperatorForNiche(
         }
       }
 
-      const score = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, bestNicheForScoring, true);
+      const baseScore = scoreOperator(operator, operatorId, niches, preferences, existingTeam, requiredNiches, preferredNiches, wantToUseSet, bestNicheForScoring, true);
+      const synergyBonus = calculateSynergyScoreForOperator(existingTeam, operatorId, false);
+      const score = baseScore + synergyBonus * NORMAL_TEAM_SYNERGY_WEIGHT;
 
       candidates.push({ operatorId, operator, niches, score, primaryNiche: bestNicheForScoring });
 
@@ -1385,11 +1396,11 @@ export async function buildTeam(
     }
   }
   score += team.length * 10; // Bonus for filling more slots
-  
-  // Calculate synergy bonuses (only for normal teambuilding, not IS)
+
+  // Apply weighted synergy score (normal teambuilding only; weight is developer-tunable)
   const synergyBonus = calculateSynergyScore(team, false);
-  score += synergyBonus;
-  
+  score += synergyBonus * NORMAL_TEAM_SYNERGY_WEIGHT;
+
   return {
     team,
     coverage: nicheCounts,

@@ -21,6 +21,8 @@
     --accent-2: #2D5A5A;
     --accent-3: #5C4A6C;
     --accent-primary: var(--accent-1);
+    /* Selected state (e.g. class selector on IS page): tertiary / main-from-image; override to match your bg */
+    --accent-selected: var(--accent-3);
     --tier-ex: #ff6b6b;
     --tier-s: #ffa500;
     --tier-a: #ffd700;

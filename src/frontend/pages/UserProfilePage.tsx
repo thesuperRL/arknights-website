@@ -610,20 +610,18 @@ const UserProfilePage: React.FC = () => {
               </div>
             </div>
 
-            <div className="operators-grid" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+            <div className="operators-grid operator-cards-collection add-operators-modal-grid" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
               {getAvailableOperators().length === 0 ? (
                 <div className="no-results">No operators found.</div>
               ) : (
                 getAvailableOperators().map((operator) => {
                   const rarityClass = getRarityClass(operator.rarity);
                   return (
-                  <div 
-                    key={operator.id} 
-                    className={`operator-card ${!operator.global ? 'non-global' : ''} ${rarityClass}`} 
+                  <div
+                    key={operator.id}
+                    className={`operator-card ${!operator.global ? 'non-global' : ''} ${rarityClass}`}
                     style={{ position: 'relative', cursor: 'pointer' }}
-                    onClick={() => {
-                      handleAddOperator(operator.id);
-                    }}
+                    onClick={() => handleAddOperator(operator.id)}
                   >
                     <img
                       src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
@@ -644,28 +642,19 @@ const UserProfilePage: React.FC = () => {
                         <span className="operator-class">{translateClass(operator.class)}</span>
                       </div>
                     </div>
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '0.5rem',
-                        right: '0.5rem',
-                        background: 'rgba(90, 238, 144, 0.8)',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '24px',
-                        height: '24px',
-                        color: 'white',
-                        fontSize: '18px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 10,
-                        pointerEvents: 'none'
+                    <button
+                      type="button"
+                      className="add-operator-button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleAddOperator(operator.id);
                       }}
-                      title="Add operator"
+                      title={t('integratedStrategies.addOperator')}
+                      aria-label={t('integratedStrategies.addOperator')}
                     >
                       +
-                    </div>
+                    </button>
                   </div>
                   );
                 })
