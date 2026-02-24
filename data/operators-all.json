@@ -651,8 +651,7 @@
     "profileImage": "/images/operators/midnight.png",
     "niches": [
       "arts-dps",
-      "physical-dps",
-      "trash-operators"
+      "physical-dps"
     ],
     "cnName": "月见夜",
     "twName": "月見夜",
@@ -669,12 +668,6 @@
       "physical-dps": [
         {
           "tier": "D",
-          "level": ""
-        }
-      ],
-      "trash-operators": [
-        {
-          "tier": "A",
           "level": ""
         }
       ]
@@ -714,16 +707,23 @@
     "global": true,
     "profileImage": "/images/operators/plume.png",
     "niches": [
-      "trash-operators"
+      "dp-generation",
+      "early-laneholder"
     ],
     "cnName": "翎羽",
     "jpName": "プリュム",
     "krName": "플룸",
     "characters": "char_192_falco",
     "nicheInstances": {
-      "trash-operators": [
+      "dp-generation": [
         {
-          "tier": "A",
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "C",
           "level": ""
         }
       ]
@@ -762,7 +762,8 @@
     "global": true,
     "profileImage": "/images/operators/spot.png",
     "niches": [
-      "trash-operators"
+      "healing-operators",
+      "tanking-blocking-operators"
     ],
     "cnName": "斑点",
     "twName": "斑點",
@@ -770,9 +771,15 @@
     "krName": "스팟",
     "characters": "char_284_spot",
     "nicheInstances": {
-      "trash-operators": [
+      "healing-operators": [
         {
-          "tier": "A",
+          "tier": "D",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "D",
           "level": ""
         }
       ]
@@ -787,8 +794,7 @@
     "global": true,
     "profileImage": "/images/operators/steward.png",
     "niches": [
-      "low-rarity",
-      "trash-operators"
+      "low-rarity"
     ],
     "cnName": "史都华德",
     "twName": "史都華德",
@@ -796,12 +802,6 @@
     "krName": "스튜어드",
     "characters": "char_210_stward",
     "nicheInstances": {
-      "trash-operators": [
-        {
-          "tier": "A",
-          "level": ""
-        }
-      ],
       "low-rarity": [
         {
           "tier": "A",
@@ -873,9 +873,20 @@
     "class": "Caster",
     "global": false,
     "profileImage": "/images/operators/akkord.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps"
+    ],
     "cnName": "协律",
-    "internalName": "char_4051_akkord"
+    "internalName": "char_4051_akkord",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "ambriel": {
     "id": "ambriel",
@@ -1734,8 +1745,7 @@
     "global": true,
     "profileImage": "/images/operators/humus.png",
     "niches": [
-      "late-laneholder",
-      "trash-operators"
+      "late-laneholder"
     ],
     "cnName": "休谟斯",
     "twName": "休謨斯",
@@ -1754,12 +1764,6 @@
       "late-laneholder": [
         {
           "tier": "C",
-          "level": ""
-        }
-      ],
-      "trash-operators": [
-        {
-          "tier": "A",
           "level": ""
         }
       ]
@@ -2177,7 +2181,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Flag"
+        ]
+      }
+    }
   },
   "perfumer": {
     "id": "perfumer",
@@ -2200,6 +2211,12 @@
         "role": "core",
         "groups": [
           "Healers"
+        ]
+      },
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Minos Operators (Worth Buffing)"
         ]
       }
     },
@@ -2536,9 +2553,34 @@
     "class": "Vanguard",
     "global": false,
     "profileImage": "/images/operators/snegurochka.png",
-    "niches": [],
+    "niches": [
+      "dp-generation",
+      "stalling"
+    ],
     "cnName": "冬时",
-    "internalName": "char_4208_wintim"
+    "internalName": "char_4208_wintim",
+    "nicheInstances": {
+      "dp-generation": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
+    }
   },
   "sussurro": {
     "id": "sussurro",
@@ -2559,7 +2601,7 @@
     "nicheInstances": {
       "healing-operators": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ],
@@ -2914,6 +2956,7 @@
     "global": true,
     "profileImage": "/images/operators/amiya.png",
     "niches": [
+      "arts-dps",
       "true_damage"
     ],
     "cnName": "阿米娅",
@@ -2922,6 +2965,12 @@
     "krName": "아미야",
     "internalName": "char_002_amiya",
     "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
       "true_damage": [
         {
           "tier": "B",
@@ -3661,9 +3710,27 @@
     "class": "Defender",
     "global": false,
     "profileImage": "/images/operators/cairn.png",
-    "niches": [],
+    "niches": [
+      "elemental-damage",
+      "tanking-blocking-operators"
+    ],
     "cnName": "响石",
-    "internalName": "char_4214_cairn"
+    "internalName": "char_4214_cairn",
+    "nicheInstances": {
+      "elemental-damage": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "cantabile": {
     "id": "cantabile",
@@ -4220,7 +4287,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Flag"
+        ]
+      }
+    }
   },
   "enforcer": {
     "id": "enforcer",
@@ -4879,10 +4953,21 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/hadiya.png",
-    "niches": [],
+    "niches": [
+      "trash-operators"
+    ],
     "cnName": "哈蒂娅",
     "jpName": "ハディヤ",
-    "internalName": "char_394_hadiya"
+    "internalName": "char_394_hadiya",
+    "nicheInstances": {
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "harmonie": {
     "id": "harmonie",
@@ -4924,8 +5009,7 @@
     "profileImage": "/images/operators/harold.png",
     "niches": [
       "elemental_damage_healers",
-      "healing-operators",
-      "trash-operators"
+      "healing-operators"
     ],
     "cnName": "哈洛德",
     "jpName": "ハロルド",
@@ -4941,12 +5025,6 @@
       "healing-operators": [
         {
           "tier": "C",
-          "level": ""
-        }
-      ],
-      "trash-operators": [
-        {
-          "tier": "A",
           "level": ""
         }
       ]
@@ -5851,7 +5929,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "lucilla": {
     "id": "lucilla",
@@ -6156,7 +6241,7 @@
     "name": "Misumi Uika",
     "rarity": 5,
     "class": "Supporter",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/misumi_uika.png",
     "niches": [
       "damage-buff",
@@ -6176,7 +6261,7 @@
       ],
       "healing-operators": [
         {
-          "tier": "A",
+          "tier": "B",
           "level": ""
         }
       ]
@@ -6553,7 +6638,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "philae": {
     "id": "philae",
@@ -6572,6 +6664,12 @@
     "krName": "필라에",
     "internalName": "char_4148_philae",
     "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      },
       "necrosis": {
         "role": "optional",
         "groups": [
@@ -7317,8 +7415,7 @@
     "global": true,
     "profileImage": "/images/operators/shalem.png",
     "niches": [
-      "free",
-      "trash-operators"
+      "free"
     ],
     "cnName": "暮落",
     "jpName": "シャレム",
@@ -7326,12 +7423,6 @@
     "internalName": "char_4025_aprot2",
     "nicheInstances": {
       "free": [
-        {
-          "tier": "A",
-          "level": ""
-        }
-      ],
-      "trash-operators": [
         {
           "tier": "A",
           "level": ""
@@ -7469,9 +7560,34 @@
     "class": "Sniper",
     "global": false,
     "profileImage": "/images/operators/skybox.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "physical-dps",
+      "silence"
+    ],
     "cnName": "天空盒",
-    "internalName": "char_4213_skybx"
+    "internalName": "char_4213_skybx",
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "silence": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "skyfire": {
     "id": "skyfire",
@@ -7504,9 +7620,20 @@
     "class": "Sniper",
     "global": false,
     "profileImage": "/images/operators/snow_hunter.png",
-    "niches": [],
+    "niches": [
+      "physical-dps"
+    ],
     "cnName": "雪猎",
-    "internalName": "char_4211_snhunt"
+    "internalName": "char_4211_snhunt",
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "snowsant": {
     "id": "snowsant",
@@ -8153,7 +8280,10 @@
     "class": "Defender",
     "global": false,
     "profileImage": "/images/operators/vetochki.png",
-    "niches": [],
+    "niches": [
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "折桠",
     "internalName": "char_4207_branch",
     "synergies": {
@@ -8164,7 +8294,20 @@
         ]
       }
     },
-    "nicheInstances": {}
+    "nicheInstances": {
+      "late-laneholder": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    }
   },
   "vulcan": {
     "id": "vulcan",
@@ -8205,6 +8348,7 @@
     "global": true,
     "profileImage": "/images/operators/waai_fu.png",
     "niches": [
+      "atk-debuff",
       "fast-redeploy-operators",
       "silence",
       "trash-operators"
@@ -8214,6 +8358,12 @@
     "krName": "와이후",
     "internalName": "char_243_waaifu",
     "nicheInstances": {
+      "atk-debuff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
       "fast-redeploy-operators": [
         {
           "tier": "B",
@@ -8240,7 +8390,7 @@
     "name": "Wakaba Mutsumi",
     "rarity": 5,
     "class": "Specialist",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/wakaba_mutsumi.png",
     "niches": [
       "arts-dps",
@@ -8261,7 +8411,7 @@
       ],
       "late-laneholder": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ],
@@ -8304,7 +8454,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Flag"
+        ]
+      }
+    }
   },
   "warfarin": {
     "id": "warfarin",
@@ -8326,7 +8483,7 @@
     "nicheInstances": {
       "damage-buff": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -8615,7 +8772,7 @@
     "name": "Yahata Umiri",
     "rarity": 5,
     "class": "Specialist",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/yahata_umiri.png",
     "niches": [
       "aoe-physical-dps",
@@ -8629,7 +8786,7 @@
     "nicheInstances": {
       "aoe-physical-dps": [
         {
-          "tier": "A",
+          "tier": "B",
           "level": ""
         }
       ],
@@ -8654,7 +8811,7 @@
     "name": "Yūtenji Nyamu",
     "rarity": 5,
     "class": "Guard",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/y_tenji_nyamu.png",
     "niches": [
       "trash-operators"
@@ -8726,9 +8883,48 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/perfumer_the_distilled.png",
-    "niches": [],
+    "niches": [
+      "damage-buff",
+      "def-buff",
+      "healing-operators",
+      "res-buff"
+    ],
     "cnName": "撷英调香师",
-    "internalName": "char_1022_flwr2"
+    "internalName": "char_1022_flwr2",
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "def-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Minos Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "vark_ris": {
     "id": "vark_ris",
@@ -8737,9 +8933,47 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/vark_ris.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "late-laneholder",
+      "tanking-blocking-operators"
+    ],
     "cnName": "摆渡人",
-    "internalName": "char_4166_varkis"
+    "internalName": "char_4166_varkis",
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "minos": {
+        "role": "core",
+        "groups": [
+          "Minos Damage Buffer"
+        ]
+      },
+      "offensive-recovery-archetto": {
+        "role": "optional",
+        "groups": [
+          "Offensive Recovery Operators"
+        ]
+      }
+    }
   },
   "ju": {
     "id": "ju",
@@ -8748,9 +8982,27 @@
     "class": "Sniper",
     "global": false,
     "profileImage": "/images/operators/ju.png",
-    "niches": [],
+    "niches": [
+      "physical-dps",
+      "sp-battery"
+    ],
     "cnName": "矩",
-    "internalName": "char_4221_ju"
+    "internalName": "char_4221_ju",
+    "nicheInstances": {
+      "physical-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "sp-battery": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "taraxacum": {
     "id": "taraxacum",
@@ -8759,9 +9011,20 @@
     "class": "Medic",
     "global": false,
     "profileImage": "/images/operators/taraxacum.png",
-    "niches": [],
+    "niches": [
+      "healing-operators"
+    ],
     "cnName": "风絮",
-    "internalName": "char_4222_taraxa"
+    "internalName": "char_4222_taraxa",
+    "nicheInstances": {
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "aak": {
     "id": "aak",
@@ -8910,7 +9173,7 @@
     "nicheInstances": {
       "aoe-physical-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -8980,9 +9243,38 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/astgenne_the_lightchaser.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "fragile",
+      "stalling"
+    ],
     "cnName": "溯光星源",
-    "internalName": "char_1047_halo2"
+    "internalName": "char_1047_halo2",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "A",
+          "level": "E2"
+        },
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "fragile": [
+        {
+          "tier": "A",
+          "level": "E2"
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "bagpipe": {
     "id": "bagpipe",
@@ -9029,7 +9321,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Pipe"
+        ]
+      }
+    }
   },
   "blaze": {
     "id": "blaze",
@@ -9136,7 +9435,7 @@
     "nicheInstances": {
       "healing-operators": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": "E2"
         }
       ],
@@ -9206,11 +9505,11 @@
     "nicheInstances": {
       "arts-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": "CCR-X"
         },
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ],
@@ -9586,7 +9885,7 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "C",
+          "tier": "B",
           "level": ""
         }
       ],
@@ -9772,7 +10071,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "executor_the_ex_foedere": {
     "id": "executor_the_ex_foedere",
@@ -9813,7 +10119,7 @@
       ],
       "physical-dps": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ]
@@ -10154,7 +10460,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "gladiia": {
     "id": "gladiia",
@@ -10532,6 +10845,7 @@
       "aoe-arts-dps",
       "arts-dps",
       "boss-killing",
+      "late-laneholder",
       "tanking-blocking-operators",
       "unconventional-niches"
     ],
@@ -10540,7 +10854,7 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "A",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -10551,6 +10865,12 @@
         }
       ],
       "boss-killing": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
         {
           "tier": "SS",
           "level": ""
@@ -10795,7 +11115,7 @@
           "level": "ISW-α"
         },
         {
-          "tier": "A",
+          "tier": "B",
           "level": ""
         }
       ],
@@ -10811,7 +11131,7 @@
       ],
       "tanking-blocking-operators": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -10959,6 +11279,7 @@
     "profileImage": "/images/operators/leizi_the_thunderbringer.png",
     "niches": [
       "aoe-physical-dps",
+      "arts-dps",
       "boss-killing",
       "physical-dps"
     ],
@@ -10972,6 +11293,12 @@
           "tier": "S",
           "level": "E2"
         },
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "arts-dps": [
         {
           "tier": "A",
           "level": ""
@@ -11030,7 +11357,7 @@
       ],
       "physical-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -11198,7 +11525,7 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -11211,7 +11538,7 @@
       "boss-killing": [
         {
           "tier": "SS",
-          "level": ""
+          "level": "E2"
         }
       ],
       "res-shred": [
@@ -11291,11 +11618,23 @@
     "class": "Caster",
     "global": false,
     "profileImage": "/images/operators/mantra.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "boss-killing",
+      "def-buff",
+      "elemental-damage",
+      "elemental-dps"
+    ],
     "cnName": "真言",
     "krName": "만트라",
     "internalName": "char_4204_mantra",
     "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      },
       "nervous-impairment": {
         "role": "optional",
         "groups": [
@@ -11303,7 +11642,38 @@
         ]
       }
     },
-    "nicheInstances": {}
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "def-buff": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "elemental-damage": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "elemental-dps": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ]
+    }
   },
   "marcille": {
     "id": "marcille",
@@ -11395,7 +11765,7 @@
       ],
       "damage-buff": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -11442,11 +11812,11 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "B",
+          "tier": "A",
           "level": "E2"
         },
         {
-          "tier": "C",
+          "tier": "B",
           "level": ""
         }
       ],
@@ -11684,7 +12054,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "nasti": {
     "id": "nasti",
@@ -11693,11 +12070,43 @@
     "class": "Supporter",
     "global": false,
     "profileImage": "/images/operators/nasti.png",
-    "niches": [],
+    "niches": [
+      "damage-buff",
+      "def-buff",
+      "res-buff",
+      "unconventional-niches"
+    ],
     "cnName": "娜斯提",
     "jpName": "ナスティ",
     "krName": "내스티",
-    "internalName": "char_4212_nasti"
+    "internalName": "char_4212_nasti",
+    "nicheInstances": {
+      "damage-buff": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        }
+      ],
+      "def-buff": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "res-buff": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "unconventional-niches": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "nearl_the_radiant_knight": {
     "id": "nearl_the_radiant_knight",
@@ -11904,7 +12313,7 @@
     "nicheInstances": {
       "aoe-arts-dps": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -11977,7 +12386,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "core",
+        "groups": [
+          "Minos Attack Buff"
+        ]
+      }
+    }
   },
   "passenger": {
     "id": "passenger",
@@ -12002,7 +12418,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "penance": {
     "id": "penance",
@@ -12037,7 +12460,7 @@
       ],
       "late-laneholder": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ],
@@ -12092,7 +12515,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "minos": {
+        "role": "optional",
+        "groups": [
+          "Sargon Operators (Worth Buffing)"
+        ]
+      }
+    }
   },
   "phantom": {
     "id": "phantom",
@@ -12164,9 +12594,69 @@
     "class": "Caster",
     "global": false,
     "profileImage": "/images/operators/pramanix_the_prerita.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "arts-dps",
+      "boss-killing",
+      "global-range",
+      "late-laneholder",
+      "stalling",
+      "tanking-blocking-operators"
+    ],
     "cnName": "圣聆初雪",
-    "internalName": "char_1046_sbell2"
+    "internalName": "char_1046_sbell2",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "arts-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "late-laneholder": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "tanking-blocking-operators": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "global-range": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "burn-global": {
+        "role": "core",
+        "groups": [
+          "Global Damage"
+        ]
+      }
+    }
   },
   "qiubai": {
     "id": "qiubai",
@@ -12309,7 +12799,7 @@
       ],
       "healing-operators": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ]
@@ -12379,7 +12869,7 @@
     "nicheInstances": {
       "aoe-physical-dps": [
         {
-          "tier": "B",
+          "tier": "A",
           "level": ""
         }
       ]
@@ -12453,7 +12943,14 @@
         }
       ]
     },
-    "synergies": {}
+    "synergies": {
+      "flagpipe": {
+        "role": "core",
+        "groups": [
+          "Flag"
+        ]
+      }
+    }
   },
   "sankta_miksaparato": {
     "id": "sankta_miksaparato",
@@ -12664,7 +13161,7 @@
     "nicheInstances": {
       "def-buff": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": ""
         }
       ],
@@ -12848,9 +13345,48 @@
     "class": "Vanguard",
     "global": false,
     "profileImage": "/images/operators/silverash_the_reignfrost.png",
-    "niches": [],
+    "niches": [
+      "aoe-physical-dps",
+      "dp-generation",
+      "early-laneholder",
+      "fragile",
+      "global-range"
+    ],
     "cnName": "凛御银灰",
-    "internalName": "char_1045_svash2"
+    "internalName": "char_1045_svash2",
+    "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "dp-generation": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "early-laneholder": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "fragile": [
+        {
+          "tier": "A",
+          "level": "E2"
+        }
+      ],
+      "global-range": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "skadi": {
     "id": "skadi",
@@ -13292,7 +13828,7 @@
     "name": "Togawa Sakiko",
     "rarity": 6,
     "class": "Guard",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/togawa_sakiko.png",
     "niches": [
       "arts-dps",
@@ -13964,6 +14500,12 @@
       ]
     },
     "synergies": {
+      "minos": {
+        "role": "core",
+        "groups": [
+          "Minos/Sargon ASPD Buff"
+        ]
+      },
       "sleep": {
         "role": "core",
         "groups": [
@@ -13984,9 +14526,55 @@
     "class": "Guard",
     "global": false,
     "profileImage": "/images/operators/ch_en_the_dawnstreak.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "arts-dps",
+      "boss-killing",
+      "global-range",
+      "physical-dps",
+      "silence"
+    ],
     "cnName": "赤刃明霄陈",
-    "internalName": "char_1050_chen3"
+    "internalName": "char_1050_chen3",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "S",
+          "level": "E2"
+        }
+      ],
+      "arts-dps": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "physical-dps": [
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "silence": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "global-range": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "wang": {
     "id": "wang",
@@ -13995,10 +14583,67 @@
     "class": "Specialist",
     "global": false,
     "profileImage": "/images/operators/wang.png",
-    "niches": [],
+    "niches": [
+      "aoe-arts-dps",
+      "arts-dps",
+      "boss-killing",
+      "global-range",
+      "res-shred",
+      "stalling"
+    ],
     "cnName": "望",
     "jpName": "ウァン",
     "krName": "왕",
-    "internalName": "char_2027_wang"
+    "internalName": "char_2027_wang",
+    "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        },
+        {
+          "tier": "S",
+          "level": ""
+        }
+      ],
+      "arts-dps": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "boss-killing": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        }
+      ],
+      "res-shred": [
+        {
+          "tier": "SS",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "global-range": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {
+      "sui": {
+        "role": "optional",
+        "groups": [
+          "Sui Operators"
+        ]
+      }
+    }
   }
 }
