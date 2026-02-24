@@ -127,7 +127,6 @@ function detectChanges(): ChangelogEntry[] {
       const committed = committedTiers.get(key);
       const isGlobal = operatorGlobal[operatorId] ?? true;
 
-      // Only record real changes: removals and tier changes. Never "first ranking" (current && !committed).
       if (!current && committed) {
         changes.push({
           date: today,
@@ -140,6 +139,21 @@ function detectChanges(): ChangelogEntry[] {
           newTier: null,
           oldLevel: committed.level,
           newLevel: '',
+          justification: '',
+          global: isGlobal,
+        });
+      } else if (current && !committed) {
+        changes.push({
+          date: today,
+          time: timeStr,
+          operatorId,
+          operatorName: operatorNames[operatorId] || operatorId,
+          niche: currentList.niche,
+          nicheFilename,
+          oldTier: null,
+          newTier: current.tier,
+          oldLevel: '',
+          newLevel: current.level,
           justification: '',
           global: isGlobal,
         });

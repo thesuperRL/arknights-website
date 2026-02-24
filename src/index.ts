@@ -27,7 +27,6 @@ import {
   getChangelogEntries,
   insertChangelogEntry,
   initializeChangelogTable,
-  deleteChangelogAdditionEntries,
   ChangelogEntryRow
 } from './changelog-pg';
 import * as fs from 'fs';
@@ -1392,10 +1391,6 @@ app.use((req, res, next) => {
   if (process.env.DATABASE_URL) {
     await initializeTeamDataTable();
     await initializeChangelogTable();
-    const removed = await deleteChangelogAdditionEntries();
-    if (removed > 0) {
-      console.log(`Changelog: removed ${removed} "first change" (addition) entries from tier_changelog.`);
-    }
   }
 
   // Start the server

@@ -2322,9 +2322,11 @@ const IntegratedStrategiesPage: React.FC = () => {
         )}
       </div>
 
-      <p style={{ marginTop: '1.5rem', fontSize: '0.9rem' }}>
-        <Link to="/config/is-niche-weights" style={{ color: 'var(--text-muted)' }}>Dev: Configure IS niche weight pools</Link>
-      </p>
+      {import.meta.env.DEV && (
+        <p style={{ marginTop: '1.5rem', fontSize: '0.9rem' }}>
+          <Link to="/config/is-niche-weights" style={{ color: 'var(--text-muted)' }}>Dev: Configure IS niche weight pools</Link>
+        </p>
+      )}
 
       {/* Operator Selection Modal */}
       {showOperatorSelectModal && (
