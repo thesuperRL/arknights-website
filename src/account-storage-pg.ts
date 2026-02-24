@@ -8,7 +8,8 @@ import bcrypt from 'bcrypt';
 
 export interface LocalAccount {
   id: number;
-  email: string;
+  username: string;
+  email: string | null;
   passwordHash: string;
   createdAt: string;
   lastLogin?: string;
@@ -48,7 +49,8 @@ function parseJsonArray(val: unknown): string[] {
 
 function rowToAccount(row: {
   id: number;
-  email: string;
+  username: string;
+  email: string | null;
   password_hash: string;
   created_at: Date;
   last_login: Date | null;
@@ -57,7 +59,8 @@ function rowToAccount(row: {
 }): LocalAccount {
   return {
     id: row.id,
-    email: row.email,
+    username: row.username,
+    email: row.email ?? null,
     passwordHash: row.password_hash,
     createdAt: row.created_at ? new Date(row.created_at).toISOString() : new Date().toISOString(),
     lastLogin: row.last_login ? new Date(row.last_login).toISOString() : undefined,
@@ -67,30 +70,46 @@ function rowToAccount(row: {
 }
 
 export async function findAccountByEmail(email: string): Promise<LocalAccount | null> {
-  const normalizedEmail = email.toLowerCase().trim();
+  return findAccountByUsername(email);
+}
+
+/** Find account by username or (for legacy accounts) by email. Used for login and session lookups. */
+export async function findAccountByUsername(identifier: string): Promise<LocalAccount | null> {
+  const normalized = identifier.toLowerCase().trim();
   const res = await getPool().query(
-    `SELECT id, email, password_hash, created_at, last_login, owned_operators, want_to_use
-     FROM accounts WHERE LOWER(email) = $1`,
-    [normalizedEmail]
+    `SELECT id, username, email, password_hash, created_at, last_login, owned_operators, want_to_use
+     FROM accounts
+     WHERE LOWER(username) = $1 OR (email IS NOT NULL AND LOWER(email) = $1)`,
+    [normalized]
   );
   if (res.rows.length === 0) return null;
   return rowToAccount(res.rows[0]);
 }
 
-export async function createAccount(email: string, password: string): Promise<LocalAccount> {
-  const normalizedEmail = email.toLowerCase().trim();
-  const existing = await findAccountByEmail(normalizedEmail);
+export async function createAccount(username: string, password: string): Promise<LocalAccount> {
+  const trimmed = username.trim();
+  if (!trimmed) {
+    throw new Error('Username is required');
+  }
+  if (trimmed.length < 2 || trimmed.length > 64) {
+    throw new Error('Username must be between 2 and 64 characters');
+  }
+  const allowed = /^[a-zA-Z0-9_-]+$/;
+  if (!allowed.test(trimmed)) {
+    throw new Error('Username may only contain letters, numbers, underscores, and hyphens');
+  }
+  const existing = await findAccountByUsername(trimmed);
   if (existing) {
-    throw new Error('Account with this email already exists');
+    throw new Error('Username already taken');
   }
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
   const createdAt = new Date();
   const res = await getPool().query(
-    `INSERT INTO accounts (email, password_hash, created_at, owned_operators, want_to_use)
-     VALUES ($1, $2, $3, $4, $5)
-     RETURNING id, email, password_hash, created_at, last_login, owned_operators, want_to_use`,
-    [normalizedEmail, passwordHash, createdAt, JSON.stringify([]), JSON.stringify([])]
+    `INSERT INTO accounts (username, email, password_hash, created_at, owned_operators, want_to_use)
+     VALUES ($1, NULL, $2, $3, $4, $5)
+     RETURNING id, username, email, password_hash, created_at, last_login, owned_operators, want_to_use`,
+    [trimmed, passwordHash, createdAt, JSON.stringify([]), JSON.stringify([])]
   );
   const row = res.rows[0];
   return rowToAccount(row);
@@ -110,20 +129,18 @@ export async function verifyPassword(account: LocalAccount, password: string): P
   }
 }
 
-export async function updateLastLogin(email: string): Promise<void> {
+export async function updateLastLogin(identifier: string): Promise<void> {
   try {
-    const normalizedEmail = email.toLowerCase().trim();
-    await getPool().query(
-      `UPDATE accounts SET last_login = $1 WHERE LOWER(email) = $2`,
-      [new Date(), normalizedEmail]
-    );
+    const account = await findAccountByUsername(identifier);
+    if (!account) return;
+    await getPool().query(`UPDATE accounts SET last_login = $1 WHERE id = $2`, [new Date(), account.id]);
   } catch (err: unknown) {
     console.warn('Failed to update last login time (non-critical):', (err as Error)?.message ?? err);
   }
 }
 
-export async function addOperatorToAccount(email: string, operatorId: string): Promise<boolean> {
-  const account = await findAccountByEmail(email);
+export async function addOperatorToAccount(identifier: string, operatorId: string): Promise<boolean> {
+  const account = await findAccountByUsername(identifier);
   if (!account) return false;
   const owned = account.ownedOperators ?? [];
   if (owned.includes(operatorId)) return false;
@@ -135,8 +152,8 @@ export async function addOperatorToAccount(email: string, operatorId: string): P
   return true;
 }
 
-export async function removeOperatorFromAccount(email: string, operatorId: string): Promise<boolean> {
-  const account = await findAccountByEmail(email);
+export async function removeOperatorFromAccount(identifier: string, operatorId: string): Promise<boolean> {
+  const account = await findAccountByUsername(identifier);
   if (!account?.ownedOperators) return false;
   const owned = account.ownedOperators.filter((id) => id !== operatorId);
   if (owned.length === account.ownedOperators.length) return false;
@@ -147,13 +164,13 @@ export async function removeOperatorFromAccount(email: string, operatorId: strin
   return true;
 }
 
-export async function getOwnedOperators(email: string): Promise<string[]> {
-  const account = await findAccountByEmail(email);
+export async function getOwnedOperators(identifier: string): Promise<string[]> {
+  const account = await findAccountByUsername(identifier);
   return account?.ownedOperators ?? [];
 }
 
-export async function toggleWantToUse(email: string, operatorId: string): Promise<boolean> {
-  const account = await findAccountByEmail(email);
+export async function toggleWantToUse(identifier: string, operatorId: string): Promise<boolean> {
+  const account = await findAccountByUsername(identifier);
   if (!account) return false;
   const wantToUse = account.wantToUse ?? [];
   const idx = wantToUse.indexOf(operatorId);
@@ -166,25 +183,26 @@ export async function toggleWantToUse(email: string, operatorId: string): Promis
   return true;
 }
 
-export async function getWantToUse(email: string): Promise<string[]> {
-  const account = await findAccountByEmail(email);
+export async function getWantToUse(identifier: string): Promise<string[]> {
+  const account = await findAccountByUsername(identifier);
   return account?.wantToUse ?? [];
 }
 
-export async function deleteAccount(email: string): Promise<boolean> {
-  const normalizedEmail = email.toLowerCase().trim();
-  const res = await getPool().query(`DELETE FROM accounts WHERE LOWER(email) = $1`, [normalizedEmail]);
+export async function deleteAccount(identifier: string): Promise<boolean> {
+  const account = await findAccountByUsername(identifier);
+  if (!account) return false;
+  const res = await getPool().query(`DELETE FROM accounts WHERE id = $1`, [account.id]);
   return (res.rowCount ?? 0) > 0;
 }
 
 export async function loadAccounts(): Promise<Record<string, LocalAccount>> {
   const res = await getPool().query(
-    `SELECT id, email, password_hash, created_at, last_login, owned_operators, want_to_use FROM accounts`
+    `SELECT id, username, email, password_hash, created_at, last_login, owned_operators, want_to_use FROM accounts`
   );
   const out: Record<string, LocalAccount> = {};
   for (const row of res.rows) {
     const acc = rowToAccount(row);
-    out[acc.email] = acc;
+    out[acc.username] = acc;
   }
   return out;
 }
@@ -192,14 +210,26 @@ export async function loadAccounts(): Promise<Record<string, LocalAccount>> {
 const CREATE_TABLE_SQL = `
 CREATE TABLE IF NOT EXISTS accounts (
   id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NULL,
   password_hash VARCHAR(255) NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   last_login TIMESTAMPTZ NULL,
   owned_operators JSONB NULL,
-  want_to_use JSONB NULL,
-  UNIQUE (email)
+  want_to_use JSONB NULL
 );
+`;
+
+const MIGRATE_LEGACY_SQL = `
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'accounts' AND column_name = 'username') THEN
+    ALTER TABLE accounts ADD COLUMN username VARCHAR(255) NULL;
+    UPDATE accounts SET username = email WHERE username IS NULL;
+    ALTER TABLE accounts ALTER COLUMN username SET NOT NULL;
+    ALTER TABLE accounts ALTER COLUMN email DROP NOT NULL;
+  END IF;
+END $$;
 `;
 
 export async function initializeDbConnection(): Promise<void> {
@@ -208,6 +238,8 @@ export async function initializeDbConnection(): Promise<void> {
     const start = Date.now();
     const p = getPool();
     await p.query(CREATE_TABLE_SQL);
+    await p.query(MIGRATE_LEGACY_SQL);
+    await p.query('CREATE UNIQUE INDEX IF NOT EXISTS accounts_username_lower_idx ON accounts (LOWER(username))');
     const countRes = await p.query('SELECT COUNT(*)::int AS c FROM accounts');
     const count = countRes.rows[0]?.c ?? 0;
     console.log(`✅ Postgres account storage ready in ${Date.now() - start}ms (${count} accounts)`);

@@ -7,7 +7,7 @@ import './AuthPage.css';
 
 const RegisterPage: React.FC = () => {
   const { t } = useTranslation();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,6 @@ const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading, checkAuth } = useAuth();
 
-  // Redirect if already logged in
   useEffect(() => {
     if (!authLoading && user) {
       navigate('/profile');
@@ -27,7 +26,6 @@ const RegisterPage: React.FC = () => {
     setLoading(true);
     setError(null);
 
-    // Validation
     if (password !== confirmPassword) {
       setError(t('auth.passwordsNoMatch'));
       setLoading(false);
@@ -44,19 +42,25 @@ const RegisterPage: React.FC = () => {
       const response = await apiFetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username: username.trim(), password }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || t('auth.registerFailed'));
+        const msg = data?.error || '';
+        if (msg.toLowerCase().includes('already taken') || msg.toLowerCase().includes('username')) {
+          setError(t('auth.usernameTaken'));
+        } else if (msg.toLowerCase().includes('character') || msg.toLowerCase().includes('letters')) {
+          setError(t('auth.usernameInvalid'));
+        } else {
+          setError(msg || t('auth.registerFailed'));
+        }
+        setLoading(false);
+        return;
       }
 
-      // Refresh auth state
       await checkAuth();
-      
-      // Redirect to profile page
       navigate('/profile');
     } catch (err: any) {
       setError(err.message || t('auth.registerFailed'));
@@ -76,16 +80,20 @@ const RegisterPage: React.FC = () => {
 
         <form onSubmit={handleRegister} className="login-form">
           <div className="form-group">
-            <label htmlFor="email">{t('auth.email')}:</label>
+            <label htmlFor="username">{t('auth.username')}:</label>
             <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your-email@example.com"
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder={t('auth.usernamePlaceholder')}
               className="form-input"
               required
+              minLength={2}
+              maxLength={64}
+              autoComplete="username"
             />
+            <p className="form-hint">{t('auth.usernameInvalid')}</p>
           </div>
           <div className="form-group">
             <label htmlFor="password">{t('auth.password')}:</label>
@@ -98,6 +106,7 @@ const RegisterPage: React.FC = () => {
               className="form-input"
               required
               minLength={8}
+              autoComplete="new-password"
             />
             <p className="form-hint">{t('auth.passwordTooShort')}</p>
           </div>
@@ -112,6 +121,7 @@ const RegisterPage: React.FC = () => {
               className="form-input"
               required
               minLength={8}
+              autoComplete="new-password"
             />
           </div>
           <button type="submit" className="login-button" disabled={loading}>
@@ -128,4 +138,3 @@ const RegisterPage: React.FC = () => {
 };
 
 export default RegisterPage;
-

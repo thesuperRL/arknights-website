@@ -44,12 +44,13 @@ async function ensureTable(): Promise<void> {
 }
 
 /**
- * Get account id by email. Returns null if not found.
+ * Get account id by username or (legacy) email. Returns null if not found.
  */
-async function getAccountIdByEmail(email: string): Promise<number | null> {
+async function getAccountIdByIdentifier(identifier: string): Promise<number | null> {
+  const normalized = identifier.toLowerCase().trim();
   const res = await getPool().query(
-    'SELECT id FROM accounts WHERE LOWER(email) = $1',
-    [email.toLowerCase().trim()]
+    `SELECT id FROM accounts WHERE LOWER(username) = $1 OR (email IS NOT NULL AND LOWER(email) = $1)`,
+    [normalized]
   );
   if (res.rows.length === 0) return null;
   return res.rows[0].id as number;
@@ -72,11 +73,11 @@ function rowToTeamData(row: {
 }
 
 /**
- * Get full team data for an account by email. Returns null if no row.
+ * Get full team data for an account by username (or legacy email). Returns null if no row.
  */
-export async function getAccountTeamData(email: string): Promise<AccountTeamData | null> {
+export async function getAccountTeamData(identifier: string): Promise<AccountTeamData | null> {
   await ensureTable();
-  const accountId = await getAccountIdByEmail(email);
+  const accountId = await getAccountIdByIdentifier(identifier);
   if (accountId == null) return null;
   const res = await getPool().query(
     'SELECT account_id, normal_preferences, normal_teambuild, is_team_state, updated_at FROM account_team_data WHERE account_id = $1',
@@ -90,7 +91,7 @@ export async function getAccountTeamData(email: string): Promise<AccountTeamData
  * Upsert team data. Pass only the keys you want to update; others are left unchanged (or set null if creating).
  */
 export async function saveAccountTeamData(
-  email: string,
+  identifier: string,
   updates: {
     normalPreferences?: Record<string, unknown> | null;
     normalTeambuild?: NormalTeambuild | null;
@@ -98,7 +99,7 @@ export async function saveAccountTeamData(
   }
 ): Promise<boolean> {
   await ensureTable();
-  const accountId = await getAccountIdByEmail(email);
+  const accountId = await getAccountIdByIdentifier(identifier);
   if (accountId == null) return false;
 
   const now = new Date();
@@ -124,8 +125,8 @@ export async function saveAccountTeamData(
 /**
  * Update only normal preferences.
  */
-export async function saveNormalPreferences(email: string, preferences: Record<string, unknown>): Promise<boolean> {
-  const accountId = await getAccountIdByEmail(email);
+export async function saveNormalPreferences(identifier: string, preferences: Record<string, unknown>): Promise<boolean> {
+  const accountId = await getAccountIdByIdentifier(identifier);
   if (accountId == null) return false;
   await ensureTable();
   const now = new Date();
@@ -141,8 +142,8 @@ export async function saveNormalPreferences(email: string, preferences: Record<s
 /**
  * Update only normal teambuild (locked IDs + last team IDs).
  */
-export async function saveNormalTeambuild(email: string, data: NormalTeambuild): Promise<boolean> {
-  const accountId = await getAccountIdByEmail(email);
+export async function saveNormalTeambuild(identifier: string, data: NormalTeambuild): Promise<boolean> {
+  const accountId = await getAccountIdByIdentifier(identifier);
   if (accountId == null) return false;
   await ensureTable();
   const now = new Date();
@@ -158,8 +159,8 @@ export async function saveNormalTeambuild(email: string, data: NormalTeambuild):
 /**
  * Update only IS team state.
  */
-export async function saveISTeamState(email: string, state: Record<string, unknown> | null): Promise<boolean> {
-  const accountId = await getAccountIdByEmail(email);
+export async function saveISTeamState(identifier: string, state: Record<string, unknown> | null): Promise<boolean> {
+  const accountId = await getAccountIdByIdentifier(identifier);
   if (accountId == null) return false;
   await ensureTable();
   const now = new Date();
@@ -175,8 +176,8 @@ export async function saveISTeamState(email: string, state: Record<string, unkno
 /**
  * Delete IS team state for an account (set to null).
  */
-export async function deleteISTeamState(email: string): Promise<boolean> {
-  return saveISTeamState(email, null);
+export async function deleteISTeamState(identifier: string): Promise<boolean> {
+  return saveISTeamState(identifier, null);
 }
 
 /**

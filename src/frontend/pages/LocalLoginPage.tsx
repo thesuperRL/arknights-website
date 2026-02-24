@@ -7,14 +7,13 @@ import './AuthPage.css';
 
 const LocalLoginPage: React.FC = () => {
   const { t } = useTranslation();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { user, loading: authLoading, setUserDirect } = useAuth();
 
-  // Redirect if already logged in
   useEffect(() => {
     if (!authLoading && user) {
       navigate('/profile');
@@ -30,10 +29,10 @@ const LocalLoginPage: React.FC = () => {
       const response = await apiFetch('/api/auth/local-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username: username.trim(), password }),
       });
 
-      let data: { error?: string };
+      let data: { error?: string; user?: { email?: string; nickname?: string } };
       try {
         data = await response.json();
       } catch {
@@ -43,19 +42,17 @@ const LocalLoginPage: React.FC = () => {
       if (!response.ok) {
         const message =
           data.error ||
-          (response.status === 401 ? t('auth.invalidEmailPassword') : response.status === 503 ? t('auth.serviceUnavailable') : t('auth.loginFailed'));
+          (response.status === 401 ? t('auth.invalidUsernamePassword') : response.status === 503 ? t('auth.serviceUnavailable') : t('auth.loginFailed'));
         throw new Error(message);
       }
 
-      // Update auth state directly with data from login response (avoid redundant API call)
       if (data.user) {
         setUserDirect({
-          email: data.user.email,
-          nickname: data.user.nickname
+          email: data.user.email ?? data.user.nickname ?? '',
+          nickname: data.user.nickname ?? data.user.email ?? ''
         });
       }
-      
-      // Redirect to profile page
+
       navigate('/profile');
     } catch (err: any) {
       setError(err.message || t('auth.loginFailed'));
@@ -74,15 +71,16 @@ const LocalLoginPage: React.FC = () => {
 
         <form onSubmit={handleLogin} className="login-form">
           <div className="form-group">
-            <label htmlFor="email">{t('auth.email')}:</label>
+            <label htmlFor="username">{t('auth.username')}:</label>
             <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your-email@example.com"
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder={t('auth.usernamePlaceholder')}
               className="form-input"
               required
+              autoComplete="username"
             />
           </div>
           <div className="form-group">
@@ -95,6 +93,7 @@ const LocalLoginPage: React.FC = () => {
               placeholder="Enter your password"
               className="form-input"
               required
+              autoComplete="current-password"
             />
           </div>
           <button type="submit" className="login-button" disabled={loading}>
@@ -111,4 +110,3 @@ const LocalLoginPage: React.FC = () => {
 };
 
 export default LocalLoginPage;
-

@@ -14,7 +14,7 @@ import { Rating } from './niche-list-types';
 import { keepPeakEntriesOnly, keepPeakInstanceOnly } from './peak-level-utils';
 import { loadAllSynergies, loadSynergy } from './synergy-utils';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
-import { createAccount, findAccountByEmail, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse, initializeDbConnection } from './account-storage';
+import { createAccount, findAccountByUsername, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse, initializeDbConnection } from './account-storage';
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
 import {
   getAccountTeamData,
@@ -851,15 +851,18 @@ app.get('/api/auth/user', async (req, res) => {
       return;
     }
 
-    const account = await findAccountByEmail(session.email);
-    const ownedOperators = account?.ownedOperators || [];
-    const raisedOperators = account?.wantToUse || []; // wantToUse is actually the raised operators
-    const wantToUse = account?.wantToUse || [];
-
+    const account = await findAccountByUsername(session.email);
+    if (!account) {
+      res.status(401).json({ error: 'Invalid session' });
+      return;
+    }
+    const ownedOperators = account.ownedOperators || [];
+    const raisedOperators = account.wantToUse || [];
+    const wantToUse = account.wantToUse || [];
 
     res.json({
-      email: session.email,
-      nickname: session.email.split('@')[0],
+      email: account.email ?? account.username,
+      nickname: account.username,
       ownedOperators,
       raisedOperators, // wantToUse field contains raised operators
       wantToUse
@@ -870,47 +873,37 @@ app.get('/api/auth/user', async (req, res) => {
   }
 });
 
-// POST /api/auth/register - Register a new local account
+// POST /api/auth/register - Register a new local account (username + password only)
 app.post('/api/auth/register', async (req, res) => {
   try {
-    const { email, password } = req.body;
-    
-    if (!email || !password) {
-      res.status(400).json({ error: 'Email and password are required' });
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      res.status(400).json({ error: 'Username and password are required' });
       return;
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      res.status(400).json({ error: 'Invalid email format' });
-      return;
-    }
-
-    // Validate password strength
     if (password.length < 8) {
       res.status(400).json({ error: 'Password must be at least 8 characters long' });
       return;
     }
 
-    const account = await createAccount(email, password);
+    const account = await createAccount(username, password);
 
-    // Create session immediately after registration
     const sessionId = generateSessionId();
     setSession(sessionId, {
-      email: account.email,
+      email: account.username,
       lastUpdated: Date.now()
     });
 
-    // Set cookie
     res.cookie('sessionId', sessionId, sessionCookieOptions());
 
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       sessionId,
       user: {
-        email: account.email,
-        nickname: account.email.split('@')[0] // Use email prefix as nickname
+        email: account.username,
+        nickname: account.username
       }
     });
   } catch (error: any) {
@@ -919,27 +912,28 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
-// POST /api/auth/local-login - Login with local account (email/password)
+// POST /api/auth/local-login - Login with username (or email for legacy accounts) and password
 app.post('/api/auth/local-login', async (req, res) => {
   const startTime = Date.now();
 
   try {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
+    const loginId = (username ?? email ?? '').trim();
 
-    if (!email || !password) {
+    if (!loginId || !password) {
       const duration = Date.now() - startTime;
       console.log(`Login failed - missing credentials (${duration}ms)`);
-      res.status(400).json({ error: 'Email and password are required' });
+      res.status(400).json({ error: 'Username and password are required' });
       return;
     }
 
-    console.log(`Login attempt for email: ${email.substring(0, 3)}***`);
+    console.log(`Login attempt for: ${loginId.substring(0, 3)}***`);
 
-    const account = await findAccountByEmail(email);
+    const account = await findAccountByUsername(loginId);
     if (!account) {
       const duration = Date.now() - startTime;
       console.log(`Login failed - account not found (${duration}ms)`);
-      res.status(401).json({ error: 'Invalid email or password' });
+      res.status(401).json({ error: 'Invalid username or password' });
       return;
     }
 
@@ -950,32 +944,29 @@ app.post('/api/auth/local-login', async (req, res) => {
     if (!isValid) {
       const duration = Date.now() - startTime;
       console.log(`Login failed - invalid password (${duration}ms, password check: ${passwordDuration}ms)`);
-      res.status(401).json({ error: 'Invalid email or password' });
+      res.status(401).json({ error: 'Invalid username or password' });
       return;
     }
 
-    // Update last login (non-blocking)
-    updateLastLogin(email);
+    updateLastLogin(account.username);
 
-    // Create session
     const sessionId = generateSessionId();
     setSession(sessionId, {
-      email: account.email,
+      email: account.username,
       lastUpdated: Date.now()
     });
 
-    // Set cookie
     res.cookie('sessionId', sessionId, sessionCookieOptions());
 
     const totalDuration = Date.now() - startTime;
-    console.log(`Login successful for ${email} (${totalDuration}ms total, ${passwordDuration}ms password)`);
+    console.log(`Login successful for ${account.username} (${totalDuration}ms total, ${passwordDuration}ms password)`);
 
     res.json({
       success: true,
       sessionId,
       user: {
-        email: account.email,
-        nickname: account.email.split('@')[0] // Use email prefix as nickname
+        email: account.email ?? account.username,
+        nickname: account.username
       }
     });
   } catch (error: any) {
@@ -1111,7 +1102,7 @@ app.post('/api/auth/toggle-want-to-use', async (req, res) => {
     console.log(`Toggling want to use for operator: ${operatorId}, user: ${session.email}`);
     const success = await toggleWantToUse(session.email, operatorId);
     if (success) {
-      const account = await findAccountByEmail(session.email);
+      const account = await findAccountByUsername(session.email);
       const wantToUse = account?.wantToUse || [];
       const isWantToUse = wantToUse.includes(operatorId);
       console.log(`Successfully toggled. Want to use: ${isWantToUse}`);

@@ -5,6 +5,7 @@
 
 export {
   findAccountByEmail,
+  findAccountByUsername,
   createAccount,
   verifyPassword,
   updateLastLogin,
