@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../api';
+import { useAuth } from '../contexts/AuthContext';
 import type { ISNicheWeightPools } from './IntegratedStrategiesPage';
 import './IsNicheWeightPoolsPage.css';
+
+const ALLOWED_ADMIN_EMAIL = 'ryanli1366@gmail.com';
 
 interface NicheItem {
   filename: string;
@@ -18,6 +21,8 @@ const POOL_LABELS: Record<PoolKey, string> = {
 };
 
 const IsNicheWeightPoolsPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [niches, setNiches] = useState<NicheItem[]>([]);
   const [config, setConfig] = useState<ISNicheWeightPools>({
     important: { rawScore: 5, niches: [] },
@@ -30,7 +35,19 @@ const IsNicheWeightPoolsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
 
+  const isAllowed = user?.email?.toLowerCase() === ALLOWED_ADMIN_EMAIL.toLowerCase();
+
   useEffect(() => {
+    if (authLoading) return;
+    if (!user) {
+      navigate('/login', { replace: true });
+      return;
+    }
+    if (!isAllowed) return;
+  }, [authLoading, user, isAllowed, navigate]);
+
+  useEffect(() => {
+    if (!isAllowed || authLoading) return;
     const load = async () => {
       try {
         const [nicheRes, configRes] = await Promise.all([
@@ -58,7 +75,7 @@ const IsNicheWeightPoolsPage: React.FC = () => {
       }
     };
     load();
-  }, []);
+  }, [isAllowed, authLoading]);
 
   const setRawScore = (pool: PoolKey, rawScore: number) => {
     setConfig(prev => ({
@@ -125,6 +142,17 @@ const IsNicheWeightPoolsPage: React.FC = () => {
     setSaved(true);
   };
 
+  if (authLoading || !user) {
+    return <div className="is-niche-weight-pools-page"><div className="loading">Loading...</div></div>;
+  }
+  if (!isAllowed) {
+    return (
+      <div className="is-niche-weight-pools-page">
+        <div className="error">Access denied. This page is restricted to the administrator.</div>
+        <p><Link to="/integrated-strategies">← Back to Integrated Strategies</Link></p>
+      </div>
+    );
+  }
   if (loading) {
     return <div className="is-niche-weight-pools-page"><div className="loading">Loading...</div></div>;
   }

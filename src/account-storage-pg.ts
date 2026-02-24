@@ -5,6 +5,7 @@
 
 import { Pool } from 'pg';
 import bcrypt from 'bcrypt';
+import { sanitizeIdentifier, sanitizeOperatorId } from './sql-sanitize';
 
 export interface LocalAccount {
   id: number;
@@ -75,7 +76,8 @@ export async function findAccountByEmail(email: string): Promise<LocalAccount | 
 
 /** Find account by username or (for legacy accounts) by email. Used for login and session lookups. */
 export async function findAccountByUsername(identifier: string): Promise<LocalAccount | null> {
-  const normalized = identifier.toLowerCase().trim();
+  const normalized = sanitizeIdentifier(identifier);
+  if (!normalized) return null;
   const res = await getPool().query(
     `SELECT id, username, email, password_hash, created_at, last_login, owned_operators, want_to_use
      FROM accounts
@@ -140,11 +142,13 @@ export async function updateLastLogin(identifier: string): Promise<void> {
 }
 
 export async function addOperatorToAccount(identifier: string, operatorId: string): Promise<boolean> {
+  const safeId = sanitizeOperatorId(operatorId);
+  if (!safeId) return false;
   const account = await findAccountByUsername(identifier);
   if (!account) return false;
   const owned = account.ownedOperators ?? [];
-  if (owned.includes(operatorId)) return false;
-  owned.push(operatorId);
+  if (owned.includes(safeId)) return false;
+  owned.push(safeId);
   await getPool().query(
     `UPDATE accounts SET owned_operators = $1 WHERE id = $2`,
     [JSON.stringify(owned), account.id]
@@ -153,9 +157,11 @@ export async function addOperatorToAccount(identifier: string, operatorId: strin
 }
 
 export async function removeOperatorFromAccount(identifier: string, operatorId: string): Promise<boolean> {
+  const safeId = sanitizeOperatorId(operatorId);
+  if (!safeId) return false;
   const account = await findAccountByUsername(identifier);
   if (!account?.ownedOperators) return false;
-  const owned = account.ownedOperators.filter((id) => id !== operatorId);
+  const owned = account.ownedOperators.filter((id) => id !== safeId);
   if (owned.length === account.ownedOperators.length) return false;
   await getPool().query(
     `UPDATE accounts SET owned_operators = $1 WHERE id = $2`,
@@ -170,12 +176,14 @@ export async function getOwnedOperators(identifier: string): Promise<string[]> {
 }
 
 export async function toggleWantToUse(identifier: string, operatorId: string): Promise<boolean> {
+  const safeId = sanitizeOperatorId(operatorId);
+  if (!safeId) return false;
   const account = await findAccountByUsername(identifier);
   if (!account) return false;
   const wantToUse = account.wantToUse ?? [];
-  const idx = wantToUse.indexOf(operatorId);
+  const idx = wantToUse.indexOf(safeId);
   if (idx > -1) wantToUse.splice(idx, 1);
-  else wantToUse.push(operatorId);
+  else wantToUse.push(safeId);
   await getPool().query(
     `UPDATE accounts SET want_to_use = $1 WHERE id = $2`,
     [JSON.stringify(wantToUse), account.id]

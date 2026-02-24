@@ -29,6 +29,14 @@ import {
   initializeChangelogTable,
   ChangelogEntryRow
 } from './changelog-pg';
+import {
+  sanitizeIdentifier,
+  sanitizeUsername,
+  sanitizeOperatorId,
+  sanitizeChangelogEntry,
+  sanitizeOperatorIdList,
+  validatePassword
+} from './sql-sanitize';
 import * as fs from 'fs';
 
 const useTeamDataDb = () => !!process.env.DATABASE_URL;
@@ -500,7 +508,8 @@ app.post('/api/changelog', async (req, res) => {
       res.status(400).json({ error: 'date, operatorId, and nicheFilename are required' });
       return;
     }
-    const id = await insertChangelogEntry(entry);
+    const sanitized = sanitizeChangelogEntry(entry);
+    const id = await insertChangelogEntry(sanitized);
     if (id == null) {
       res.status(500).json({ error: 'Failed to insert changelog entry' });
       return;
@@ -899,17 +908,14 @@ app.post('/api/auth/register', async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    if (!username || !password) {
-      res.status(400).json({ error: 'Username and password are required' });
+    const sanitizedUsername = sanitizeUsername(username);
+    const validPassword = validatePassword(password);
+    if (!sanitizedUsername || !validPassword) {
+      res.status(400).json({ error: 'Username and password are required (password 8–128 chars, no control characters)' });
       return;
     }
 
-    if (password.length < 8) {
-      res.status(400).json({ error: 'Password must be at least 8 characters long' });
-      return;
-    }
-
-    const account = await createAccount(username, password);
+    const account = await createAccount(sanitizedUsername, validPassword);
 
     const sessionId = generateSessionId();
     setSession(sessionId, {
@@ -939,12 +945,12 @@ app.post('/api/auth/local-login', async (req, res) => {
 
   try {
     const { username, email, password } = req.body;
-    const loginId = (username ?? email ?? '').trim();
-
-    if (!loginId || !password) {
+    const loginId = sanitizeIdentifier(username ?? email ?? '');
+    const validPassword = validatePassword(password);
+    if (!loginId || !validPassword) {
       const duration = Date.now() - startTime;
-      console.log(`Login failed - missing credentials (${duration}ms)`);
-      res.status(400).json({ error: 'Username and password are required' });
+      console.log(`Login failed - missing or invalid credentials (${duration}ms)`);
+      res.status(400).json({ error: 'Username and password are required (password 8–128 chars, no control characters)' });
       return;
     }
 
@@ -959,7 +965,7 @@ app.post('/api/auth/local-login', async (req, res) => {
     }
 
     const passwordStartTime = Date.now();
-    const isValid = await verifyPassword(account, password);
+    const isValid = await verifyPassword(account, validPassword);
     const passwordDuration = Date.now() - passwordStartTime;
 
     if (!isValid) {
@@ -1042,7 +1048,7 @@ app.post('/api/auth/add-operator', async (req, res) => {
     }
 
 
-    const { operatorId } = req.body;
+    const operatorId = sanitizeOperatorId(req.body?.operatorId);
     if (!operatorId) {
       res.status(400).json({ error: 'Operator ID is required' });
       return;
@@ -1076,7 +1082,7 @@ app.post('/api/auth/remove-operator', async (req, res) => {
       return;
     }
 
-    const { operatorId } = req.body;
+    const operatorId = sanitizeOperatorId(req.body?.operatorId);
     if (!operatorId) {
       res.status(400).json({ error: 'Operator ID is required' });
       return;
@@ -1113,7 +1119,7 @@ app.post('/api/auth/toggle-want-to-use', async (req, res) => {
       return;
     }
 
-    const { operatorId } = req.body;
+    const operatorId = sanitizeOperatorId(req.body?.operatorId);
     if (!operatorId) {
       console.log('No operator ID provided');
       res.status(400).json({ error: 'Operator ID is required' });
@@ -1154,7 +1160,7 @@ app.post('/api/team/build', async (req, res) => {
     }
 
     const preferences: TeamPreferences = req.body.preferences || getDefaultPreferences();
-    const lockedOperatorIds: string[] = Array.isArray(req.body.lockedOperatorIds) ? req.body.lockedOperatorIds : [];
+    const lockedOperatorIds: string[] = sanitizeOperatorIdList(req.body.lockedOperatorIds);
     const result = await buildTeam(session.email, preferences, lockedOperatorIds);
 
     if (useTeamDataDb()) {
@@ -1230,8 +1236,12 @@ app.post('/api/team/preferences', async (req, res) => {
 
     // Only save teambuild state, not preferences (preferences are universal now)
     if (useTeamDataDb()) {
-      const normalTeambuild = req.body.normalTeambuild as { lockedOperatorIds?: string[]; lastTeamOperatorIds?: string[] } | undefined;
-      if (normalTeambuild) {
+      const raw = req.body.normalTeambuild as { lockedOperatorIds?: unknown; lastTeamOperatorIds?: unknown } | undefined;
+      if (raw) {
+        const normalTeambuild = {
+          lockedOperatorIds: sanitizeOperatorIdList(raw.lockedOperatorIds),
+          lastTeamOperatorIds: sanitizeOperatorIdList(raw.lastTeamOperatorIds),
+        };
         await saveNormalTeambuild(session.email, normalTeambuild);
       }
     }

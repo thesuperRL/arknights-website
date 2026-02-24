@@ -5,6 +5,7 @@
 
 import * as sql from 'mssql';
 import bcrypt from 'bcrypt';
+import { sanitizeIdentifier, sanitizeOperatorId } from './sql-sanitize';
 
 export interface LocalAccount {
   id: number; // Changed from string to number (INT IDENTITY in SQL)
@@ -231,6 +232,8 @@ async function getColumnNames(pool: sql.ConnectionPool): Promise<Record<string, 
  * Find account by email with optimized query
  */
 export async function findAccountByEmail(email: string): Promise<LocalAccount | null> {
+  const normalizedEmail = sanitizeIdentifier(email);
+  if (!normalizedEmail) return null;
   const maxRetries = 2;
   let lastError: any;
 
@@ -238,7 +241,6 @@ export async function findAccountByEmail(email: string): Promise<LocalAccount | 
     try {
       const dbPool = await getDbPool();
       const columns = await getColumnNames(dbPool);
-      const normalizedEmail = email.toLowerCase().trim();
 
       // Use a more efficient query - only select needed columns
       const escapeCol = (col: string) => `[${col}]`;
@@ -275,10 +277,11 @@ export async function findAccountByEmail(email: string): Promise<LocalAccount | 
  * Create a new account
  */
 export async function createAccount(email: string, password: string): Promise<LocalAccount> {
+  const normalizedEmail = sanitizeIdentifier(email);
+  if (!normalizedEmail) throw new Error('Invalid email/username');
   try {
     const dbPool = await getDbPool();
     const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
     
     // Check if account already exists
     const existing = await findAccountByEmail(normalizedEmail);
@@ -347,10 +350,11 @@ export async function verifyPassword(account: LocalAccount, password: string): P
  * Update last login time (non-blocking)
  */
 export async function updateLastLogin(email: string): Promise<void> {
+  const normalizedEmail = sanitizeIdentifier(email);
+  if (!normalizedEmail) return;
   try {
     const dbPool = await getDbPool();
     const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
 
     const escapeCol = (col: string) => `[${col}]`;
     const updateQuery = `UPDATE accounts SET ${escapeCol(columns.lastLogin)} = @lastLogin WHERE LOWER(${escapeCol(columns.email)}) = LOWER(@email)`;
@@ -373,6 +377,10 @@ export async function updateLastLogin(email: string): Promise<void> {
  * Add operator to account's owned operators
  */
 export async function addOperatorToAccount(email: string, operatorId: string): Promise<boolean> {
+  const safeId = sanitizeOperatorId(operatorId);
+  if (!safeId) return false;
+  const normalizedEmail = sanitizeIdentifier(email);
+  if (!normalizedEmail) return false;
   try {
     const account = await findAccountByEmail(email);
     if (!account) {
@@ -380,15 +388,14 @@ export async function addOperatorToAccount(email: string, operatorId: string): P
     }
     
     const ownedOperators = account.ownedOperators || [];
-    if (ownedOperators.includes(operatorId)) {
+    if (ownedOperators.includes(safeId)) {
       return false; // Already exists
     }
     
-    ownedOperators.push(operatorId);
+    ownedOperators.push(safeId);
     
     const dbPool = await getDbPool();
     const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
     
     const escapeCol = (col: string) => `[${col}]`;
     const updateQuery = `UPDATE accounts SET ${escapeCol(columns.ownedOperators)} = @ownedOperators WHERE ${escapeCol(columns.email)} = @email`;
@@ -409,13 +416,17 @@ export async function addOperatorToAccount(email: string, operatorId: string): P
  * Remove operator from account's owned operators
  */
 export async function removeOperatorFromAccount(email: string, operatorId: string): Promise<boolean> {
+  const safeId = sanitizeOperatorId(operatorId);
+  if (!safeId) return false;
+  const normalizedEmail = sanitizeIdentifier(email);
+  if (!normalizedEmail) return false;
   try {
     const account = await findAccountByEmail(email);
     if (!account || !account.ownedOperators) {
       return false;
     }
     
-    const ownedOperators = account.ownedOperators.filter(id => id !== operatorId);
+    const ownedOperators = account.ownedOperators.filter(id => id !== safeId);
     
     if (ownedOperators.length === account.ownedOperators.length) {
       return false; // Operator not found
@@ -423,7 +434,6 @@ export async function removeOperatorFromAccount(email: string, operatorId: strin
     
     const dbPool = await getDbPool();
     const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
     
     const escapeCol = (col: string) => `[${col}]`;
     const updateQuery = `UPDATE accounts SET ${escapeCol(columns.ownedOperators)} = @ownedOperators WHERE ${escapeCol(columns.email)} = @email`;
@@ -452,6 +462,10 @@ export async function getOwnedOperators(email: string): Promise<string[]> {
  * Toggle want to use status for an operator
  */
 export async function toggleWantToUse(email: string, operatorId: string): Promise<boolean> {
+  const safeId = sanitizeOperatorId(operatorId);
+  if (!safeId) return false;
+  const normalizedEmail = sanitizeIdentifier(email);
+  if (!normalizedEmail) return false;
   try {
     const account = await findAccountByEmail(email);
     if (!account) {
@@ -459,19 +473,18 @@ export async function toggleWantToUse(email: string, operatorId: string): Promis
     }
     
     const wantToUse = account.wantToUse || [];
-    const index = wantToUse.indexOf(operatorId);
+    const index = wantToUse.indexOf(safeId);
     
     if (index > -1) {
       // Remove from want to use
       wantToUse.splice(index, 1);
     } else {
       // Add to want to use
-      wantToUse.push(operatorId);
+      wantToUse.push(safeId);
     }
     
     const dbPool = await getDbPool();
     const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
     
     const escapeCol = (col: string) => `[${col}]`;
     const updateQuery = `UPDATE accounts SET ${escapeCol(columns.wantToUse)} = @wantToUse WHERE ${escapeCol(columns.email)} = @email`;
@@ -500,10 +513,11 @@ export async function getWantToUse(email: string): Promise<string[]> {
  * Delete an account
  */
 export async function deleteAccount(email: string): Promise<boolean> {
+  const normalizedEmail = sanitizeIdentifier(email);
+  if (!normalizedEmail) return false;
   try {
     const dbPool = await getDbPool();
     const columns = await getColumnNames(dbPool);
-    const normalizedEmail = email.toLowerCase().trim();
     
     const escapeCol = (col: string) => `[${col}]`;
     const deleteQuery = `DELETE FROM accounts WHERE ${escapeCol(columns.email)} = @email`;

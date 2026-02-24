@@ -4,6 +4,7 @@
  */
 
 import { Pool } from 'pg';
+import { sanitizeIdentifier } from './sql-sanitize';
 
 let pool: Pool | null = null;
 
@@ -47,7 +48,8 @@ async function ensureTable(): Promise<void> {
  * Get account id by username or (legacy) email. Returns null if not found.
  */
 async function getAccountIdByIdentifier(identifier: string): Promise<number | null> {
-  const normalized = identifier.toLowerCase().trim();
+  const normalized = sanitizeIdentifier(identifier);
+  if (!normalized) return null;
   const res = await getPool().query(
     `SELECT id FROM accounts WHERE LOWER(username) = $1 OR (email IS NOT NULL AND LOWER(email) = $1)`,
     [normalized]
