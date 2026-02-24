@@ -37,6 +37,21 @@ import {
   sanitizeOperatorIdList,
   validatePassword
 } from './sql-sanitize';
+import {
+  initializeDataCache,
+  getOperatorsData,
+  getOperatorsByRarity,
+  getOperatorGlobalMap,
+  getOperatorNamesMap,
+  getIsNicheWeightPools,
+  getOperatorNameForLanguage,
+  getSpecialListFree,
+  getSpecialListGlobalRange,
+  getSpecialListTrash,
+  getSpecialListUnconventional,
+  getSpecialListLowRarity,
+  type OperatorNameLang,
+} from './data-cache';
 import * as fs from 'fs';
 
 const useTeamDataDb = () => !!process.env.DATABASE_URL;
@@ -69,8 +84,8 @@ const sessionCookieOptions = () => {
   };
 };
 
-// Middleware
-app.use(express.json());
+// Middleware: limit body size to avoid large-payload DoS
+app.use(express.json({ limit: '512kb' }));
 app.use(cookieParser());
 
 // CORS for GitHub Pages / cross-origin: allow specific origin(s) and credentials
@@ -133,19 +148,7 @@ app.get('/api/niche-lists', (_req, res) => {
 // IS niche weight pools: important, optional, good — raw scores used in Integrated Strategies scoring
 app.get('/api/config/is-niche-weight-pools', (_req, res) => {
   try {
-    const configPath = path.join(__dirname, '../data/is-niche-weight-pools.json');
-    if (!fs.existsSync(configPath)) {
-      return res.json({
-        important: { rawScore: 5, niches: [] },
-        optional: { rawScore: 2, niches: [] },
-        good: { rawScore: 0.5, niches: [] },
-        synergyCoreBonus: 15,
-        synergyScaleFactor: 1
-      });
-    }
-    const raw = fs.readFileSync(configPath, 'utf-8');
-    const data = JSON.parse(raw);
-    return res.json(data);
+    return res.json(getIsNicheWeightPools());
   } catch (error) {
     console.error('Error loading IS niche weight pools:', error);
     return res.status(500).json({ error: 'Failed to load IS niche weight pools' });
@@ -167,18 +170,7 @@ app.get('/api/niche-lists/:niche', (req, res) => {
       return;
     }
 
-    // Load operator data to enrich the operator list
-    const operatorsData: Record<string, any> = {};
-    const rarities = [1, 2, 3, 4, 5, 6];
-
-    for (const rarity of rarities) {
-      const filePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
-      if (fs.existsSync(filePath)) {
-        const content = fs.readFileSync(filePath, 'utf-8');
-        const operators = JSON.parse(content);
-        Object.assign(operatorsData, operators);
-      }
-    }
+    const operatorsData = getOperatorsData();
 
     // Enrich operator list with operator data
     // Convert from rating-grouped structure to flat array for frontend
@@ -272,18 +264,7 @@ app.get('/api/synergies/:synergy', (req, res) => {
       return;
     }
 
-    // Load operator data to enrich the synergy
-    const operatorsData: Record<string, any> = {};
-    const rarities = [1, 2, 3, 4, 5, 6];
-    
-    for (const rarity of rarities) {
-      const filePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
-      if (fs.existsSync(filePath)) {
-        const content = fs.readFileSync(filePath, 'utf-8');
-        const operators = JSON.parse(content);
-        Object.assign(operatorsData, operators);
-      }
-    }
+    const operatorsData = getOperatorsData();
 
     // Enrich synergy with operator data
     const enrichedCore: Record<string, Array<{ operatorId: string; level: string; operator: any }>> = {};
@@ -356,29 +337,12 @@ app.get('/api/synergies/:synergy', (req, res) => {
 // API route to get trash operators
 app.get('/api/trash-operators', (_req, res) => {
   try {
-    const filePath = path.join(__dirname, '../data', 'trash-operators.json');
-    if (!fs.existsSync(filePath)) {
+    const trashData = getSpecialListTrash();
+    if (!trashData) {
       res.status(404).json({ error: 'Trash operators not found' });
       return;
     }
-
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const trashData = JSON.parse(content);
-    
-    // Load operator data to enrich the trash operators list
-    const operatorsData: Record<string, any> = {};
-    const rarities = [1, 2, 3, 4, 5, 6];
-    
-    for (const rarity of rarities) {
-      const operatorFilePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
-      if (fs.existsSync(operatorFilePath)) {
-        const operatorContent = fs.readFileSync(operatorFilePath, 'utf-8');
-        const operators = JSON.parse(operatorContent);
-        Object.assign(operatorsData, operators);
-      }
-    }
-
-    // Enrich trash operators list with operator data
+    const operatorsData = getOperatorsData();
     const enrichedTrashList = {
       ...trashData,
       operators: Object.entries(trashData.operators || {}).map(([operatorId, note]) => ({
@@ -387,7 +351,6 @@ app.get('/api/trash-operators', (_req, res) => {
         operator: operatorsData[operatorId] || null
       }))
     };
-
     res.json(enrichedTrashList);
   } catch (error) {
     console.error('Error loading trash operators:', error);
@@ -395,71 +358,13 @@ app.get('/api/trash-operators', (_req, res) => {
   }
 });
 
-// Changelog: single source of truth is tier_changelog SQL table when DATABASE_URL is set
-function getOperatorGlobalMap(dataDir: string): Record<string, boolean> {
-  const operatorGlobal: Record<string, boolean> = {};
-  for (const rarity of [1, 2, 3, 4, 5, 6]) {
-    const opPath = path.join(dataDir, `operators-${rarity}star.json`);
-    if (fs.existsSync(opPath)) {
-      const opData = JSON.parse(fs.readFileSync(opPath, 'utf-8')) as Record<string, { global?: boolean }>;
-      for (const [id, op] of Object.entries(opData)) {
-        operatorGlobal[id] = op?.global ?? true;
-      }
-    }
-  }
-  return operatorGlobal;
-}
-
-type OperatorNameLang = 'en' | 'cn' | 'tw' | 'jp' | 'kr';
-interface OperatorNames {
-  name: string;
-  cnName?: string;
-  twName?: string;
-  jpName?: string;
-  krName?: string;
-}
-
-function getOperatorNamesMap(dataDir: string): Record<string, OperatorNames> {
-  const map: Record<string, OperatorNames> = {};
-  for (const rarity of [1, 2, 3, 4, 5, 6]) {
-    const opPath = path.join(dataDir, `operators-${rarity}star.json`);
-    if (fs.existsSync(opPath)) {
-      const opData = JSON.parse(fs.readFileSync(opPath, 'utf-8')) as Record<string, OperatorNames & { global?: boolean }>;
-      for (const [id, op] of Object.entries(opData)) {
-        if (op && typeof op.name === 'string') {
-          map[id] = { name: op.name, cnName: op.cnName, twName: op.twName, jpName: op.jpName, krName: op.krName };
-        }
-      }
-    }
-  }
-  return map;
-}
-
-function getOperatorNameForLanguage(op: OperatorNames | null, fallback: string, lang: OperatorNameLang): string {
-  if (!op) return fallback;
-  switch (lang) {
-    case 'cn':
-      return (op.cnName && op.cnName.trim()) || op.name;
-    case 'tw':
-      return (op.twName && op.twName.trim()) || (op.cnName && op.cnName.trim()) || op.name;
-    case 'jp':
-      return (op.jpName && op.jpName.trim()) || op.name;
-    case 'kr':
-      return (op.krName && op.krName.trim()) || op.name;
-    case 'en':
-    default:
-      return op.name;
-  }
-}
-
 app.get('/api/changelog', async (req, res) => {
   try {
-    const dataDir = path.join(__dirname, '../data');
-    const operatorGlobal = getOperatorGlobalMap(dataDir);
+    const operatorGlobal = getOperatorGlobalMap();
     const lang = (req.query.language as OperatorNameLang) || 'en';
     const validLang: OperatorNameLang[] = ['en', 'cn', 'tw', 'jp', 'kr'];
     const language = validLang.includes(lang) ? lang : 'en';
-    const operatorNames = getOperatorNamesMap(dataDir);
+    const operatorNames = getOperatorNamesMap();
 
     const resolveName = (operatorId: string, currentName: string): string =>
       getOperatorNameForLanguage(operatorNames[operatorId] || null, currentName, language);
@@ -524,30 +429,13 @@ app.post('/api/changelog', async (req, res) => {
 // API route to get free operators
 app.get('/api/free-operators', (_req, res) => {
   try {
-    const filePath = path.join(__dirname, '../data', 'free.json');
-    if (!fs.existsSync(filePath)) {
+    const freeData = getSpecialListFree();
+    if (!freeData) {
       console.log('Free operators file not found');
       res.status(404).json({ error: 'Free operators not found' });
       return;
     }
-
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const freeData = JSON.parse(content);
-
-    // Load operator data to enrich the free operators list
-    const operatorsData: Record<string, any> = {};
-    const rarities = [1, 2, 3, 4, 5, 6];
-
-    for (const rarity of rarities) {
-      const operatorFilePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
-      if (fs.existsSync(operatorFilePath)) {
-        const operatorContent = fs.readFileSync(operatorFilePath, 'utf-8');
-        const operators = JSON.parse(operatorContent);
-        Object.assign(operatorsData, operators);
-      }
-    }
-
-    // Enrich free operators list with operator data
+    const operatorsData = getOperatorsData();
     const enrichedFreeList = {
       ...freeData,
       operators: Object.entries(freeData.operators || {}).map(([operatorId, note]) => ({
@@ -556,7 +444,6 @@ app.get('/api/free-operators', (_req, res) => {
         operator: operatorsData[operatorId] || null
       }))
     };
-
     res.json(enrichedFreeList);
   } catch (error) {
     console.error('Error loading free operators:', error);
@@ -567,30 +454,13 @@ app.get('/api/free-operators', (_req, res) => {
 // API route to get global range operators
 app.get('/api/global-range-operators', (_req, res) => {
   try {
-    const filePath = path.join(__dirname, '../data', 'global-range.json');
-    if (!fs.existsSync(filePath)) {
+    const globalRangeData = getSpecialListGlobalRange();
+    if (!globalRangeData) {
       console.log('Global range operators file not found');
       res.status(404).json({ error: 'Global range operators not found' });
       return;
     }
-
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const globalRangeData = JSON.parse(content);
-
-    // Load operator data to enrich the global range operators list
-    const operatorsData: Record<string, any> = {};
-    const rarities = [1, 2, 3, 4, 5, 6];
-
-    for (const rarity of rarities) {
-      const operatorFilePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
-      if (fs.existsSync(operatorFilePath)) {
-        const operatorContent = fs.readFileSync(operatorFilePath, 'utf-8');
-        const operators = JSON.parse(operatorContent);
-        Object.assign(operatorsData, operators);
-      }
-    }
-
-    // Enrich global range operators list with operator data
+    const operatorsData = getOperatorsData();
     const enrichedGlobalRangeList = {
       ...globalRangeData,
       operators: Object.entries(globalRangeData.operators || {}).map(([operatorId, note]) => ({
@@ -599,7 +469,6 @@ app.get('/api/global-range-operators', (_req, res) => {
         operator: operatorsData[operatorId] || null
       }))
     };
-
     res.json(enrichedGlobalRangeList);
   } catch (error) {
     console.error('Error loading global range operators:', error);
@@ -610,29 +479,12 @@ app.get('/api/global-range-operators', (_req, res) => {
 // API route to get unconventional niches operators
 app.get('/api/unconventional-niches-operators', (_req, res) => {
   try {
-    const filePath = path.join(__dirname, '../data', 'unconventional-niches.json');
-    if (!fs.existsSync(filePath)) {
+    const unconventionalData = getSpecialListUnconventional();
+    if (!unconventionalData) {
       res.status(404).json({ error: 'Unconventional niches operators not found' });
       return;
     }
-
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const unconventionalData = JSON.parse(content);
-
-    // Load operator data to enrich the unconventional niches operators list
-    const operatorsData: Record<string, any> = {};
-    const rarities = [1, 2, 3, 4, 5, 6];
-
-    for (const rarity of rarities) {
-      const operatorFilePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
-      if (fs.existsSync(operatorFilePath)) {
-        const operatorContent = fs.readFileSync(operatorFilePath, 'utf-8');
-        const operators = JSON.parse(operatorContent);
-        Object.assign(operatorsData, operators);
-      }
-    }
-
-    // Enrich unconventional niches operators list with operator data
+    const operatorsData = getOperatorsData();
     const enrichedUnconventionalList = {
       ...unconventionalData,
       operators: Object.entries(unconventionalData.operators || {}).map(([operatorId, note]) => ({
@@ -641,7 +493,6 @@ app.get('/api/unconventional-niches-operators', (_req, res) => {
         operator: operatorsData[operatorId] || null
       }))
     };
-
     res.json(enrichedUnconventionalList);
   } catch (error) {
     console.error('Error loading unconventional niches operators:', error);
@@ -652,29 +503,12 @@ app.get('/api/unconventional-niches-operators', (_req, res) => {
 // API route to get low-rarity operators
 app.get('/api/low-rarity-operators', (_req, res) => {
   try {
-    const filePath = path.join(__dirname, '../data', 'low-rarity.json');
-    if (!fs.existsSync(filePath)) {
+    const lowRarityData = getSpecialListLowRarity();
+    if (!lowRarityData) {
       res.status(404).json({ error: 'Low-rarity operators not found' });
       return;
     }
-
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const lowRarityData = JSON.parse(content);
-
-    // Load operator data to enrich the low-rarity operators list
-    const operatorsData: Record<string, any> = {};
-    const rarities = [1, 2, 3, 4, 5, 6];
-
-    for (const rarity of rarities) {
-      const operatorFilePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
-      if (fs.existsSync(operatorFilePath)) {
-        const operatorContent = fs.readFileSync(operatorFilePath, 'utf-8');
-        const operators = JSON.parse(operatorContent);
-        Object.assign(operatorsData, operators);
-      }
-    }
-
-    // Enrich low-rarity operators list with operator data
+    const operatorsData = getOperatorsData();
     const enrichedLowRarityList = {
       ...lowRarityData,
       operators: Object.entries(lowRarityData.operators || {}).map(([operatorId, note]) => ({
@@ -683,7 +517,6 @@ app.get('/api/low-rarity-operators', (_req, res) => {
         operator: operatorsData[operatorId] || null
       }))
     };
-
     res.json(enrichedLowRarityList);
   } catch (error) {
     console.error('Error loading low-rarity operators:', error);
@@ -699,19 +532,7 @@ app.get('/api/operators/:id', async (req, res) => {
     const operatorId = req.params.id;
     const allLevels = req.query.allLevels === '1' || req.query.allLevels === 'true';
     
-    // Load all operators
-    const operatorsData: Record<string, any> = {};
-    const rarities = [1, 2, 3, 4, 5, 6];
-    
-    for (const rarity of rarities) {
-      const filePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
-      if (fs.existsSync(filePath)) {
-        const content = fs.readFileSync(filePath, 'utf-8');
-        const operators = JSON.parse(content);
-        Object.assign(operatorsData, operators);
-      }
-    }
-
+    const operatorsData = getOperatorsData();
     const operator = operatorsData[operatorId];
     if (!operator) {
       res.status(404).json({ error: 'Operator not found' });
@@ -764,37 +585,29 @@ app.get('/api/operators/:id', async (req, res) => {
     // Check if operator is in special lists (free, global-range, trash, unconventional, low-rarity)
     // These operators show niche name but no ranking tier.
     // Canonical nicheFilename must match frontend routes and translation keys (niche-translations.json).
-    const specialLists = [
-      { file: 'free.json', name: 'Free Operators', nicheFilename: 'free' },
-      { file: 'global-range.json', name: 'Global Range Operators', nicheFilename: 'global-range' },
-      { file: 'trash-operators.json', name: 'Trash Operators', nicheFilename: 'trash-operators' },
-      { file: 'unconventional-niches.json', name: 'Unconventional Niches', nicheFilename: 'unconventional-niches' },
-      { file: 'low-rarity.json', name: 'Good Low-Rarity Operators', nicheFilename: 'low-rarity' }
+    const specialListConfig = [
+      { getData: getSpecialListFree, name: 'Free Operators', nicheFilename: 'free' },
+      { getData: getSpecialListGlobalRange, name: 'Global Range Operators', nicheFilename: 'global-range' },
+      { getData: getSpecialListTrash, name: 'Trash Operators', nicheFilename: 'trash-operators' },
+      { getData: getSpecialListUnconventional, name: 'Unconventional Niches', nicheFilename: 'unconventional-niches' },
+      { getData: getSpecialListLowRarity, name: 'Good Low-Rarity Operators', nicheFilename: 'low-rarity' }
     ];
     const specialListNicheFilenames: Record<string, string> = {};
-    for (const sl of specialLists) {
+    for (const sl of specialListConfig) {
       specialListNicheFilenames[sl.name] = sl.nicheFilename;
     }
 
-    for (const specialList of specialLists) {
-      const specialFilePath = path.join(__dirname, '../data', specialList.file);
-      if (fs.existsSync(specialFilePath)) {
-        try {
-          const specialContent = fs.readFileSync(specialFilePath, 'utf-8');
-          const specialData = JSON.parse(specialContent);
-          if (specialData.operators && operatorId in specialData.operators) {
-            if (!rankingsByNiche[specialList.name]) {
-              rankingsByNiche[specialList.name] = [];
-            }
-            rankingsByNiche[specialList.name].push({
-              tier: '', // Empty tier - will display niche name without ranking
-              level: '',
-              notes: specialData.operators[operatorId] || undefined
-            });
-          }
-        } catch (error) {
-          // Silently ignore errors when checking special lists
+    for (const specialList of specialListConfig) {
+      const specialData = specialList.getData();
+      if (specialData?.operators && operatorId in specialData.operators) {
+        if (!rankingsByNiche[specialList.name]) {
+          rankingsByNiche[specialList.name] = [];
         }
+        rankingsByNiche[specialList.name].push({
+          tier: '',
+          level: '',
+          notes: (specialData.operators as Record<string, string>)[operatorId] || undefined
+        });
       }
     }
 
@@ -847,15 +660,11 @@ app.get('/api/operators/rarity/:rarity', (req, res) => {
       res.status(400).json({ error: 'Invalid rarity' });
       return;
     }
-
-    const filePath = path.join(__dirname, '../data', `operators-${rarity}star.json`);
-    if (!fs.existsSync(filePath)) {
+    const operators = getOperatorsByRarity(rarity);
+    if (Object.keys(operators).length === 0) {
       res.status(404).json({ error: 'Operators not found' });
       return;
     }
-
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const operators = JSON.parse(content);
     res.json(operators);
   } catch (error) {
     console.error('Error loading operators:', error);
@@ -1395,13 +1204,15 @@ app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// Initialize database connection before starting server
+// Initialize data cache and database before starting server
 (async () => {
+  await initializeDataCache();
   await initializeDbConnection();
   if (process.env.DATABASE_URL) {
     await initializeTeamDataTable();
     await initializeChangelogTable();
   }
+  await initializeDataCache();
 
   // Start the server
   app.listen(PORT, () => {

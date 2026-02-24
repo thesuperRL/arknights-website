@@ -8,11 +8,19 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { OperatorList, OperatorListCollection } from './niche-list-types';
 
+const DEFAULT_NICHE_DATA_DIR = path.join(__dirname, '../data/niche-lists');
+let cachedAllNicheLists: OperatorListCollection | null = null;
+let cachedAllNicheListsDataDir: string | null = null;
+const nicheListCache = new Map<string, OperatorList | null>();
+
 /**
  * Loads all operator lists from the data directory and subdirectories
  * Returns a collection keyed by filename (without .json extension)
  */
-export function loadAllNicheLists(dataDir: string = path.join(__dirname, '../data/niche-lists')): OperatorListCollection {
+export function loadAllNicheLists(dataDir: string = DEFAULT_NICHE_DATA_DIR): OperatorListCollection {
+  if (cachedAllNicheLists !== null && cachedAllNicheListsDataDir === dataDir) {
+    return cachedAllNicheLists;
+  }
   const collection: OperatorListCollection = {};
 
   if (!fs.existsSync(dataDir)) {
@@ -38,9 +46,9 @@ export function loadAllNicheLists(dataDir: string = path.join(__dirname, '../dat
           const operatorList: OperatorList = JSON.parse(content);
           // Only add if it has the operator list structure (has 'operators' property)
           if (operatorList.operators && operatorList.niche) {
-            // Use filename with prefix (without .json) as the key
             const filename = prefix ? `${prefix}/${file.replace('.json', '')}` : file.replace('.json', '');
             collection[filename] = operatorList;
+            nicheListCache.set(`${dataDir}\0${filename}`, operatorList);
           }
         } catch (error) {
           console.error(`Error loading operator list from ${fullPath}:`, error);
@@ -62,9 +70,9 @@ export function loadAllNicheLists(dataDir: string = path.join(__dirname, '../dat
           const content = fs.readFileSync(fullPath, 'utf-8');
           const operatorList: OperatorList = JSON.parse(content);
           if (operatorList.operators && operatorList.niche) {
-            // Use "synergies/" prefix for synergies
             const filename = `synergies/${file.replace('.json', '')}`;
             collection[filename] = operatorList;
+            nicheListCache.set(`${dataDir}\0${filename}`, operatorList);
           }
         } catch (error) {
           console.error(`Error loading synergy list from ${fullPath}:`, error);
@@ -72,7 +80,9 @@ export function loadAllNicheLists(dataDir: string = path.join(__dirname, '../dat
       }
     }
   }
-  
+
+  cachedAllNicheLists = collection;
+  cachedAllNicheListsDataDir = dataDir;
   return collection;
 }
 
@@ -81,54 +91,46 @@ export function loadAllNicheLists(dataDir: string = path.join(__dirname, '../dat
  * The filename parameter should be the filename code (e.g., "healing-operators" or "synergies/sleep")
  * Synergies are loaded from data/synergies/ instead of data/niche-lists/synergies/
  */
-export function loadNicheList(nicheFilename: string, dataDir: string = path.join(__dirname, '../data/niche-lists')): OperatorList | null {
-  // Decode URL-encoded niche filename
+export function loadNicheList(nicheFilename: string, dataDir: string = DEFAULT_NICHE_DATA_DIR): OperatorList | null {
   const decodedFilename = decodeURIComponent(nicheFilename);
-
-  // Try loading by filename directly (handles both root files and subdir files)
   let filename = decodedFilename;
   if (filename.endsWith('.json')) {
     filename = filename.replace('.json', '');
   }
+  const cacheKey = `${dataDir}\0${filename}`;
+  const cached = nicheListCache.get(cacheKey);
+  if (cached !== undefined) return cached;
 
-  // Check if this is a synergy (starts with "synergies/")
+  let result: OperatorList | null = null;
+
   if (filename.startsWith('synergies/')) {
-    // Load from data/synergies/ instead of data/niche-lists/synergies/
     const synergyName = filename.replace('synergies/', '');
     const synergyDir = path.join(__dirname, '../data/synergies');
     const filePath = path.join(synergyDir, `${synergyName}.json`);
-    
     if (fs.existsSync(filePath)) {
       try {
         const content = fs.readFileSync(filePath, 'utf-8');
         const operatorList = JSON.parse(content);
-        // Only return if it has the operator list structure
-        if (operatorList.operators && operatorList.niche) {
-          return operatorList;
-        }
+        if (operatorList.operators && operatorList.niche) result = operatorList;
       } catch (error) {
         console.error(`Error loading operator list from ${filePath}:`, error);
       }
     }
-    return null;
-  }
-
-  const filePath = path.join(dataDir, `${filename}.json`);
-
-  if (fs.existsSync(filePath)) {
-    try {
-      const content = fs.readFileSync(filePath, 'utf-8');
-      const operatorList = JSON.parse(content);
-      // Only return if it has the operator list structure
-      if (operatorList.operators && operatorList.niche) {
-        return operatorList;
+  } else {
+    const filePath = path.join(dataDir, `${filename}.json`);
+    if (fs.existsSync(filePath)) {
+      try {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        const operatorList = JSON.parse(content);
+        if (operatorList.operators && operatorList.niche) result = operatorList;
+      } catch (error) {
+        console.error(`Error loading operator list from ${filePath}:`, error);
       }
-    } catch (error) {
-      console.error(`Error loading operator list from ${filePath}:`, error);
     }
   }
 
-  return null;
+  nicheListCache.set(cacheKey, result);
+  return result;
 }
 
 /**

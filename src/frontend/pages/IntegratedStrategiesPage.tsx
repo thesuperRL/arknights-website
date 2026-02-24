@@ -750,7 +750,7 @@ async function getIntegratedStrategiesRecommendation(
     // Exception: temporary recruitment operators don't incur a hope penalty
     const isTemporaryRecruitment = operatorId === temporaryRecruitment;
     if (!isTemporaryRecruitment) {
-      const hopePenalty = hopeCost * 10; // Large multiplier to make hope cost very significant
+      const hopePenalty = hopeCost * 6; // Large multiplier to make hope cost very significant
       score -= hopePenalty;
       reasoning.push(`Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
     } else {

@@ -86,10 +86,12 @@ export interface TeamResult {
   emptySlots: number; // Number of empty slots after filling all niches
 }
 
+let cachedTrashOperators: Set<string> | null = null;
 /**
  * Loads trash operators from the trash-operators.json file
  */
 function loadTrashOperators(): Set<string> {
+  if (cachedTrashOperators !== null) return cachedTrashOperators;
   const trashFilePath = path.join(__dirname, '../data', 'trash-operators.json');
   const trashOperators = new Set<string>();
 
@@ -117,13 +119,16 @@ function loadTrashOperators(): Set<string> {
     }
   }
 
+  cachedTrashOperators = trashOperators;
   return trashOperators;
 }
 
+let cachedFreeOperators: Set<string> | null = null;
 /**
  * Loads free operators from the free.json file
  */
 function loadFreeOperators(): Set<string> {
+  if (cachedFreeOperators !== null) return cachedFreeOperators;
   const freeFilePath = path.join(__dirname, '../data', 'free.json');
   const freeOperators = new Set<string>();
 
@@ -142,37 +147,38 @@ function loadFreeOperators(): Set<string> {
     }
   }
 
+  cachedFreeOperators = freeOperators;
   return freeOperators;
 }
 
+let cachedTeamPreferencesFile: Record<string, TeamPreferences> | null = null;
 /**
  * Loads team preferences from team-preferences.json for a specific user
  */
 function loadTeamPreferencesForUser(email: string): TeamPreferences | null {
-  const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
-  
-  if (!fs.existsSync(preferencesFile)) {
-    return null;
-  }
-  
-  try {
-    const content = fs.readFileSync(preferencesFile, 'utf-8');
-    const allPreferences: Record<string, TeamPreferences> = JSON.parse(content);
-    
-    if (allPreferences[email]) {
-      return allPreferences[email];
+  if (cachedTeamPreferencesFile === null) {
+    const preferencesFile = path.join(__dirname, '../data/team-preferences.json');
+    if (!fs.existsSync(preferencesFile)) {
+      cachedTeamPreferencesFile = {};
+    } else {
+      try {
+        const content = fs.readFileSync(preferencesFile, 'utf-8');
+        cachedTeamPreferencesFile = JSON.parse(content) as Record<string, TeamPreferences>;
+      } catch (error) {
+        console.error('Error loading team preferences:', error);
+        cachedTeamPreferencesFile = {};
+      }
     }
-  } catch (error) {
-    console.error('Error loading team preferences:', error);
   }
-  
-  return null;
+  return cachedTeamPreferencesFile[email] ?? null;
 }
 
+let cachedAllOperators: Record<string, any> | null = null;
 /**
  * Loads all operator data from JSON files
  */
 function loadAllOperators(): Record<string, any> {
+  if (cachedAllOperators !== null) return cachedAllOperators;
   const operatorsDir = path.join(__dirname, '../data');
   const operators: Record<string, any> = {};
   
@@ -184,7 +190,6 @@ function loadAllOperators(): Record<string, any> {
       try {
         const content = fs.readFileSync(filePath, 'utf-8');
         const data = JSON.parse(content);
-        // Handle both dictionary and array formats
         if (Array.isArray(data)) {
           for (const op of data) {
             if (op.id) {
@@ -200,6 +205,7 @@ function loadAllOperators(): Record<string, any> {
     }
   }
   
+  cachedAllOperators = operators;
   return operators;
 }
 
@@ -1627,29 +1633,29 @@ export async function getIntegratedStrategiesRecommendation(
  * Reads from data/team-preferences.json, using the first user's preferences if available,
  * otherwise falls back to hardcoded defaults
  */
+let cachedDefaultPreferences: TeamPreferences | null = null;
 export function getDefaultPreferences(): TeamPreferences {
+  if (cachedDefaultPreferences !== null) return cachedDefaultPreferences;
   const preferencesFile = path.join(__dirname, '../data/universal-team-preferences.json');
   
-  // Load from universal config file
   if (fs.existsSync(preferencesFile)) {
     try {
       const content = fs.readFileSync(preferencesFile, 'utf-8');
       const prefs: Partial<TeamPreferences> = JSON.parse(content);
-      
-      return {
+      cachedDefaultPreferences = {
         requiredNiches: prefs.requiredNiches || {},
         preferredNiches: prefs.preferredNiches || {},
         rarityRanking: prefs.rarityRanking || [6, 4, 5, 3, 2, 1],
         allowDuplicates: prefs.allowDuplicates !== undefined ? prefs.allowDuplicates : false,
         hopeCosts: prefs.hopeCosts || { ...HOPE_COST_CONFIG }
       };
+      return cachedDefaultPreferences;
     } catch (error) {
       console.error('Error loading universal team preferences:', error);
     }
   }
   
-  // Fallback to hardcoded defaults
-  return {
+  cachedDefaultPreferences = {
     requiredNiches: {
         'dp-generation': { min: 1, max: 2 },
         'late-laneholder': { min: 2, max: 2 },
@@ -1669,5 +1675,6 @@ export function getDefaultPreferences(): TeamPreferences {
     allowDuplicates: false,
     hopeCosts: { ...HOPE_COST_CONFIG }
   };
+  return cachedDefaultPreferences;
 }
 

@@ -28,11 +28,19 @@ export interface SynergyCollection {
   [filename: string]: Synergy;
 }
 
+const defaultSynergyDataDir = path.join(__dirname, '../data/synergies');
+let cachedAllSynergies: SynergyCollection | null = null;
+let cachedAllSynergiesDataDir: string | null = null;
+const synergyCache = new Map<string, Synergy | null>();
+
 /**
  * Loads all synergies from the data/synergies directory
  * Returns a collection keyed by filename (without .json extension)
  */
-export function loadAllSynergies(dataDir: string = path.join(__dirname, '../data/synergies')): SynergyCollection {
+export function loadAllSynergies(dataDir: string = defaultSynergyDataDir): SynergyCollection {
+  if (cachedAllSynergies !== null && cachedAllSynergiesDataDir === dataDir) {
+    return cachedAllSynergies;
+  }
   const collection: SynergyCollection = {};
 
   if (!fs.existsSync(dataDir)) {
@@ -48,10 +56,10 @@ export function loadAllSynergies(dataDir: string = path.join(__dirname, '../data
       try {
         const content = fs.readFileSync(fullPath, 'utf-8');
         const synergy: Synergy = JSON.parse(content);
-        // Only add if it has the synergy structure (has 'name', 'core', 'optional')
         if (synergy.name && synergy.core && synergy.optional) {
           const filename = file.replace('.json', '');
           collection[filename] = synergy;
+          synergyCache.set(`${dataDir}\0${filename}`, synergy);
         }
       } catch (error) {
         console.error(`Error loading synergy from ${fullPath}:`, error);
@@ -59,33 +67,35 @@ export function loadAllSynergies(dataDir: string = path.join(__dirname, '../data
     }
   }
 
+  cachedAllSynergies = collection;
+  cachedAllSynergiesDataDir = dataDir;
   return collection;
 }
 
 /**
  * Loads a specific synergy by filename (without .json extension)
  */
-export function loadSynergy(synergyFilename: string, dataDir: string = path.join(__dirname, '../data/synergies')): Synergy | null {
+export function loadSynergy(synergyFilename: string, dataDir: string = defaultSynergyDataDir): Synergy | null {
   const decodedFilename = decodeURIComponent(synergyFilename);
   let filename = decodedFilename;
   if (filename.endsWith('.json')) {
     filename = filename.replace('.json', '');
   }
+  const cacheKey = `${dataDir}\0${filename}`;
+  const cached = synergyCache.get(cacheKey);
+  if (cached !== undefined) return cached;
 
+  let result: Synergy | null = null;
   const filePath = path.join(dataDir, `${filename}.json`);
-
   if (fs.existsSync(filePath)) {
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
       const synergy = JSON.parse(content);
-      // Only return if it has the synergy structure
-      if (synergy.name && synergy.core && synergy.optional) {
-        return synergy;
-      }
+      if (synergy.name && synergy.core && synergy.optional) result = synergy;
     } catch (error) {
       console.error(`Error loading synergy from ${filePath}:`, error);
     }
   }
-
-  return null;
+  synergyCache.set(cacheKey, result);
+  return result;
 }

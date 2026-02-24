@@ -3,20 +3,9 @@
  * Single source of truth: read and write only to this table.
  */
 
-import { Pool } from 'pg';
+import { getPool } from './pg-pool';
 import * as fs from 'fs';
 import * as path from 'path';
-
-let pool: Pool | null = null;
-
-function getPool(): Pool {
-  const url = process.env.DATABASE_URL;
-  if (!url) throw new Error('DATABASE_URL is not set');
-  if (!pool) {
-    pool = new Pool({ connectionString: url, ssl: { rejectUnauthorized: false } });
-  }
-  return pool;
-}
 
 export interface ChangelogEntryRow {
   date: string;
@@ -51,8 +40,16 @@ CREATE TABLE IF NOT EXISTS tier_changelog (
 );
 `;
 
+let ensureTablePromise: Promise<void> | null = null;
 async function ensureTable(): Promise<void> {
-  await getPool().query(CREATE_TABLE_SQL);
+  if (ensureTablePromise) return ensureTablePromise;
+  ensureTablePromise = getPool().query(CREATE_TABLE_SQL).then(() => {});
+  try {
+    await ensureTablePromise;
+  } catch (e) {
+    ensureTablePromise = null;
+    throw e;
+  }
 }
 
 function rowToEntry(row: {

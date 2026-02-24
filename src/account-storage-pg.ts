@@ -3,8 +3,8 @@
  * See: https://devcenter.heroku.com/articles/connecting-heroku-postgres
  */
 
-import { Pool } from 'pg';
 import bcrypt from 'bcrypt';
+import { getPool, closePool } from './pg-pool';
 import { sanitizeIdentifier, sanitizeOperatorId } from './sql-sanitize';
 
 export interface LocalAccount {
@@ -16,22 +16,6 @@ export interface LocalAccount {
   lastLogin?: string;
   ownedOperators?: string[];
   wantToUse?: string[];
-}
-
-let pool: Pool | null = null;
-
-function getPool(): Pool {
-  const url = process.env.DATABASE_URL;
-  if (!url) {
-    throw new Error('DATABASE_URL is not set');
-  }
-  if (!pool) {
-    pool = new Pool({
-      connectionString: url,
-      ssl: { rejectUnauthorized: false },
-    });
-  }
-  return pool;
 }
 
 function parseJsonArray(val: unknown): string[] {
@@ -258,9 +242,6 @@ export async function initializeDbConnection(): Promise<void> {
 }
 
 export async function closeDbConnection(): Promise<void> {
-  if (pool) {
-    await pool.end();
-    pool = null;
-  }
+  await closePool();
   console.log('Postgres account storage closed');
 }
