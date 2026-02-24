@@ -1,0 +1,154 @@
+.about-page {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+}
+
+.about-header {
+  margin-bottom: 2rem;
+}
+
+.about-back-link {
+  display: inline-block;
+  color: var(--text-light);
+  text-decoration: none;
+  margin-bottom: 1rem;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+  font-size: 0.95rem;
+}
+
+.about-back-link:hover {
+  opacity: 1;
+}
+
+.about-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-light);
+  line-height: 1.3;
+}
+
+.about-intro {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.about-content {
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.about-section {
+  margin-bottom: 0;
+}
+
+.about-section h2 {
+  font-size: 1.35rem;
+  color: var(--text-light);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.about-github-embed {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.about-github-embed:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.about-github-avatar-wrap {
+  flex-shrink: 0;
+}
+
+.about-github-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.about-github-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.about-github-username {
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--text-light);
+}
+
+.about-github-name {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.about-github-bio {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0.25rem 0 0 0;
+}
+
+.about-github-stats {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.about-github-link-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+
+.about-github-embed:hover .about-github-link-text {
+  text-decoration: underline;
+}
+
+.about-discord {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-discord-label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.about-discord-username {
+  font-size: 1.05rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-family: ui-monospace, monospace;
+}

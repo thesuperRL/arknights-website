@@ -25,6 +25,7 @@ import IntegratedStrategiesPage from './pages/IntegratedStrategiesPage';
 import UserGuidePage from './pages/UserGuidePage';
 import ChangelogPage from './pages/ChangelogPage';
 import IsNicheWeightPoolsPage from './pages/IsNicheWeightPoolsPage';
+import AboutPage from './pages/AboutPage';
 import './App.css';
 import './pages/AllOperatorsPage.css';
 import './pages/NicheListPage.css';
@@ -65,6 +66,7 @@ function AnimatedMain() {
               <Route path="/user-guide" element={<UserGuidePage />} />
               <Route path="/changelog" element={<ChangelogPage />} />
               <Route path="/config/is-niche-weights" element={<IsNicheWeightPoolsPage />} />
+              <Route path="/about" element={<AboutPage />} />
       </Routes>
     </main>
   );

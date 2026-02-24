@@ -15,6 +15,7 @@ const Footer: React.FC = () => {
         <Link to="/user-guide" className="footer-guide-link">{t('footer.userGuide')}</Link>
         <Link to="/changelog" className="footer-guide-link">{t('footer.changelog')}</Link>
         <LanguageSelector />
+        <Link to="/about" className="footer-guide-link">{t('footer.about')}</Link>
         <a
           href={FEEDBACK_FORM_URL}
           target="_blank"
