@@ -141,7 +141,7 @@ const ChangelogPage: React.FC = () => {
     return (
       <span className="tier-change">
         <span className={getTierBadgeClass(entry.oldTier)}>{entry.oldTier}</span>
-        <span className={`change-arrow ${arrowClass}`}>→</span>
+        <span className={`change-arrow ${arrowClass}`} aria-hidden="true">&rarr;</span>
         <span className={getTierBadgeClass(entry.newTier)}>{entry.newTier}</span>
       </span>
     );

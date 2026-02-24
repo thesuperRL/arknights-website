@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { animate } from 'animejs';
 import { AuthProvider } from './contexts/AuthContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Navbar from './components/Navbar';
@@ -28,15 +30,20 @@ import './pages/NicheListPage.css';
 import './pages/SynergiesPage.css';
 import './pages/SynergyPage.css';
 
-function App() {
+function AnimatedMain() {
+  const location = useLocation();
+  const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.opacity = '0';
+    animate(el, { opacity: [0, 1], duration: 320, ease: 'outCubic' });
+  }, [location.pathname]);
+
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <AuthProvider>
-        <LanguageProvider>
-          <div className="app">
-            <Navbar />
-            <main className="main-content">
-              <Routes>
+    <main className="main-content" ref={ref}>
+      <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/tier-lists" element={<TierListsPage />} />
               <Route path="/niche-list/:niche" element={<NicheListPage />} />
@@ -56,8 +63,19 @@ function App() {
               <Route path="/integrated-strategies" element={<IntegratedStrategiesPage />} />
               <Route path="/user-guide" element={<UserGuidePage />} />
               <Route path="/changelog" element={<ChangelogPage />} />
-              </Routes>
-            </main>
+      </Routes>
+    </main>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <AuthProvider>
+        <LanguageProvider>
+          <div className="app">
+            <Navbar />
+            <AnimatedMain />
             <Footer />
           </div>
         </LanguageProvider>

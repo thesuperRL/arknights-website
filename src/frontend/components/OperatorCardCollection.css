@@ -9,10 +9,10 @@
 
 .operator-cards-collection .operator-card {
   position: relative;
-  background: rgba(22, 33, 62, 0.8);
+  background: var(--surface);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  padding: 1rem;
+  padding: 1rem 1rem 3rem 1rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s, box-shadow 0.3s, filter 0.3s, opacity 0.3s;
   text-decoration: none;

@@ -37,7 +37,7 @@
 }
 
 .user-guide-content {
-  background: rgba(22, 33, 62, 0.85);
+  background: var(--surface);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 2rem;

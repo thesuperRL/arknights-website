@@ -1,9 +1,11 @@
 .footer {
   margin-top: auto;
   padding: 1rem 2rem;
-  background: rgba(22, 33, 62, 0.8);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--surface-border);
+  box-shadow: 0 -1px 0 var(--surface-border);
 }
 
 .footer-content {
@@ -16,7 +18,6 @@
   flex-wrap: wrap;
 }
 
-/* Language selector inside footer: no duplicate bar styling */
 .footer .language-selector {
   background: none;
   border: none;
@@ -28,19 +29,21 @@
 .footer-feedback-btn {
   display: inline-block;
   padding: 0.5rem 1.25rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  color: var(--text-light, #e8e8e8);
+  background: rgba(242, 242, 242, 0.06);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  color: var(--text-light);
   text-decoration: none;
   font-size: 0.9rem;
-  transition: background 0.2s, border-color 0.2s;
+  font-weight: 500;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .footer-guide-link:hover,
 .footer-feedback-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(242, 242, 242, 0.1);
+  border-color: var(--surface-border-strong);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {

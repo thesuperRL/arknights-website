@@ -3,9 +3,8 @@
     align-items: center;
     gap: 0.75rem;
     padding: 1rem 2rem;
-    background: rgba(22, 33, 62, 0.8);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    border-top: 1px solid var(--surface-border);
     justify-content: center;
     margin-top: auto;
 }
@@ -18,23 +17,24 @@
 
 .language-select {
     padding: 0.5rem 1rem;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--surface-border);
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(242, 242, 242, 0.06);
     color: var(--text-light);
     font-size: 0.95rem;
     cursor: pointer;
-    transition: border-color 0.3s;
+    transition: border-color 0.2s, box-shadow 0.2s;
     min-width: 200px;
 }
 
 .language-select:focus {
     outline: none;
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: var(--surface-border-strong);
+    box-shadow: 0 0 0 2px rgba(242, 242, 242, 0.08);
 }
 
 .language-select option {
-    background: rgba(22, 33, 62, 0.95);
+    background: var(--bg-card);
     color: var(--text-light);
 }
 
@@ -49,10 +49,3 @@
         min-width: unset;
     }
 }
-
-
-
-
-
-
-

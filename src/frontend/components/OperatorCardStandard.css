@@ -9,19 +9,19 @@
 
 .operator-cards-standard .operator-card {
   position: relative;
-  background: rgba(22, 33, 62, 0.8);
+  background: var(--surface);
   backdrop-filter: blur(10px);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 0.25rem !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s, opacity 0.3s;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--surface-border);
+  transition: transform 0.25s, box-shadow 0.25s, filter 0.3s, opacity 0.3s;
   text-decoration: none;
   color: var(--text-light);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border: 2px solid transparent;
+  border: 1px solid var(--surface-border);
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -127,8 +127,8 @@
 }
 
 .operator-cards-standard .operator-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--surface-border-strong);
 }
 
 .operator-cards-standard .operator-card.non-global {

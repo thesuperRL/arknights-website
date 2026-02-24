@@ -4,13 +4,23 @@
     box-sizing: border-box;
 }
 
+/* Iights theme: primary #0D0D0D, secondary #F2F2F2. Set --bg-image to your image; accents can match image colors. */
 :root {
-    --primary-color: #667eea;
-    --secondary-color: #764ba2;
-    --bg-dark: #1a1a2e;
-    --bg-card: #16213e;
-    --text-light: #ffffff;
-    --text-muted: #b0b0b0;
+    --primary-color: #0D0D0D;
+    --secondary-color: #F2F2F2;
+    --text-light: #F2F2F2;
+    --text-muted: rgba(242, 242, 242, 0.7);
+    --bg-dark: #0D0D0D;
+    --bg-card: rgba(13, 13, 13, 0.85);
+    --bg-secondary: rgba(18, 18, 18, 0.9);
+    --surface: rgba(13, 13, 13, 0.75);
+    --surface-border: rgba(242, 242, 242, 0.12);
+    --surface-border-strong: rgba(242, 242, 242, 0.22);
+    /* Accent colors: override these to match your background image main colors */
+    --accent-1: #C9A227;
+    --accent-2: #2D5A5A;
+    --accent-3: #5C4A6C;
+    --accent-primary: var(--accent-1);
     --tier-ex: #ff6b6b;
     --tier-s: #ffa500;
     --tier-a: #ffd700;
@@ -18,17 +28,34 @@
     --tier-c: #87ceeb;
     --tier-d: #d3d3d3;
     --tier-f: #808080;
+    /* Background image: Evening Stroll from Arknights wiki */
+    --bg-image: url("https://arknights.wiki.gg/images/GO-Evening_Stroll.png");
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     min-height: 100vh;
     color: var(--text-light);
     line-height: 1.6;
+    background: var(--primary-color);
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(13, 13, 13, 0.82) 0%, rgba(13, 13, 13, 0.75) 50%, rgba(13, 13, 13, 0.88) 100%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 #root {
+    position: relative;
+    z-index: 1;
     min-height: 100vh;
 }
 
@@ -40,12 +67,13 @@ body {
 }
 
 .error {
-    background: rgba(255, 0, 0, 0.2);
-    border: 2px solid rgba(255, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 1rem;
+    background: rgba(255, 107, 107, 0.15);
+    border: 1px solid var(--surface-border-strong);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
     text-align: center;
     color: var(--text-light);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 

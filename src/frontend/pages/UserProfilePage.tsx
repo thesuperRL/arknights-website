@@ -311,7 +311,7 @@ const UserProfilePage: React.FC = () => {
               <strong>{t('profile.operatorsLabel')}:</strong> {user.ownedOperators.length}
             </span>
             <Link to="/team-builder" className="team-builder-link">
-              🎯 {t('profile.teamBuilder')}
+              {t('profile.teamBuilder')}
             </Link>
           </div>
         </div>
@@ -488,7 +488,7 @@ const UserProfilePage: React.FC = () => {
                     }}
                     title={user.wantToUse?.includes(operator.id) ? 'Operator is raised' : 'Mark as raised'}
                   >
-                    {user.wantToUse?.includes(operator.id) ? '✓' : ''} Raised
+                    {user.wantToUse?.includes(operator.id) && 'Raised'}
                   </button>
                 </div>
                 );

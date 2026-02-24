@@ -51,7 +51,7 @@
 }
 
 .related-niches-section {
-    background: rgba(22, 33, 62, 0.8);
+    background: var(--surface);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 1.5rem;
@@ -96,7 +96,7 @@
 }
 
 .tier-section {
-    background: rgba(22, 33, 62, 0.8);
+    background: var(--surface);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 1.5rem;

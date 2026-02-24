@@ -502,17 +502,17 @@ async function getIntegratedStrategiesRecommendation(
             // Filling a missing required niche
             const bonus = tierPoints * 5;
             score +=  bonus;
-            reasoning.push(`🎯 ${isPromotion ? 'Adds new capability' : 'Fills missing required niche'}: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`${isPromotion ? 'Adds new capability' : 'Fills missing required niche'}: ${niche} at ${tierName} tier (+${bonus})`);
           } else if (currentCount < requiredRange.max) {
             // Filling an under-covered required niche
             const bonus = tierPoints * 2.5;
             score += bonus;
-            reasoning.push(`➕ ${isPromotion ? 'Enhances capability' : 'Strengthens required niche'}: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`${isPromotion ? 'Enhances capability' : 'Strengthens required niche'}: ${niche} at ${tierName} tier (+${bonus})`);
           } else {
             // Over-covered required niche (negativevalue)
             const bonus = tierPoints * (1.25);
             score += bonus;
-            reasoning.push(`⚠️ ${isPromotion ? 'Adds over-specialization' : 'Over-specializes in'}: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`${isPromotion ? 'Adds over-specialization' : 'Over-specializes in'}: ${niche} at ${tierName} tier (+${bonus})`);
           }
         } else if (preferredRange) {
           // Preferred niche
@@ -520,28 +520,28 @@ async function getIntegratedStrategiesRecommendation(
             // Filling a missing preferred niche
             const bonus = tierPoints * 3.5;
             score += bonus;
-            reasoning.push(`🎯 ${isPromotion ? 'Adds new capability' : 'Fills missing preferred niche'}: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`${isPromotion ? 'Adds new capability' : 'Fills missing preferred niche'}: ${niche} at ${tierName} tier (+${bonus})`);
           } else if (currentCount < preferredRange.max) {
             // Filling an under-covered preferred niche
             const bonus = tierPoints * 1.5;
             score += bonus;
-            reasoning.push(`➕ ${isPromotion ? 'Enhances capability' : 'Strengthens preferred niche'}: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`${isPromotion ? 'Enhances capability' : 'Strengthens preferred niche'}: ${niche} at ${tierName} tier (+${bonus})`);
           } else {
             // Over-covered preferred niche (negative value)
             const bonus = tierPoints * (0.75);
             score += bonus;
-            reasoning.push(`⚠️ ${isPromotion ? 'Adds over-specialization' : 'Over-specializes in'}: ${niche} at ${tierName} tier (+${bonus})`);
+            reasoning.push(`${isPromotion ? 'Adds over-specialization' : 'Over-specializes in'}: ${niche} at ${tierName} tier (+${bonus})`);
           }
         }
       } else if (niche == "trash-operators") {
         const trashPenalty = 1000; // Large penalty that makes trash operators virtually unrecommendable
         score -= trashPenalty;
-        reasoning.push(`🚫 Trash operator (-${trashPenalty})`);
+        reasoning.push(`Trash operator (-${trashPenalty})`);
       } else {
         // Non-standard niche (some value for variety)
             const bonus = tierPoints * 0.5;
             score += bonus;
-        reasoning.push(`🌟 Provides niche variety: ${niche} at ${tierName} tier (+${bonus})`);
+        reasoning.push(`Provides niche variety: ${niche} at ${tierName} tier (+${bonus})`);
       }
     }
 
@@ -551,7 +551,7 @@ async function getIntegratedStrategiesRecommendation(
     let hopeCost: number;
     if (isPromotion) {
       hopeCost = promotionCost ?? 3; // Promotion cost
-      reasoning.push(`🔄 This is a promotion (second selection)`);
+      reasoning.push(`This is a promotion (second selection)`);
     } else {
       hopeCost = getActualHopeCost(operator.rarity || 1);
     }
@@ -594,9 +594,9 @@ async function getIntegratedStrategiesRecommendation(
     if (!isTemporaryRecruitment) {
       const hopePenalty = hopeCost * 30; // Large multiplier to make hope cost very significant
       score -= hopePenalty;
-      reasoning.push(`💎 Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
+      reasoning.push(`Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
     } else {
-      reasoning.push(`✨ Temporary recruitment: No hope penalty applied!`);
+      reasoning.push(`Temporary recruitment: No hope penalty applied!`);
     }
 
     // Log each evaluated character and their scoring criteria
@@ -659,20 +659,20 @@ async function getIntegratedStrategiesRecommendation(
   const actionType = isPromotion ? 'Promotion' : 'Recruitment';
   const actualPromotionCost = promotionCost ?? 3;
   const reasoningParts = [
-    `🏆 **Recommended ${classText} ${actionType}**`,
+    `**Recommended ${classText} ${actionType}**`,
     '',
     ...(isPromotion ? [
-      `🔄 **This is a promotion (second selection)**`,
-      `💎 **Cost: ${actualPromotionCost} hope**`,
-      `✨ **Adds new tiers from E2/module levels only**`,
+      `**This is a promotion (second selection)**`,
+      `**Cost: ${actualPromotionCost} hope**`,
+      `**Adds new tiers from E2/module levels only**`,
       ''
     ] : []),
     ...(temporaryRecruitment ? [
-      `💫 **Temporary recruitment: ${allOperators[temporaryRecruitment]?.name || 'Unknown Operator'} (considered owned & raised)**`,
+      `**Temporary recruitment: ${allOperators[temporaryRecruitment]?.name || 'Unknown Operator'} (considered owned & raised)**`,
       ''
     ] : []),
     '**Scoring Breakdown:**',
-    ...bestOperator.reasoning.map(line => `• ${line}`),
+    ...bestOperator.reasoning.map(line => `- ${line}`),
     '',
     `**Final Score: ${bestOperator.score}**`,
     '',
@@ -705,8 +705,8 @@ const FormattedReasoning: React.FC<{ text: string }> = ({ text }) => {
           );
         }
 
-        // Handle bullet points (lines starting with •)
-        if (line.startsWith('• ')) {
+        // Handle bullet points (lines starting with - )
+        if (line.startsWith('- ')) {
           return (
             <div key={index} className="reasoning-bullet">
               {line.substring(2)}
@@ -1912,7 +1912,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                       onClick={() => setShowTempRecruitmentModal(true)}
                     >
                       <div className="add-temp-operator-content">
-                        <span className="add-icon">💫</span>
+                        <span className="add-icon" aria-hidden="true">+</span>
                         <span className="add-text">{t('isTeamBuilder.selectTempRecruitment')}</span>
                       </div>
                     </div>
@@ -2068,7 +2068,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                     }}
                     className="add-recommended-btn primary"
                   >
-                    ➕ {recommendation.isPromotion ? t('isTeamBuilder.promoteOperator') : t('isTeamBuilder.addToTeam')}
+                    {recommendation.isPromotion ? t('isTeamBuilder.promoteOperator') : t('isTeamBuilder.addToTeam')}
                   </button>
                 </div>
               </>

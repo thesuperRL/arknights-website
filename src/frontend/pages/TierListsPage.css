@@ -11,12 +11,14 @@
 .hero h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: var(--text-light);
+    font-weight: 700;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
 .hero p {
     font-size: 1.2rem;
-    opacity: 0.9;
+    color: var(--text-muted);
 }
 
 .special-links {
@@ -28,12 +30,13 @@
 }
 
 .special-card {
-    background: rgba(22, 33, 62, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--surface-border);
+    border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
     cursor: pointer;
     text-decoration: none;
     color: var(--text-light);
@@ -47,19 +50,21 @@
 }
 
 .special-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+    border-color: var(--surface-border-strong);
 }
 
 .trash-card {
-    background: rgba(128, 128, 128, 0.3);
-    border: 2px solid rgba(128, 128, 128, 0.5);
+    background: rgba(128, 128, 128, 0.2);
+    border: 1px solid rgba(128, 128, 128, 0.4);
 }
 
 .trash-card h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     color: var(--text-light);
+    font-weight: 600;
 }
 
 .trash-card p {
@@ -68,14 +73,15 @@
 }
 
 .free-card {
-    background: rgba(34, 139, 34, 0.3);
-    border: 2px solid rgba(34, 139, 34, 0.5);
+    background: rgba(34, 139, 34, 0.2);
+    border: 1px solid rgba(34, 139, 34, 0.5);
 }
 
 .free-card h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     color: var(--text-light);
+    font-weight: 600;
 }
 
 .free-card p {
@@ -84,14 +90,15 @@
 }
 
 .global-range-card {
-    background: rgba(70, 130, 180, 0.3);
-    border: 2px solid rgba(70, 130, 180, 0.5);
+    background: rgba(70, 130, 180, 0.2);
+    border: 1px solid rgba(70, 130, 180, 0.5);
 }
 
 .global-range-card h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     color: var(--text-light);
+    font-weight: 600;
 }
 
 .global-range-card p {
@@ -100,14 +107,15 @@
 }
 
 .unconventional-niches-card {
-    background: rgba(138, 43, 226, 0.3);
-    border: 2px solid rgba(138, 43, 226, 0.5);
+    background: rgba(138, 43, 226, 0.2);
+    border: 1px solid rgba(138, 43, 226, 0.5);
 }
 
 .unconventional-niches-card h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     color: var(--text-light);
+    font-weight: 600;
 }
 
 .unconventional-niches-card p {
@@ -116,14 +124,15 @@
 }
 
 .low-rarity-card {
-    background: rgba(210, 105, 30, 0.3);
-    border: 2px solid rgba(210, 105, 30, 0.5);
+    background: rgba(210, 105, 30, 0.2);
+    border: 1px solid rgba(210, 105, 30, 0.5);
 }
 
 .low-rarity-card h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     color: var(--text-light);
+    font-weight: 600;
 }
 
 .low-rarity-card p {
@@ -139,12 +148,13 @@
 }
 
 .niche-list-card {
-    background: rgba(22, 33, 62, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--surface-border);
+    border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
     cursor: pointer;
     text-decoration: none;
     color: var(--text-light);
@@ -152,14 +162,16 @@
 }
 
 .niche-list-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+    border-color: var(--surface-border-strong);
 }
 
 .niche-list-card h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     color: var(--text-light);
+    font-weight: 600;
 }
 
 .niche-list-card p {
@@ -181,4 +193,3 @@
         grid-template-columns: 1fr;
     }
 }
-

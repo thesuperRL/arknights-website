@@ -38,7 +38,7 @@
 }
 
 .unconventional-niches-container {
-  background: rgba(22, 33, 62, 0.8);
+  background: var(--surface);
   backdrop-filter: blur(10px);
   border-radius: 15px;
   padding: 2rem;

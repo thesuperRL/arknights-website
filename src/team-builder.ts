@@ -1498,36 +1498,36 @@ export async function getIntegratedStrategiesRecommendation(
           if (currentCount < requiredRange.min) {
             // Filling a missing required niche
             score += 100;
-            reasoning.push(`🎯 Fills missing required niche: ${niche} (+100)`);
+            reasoning.push(`Fills missing required niche: ${niche} (+100)`);
           } else if (currentCount < requiredRange.max) {
             // Filling an under-covered required niche
             score += 50;
-            reasoning.push(`➕ Strengthens required niche: ${niche} (+50)`);
+            reasoning.push(`Strengthens required niche: ${niche} (+50)`);
           } else {
             // Over-covered required niche (still some value)
             score += 10;
-            reasoning.push(`✅ Supports required niche: ${niche} (+10)`);
+            reasoning.push(`Supports required niche: ${niche} (+10)`);
           }
         } else if (preferredRange) {
           // Preferred niche
           if (currentCount < preferredRange.min) {
             // Filling a missing preferred niche
             score += 75;
-            reasoning.push(`🎯 Fills missing preferred niche: ${niche} (+75)`);
+            reasoning.push(`Fills missing preferred niche: ${niche} (+75)`);
           } else if (currentCount < preferredRange.max) {
             // Filling an under-covered preferred niche
             score += 30;
-            reasoning.push(`➕ Strengthens preferred niche: ${niche} (+30)`);
+            reasoning.push(`Strengthens preferred niche: ${niche} (+30)`);
           } else {
             // Over-covered preferred niche (minimal value)
             score += 5;
-            reasoning.push(`✅ Supports preferred niche: ${niche} (+5)`);
+            reasoning.push(`Supports preferred niche: ${niche} (+5)`);
           }
         }
       } else {
         // Non-standard niche (some value for variety)
         score += 15;
-        reasoning.push(`🌟 Provides niche variety: ${niche} (+15)`);
+        reasoning.push(`Provides niche variety: ${niche} (+15)`);
       }
     }
 
@@ -1540,7 +1540,7 @@ export async function getIntegratedStrategiesRecommendation(
       if (duplicateNiches.length > 0) {
         const penalty = duplicateNiches.length * 20;
         score -= penalty;
-        reasoning.push(`⚠️ Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
+        reasoning.push(`Over-specializes in: ${duplicateNiches.join(', ')} (-${penalty})`);
       }
     }
 
@@ -1549,7 +1549,7 @@ export async function getIntegratedStrategiesRecommendation(
     const synergyBonus = calculateSynergyScoreForOperator(testTeam, operatorId, true);
     if (synergyBonus > 0) {
       score += synergyBonus;
-      reasoning.push(`🔗 Synergy bonus: +${synergyBonus}`);
+      reasoning.push(`Synergy bonus: +${synergyBonus}`);
     }
 
     // Log each evaluated character and their scoring criteria
@@ -1590,14 +1590,14 @@ export async function getIntegratedStrategiesRecommendation(
     : `${requiredClasses.slice(0, -1).join(', ')} or ${requiredClasses[requiredClasses.length - 1]}`;
 
   const reasoningParts = [
-    `🏆 **Recommended ${classText} Operator**`,
+    `**Recommended ${classText} Operator**`,
     '',
     ...(temporaryRecruitment ? [
-      `💫 **Considering temporary recruitment: ${allOperators[temporaryRecruitment]?.name || 'Unknown Operator'}**`,
+      `**Considering temporary recruitment: ${allOperators[temporaryRecruitment]?.name || 'Unknown Operator'}**`,
       ''
     ] : []),
     '**Scoring Breakdown:**',
-    ...bestOperator.reasoning.map(line => `• ${line}`),
+    ...bestOperator.reasoning.map(line => `- ${line}`),
     '',
     `**Final Score: ${bestOperator.score}**`,
     '',

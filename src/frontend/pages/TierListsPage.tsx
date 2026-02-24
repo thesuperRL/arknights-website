@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { animate, stagger } from 'animejs';
 import { apiFetch } from '../api';
 import { useTranslation } from '../translations';
 import './TierListsPage.css';
@@ -20,10 +21,41 @@ const TierListsPage: React.FC = () => {
   const [nicheLists, setNicheLists] = useState<NicheListInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     loadNicheLists();
   }, []);
+
+  useEffect(() => {
+    if (loading || error) return;
+    const page = pageRef.current;
+    if (!page) return;
+    const hero = page.querySelector('.hero');
+    const gridCards = page.querySelectorAll('.niche-list-card');
+    const specialCards = page.querySelectorAll('.special-card');
+    if (hero) {
+      animate(hero, { opacity: [0.7, 1], y: [10, 0], duration: 450, ease: 'outCubic' });
+    }
+    if (gridCards.length) {
+      animate(gridCards, {
+        opacity: [0, 1],
+        y: [16, 0],
+        duration: 400,
+        delay: stagger(50, { from: 'first' }),
+        ease: 'outCubic',
+      });
+    }
+    if (specialCards.length) {
+      animate(specialCards, {
+        opacity: [0, 1],
+        y: [14, 0],
+        duration: 380,
+        delay: stagger(60, { from: 'first' }),
+        ease: 'outCubic',
+      });
+    }
+  }, [loading, error]);
 
   const loadNicheLists = async () => {
     try {
@@ -49,7 +81,7 @@ const TierListsPage: React.FC = () => {
   }
 
   return (
-    <div className="tier-lists-page">
+    <div className="tier-lists-page" ref={pageRef}>
       <div className="hero">
         <h1>{t('tierLists.title')}</h1>
         <p>{t('tierLists.subtitle')}</p>

@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
     <nav className="navbar">
       <div className="nav-container">
         <Link to="/" className="nav-logo">
-          🎯 {t('nav.title')}
+          {t('nav.title')}
         </Link>
         <div className="nav-links">
           <Link to="/">{t('nav.home')}</Link>

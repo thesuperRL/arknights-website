@@ -38,7 +38,7 @@
   gap: 1rem;
   margin-bottom: 2rem;
   padding: 1rem;
-  background: #1a1a2e;
+  background: var(--surface);
   border-radius: 8px;
 }
 
@@ -116,7 +116,7 @@
 
 .changelog-table-wrap {
   overflow-x: auto;
-  background: #1a1a2e;
+  background: var(--surface);
   border-radius: 8px;
   border: 1px solid #333;
 }

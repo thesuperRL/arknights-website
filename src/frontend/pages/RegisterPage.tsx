@@ -70,6 +70,7 @@ const RegisterPage: React.FC = () => {
       <div className="login-container">
         <h1>{t('auth.createAccount')}</h1>
         <p className="login-description">{t('auth.registerDesc')}</p>
+        <p className="login-notice">{t('auth.passwordHashNotice')}</p>
 
         {error && <div className="error-message">{error}</div>}
 
