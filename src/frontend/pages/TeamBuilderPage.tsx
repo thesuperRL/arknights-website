@@ -207,6 +207,11 @@ const TeamBuilderPage: React.FC = () => {
       });
       if (response.ok) {
         const data = await response.json();
+        // Restore cached locked operators so they persist across page changes
+        const cached = data.normalTeambuild?.lockedOperatorIds;
+        if (Array.isArray(cached)) {
+          setLockedOperatorIds(cached);
+        }
         // Wait for nicheFilenameMap to be loaded before migrating
         if (Object.keys(nicheFilenameMap).length > 0) {
           const migrated = migratePreferences(data);
@@ -360,6 +365,22 @@ const TeamBuilderPage: React.FC = () => {
     }
   };
 
+  const persistLockedOperators = async (lockedIds: string[], lastTeamIds?: string[]) => {
+    try {
+      const lastTeam = lastTeamIds ?? (modifiedTeam || teamResult?.team)?.map(m => m.operatorId) ?? [];
+      await apiFetch('/api/team/preferences', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          normalTeambuild: { lockedOperatorIds: lockedIds, lastTeamOperatorIds: lastTeam }
+        }),
+        credentials: 'include'
+      });
+    } catch (err) {
+      console.error('Error persisting locked operators:', err);
+    }
+  };
+
   const savePreferences = async () => {
     if (!preferences) return;
     
@@ -374,7 +395,13 @@ const TeamBuilderPage: React.FC = () => {
       const response = await apiFetch('/api/team/preferences', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ preferences: prefsToSave }),
+        body: JSON.stringify({
+          preferences: prefsToSave,
+          normalTeambuild: {
+            lockedOperatorIds,
+            lastTeamOperatorIds: (modifiedTeam || teamResult?.team)?.map(m => m.operatorId) ?? []
+          }
+        }),
         credentials: 'include'
       });
       
@@ -671,7 +698,10 @@ const TeamBuilderPage: React.FC = () => {
     if (modalState.type === 'lock') {
       setLockedOperatorIds(prev => {
         if (prev.includes(operatorId) || prev.length >= 12) return prev;
-        return [...prev, operatorId];
+        const next = [...prev, operatorId];
+        const lastTeam = (modifiedTeam || teamResult?.team)?.map(m => m.operatorId) ?? [];
+        persistLockedOperators(next, lastTeam);
+        return next;
       });
       setShowOperatorSelectModal(null);
       setOperatorSelectSearch('');
@@ -866,7 +896,14 @@ const TeamBuilderPage: React.FC = () => {
                       <button
                         type="button"
                         className="locked-operator-unlock"
-                        onClick={() => setLockedOperatorIds(prev => prev.filter(x => x !== id))}
+                        onClick={() => {
+                          setLockedOperatorIds(prev => {
+                            const next = prev.filter(x => x !== id);
+                            const lastTeam = (modifiedTeam || teamResult?.team)?.map(m => m.operatorId) ?? [];
+                            persistLockedOperators(next, lastTeam);
+                            return next;
+                          });
+                        }}
                         title={t('teamBuilder.unlock')}
                       >
                         ×

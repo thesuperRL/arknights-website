@@ -113,9 +113,12 @@ function detectChanges(): ChangelogEntry[] {
     const committedContent = getCommittedFileContent(filePath);
     const committedList = committedContent ? parseNicheList(committedContent) : null;
 
-    const currentTiers = extractTiers(currentList);
-    const committedTiers = committedList ? extractTiers(committedList) : new Map();
+    // If file had no committed version (new file or not in HEAD), skip it. Otherwise we would
+    // treat every operator as "first ranking" and flood the changelog.
+    if (!committedList) continue;
 
+    const currentTiers = extractTiers(currentList);
+    const committedTiers = extractTiers(committedList);
     const allKeys = new Set([...currentTiers.keys(), ...committedTiers.keys()]);
 
     for (const key of allKeys) {
@@ -124,6 +127,7 @@ function detectChanges(): ChangelogEntry[] {
       const committed = committedTiers.get(key);
       const isGlobal = operatorGlobal[operatorId] ?? true;
 
+      // Only record real changes: removals and tier changes. Never "first ranking" (current && !committed).
       if (!current && committed) {
         changes.push({
           date: today,
@@ -136,21 +140,6 @@ function detectChanges(): ChangelogEntry[] {
           newTier: null,
           oldLevel: committed.level,
           newLevel: '',
-          justification: '',
-          global: isGlobal,
-        });
-      } else if (current && !committed) {
-        changes.push({
-          date: today,
-          time: timeStr,
-          operatorId,
-          operatorName: operatorNames[operatorId] || operatorId,
-          niche: currentList.niche,
-          nicheFilename,
-          oldTier: null,
-          newTier: current.tier,
-          oldLevel: '',
-          newLevel: current.level,
           justification: '',
           global: isGlobal,
         });
