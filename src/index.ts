@@ -123,6 +123,26 @@ app.get('/api/niche-lists', (_req, res) => {
   }
 });
 
+// IS niche weight pools: important, optional, good — raw scores used in Integrated Strategies scoring
+app.get('/api/config/is-niche-weight-pools', (_req, res) => {
+  try {
+    const configPath = path.join(__dirname, '../data/is-niche-weight-pools.json');
+    if (!fs.existsSync(configPath)) {
+      return res.json({
+        important: { rawScore: 5, niches: [] },
+        optional: { rawScore: 2, niches: [] },
+        good: { rawScore: 0.5, niches: [] }
+      });
+    }
+    const raw = fs.readFileSync(configPath, 'utf-8');
+    const data = JSON.parse(raw);
+    return res.json(data);
+  } catch (error) {
+    console.error('Error loading IS niche weight pools:', error);
+    return res.status(500).json({ error: 'Failed to load IS niche weight pools' });
+  }
+});
+
 // API route to get a specific niche list
 // Query: allLevels=1 returns every (tier, level) evaluation; otherwise returns peak-only (one per operator).
 app.get('/api/niche-lists/:niche', (req, res) => {

@@ -1,0 +1,35 @@
+{
+  "important": {
+    "rawScore": 1.5,
+    "niches": [
+      "dp-generation",
+      "late-laneholder",
+      "healing-operators",
+      "arts-dps",
+      "physical-dps",
+      "elemental-damage",
+      "early-laneholder",
+      "boss-killing",
+      "anti-air-operators"
+    ]
+  },
+  "optional": {
+    "rawScore": 1,
+    "niches": [
+      "tanking-blocking-operators",
+      "stalling",
+      "aoe-arts-dps",
+      "aoe-physical-dps",
+      "damage-buff"
+    ]
+  },
+  "good": {
+    "rawScore": 0.5,
+    "niches": [
+      "fast-redeploy-operators",
+      "res-shred",
+      "def-shred",
+      "sp-battery"
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTranslation } from '../translations/useTranslation';
@@ -13,6 +14,12 @@ interface TeamPreferences {
   preferredNiches: Record<string, { min: number; max: number }>;
   rarityRanking?: number[];
   allowDuplicates?: boolean;
+}
+
+export interface ISNicheWeightPools {
+  important: { rawScore: number; niches: string[] };
+  optional: { rawScore: number; niches: string[] };
+  good: { rawScore: number; niches: string[] };
 }
 
 // Cache for niche lists to avoid repeated API calls
@@ -208,6 +215,52 @@ async function getOperatorMaxTierInNiche(operatorId: string, niche: string): Pro
   return highestTier;
 }
 
+// Helper: best tier at E2/module levels only (excludes level 0). Used for promotion scoring.
+async function getOperatorBestTierAtPromotionLevel(operatorId: string, niche: string): Promise<number> {
+  if (!nicheListCache[niche]) {
+    try {
+      const response = await apiFetch(`/api/niche-lists/${encodeURIComponent(niche)}`);
+      if (response.ok) {
+        const data = await response.json();
+        nicheListCache[niche] = data;
+      } else {
+        return 0;
+      }
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  const nicheList = nicheListCache[niche];
+  if (!nicheList || !nicheList.operators) {
+    return 0;
+  }
+
+  const tierValues: Record<string, number> = {
+    'SS': 120,
+    'S': 90,
+    'A': 75,
+    'B': 50,
+    'C': 30,
+    'D': 15,
+    'F': 5
+  };
+
+  let highestTier = 0;
+  for (const entry of nicheList.operators) {
+    if (entry.operatorId === operatorId) {
+      const entryLevel = (entry.level || '').trim();
+      if (entryLevel !== '') {
+        const tierScore = tierValues[entry.rating] || 0;
+        if (tierScore > highestTier) {
+          highestTier = tierScore;
+        }
+      }
+    }
+  }
+  return highestTier;
+}
+
 // Helper function to get new tiers at promotion level (E2 or modules) that are better than level 0
 async function getOperatorNewTiersAtPromotion(operatorId: string, niche: string): Promise<number> {
   if (!nicheListCache[niche]) {
@@ -259,6 +312,18 @@ async function getOperatorNewTiersAtPromotion(operatorId: string, niche: string)
   return highestNewTier;
 }
 
+const DEFAULT_WEIGHT_POOLS: ISNicheWeightPools = {
+  important: { rawScore: 5, niches: [] },
+  optional: { rawScore: 2, niches: [] },
+  good: { rawScore: 0.5, niches: [] }
+};
+
+function getPoolRawScore(niche: string, weightPools: ISNicheWeightPools): number {
+  if (weightPools.important.niches.includes(niche)) return weightPools.important.rawScore;
+  if (weightPools.optional.niches.includes(niche)) return weightPools.optional.rawScore;
+  return weightPools.good.rawScore;
+}
+
 // Local recommendation algorithm - ONLY considers raised/deployable operators
 async function getIntegratedStrategiesRecommendation(
   allOperators: Record<string, Operator>,
@@ -271,7 +336,8 @@ async function getIntegratedStrategiesRecommendation(
   hopeCosts?: Record<number, number>,
   trashOperators?: Set<string>,
   teamSize?: number,
-  promotionCost?: number
+  promotionCost?: number,
+  weightPools: ISNicheWeightPools = DEFAULT_WEIGHT_POOLS
 ): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number; isPromotion?: boolean }> {
   // Helper functions for hope costs
   const getHopeCost = (rarity: number): number => {
@@ -470,78 +536,59 @@ async function getIntegratedStrategiesRecommendation(
       let tierName = '';
       
       if (isPromotion) {
-        // Second selection (promotion): use max tier across ALL levels (including level 0)
-        tier = await getOperatorMaxTierInNiche(operatorId, niche);
+        // Promotion: only E2/module tiers (minus promotion cost applied later)
+        tier = await getOperatorBestTierAtPromotionLevel(operatorId, niche);
         if (tier === 0) {
           continue;
         }
         tierName = getTierNameFromValue(tier);
       } else {
-        // First selection (recruit): use level 0 tier + 20% of full potential
-        const level0Tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
-        const maxTier = await getOperatorMaxTierInNiche(operatorId, niche);
-        
-        // Give 100% of level 0 tier + 20% of the difference to max tier
-        tier = level0Tier + (maxTier - level0Tier) * 0.2;
-        
+        // First recruitment: only level 0 (no E2 or modules)
+        tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
         if (tier === 0) {
           continue;
         }
-        tierName = getTierNameFromValue(level0Tier); // Use level 0 tier name for display
+        tierName = getTierNameFromValue(tier);
       }
 
       const tierPoints = tier;
 
-      if (importantNiches.has(niche)) {
-        const requiredRange = defaultPreferences.requiredNiches[niche];
-        const preferredRange = defaultPreferences.preferredNiches[niche];
-
-        if (requiredRange) {
-          // Required niche
-          if (currentCount < requiredRange.min) {
-            // Filling a missing required niche
-            const bonus = tierPoints * 5;
-            score +=  bonus;
-            reasoning.push(`${isPromotion ? 'Adds new capability' : 'Fills missing required niche'}: ${niche} at ${tierName} tier (+${bonus})`);
-          } else if (currentCount < requiredRange.max) {
-            // Filling an under-covered required niche
-            const bonus = tierPoints * 2.5;
-            score += bonus;
-            reasoning.push(`${isPromotion ? 'Enhances capability' : 'Strengthens required niche'}: ${niche} at ${tierName} tier (+${bonus})`);
-          } else {
-            // Over-covered required niche (negativevalue)
-            const bonus = tierPoints * (1.25);
-            score += bonus;
-            reasoning.push(`${isPromotion ? 'Adds over-specialization' : 'Over-specializes in'}: ${niche} at ${tierName} tier (+${bonus})`);
-          }
-        } else if (preferredRange) {
-          // Preferred niche
-          if (currentCount < preferredRange.min) {
-            // Filling a missing preferred niche
-            const bonus = tierPoints * 3.5;
-            score += bonus;
-            reasoning.push(`${isPromotion ? 'Adds new capability' : 'Fills missing preferred niche'}: ${niche} at ${tierName} tier (+${bonus})`);
-          } else if (currentCount < preferredRange.max) {
-            // Filling an under-covered preferred niche
-            const bonus = tierPoints * 1.5;
-            score += bonus;
-            reasoning.push(`${isPromotion ? 'Enhances capability' : 'Strengthens preferred niche'}: ${niche} at ${tierName} tier (+${bonus})`);
-          } else {
-            // Over-covered preferred niche (negative value)
-            const bonus = tierPoints * (0.75);
-            score += bonus;
-            reasoning.push(`${isPromotion ? 'Adds over-specialization' : 'Over-specializes in'}: ${niche} at ${tierName} tier (+${bonus})`);
-          }
-        }
-      } else if (niche == "trash-operators") {
-        const trashPenalty = 1000; // Large penalty that makes trash operators virtually unrecommendable
+      if (niche === 'trash-operators') {
+        const trashPenalty = 1000;
         score -= trashPenalty;
         reasoning.push(`Trash operator (-${trashPenalty})`);
       } else {
-        // Non-standard niche (some value for variety)
-            const bonus = tierPoints * 0.5;
-            score += bonus;
-        reasoning.push(`Provides niche variety: ${niche} at ${tierName} tier (+${bonus})`);
+        const rawScore = getPoolRawScore(niche, weightPools);
+        const requiredRange = defaultPreferences.requiredNiches[niche];
+        const preferredRange = defaultPreferences.preferredNiches[niche];
+        let coverageFactor = 1;
+        let label = 'Provides niche variety';
+        if (requiredRange) {
+          if (currentCount < requiredRange.min) {
+            coverageFactor = 1;
+            label = isPromotion ? 'Adds new capability' : 'Fills missing required niche';
+          } else if (currentCount < requiredRange.max) {
+            coverageFactor = 0.5;
+            label = isPromotion ? 'Enhances capability' : 'Strengthens required niche';
+          } else {
+            coverageFactor = 0.25;
+            label = isPromotion ? 'Adds over-specialization' : 'Over-specializes in';
+          }
+        } else if (preferredRange) {
+          if (currentCount < preferredRange.min) {
+            coverageFactor = 1;
+            label = isPromotion ? 'Adds new capability' : 'Fills missing preferred niche';
+          } else if (currentCount < preferredRange.max) {
+            coverageFactor = 0.5;
+            label = isPromotion ? 'Enhances capability' : 'Strengthens preferred niche';
+          } else {
+            coverageFactor = 0.25;
+            label = isPromotion ? 'Adds over-specialization' : 'Over-specializes in';
+          }
+        }
+        const bonus = tierPoints * rawScore * coverageFactor;
+        score += bonus;
+        reasoning.push(`${label}: ${niche} at ${tierName} tier (+${Math.round(bonus)})`);
       }
     }
 
@@ -592,7 +639,7 @@ async function getIntegratedStrategiesRecommendation(
     // Exception: temporary recruitment operators don't incur a hope penalty
     const isTemporaryRecruitment = operatorId === temporaryRecruitment;
     if (!isTemporaryRecruitment) {
-      const hopePenalty = hopeCost * 30; // Large multiplier to make hope cost very significant
+      const hopePenalty = hopeCost * 10; // Large multiplier to make hope cost very significant
       score -= hopePenalty;
       reasoning.push(`Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
     } else {
@@ -807,6 +854,7 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [promotionCost, setPromotionCost] = useState<number>(3);
   const [trashOperators, setTrashOperators] = useState<Set<string>>(new Set());
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
+  const [weightPoolsConfig, setWeightPoolsConfig] = useState<ISNicheWeightPools>(DEFAULT_WEIGHT_POOLS);
   const [teamSize, setTeamSize] = useState<number>(8);
   const [optimalTeam, setOptimalTeam] = useState<Set<string>>(new Set());
   const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
@@ -854,9 +902,12 @@ const IntegratedStrategiesPage: React.FC = () => {
 
   const loadPreferences = async () => {
     try {
-      const response = await apiFetch('/api/team/preferences');
-      if (response.ok) {
-        const data = await response.json();
+      const [prefsResponse, weightResponse] = await Promise.all([
+        apiFetch('/api/team/preferences'),
+        apiFetch('/api/config/is-niche-weight-pools')
+      ]);
+      if (prefsResponse.ok) {
+        const data = await prefsResponse.json();
         setPreferences(data);
       } else {
         // Load defaults if no saved preferences
@@ -865,6 +916,14 @@ const IntegratedStrategiesPage: React.FC = () => {
           const defaultData = await defaultResponse.json();
           setPreferences(defaultData);
         }
+      }
+      if (weightResponse.ok) {
+        const weightData = await weightResponse.json();
+        setWeightPoolsConfig({
+          important: weightData.important ?? DEFAULT_WEIGHT_POOLS.important,
+          optional: weightData.optional ?? DEFAULT_WEIGHT_POOLS.optional,
+          good: weightData.good ?? DEFAULT_WEIGHT_POOLS.good
+        });
       }
     } catch (err) {
       console.error('Error loading preferences:', err);
@@ -1094,36 +1153,22 @@ const IntegratedStrategiesPage: React.FC = () => {
           ? topTiers.reduce((sum, tier) => sum + tier, 0)
           : 0;
 
+        const rawScore = getPoolRawScore(niche, weightPoolsConfig);
+        let coverageFactor = 1;
+        if (requiredRange) {
+          if (currentCount < requiredRange.min) coverageFactor = 1;
+          else if (currentCount < requiredRange.max) coverageFactor = 0.5;
+          else coverageFactor = 0.25;
+        } else if (preferredRange) {
+          if (currentCount < preferredRange.min) coverageFactor = 1;
+          else if (currentCount < preferredRange.max) coverageFactor = 0.5;
+          else coverageFactor = 0.25;
+        }
         if (importantNiches.has(niche)) {
-          if (requiredRange) {
-            // Required niche - tier-weighted scoring
-            if (currentCount < requiredRange.min) {
-              // Filling a missing required niche - bonus weighted by tier
-              nicheCoverageScore += totalTierValue * 5;
-            } else if (currentCount < requiredRange.max) {
-              // Filling an under-covered required niche
-              nicheCoverageScore += totalTierValue * 2.5;
-            } else {
-              // Over-covered - minimal bonus
-              nicheCoverageScore += totalTierValue * 1.25;
-            }
-          } else if (preferredRange) {
-            // Preferred niche - tier-weighted scoring
-            if (currentCount < preferredRange.min) {
-              // Filling a missing preferred niche
-              nicheCoverageScore += totalTierValue * 3.5;
-            } else if (currentCount < preferredRange.max) {
-              // Filling an under-covered preferred niche
-              nicheCoverageScore += totalTierValue * 1.5;
-            } else {
-              // Over-covered - minimal bonus
-              nicheCoverageScore += totalTierValue * 0.75;
-            }
-          }
+          nicheCoverageScore += totalTierValue * rawScore * coverageFactor;
         } else {
-          // Non-standard niche - small tier-weighted bonus (use best tier only)
           const bestTier = topTiers.length > 0 ? topTiers[0] : 0;
-          nicheCoverageScore += bestTier * 0.5;
+          nicheCoverageScore += bestTier * rawScore * coverageFactor;
         }
       }
     }
@@ -1535,7 +1580,8 @@ const IntegratedStrategiesPage: React.FC = () => {
           hopeCosts,
           trashOperators,
           teamSize,
-          promotionCost
+          promotionCost,
+          weightPoolsConfig
         );
 
         if (result.recommendedOperator) {
@@ -2103,6 +2149,10 @@ const IntegratedStrategiesPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      <p style={{ marginTop: '1.5rem', fontSize: '0.9rem' }}>
+        <Link to="/config/is-niche-weights" style={{ color: 'var(--text-muted)' }}>Dev: Configure IS niche weight pools</Link>
+      </p>
 
       {/* Operator Selection Modal */}
       {showOperatorSelectModal && (

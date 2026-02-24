@@ -847,7 +847,7 @@
 
 .recommendation-score {
   font-size: 0.9rem;
-  color: var(--primary-color);
+  color: var(--text-light);
   font-weight: 600;
 }
 
@@ -961,7 +961,7 @@
 }
 
 .recommendation-reasoning strong {
-  color: var(--primary-color);
+  color: var(--text-light);
   font-weight: 600;
 }
 
@@ -975,7 +975,7 @@
 }
 
 .reasoning-header {
-  color: var(--primary-color);
+  color: var(--text-light);
   font-size: 1rem;
   font-weight: 600;
   margin: 0.75rem 0 0.5rem 0;

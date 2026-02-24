@@ -1,0 +1,189 @@
+.is-niche-weight-pools-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: var(--text-light);
+}
+
+.is-niche-weight-pools-page h1 {
+  margin-bottom: 0.5rem;
+}
+
+.is-niche-weight-pools-page .intro {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.is-niche-weight-pools-page .intro code {
+  background: var(--surface);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.pools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pool-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1rem;
+  border: 2px solid var(--surface-border);
+}
+
+.pool-card h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem 0;
+}
+
+.pool-card label {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.pool-card input[type="number"] {
+  width: 4rem;
+  padding: 0.35rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-light);
+}
+
+.pool-niches {
+  min-height: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.pool-niche-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.pool-niche-chip .remove-niche {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 0.2rem;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.pool-niche-chip .remove-niche:hover {
+  color: #f08080;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.all-niches-section {
+  margin-bottom: 2rem;
+}
+
+.all-niches-section h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.niches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.niche-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  background: var(--surface);
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.niche-name {
+  font-weight: 500;
+  min-width: 140px;
+}
+
+.niche-filename {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  min-width: 180px;
+}
+
+.pool-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.pool-buttons button {
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-light);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.pool-buttons button:hover {
+  background: var(--hover-bg);
+}
+
+.pool-buttons button.active {
+  background: var(--accent-1);
+  border-color: var(--accent-1);
+  color: #0D0D0D;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.download-btn {
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent-1);
+  color: #0D0D0D;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  filter: brightness(1.1);
+}
+
+.saved-hint {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.is-niche-weight-pools-page a {
+  color: var(--accent-1);
+}
+
+@media (max-width: 768px) {
+  .pools-grid {
+    grid-template-columns: 1fr;
+  }
+}
