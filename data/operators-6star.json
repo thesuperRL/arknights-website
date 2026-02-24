@@ -5373,6 +5373,10 @@
         {
           "tier": "SS",
           "level": "E2"
+        },
+        {
+          "tier": "A",
+          "level": ""
         }
       ],
       "elemental_damage_healers": [

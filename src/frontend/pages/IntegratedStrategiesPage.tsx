@@ -20,6 +20,10 @@ export interface ISNicheWeightPools {
   important: { rawScore: number; niches: string[] };
   optional: { rawScore: number; niches: string[] };
   good: { rawScore: number; niches: string[] };
+  /** Bonus added when a synergy's core (required operators) is satisfied. Used for all IS synergies. */
+  synergyCoreBonus?: number;
+  /** Multiplier applied to each synergy's corePointBonus and optionalPointBonus from its JSON. */
+  synergyScaleFactor?: number;
 }
 
 // Cache for niche lists to avoid repeated API calls
@@ -315,13 +319,119 @@ async function getOperatorNewTiersAtPromotion(operatorId: string, niche: string)
 const DEFAULT_WEIGHT_POOLS: ISNicheWeightPools = {
   important: { rawScore: 5, niches: [] },
   optional: { rawScore: 2, niches: [] },
-  good: { rawScore: 0.5, niches: [] }
+  good: { rawScore: 0.5, niches: [] },
+  synergyCoreBonus: 15,
+  synergyScaleFactor: 1
 };
 
 function getPoolRawScore(niche: string, weightPools: ISNicheWeightPools): number {
   if (weightPools.important.niches.includes(niche)) return weightPools.important.rawScore;
   if (weightPools.optional.niches.includes(niche)) return weightPools.optional.rawScore;
   return weightPools.good.rawScore;
+}
+
+/** Synergy shape for IS scoring (core/optional are group -> operator IDs). */
+interface SynergyForIS {
+  filename: string;
+  name: string;
+  core: Record<string, string[]>;
+  optional: Record<string, string[]>;
+  corePointBonus: number;
+  optionalPointBonus: number;
+  coreCountSeparately: boolean;
+  optionalCountSeparately: boolean;
+  optionalCountMinimum: number;
+  isOnly: boolean;
+}
+
+function calculateISSynergyScore(
+  teamOperatorIds: Set<string>,
+  candidateOperatorId: string,
+  synergies: SynergyForIS[],
+  synergyCoreBonus: number,
+  synergyScaleFactor: number
+): { score: number; lines: string[] } {
+  let score = 0;
+  const lines: string[] = [];
+  for (const synergy of synergies) {
+    const hasCore = Object.keys(synergy.core).length > 0;
+    let coreSatisfied = true;
+    if (hasCore) {
+      for (const operatorIds of Object.values(synergy.core)) {
+        if (!operatorIds.some(id => teamOperatorIds.has(id))) {
+          coreSatisfied = false;
+          break;
+        }
+      }
+    }
+    const candidateIsCore = hasCore && Object.values(synergy.core).some(ids => ids.includes(candidateOperatorId));
+    const candidateInOptional = Object.values(synergy.optional).some(ids => ids.includes(candidateOperatorId));
+
+    let rawPoints = 0;
+    if (synergy.coreCountSeparately) {
+      if (candidateIsCore) {
+        for (const operatorIds of Object.values(synergy.core)) {
+          if (operatorIds.includes(candidateOperatorId)) rawPoints += synergy.corePointBonus;
+        }
+      }
+      if (coreSatisfied && candidateInOptional) {
+        let totalOptional = 0;
+        for (const operatorIds of Object.values(synergy.optional)) {
+          for (const id of operatorIds) {
+            if (teamOperatorIds.has(id)) totalOptional++;
+          }
+        }
+        if (totalOptional >= (synergy.optionalCountMinimum || 0)) {
+          if (synergy.optionalCountSeparately) {
+            for (const operatorIds of Object.values(synergy.optional)) {
+              if (operatorIds.includes(candidateOperatorId)) rawPoints += synergy.optionalPointBonus;
+            }
+          } else {
+            for (const operatorIds of Object.values(synergy.optional)) {
+              if (operatorIds.includes(candidateOperatorId) && operatorIds.some(id => teamOperatorIds.has(id))) {
+                rawPoints += synergy.optionalPointBonus;
+              }
+            }
+          }
+        }
+      }
+    } else {
+      if (candidateIsCore) {
+        rawPoints += synergy.corePointBonus;
+      }
+      if (coreSatisfied && candidateInOptional) {
+        let totalOptional = 0;
+        for (const operatorIds of Object.values(synergy.optional)) {
+          for (const id of operatorIds) {
+            if (teamOperatorIds.has(id)) totalOptional++;
+          }
+        }
+        if (totalOptional >= (synergy.optionalCountMinimum || 0)) {
+          if (synergy.optionalCountSeparately) {
+            for (const operatorIds of Object.values(synergy.optional)) {
+              if (operatorIds.includes(candidateOperatorId)) rawPoints += synergy.optionalPointBonus;
+            }
+          } else {
+            for (const operatorIds of Object.values(synergy.optional)) {
+              if (operatorIds.includes(candidateOperatorId) && operatorIds.some(id => teamOperatorIds.has(id))) {
+                rawPoints += synergy.optionalPointBonus;
+              }
+            }
+          }
+        }
+      }
+    }
+    // Core bonus whenever the operator BEING CONSIDERED is a core operator (no need for full core to be satisfied)
+    const coreBonus = candidateIsCore ? synergyCoreBonus : 0;
+    const scaledPoints = rawPoints * synergyScaleFactor;
+    const synergyTotal = coreBonus + scaledPoints;
+    if (synergyTotal > 0) {
+      score += synergyTotal;
+      const coreLabel = hasCore ? (candidateIsCore ? 'core ✓' : 'optional') : 'optional';
+      lines.push(`Synergy "${synergy.name}": ${coreLabel} (+${Math.round(synergyTotal)})`);
+    }
+  }
+  return { score, lines };
 }
 
 // Local recommendation algorithm - ONLY considers raised/deployable operators
@@ -337,7 +447,8 @@ async function getIntegratedStrategiesRecommendation(
   trashOperators?: Set<string>,
   teamSize?: number,
   promotionCost?: number,
-  weightPools: ISNicheWeightPools = DEFAULT_WEIGHT_POOLS
+  weightPools: ISNicheWeightPools = DEFAULT_WEIGHT_POOLS,
+  allSynergies: SynergyForIS[] = []
 ): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number; isPromotion?: boolean }> {
   // Helper functions for hope costs
   const getHopeCost = (rarity: number): number => {
@@ -646,6 +757,24 @@ async function getIntegratedStrategiesRecommendation(
       reasoning.push(`Temporary recruitment: No hope penalty applied!`);
     }
 
+    // Synergy scoring (IS-only synergies): core bonus + scale factor × points from each synergy's JSON
+    const synergyCoreBonus = weightPools.synergyCoreBonus ?? 0;
+    const synergyScaleFactor = weightPools.synergyScaleFactor ?? 1;
+    if (allSynergies.length > 0 && (synergyCoreBonus !== 0 || synergyScaleFactor !== 0)) {
+      const teamWithCandidate = new Set([...currentTeamOperators.map(t => t.operatorId), operatorId]);
+      const { score: synScore, lines: synLines } = calculateISSynergyScore(
+        teamWithCandidate,
+        operatorId,
+        allSynergies,
+        synergyCoreBonus,
+        synergyScaleFactor
+      );
+      if (synScore > 0) {
+        score += synScore;
+        reasoning.push(...synLines);
+      }
+    }
+
     // Log each evaluated character and their scoring criteria
     console.log(`\n=== Integrated Strategies Evaluation: ${operator.name || operatorId} ===`);
     console.log(`Class: ${operator.class}, Rarity: ${operator.rarity}★`);
@@ -855,6 +984,7 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [trashOperators, setTrashOperators] = useState<Set<string>>(new Set());
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
   const [weightPoolsConfig, setWeightPoolsConfig] = useState<ISNicheWeightPools>(DEFAULT_WEIGHT_POOLS);
+  const [allSynergies, setAllSynergies] = useState<SynergyForIS[]>([]);
   const [teamSize, setTeamSize] = useState<number>(8);
   const [optimalTeam, setOptimalTeam] = useState<Set<string>>(new Set());
   const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
@@ -871,6 +1001,7 @@ const IntegratedStrategiesPage: React.FC = () => {
       loadOwnedOperators();
       loadTrashOperators();
       loadPreferences();
+      loadSynergies();
       // Load hope and hope costs immediately (don't need to wait for operators)
       loadISTeamState(true);
     }
@@ -922,7 +1053,9 @@ const IntegratedStrategiesPage: React.FC = () => {
         setWeightPoolsConfig({
           important: weightData.important ?? DEFAULT_WEIGHT_POOLS.important,
           optional: weightData.optional ?? DEFAULT_WEIGHT_POOLS.optional,
-          good: weightData.good ?? DEFAULT_WEIGHT_POOLS.good
+          good: weightData.good ?? DEFAULT_WEIGHT_POOLS.good,
+          synergyCoreBonus: weightData.synergyCoreBonus ?? DEFAULT_WEIGHT_POOLS.synergyCoreBonus ?? 15,
+          synergyScaleFactor: weightData.synergyScaleFactor ?? DEFAULT_WEIGHT_POOLS.synergyScaleFactor ?? 1
         });
       }
     } catch (err) {
@@ -937,6 +1070,44 @@ const IntegratedStrategiesPage: React.FC = () => {
       } catch (e) {
         console.error('Failed to load default preferences:', e);
       }
+    }
+  };
+
+  const loadSynergies = async () => {
+    try {
+      const response = await apiFetch('/api/synergies');
+      if (!response.ok) return;
+      const list = await response.json();
+      const synergyPromises = list.map(async (s: { filename: string }) => {
+        const detailRes = await apiFetch(`/api/synergies/${encodeURIComponent(s.filename)}`);
+        if (!detailRes.ok) return null;
+        const full = await detailRes.json();
+        // Load all synergies for IS; isOnly only affects normal teambuilding
+        const core: Record<string, string[]> = {};
+        for (const [groupName, operators] of Object.entries(full.core || {})) {
+          core[groupName] = (operators as Array<{ operatorId: string }>).map((op: { operatorId: string }) => op.operatorId);
+        }
+        const optional: Record<string, string[]> = {};
+        for (const [groupName, operators] of Object.entries(full.optional || {})) {
+          optional[groupName] = (operators as Array<{ operatorId: string }>).map((op: { operatorId: string }) => op.operatorId);
+        }
+        return {
+          filename: s.filename,
+          name: full.name,
+          core,
+          optional,
+          isOnly: !!full.isOnly,
+          corePointBonus: full.corePointBonus ?? 0,
+          optionalPointBonus: full.optionalPointBonus ?? 0,
+          coreCountSeparately: !!full.coreCountSeparately,
+          optionalCountSeparately: !!full.optionalCountSeparately,
+          optionalCountMinimum: full.optionalCountMinimum ?? 0
+        } as SynergyForIS;
+      });
+      const synergies = await Promise.all(synergyPromises);
+      setAllSynergies(synergies.filter((s): s is SynergyForIS => s !== null));
+    } catch (err) {
+      console.error('Error loading synergies for IS:', err);
     }
   };
 
@@ -1581,7 +1752,8 @@ const IntegratedStrategiesPage: React.FC = () => {
           trashOperators,
           teamSize,
           promotionCost,
-          weightPoolsConfig
+          weightPoolsConfig,
+          allSynergies
         );
 
         if (result.recommendedOperator) {

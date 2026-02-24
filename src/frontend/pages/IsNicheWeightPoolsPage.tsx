@@ -10,7 +10,8 @@ interface NicheItem {
 }
 
 const POOL_KEYS = ['important', 'optional', 'good'] as const;
-const POOL_LABELS: Record<string, string> = {
+type PoolKey = typeof POOL_KEYS[number];
+const POOL_LABELS: Record<PoolKey, string> = {
   important: 'Important',
   optional: 'Optional',
   good: 'Good'
@@ -21,7 +22,9 @@ const IsNicheWeightPoolsPage: React.FC = () => {
   const [config, setConfig] = useState<ISNicheWeightPools>({
     important: { rawScore: 5, niches: [] },
     optional: { rawScore: 2, niches: [] },
-    good: { rawScore: 0.5, niches: [] }
+    good: { rawScore: 0.5, niches: [] },
+    synergyCoreBonus: 15,
+    synergyScaleFactor: 1
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +46,9 @@ const IsNicheWeightPoolsPage: React.FC = () => {
           setConfig({
             important: data.important ?? { rawScore: 5, niches: [] },
             optional: data.optional ?? { rawScore: 2, niches: [] },
-            good: data.good ?? { rawScore: 0.5, niches: [] }
+            good: data.good ?? { rawScore: 0.5, niches: [] },
+            synergyCoreBonus: data.synergyCoreBonus ?? 15,
+            synergyScaleFactor: data.synergyScaleFactor ?? 1
           });
         }
       } catch (e) {
@@ -55,7 +60,7 @@ const IsNicheWeightPoolsPage: React.FC = () => {
     load();
   }, []);
 
-  const setRawScore = (pool: keyof ISNicheWeightPools, rawScore: number) => {
+  const setRawScore = (pool: PoolKey, rawScore: number) => {
     setConfig(prev => ({
       ...prev,
       [pool]: { ...prev[pool], rawScore }
@@ -63,7 +68,7 @@ const IsNicheWeightPoolsPage: React.FC = () => {
     setSaved(false);
   };
 
-  const toggleNicheInPool = (pool: keyof ISNicheWeightPools, filename: string) => {
+  const toggleNicheInPool = (pool: PoolKey, filename: string) => {
     setConfig(prev => {
       const current = prev[pool].niches.includes(filename);
       const newNiches = current
@@ -74,17 +79,18 @@ const IsNicheWeightPoolsPage: React.FC = () => {
     setSaved(false);
   };
 
-  const moveNicheToPool = (filename: string, toPool: keyof ISNicheWeightPools) => {
+  const moveNicheToPool = (filename: string, toPool: PoolKey) => {
     setConfig(prev => {
-      const removeFrom = (p: keyof ISNicheWeightPools) => ({
+      const removeFrom = (p: PoolKey) => ({
         ...prev[p],
         niches: prev[p].niches.filter(n => n !== filename)
       });
-      const addTo = (p: keyof ISNicheWeightPools) => ({
+      const addTo = (p: PoolKey) => ({
         ...prev[p],
         niches: prev[p].niches.includes(filename) ? prev[p].niches : [...prev[p].niches, filename]
       });
       return {
+        ...prev,
         important: toPool === 'important' ? addTo('important') : removeFrom('important'),
         optional: toPool === 'optional' ? addTo('optional') : removeFrom('optional'),
         good: toPool === 'good' ? addTo('good') : removeFrom('good')
@@ -93,11 +99,20 @@ const IsNicheWeightPoolsPage: React.FC = () => {
     setSaved(false);
   };
 
-  const getNichePool = (filename: string): keyof ISNicheWeightPools | null => {
+  const getNichePool = (filename: string): PoolKey | null => {
     if (config.important.niches.includes(filename)) return 'important';
     if (config.optional.niches.includes(filename)) return 'optional';
     if (config.good.niches.includes(filename)) return 'good';
     return null;
+  };
+
+  const setSynergyCoreBonus = (v: number) => {
+    setConfig(prev => ({ ...prev, synergyCoreBonus: v }));
+    setSaved(false);
+  };
+  const setSynergyScaleFactor = (v: number) => {
+    setConfig(prev => ({ ...prev, synergyScaleFactor: v }));
+    setSaved(false);
   };
 
   const downloadJson = () => {
@@ -162,6 +177,32 @@ const IsNicheWeightPoolsPage: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="synergy-scoring-section">
+        <h2>Synergy scoring (IS)</h2>
+        <p className="muted">Applied to all IS-only synergies. Core bonus when required operators are present; scale factor multiplies each synergy&apos;s corePointBonus and optionalPointBonus from its JSON.</p>
+        <div className="synergy-inputs">
+          <label>
+            Synergy core bonus:{' '}
+            <input
+              type="number"
+              step="1"
+              min="0"
+              value={config.synergyCoreBonus ?? 15}
+              onChange={e => setSynergyCoreBonus(parseFloat(e.target.value) || 0)}
+            />
+          </label>
+          <label>
+            Synergy scale factor:{' '}
+            <input
+              type="number"
+              step="0.1"
+              min="0"
+              value={config.synergyScaleFactor ?? 1}
+              onChange={e => setSynergyScaleFactor(parseFloat(e.target.value) || 0)}
+            />
+          </label>
+        </div>
       </div>
       <div className="all-niches-section">
         <h2>All niches – assign to pool</h2>

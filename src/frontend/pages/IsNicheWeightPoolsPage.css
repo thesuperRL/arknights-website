@@ -90,6 +90,35 @@
   font-size: 0.9rem;
 }
 
+.synergy-scoring-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 2px solid var(--surface-border);
+}
+
+.synergy-scoring-section h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.synergy-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+.synergy-inputs label input {
+  width: 5rem;
+  padding: 0.35rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-light);
+}
+
 .all-niches-section {
   margin-bottom: 2rem;
 }

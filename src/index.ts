@@ -131,7 +131,9 @@ app.get('/api/config/is-niche-weight-pools', (_req, res) => {
       return res.json({
         important: { rawScore: 5, niches: [] },
         optional: { rawScore: 2, niches: [] },
-        good: { rawScore: 0.5, niches: [] }
+        good: { rawScore: 0.5, niches: [] },
+        synergyCoreBonus: 15,
+        synergyScaleFactor: 1
       });
     }
     const raw = fs.readFileSync(configPath, 'utf-8');

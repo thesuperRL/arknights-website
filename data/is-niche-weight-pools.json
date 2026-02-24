@@ -9,18 +9,17 @@
       "physical-dps",
       "elemental-damage",
       "early-laneholder",
-      "boss-killing",
-      "anti-air-operators"
+      "aoe-arts-dps",
+      "aoe-physical-dps",
+      "boss-killing"
     ]
   },
   "optional": {
     "rawScore": 1,
     "niches": [
       "tanking-blocking-operators",
-      "stalling",
-      "aoe-arts-dps",
-      "aoe-physical-dps",
-      "damage-buff"
+      "damage-buff",
+      "anti-air-operators"
     ]
   },
   "good": {
@@ -29,7 +28,10 @@
       "fast-redeploy-operators",
       "res-shred",
       "def-shred",
+      "stalling",
       "sp-battery"
     ]
-  }
+  },
+  "synergyCoreBonus": 15,
+  "synergyScaleFactor": 0.6
 }
