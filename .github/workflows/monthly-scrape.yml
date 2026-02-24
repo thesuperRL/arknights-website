@@ -1,5 +1,9 @@
 name: Biweekly Operator Scrape
 
+# Changelog policy: This workflow must NOT update the tier changelog. Only manual
+# runs of `npm run update:ranked` (or the build step that runs it) should write
+# changelog entries. Do not add update:ranked or detect:changes to this workflow.
+
 on:
   schedule:
     # Biweekly: 10th and 24th of every month at 00:00 UTC (first run Feb 24, 2026)
@@ -12,7 +16,9 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    
+    env:
+      BIWEEKLY_SCRAPE: 'true'  # Prevents detect-tier-changes from writing to changelog if ever run here
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

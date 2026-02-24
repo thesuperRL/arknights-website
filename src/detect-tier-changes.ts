@@ -177,6 +177,11 @@ function detectChanges(): ChangelogEntry[] {
 }
 
 async function main(): Promise<void> {
+  if (process.env.BIWEEKLY_SCRAPE === 'true') {
+    console.log('Changelog: skipped (biweekly scrape must not update changelog; only manual npm run update:ranked or build should).');
+    return;
+  }
+
   const changes = detectChanges();
 
   if (changes.length === 0) {
