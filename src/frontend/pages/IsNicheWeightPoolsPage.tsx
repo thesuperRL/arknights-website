@@ -29,7 +29,8 @@ const IsNicheWeightPoolsPage: React.FC = () => {
     optional: { rawScore: 2, niches: [] },
     good: { rawScore: 0.5, niches: [] },
     synergyCoreBonus: 15,
-    synergyScaleFactor: 1
+    synergyScaleFactor: 1,
+    firstRecruitPotentialMultiplier: 0
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -65,7 +66,8 @@ const IsNicheWeightPoolsPage: React.FC = () => {
             optional: data.optional ?? { rawScore: 2, niches: [] },
             good: data.good ?? { rawScore: 0.5, niches: [] },
             synergyCoreBonus: data.synergyCoreBonus ?? 15,
-            synergyScaleFactor: data.synergyScaleFactor ?? 1
+            synergyScaleFactor: data.synergyScaleFactor ?? 1,
+            firstRecruitPotentialMultiplier: data.firstRecruitPotentialMultiplier ?? 0
           });
         }
       } catch (e) {
@@ -129,6 +131,10 @@ const IsNicheWeightPoolsPage: React.FC = () => {
   };
   const setSynergyScaleFactor = (v: number) => {
     setConfig(prev => ({ ...prev, synergyScaleFactor: v }));
+    setSaved(false);
+  };
+  const setFirstRecruitPotentialMultiplier = (v: number) => {
+    setConfig(prev => ({ ...prev, firstRecruitPotentialMultiplier: v }));
     setSaved(false);
   };
 
@@ -229,6 +235,18 @@ const IsNicheWeightPoolsPage: React.FC = () => {
               value={config.synergyScaleFactor ?? 1}
               onChange={e => setSynergyScaleFactor(parseFloat(e.target.value) || 0)}
             />
+          </label>
+          <label>
+            First-recruit potential multiplier (0–1):{' '}
+            <input
+              type="number"
+              step="0.05"
+              min="0"
+              max="1"
+              value={config.firstRecruitPotentialMultiplier ?? 0}
+              onChange={e => setFirstRecruitPotentialMultiplier(parseFloat(e.target.value) || 0)}
+            />
+            <span className="muted"> — On first recruitment only, adds this fraction of the operator&apos;s E2/module tier score so future potential is considered.</span>
           </label>
         </div>
       </div>

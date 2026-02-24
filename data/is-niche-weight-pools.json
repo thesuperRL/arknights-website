@@ -33,5 +33,6 @@
     ]
   },
   "synergyCoreBonus": 15,
-  "synergyScaleFactor": 0.6
+  "synergyScaleFactor": 0.6,
+  "firstRecruitPotentialMultiplier": 0.5
 }

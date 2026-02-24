@@ -102,7 +102,7 @@ const RegisterPage: React.FC = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="At least 8 characters"
+              placeholder={t('auth.passwordPlaceholderRegister')}
               className="form-input"
               required
               minLength={8}
@@ -117,7 +117,7 @@ const RegisterPage: React.FC = () => {
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Re-enter your password"
+              placeholder={t('auth.confirmPasswordPlaceholder')}
               className="form-input"
               required
               minLength={8}

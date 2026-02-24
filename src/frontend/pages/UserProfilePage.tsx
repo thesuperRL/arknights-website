@@ -486,9 +486,9 @@ const UserProfilePage: React.FC = () => {
                         ? 'translateY(-2px)' 
                         : 'none'
                     }}
-                    title={user.wantToUse?.includes(operator.id) ? 'Operator is raised' : 'Mark as raised'}
+                    title={user.wantToUse?.includes(operator.id) ? t('profile.operatorIsRaisedTitle') : t('profile.markAsRaisedTitle')}
                   >
-                    {user.wantToUse?.includes(operator.id) && 'Raised'}
+                    {user.wantToUse?.includes(operator.id) ? t('profile.raisedLabel') : t('profile.markRaisedShort')}
                   </button>
                 </div>
                 );
@@ -554,7 +554,7 @@ const UserProfilePage: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ color: 'var(--text-light)', margin: 0 }}>Add Operators</h2>
+              <h2 style={{ color: 'var(--text-light)', margin: 0 }}>{t('profile.addOperatorsModalTitle')}</h2>
               <button
                 onClick={() => setShowAddModal(false)}
                 style={{
@@ -576,35 +576,35 @@ const UserProfilePage: React.FC = () => {
               <div className="search-box">
                 <input
                   type="text"
-                  placeholder="Search operators..."
+                  placeholder={t('common.searchOperators')}
                   value={addSearchTerm}
                   onChange={(e) => setAddSearchTerm(e.target.value)}
                   className="search-input"
                 />
               </div>
               <div className="filter-group">
-                <label>Rarity:</label>
+                <label>{t('common.rarity')}:</label>
                 <select
                   value={addFilterRarity || ''}
                   onChange={(e) => setAddFilterRarity(e.target.value ? parseInt(e.target.value) : null)}
                   className="filter-select"
                 >
-                  <option value="">All</option>
+                  <option value="">{t('common.all')}</option>
                   {[6, 5, 4, 3, 2, 1].map(rarity => (
                     <option key={rarity} value={rarity}>{rarity}{vocab('star')}</option>
                   ))}
                 </select>
               </div>
               <div className="filter-group">
-                <label>Class:</label>
+                <label>{t('common.class')}:</label>
                 <select
                   value={addFilterClass || ''}
                   onChange={(e) => setAddFilterClass(e.target.value || null)}
                   className="filter-select"
                 >
-                  <option value="">All</option>
+                  <option value="">{t('common.all')}</option>
                   {getAllUniqueClasses().map(className => (
-                    <option key={className} value={className}>{className}</option>
+                    <option key={className} value={className}>{translateClass(className)}</option>
                   ))}
                 </select>
               </div>
@@ -612,7 +612,7 @@ const UserProfilePage: React.FC = () => {
 
             <div className="operators-grid operator-cards-collection add-operators-modal-grid" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
               {getAvailableOperators().length === 0 ? (
-                <div className="no-results">No operators found.</div>
+                <div className="no-results">{t('profile.addModalNoResults')}</div>
               ) : (
                 getAvailableOperators().map((operator) => {
                   const rarityClass = getRarityClass(operator.rarity);

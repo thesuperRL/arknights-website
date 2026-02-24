@@ -90,7 +90,7 @@ const LocalLoginPage: React.FC = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder={t('auth.passwordPlaceholder')}
               className="form-input"
               required
               autoComplete="current-password"

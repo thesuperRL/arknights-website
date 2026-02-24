@@ -31,6 +31,30 @@ const DATA_DIR = path.join(__dirname, '../data');
 const NICHE_LISTS_DIR = path.join(DATA_DIR, 'niche-lists');
 const OPERATORS_FILES = [1, 2, 3, 4, 5, 6].map(r => path.join(DATA_DIR, `operators-${r}star.json`));
 
+const MAX_DB_RETRIES = 3;
+const DB_RETRY_DELAY_MS = 3000;
+
+/** Retry an async DB operation on connection/timeout errors (e.g. Heroku Postgres cold start). */
+async function withDbRetry<T>(fn: () => Promise<T>): Promise<T> {
+  let lastErr: unknown;
+  for (let attempt = 1; attempt <= MAX_DB_RETRIES; attempt++) {
+    try {
+      return await fn();
+    } catch (e) {
+      lastErr = e;
+      const msg = (e && typeof e === 'object' && 'message' in e ? (e as Error).message : String(e)) + (e && typeof e === 'object' && 'cause' in e ? String((e as { cause?: unknown }).cause) : '');
+      const isConnectionError = /connection|timeout|terminated|ECONNRESET|ETIMEDOUT|Connection terminated/i.test(msg);
+      if (attempt < MAX_DB_RETRIES && isConnectionError) {
+        console.warn(`\n⚠️  Database connection issue (attempt ${attempt}/${MAX_DB_RETRIES}), retrying in ${DB_RETRY_DELAY_MS / 1000}s...`);
+        await new Promise((r) => setTimeout(r, DB_RETRY_DELAY_MS));
+      } else {
+        throw e;
+      }
+    }
+  }
+  throw lastErr;
+}
+
 function loadOperatorData(): { names: Record<string, string>; global: Record<string, boolean> } {
   const names: Record<string, string> = {};
   const global: Record<string, boolean> = {};
@@ -210,9 +234,9 @@ async function main(): Promise<void> {
 
       console.log(`  • ${change.operatorName}: ${tierChange}${levelInfo} in ${change.nicheFilename}`);
 
-      const exists = await changelogEntryExists(change);
+      const exists = await withDbRetry(() => changelogEntryExists(change));
       if (!exists) {
-        await insertChangelogEntry(change);
+        await withDbRetry(() => insertChangelogEntry(change));
         written++;
       }
     }

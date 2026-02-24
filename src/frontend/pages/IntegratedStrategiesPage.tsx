@@ -24,6 +24,8 @@ export interface ISNicheWeightPools {
   synergyCoreBonus?: number;
   /** Multiplier applied to each synergy's corePointBonus and optionalPointBonus from its JSON. */
   synergyScaleFactor?: number;
+  /** On first recruitment only: multiplier for operator's E2/module potential (0 = off, e.g. 0.1 = 10% of full-potential score added). */
+  firstRecruitPotentialMultiplier?: number;
 }
 
 // Cache for niche lists to avoid repeated API calls
@@ -321,7 +323,8 @@ const DEFAULT_WEIGHT_POOLS: ISNicheWeightPools = {
   optional: { rawScore: 2, niches: [] },
   good: { rawScore: 0.5, niches: [] },
   synergyCoreBonus: 15,
-  synergyScaleFactor: 1
+  synergyScaleFactor: 1,
+  firstRecruitPotentialMultiplier: 0
 };
 
 function getPoolRawScore(niche: string, weightPools: ISNicheWeightPools): number {
@@ -349,7 +352,8 @@ function calculateISSynergyScore(
   candidateOperatorId: string,
   synergies: SynergyForIS[],
   synergyCoreBonus: number,
-  synergyScaleFactor: number
+  synergyScaleFactor: number,
+  i18n?: { t: (key: string) => string; interpolate: (tpl: string, vars: Record<string, string | number>) => string; getNicheName: (filename: string, fallback: string) => string }
 ): { score: number; lines: string[] } {
   let score = 0;
   const lines: string[] = [];
@@ -427,14 +431,27 @@ function calculateISSynergyScore(
     const synergyTotal = coreBonus + scaledPoints;
     if (synergyTotal > 0) {
       score += synergyTotal;
-      const coreLabel = hasCore ? (candidateIsCore ? 'core ✓' : 'optional') : 'optional';
-      lines.push(`Synergy "${synergy.name}": ${coreLabel} (+${Math.round(synergyTotal)})`);
+      const labelKey = hasCore ? (candidateIsCore ? 'isTeamBuilder.synergyCoreLabel' : 'isTeamBuilder.synergyOptionalLabel') : 'isTeamBuilder.synergyOptionalLabel';
+      const label = i18n ? i18n.t(labelKey) : (candidateIsCore && hasCore ? 'core ✓' : 'optional');
+      const name = i18n ? i18n.getNicheName(synergy.filename, synergy.name) : synergy.name;
+      if (i18n) {
+        lines.push(i18n.interpolate(i18n.t('isTeamBuilder.synergyLineFormat'), { name, label, score: Math.round(synergyTotal) }));
+      } else {
+        lines.push(`Synergy "${synergy.name}": ${label} (+${Math.round(synergyTotal)})`);
+      }
     }
   }
   return { score, lines };
 }
 
 // Local recommendation algorithm - ONLY considers raised/deployable operators
+type I18nRecommendation = {
+  t: (key: string) => string;
+  interpolate: (template: string, vars: Record<string, string | number>) => string;
+  translateClass: (className: string) => string;
+  getNicheName: (filename: string, fallback: string) => string;
+};
+
 async function getIntegratedStrategiesRecommendation(
   allOperators: Record<string, Operator>,
   raisedOperatorIds: string[], // ONLY raised operators that user can deploy
@@ -448,8 +465,15 @@ async function getIntegratedStrategiesRecommendation(
   teamSize?: number,
   promotionCost?: number,
   weightPools: ISNicheWeightPools = DEFAULT_WEIGHT_POOLS,
-  allSynergies: SynergyForIS[] = []
+  allSynergies: SynergyForIS[] = [],
+  i18n?: I18nRecommendation
 ): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number; isPromotion?: boolean }> {
+  const t = i18n?.t ?? ((k: string) => k);
+  const interpolate = i18n?.interpolate ?? ((tpl: string, vars: Record<string, string | number>) =>
+    tpl.replace(/\{(\w+)\}/g, (_, key) => String(vars[key] ?? '')));
+  const translateClass = i18n?.translateClass ?? ((c: string) => c);
+  const getNicheName = i18n?.getNicheName ?? ((_filename: string, fallback: string) => fallback);
+  const synergyI18n = i18n ? { t, interpolate, getNicheName } : undefined;
   // Helper functions for hope costs
   const getHopeCost = (rarity: number): number => {
     return hopeCosts?.[rarity] ?? 0;
@@ -630,16 +654,11 @@ async function getIntegratedStrategiesRecommendation(
     const isPromotion = selectionCount === 1;
 
     // Tier-based scoring - VERY significant, should outweigh hope penalties
-    // Calculate tier scores across all niches the operator has
-    // Skip special lists that don't have tier-based scoring
-    const excludedFromTierScoring = new Set(['low-rarity', 'unconventional-niches']);
+    // Include ALL niches the operator has (no exclusions); each uses pool rawScore and coverage factor
+    const firstRecruitPotentialMultiplier = weightPools.firstRecruitPotentialMultiplier ?? 0;
+    let totalPotentialBonus = 0; // First recruitment only: E2/module potential bonus
 
-    // Bonus for filling important niches that are missing or under-covered
     for (const niche of operator.niches) {
-      if (excludedFromTierScoring.has(niche)) {
-        continue;
-      }
-
       const currentCount = nicheCounts[niche] || 0;
 
       // Get tier based on selection type
@@ -649,17 +668,12 @@ async function getIntegratedStrategiesRecommendation(
       if (isPromotion) {
         // Promotion: only E2/module tiers (minus promotion cost applied later)
         tier = await getOperatorBestTierAtPromotionLevel(operatorId, niche);
-        if (tier === 0) {
-          continue;
-        }
+        if (tier === 0) continue; // No E2/module for this niche
         tierName = getTierNameFromValue(tier);
       } else {
-        // First recruitment: only level 0 (no E2 or modules)
+        // First recruitment: level 0 tier (may be 0); we still factor E2/module potential via firstRecruitPotentialMultiplier
         tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
-        if (tier === 0) {
-          continue;
-        }
-        tierName = getTierNameFromValue(tier);
+        tierName = tier > 0 ? getTierNameFromValue(tier) : '';
       }
 
       const tierPoints = tier;
@@ -667,40 +681,60 @@ async function getIntegratedStrategiesRecommendation(
       if (niche === 'trash-operators') {
         const trashPenalty = 1000;
         score -= trashPenalty;
-        reasoning.push(`Trash operator (-${trashPenalty})`);
+        reasoning.push(interpolate(t('isTeamBuilder.trashOperator'), { penalty: String(trashPenalty) }));
       } else {
         const rawScore = getPoolRawScore(niche, weightPools);
         const requiredRange = defaultPreferences.requiredNiches[niche];
         const preferredRange = defaultPreferences.preferredNiches[niche];
         let coverageFactor = 1;
-        let label = 'Provides niche variety';
+        let labelKey = 'isTeamBuilder.providesNicheVariety';
         if (requiredRange) {
           if (currentCount < requiredRange.min) {
             coverageFactor = 1;
-            label = isPromotion ? 'Adds new capability' : 'Fills missing required niche';
+            labelKey = isPromotion ? 'isTeamBuilder.addsNewCapability' : 'isTeamBuilder.fillsMissingRequiredNiche';
           } else if (currentCount < requiredRange.max) {
             coverageFactor = 0.5;
-            label = isPromotion ? 'Enhances capability' : 'Strengthens required niche';
+            labelKey = isPromotion ? 'isTeamBuilder.enhancesCapability' : 'isTeamBuilder.strengthensRequiredNiche';
           } else {
             coverageFactor = 0.25;
-            label = isPromotion ? 'Adds over-specialization' : 'Over-specializes in';
+            labelKey = isPromotion ? 'isTeamBuilder.addsOverSpecialization' : 'isTeamBuilder.overSpecializesIn';
           }
         } else if (preferredRange) {
           if (currentCount < preferredRange.min) {
             coverageFactor = 1;
-            label = isPromotion ? 'Adds new capability' : 'Fills missing preferred niche';
+            labelKey = isPromotion ? 'isTeamBuilder.addsNewCapability' : 'isTeamBuilder.fillsMissingPreferredNiche';
           } else if (currentCount < preferredRange.max) {
             coverageFactor = 0.5;
-            label = isPromotion ? 'Enhances capability' : 'Strengthens preferred niche';
+            labelKey = isPromotion ? 'isTeamBuilder.enhancesCapability' : 'isTeamBuilder.strengthensPreferredNiche';
           } else {
             coverageFactor = 0.25;
-            label = isPromotion ? 'Adds over-specialization' : 'Over-specializes in';
+            labelKey = isPromotion ? 'isTeamBuilder.addsOverSpecialization' : 'isTeamBuilder.overSpecializesIn';
           }
         }
         const bonus = tierPoints * rawScore * coverageFactor;
         score += bonus;
-        reasoning.push(`${label}: ${niche} at ${tierName} tier (+${Math.round(bonus)})`);
+        if (tier > 0) {
+          reasoning.push(interpolate(t('isTeamBuilder.reasoningLineFormat'), {
+            label: t(labelKey),
+            niche,
+            tier: tierName,
+            bonus: Math.round(bonus)
+          }));
+        }
+
+        // First recruitment only: add a small multiplier of E2/module potential (for all niches, including tier 0 at level 0)
+        if (!isPromotion && firstRecruitPotentialMultiplier > 0) {
+          const fullPotentialTier = await getOperatorBestTierAtPromotionLevel(operatorId, niche);
+          if (fullPotentialTier > 0) {
+            totalPotentialBonus += fullPotentialTier * rawScore * coverageFactor * firstRecruitPotentialMultiplier;
+          }
+        }
       }
+    }
+
+    if (!isPromotion && totalPotentialBonus > 0) {
+      score += totalPotentialBonus;
+      reasoning.push(interpolate(t('isTeamBuilder.futurePotentialBonus'), { bonus: Math.round(totalPotentialBonus) }));
     }
 
     // Apply hope cost penalty
@@ -709,7 +743,7 @@ async function getIntegratedStrategiesRecommendation(
     let hopeCost: number;
     if (isPromotion) {
       hopeCost = promotionCost ?? 3; // Promotion cost
-      reasoning.push(`This is a promotion (second selection)`);
+      reasoning.push(t('isTeamBuilder.thisIsPromotion'));
     } else {
       hopeCost = getActualHopeCost(operator.rarity || 1);
     }
@@ -752,9 +786,9 @@ async function getIntegratedStrategiesRecommendation(
     if (!isTemporaryRecruitment) {
       const hopePenalty = hopeCost * 6; // Large multiplier to make hope cost very significant
       score -= hopePenalty;
-      reasoning.push(`Hope cost penalty: ${hopeCost} hope (-${hopePenalty})`);
+      reasoning.push(interpolate(t('isTeamBuilder.hopeCostPenalty'), { hope: String(hopeCost), penalty: String(hopePenalty) }));
     } else {
-      reasoning.push(`Temporary recruitment: No hope penalty applied!`);
+      reasoning.push(t('isTeamBuilder.temporaryRecruitmentNoPenalty'));
     }
 
     // Synergy scoring (IS-only synergies): core bonus + scale factor × points from each synergy's JSON
@@ -767,7 +801,8 @@ async function getIntegratedStrategiesRecommendation(
         operatorId,
         allSynergies,
         synergyCoreBonus,
-        synergyScaleFactor
+        synergyScaleFactor,
+        synergyI18n
       );
       if (synScore > 0) {
         score += synScore;
@@ -827,34 +862,36 @@ async function getIntegratedStrategiesRecommendation(
   const operator = allOperators[bestOperator.operatorId];
   const isPromotion = bestOperator.isPromotion || false;
 
-  // Create detailed reasoning with better formatting
-  const classText = requiredClasses.length === 1
-    ? requiredClasses[0]
-    : `${requiredClasses.slice(0, -1).join(', ')} or ${requiredClasses[requiredClasses.length - 1]}`;
+  // Create detailed reasoning with better formatting (translated)
+  const classTextTranslated = requiredClasses.length === 1
+    ? translateClass(requiredClasses[0])
+    : `${requiredClasses.slice(0, -1).map(c => translateClass(c)).join(', ')} or ${translateClass(requiredClasses[requiredClasses.length - 1]!)}`;
 
-  const actionType = isPromotion ? 'Promotion' : 'Recruitment';
+  const recommendedHeader = isPromotion
+    ? interpolate(t('isTeamBuilder.recommendedPromotion'), { class: classTextTranslated })
+    : interpolate(t('isTeamBuilder.recommendedRecruitment'), { class: classTextTranslated });
   const actualPromotionCost = promotionCost ?? 3;
   const reasoningParts = [
-    `**Recommended ${classText} ${actionType}**`,
+    `**${recommendedHeader}**`,
     '',
     ...(isPromotion ? [
-      `**This is a promotion (second selection)**`,
-      `**Cost: ${actualPromotionCost} hope**`,
-      `**Adds new tiers from E2/module levels only**`,
+      `**${t('isTeamBuilder.thisIsPromotion')}**`,
+      `**${interpolate(t('isTeamBuilder.costHope'), { cost: actualPromotionCost })}**`,
+      `**${t('isTeamBuilder.addsNewTiers')}**`,
       ''
     ] : []),
     ...(temporaryRecruitment ? [
-      `**Temporary recruitment: ${allOperators[temporaryRecruitment]?.name || 'Unknown Operator'} (considered owned & raised)**`,
+      `**${interpolate(t('isTeamBuilder.temporaryRecruitmentConsidered'), { name: allOperators[temporaryRecruitment]?.name || 'Unknown Operator' })}**`,
       ''
     ] : []),
-    '**Scoring Breakdown:**',
+    `**${t('isTeamBuilder.scoringBreakdown')}**`,
     ...bestOperator.reasoning.map(line => `- ${line}`),
     '',
-    `**Final Score: ${bestOperator.score}**`,
+    `**${interpolate(t('isTeamBuilder.finalScoreLabel'), { score: bestOperator.score })}**`,
     '',
-    isPromotion 
-      ? '*This promotion adds new capabilities (E2/module tiers) that weren\'t available at level 0.*'
-      : '*This operator was selected because it best complements your current team composition and fills important gaps.*'
+    isPromotion
+      ? `*${t('isTeamBuilder.conclusionPromotion')}*`
+      : `*${t('isTeamBuilder.conclusionRecruitment')}*`
   ];
 
   return {
@@ -953,7 +990,7 @@ const CLASS_OPTIONS = [
 const IntegratedStrategiesPage: React.FC = () => {
   const { user } = useAuth();
   const { language } = useLanguage();
-  const { t, translateClass, interpolate } = useTranslation();
+  const { t, translateClass, interpolate, getNicheName } = useTranslation();
 
   const [allOperators, setAllOperators] = useState<Record<string, Operator>>({});
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
@@ -1050,13 +1087,16 @@ const IntegratedStrategiesPage: React.FC = () => {
       }
       if (weightResponse.ok) {
         const weightData = await weightResponse.json();
-        setWeightPoolsConfig({
+        const pools = {
           important: weightData.important ?? DEFAULT_WEIGHT_POOLS.important,
           optional: weightData.optional ?? DEFAULT_WEIGHT_POOLS.optional,
           good: weightData.good ?? DEFAULT_WEIGHT_POOLS.good,
           synergyCoreBonus: weightData.synergyCoreBonus ?? DEFAULT_WEIGHT_POOLS.synergyCoreBonus ?? 15,
-          synergyScaleFactor: weightData.synergyScaleFactor ?? DEFAULT_WEIGHT_POOLS.synergyScaleFactor ?? 1
-        });
+          synergyScaleFactor: weightData.synergyScaleFactor ?? DEFAULT_WEIGHT_POOLS.synergyScaleFactor ?? 1,
+          firstRecruitPotentialMultiplier: weightData.firstRecruitPotentialMultiplier ?? DEFAULT_WEIGHT_POOLS.firstRecruitPotentialMultiplier ?? 0
+        };
+        setWeightPoolsConfig(pools);
+        console.log('[IS Team Builder] Weight pools loaded:', pools);
       }
     } catch (err) {
       console.error('Error loading preferences:', err);
@@ -1753,7 +1793,8 @@ const IntegratedStrategiesPage: React.FC = () => {
           teamSize,
           promotionCost,
           weightPoolsConfig,
-          allSynergies
+          allSynergies,
+          { t, interpolate, translateClass, getNicheName }
         );
 
         if (result.recommendedOperator) {

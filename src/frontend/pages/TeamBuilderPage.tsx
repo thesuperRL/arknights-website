@@ -1275,7 +1275,7 @@ const TeamBuilderPage: React.FC = () => {
                           {activeSynergies.map((synergy) => (
                             <Link key={synergy.filename} to={`/synergy/${encodeURIComponent(synergy.filename)}`} className="synergy-item-link">
                               <div className="synergy-item">
-                                <span className="synergy-name">{synergy.name}</span>
+                                <span className="synergy-name">{getNicheName(synergy.filename, synergy.name)}</span>
                                 {synergy.satisfiedOptionalGroups > 0 && (
                                   <span className="synergy-optional-badge">+{synergy.satisfiedOptionalGroups} {t('teamBuilder.optional')}</span>
                                 )}

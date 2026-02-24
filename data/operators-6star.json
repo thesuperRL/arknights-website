@@ -2300,6 +2300,7 @@
     "global": true,
     "profileImage": "/images/operators/lemuen.png",
     "niches": [
+      "aoe-physical-dps",
       "boss-killing",
       "global-range",
       "physical-dps"
@@ -2318,6 +2319,12 @@
       }
     },
     "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        }
+      ],
       "boss-killing": [
         {
           "tier": "SS",
@@ -2330,7 +2337,7 @@
       ],
       "physical-dps": [
         {
-          "tier": "S",
+          "tier": "SS",
           "level": ""
         }
       ],
@@ -4913,7 +4920,8 @@
     "profileImage": "/images/operators/typhon.png",
     "niches": [
       "boss-killing",
-      "physical-dps"
+      "physical-dps",
+      "stalling"
     ],
     "cnName": "提丰",
     "twName": "提豐",
@@ -4934,6 +4942,12 @@
       "physical-dps": [
         {
           "tier": "S",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "A",
           "level": ""
         }
       ]

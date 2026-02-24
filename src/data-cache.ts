@@ -31,6 +31,8 @@ export interface IsNicheWeightPoolsConfig {
   good?: { rawScore: number; niches: string[] };
   synergyCoreBonus?: number;
   synergyScaleFactor?: number;
+  /** On first recruitment only: multiplier for E2/module potential (0 = off). */
+  firstRecruitPotentialMultiplier?: number;
 }
 
 let initPromise: Promise<void> | null = null;
