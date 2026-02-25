@@ -21,6 +21,8 @@ import {
   saveNormalTeambuild,
   saveISTeamState,
   deleteISTeamState,
+  saveISConfigOverride,
+  clearISConfigOverride,
   initializeTeamDataTable
 } from './team-data-pg';
 import {
@@ -44,12 +46,16 @@ import {
   getOperatorGlobalMap,
   getOperatorNamesMap,
   getIsNicheWeightPools,
+  getIsHopeCosts,
+  reloadIsHopeCosts,
+  reloadIsNicheWeightPools,
   getOperatorNameForLanguage,
   getSpecialListFree,
   getSpecialListGlobalRange,
   getSpecialListTrash,
   getSpecialListUnconventional,
   getSpecialListLowRarity,
+  DATA_DIR,
   type OperatorNameLang,
 } from './data-cache';
 import * as fs from 'fs';
@@ -73,13 +79,16 @@ function sanitizeErrorMessage(error: any): string {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Cookie options: when CORS_ORIGIN is set (e.g. GitHub Pages), use SameSite=None; Secure for cross-origin
+// Cookie options: when CORS_ORIGIN is set (e.g. GitHub Pages), use SameSite=None; Secure for cross-origin.
+// In dev with Vite on 5173 and API on 3000, we also need SameSite=None; Secure so the cookie is sent on cross-origin requests.
 const sessionCookieOptions = () => {
   const crossOrigin = !!process.env.CORS_ORIGIN;
+  const devCrossOrigin = process.env.NODE_ENV !== 'production' && (process.env.CORS_ORIGIN || '').trim() === '';
+  const needCrossSiteCookie = crossOrigin || devCrossOrigin;
   return {
     httpOnly: true,
-    secure: crossOrigin || process.env.NODE_ENV === 'production',
-    sameSite: (crossOrigin ? 'none' : 'lax') as 'lax' | 'none',
+    secure: needCrossSiteCookie || process.env.NODE_ENV === 'production',
+    sameSite: (needCrossSiteCookie ? 'none' : 'lax') as 'lax' | 'none',
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   };
 };
@@ -90,15 +99,18 @@ app.use(cookieParser());
 
 // CORS for GitHub Pages / cross-origin: allow specific origin(s) and credentials
 // CORS_ORIGIN can be a single URL or comma-separated list (e.g. https://thesuperrl.github.io,https://username.github.io)
-// Request origin is echoed back when it matches an allowed origin (case-insensitive) so CORS works.
+// In development, allow Vite dev server so frontend can call backend directly (avoids proxy 404s).
 const corsOriginEnv = process.env.CORS_ORIGIN || '';
-const allowedOrigins = corsOriginEnv
+let allowedOriginsList = corsOriginEnv
   .split(',')
   .map((o) => o.trim())
   .filter(Boolean);
-const allowedOriginsLower = new Set(allowedOrigins.map((o) => o.toLowerCase()));
+if (allowedOriginsList.length === 0 && process.env.NODE_ENV !== 'production') {
+  allowedOriginsList = ['http://localhost:5173', 'http://127.0.0.1:5173'];
+}
+const allowedOriginsLower = new Set(allowedOriginsList.map((o) => o.toLowerCase()));
 
-if (allowedOrigins.length > 0) {
+if (allowedOriginsList.length > 0) {
   app.use((req, res, next) => {
     const requestOrigin = req.get('Origin');
     const originAllowed =
@@ -118,11 +130,7 @@ if (allowedOrigins.length > 0) {
   });
 }
 
-// Serve static files from the public directory (React build output)
-app.use(express.static(path.join(__dirname, '../public')));
-// Serve images and other assets
-app.use('/images', express.static(path.join(__dirname, '../public/images')));
-
+// API routes (must be before static so /api/* is not served as files)
 // API route to get all niche lists
 app.get('/api/niche-lists', (_req, res) => {
   try {
@@ -152,6 +160,77 @@ app.get('/api/config/is-niche-weight-pools', (_req, res) => {
   } catch (error) {
     console.error('Error loading IS niche weight pools:', error);
     return res.status(500).json({ error: 'Failed to load IS niche weight pools' });
+  }
+});
+
+// IS hope costs: per IS, squad, rarity, class (data/is-hope-costs.json)
+app.get('/api/config/is-hope-costs', (_req, res) => {
+  try {
+    const config = getIsHopeCosts();
+    return res.json(config ?? {});
+  } catch (error) {
+    console.error('Error loading IS hope costs:', error);
+    return res.status(500).json({ error: 'Failed to load IS hope costs' });
+  }
+});
+
+const ALLOWED_ADMIN_EMAIL = (process.env.ALLOWED_ADMIN_EMAIL || 'ryanli1366@gmail.com').toLowerCase();
+
+function isAdminSession(sessionId: string | undefined): boolean {
+  if (!sessionId) return false;
+  const session = getSession(sessionId);
+  return !!session && session.email?.toLowerCase() === ALLOWED_ADMIN_EMAIL;
+}
+
+// POST /api/config/is-hope-costs — Dev only: save to data/is-hope-costs.json and reload cache
+app.post('/api/config/is-hope-costs', async (req, res) => {
+  try {
+    const sessionId = req.cookies?.sessionId;
+    if (!isAdminSession(sessionId)) {
+      return res.status(403).json({
+        error: 'Forbidden: admin only. Log in with the admin account (username must match). If you are the admin, try logging out and back in so your session cookie is sent to the API.'
+      });
+    }
+    const config = req.body;
+    if (!config || typeof config !== 'object') {
+      return res.status(400).json({ error: 'Config object required' });
+    }
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    const dataPath = path.join(DATA_DIR, 'is-hope-costs.json');
+    fs.writeFileSync(dataPath, JSON.stringify(config, null, 2), 'utf-8');
+    reloadIsHopeCosts();
+    return res.json({ success: true });
+  } catch (error: any) {
+    console.error('Error saving IS hope costs:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to save IS hope costs' });
+  }
+});
+
+// POST /api/config/is-niche-weight-pools — Dev only: save to data/is-niche-weight-pools.json and reload cache
+app.post('/api/config/is-niche-weight-pools', async (req, res) => {
+  try {
+    const sessionId = req.cookies?.sessionId;
+    if (!isAdminSession(sessionId)) {
+      return res.status(403).json({
+        error: 'Forbidden: admin only. Log in with the admin account (username must match). If you are the admin, try logging out and back in so your session cookie is sent to the API.'
+      });
+    }
+    const config = req.body;
+    if (!config || typeof config !== 'object') {
+      return res.status(400).json({ error: 'Config object required' });
+    }
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    const dataPath = path.join(DATA_DIR, 'is-niche-weight-pools.json');
+    fs.writeFileSync(dataPath, JSON.stringify(config, null, 2), 'utf-8');
+    reloadIsNicheWeightPools();
+    return res.json({ success: true });
+  } catch (error: any) {
+    console.error('Error saving IS niche weight pools:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to save IS niche weight pools' });
   }
 });
 
@@ -1192,15 +1271,107 @@ app.delete('/api/integrated-strategies/team', async (req, res) => {
   }
 });
 
+/** Deep-merge user IS config override onto server defaults. */
+function mergeISConfig(defaults: Record<string, unknown> | null, override: Record<string, unknown> | null): Record<string, unknown> {
+  if (!defaults || typeof defaults !== 'object') return override && typeof override === 'object' ? JSON.parse(JSON.stringify(override)) : {};
+  const result = JSON.parse(JSON.stringify(defaults)) as Record<string, unknown>;
+  if (!override || typeof override !== 'object') return result;
+  for (const isId of Object.keys(override)) {
+    const overrideSquads = override[isId];
+    if (!overrideSquads || typeof overrideSquads !== 'object') continue;
+    if (!result[isId] || typeof result[isId] !== 'object') result[isId] = {};
+    const resultSquads = result[isId] as Record<string, unknown>;
+    for (const squadId of Object.keys(overrideSquads as Record<string, unknown>)) {
+      const ov = (overrideSquads as Record<string, unknown>)[squadId];
+      if (ov === undefined) continue;
+      resultSquads[squadId] = typeof ov === 'object' && ov !== null ? JSON.parse(JSON.stringify(ov)) : ov;
+    }
+  }
+  return result;
+}
+
+// GET /api/integrated-strategies/config - Merged IS config (server defaults + user override). Auth optional; if logged in and has override, merge. On any error (e.g. no DB), return defaults.
+app.get('/api/integrated-strategies/config', async (req, res) => {
+  try {
+    const defaults = getIsHopeCosts() as Record<string, unknown> | null;
+    const sessionId = req.cookies.sessionId;
+    const session = sessionId ? getSession(sessionId) : null;
+    if (!session || !useTeamDataDb()) {
+      return res.json(defaults ?? {});
+    }
+    let override: Record<string, unknown> | null = null;
+    try {
+      const data = await getAccountTeamData(session.email);
+      override = data?.isConfigOverride ?? null;
+    } catch (e) {
+      console.warn('IS config: could not load user override, using defaults:', (e as Error).message);
+    }
+    const merged = mergeISConfig(defaults ?? {}, override);
+    return res.json(merged);
+  } catch (error: any) {
+    console.error('Error getting IS config:', error);
+    const defaults = getIsHopeCosts() as Record<string, unknown> | null;
+    return res.json(defaults ?? {});
+  }
+});
+
+// POST /api/integrated-strategies/config - Save user's IS config override (hope costs, promotion, autoPromote).
+app.post('/api/integrated-strategies/config', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    const session = getSession(sessionId);
+    if (!session) {
+      return res.status(401).json({ error: 'Invalid session' });
+    }
+    if (!useTeamDataDb()) {
+      return res.status(503).json({ error: 'User config is not available (no database)' });
+    }
+    const config = req.body;
+    if (!config || typeof config !== 'object') {
+      return res.status(400).json({ error: 'Config object required' });
+    }
+    await saveISConfigOverride(session.email, config as Record<string, unknown>);
+    return res.json({ success: true });
+  } catch (error: any) {
+    console.error('Error saving IS config:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to save IS config' });
+  }
+});
+
+// POST /api/integrated-strategies/config/reset - Reset user's IS config to server defaults.
+app.post('/api/integrated-strategies/config/reset', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    const session = getSession(sessionId);
+    if (!session) {
+      return res.status(401).json({ error: 'Invalid session' });
+    }
+    if (!useTeamDataDb()) {
+      return res.status(503).json({ error: 'Reset is not available (no database)' });
+    }
+    await clearISConfigOverride(session.email);
+    return res.json({ success: true });
+  } catch (error: any) {
+    console.error('Error resetting IS config:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to reset IS config' });
+  }
+});
+
+// Serve static files (after API routes so /api/* is never served as static)
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
 // Serve React app for all non-API routes (SPA routing) - must be last
-// Use a catch-all middleware instead of a route pattern for Express 5
 app.use((req, res, next) => {
-  // Skip API routes and static assets (already handled above)
   if (req.path.startsWith('/api') || req.path.startsWith('/images') || req.path.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/)) {
     return next();
   }
-  // Serve React app for all other routes
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 

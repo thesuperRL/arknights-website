@@ -1536,6 +1536,7 @@
     "global": true,
     "profileImage": "/images/operators/goldenglow.png",
     "niches": [
+      "aoe-arts-dps",
       "arts-dps",
       "global-range"
     ],
@@ -1553,6 +1554,12 @@
       }
     },
     "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
       "arts-dps": [
         {
           "tier": "S",

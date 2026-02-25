@@ -1,0 +1,1962 @@
+{
+  "IS2": {
+    "default": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TAS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": ["Guard", "Vanguard"]
+    },
+    "TDS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": ["Caster", "Specialist"]
+    },
+    "TFS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": ["Defender", "Supporter"]
+    },
+    "TRS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": ["Medic", "Sniper"]
+    }
+  },
+  "IS3": {
+    "default": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "POS": {
+      "4": {
+        "Vanguard": 1,
+        "Guard": 1,
+        "Defender": 1,
+        "Sniper": 1,
+        "Caster": 1,
+        "Medic": 1,
+        "Supporter": 1,
+        "Specialist": 1
+      },
+      "5": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "6": {
+        "Vanguard": 5,
+        "Guard": 5,
+        "Defender": 5,
+        "Sniper": 5,
+        "Caster": 5,
+        "Medic": 5,
+        "Supporter": 5,
+        "Specialist": 5
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 2,
+          "Sniper": 2,
+          "Caster": 2,
+          "Medic": 2,
+          "Supporter": 2,
+          "Specialist": 2
+        },
+        "5": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 2,
+          "Sniper": 2,
+          "Caster": 2,
+          "Medic": 2,
+          "Supporter": 2,
+          "Specialist": 2
+        },
+        "6": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 2,
+          "Sniper": 2,
+          "Caster": 2,
+          "Medic": 2,
+          "Supporter": 2,
+          "Specialist": 2
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TAS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 1,
+        "Guard": 1,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 4,
+        "Guard": 4,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TDS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 0,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 1,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 1
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 4,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 4
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TFS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 0,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 0,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 1,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 1,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 4,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 4,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TRS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 0,
+        "Supporter": 2,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 1,
+        "Caster": 3,
+        "Medic": 1,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 4,
+        "Caster": 6,
+        "Medic": 4,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 2,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 2,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 2,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    }
+  },
+  "IS4": {
+    "default": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "STS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 0,
+          "Guard": 0,
+          "Defender": 0,
+          "Sniper": 0,
+          "Caster": 0,
+          "Medic": 0,
+          "Supporter": 0,
+          "Specialist": 0
+        },
+        "5": {
+          "Vanguard": 0,
+          "Guard": 0,
+          "Defender": 0,
+          "Sniper": 0,
+          "Caster": 0,
+          "Medic": 0,
+          "Supporter": 0,
+          "Specialist": 0
+        },
+        "6": {
+          "Vanguard": 0,
+          "Guard": 0,
+          "Defender": 0,
+          "Sniper": 0,
+          "Caster": 0,
+          "Medic": 0,
+          "Supporter": 0,
+          "Specialist": 0
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TAS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 1,
+        "Guard": 1,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 4,
+        "Guard": 4,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TDS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 0,
+        "Medic": 2,
+        "Supporter": 2,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 1,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 1
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 4,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 4
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TFS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 0,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 2,
+        "Supporter": 0,
+        "Specialist": 2
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 1,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 1,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 4,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 4,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TRS": {
+      "4": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 2,
+        "Sniper": 2,
+        "Caster": 2,
+        "Medic": 0,
+        "Supporter": 2,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 1,
+        "Caster": 3,
+        "Medic": 1,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 4,
+        "Caster": 6,
+        "Medic": 4,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 2,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 2,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 2,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    }
+  },
+  "IS5": {
+    "default": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "MS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TAS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 1,
+        "Guard": 1,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 4,
+        "Guard": 4,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TDS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 1,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 1
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 4,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 4
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TFS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 1,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 1,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 4,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 4,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TRS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 1,
+        "Caster": 3,
+        "Medic": 1,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 4,
+        "Caster": 6,
+        "Medic": 4,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 2,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 2,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 2,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    }
+  },
+  "IS6": {
+    "default": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "GBO": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 1,
+        "Guard": 1,
+        "Defender": 1,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 1
+      },
+      "6": {
+        "Vanguard": 4,
+        "Guard": 4,
+        "Defender": 4,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 4
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 0,
+          "Guard": 0,
+          "Defender": 0,
+          "Sniper": 0,
+          "Caster": 0,
+          "Medic": 0,
+          "Supporter": 0,
+          "Specialist": 0
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "HGBO": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 1,
+        "Caster": 1,
+        "Medic": 1,
+        "Supporter": 1,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 4,
+        "Caster": 4,
+        "Medic": 4,
+        "Supporter": 4,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 0,
+          "Guard": 0,
+          "Defender": 0,
+          "Sniper": 0,
+          "Caster": 0,
+          "Medic": 0,
+          "Supporter": 0,
+          "Specialist": 0
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TAS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 2,
+        "Guard": 2,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 5,
+        "Guard": 5,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 0,
+          "Guard": 0,
+          "Defender": 0,
+          "Sniper": 0,
+          "Caster": 0,
+          "Medic": 0,
+          "Supporter": 0,
+          "Specialist": 0
+        },
+        "5": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 2,
+          "Guard": 2,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TDS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 3,
+        "Caster": 2,
+        "Medic": 3,
+        "Supporter": 3,
+        "Specialist": 2
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 6,
+        "Caster": 5,
+        "Medic": 6,
+        "Supporter": 6,
+        "Specialist": 5
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 0,
+          "Guard": 0,
+          "Defender": 0,
+          "Sniper": 0,
+          "Caster": 0,
+          "Medic": 0,
+          "Supporter": 0,
+          "Specialist": 0
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 3,
+          "Caster": 2,
+          "Medic": 3,
+          "Supporter": 3,
+          "Specialist": 2
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TFS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 2,
+        "Sniper": 3,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 2,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 5,
+        "Sniper": 6,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 5,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 0,
+          "Guard": 0,
+          "Defender": 0,
+          "Sniper": 0,
+          "Caster": 0,
+          "Medic": 0,
+          "Supporter": 0,
+          "Specialist": 0
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 2,
+          "Sniper": 3,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    },
+    "TRS": {
+      "4": {
+        "Vanguard": 0,
+        "Guard": 0,
+        "Defender": 0,
+        "Sniper": 0,
+        "Caster": 0,
+        "Medic": 0,
+        "Supporter": 0,
+        "Specialist": 0
+      },
+      "5": {
+        "Vanguard": 3,
+        "Guard": 3,
+        "Defender": 3,
+        "Sniper": 2,
+        "Caster": 3,
+        "Medic": 3,
+        "Supporter": 2,
+        "Specialist": 3
+      },
+      "6": {
+        "Vanguard": 6,
+        "Guard": 6,
+        "Defender": 6,
+        "Sniper": 5,
+        "Caster": 6,
+        "Medic": 6,
+        "Supporter": 5,
+        "Specialist": 6
+      },
+      "promotionCost": {
+        "4": {
+          "Vanguard": 0,
+          "Guard": 0,
+          "Defender": 0,
+          "Sniper": 0,
+          "Caster": 0,
+          "Medic": 0,
+          "Supporter": 0,
+          "Specialist": 0
+        },
+        "5": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        },
+        "6": {
+          "Vanguard": 3,
+          "Guard": 3,
+          "Defender": 3,
+          "Sniper": 2,
+          "Caster": 3,
+          "Medic": 3,
+          "Supporter": 2,
+          "Specialist": 3
+        }
+      },
+      "autoPromoteClasses": []
+    }
+  }
+}

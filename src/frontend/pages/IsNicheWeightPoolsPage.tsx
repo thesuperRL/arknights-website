@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import type { ISNicheWeightPools } from './IntegratedStrategiesPage';
 import './IsNicheWeightPoolsPage.css';
+
+const AUTOSAVE_DEBOUNCE_MS = 1500;
 
 const ALLOWED_ADMIN_EMAIL = 'ryanli1366@gmail.com';
 
@@ -35,6 +37,9 @@ const IsNicheWeightPoolsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const initialLoadDone = useRef(false);
+  const hasEdited = useRef(false);
 
   const isAllowed = user?.email?.toLowerCase() === ALLOWED_ADMIN_EMAIL.toLowerCase();
 
@@ -74,10 +79,40 @@ const IsNicheWeightPoolsPage: React.FC = () => {
         setError(e instanceof Error ? e.message : 'Failed to load');
       } finally {
         setLoading(false);
+        initialLoadDone.current = true;
       }
     };
     load();
   }, [isAllowed, authLoading]);
+
+  // Autosave to server JSON when config is edited (debounced)
+  useEffect(() => {
+    if (!isAllowed || !initialLoadDone.current || !hasEdited.current) return;
+    const timer = setTimeout(async () => {
+      setSaveStatus('saving');
+      setError(null);
+      try {
+        const res = await apiFetch('/api/config/is-niche-weight-pools', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(config)
+        });
+        if (res.ok) {
+          setSaveStatus('saved');
+          setSaved(true);
+          hasEdited.current = false;
+        } else {
+          const err = await res.json().catch(() => ({}));
+          setSaveStatus('error');
+          setError(err.error || 'Failed to save');
+        }
+      } catch (e) {
+        setSaveStatus('error');
+        setError(e instanceof Error ? e.message : 'Failed to save');
+      }
+    }, AUTOSAVE_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [config, isAllowed]);
 
   const setRawScore = (pool: PoolKey, rawScore: number) => {
     setConfig(prev => ({
@@ -85,6 +120,7 @@ const IsNicheWeightPoolsPage: React.FC = () => {
       [pool]: { ...prev[pool], rawScore }
     }));
     setSaved(false);
+    hasEdited.current = true;
   };
 
   const toggleNicheInPool = (pool: PoolKey, filename: string) => {
@@ -96,6 +132,7 @@ const IsNicheWeightPoolsPage: React.FC = () => {
       return { ...prev, [pool]: { ...prev[pool], niches: newNiches } };
     });
     setSaved(false);
+    hasEdited.current = true;
   };
 
   const moveNicheToPool = (filename: string, toPool: PoolKey) => {
@@ -116,6 +153,7 @@ const IsNicheWeightPoolsPage: React.FC = () => {
       };
     });
     setSaved(false);
+    hasEdited.current = true;
   };
 
   const getNichePool = (filename: string): PoolKey | null => {
@@ -128,14 +166,17 @@ const IsNicheWeightPoolsPage: React.FC = () => {
   const setSynergyCoreBonus = (v: number) => {
     setConfig(prev => ({ ...prev, synergyCoreBonus: v }));
     setSaved(false);
+    hasEdited.current = true;
   };
   const setSynergyScaleFactor = (v: number) => {
     setConfig(prev => ({ ...prev, synergyScaleFactor: v }));
     setSaved(false);
+    hasEdited.current = true;
   };
   const setFirstRecruitPotentialMultiplier = (v: number) => {
     setConfig(prev => ({ ...prev, firstRecruitPotentialMultiplier: v }));
     setSaved(false);
+    hasEdited.current = true;
   };
 
   const downloadJson = () => {
@@ -171,7 +212,7 @@ const IsNicheWeightPoolsPage: React.FC = () => {
       <h1>IS Niche Weight Pools (Dev)</h1>
       <p className="intro">
         Assign each niche to one of three pools. The <strong>raw score</strong> of each pool is used in Integrated
-        Strategies scoring (tier × rawScore × coverage factor). Save the JSON to <code>data/is-niche-weight-pools.json</code> and commit.
+        Strategies scoring (tier × rawScore × coverage factor). Changes are autosaved to <code>data/is-niche-weight-pools.json</code> on the server.
       </p>
       <div className="pools-grid">
         {POOL_KEYS.map(pool => (
@@ -281,7 +322,9 @@ const IsNicheWeightPoolsPage: React.FC = () => {
         <button type="button" className="download-btn" onClick={downloadJson}>
           Download is-niche-weight-pools.json
         </button>
-        {saved && <span className="saved-hint">Save the file to data/is-niche-weight-pools.json and commit.</span>}
+        {saveStatus === 'saving' && <span className="saved-hint">Saving…</span>}
+        {saveStatus === 'saved' && <span className="saved-hint">Saved to server.</span>}
+        {saveStatus === 'error' && <span className="saved-hint" style={{ color: 'var(--error, #ef4444)' }}>Save failed.</span>}
       </div>
       <p>
         <Link to="/integrated-strategies">← Integrated Strategies</Link>

@@ -6,7 +6,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-const DATA_DIR = path.join(__dirname, '..', 'data');
+export const DATA_DIR = path.join(__dirname, '..', 'data');
 
 export type OperatorNameLang = 'en' | 'cn' | 'tw' | 'jp' | 'kr';
 export interface OperatorNames {
@@ -35,6 +35,9 @@ export interface IsNicheWeightPoolsConfig {
   firstRecruitPotentialMultiplier?: number;
 }
 
+/** Hope & promotion cost config: IS id -> squad id (or "default") -> "4"|"5"|"6"|"promotionCost" -> class (or "default") -> number. */
+export type IsHopeCostsConfig = Record<string, Record<string, Record<string, Record<string, number>>>>;
+
 let initPromise: Promise<void> | null = null;
 let operatorsData: OperatorsData = {};
 /** Per-rarity (1..6) operator maps, same shape as operators-{n}star.json */
@@ -42,6 +45,7 @@ let operatorsByRarity: Record<number, Record<string, Record<string, unknown>>> =
 let operatorGlobalMap: Record<string, boolean> = {};
 let operatorNamesMap: OperatorNamesMap = {};
 let isNicheWeightPools: IsNicheWeightPoolsConfig | null = null;
+let isHopeCosts: IsHopeCostsConfig | null = null;
 let specialLists: {
   free: { operators?: Record<string, string> } | null;
   globalRange: { operators?: Record<string, string> } | null;
@@ -105,6 +109,21 @@ function loadIsNicheWeightPools(): void {
   isNicheWeightPools = JSON.parse(raw) as IsNicheWeightPoolsConfig;
 }
 
+function loadIsHopeCosts(): void {
+  const configPath = path.join(DATA_DIR, 'is-hope-costs.json');
+  if (!fs.existsSync(configPath)) {
+    isHopeCosts = null;
+    return;
+  }
+  try {
+    const raw = fs.readFileSync(configPath, 'utf-8');
+    isHopeCosts = JSON.parse(raw) as IsHopeCostsConfig;
+  } catch (e) {
+    console.warn('data-cache: failed to load is-hope-costs.json:', (e as Error).message);
+    isHopeCosts = null;
+  }
+}
+
 function loadSpecialList(name: keyof typeof specialLists, filename: string): void {
   const filePath = path.join(DATA_DIR, filename);
   if (!fs.existsSync(filePath)) return;
@@ -119,6 +138,7 @@ function loadSpecialList(name: keyof typeof specialLists, filename: string): voi
 function loadAll(): void {
   loadOperatorsAndMaps();
   loadIsNicheWeightPools();
+  loadIsHopeCosts();
   loadSpecialList('free', 'free.json');
   loadSpecialList('globalRange', 'global-range.json');
   loadSpecialList('trash', 'trash-operators.json');
@@ -186,6 +206,27 @@ export function getIsNicheWeightPools(): IsNicheWeightPoolsConfig {
     synergyCoreBonus: 15,
     synergyScaleFactor: 1,
   };
+}
+
+/**
+ * IS hope costs config (per IS, squad, rarity, class). null if file missing.
+ */
+export function getIsHopeCosts(): IsHopeCostsConfig | null {
+  return isHopeCosts;
+}
+
+/**
+ * Reload IS hope costs from disk (e.g. after dev saves new JSON).
+ */
+export function reloadIsHopeCosts(): void {
+  loadIsHopeCosts();
+}
+
+/**
+ * Reload IS niche weight pools from disk (e.g. after dev saves new JSON).
+ */
+export function reloadIsNicheWeightPools(): void {
+  loadIsNicheWeightPools();
 }
 
 /**

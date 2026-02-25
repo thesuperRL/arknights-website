@@ -1,0 +1,194 @@
+.is-hope-costs-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+.is-hope-costs-page h1 {
+  margin-bottom: 0.5rem;
+}
+
+.is-hope-costs-page .intro {
+  margin-bottom: 1rem;
+  color: var(--text-light);
+}
+
+.is-hope-costs-page .intro code {
+  background: var(--bg-secondary);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.is-hope-costs-page .muted {
+  font-size: 0.9rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.6));
+  margin: -0.25rem 0 0.5rem 0;
+}
+
+.is-hope-costs-selectors {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.is-hope-costs-selectors label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.is-hope-costs-selectors select {
+  padding: 0.4rem 0.75rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  min-width: 120px;
+}
+
+.is-hope-costs-page h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+}
+
+.hope-costs-grid,
+.promotion-costs-grid {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.hope-costs-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hope-costs-table th,
+.hope-costs-table td {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.hope-costs-table th {
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.hope-costs-table td:first-child,
+.hope-costs-table th:first-child {
+  text-align: left;
+  min-width: 4rem;
+}
+
+.hope-costs-table input {
+  width: 56px;
+  padding: 0.25rem 0.35rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.download-btn {
+  padding: 0.5rem 1rem;
+  background: var(--accent, #3b82f6);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  filter: brightness(1.1);
+}
+
+.download-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.reset-config-btn {
+  padding: 0.5rem 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-light);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.reset-config-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.reset-config-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.is-settings-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.is-settings-label span {
+  min-width: 3rem;
+}
+
+.saved-hint {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.auto-promote-classes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.auto-promote-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.auto-promote-checkbox input {
+  width: 1rem;
+  height: 1rem;
+}
+
+.is-hope-costs-page .error {
+  color: #ef4444;
+  margin-bottom: 1rem;
+}
+
+.is-hope-costs-page .loading {
+  color: var(--text-light);
+}
+
+.is-hope-costs-page a {
+  color: var(--accent, #3b82f6);
+}

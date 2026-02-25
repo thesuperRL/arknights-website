@@ -4,16 +4,16 @@
     flex-direction: column;
 }
 
+/* Main grows to fill space so footer stays at bottom when content is short;
+   when content is long, main grows and footer stays below all content. */
 .main-content {
-    flex: 1;
-}
-
-.main-content {
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     max-width: 1800px;
     margin: 0 auto;
     padding: 2rem;
     width: 100%;
+    box-sizing: border-box;
 }
 
 @media (max-width: 768px) {

@@ -7,6 +7,7 @@ import { getOperatorName } from '../utils/operatorNameUtils';
 import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
 import { apiFetch, getImageUrl } from '../api';
+import { IS_TITLES, IS_SQUADS_BY_TITLE } from '../is-constants';
 import './IntegratedStrategiesPage.css';
 
 interface TeamPreferences {
@@ -452,6 +453,11 @@ type I18nRecommendation = {
   getNicheName: (filename: string, fallback: string) => string;
 };
 
+/** Hope cost config: IS id -> squad id (or "default") -> rarity "4"|"5"|"6" -> class (or "default") -> hope cost. */
+type IsHopeCostsConfig = Record<string, Record<string, Record<string, Record<string, number>>>>;
+
+const DEFAULT_HOPE_BY_RARITY: Record<number, number> = { 6: 6, 5: 3, 4: 0, 3: 0, 2: 0, 1: 0 };
+
 async function getIntegratedStrategiesRecommendation(
   allOperators: Record<string, Operator>,
   raisedOperatorIds: string[], // ONLY raised operators that user can deploy
@@ -463,25 +469,60 @@ async function getIntegratedStrategiesRecommendation(
   hopeCosts?: Record<number, number>,
   trashOperators?: Set<string>,
   teamSize?: number,
-  promotionCost?: number,
   weightPools: ISNicheWeightPools = DEFAULT_WEIGHT_POOLS,
   allSynergies: SynergyForIS[] = [],
-  i18n?: I18nRecommendation
-): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number; isPromotion?: boolean }> {
+  i18n?: I18nRecommendation,
+  hopeCostConfig?: { config: IsHopeCostsConfig | null; isId: string; squadId: string | null; autoPromoteClasses?: string[] }
+): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number; isPromotion?: boolean; isAutoPromoteOnRecruit?: boolean }> {
   const t = i18n?.t ?? ((k: string) => k);
   const interpolate = i18n?.interpolate ?? ((tpl: string, vars: Record<string, string | number>) =>
     tpl.replace(/\{(\w+)\}/g, (_, key) => String(vars[key] ?? '')));
   const translateClass = i18n?.translateClass ?? ((c: string) => c);
   const getNicheName = i18n?.getNicheName ?? ((_filename: string, fallback: string) => fallback);
   const synergyI18n = i18n ? { t, interpolate, getNicheName } : undefined;
-  // Helper functions for hope costs
-  const getHopeCost = (rarity: number): number => {
-    return hopeCosts?.[rarity] ?? 0;
+
+  const getHopeCostForOperator = (operator: Operator): number => {
+    if (hopeCostConfig?.config && hopeCostConfig.isId && hopeCostConfig.config[hopeCostConfig.isId]) {
+      const bySquad = hopeCostConfig.config[hopeCostConfig.isId];
+      const squadKey = hopeCostConfig.squadId ?? 'default';
+      const byRarity = bySquad[squadKey] ?? bySquad['default'];
+      if (byRarity) {
+        const r = operator.rarity || 1;
+        const rarityKey = r >= 4 ? String(r) : '4';
+        const byClass = byRarity[rarityKey] as Record<string, number> | undefined;
+        if (byClass && typeof byClass === 'object') {
+          const hope = byClass[operator.class ?? ''];
+          if (hope !== undefined) return hope;
+        }
+      }
+    }
+    return hopeCosts?.[operator.rarity ?? 1] ?? DEFAULT_HOPE_BY_RARITY[operator.rarity ?? 1] ?? 0;
   };
 
-  const getActualHopeCost = (rarity: number): number => {
-    return hopeCosts?.[rarity] ?? 0;
+  const getPromotionCostForOperator = (operator: Operator): number => {
+    if (hopeCostConfig?.config && hopeCostConfig.isId && hopeCostConfig.config[hopeCostConfig.isId]) {
+      const bySquad = hopeCostConfig.config[hopeCostConfig.isId];
+      const squadKey = hopeCostConfig.squadId ?? 'default';
+      const entry = bySquad[squadKey] ?? bySquad['default'];
+      const prom = entry?.['promotionCost'] as Record<string, unknown> | undefined;
+      if (prom && typeof prom === 'object') {
+        const r = operator.rarity || 1;
+        const rarityKey = r >= 4 ? String(r) : '4';
+        const byRarity = prom[rarityKey];
+        if (byRarity && typeof byRarity === 'object' && !Array.isArray(byRarity)) {
+          const cost = (byRarity as Record<string, number>)[operator.class ?? ''];
+          if (cost !== undefined) return cost;
+        }
+        const flat = prom as Record<string, number>;
+        const cost = flat[operator.class ?? ''] ?? flat['default'];
+        if (cost !== undefined) return cost;
+      }
+    }
+    return 3;
   };
+
+  const getHopeCost = (rarity: number): number => hopeCosts?.[rarity] ?? DEFAULT_HOPE_BY_RARITY[rarity] ?? 0;
+  const getActualHopeCost = (operator: Operator): number => getHopeCostForOperator(operator);
 
   // Temporarily add the recruitment operator to raised operators (considered owned & raised)
   let effectiveRaisedOperators = [...raisedOperatorIds];
@@ -513,8 +554,7 @@ async function getIntegratedStrategiesRecommendation(
       if (selectionCount === 1) {
         const operator = allOperators[id];
         if (!operator || !operator.niches) return false;
-        // Check if operator has promotion levels and sufficient hope
-        const actualPromotionCost = promotionCost ?? 3;
+        const actualPromotionCost = getPromotionCostForOperator(operator);
         if (currentHope !== undefined && currentHope < actualPromotionCost) {
           return false; // Insufficient hope for promotion
         }
@@ -536,7 +576,7 @@ async function getIntegratedStrategiesRecommendation(
       if (temporaryRecruitment === id) {
         return true;
       }
-      const hopeCost = getHopeCost(operator.rarity || 1);
+      const hopeCost = getHopeCostForOperator(operator);
       return currentHope >= hopeCost;
     });
   }
@@ -640,7 +680,8 @@ async function getIntegratedStrategiesRecommendation(
   ].filter(niche => !isExcludedNiches.has(niche)));
 
   // Score each available operator
-  const operatorScores: Array<{ operatorId: string; score: number; reasoning: string[]; isPromotion: boolean }> = [];
+  const autoPromoteClasses = hopeCostConfig?.autoPromoteClasses ?? [];
+  const operatorScores: Array<{ operatorId: string; score: number; reasoning: string[]; isPromotion: boolean; isAutoPromoteOnRecruit: boolean }> = [];
 
   for (const operatorId of availableOperators) {
     const operator = allOperators[operatorId];
@@ -652,26 +693,28 @@ async function getIntegratedStrategiesRecommendation(
     // Determine if this is a first selection (recruit) or second (promotion)
     const selectionCount = selectionCounts.get(operatorId) || 0;
     const isPromotion = selectionCount === 1;
+    // If this class is auto-promoted on recruitment, score them at max potential (E2/module) for first pick
+    const isAutoPromoteOnRecruit = !isPromotion && autoPromoteClasses.includes(operator.class ?? '');
 
     // Tier-based scoring - VERY significant, should outweigh hope penalties
     // Include ALL niches the operator has (no exclusions); each uses pool rawScore and coverage factor
     const firstRecruitPotentialMultiplier = weightPools.firstRecruitPotentialMultiplier ?? 0;
-    let totalPotentialBonus = 0; // First recruitment only: E2/module potential bonus
+    let totalPotentialBonus = 0; // First recruitment only: E2/module potential bonus (not used when isAutoPromoteOnRecruit)
 
     for (const niche of operator.niches) {
       const currentCount = nicheCounts[niche] || 0;
 
-      // Get tier based on selection type
+      // Get tier based on selection type (or auto-promote: first recruitment at max potential)
       let tier = 0;
       let tierName = '';
       
-      if (isPromotion) {
-        // Promotion: only E2/module tiers (minus promotion cost applied later)
+      if (isPromotion || isAutoPromoteOnRecruit) {
+        // Promotion, or first recruitment with auto-promote class: use E2/module (max potential)
         tier = await getOperatorBestTierAtPromotionLevel(operatorId, niche);
-        if (tier === 0) continue; // No E2/module for this niche
+        if (tier === 0) continue;
         tierName = getTierNameFromValue(tier);
       } else {
-        // First recruitment: level 0 tier (may be 0); we still factor E2/module potential via firstRecruitPotentialMultiplier
+        // First recruitment (no auto-promote): level 0 tier + optional future potential bonus
         tier = await getOperatorTierInNicheAtLevel0(operatorId, niche);
         tierName = tier > 0 ? getTierNameFromValue(tier) : '';
       }
@@ -722,8 +765,8 @@ async function getIntegratedStrategiesRecommendation(
           }));
         }
 
-        // First recruitment only: add a small multiplier of E2/module potential (for all niches, including tier 0 at level 0)
-        if (!isPromotion && firstRecruitPotentialMultiplier > 0) {
+        // First recruitment only (and not auto-promote): add a small multiplier of E2/module potential
+        if (!isPromotion && !isAutoPromoteOnRecruit && firstRecruitPotentialMultiplier > 0) {
           const fullPotentialTier = await getOperatorBestTierAtPromotionLevel(operatorId, niche);
           if (fullPotentialTier > 0) {
             totalPotentialBonus += fullPotentialTier * rawScore * coverageFactor * firstRecruitPotentialMultiplier;
@@ -732,20 +775,20 @@ async function getIntegratedStrategiesRecommendation(
       }
     }
 
-    if (!isPromotion && totalPotentialBonus > 0) {
+    if (!isPromotion && !isAutoPromoteOnRecruit && totalPotentialBonus > 0) {
       score += totalPotentialBonus;
       reasoning.push(interpolate(t('isTeamBuilder.futurePotentialBonus'), { bonus: Math.round(totalPotentialBonus) }));
     }
 
     // Apply hope cost penalty
-    // For promotions (second selection), use configured promotion cost
+    // For promotions (second selection), use configured promotion cost per class
     // For first selection (recruit), use normal rarity-based hope cost
     let hopeCost: number;
     if (isPromotion) {
-      hopeCost = promotionCost ?? 3; // Promotion cost
+      hopeCost = getPromotionCostForOperator(operator);
       reasoning.push(t('isTeamBuilder.thisIsPromotion'));
     } else {
-      hopeCost = getActualHopeCost(operator.rarity || 1);
+      hopeCost = getActualHopeCost(operator);
     }
 
     // Filter based on hope requirements
@@ -822,7 +865,8 @@ async function getIntegratedStrategiesRecommendation(
       operatorId,
       score,
       reasoning,
-      isPromotion
+      isPromotion,
+      isAutoPromoteOnRecruit
     });
   }
 
@@ -844,7 +888,7 @@ async function getIntegratedStrategiesRecommendation(
 
       // Check hope constraint (if hope tracking is enabled)
       if (currentHope !== undefined) {
-        const hopeCost = getHopeCost(operator.rarity || 1);
+        const hopeCost = getHopeCostForOperator(operator);
         if (currentHope < hopeCost) return false;
       }
 
@@ -861,6 +905,7 @@ async function getIntegratedStrategiesRecommendation(
   const bestOperator = operatorScores[0];
   const operator = allOperators[bestOperator.operatorId];
   const isPromotion = bestOperator.isPromotion || false;
+  const isAutoPromoteOnRecruit = bestOperator.isAutoPromoteOnRecruit || false;
 
   // Create detailed reasoning with better formatting (translated)
   const classTextTranslated = requiredClasses.length === 1
@@ -870,7 +915,7 @@ async function getIntegratedStrategiesRecommendation(
   const recommendedHeader = isPromotion
     ? interpolate(t('isTeamBuilder.recommendedPromotion'), { class: classTextTranslated })
     : interpolate(t('isTeamBuilder.recommendedRecruitment'), { class: classTextTranslated });
-  const actualPromotionCost = promotionCost ?? 3;
+  const actualPromotionCost = getPromotionCostForOperator(operator);
   const reasoningParts = [
     `**${recommendedHeader}**`,
     '',
@@ -878,6 +923,10 @@ async function getIntegratedStrategiesRecommendation(
       `**${t('isTeamBuilder.thisIsPromotion')}**`,
       `**${interpolate(t('isTeamBuilder.costHope'), { cost: actualPromotionCost })}**`,
       `**${t('isTeamBuilder.addsNewTiers')}**`,
+      ''
+    ] : []),
+    ...(isAutoPromoteOnRecruit ? [
+      `**${t('isTeamBuilder.autoPromoteOnRecruit')}**`,
       ''
     ] : []),
     ...(temporaryRecruitment ? [
@@ -898,7 +947,8 @@ async function getIntegratedStrategiesRecommendation(
     recommendedOperator: operator,
     reasoning: reasoningParts.join('\n'),
     score: bestOperator.score,
-    isPromotion: isPromotion
+    isPromotion: isPromotion,
+    isAutoPromoteOnRecruit: isAutoPromoteOnRecruit
   };
 }
 
@@ -974,6 +1024,7 @@ interface RecommendationResult {
   reasoning: string;
   score: number;
   isPromotion?: boolean; // True if this is a promotion (second selection)
+  isAutoPromoteOnRecruit?: boolean; // True if this class is auto-promoted on first recruitment (scored at max potential)
 }
 
 const CLASS_OPTIONS = [
@@ -1012,12 +1063,7 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [showTempRecruitmentModal, setShowTempRecruitmentModal] = useState(false);
   const [tempRecruitmentSearch, setTempRecruitmentSearch] = useState('');
   const [currentHope, setCurrentHope] = useState<number>(0);
-  const [hopeCosts, setHopeCosts] = useState<Record<number, number>>({
-    6: 6,
-    5: 3,
-    4: 0
-  });
-  const [promotionCost, setPromotionCost] = useState<number>(3);
+  // Hope and promotion costs come from config (is-hope-costs.json) only; no user editing
   const [trashOperators, setTrashOperators] = useState<Set<string>>(new Set());
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
   const [weightPoolsConfig, setWeightPoolsConfig] = useState<ISNicheWeightPools>(DEFAULT_WEIGHT_POOLS);
@@ -1025,10 +1071,81 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [teamSize, setTeamSize] = useState<number>(8);
   const [optimalTeam, setOptimalTeam] = useState<Set<string>>(new Set());
   const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
+  const [selectedISTitleId, setSelectedISTitleId] = useState<string>(IS_TITLES[0].id);
+  /** At most one squad selected; null = none. Only shown for titles that have squads (e.g. IS6). */
+  const [selectedSquadId, setSelectedSquadId] = useState<string | null>(null);
+  const [isHopeCostsConfig, setIsHopeCostsConfig] = useState<IsHopeCostsConfig | null>(null);
 
-  // Helper function to get hope cost for an operator
-  const getHopeCost = (rarity: number): number => {
-    return hopeCosts[rarity] ?? 0;
+  const getHopeCostForOperator = (operator: Operator): number => {
+    if (isHopeCostsConfig && selectedISTitleId && isHopeCostsConfig[selectedISTitleId]) {
+      const bySquad = isHopeCostsConfig[selectedISTitleId];
+      const squadKey = selectedSquadId ?? 'default';
+      const byRarity = bySquad[squadKey] ?? bySquad['default'];
+      if (byRarity) {
+        const r = operator.rarity || 1;
+        const rarityKey = r >= 4 ? String(r) : '4';
+        const byClass = byRarity[rarityKey] as Record<string, number> | undefined;
+        if (byClass && typeof byClass === 'object') {
+          const hope = byClass[operator.class ?? ''];
+          if (hope !== undefined) return hope;
+        }
+      }
+    }
+    return DEFAULT_HOPE_BY_RARITY[operator.rarity ?? 1] ?? 0;
+  };
+
+  const getPromotionCostForOperator = (operator: Operator): number => {
+    if (isHopeCostsConfig && selectedISTitleId && isHopeCostsConfig[selectedISTitleId]) {
+      const bySquad = isHopeCostsConfig[selectedISTitleId];
+      const squadKey = selectedSquadId ?? 'default';
+      const entry = bySquad[squadKey] ?? bySquad['default'];
+      const prom = entry?.['promotionCost'] as Record<string, unknown> | undefined;
+      if (prom && typeof prom === 'object') {
+        const r = operator.rarity || 1;
+        const rarityKey = r >= 4 ? String(r) : '4';
+        const byRarity = prom[rarityKey];
+        if (byRarity && typeof byRarity === 'object' && !Array.isArray(byRarity)) {
+          const cost = (byRarity as Record<string, number>)[operator.class ?? ''];
+          if (cost !== undefined) return cost;
+        }
+        const flat = prom as Record<string, number>;
+        const cost = flat[operator.class ?? ''] ?? flat['default'];
+        if (cost !== undefined) return cost;
+      }
+    }
+    return 3;
+  };
+
+  const effectiveHopeByRarity = (): Record<number, number> => {
+    if (isHopeCostsConfig && selectedISTitleId && isHopeCostsConfig[selectedISTitleId]) {
+      const bySquad = isHopeCostsConfig[selectedISTitleId];
+      const squadKey = selectedSquadId ?? 'default';
+      const byRarity = bySquad[squadKey] ?? bySquad['default'];
+      if (byRarity) {
+        const firstVal = (r: Record<string, number> | undefined, fallback: number) =>
+          (r && typeof r === 'object' ? (Object.values(r).find((v): v is number => typeof v === 'number') ?? fallback) : fallback);
+        return {
+          6: firstVal(byRarity['6'] as Record<string, number> | undefined, 6),
+          5: firstVal(byRarity['5'] as Record<string, number> | undefined, 3),
+          4: firstVal(byRarity['4'] as Record<string, number> | undefined, 0),
+          3: 0,
+          2: 0,
+          1: 0
+        };
+      }
+    }
+    return { ...DEFAULT_HOPE_BY_RARITY };
+  };
+
+  const getHopeCost = (rarity: number): number => effectiveHopeByRarity()[rarity] ?? 0;
+
+  const getAutoPromoteClasses = (): string[] => {
+    if (!isHopeCostsConfig || !selectedISTitleId || !isHopeCostsConfig[selectedISTitleId]) return [];
+    const bySquad = isHopeCostsConfig[selectedISTitleId];
+    const squadKey = selectedSquadId ?? 'default';
+    const entry = bySquad[squadKey] ?? bySquad['default'];
+    const arr = (entry as Record<string, unknown>)?.['autoPromoteClasses'];
+    return Array.isArray(arr) ? arr.filter((c): c is string => typeof c === 'string') : [];
   };
 
 
@@ -1066,13 +1183,15 @@ const IntegratedStrategiesPage: React.FC = () => {
     if (user && Object.keys(allOperators).length > 0 && !isInitialLoad) {
       saveISTeamState();
     }
-  }, [selectedOperators, currentHope, hopeCosts, promotionCost, teamSize, user, allOperators, isInitialLoad]);
+  }, [selectedOperators, currentHope, teamSize, user, allOperators, isInitialLoad]);
 
   const loadPreferences = async () => {
     try {
-      const [prefsResponse, weightResponse] = await Promise.all([
+      const hopeCostsUrl = user ? '/api/integrated-strategies/config' : '/api/config/is-hope-costs';
+      const [prefsResponse, weightResponse, hopeCostsResponse] = await Promise.all([
         apiFetch('/api/team/preferences'),
-        apiFetch('/api/config/is-niche-weight-pools')
+        apiFetch('/api/config/is-niche-weight-pools'),
+        apiFetch(hopeCostsUrl)
       ]);
       if (prefsResponse.ok) {
         const data = await prefsResponse.json();
@@ -1097,6 +1216,10 @@ const IntegratedStrategiesPage: React.FC = () => {
         };
         setWeightPoolsConfig(pools);
         console.log('[IS Team Builder] Weight pools loaded:', pools);
+      }
+      if (hopeCostsResponse.ok) {
+        const hopeData = await hopeCostsResponse.json();
+        setIsHopeCostsConfig(Object.keys(hopeData).length > 0 ? hopeData : null);
       }
     } catch (err) {
       console.error('Error loading preferences:', err);
@@ -1157,33 +1280,14 @@ const IntegratedStrategiesPage: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         if (data) {
-          // Always restore current hope and hope costs immediately (don't need to wait for operators)
           if (loadOnlyHope) {
-            if (data.currentHope !== undefined) {
-              setCurrentHope(data.currentHope);
-            }
-            
-            if (data.hopeCosts) {
-              setHopeCosts(data.hopeCosts);
-            }
-            
-            if (data.promotionCost !== undefined) {
-              setPromotionCost(data.promotionCost);
-            }
-            return; // Early return if only loading hope
+            if (data.currentHope !== undefined) setCurrentHope(data.currentHope);
+            return;
           }
           
           // Restore everything (hope, costs, and operators)
           if (data.currentHope !== undefined) {
             setCurrentHope(data.currentHope);
-          }
-          
-          if (data.hopeCosts) {
-            setHopeCosts(data.hopeCosts);
-          }
-          
-          if (data.promotionCost !== undefined) {
-            setPromotionCost(data.promotionCost);
           }
           
           // Restore team size
@@ -1546,8 +1650,6 @@ const IntegratedStrategiesPage: React.FC = () => {
           selectionCount: s.selectionCount || 1
         })),
         currentHope,
-        hopeCosts,
-        promotionCost,
         teamSize
       };
       
@@ -1579,12 +1681,6 @@ const IntegratedStrategiesPage: React.FC = () => {
       // Reset local state to defaults
       setSelectedOperators([]);
       setCurrentHope(0);
-      setHopeCosts({
-        6: 6,
-        5: 3,
-        4: 0
-      });
-      setPromotionCost(3);
       setTeamSize(8);
       setOptimalTeam(new Set());
       setRecommendation(null);
@@ -1651,19 +1747,21 @@ const IntegratedStrategiesPage: React.FC = () => {
     }
   };
 
-  const addOperator = async (operatorId: string, isPromotion: boolean = false, fromRecommendation: boolean = false) => {
+  const addOperator = async (operatorId: string, isPromotion: boolean = false, fromRecommendation: boolean = false, isAutoPromoteOnRecruit: boolean = false) => {
     const operator = allOperators[operatorId];
     if (!operator) return;
 
-    // Calculate hope cost if this is from a recommendation
+    // Calculate hope cost if this is from a recommendation (always recruit cost for first add; promotion cost only when explicitly promoting)
     let hopeCostToDeduct = 0;
     if (fromRecommendation) {
       if (isPromotion) {
-        hopeCostToDeduct = promotionCost;
+        hopeCostToDeduct = getPromotionCostForOperator(operator);
       } else {
-        hopeCostToDeduct = getHopeCost(operator.rarity || 1);
+        hopeCostToDeduct = getHopeCostForOperator(operator);
       }
     }
+
+    const autoPromote = isAutoPromoteOnRecruit || (!isPromotion && getAutoPromoteClasses().includes(operator.class ?? ''));
 
     setSelectedOperators(prev => {
       const existing = prev.find(s => s.operatorId === operatorId);
@@ -1671,23 +1769,17 @@ const IntegratedStrategiesPage: React.FC = () => {
       if (existing) {
         // Operator already selected
         if (existing.selectionCount === 1 && isPromotion) {
-          // Promotion: second selection
-          // No hope check or subtraction for manual additions
-          
-          // Update to selection count 2 (promotion)
+          // Promotion: second selection (user clicked Promote)
           return prev.map(s => 
             s.operatorId === operatorId 
               ? { ...s, selectionCount: 2 }
               : s
           );
         }
-        // Already promoted or invalid state
         return prev;
       } else {
-        // First selection (recruit at level 0)
-        // No hope check or subtraction for manual additions
-        
-        return [...prev, { operatorId, operator, selectionCount: 1 }];
+        // First selection (recruit): use selectionCount 2 if this class is auto-promoted on recruitment
+        return [...prev, { operatorId, operator, selectionCount: autoPromote ? 2 : 1 }];
       }
     });
     
@@ -1788,13 +1880,13 @@ const IntegratedStrategiesPage: React.FC = () => {
           preferences,
           temporaryRecruitment || undefined,
           currentHope,
-          hopeCosts,
+          undefined,
           trashOperators,
           teamSize,
-          promotionCost,
           weightPoolsConfig,
           allSynergies,
-          { t, interpolate, translateClass, getNicheName }
+          { t, interpolate, translateClass, getNicheName },
+          { config: isHopeCostsConfig, isId: selectedISTitleId, squadId: selectedSquadId, autoPromoteClasses: getAutoPromoteClasses() }
         );
 
         if (result.recommendedOperator) {
@@ -1854,6 +1946,48 @@ const IntegratedStrategiesPage: React.FC = () => {
 
   return (
     <div className="integrated-strategies-page">
+      <div className="is-title-selection" aria-label={t('isTeamBuilder.selectTitle')}>
+        {IS_TITLES.map((title) => (
+          <button
+            key={title.id}
+            type="button"
+            className={`is-title-option ${selectedISTitleId === title.id ? 'selected' : ''}`}
+            onClick={() => {
+              setSelectedISTitleId(title.id);
+              setSelectedSquadId(null);
+            }}
+            title={title.label}
+            aria-pressed={selectedISTitleId === title.id}
+          >
+            <img src={getImageUrl(title.image)} alt={title.label} />
+          </button>
+        ))}
+      </div>
+      {IS_SQUADS_BY_TITLE[selectedISTitleId] && (
+        <div className="is-squad-selection" aria-label={t('isTeamBuilder.selectSquad')}>
+          <button
+            type="button"
+            className={`is-squad-option ${selectedSquadId === null ? 'selected' : ''}`}
+            onClick={() => setSelectedSquadId(null)}
+            title={t('isTeamBuilder.noSquad')}
+            aria-pressed={selectedSquadId === null}
+          >
+            <span className="is-squad-option-label">{t('isTeamBuilder.noSquad')}</span>
+          </button>
+          {IS_SQUADS_BY_TITLE[selectedISTitleId].map((squad) => (
+            <button
+              key={squad.id}
+              type="button"
+              className={`is-squad-option ${selectedSquadId === squad.id ? 'selected' : ''}`}
+              onClick={() => setSelectedSquadId(selectedSquadId === squad.id ? null : squad.id)}
+              title={squad.label}
+              aria-pressed={selectedSquadId === squad.id}
+            >
+              <img src={getImageUrl(squad.image)} alt={squad.label} />
+            </button>
+          ))}
+        </div>
+      )}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
         <h1 style={{ margin: 0 }}>{t('isTeamBuilder.title')}</h1>
         <button
@@ -1992,15 +2126,15 @@ const IntegratedStrategiesPage: React.FC = () => {
           <div className="hope-requirements">
             <div className="hope-requirement">
               <span className="hope-stars">★★★★★★</span>
-              <span className="hope-cost">{hopeCosts[6]} {t('isTeamBuilder.hope')}</span>
+              <span className="hope-cost">{effectiveHopeByRarity()[6]} {t('isTeamBuilder.hope')}</span>
             </div>
             <div className="hope-requirement">
               <span className="hope-stars">★★★★★</span>
-              <span className="hope-cost">{hopeCosts[5]} {t('isTeamBuilder.hope')}</span>
+              <span className="hope-cost">{effectiveHopeByRarity()[5]} {t('isTeamBuilder.hope')}</span>
             </div>
             <div className="hope-requirement">
               <span className="hope-stars">★★★★</span>
-              <span className="hope-cost">{hopeCosts[4]} {t('isTeamBuilder.hope')}</span>
+              <span className="hope-cost">{effectiveHopeByRarity()[4]} {t('isTeamBuilder.hope')}</span>
             </div>
             <div className="hope-requirement">
               <span className="hope-stars">{t('isTeamBuilder.starsAndBelow')}</span>
@@ -2012,76 +2146,7 @@ const IntegratedStrategiesPage: React.FC = () => {
             </div>
           </div>
         </div>
-
-        <div className="hope-cost-config-section">
-          <h3>{t('isTeamBuilder.hopeCostConfig')}</h3>
-          <div className="hope-cost-config">
-            <div className="hope-cost-input-group">
-              <label htmlFor="hope-cost-6star">{t('isTeamBuilder.cost6')}:</label>
-              <input
-                id="hope-cost-6star"
-                type="number"
-                min="0"
-                max="50"
-                value={hopeCosts[6]}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value) || 0;
-                  setHopeCosts(prev => ({ ...prev, 6: value }));
-                  setRecommendation(null); // Clear recommendation when costs change
-                }}
-                className="hope-cost-input"
-              />
-            </div>
-            <div className="hope-cost-input-group">
-              <label htmlFor="hope-cost-5star">{t('isTeamBuilder.cost5')}:</label>
-              <input
-                id="hope-cost-5star"
-                type="number"
-                min="0"
-                max="30"
-                value={hopeCosts[5]}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value) || 0;
-                  setHopeCosts(prev => ({ ...prev, 5: value }));
-                  setRecommendation(null); // Clear recommendation when costs change
-                }}
-                className="hope-cost-input"
-              />
-            </div>
-            <div className="hope-cost-input-group">
-              <label htmlFor="hope-cost-4star">{t('isTeamBuilder.cost4')}:</label>
-              <input
-                id="hope-cost-4star"
-                type="number"
-                min="0"
-                max="20"
-                value={hopeCosts[4]}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value) || 0;
-                  setHopeCosts(prev => ({ ...prev, 4: value }));
-                  setRecommendation(null); // Clear recommendation when costs change
-                }}
-                className="hope-cost-input"
-              />
-            </div>
-            <div className="hope-cost-input-group">
-              <label htmlFor="promotion-cost">{t('isTeamBuilder.promotionCost')}:</label>
-              <input
-                id="promotion-cost"
-                type="number"
-                min="0"
-                max="20"
-                value={promotionCost}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value) || 0;
-                  setPromotionCost(value);
-                  setRecommendation(null); // Clear recommendation when costs change
-                }}
-                className="hope-cost-input"
-              />
-            </div>
-          </div>
-        </div>
+        <p className="hope-cost-source">{t('isTeamBuilder.hopeCostFromConfig')}</p>
       </div>
 
       <div className="class-constraint-section">
@@ -2312,7 +2377,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                     <div className="operator-class">{translateClass(recommendation.recommendedOperator.class)}</div>
                     <div className="recommendation-score">{t('isTeamBuilder.score')}: {recommendation.score.toFixed(1)}</div>
                     <div className="operator-hope-cost">
-                      {t('isTeamBuilder.hopeCost')}: {getHopeCost(recommendation.recommendedOperator.rarity || 1)}
+                      {t('isTeamBuilder.hopeCost')}: {getHopeCostForOperator(recommendation.recommendedOperator)}
                     </div>
                   </div>
                 </div>
@@ -2320,7 +2385,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                 <div className="recommendation-actions">
                   <button
                     onClick={() => {
-                      addOperator(recommendation.recommendedOperator!.id, recommendation.isPromotion || false, true);
+                      addOperator(recommendation.recommendedOperator!.id, recommendation.isPromotion || false, true, recommendation.isAutoPromoteOnRecruit || false);
                       setRecommendation(null); // Clear recommendation after adding
                       setAllRecommendations([]); // Clear all recommendations after accepting one
                       setCurrentRecommendationIndex(0);
@@ -2363,11 +2428,19 @@ const IntegratedStrategiesPage: React.FC = () => {
         )}
       </div>
 
-      {import.meta.env.DEV && (
-        <p style={{ marginTop: '1.5rem', fontSize: '0.9rem' }}>
-          <Link to="/config/is-niche-weights" style={{ color: 'var(--text-muted)' }}>Dev: Configure IS niche weight pools</Link>
-        </p>
-      )}
+      <p style={{ marginTop: '1.5rem', fontSize: '0.9rem' }}>
+        {user && (
+          <Link to="/integrated-strategies/settings">Hope &amp; promotion settings</Link>
+        )}
+        {import.meta.env.DEV && (
+          <>
+            {user && ' · '}
+            <Link to="/config/is-niche-weights" style={{ color: 'var(--text-muted)' }}>Dev: IS niche weight pools</Link>
+            {' · '}
+            <Link to="/config/is-hope-costs" style={{ color: 'var(--text-muted)' }}>Dev: IS hope &amp; promotion costs</Link>
+          </>
+        )}
+      </p>
 
       {/* Operator Selection Modal */}
       {showOperatorSelectModal && (

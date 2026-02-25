@@ -16,6 +16,8 @@ export interface AccountTeamData {
   normalPreferences: Record<string, unknown> | null;
   normalTeambuild: NormalTeambuild | null;
   isTeamState: Record<string, unknown> | null;
+  /** User override for IS hope/promotion/autoPromote config; null = use server defaults. */
+  isConfigOverride: Record<string, unknown> | null;
   updatedAt: string;
 }
 
@@ -25,14 +27,22 @@ CREATE TABLE IF NOT EXISTS account_team_data (
   normal_preferences JSONB NULL,
   normal_teambuild JSONB NULL,
   is_team_state JSONB NULL,
+  is_config_override JSONB NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+`;
+
+const ALTER_ADD_IS_CONFIG_SQL = `
+ALTER TABLE account_team_data ADD COLUMN IF NOT EXISTS is_config_override JSONB NULL;
 `;
 
 let ensureTablePromise: Promise<void> | null = null;
 async function ensureTable(): Promise<void> {
   if (ensureTablePromise) return ensureTablePromise;
-  ensureTablePromise = getPool().query(CREATE_TABLE_SQL).then(() => {});
+  ensureTablePromise = getPool()
+    .query(CREATE_TABLE_SQL)
+    .then(() => getPool().query(ALTER_ADD_IS_CONFIG_SQL))
+    .then(() => {});
   try {
     await ensureTablePromise;
   } catch (e) {
@@ -60,6 +70,7 @@ function rowToTeamData(row: {
   normal_preferences: unknown;
   normal_teambuild: unknown;
   is_team_state: unknown;
+  is_config_override?: unknown;
   updated_at: Date;
 }): AccountTeamData {
   return {
@@ -67,6 +78,7 @@ function rowToTeamData(row: {
     normalPreferences: row.normal_preferences as Record<string, unknown> | null,
     normalTeambuild: row.normal_teambuild as NormalTeambuild | null,
     isTeamState: row.is_team_state as Record<string, unknown> | null,
+    isConfigOverride: (row.is_config_override as Record<string, unknown> | null) ?? null,
     updatedAt: new Date(row.updated_at).toISOString(),
   };
 }
@@ -79,7 +91,7 @@ export async function getAccountTeamData(identifier: string): Promise<AccountTea
   const accountId = await getAccountIdByIdentifier(identifier);
   if (accountId == null) return null;
   const res = await getPool().query(
-    'SELECT account_id, normal_preferences, normal_teambuild, is_team_state, updated_at FROM account_team_data WHERE account_id = $1',
+    'SELECT account_id, normal_preferences, normal_teambuild, is_team_state, is_config_override, updated_at FROM account_team_data WHERE account_id = $1',
     [accountId]
   );
   if (res.rows.length === 0) return null;
@@ -95,6 +107,7 @@ export async function saveAccountTeamData(
     normalPreferences?: Record<string, unknown> | null;
     normalTeambuild?: NormalTeambuild | null;
     isTeamState?: Record<string, unknown> | null;
+    isConfigOverride?: Record<string, unknown> | null;
   }
 ): Promise<boolean> {
   await ensureTable();
@@ -103,18 +116,20 @@ export async function saveAccountTeamData(
 
   const now = new Date();
   const res = await getPool().query(
-    `INSERT INTO account_team_data (account_id, normal_preferences, normal_teambuild, is_team_state, updated_at)
-     VALUES ($1, $2, $3, $4, $5)
+    `INSERT INTO account_team_data (account_id, normal_preferences, normal_teambuild, is_team_state, is_config_override, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6)
      ON CONFLICT (account_id) DO UPDATE SET
        normal_preferences = COALESCE(EXCLUDED.normal_preferences, account_team_data.normal_preferences),
        normal_teambuild = COALESCE(EXCLUDED.normal_teambuild, account_team_data.normal_teambuild),
        is_team_state = COALESCE(EXCLUDED.is_team_state, account_team_data.is_team_state),
+       is_config_override = COALESCE(EXCLUDED.is_config_override, account_team_data.is_config_override),
        updated_at = EXCLUDED.updated_at`,
     [
       accountId,
       updates.normalPreferences !== undefined ? JSON.stringify(updates.normalPreferences) : null,
       updates.normalTeambuild !== undefined ? JSON.stringify(updates.normalTeambuild) : null,
       updates.isTeamState !== undefined ? JSON.stringify(updates.isTeamState) : null,
+      updates.isConfigOverride !== undefined ? JSON.stringify(updates.isConfigOverride) : null,
       now,
     ]
   );
@@ -177,6 +192,30 @@ export async function saveISTeamState(identifier: string, state: Record<string, 
  */
 export async function deleteISTeamState(identifier: string): Promise<boolean> {
   return saveISTeamState(identifier, null);
+}
+
+/**
+ * Save IS config override (hope costs, promotion costs, autoPromote) for an account.
+ */
+export async function saveISConfigOverride(identifier: string, config: Record<string, unknown> | null): Promise<boolean> {
+  const accountId = await getAccountIdByIdentifier(identifier);
+  if (accountId == null) return false;
+  await ensureTable();
+  const now = new Date();
+  await getPool().query(
+    `INSERT INTO account_team_data (account_id, is_config_override, updated_at)
+     VALUES ($1, $2, $3)
+     ON CONFLICT (account_id) DO UPDATE SET is_config_override = EXCLUDED.is_config_override, updated_at = EXCLUDED.updated_at`,
+    [accountId, config ? JSON.stringify(config) : null, now]
+  );
+  return true;
+}
+
+/**
+ * Clear IS config override for an account (reset to server defaults).
+ */
+export async function clearISConfigOverride(identifier: string): Promise<boolean> {
+  return saveISConfigOverride(identifier, null);
 }
 
 /**

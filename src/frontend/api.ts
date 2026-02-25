@@ -1,10 +1,13 @@
 /**
  * API base URL for requests. Empty string = same origin (local dev with proxy).
  * Set VITE_API_BASE when building for GitHub Pages (e.g. https://your-backend.onrender.com).
+ * In dev, when unset, use backend directly (http://localhost:3000) to avoid proxy 404s.
  */
 export function getApiBase(): string {
   const base = import.meta.env.VITE_API_BASE;
-  return typeof base === 'string' ? base.replace(/\/$/, '') : '';
+  if (typeof base === 'string' && base) return base.replace(/\/$/, '');
+  if (import.meta.env.DEV) return 'http://localhost:3000';
+  return '';
 }
 
 /**

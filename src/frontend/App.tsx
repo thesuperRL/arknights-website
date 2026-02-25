@@ -22,9 +22,11 @@ import RegisterPage from './pages/RegisterPage';
 import UserProfilePage from './pages/UserProfilePage';
 import TeamBuilderPage from './pages/TeamBuilderPage';
 import IntegratedStrategiesPage from './pages/IntegratedStrategiesPage';
+import IsHopeCostsSettingsPage from './pages/IsHopeCostsSettingsPage';
 import UserGuidePage from './pages/UserGuidePage';
 import ChangelogPage from './pages/ChangelogPage';
 import IsNicheWeightPoolsPage from './pages/IsNicheWeightPoolsPage';
+import IsHopeCostsPage from './pages/IsHopeCostsPage';
 import AboutPage from './pages/AboutPage';
 import './App.css';
 import './pages/AllOperatorsPage.css';
@@ -63,9 +65,11 @@ function AnimatedMain() {
               <Route path="/profile" element={<UserProfilePage />} />
               <Route path="/team-builder" element={<TeamBuilderPage />} />
               <Route path="/integrated-strategies" element={<IntegratedStrategiesPage />} />
+              <Route path="/integrated-strategies/settings" element={<IsHopeCostsSettingsPage />} />
               <Route path="/user-guide" element={<UserGuidePage />} />
               <Route path="/changelog" element={<ChangelogPage />} />
               <Route path="/config/is-niche-weights" element={<IsNicheWeightPoolsPage />} />
+              <Route path="/config/is-hope-costs" element={<IsHopeCostsPage />} />
               <Route path="/about" element={<AboutPage />} />
       </Routes>
     </main>

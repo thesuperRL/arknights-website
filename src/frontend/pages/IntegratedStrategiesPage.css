@@ -4,8 +4,122 @@
   margin: 0 auto;
   padding: 0.75rem 1.5rem;
   box-sizing: border-box;
-  max-height: 100vh;
-  overflow-y: auto;
+}
+
+/* IS title selection row at top - evenly spaced images in one row */
+.is-title-selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+}
+
+.is-title-selection .is-title-option {
+  flex: 1;
+  min-width: 0;
+  max-width: 360px;
+  padding: 0;
+  background: transparent;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+  overflow: hidden;
+}
+
+.is-title-selection .is-title-option:hover {
+  transform: scale(1.02);
+}
+
+.is-title-selection .is-title-option.selected {
+  border-color: var(--accent, #3b82f6);
+  box-shadow: 0 0 0 1px var(--accent, #3b82f6);
+}
+
+.is-title-selection .is-title-option img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* IS squad selection bar - shown under title when title has squads (e.g. IS6); at most one selected; "None" option */
+.is-squad-selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: stretch;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.is-squad-selection .is-squad-option {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  padding: 0.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.is-squad-selection .is-squad-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+}
+
+.is-squad-selection .is-squad-option.selected {
+  border-color: var(--accent, #3b82f6);
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.is-squad-selection .is-squad-option img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.is-squad-selection .is-squad-option-label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  padding: 0.25rem 0.5rem;
+}
+
+.is-title-squad-dropdowns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.is-dropdown-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.is-dropdown-group .is-dropdown-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 .integrated-strategies-page h1 {
@@ -328,6 +442,18 @@
   font-size: 0.85rem;
   color: var(--text-light);
   margin-top: 0.25rem;
+}
+
+.hope-cost-config-note {
+  font-size: 0.8rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  margin: -0.25rem 0 0.5rem 0;
+}
+
+.hope-cost-source {
+  font-size: 0.8rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  margin: 0.25rem 0 0 0;
 }
 
 /* Class Constraint Section */
