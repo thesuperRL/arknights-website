@@ -161,8 +161,9 @@ export function computeTop12AvgByClass(
     topByClass[classA] = teamA;
     topByClass[classB] = teamB;
   }
-  console.log('[squad-recommendation] avg per class (pair team score / 2N, niches in combination):', result);
-  console.log('[squad-recommendation] top', TOP_N_PER_CLASS, 'per class in each pair (codes):', topByClass);
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[squad-recommendation] avg:', result, '| top per class:', topByClass);
+  }
   return result;
 }
 

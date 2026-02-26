@@ -458,7 +458,8 @@ async function getIntegratedStrategiesRecommendation(
   weightPools: ISNicheWeightPools = DEFAULT_WEIGHT_POOLS,
   allSynergies: SynergyForIS[] = [],
   i18n?: I18nRecommendation,
-  hopeCostConfig?: { config: IsHopeCostsConfig | null; isId: string; squadId: string | null; autoPromoteClasses?: string[] }
+  hopeCostConfig?: { config: IsHopeCostsConfig | null; isId: string; squadId: string | null; autoPromoteClasses?: string[] },
+  onlyGlobalOperators: boolean = true
 ): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number; isPromotion?: boolean; isAutoPromoteOnRecruit?: boolean }> {
   const t = i18n?.t ?? ((k: string) => k);
   const interpolate = i18n?.interpolate ?? ((tpl: string, vars: Record<string, string | number>) =>
@@ -520,6 +521,11 @@ async function getIntegratedStrategiesRecommendation(
 
   // ONLY use raised operators (user's deployable collection)
   let availableOperatorIds = effectiveRaisedOperators.filter(id => allOperators[id]);
+
+  // Optionally restrict to globally released operators only
+  if (onlyGlobalOperators) {
+    availableOperatorIds = availableOperatorIds.filter(id => allOperators[id].global === true);
+  }
 
   // Create a map of operator selection counts
   const selectionCounts = new Map<string, number>();
@@ -1034,6 +1040,8 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [raisedOperators, setRaisedOperators] = useState<Set<string>>(new Set());
   const [originalRaisedOperators, setOriginalRaisedOperators] = useState<Set<string>>(new Set());
   const [allClassesAvailable, setAllClassesAvailable] = useState<boolean>(false);
+  /** When true, add-all and recommendations only consider globally released operators. Default on. */
+  const [onlyGlobalOperators, setOnlyGlobalOperators] = useState<boolean>(true);
   const [rawUserData, setRawUserData] = useState<any>(null);
   const [selectedOperators, setSelectedOperators] = useState<SelectedOperator[]>([]);
   const [requiredClasses, setRequiredClasses] = useState<Set<string>>(new Set());
@@ -1240,8 +1248,10 @@ const IntegratedStrategiesPage: React.FC = () => {
   }, [selectedOperators, currentHope, teamSize, user, allOperators, isInitialLoad]);
 
   // Fetch squad recommendation when user is logged in and IS has squads (one request per IS; minimal backend load)
+  // Use user?.email so we don't refetch when the user object reference changes (e.g. auth context re-render)
+  const userKey = user?.email ?? null;
   useEffect(() => {
-    if (!user || !IS_SQUADS_BY_TITLE[selectedISTitleId]) {
+    if (!userKey || !IS_SQUADS_BY_TITLE[selectedISTitleId]) {
       setSquadRecommendation(null);
       return;
     }
@@ -1267,7 +1277,7 @@ const IntegratedStrategiesPage: React.FC = () => {
         if (!cancelled) setSquadRecommendationLoading(false);
       });
     return () => { cancelled = true; };
-  }, [user, selectedISTitleId]);
+  }, [userKey, selectedISTitleId]);
 
   const loadPreferences = async () => {
     try {
@@ -1970,7 +1980,8 @@ const IntegratedStrategiesPage: React.FC = () => {
           weightPoolsConfig,
           allSynergies,
           { t, interpolate, translateClass, getNicheName },
-          { config: isHopeCostsConfig, isId: selectedISTitleId, squadId: selectedSquadId, autoPromoteClasses: getAutoPromoteClasses() }
+          { config: isHopeCostsConfig, isId: selectedISTitleId, squadId: selectedSquadId, autoPromoteClasses: getAutoPromoteClasses() },
+          onlyGlobalOperators
         );
 
         if (result.recommendedOperator) {
@@ -2390,6 +2401,21 @@ const IntegratedStrategiesPage: React.FC = () => {
                 </div>
               )}
               <div className="advanced-option-toggle">
+                <label className="toggle-container" title={t('isTeamBuilder.onlyGlobalOperatorsTitle')}>
+                  <input
+                    type="checkbox"
+                    checked={onlyGlobalOperators}
+                    onChange={(e) => {
+                      setOnlyGlobalOperators(e.target.checked);
+                      setRecommendation(null);
+                    }}
+                    className="toggle-checkbox"
+                  />
+                  <span className="toggle-slider"></span>
+                  <span className="toggle-label">{t('isTeamBuilder.onlyGlobalOperators')}</span>
+                </label>
+              </div>
+              <div className="advanced-option-toggle">
                 <label 
                   className={`toggle-container ${!allClassesAvailable && requiredClasses.size === 0 ? 'disabled' : ''}`}
                   title={allClassesAvailable 
@@ -2414,11 +2440,13 @@ const IntegratedStrategiesPage: React.FC = () => {
                         // Store current raised operators as original
                         setOriginalRaisedOperators(new Set(raisedOperators));
                         
-                        // Add all operators of the required classes to raised operators
+                        // Add all operators of the required classes to raised operators (optionally global-only)
                         const classArray = Array.from(requiredClasses);
                         const operatorsToAdd = Object.keys(allOperators).filter(id => {
                           const operator = allOperators[id];
-                          return operator && classArray.includes(operator.class);
+                          if (!operator || !classArray.includes(operator.class)) return false;
+                          if (onlyGlobalOperators && !operator.global) return false;
+                          return true;
                         });
                         
                         setRaisedOperators(prev => {
