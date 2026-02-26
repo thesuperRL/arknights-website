@@ -423,6 +423,50 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.hope-requirement-row {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 0.75rem 1rem;
+  align-items: baseline;
+  justify-content: start;
+}
+
+.hope-requirement-row .hope-stars {
+  min-width: 5rem;
+}
+
+.hope-cost-block {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem;
+  font-weight: 500;
+}
+
+.hope-cost-block .hope-cost-label {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.6));
+  white-space: nowrap;
+}
+
+.hope-cost-block .hope-cost-value {
+  color: white;
+  font-size: 0.9rem;
+}
+
+.hope-cost-diffs {
+  font-size: 0.8rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.75));
+  font-weight: 400;
+}
+
+.hope-autopromote-line {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.65));
+}
+
 .hope-requirement:last-child {
   border-bottom: none;
 }
@@ -448,6 +492,40 @@
   font-size: 0.8rem;
   color: var(--text-muted, rgba(255, 255, 255, 0.5));
   margin: -0.25rem 0 0.5rem 0;
+}
+
+.hope-cost-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.hope-cost-footer .hope-cost-source {
+  font-size: 0.8rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
+  margin: 0;
+}
+
+.hope-settings-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary, #fff);
+  background: var(--bg-secondary, #3a3a4a);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.hope-settings-btn:hover {
+  background: var(--accent-dim, rgba(100, 140, 200, 0.25));
+  border-color: var(--accent, rgba(100, 140, 200, 0.6));
+  color: var(--text-primary, #fff);
 }
 
 .hope-cost-source {

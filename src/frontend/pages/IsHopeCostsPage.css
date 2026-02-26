@@ -99,6 +99,39 @@
   text-align: center;
 }
 
+.hope-adjust-col {
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.hope-adjust-cell {
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.hope-adjust-btn {
+  min-width: 28px;
+  padding: 0.2rem 0.35rem;
+  margin: 0 1px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.hope-adjust-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.hope-adjust-btn:active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .actions {
   margin-top: 1.5rem;
   display: flex;

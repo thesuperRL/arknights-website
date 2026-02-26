@@ -1148,6 +1148,69 @@ const IntegratedStrategiesPage: React.FC = () => {
     return Array.isArray(arr) ? arr.filter((c): c is string => typeof c === 'string') : [];
   };
 
+  /** For a map class -> cost, return the mode (most common value) and list of { class, cost } that differ from mode. */
+  const modeAndDiffs = (byClass: Record<string, number> | undefined): { mode: number; diffs: Array<{ class: string; cost: number }> } => {
+    if (!byClass || typeof byClass !== 'object') return { mode: 0, diffs: [] };
+    const counts: Record<number, number> = {};
+    for (const v of Object.values(byClass)) {
+      if (typeof v === 'number') counts[v] = (counts[v] ?? 0) + 1;
+    }
+    const mode = (Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] != null)
+      ? Number(Object.entries(counts).sort((a, b) => b[1] - a[1])[0]![0])
+      : 0;
+    const diffs = Object.entries(byClass)
+      .filter(([, cost]) => typeof cost === 'number' && cost !== mode)
+      .map(([cls, cost]) => ({ class: cls, cost: cost as number }));
+    return { mode, diffs };
+  };
+
+  /** Per-rarity display: default recruit cost, classes that differ; default promotion cost, classes that differ. */
+  const getHopeDisplayForRarity = (rarity: 4 | 5 | 6): {
+    defaultRecruit: number;
+    recruitDiffs: Array<{ class: string; cost: number }>;
+    defaultPromo: number;
+    promoDiffs: Array<{ class: string; cost: number }>;
+  } => {
+    const defaultRecruitByRarity: Record<number, number> = { 4: 0, 5: 3, 6: 6 };
+    const defaultPromo = 3;
+    if (!isHopeCostsConfig || !selectedISTitleId || !isHopeCostsConfig[selectedISTitleId]) {
+      return {
+        defaultRecruit: defaultRecruitByRarity[rarity],
+        recruitDiffs: [],
+        defaultPromo,
+        promoDiffs: []
+      };
+    }
+    const bySquad = isHopeCostsConfig[selectedISTitleId];
+    const squadKey = selectedSquadId ?? 'default';
+    const entry = (bySquad[squadKey] ?? bySquad['default']) as Record<string, unknown> | undefined;
+    if (!entry) {
+      return {
+        defaultRecruit: defaultRecruitByRarity[rarity],
+        recruitDiffs: [],
+        defaultPromo,
+        promoDiffs: []
+      };
+    }
+    const r = String(rarity);
+    const recruitByClass = entry[r] as Record<string, number> | undefined;
+    const recruit = modeAndDiffs(recruitByClass);
+    const promEntry = entry.promotionCost as Record<string, Record<string, number>> | undefined;
+    const promoByClass = promEntry?.[r];
+    const promo = modeAndDiffs(promoByClass);
+    const effectiveRecruit = (recruitByClass && Object.keys(recruitByClass).length > 0)
+      ? recruit.mode
+      : defaultRecruitByRarity[rarity];
+    const effectivePromo = (promoByClass && Object.keys(promoByClass).length > 0)
+      ? promo.mode
+      : defaultPromo;
+    return {
+      defaultRecruit: effectiveRecruit,
+      recruitDiffs: recruit.diffs,
+      defaultPromo: effectivePromo,
+      promoDiffs: promo.diffs
+    };
+  };
 
   useEffect(() => {
     if (user) {
@@ -2124,18 +2187,37 @@ const IntegratedStrategiesPage: React.FC = () => {
             className="hope-input"
           />
           <div className="hope-requirements">
-            <div className="hope-requirement">
-              <span className="hope-stars">★★★★★★</span>
-              <span className="hope-cost">{effectiveHopeByRarity()[6]} {t('isTeamBuilder.hope')}</span>
-            </div>
-            <div className="hope-requirement">
-              <span className="hope-stars">★★★★★</span>
-              <span className="hope-cost">{effectiveHopeByRarity()[5]} {t('isTeamBuilder.hope')}</span>
-            </div>
-            <div className="hope-requirement">
-              <span className="hope-stars">★★★★</span>
-              <span className="hope-cost">{effectiveHopeByRarity()[4]} {t('isTeamBuilder.hope')}</span>
-            </div>
+            {([6, 5, 4] as const).map(r => {
+              const { defaultRecruit, recruitDiffs, defaultPromo, promoDiffs } = getHopeDisplayForRarity(r);
+              const stars = '★'.repeat(r);
+              return (
+                <div key={r} className="hope-requirement hope-requirement-row">
+                  <span className="hope-stars">{stars}</span>
+                  <span className="hope-cost hope-cost-block">
+                    <span className="hope-cost-label">{t('isTeamBuilder.recruitLabel')}:</span>
+                    <span className="hope-cost-value">
+                      {defaultRecruit} {t('isTeamBuilder.hope')}
+                      {recruitDiffs.length > 0 && (
+                        <span className="hope-cost-diffs">
+                          {' '}({recruitDiffs.map(d => `${translateClass(d.class)} ${d.cost}`).join(', ')})
+                        </span>
+                      )}
+                    </span>
+                  </span>
+                  <span className="hope-cost hope-cost-block">
+                    <span className="hope-cost-label">{t('isTeamBuilder.promotionCost')}:</span>
+                    <span className="hope-cost-value">
+                      {defaultPromo} {t('isTeamBuilder.hope')}
+                      {promoDiffs.length > 0 && (
+                        <span className="hope-cost-diffs">
+                          {' '}({promoDiffs.map(d => `${translateClass(d.class)} ${d.cost}`).join(', ')})
+                        </span>
+                      )}
+                    </span>
+                  </span>
+                </div>
+              );
+            })}
             <div className="hope-requirement">
               <span className="hope-stars">{t('isTeamBuilder.starsAndBelow')}</span>
               <span className="hope-cost">0 {t('isTeamBuilder.hope')}</span>
@@ -2145,8 +2227,20 @@ const IntegratedStrategiesPage: React.FC = () => {
               <span className="hope-cost">0 {t('isTeamBuilder.hope')}</span>
             </div>
           </div>
+          {getAutoPromoteClasses().length > 0 && (
+            <p className="hope-autopromote-line">
+              {t('isTeamBuilder.autoPromoteClassesLabel')}: {getAutoPromoteClasses().map(c => translateClass(c)).join(', ')}
+            </p>
+          )}
         </div>
-        <p className="hope-cost-source">{t('isTeamBuilder.hopeCostFromConfig')}</p>
+        <div className="hope-cost-footer">
+          <span className="hope-cost-source">{t('isTeamBuilder.hopeCostFromConfig')}</span>
+          {user && (
+            <Link to="/integrated-strategies/settings" className="hope-settings-btn">
+              {t('isTeamBuilder.hopePromotionSettings')}
+            </Link>
+          )}
+        </div>
       </div>
 
       <div className="class-constraint-section">
@@ -2428,19 +2522,13 @@ const IntegratedStrategiesPage: React.FC = () => {
         )}
       </div>
 
-      <p style={{ marginTop: '1.5rem', fontSize: '0.9rem' }}>
-        {user && (
-          <Link to="/integrated-strategies/settings">Hope &amp; promotion settings</Link>
-        )}
-        {import.meta.env.DEV && (
-          <>
-            {user && ' · '}
-            <Link to="/config/is-niche-weights" style={{ color: 'var(--text-muted)' }}>Dev: IS niche weight pools</Link>
-            {' · '}
-            <Link to="/config/is-hope-costs" style={{ color: 'var(--text-muted)' }}>Dev: IS hope &amp; promotion costs</Link>
-          </>
-        )}
-      </p>
+      {import.meta.env.DEV && (
+        <p style={{ marginTop: '1.5rem', fontSize: '0.9rem' }}>
+          <Link to="/config/is-niche-weights" style={{ color: 'var(--text-muted)' }}>Dev: IS niche weight pools</Link>
+          {' · '}
+          <Link to="/config/is-hope-costs" style={{ color: 'var(--text-muted)' }}>Dev: IS hope &amp; promotion costs</Link>
+        </p>
+      )}
 
       {/* Operator Selection Modal */}
       {showOperatorSelectModal && (

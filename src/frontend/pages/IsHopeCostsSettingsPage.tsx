@@ -161,6 +161,39 @@ const IsHopeCostsSettingsPage: React.FC = () => {
     setSaveStatus('idle');
   };
 
+  /** Add delta to all class hope costs in this rarity row (recruit). Clamped 0–50. */
+  const adjustHopeRow = (rarity: string, delta: number) => {
+    if (delta === 0) return;
+    setConfig(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      ensureSquadEntry(next, selectedIS, selectedSquad);
+      const byClass = next[selectedIS][selectedSquad][rarity] as Record<string, number>;
+      for (const c of CLASSES) {
+        const v = (byClass[c] ?? (rarity === '6' ? 6 : rarity === '5' ? 3 : 0)) + delta;
+        byClass[c] = Math.max(0, Math.min(50, v));
+      }
+      return next;
+    });
+    setSaveStatus('idle');
+  };
+
+  /** Add delta to all class promotion costs in this rarity row. Clamped 0–20. */
+  const adjustPromotionRow = (rarity: string, delta: number) => {
+    if (delta === 0) return;
+    setConfig(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      ensureSquadEntry(next, selectedIS, selectedSquad);
+      const prom = next[selectedIS][selectedSquad].promotionCost as Record<string, Record<string, number>>;
+      if (!prom[rarity]) prom[rarity] = {};
+      for (const c of CLASSES) {
+        const current = (prom[rarity][c] ?? 3) + delta;
+        prom[rarity][c] = Math.max(0, Math.min(20, current));
+      }
+      return next;
+    });
+    setSaveStatus('idle');
+  };
+
   const toggleAutoPromoteClass = (className: string) => {
     setConfig(prev => {
       const next = JSON.parse(JSON.stringify(prev));
@@ -262,6 +295,7 @@ const IsHopeCostsSettingsPage: React.FC = () => {
                 <tr>
                   <th>Rarity</th>
                   {CLASSES.map(c => <th key={c}>{c}</th>)}
+                  <th className="hope-adjust-col">Adjust row</th>
                 </tr>
               </thead>
               <tbody>
@@ -279,6 +313,20 @@ const IsHopeCostsSettingsPage: React.FC = () => {
                         />
                       </td>
                     ))}
+                    <td className="hope-adjust-cell">
+                      {([-2, -1, 1, 2] as const).map(d => (
+                        <button
+                          key={d}
+                          type="button"
+                          className="hope-adjust-btn"
+                          onClick={() => adjustHopeRow(r, d)}
+                          title={d > 0 ? `Add ${d} to all in row` : `Subtract ${-d} from all in row`}
+                          aria-label={d > 0 ? `Add ${d}` : `Subtract ${-d}`}
+                        >
+                          {d > 0 ? `+${d}` : d}
+                          </button>
+                        ))}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -292,6 +340,7 @@ const IsHopeCostsSettingsPage: React.FC = () => {
                 <tr>
                   <th>Rarity</th>
                   {CLASSES.map(c => <th key={c}>{c}</th>)}
+                  <th className="hope-adjust-col">Adjust row</th>
                 </tr>
               </thead>
               <tbody>
@@ -314,6 +363,20 @@ const IsHopeCostsSettingsPage: React.FC = () => {
                           />
                         </td>
                       ))}
+                      <td className="hope-adjust-cell">
+                        {([-2, -1, 1, 2] as const).map(d => (
+                          <button
+                            key={d}
+                            type="button"
+                            className="hope-adjust-btn"
+                            onClick={() => adjustPromotionRow(r, d)}
+                            title={d > 0 ? `Add ${d} to all in row` : `Subtract ${-d} from all in row`}
+                            aria-label={d > 0 ? `Add ${d}` : `Subtract ${-d}`}
+                          >
+                            {d > 0 ? `+${d}` : d}
+                          </button>
+                        ))}
+                      </td>
                     </tr>
                   );
                 })}

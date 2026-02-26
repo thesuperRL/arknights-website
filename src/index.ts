@@ -40,6 +40,12 @@ import {
   validatePassword
 } from './sql-sanitize';
 import {
+  applyEditsToHopeCosts,
+  fullConfigToEdits,
+  isEditsFormat,
+  type HopeCostEdit
+} from './is-hope-cost-edits';
+import {
   initializeDataCache,
   getOperatorsData,
   getOperatorsByRarity,
@@ -1306,7 +1312,12 @@ app.get('/api/integrated-strategies/config', async (req, res) => {
     } catch (e) {
       console.warn('IS config: could not load user override, using defaults:', (e as Error).message);
     }
-    const merged = mergeISConfig(defaults ?? {}, override);
+    let merged: Record<string, unknown>;
+    if (override && isEditsFormat(override)) {
+      merged = applyEditsToHopeCosts(defaults ?? {} as Record<string, unknown>, (override as { edits: HopeCostEdit[] }).edits);
+    } else {
+      merged = mergeISConfig(defaults ?? {}, override);
+    }
     return res.json(merged);
   } catch (error: any) {
     console.error('Error getting IS config:', error);
@@ -1315,7 +1326,7 @@ app.get('/api/integrated-strategies/config', async (req, res) => {
   }
 });
 
-// POST /api/integrated-strategies/config - Save user's IS config override (hope costs, promotion, autoPromote).
+// POST /api/integrated-strategies/config - Save user's IS config override as a list of edits (saves DB space).
 app.post('/api/integrated-strategies/config', async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
@@ -1333,7 +1344,10 @@ app.post('/api/integrated-strategies/config', async (req, res) => {
     if (!config || typeof config !== 'object') {
       return res.status(400).json({ error: 'Config object required' });
     }
-    await saveISConfigOverride(session.email, config as Record<string, unknown>);
+    const defaults = getIsHopeCosts() as Record<string, unknown> | null;
+    const edits = fullConfigToEdits(defaults ?? {} as Record<string, unknown>, config as Record<string, unknown>);
+    const toStore = edits.length > 0 ? { edits } : null;
+    await saveISConfigOverride(session.email, toStore);
     return res.json({ success: true });
   } catch (error: any) {
     console.error('Error saving IS config:', error);
