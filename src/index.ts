@@ -45,6 +45,7 @@ import {
   isEditsFormat,
   type HopeCostEdit
 } from './is-hope-cost-edits';
+import { computeTop12AvgByClass, recommendSquadForIS } from './squad-recommendation';
 import {
   initializeDataCache,
   getOperatorsData,
@@ -1377,6 +1378,56 @@ app.post('/api/integrated-strategies/config/reset', async (req, res) => {
   }
 });
 
+// GET /api/integrated-strategies/squad-recommendation?isId=IS6 - Top 12 avg strength per class + recommended squad. One account query; rest in-memory.
+app.get('/api/integrated-strategies/squad-recommendation', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    const session = getSession(sessionId);
+    if (!session) {
+      return res.status(401).json({ error: 'Invalid session' });
+    }
+    const isId = typeof req.query.isId === 'string' ? req.query.isId.trim() : '';
+    if (!isId) {
+      return res.status(400).json({ error: 'isId query required (e.g. IS6)' });
+    }
+    const account = await findAccountByUsername(session.email);
+    if (!account) {
+      return res.status(401).json({ error: 'Account not found' });
+    }
+    const ownedOperatorIds = account.ownedOperators ?? [];
+    const wantToUseIds = account.wantToUse ?? [];
+    const operatorsData = getOperatorsData();
+    const top12AvgByClass = computeTop12AvgByClass(ownedOperatorIds, wantToUseIds, operatorsData);
+    const defaults = getIsHopeCosts() as Record<string, unknown> | null;
+    type MergedHopeConfig = Record<string, Record<string, Record<string, unknown>>>;
+    let merged: MergedHopeConfig = (defaults ?? {}) as MergedHopeConfig;
+    if (useTeamDataDb()) {
+      try {
+        const data = await getAccountTeamData(session.email);
+        const override = data?.isConfigOverride ?? null;
+        if (override && isEditsFormat(override)) {
+          merged = applyEditsToHopeCosts(defaults ?? {}, (override as { edits: HopeCostEdit[] }).edits) as MergedHopeConfig;
+        } else if (override && typeof override === 'object') {
+          merged = mergeISConfig(defaults ?? {}, override) as MergedHopeConfig;
+        }
+      } catch (e) {
+        console.warn('Squad recommendation: could not load user config, using defaults:', (e as Error).message);
+      }
+    }
+    const recommended = recommendSquadForIS(isId, merged, top12AvgByClass);
+    const recommendedSquad = recommended
+      ? { isId, squadId: recommended.squadId, reason: recommended.reason }
+      : null;
+    return res.json({ top12AvgByClass, recommendedSquad });
+  } catch (error: any) {
+    console.error('Error computing squad recommendation:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get squad recommendation' });
+  }
+});
+
 // Serve static files (after API routes so /api/* is never served as static)
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
@@ -1389,21 +1440,26 @@ app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// Initialize data cache and database before starting server
+// Initialize data cache and start server; init DB in background so startup isn't blocked by connection timeout
 (async () => {
   await initializeDataCache();
-  await initializeDbConnection();
-  if (process.env.DATABASE_URL) {
-    await initializeTeamDataTable();
-    await initializeChangelogTable();
-  }
-  await initializeDataCache();
 
-  // Start the server
   app.listen(PORT, () => {
     console.log('🚀 Arknights Website is running!');
     console.log(`📍 Server running at http://localhost:${PORT}`);
     console.log(`   Open your browser and navigate to: http://localhost:${PORT}`);
     console.log(`   Press Ctrl+C to stop the server`);
   });
+
+  // DB init in background — avoids blocking startup when DATABASE_URL is unreachable (e.g. remote DB from local)
+  if (process.env.DATABASE_URL) {
+    initializeDbConnection()
+      .then(async () => {
+        await initializeTeamDataTable();
+        await initializeChangelogTable();
+      })
+      .catch((err) => {
+        console.error('Database init failed:', (err as Error).message);
+      });
+  }
 })();

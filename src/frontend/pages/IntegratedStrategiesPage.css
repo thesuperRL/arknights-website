@@ -47,12 +47,54 @@
   object-fit: cover;
 }
 
+/* Squad recommendation loading bar (indeterminate) */
+.squad-recommendation-loading {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.squad-recommendation-loading-bar {
+  height: 100%;
+  width: 40%;
+  background: var(--accent, #3b82f6);
+  border-radius: 2px;
+  animation: squad-recommendation-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes squad-recommendation-shimmer {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(250%); }
+  100% { transform: translateX(-100%); }
+}
+
+.squad-option-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 64px;
+}
+
+/* Recommended outline: distinct color (amber) so it doesn’t match “selected” (accent blue) */
+.squad-option-cell-recommended {
+  padding: 0.35rem;
+  border-radius: 8px;
+  outline: 2px solid var(--squad-recommended-color, #eab308);
+  outline-offset: 2px;
+  background: rgba(234, 179, 8, 0.08);
+}
+
+
 /* IS squad selection bar - shown under title when title has squads (e.g. IS6); at most one selected; "None" option */
 .is-squad-selection {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  align-items: stretch;
+  justify-content: center;
+  align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-bottom: 1rem;

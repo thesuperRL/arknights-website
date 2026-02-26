@@ -36,61 +36,33 @@ export default defineConfig({
           console.log('✅ 404.html created for client-side routing');
         }
 
-        // Restore images directory after build completes
+        // Restore entire images directory after build (IStitles, ISsquads, operators, modules, E2.png, etc.)
         const imagesDir = path.resolve(__dirname, 'public/images');
         const backupDir = path.resolve(__dirname, '.images-backup');
         if (fs.existsSync(backupDir)) {
           console.log('📦 Restoring images directory...');
-          // Ensure images directory exists
           if (!fs.existsSync(imagesDir)) {
             fs.mkdirSync(imagesDir, { recursive: true });
           }
-          
-          // Restore operators directory
-          const operatorsDir = path.join(imagesDir, 'operators');
-          if (fs.existsSync(operatorsDir)) {
-            fs.rmSync(operatorsDir, { recursive: true, force: true });
+          const items = fs.readdirSync(backupDir);
+          for (const item of items) {
+            const src = path.join(backupDir, item);
+            const dest = path.join(imagesDir, item);
+            if (fs.statSync(src).isDirectory()) {
+              if (fs.existsSync(dest)) fs.rmSync(dest, { recursive: true, force: true });
+              fs.mkdirSync(dest, { recursive: true });
+              fs.cpSync(src, dest, { recursive: true });
+            } else {
+              fs.copyFileSync(src, dest);
+            }
           }
-          const backupOperatorsDir = path.join(backupDir, 'operators');
-          if (fs.existsSync(backupOperatorsDir)) {
-            fs.mkdirSync(operatorsDir, { recursive: true });
-            fs.cpSync(backupOperatorsDir, operatorsDir, { recursive: true });
-            const fileCount = fs.readdirSync(operatorsDir).length;
-            console.log(`✅ Restored ${fileCount} operator images`);
-          }
-          
-          // Restore modules directory
-          const modulesDir = path.join(imagesDir, 'modules');
-          if (fs.existsSync(modulesDir)) {
-            fs.rmSync(modulesDir, { recursive: true, force: true });
-          }
-          const backupModulesDir = path.join(backupDir, 'modules');
-          if (fs.existsSync(backupModulesDir)) {
-            fs.mkdirSync(modulesDir, { recursive: true });
-            fs.cpSync(backupModulesDir, modulesDir, { recursive: true });
-            const fileCount = fs.readdirSync(modulesDir).length;
-            console.log(`✅ Restored ${fileCount} module images`);
-          }
-          
-          // Restore E2.png and other root-level images
-          const backupE2 = path.join(backupDir, 'E2.png');
-          if (fs.existsSync(backupE2)) {
-            fs.copyFileSync(backupE2, path.join(imagesDir, 'E2.png'));
-            console.log('✅ Restored E2.png badge');
-          }
-          
-          // Clean up backup
+          console.log(`✅ Restored ${items.length} items (operators, modules, IStitles, ISsquads, etc.)`);
           fs.rmSync(backupDir, { recursive: true, force: true });
         } else {
-          // Ensure images directory exists even if no backup
           const operatorsDir = path.resolve(__dirname, 'public/images/operators');
           const modulesDir = path.resolve(__dirname, 'public/images/modules');
-          if (!fs.existsSync(operatorsDir)) {
-            fs.mkdirSync(operatorsDir, { recursive: true });
-          }
-          if (!fs.existsSync(modulesDir)) {
-            fs.mkdirSync(modulesDir, { recursive: true });
-          }
+          if (!fs.existsSync(operatorsDir)) fs.mkdirSync(operatorsDir, { recursive: true });
+          if (!fs.existsSync(modulesDir)) fs.mkdirSync(modulesDir, { recursive: true });
           console.log('⚠️  No backup found, created empty images directories');
         }
       }

@@ -75,6 +75,7 @@ const TeamBuilderPage: React.FC = () => {
   const [showOperatorSelectModal, setShowOperatorSelectModal] = useState<{ type: 'replace' | 'empty' | 'lock'; operatorId?: string; slotIndex?: number } | null>(null);
   const [operatorSelectSearch, setOperatorSelectSearch] = useState('');
   const [lockedOperatorIds, setLockedOperatorIds] = useState<string[]>([]);
+  const [savedLastTeamIds, setSavedLastTeamIds] = useState<string[] | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -212,6 +213,11 @@ const TeamBuilderPage: React.FC = () => {
         if (Array.isArray(cached)) {
           setLockedOperatorIds(cached);
         }
+        // Restore last built team from SQL so it displays when they re-enter the page
+        const lastIds = data.normalTeambuild?.lastTeamOperatorIds;
+        if (Array.isArray(lastIds) && lastIds.length > 0) {
+          setSavedLastTeamIds(lastIds);
+        }
         // Wait for nicheFilenameMap to be loaded before migrating
         if (Object.keys(nicheFilenameMap).length > 0) {
           const migrated = migratePreferences(data);
@@ -258,6 +264,42 @@ const TeamBuilderPage: React.FC = () => {
     }
   };
   
+  // Restore last built team from SQL when user has saved team and operators are loaded
+  useEffect(() => {
+    if (
+      !savedLastTeamIds ||
+      savedLastTeamIds.length === 0 ||
+      Object.keys(allOperators).length === 0 ||
+      !preferences ||
+      teamResult !== null
+    ) {
+      return;
+    }
+    const team: TeamMember[] = savedLastTeamIds
+      .filter((id) => allOperators[id])
+      .map((id) => ({
+        operatorId: id,
+        operator: allOperators[id],
+        niches: (allOperators[id] as Operator).niches ?? [],
+        isTrash: false
+      }));
+    if (team.length === 0) {
+      setSavedLastTeamIds(null);
+      return;
+    }
+    const { coverage, missingNiches } = recalculateCoverageWithEmptySlots(team, {});
+    setTeamResult({
+      team,
+      coverage,
+      missingNiches,
+      score: 0,
+      emptySlots: Math.max(0, 12 - team.length)
+    });
+    setOriginalTeam([...team]);
+    setModifiedTeam(null);
+    setSavedLastTeamIds(null);
+  }, [savedLastTeamIds, allOperators, preferences, teamResult]);
+
   // Migrate preferences when nicheFilenameMap is loaded
   useEffect(() => {
     if (preferences && Object.keys(nicheFilenameMap).length > 0) {

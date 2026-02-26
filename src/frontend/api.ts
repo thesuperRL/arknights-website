@@ -22,12 +22,17 @@ export function apiFetch(input: string, init?: RequestInit): Promise<Response> {
 }
 
 /**
- * Resolve image path for img src. When API base is set (e.g. GitHub Pages),
- * images are loaded from the backend so operator images work.
+ * Resolve image path for img src.
+ * - When API base is set (e.g. separate backend), images are loaded from the backend.
+ * - When same origin (e.g. production with base path like /arknights-website/), prefix
+ *   with BASE_URL so /images/... becomes /arknights-website/images/... and does not 404.
  */
 export function getImageUrl(path: string): string {
   if (!path) return path;
   if (path.startsWith('http')) return path;
-  const base = getApiBase();
-  return base ? base + (path.startsWith('/') ? path : '/' + path) : path;
+  const apiBase = getApiBase();
+  if (apiBase) return apiBase + (path.startsWith('/') ? path : '/' + path);
+  const baseUrl = (typeof import.meta.env.BASE_URL === 'string' && import.meta.env.BASE_URL) || '';
+  const normalized = path.startsWith('/') ? path.slice(1) : path;
+  return baseUrl ? baseUrl + (baseUrl.endsWith('/') ? '' : '/') + normalized : path;
 }

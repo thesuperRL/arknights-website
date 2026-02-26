@@ -8,6 +8,7 @@ import { getRarityClass } from '../utils/rarityUtils';
 import Stars from '../components/Stars';
 import { apiFetch, getImageUrl } from '../api';
 import { IS_TITLES, IS_SQUADS_BY_TITLE } from '../is-constants';
+import { getPoolRawScore, type ISNicheWeightPools as ISNicheWeightPoolsShared } from '../../is-scoring';
 import './IntegratedStrategiesPage.css';
 
 interface TeamPreferences {
@@ -17,17 +18,8 @@ interface TeamPreferences {
   allowDuplicates?: boolean;
 }
 
-export interface ISNicheWeightPools {
-  important: { rawScore: number; niches: string[] };
-  optional: { rawScore: number; niches: string[] };
-  good: { rawScore: number; niches: string[] };
-  /** Bonus added when a synergy's core (required operators) is satisfied. Used for all IS synergies. */
-  synergyCoreBonus?: number;
-  /** Multiplier applied to each synergy's corePointBonus and optionalPointBonus from its JSON. */
-  synergyScaleFactor?: number;
-  /** On first recruitment only: multiplier for operator's E2/module potential (0 = off, e.g. 0.1 = 10% of full-potential score added). */
-  firstRecruitPotentialMultiplier?: number;
-}
+/** Re-export shared type for IS teambuilder; scoring uses getPoolRawScore from is-scoring. */
+export type ISNicheWeightPools = ISNicheWeightPoolsShared;
 
 // Cache for niche lists to avoid repeated API calls
 const nicheListCache: Record<string, any> = {};
@@ -327,12 +319,6 @@ const DEFAULT_WEIGHT_POOLS: ISNicheWeightPools = {
   synergyScaleFactor: 1,
   firstRecruitPotentialMultiplier: 0
 };
-
-function getPoolRawScore(niche: string, weightPools: ISNicheWeightPools): number {
-  if (weightPools.important.niches.includes(niche)) return weightPools.important.rawScore;
-  if (weightPools.optional.niches.includes(niche)) return weightPools.optional.rawScore;
-  return weightPools.good.rawScore;
-}
 
 /** Synergy shape for IS scoring (core/optional are group -> operator IDs). */
 interface SynergyForIS {
@@ -1075,6 +1061,11 @@ const IntegratedStrategiesPage: React.FC = () => {
   /** At most one squad selected; null = none. Only shown for titles that have squads (e.g. IS6). */
   const [selectedSquadId, setSelectedSquadId] = useState<string | null>(null);
   const [isHopeCostsConfig, setIsHopeCostsConfig] = useState<IsHopeCostsConfig | null>(null);
+  const [squadRecommendationLoading, setSquadRecommendationLoading] = useState(false);
+  const [squadRecommendation, setSquadRecommendation] = useState<{
+    top12AvgByClass: Record<string, number>;
+    recommendedSquad: { isId: string; squadId: string; reason: string } | null;
+  } | null>(null);
 
   const getHopeCostForOperator = (operator: Operator): number => {
     if (isHopeCostsConfig && selectedISTitleId && isHopeCostsConfig[selectedISTitleId]) {
@@ -1247,6 +1238,36 @@ const IntegratedStrategiesPage: React.FC = () => {
       saveISTeamState();
     }
   }, [selectedOperators, currentHope, teamSize, user, allOperators, isInitialLoad]);
+
+  // Fetch squad recommendation when user is logged in and IS has squads (one request per IS; minimal backend load)
+  useEffect(() => {
+    if (!user || !IS_SQUADS_BY_TITLE[selectedISTitleId]) {
+      setSquadRecommendation(null);
+      return;
+    }
+    let cancelled = false;
+    setSquadRecommendationLoading(true);
+    setSquadRecommendation(null);
+    apiFetch(`/api/integrated-strategies/squad-recommendation?isId=${encodeURIComponent(selectedISTitleId)}`)
+      .then((res) => {
+        if (cancelled || !res.ok) return res.json().catch(() => ({}));
+        return res.json();
+      })
+      .then((data) => {
+        if (cancelled) return;
+        setSquadRecommendation({
+          top12AvgByClass: data.top12AvgByClass ?? {},
+          recommendedSquad: data.recommendedSquad ?? null
+        });
+      })
+      .catch(() => {
+        if (!cancelled) setSquadRecommendation(null);
+      })
+      .finally(() => {
+        if (!cancelled) setSquadRecommendationLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [user, selectedISTitleId]);
 
   const loadPreferences = async () => {
     try {
@@ -2027,29 +2048,50 @@ const IntegratedStrategiesPage: React.FC = () => {
         ))}
       </div>
       {IS_SQUADS_BY_TITLE[selectedISTitleId] && (
-        <div className="is-squad-selection" aria-label={t('isTeamBuilder.selectSquad')}>
-          <button
-            type="button"
-            className={`is-squad-option ${selectedSquadId === null ? 'selected' : ''}`}
-            onClick={() => setSelectedSquadId(null)}
-            title={t('isTeamBuilder.noSquad')}
-            aria-pressed={selectedSquadId === null}
-          >
-            <span className="is-squad-option-label">{t('isTeamBuilder.noSquad')}</span>
-          </button>
-          {IS_SQUADS_BY_TITLE[selectedISTitleId].map((squad) => (
-            <button
-              key={squad.id}
-              type="button"
-              className={`is-squad-option ${selectedSquadId === squad.id ? 'selected' : ''}`}
-              onClick={() => setSelectedSquadId(selectedSquadId === squad.id ? null : squad.id)}
-              title={squad.label}
-              aria-pressed={selectedSquadId === squad.id}
-            >
-              <img src={getImageUrl(squad.image)} alt={squad.label} />
-            </button>
-          ))}
-        </div>
+        <>
+          {squadRecommendationLoading && (
+            <div className="squad-recommendation-loading" role="progressbar" aria-label={t('isTeamBuilder.squadRecommendationLoading')}>
+              <div className="squad-recommendation-loading-bar" />
+            </div>
+          )}
+          <div className="is-squad-selection" aria-label={t('isTeamBuilder.selectSquad')}>
+            {(() => {
+              const recommendedSquadId = squadRecommendation?.recommendedSquad && !squadRecommendationLoading ? squadRecommendation.recommendedSquad.squadId : null;
+              const isRecommendedNone = recommendedSquadId === 'default';
+              return (
+                <>
+                  <div className={`squad-option-cell ${isRecommendedNone ? 'squad-option-cell-recommended' : ''}`}>
+                    <button
+                      type="button"
+                      className={`is-squad-option ${selectedSquadId === null ? 'selected' : ''}`}
+                      onClick={() => setSelectedSquadId(null)}
+                      title={t('isTeamBuilder.noSquad')}
+                      aria-pressed={selectedSquadId === null}
+                    >
+                      <span className="is-squad-option-label">{t('isTeamBuilder.noSquad')}</span>
+                    </button>
+                  </div>
+                  {IS_SQUADS_BY_TITLE[selectedISTitleId].map((squad) => {
+                    const isRecommended = recommendedSquadId === squad.id;
+                    return (
+                      <div key={squad.id} className={`squad-option-cell ${isRecommended ? 'squad-option-cell-recommended' : ''}`}>
+                        <button
+                          type="button"
+                          className={`is-squad-option ${selectedSquadId === squad.id ? 'selected' : ''}`}
+                          onClick={() => setSelectedSquadId(selectedSquadId === squad.id ? null : squad.id)}
+                          title={squad.label}
+                          aria-pressed={selectedSquadId === squad.id}
+                        >
+                          <img src={getImageUrl(squad.image)} alt={squad.label} />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </>
+              );
+            })()}
+          </div>
+        </>
       )}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
         <h1 style={{ margin: 0 }}>{t('isTeamBuilder.title')}</h1>

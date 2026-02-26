@@ -413,7 +413,7 @@ export async function addOperatorToAccount(email: string, operatorId: string): P
 }
 
 /**
- * Remove operator from account's owned operators
+ * Remove operator from account's owned operators and from wantToUse (raised) if present.
  */
 export async function removeOperatorFromAccount(email: string, operatorId: string): Promise<boolean> {
   const safeId = sanitizeOperatorId(operatorId);
@@ -425,23 +425,26 @@ export async function removeOperatorFromAccount(email: string, operatorId: strin
     if (!account || !account.ownedOperators) {
       return false;
     }
-    
+
     const ownedOperators = account.ownedOperators.filter(id => id !== safeId);
-    
+
     if (ownedOperators.length === account.ownedOperators.length) {
       return false; // Operator not found
     }
-    
+
+    const wantToUse = (account.wantToUse ?? []).filter(id => id !== safeId);
+
     const dbPool = await getDbPool();
     const columns = await getColumnNames(dbPool);
-    
+
     const escapeCol = (col: string) => `[${col}]`;
-    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.ownedOperators)} = @ownedOperators WHERE ${escapeCol(columns.email)} = @email`;
-    
+    const updateQuery = `UPDATE accounts SET ${escapeCol(columns.ownedOperators)} = @ownedOperators, ${escapeCol(columns.wantToUse)} = @wantToUse WHERE ${escapeCol(columns.email)} = @email`;
+
     const request = dbPool.request();
     request.input('email', sql.NVarChar(255), normalizedEmail);
     request.input('ownedOperators', sql.NVarChar(sql.MAX), JSON.stringify(ownedOperators));
-    
+    request.input('wantToUse', sql.NVarChar(sql.MAX), JSON.stringify(wantToUse));
+
     await request.query(updateQuery);
     return true;
   } catch (error) {

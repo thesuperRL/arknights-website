@@ -147,9 +147,10 @@ export async function removeOperatorFromAccount(identifier: string, operatorId: 
   if (!account?.ownedOperators) return false;
   const owned = account.ownedOperators.filter((id) => id !== safeId);
   if (owned.length === account.ownedOperators.length) return false;
+  const wantToUse = (account.wantToUse ?? []).filter((id) => id !== safeId);
   await getPool().query(
-    `UPDATE accounts SET owned_operators = $1 WHERE id = $2`,
-    [JSON.stringify(owned), account.id]
+    `UPDATE accounts SET owned_operators = $1, want_to_use = $2 WHERE id = $3`,
+    [JSON.stringify(owned), JSON.stringify(wantToUse), account.id]
   );
   return true;
 }
