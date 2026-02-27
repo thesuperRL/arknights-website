@@ -47,11 +47,41 @@ const UserProfilePage: React.FC = () => {
   const [addSearchTerm, setAddSearchTerm] = useState('');
   const [addFilterRarity, setAddFilterRarity] = useState<number | null>(null);
   const [addFilterClass, setAddFilterClass] = useState<string | null>(null);
+  const [raiseRecommendation, setRaiseRecommendation] = useState<{
+    recommendedOperatorId: string;
+    score: number;
+    operator: { id: string; name: string; class: string; rarity: number; profileImage: string };
+  } | null>(null);
 
   useEffect(() => {
     loadUserData();
     loadAllOperators();
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      setRaiseRecommendation(null);
+      return;
+    }
+    let cancelled = false;
+    apiFetch('/api/profile/raise-recommendation')
+      .then((res) => (res.ok ? res.json() : { recommendedOperatorId: null, operator: null }))
+      .then((data) => {
+        if (!cancelled && data?.operator) {
+          setRaiseRecommendation({
+            recommendedOperatorId: data.recommendedOperatorId,
+            score: data.score ?? 0,
+            operator: data.operator
+          });
+        } else if (!cancelled) {
+          setRaiseRecommendation(null);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setRaiseRecommendation(null);
+      });
+    return () => { cancelled = true; };
+  }, [user?.email, user?.ownedOperators?.length, user?.wantToUse?.length]);
 
   const loadUserData = async () => {
     try {
@@ -314,6 +344,25 @@ const UserProfilePage: React.FC = () => {
               {t('profile.teamBuilder')}
             </Link>
           </div>
+        </div>
+        <div className="profile-header-center">
+          {raiseRecommendation && (
+            <Link
+              to={`/operator/${raiseRecommendation.operator.id}`}
+              className="raise-recommendation-card"
+              title={t('profile.raiseRecommendationTitle')}
+            >
+              <span className="raise-recommendation-label">{t('profile.raiseRecommendation')}</span>
+              <img
+                src={getImageUrl(raiseRecommendation.operator.profileImage || `/images/operators/${raiseRecommendation.operator.id}.png`)}
+                alt={getOperatorName((operators[raiseRecommendation.operator.id] ?? raiseRecommendation.operator) as Operator, language)}
+                className="raise-recommendation-image"
+              />
+              <span className="raise-recommendation-name">{getOperatorName((operators[raiseRecommendation.operator.id] ?? raiseRecommendation.operator) as Operator, language)}</span>
+              <span className="raise-recommendation-class">{translateClass(raiseRecommendation.operator.class)}</span>
+              <Stars rarity={raiseRecommendation.operator.rarity} />
+            </Link>
+          )}
         </div>
         <button onClick={handleLogout} className="logout-button">
           {t('profile.logout')}

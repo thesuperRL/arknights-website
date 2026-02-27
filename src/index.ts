@@ -46,6 +46,9 @@ import {
   type HopeCostEdit
 } from './is-hope-cost-edits';
 import { computeTop12AvgByClass, recommendSquadForIS } from './squad-recommendation';
+import { computeOperatorISScoreStandalone } from './is-scoring';
+import { getNichesForOperator } from './niche-list-utils';
+import { getOperatorTierInNiche } from './team-builder';
 import {
   initializeDataCache,
   getOperatorsData,
@@ -1036,6 +1039,61 @@ app.post('/api/auth/toggle-want-to-use', async (req, res) => {
   } catch (error: any) {
     console.error('Error toggling want to use:', error);
     res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to toggle want to use' });
+  }
+});
+
+// GET /api/profile/raise-recommendation - Best operator to raise next (owned but not in wantToUse, highest positive score)
+app.get('/api/profile/raise-recommendation', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    const session = getSession(sessionId);
+    if (!session) {
+      return res.status(401).json({ error: 'Invalid session' });
+    }
+    const account = await findAccountByUsername(session.email);
+    if (!account) {
+      return res.status(401).json({ error: 'Invalid session' });
+    }
+    const owned = account.ownedOperators ?? [];
+    const wantToUseSet = new Set(account.wantToUse ?? []);
+    const candidates = owned.filter((id: string) => !wantToUseSet.has(id));
+    if (candidates.length === 0) {
+      return res.json({ recommendedOperatorId: null, score: 0, operator: null });
+    }
+    const operatorsData = getOperatorsData();
+    const weightPools = getIsNicheWeightPools();
+    const getTier = (operatorId: string, niche: string) => getOperatorTierInNiche(operatorId, niche, true);
+    let bestId: string | null = null;
+    let bestScore = -Infinity;
+    for (const id of candidates) {
+      const op = operatorsData[id];
+      if (!op || typeof op !== 'object') continue;
+      const score = computeOperatorISScoreStandalone(id, false, weightPools, getNichesForOperator, getTier);
+      if (score > bestScore && score > 0) {
+        bestScore = score;
+        bestId = id;
+      }
+    }
+    if (bestId === null) {
+      return res.json({ recommendedOperatorId: null, score: 0, operator: null });
+    }
+    const op = operatorsData[bestId] as Record<string, unknown> | undefined;
+    const operator = op
+      ? {
+          id: bestId,
+          name: op.name ?? bestId,
+          class: op.class ?? '',
+          rarity: op.rarity ?? 3,
+          profileImage: op.profileImage ?? ''
+        }
+      : null;
+    return res.json({ recommendedOperatorId: bestId, score: bestScore, operator });
+  } catch (error: any) {
+    console.error('Error getting raise recommendation:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get recommendation' });
   }
 });
 
