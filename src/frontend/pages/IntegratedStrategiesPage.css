@@ -435,6 +435,39 @@
   margin-bottom: 0.5rem;
 }
 
+.hope-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.hope-step-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.25rem;
+  padding: 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary, #fff);
+  background: var(--bg-secondary, #3a3a4a);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.2));
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hope-step-btn:hover {
+  background: var(--accent-dim, rgba(100, 140, 200, 0.25));
+  border-color: var(--accent, rgba(100, 140, 200, 0.6));
+}
+
+.hope-step-btn:active {
+  transform: scale(0.98);
+}
+
 .hope-input {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -443,7 +476,6 @@
   padding: 0.5rem;
   font-size: 1rem;
   width: 120px;
-  margin-bottom: 1rem;
 }
 
 .hope-input:focus {
@@ -494,6 +526,19 @@
 
 .hope-cost-block .hope-cost-value {
   color: white;
+  font-size: 0.9rem;
+}
+
+.hope-cost-with-buttons .hope-cost-value-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.hope-cost-step {
+  min-width: 2rem;
+  height: 1.75rem;
+  padding: 0 0.35rem;
   font-size: 0.9rem;
 }
 

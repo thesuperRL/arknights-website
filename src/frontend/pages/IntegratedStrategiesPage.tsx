@@ -458,7 +458,14 @@ async function getIntegratedStrategiesRecommendation(
   weightPools: ISNicheWeightPools = DEFAULT_WEIGHT_POOLS,
   allSynergies: SynergyForIS[] = [],
   i18n?: I18nRecommendation,
-  hopeCostConfig?: { config: IsHopeCostsConfig | null; isId: string; squadId: string | null; autoPromoteClasses?: string[] },
+  hopeCostConfig?: {
+    config: IsHopeCostsConfig | null;
+    isId: string;
+    squadId: string | null;
+    autoPromoteClasses?: string[];
+    recruitHopeCostOverrides?: Record<number, number>;
+    promotionHopeCostOverrides?: Record<number, number>;
+  },
   onlyGlobalOperators: boolean = true
 ): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number; isPromotion?: boolean; isAutoPromoteOnRecruit?: boolean }> {
   const t = i18n?.t ?? ((k: string) => k);
@@ -468,13 +475,16 @@ async function getIntegratedStrategiesRecommendation(
   const getNicheName = i18n?.getNicheName ?? ((_filename: string, fallback: string) => fallback);
   const synergyI18n = i18n ? { t, interpolate, getNicheName } : undefined;
 
-  const getHopeCostForOperator = (operator: Operator): number => {
+  const recruitOverrides = hopeCostConfig?.recruitHopeCostOverrides ?? {};
+  const promoOverrides = hopeCostConfig?.promotionHopeCostOverrides ?? {};
+
+  const getBaseRecruitCostForOperator = (operator: Operator): number => {
+    const r = operator.rarity ?? 1;
     if (hopeCostConfig?.config && hopeCostConfig.isId && hopeCostConfig.config[hopeCostConfig.isId]) {
       const bySquad = hopeCostConfig.config[hopeCostConfig.isId];
       const squadKey = hopeCostConfig.squadId ?? 'default';
       const byRarity = bySquad[squadKey] ?? bySquad['default'];
       if (byRarity) {
-        const r = operator.rarity || 1;
         const rarityKey = r >= 4 ? String(r) : '4';
         const byClass = byRarity[rarityKey] as Record<string, number> | undefined;
         if (byClass && typeof byClass === 'object') {
@@ -483,17 +493,17 @@ async function getIntegratedStrategiesRecommendation(
         }
       }
     }
-    return hopeCosts?.[operator.rarity ?? 1] ?? DEFAULT_HOPE_BY_RARITY[operator.rarity ?? 1] ?? 0;
+    return hopeCosts?.[r] ?? DEFAULT_HOPE_BY_RARITY[r] ?? 0;
   };
 
-  const getPromotionCostForOperator = (operator: Operator): number => {
+  const getBasePromotionCostForOperator = (operator: Operator): number => {
+    const r = operator.rarity ?? 1;
     if (hopeCostConfig?.config && hopeCostConfig.isId && hopeCostConfig.config[hopeCostConfig.isId]) {
       const bySquad = hopeCostConfig.config[hopeCostConfig.isId];
       const squadKey = hopeCostConfig.squadId ?? 'default';
       const entry = bySquad[squadKey] ?? bySquad['default'];
       const prom = entry?.['promotionCost'] as Record<string, unknown> | undefined;
       if (prom && typeof prom === 'object') {
-        const r = operator.rarity || 1;
         const rarityKey = r >= 4 ? String(r) : '4';
         const byRarity = prom[rarityKey];
         if (byRarity && typeof byRarity === 'object' && !Array.isArray(byRarity)) {
@@ -508,7 +518,25 @@ async function getIntegratedStrategiesRecommendation(
     return 3;
   };
 
-  const getHopeCost = (rarity: number): number => hopeCosts?.[rarity] ?? DEFAULT_HOPE_BY_RARITY[rarity] ?? 0;
+  const getHopeCostForOperator = (operator: Operator): number => {
+    const r = operator.rarity ?? 1;
+    const base = getBaseRecruitCostForOperator(operator);
+    const delta = (r === 4 || r === 5 || r === 6) ? (recruitOverrides[r] ?? 0) : 0;
+    return Math.max(0, base + delta);
+  };
+
+  const getPromotionCostForOperator = (operator: Operator): number => {
+    const r = operator.rarity ?? 1;
+    const base = getBasePromotionCostForOperator(operator);
+    const delta = (r === 4 || r === 5 || r === 6) ? (promoOverrides[r] ?? 0) : 0;
+    return Math.max(0, base + delta);
+  };
+
+  const getHopeCost = (rarity: number): number => {
+    const base = hopeCosts?.[rarity] ?? DEFAULT_HOPE_BY_RARITY[rarity] ?? 0;
+    const delta = (rarity === 4 || rarity === 5 || rarity === 6) ? (recruitOverrides[rarity] ?? 0) : 0;
+    return Math.max(0, base + delta);
+  };
   const getActualHopeCost = (operator: Operator): number => getHopeCostForOperator(operator);
 
   // Temporarily add the recruitment operator to raised operators (considered owned & raised)
@@ -1069,19 +1097,24 @@ const IntegratedStrategiesPage: React.FC = () => {
   /** At most one squad selected; null = none. Only shown for titles that have squads (e.g. IS6). */
   const [selectedSquadId, setSelectedSquadId] = useState<string | null>(null);
   const [isHopeCostsConfig, setIsHopeCostsConfig] = useState<IsHopeCostsConfig | null>(null);
+  /** Delta added to recruit hope cost per rarity (4,5,6). +1 button adds 1 to all operators of that rarity. */
+  const [recruitHopeCostOverrides, setRecruitHopeCostOverrides] = useState<Record<number, number>>({});
+  /** Delta added to promotion hope cost per rarity (4,5,6). +1 button adds 1 to all operators of that rarity. */
+  const [promotionHopeCostOverrides, setPromotionHopeCostOverrides] = useState<Record<number, number>>({});
   const [squadRecommendationLoading, setSquadRecommendationLoading] = useState(false);
   const [squadRecommendation, setSquadRecommendation] = useState<{
     top12AvgByClass: Record<string, number>;
     recommendedSquad: { isId: string; squadId: string; reason: string } | null;
   } | null>(null);
 
-  const getHopeCostForOperator = (operator: Operator): number => {
+  /** Base recruit hope cost from config (per class, rarity, squad). No user delta. */
+  const getBaseRecruitCostForOperator = (operator: Operator): number => {
+    const r = operator.rarity ?? 1;
     if (isHopeCostsConfig && selectedISTitleId && isHopeCostsConfig[selectedISTitleId]) {
       const bySquad = isHopeCostsConfig[selectedISTitleId];
       const squadKey = selectedSquadId ?? 'default';
       const byRarity = bySquad[squadKey] ?? bySquad['default'];
       if (byRarity) {
-        const r = operator.rarity || 1;
         const rarityKey = r >= 4 ? String(r) : '4';
         const byClass = byRarity[rarityKey] as Record<string, number> | undefined;
         if (byClass && typeof byClass === 'object') {
@@ -1090,17 +1123,18 @@ const IntegratedStrategiesPage: React.FC = () => {
         }
       }
     }
-    return DEFAULT_HOPE_BY_RARITY[operator.rarity ?? 1] ?? 0;
+    return DEFAULT_HOPE_BY_RARITY[r] ?? 0;
   };
 
-  const getPromotionCostForOperator = (operator: Operator): number => {
+  /** Base promotion hope cost from config (per class, rarity, squad). No user delta. */
+  const getBasePromotionCostForOperator = (operator: Operator): number => {
+    const r = operator.rarity ?? 1;
     if (isHopeCostsConfig && selectedISTitleId && isHopeCostsConfig[selectedISTitleId]) {
       const bySquad = isHopeCostsConfig[selectedISTitleId];
       const squadKey = selectedSquadId ?? 'default';
       const entry = bySquad[squadKey] ?? bySquad['default'];
       const prom = entry?.['promotionCost'] as Record<string, unknown> | undefined;
       if (prom && typeof prom === 'object') {
-        const r = operator.rarity || 1;
         const rarityKey = r >= 4 ? String(r) : '4';
         const byRarity = prom[rarityKey];
         if (byRarity && typeof byRarity === 'object' && !Array.isArray(byRarity)) {
@@ -1113,6 +1147,22 @@ const IntegratedStrategiesPage: React.FC = () => {
       }
     }
     return 3;
+  };
+
+  /** Effective recruit cost = config cost (per class/rarity/squad) + user delta for that rarity. */
+  const getHopeCostForOperator = (operator: Operator): number => {
+    const r = operator.rarity ?? 1;
+    const base = getBaseRecruitCostForOperator(operator);
+    const delta = (r === 4 || r === 5 || r === 6) ? (recruitHopeCostOverrides[r] ?? 0) : 0;
+    return Math.max(0, base + delta);
+  };
+
+  /** Effective promotion cost = config cost (per class/rarity/squad) + user delta for that rarity. */
+  const getPromotionCostForOperator = (operator: Operator): number => {
+    const r = operator.rarity ?? 1;
+    const base = getBasePromotionCostForOperator(operator);
+    const delta = (r === 4 || r === 5 || r === 6) ? (promotionHopeCostOverrides[r] ?? 0) : 0;
+    return Math.max(0, base + delta);
   };
 
   const effectiveHopeByRarity = (): Record<number, number> => {
@@ -1136,7 +1186,10 @@ const IntegratedStrategiesPage: React.FC = () => {
     return { ...DEFAULT_HOPE_BY_RARITY };
   };
 
-  const getHopeCost = (rarity: number): number => effectiveHopeByRarity()[rarity] ?? 0;
+  const getHopeCost = (rarity: number): number => {
+    if (rarity === 4 || rarity === 5 || rarity === 6) return effectiveRecruitCost(rarity);
+    return effectiveHopeByRarity()[rarity] ?? 0;
+  };
 
   const getAutoPromoteClasses = (): string[] => {
     if (!isHopeCostsConfig || !selectedISTitleId || !isHopeCostsConfig[selectedISTitleId]) return [];
@@ -1211,6 +1264,20 @@ const IntegratedStrategiesPage: React.FC = () => {
     };
   };
 
+  /** Display/scalar effective recruit cost for rarity = config default + user delta (for UI row). */
+  const effectiveRecruitCost = (rarity: 4 | 5 | 6): number => {
+    const base = getHopeDisplayForRarity(rarity).defaultRecruit;
+    const delta = recruitHopeCostOverrides[rarity] ?? 0;
+    return Math.max(0, base + delta);
+  };
+
+  /** Display/scalar effective promotion cost for rarity = config default + user delta (for UI row). */
+  const effectivePromoCost = (rarity: 4 | 5 | 6): number => {
+    const base = getHopeDisplayForRarity(rarity).defaultPromo;
+    const delta = promotionHopeCostOverrides[rarity] ?? 0;
+    return Math.max(0, base + delta);
+  };
+
   useEffect(() => {
     if (user) {
       loadAllOperators();
@@ -1245,7 +1312,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     if (user && Object.keys(allOperators).length > 0 && !isInitialLoad) {
       saveISTeamState();
     }
-  }, [selectedOperators, currentHope, teamSize, user, allOperators, isInitialLoad]);
+  }, [selectedOperators, currentHope, teamSize, recruitHopeCostOverrides, promotionHopeCostOverrides, user, allOperators, isInitialLoad]);
 
   // Fetch squad recommendation when user is logged in and IS has squads (one request per IS; minimal backend load)
   // Use user?.email so we don't refetch when the user object reference changes (e.g. auth context re-render)
@@ -1376,12 +1443,20 @@ const IntegratedStrategiesPage: React.FC = () => {
         if (data) {
           if (loadOnlyHope) {
             if (data.currentHope !== undefined) setCurrentHope(data.currentHope);
+            if (data.recruitHopeCostOverrides && typeof data.recruitHopeCostOverrides === 'object') setRecruitHopeCostOverrides(data.recruitHopeCostOverrides);
+            if (data.promotionHopeCostOverrides && typeof data.promotionHopeCostOverrides === 'object') setPromotionHopeCostOverrides(data.promotionHopeCostOverrides);
             return;
           }
           
           // Restore everything (hope, costs, and operators)
           if (data.currentHope !== undefined) {
             setCurrentHope(data.currentHope);
+          }
+          if (data.recruitHopeCostOverrides && typeof data.recruitHopeCostOverrides === 'object') {
+            setRecruitHopeCostOverrides(data.recruitHopeCostOverrides);
+          }
+          if (data.promotionHopeCostOverrides && typeof data.promotionHopeCostOverrides === 'object') {
+            setPromotionHopeCostOverrides(data.promotionHopeCostOverrides);
           }
           
           // Restore team size
@@ -1744,7 +1819,10 @@ const IntegratedStrategiesPage: React.FC = () => {
           selectionCount: s.selectionCount || 1
         })),
         currentHope,
-        teamSize
+        teamSize,
+        // Cache cost edits with the IS team so they persist and restore with the team
+        recruitHopeCostOverrides: Object.keys(recruitHopeCostOverrides).length > 0 ? recruitHopeCostOverrides : undefined,
+        promotionHopeCostOverrides: Object.keys(promotionHopeCostOverrides).length > 0 ? promotionHopeCostOverrides : undefined
       };
       
       await apiFetch('/api/integrated-strategies/team', {
@@ -1772,9 +1850,11 @@ const IntegratedStrategiesPage: React.FC = () => {
         method: 'DELETE'
       });
       
-      // Reset local state to defaults
+      // Reset local state to defaults (including cost edits)
       setSelectedOperators([]);
       setCurrentHope(0);
+      setRecruitHopeCostOverrides({});
+      setPromotionHopeCostOverrides({});
       setTeamSize(8);
       setOptimalTeam(new Set());
       setRecommendation(null);
@@ -1980,7 +2060,14 @@ const IntegratedStrategiesPage: React.FC = () => {
           weightPoolsConfig,
           allSynergies,
           { t, interpolate, translateClass, getNicheName },
-          { config: isHopeCostsConfig, isId: selectedISTitleId, squadId: selectedSquadId, autoPromoteClasses: getAutoPromoteClasses() },
+          {
+            config: isHopeCostsConfig,
+            isId: selectedISTitleId,
+            squadId: selectedSquadId,
+            autoPromoteClasses: getAutoPromoteClasses(),
+            recruitHopeCostOverrides: Object.keys(recruitHopeCostOverrides).length > 0 ? recruitHopeCostOverrides : undefined,
+            promotionHopeCostOverrides: Object.keys(promotionHopeCostOverrides).length > 0 ? promotionHopeCostOverrides : undefined
+          },
           onlyGlobalOperators
         );
 
@@ -2227,45 +2314,127 @@ const IntegratedStrategiesPage: React.FC = () => {
 
         <div className="hope-input-container">
           <label htmlFor="hope-input" className="hope-label">{t('isTeamBuilder.currentHope')}:</label>
-          <input
-            id="hope-input"
-            type="number"
-            min="0"
-            value={currentHope}
-            onChange={(e) => {
-              const value = parseInt(e.target.value) || 0;
-              setCurrentHope(Math.max(0, value));
-              setRecommendation(null); // Clear recommendation when hope changes
-            }}
-            className="hope-input"
-          />
+          <div className="hope-input-row">
+            <button
+              type="button"
+              className="hope-step-btn"
+              onClick={() => {
+                setCurrentHope(prev => Math.max(0, prev - 1));
+                setRecommendation(null);
+              }}
+              aria-label={t('isTeamBuilder.hopeDecrease')}
+              title={t('isTeamBuilder.hopeDecrease')}
+            >
+              −1
+            </button>
+            <input
+              id="hope-input"
+              type="number"
+              min="0"
+              value={currentHope}
+              onChange={(e) => {
+                const value = parseInt(e.target.value) || 0;
+                setCurrentHope(Math.max(0, value));
+                setRecommendation(null); // Clear recommendation when hope changes
+              }}
+              className="hope-input"
+            />
+            <button
+              type="button"
+              className="hope-step-btn"
+              onClick={() => {
+                setCurrentHope(prev => prev + 1);
+                setRecommendation(null);
+              }}
+              aria-label={t('isTeamBuilder.hopeIncrease')}
+              title={t('isTeamBuilder.hopeIncrease')}
+            >
+              +1
+            </button>
+          </div>
           <div className="hope-requirements">
             {([6, 5, 4] as const).map(r => {
-              const { defaultRecruit, recruitDiffs, defaultPromo, promoDiffs } = getHopeDisplayForRarity(r);
+              const { recruitDiffs, promoDiffs } = getHopeDisplayForRarity(r);
               const stars = '★'.repeat(r);
+              const recruitCost = effectiveRecruitCost(r);
+              const promoCost = effectivePromoCost(r);
+              const recruitDelta = recruitHopeCostOverrides[r] ?? 0;
+              const promoDelta = promotionHopeCostOverrides[r] ?? 0;
               return (
                 <div key={r} className="hope-requirement hope-requirement-row">
                   <span className="hope-stars">{stars}</span>
-                  <span className="hope-cost hope-cost-block">
+                  <span className="hope-cost hope-cost-block hope-cost-with-buttons">
                     <span className="hope-cost-label">{t('isTeamBuilder.recruitLabel')}:</span>
-                    <span className="hope-cost-value">
-                      {defaultRecruit} {t('isTeamBuilder.hope')}
-                      {recruitDiffs.length > 0 && (
-                        <span className="hope-cost-diffs">
-                          {' '}({recruitDiffs.map(d => `${translateClass(d.class)} ${d.cost}`).join(', ')})
-                        </span>
-                      )}
+                    <span className="hope-cost-value-row">
+                      <button
+                        type="button"
+                        className="hope-step-btn hope-cost-step"
+                        aria-label={t('isTeamBuilder.recruitCostDecrease')}
+                        title={t('isTeamBuilder.recruitCostDecrease')}
+                        onClick={() => {
+                          setRecruitHopeCostOverrides(prev => ({ ...prev, [r]: (prev[r] ?? 0) - 1 }));
+                          setRecommendation(null);
+                        }}
+                      >
+                        −1
+                      </button>
+                      <span className="hope-cost-value">
+                        {recruitCost} {t('isTeamBuilder.hope')}
+                        {recruitDiffs.length > 0 && (
+                          <span className="hope-cost-diffs">
+                            {' '}({recruitDiffs.map(d => `${translateClass(d.class)} ${Math.max(0, d.cost + recruitDelta)}`).join(', ')})
+                          </span>
+                        )}
+                      </span>
+                      <button
+                        type="button"
+                        className="hope-step-btn hope-cost-step"
+                        aria-label={t('isTeamBuilder.recruitCostIncrease')}
+                        title={t('isTeamBuilder.recruitCostIncrease')}
+                        onClick={() => {
+                          setRecruitHopeCostOverrides(prev => ({ ...prev, [r]: (prev[r] ?? 0) + 1 }));
+                          setRecommendation(null);
+                        }}
+                      >
+                        +1
+                      </button>
                     </span>
                   </span>
-                  <span className="hope-cost hope-cost-block">
+                  <span className="hope-cost hope-cost-block hope-cost-with-buttons">
                     <span className="hope-cost-label">{t('isTeamBuilder.promotionCost')}:</span>
-                    <span className="hope-cost-value">
-                      {defaultPromo} {t('isTeamBuilder.hope')}
-                      {promoDiffs.length > 0 && (
-                        <span className="hope-cost-diffs">
-                          {' '}({promoDiffs.map(d => `${translateClass(d.class)} ${d.cost}`).join(', ')})
-                        </span>
-                      )}
+                    <span className="hope-cost-value-row">
+                      <button
+                        type="button"
+                        className="hope-step-btn hope-cost-step"
+                        aria-label={t('isTeamBuilder.promotionCostDecrease')}
+                        title={t('isTeamBuilder.promotionCostDecrease')}
+                        onClick={() => {
+                          setPromotionHopeCostOverrides(prev => ({ ...prev, [r]: (prev[r] ?? 0) - 1 }));
+                          setRecommendation(null);
+                        }}
+                      >
+                        −1
+                      </button>
+                      <span className="hope-cost-value">
+                        {promoCost} {t('isTeamBuilder.hope')}
+                        {promoDiffs.length > 0 && (
+                          <span className="hope-cost-diffs">
+                            {' '}({promoDiffs.map(d => `${translateClass(d.class)} ${Math.max(0, d.cost + promoDelta)}`).join(', ')})
+                          </span>
+                        )}
+                      </span>
+                      <button
+                        type="button"
+                        className="hope-step-btn hope-cost-step"
+                        aria-label={t('isTeamBuilder.promotionCostIncrease')}
+                        title={t('isTeamBuilder.promotionCostIncrease')}
+                        onClick={() => {
+                          setPromotionHopeCostOverrides(prev => ({ ...prev, [r]: (prev[r] ?? 0) + 1 }));
+                          setRecommendation(null);
+                        }}
+                      >
+                        +1
+                      </button>
                     </span>
                   </span>
                 </div>
@@ -2284,14 +2453,6 @@ const IntegratedStrategiesPage: React.FC = () => {
             <p className="hope-autopromote-line">
               {t('isTeamBuilder.autoPromoteClassesLabel')}: {getAutoPromoteClasses().map(c => translateClass(c)).join(', ')}
             </p>
-          )}
-        </div>
-        <div className="hope-cost-footer">
-          <span className="hope-cost-source">{t('isTeamBuilder.hopeCostFromConfig')}</span>
-          {user && (
-            <Link to="/integrated-strategies/settings" className="hope-settings-btn">
-              {t('isTeamBuilder.hopePromotionSettings')}
-            </Link>
           )}
         </div>
       </div>
