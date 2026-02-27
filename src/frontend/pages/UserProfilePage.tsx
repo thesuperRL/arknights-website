@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -47,11 +47,13 @@ const UserProfilePage: React.FC = () => {
   const [addSearchTerm, setAddSearchTerm] = useState('');
   const [addFilterRarity, setAddFilterRarity] = useState<number | null>(null);
   const [addFilterClass, setAddFilterClass] = useState<string | null>(null);
-  const [raiseRecommendation, setRaiseRecommendation] = useState<{
+  type RaiseRecItem = {
     recommendedOperatorId: string;
     score: number;
     operator: { id: string; name: string; class: string; rarity: number; profileImage: string };
-  } | null>(null);
+  };
+  const [raiseRecommendations, setRaiseRecommendations] = useState<RaiseRecItem[]>([]);
+  const [raiseRecommendationIndex, setRaiseRecommendationIndex] = useState(0);
 
   useEffect(() => {
     loadUserData();
@@ -60,28 +62,53 @@ const UserProfilePage: React.FC = () => {
 
   useEffect(() => {
     if (!user) {
-      setRaiseRecommendation(null);
+      setRaiseRecommendations([]);
+      setRaiseRecommendationIndex(0);
       return;
     }
     let cancelled = false;
     apiFetch('/api/profile/raise-recommendation')
-      .then((res) => (res.ok ? res.json() : { recommendedOperatorId: null, operator: null }))
+      .then((res) => (res.ok ? res.json() : { recommendations: [] }))
       .then((data) => {
-        if (!cancelled && data?.operator) {
-          setRaiseRecommendation({
-            recommendedOperatorId: data.recommendedOperatorId,
-            score: data.score ?? 0,
-            operator: data.operator
-          });
-        } else if (!cancelled) {
-          setRaiseRecommendation(null);
-        }
+        if (cancelled) return;
+        const list = Array.isArray(data?.recommendations) ? data.recommendations : (data?.operator ? [data] : []);
+        setRaiseRecommendations(list);
+        setRaiseRecommendationIndex(0);
       })
       .catch(() => {
-        if (!cancelled) setRaiseRecommendation(null);
+        if (!cancelled) setRaiseRecommendations([]);
       });
     return () => { cancelled = true; };
   }, [user?.email, user?.ownedOperators?.length, user?.wantToUse?.length]);
+
+  useEffect(() => {
+    if (raiseRecommendations.length > 0 && raiseRecommendationIndex >= raiseRecommendations.length) {
+      setRaiseRecommendationIndex(raiseRecommendations.length - 1);
+    }
+  }, [raiseRecommendations.length, raiseRecommendationIndex]);
+
+  const currentRaiseRecommendation = raiseRecommendations.length > 0 ? raiseRecommendations[raiseRecommendationIndex] ?? raiseRecommendations[0] : null;
+  const goPrevRaise = () => setRaiseRecommendationIndex((i) => (i <= 0 ? raiseRecommendations.length - 1 : i - 1));
+  const goNextRaise = () => setRaiseRecommendationIndex((i) => (i >= raiseRecommendations.length - 1 ? 0 : i + 1));
+
+  const raiseRecommendationsLengthRef = useRef(raiseRecommendations.length);
+  raiseRecommendationsLengthRef.current = raiseRecommendations.length;
+  useEffect(() => {
+    if (raiseRecommendations.length <= 1) return;
+    const onKey = (e: KeyboardEvent) => {
+      const len = raiseRecommendationsLengthRef.current;
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setRaiseRecommendationIndex((i) => (i <= 0 ? len - 1 : i - 1));
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setRaiseRecommendationIndex((i) => (i >= len - 1 ? 0 : i + 1));
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [raiseRecommendations.length]);
 
   const loadUserData = async () => {
     try {
@@ -346,22 +373,49 @@ const UserProfilePage: React.FC = () => {
           </div>
         </div>
         <div className="profile-header-center">
-          {raiseRecommendation && (
-            <Link
-              to={`/operator/${raiseRecommendation.operator.id}`}
-              className="raise-recommendation-card"
-              title={t('profile.raiseRecommendationTitle')}
-            >
-              <span className="raise-recommendation-label">{t('profile.raiseRecommendation')}</span>
-              <img
-                src={getImageUrl(raiseRecommendation.operator.profileImage || `/images/operators/${raiseRecommendation.operator.id}.png`)}
-                alt={getOperatorName((operators[raiseRecommendation.operator.id] ?? raiseRecommendation.operator) as Operator, language)}
-                className="raise-recommendation-image"
-              />
-              <span className="raise-recommendation-name">{getOperatorName((operators[raiseRecommendation.operator.id] ?? raiseRecommendation.operator) as Operator, language)}</span>
-              <span className="raise-recommendation-class">{translateClass(raiseRecommendation.operator.class)}</span>
-              <Stars rarity={raiseRecommendation.operator.rarity} />
-            </Link>
+          {currentRaiseRecommendation && (
+            <div className="raise-recommendation-carousel">
+              {raiseRecommendations.length > 1 && (
+                <button
+                  type="button"
+                  className="raise-recommendation-arrow raise-recommendation-arrow-prev"
+                  onClick={(e) => { e.preventDefault(); goPrevRaise(); }}
+                  aria-label={t('profile.raiseRecommendationPrev')}
+                  title={t('profile.raiseRecommendationPrev')}
+                >
+                  ←
+                </button>
+              )}
+              <Link
+                to={`/operator/${currentRaiseRecommendation.operator.id}`}
+                className="raise-recommendation-card"
+                title={t('profile.raiseRecommendationTitle')}
+              >
+                <span className="raise-recommendation-label">{t('profile.raiseRecommendation')}</span>
+                <img
+                  src={getImageUrl(currentRaiseRecommendation.operator.profileImage || `/images/operators/${currentRaiseRecommendation.operator.id}.png`)}
+                  alt={getOperatorName((operators[currentRaiseRecommendation.operator.id] ?? currentRaiseRecommendation.operator) as Operator, language)}
+                  className="raise-recommendation-image"
+                />
+                <span className="raise-recommendation-name">{getOperatorName((operators[currentRaiseRecommendation.operator.id] ?? currentRaiseRecommendation.operator) as Operator, language)}</span>
+                <span className="raise-recommendation-class">{translateClass(currentRaiseRecommendation.operator.class)}</span>
+                <Stars rarity={currentRaiseRecommendation.operator.rarity} />
+                {raiseRecommendations.length > 1 && (
+                  <span className="raise-recommendation-counter">{raiseRecommendationIndex + 1} / {raiseRecommendations.length}</span>
+                )}
+              </Link>
+              {raiseRecommendations.length > 1 && (
+                <button
+                  type="button"
+                  className="raise-recommendation-arrow raise-recommendation-arrow-next"
+                  onClick={(e) => { e.preventDefault(); goNextRaise(); }}
+                  aria-label={t('profile.raiseRecommendationNext')}
+                  title={t('profile.raiseRecommendationNext')}
+                >
+                  →
+                </button>
+              )}
+            </div>
           )}
         </div>
         <button onClick={handleLogout} className="logout-button">

@@ -648,6 +648,41 @@
   border-color: var(--primary-color);
 }
 
+.pathfinder-toggle-wrap {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+.pathfinder-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+.pathfinder-checkbox {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.pathfinder-label {
+  font-size: 0.95rem;
+}
+
+.pathfinder-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.55));
+}
+
 /* Advanced Options Section */
 .advanced-options-section-collapsible {
   margin-bottom: 1.5rem;

@@ -25,6 +25,46 @@
     min-width: 0;
 }
 
+.raise-recommendation-carousel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.raise-recommendation-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--text-light);
+    background: var(--bg-secondary, #2a2a3a);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.raise-recommendation-arrow:hover {
+    background: rgba(90, 238, 144, 0.15);
+    border-color: rgba(90, 238, 144, 0.4);
+    color: #5aee90;
+}
+
+.raise-recommendation-arrow:focus {
+    outline: none;
+    border-color: rgba(90, 238, 144, 0.5);
+}
+
+.raise-recommendation-counter {
+    font-size: 0.7rem;
+    color: var(--text-muted, rgba(255, 255, 255, 0.5));
+    margin-top: 0.15rem;
+}
+
 .raise-recommendation-card {
     display: flex;
     flex-direction: column;

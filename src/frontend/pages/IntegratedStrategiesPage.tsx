@@ -443,6 +443,8 @@ type I18nRecommendation = {
 type IsHopeCostsConfig = Record<string, Record<string, Record<string, Record<string, number>>>>;
 
 const DEFAULT_HOPE_BY_RARITY: Record<number, number> = { 6: 6, 5: 3, 4: 0, 3: 0, 2: 0, 1: 0 };
+/** IS6 Pathfinder: subtract this from recruit hope cost when active (min 0). */
+const PATHFINDER_HOPE_DISCOUNT = 2;
 
 async function getIntegratedStrategiesRecommendation(
   allOperators: Record<string, Operator>,
@@ -465,6 +467,8 @@ async function getIntegratedStrategiesRecommendation(
     autoPromoteClasses?: string[];
     recruitHopeCostOverrides?: Record<number, number>;
     promotionHopeCostOverrides?: Record<number, number>;
+    /** IS6 only: when true, subtract PATHFINDER_HOPE_DISCOUNT from recruit cost (min 0). */
+    pathfinderActive?: boolean;
   },
   onlyGlobalOperators: boolean = true
 ): Promise<{ recommendedOperator: Operator | null; reasoning: string; score: number; isPromotion?: boolean; isAutoPromoteOnRecruit?: boolean }> {
@@ -522,7 +526,11 @@ async function getIntegratedStrategiesRecommendation(
     const r = operator.rarity ?? 1;
     const base = getBaseRecruitCostForOperator(operator);
     const delta = (r === 4 || r === 5 || r === 6) ? (recruitOverrides[r] ?? 0) : 0;
-    return Math.max(0, base + delta);
+    let cost = Math.max(0, base + delta);
+    if (hopeCostConfig?.isId === 'IS6' && hopeCostConfig?.pathfinderActive) {
+      cost = Math.max(0, cost - PATHFINDER_HOPE_DISCOUNT);
+    }
+    return cost;
   };
 
   const getPromotionCostForOperator = (operator: Operator): number => {
@@ -1084,7 +1092,7 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [temporaryRecruitment, setTemporaryRecruitment] = useState<string>('');
   const [showTempRecruitmentModal, setShowTempRecruitmentModal] = useState(false);
   const [tempRecruitmentSearch, setTempRecruitmentSearch] = useState('');
-  const [currentHope, setCurrentHope] = useState<number>(0);
+  const [currentHope, setCurrentHope] = useState<number>(6);
   // Hope and promotion costs come from config (is-hope-costs.json) only; no user editing
   const [trashOperators, setTrashOperators] = useState<Set<string>>(new Set());
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
@@ -1101,6 +1109,8 @@ const IntegratedStrategiesPage: React.FC = () => {
   const [recruitHopeCostOverrides, setRecruitHopeCostOverrides] = useState<Record<number, number>>({});
   /** Delta added to promotion hope cost per rarity (4,5,6). +1 button adds 1 to all operators of that rarity. */
   const [promotionHopeCostOverrides, setPromotionHopeCostOverrides] = useState<Record<number, number>>({});
+  /** IS6 only: Pathfinder active — subtract 2 from every recruit hope cost (min 0). */
+  const [pathfinderActive, setPathfinderActive] = useState(false);
   const [squadRecommendationLoading, setSquadRecommendationLoading] = useState(false);
   const [squadRecommendation, setSquadRecommendation] = useState<{
     top12AvgByClass: Record<string, number>;
@@ -1149,12 +1159,16 @@ const IntegratedStrategiesPage: React.FC = () => {
     return 3;
   };
 
-  /** Effective recruit cost = config cost (per class/rarity/squad) + user delta for that rarity. */
+  /** Effective recruit cost = config cost (per class/rarity/squad) + user delta for that rarity. IS6 Pathfinder subtracts 2 when on. */
   const getHopeCostForOperator = (operator: Operator): number => {
     const r = operator.rarity ?? 1;
     const base = getBaseRecruitCostForOperator(operator);
     const delta = (r === 4 || r === 5 || r === 6) ? (recruitHopeCostOverrides[r] ?? 0) : 0;
-    return Math.max(0, base + delta);
+    let cost = Math.max(0, base + delta);
+    if (selectedISTitleId === 'IS6' && pathfinderActive) {
+      cost = Math.max(0, cost - PATHFINDER_HOPE_DISCOUNT);
+    }
+    return cost;
   };
 
   /** Effective promotion cost = config cost (per class/rarity/squad) + user delta for that rarity. */
@@ -1312,7 +1326,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     if (user && Object.keys(allOperators).length > 0 && !isInitialLoad) {
       saveISTeamState();
     }
-  }, [selectedOperators, currentHope, teamSize, recruitHopeCostOverrides, promotionHopeCostOverrides, user, allOperators, isInitialLoad]);
+  }, [selectedOperators, currentHope, teamSize, recruitHopeCostOverrides, promotionHopeCostOverrides, pathfinderActive, selectedISTitleId, user, allOperators, isInitialLoad]);
 
   // Fetch squad recommendation when user is logged in and IS has squads (one request per IS; minimal backend load)
   // Use user?.email so we don't refetch when the user object reference changes (e.g. auth context re-render)
@@ -1445,6 +1459,7 @@ const IntegratedStrategiesPage: React.FC = () => {
             if (data.currentHope !== undefined) setCurrentHope(data.currentHope);
             if (data.recruitHopeCostOverrides && typeof data.recruitHopeCostOverrides === 'object') setRecruitHopeCostOverrides(data.recruitHopeCostOverrides);
             if (data.promotionHopeCostOverrides && typeof data.promotionHopeCostOverrides === 'object') setPromotionHopeCostOverrides(data.promotionHopeCostOverrides);
+            if (data.pathfinderActive === true) setPathfinderActive(true);
             return;
           }
           
@@ -1458,6 +1473,7 @@ const IntegratedStrategiesPage: React.FC = () => {
           if (data.promotionHopeCostOverrides && typeof data.promotionHopeCostOverrides === 'object') {
             setPromotionHopeCostOverrides(data.promotionHopeCostOverrides);
           }
+          if (data.pathfinderActive === true) setPathfinderActive(true);
           
           // Restore team size
           if (data.teamSize !== undefined) {
@@ -1822,7 +1838,8 @@ const IntegratedStrategiesPage: React.FC = () => {
         teamSize,
         // Cache cost edits with the IS team so they persist and restore with the team
         recruitHopeCostOverrides: Object.keys(recruitHopeCostOverrides).length > 0 ? recruitHopeCostOverrides : undefined,
-        promotionHopeCostOverrides: Object.keys(promotionHopeCostOverrides).length > 0 ? promotionHopeCostOverrides : undefined
+        promotionHopeCostOverrides: Object.keys(promotionHopeCostOverrides).length > 0 ? promotionHopeCostOverrides : undefined,
+        pathfinderActive: selectedISTitleId === 'IS6' ? pathfinderActive : undefined
       };
       
       await apiFetch('/api/integrated-strategies/team', {
@@ -1850,11 +1867,12 @@ const IntegratedStrategiesPage: React.FC = () => {
         method: 'DELETE'
       });
       
-      // Reset local state to defaults (including cost edits)
+      // Reset local state to defaults (including cost edits and Pathfinder)
       setSelectedOperators([]);
-      setCurrentHope(0);
+      setCurrentHope(6);
       setRecruitHopeCostOverrides({});
       setPromotionHopeCostOverrides({});
+      setPathfinderActive(false);
       setTeamSize(8);
       setOptimalTeam(new Set());
       setRecommendation(null);
@@ -2066,7 +2084,8 @@ const IntegratedStrategiesPage: React.FC = () => {
             squadId: selectedSquadId,
             autoPromoteClasses: getAutoPromoteClasses(),
             recruitHopeCostOverrides: Object.keys(recruitHopeCostOverrides).length > 0 ? recruitHopeCostOverrides : undefined,
-            promotionHopeCostOverrides: Object.keys(promotionHopeCostOverrides).length > 0 ? promotionHopeCostOverrides : undefined
+            promotionHopeCostOverrides: Object.keys(promotionHopeCostOverrides).length > 0 ? promotionHopeCostOverrides : undefined,
+            pathfinderActive: selectedISTitleId === 'IS6' ? pathfinderActive : undefined
           },
           onlyGlobalOperators
         );
@@ -2498,6 +2517,23 @@ const IntegratedStrategiesPage: React.FC = () => {
             </button>
           </div>
         </div>
+        {selectedISTitleId === 'IS6' && (
+          <div className="pathfinder-toggle-wrap">
+            <label className="pathfinder-toggle-label">
+              <input
+                type="checkbox"
+                checked={pathfinderActive}
+                onChange={(e) => {
+                  setPathfinderActive(e.target.checked);
+                  setRecommendation(null);
+                }}
+                className="pathfinder-checkbox"
+              />
+              <span className="pathfinder-label">{t('isTeamBuilder.pathfinder')}</span>
+            </label>
+            <span className="pathfinder-hint">{t('isTeamBuilder.pathfinderHint')}</span>
+          </div>
+        )}
       </div>
 
       <div className="advanced-options-section-collapsible">
