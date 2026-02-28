@@ -76,7 +76,10 @@ async function downloadImage(imageUrl: string, destPath: string): Promise<void> 
     protocol.get(fullUrl, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; collectibles-scraper/1.0)' } }, (res) => {
       if (res.statusCode === 301 || res.statusCode === 302) {
         const loc = res.headers.location;
-        if (loc) return downloadImage(loc, destPath).then(resolve).catch(reject);
+        if (loc) {
+          downloadImage(loc, destPath).then(resolve).catch(reject);
+          return;
+        }
       }
       res.pipe(file);
       file.on('finish', () => { file.close(); resolve(); });
@@ -104,7 +107,7 @@ async function getCollectibleLinks(): Promise<string[]> {
   return Array.from(links);
 }
 
-function extractCollectiblePage($: cheerio.CheerioAPI, pageUrl: string, slug: string): Partial<CollectibleEntry> & { imageUrl?: string } {
+function extractCollectiblePage($: cheerio.CheerioAPI, _pageUrl: string, slug: string): Partial<CollectibleEntry> & { imageUrl?: string } {
   const name = $('.druid-title').first().text().trim() || slug.replace(/_/g, ' ');
   const $img = $('.druid-main-image').first();
   let imageUrl = $img.find('img').attr('src') || $img.attr('src');
