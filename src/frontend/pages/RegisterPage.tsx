@@ -48,14 +48,22 @@ const RegisterPage: React.FC = () => {
       const data = await response.json();
 
       if (!response.ok) {
+        const code = data?.code as string | undefined;
         const msg = data?.error || '';
-        if (msg.toLowerCase().includes('already taken') || msg.toLowerCase().includes('username')) {
-          setError(t('auth.usernameTaken'));
-        } else if (msg.toLowerCase().includes('character') || msg.toLowerCase().includes('letters')) {
-          setError(t('auth.usernameInvalid'));
-        } else {
-          setError(msg || t('auth.registerFailed'));
-        }
+        const codeToKey: Record<string, string> = {
+          username_required: 'auth.usernameRequired',
+          username_too_short: 'auth.usernameTooShort',
+          username_too_long: 'auth.usernameTooLong',
+          username_invalid_characters: 'auth.usernameInvalidCharacters',
+          username_taken: 'auth.usernameTaken',
+          password_required: 'auth.passwordRequired',
+          password_too_short: 'auth.passwordTooShort',
+          password_too_long: 'auth.passwordTooLong',
+          password_invalid_characters: 'auth.passwordInvalidCharacters',
+          validation_failed: 'auth.validationFailed',
+        };
+        const key = code && codeToKey[code] ? codeToKey[code] : null;
+        setError(key ? t(key) : (msg || t('auth.registerFailed')));
         setLoading(false);
         return;
       }

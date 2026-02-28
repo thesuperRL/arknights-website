@@ -33,14 +33,16 @@ const AllOperatorsPage: React.FC = () => {
   const [filterClass, setFilterClass] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [ownedOperators, setOwnedOperators] = useState<Set<string>>(new Set());
+  const [wantToUse, setWantToUse] = useState<Set<string>>(new Set());
+  const [quickAddLoading, setQuickAddLoading] = useState<string | null>(null);
 
   useEffect(() => {
     loadAllOperators();
-    loadOwnedOperators();
+    loadUserData();
   }, []);
 
   useEffect(() => {
-    loadOwnedOperators();
+    loadUserData();
   }, [user]);
 
   const loadAllOperators = async () => {
@@ -64,9 +66,10 @@ const AllOperatorsPage: React.FC = () => {
     }
   };
 
-  const loadOwnedOperators = async () => {
+  const loadUserData = async () => {
     if (!user) {
       setOwnedOperators(new Set());
+      setWantToUse(new Set());
       return;
     }
 
@@ -75,9 +78,46 @@ const AllOperatorsPage: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         setOwnedOperators(new Set(data.ownedOperators || []));
+        setWantToUse(new Set(data.wantToUse || []));
       }
     } catch (err) {
-      console.error('Error loading owned operators:', err);
+      console.error('Error loading user data:', err);
+    }
+  };
+
+  const handleQuickAdd = async (e: React.MouseEvent, operatorId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user || quickAddLoading) return;
+    setQuickAddLoading(operatorId);
+    try {
+      const response = await apiFetch('/api/auth/toggle-want-to-use', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ operatorId }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Failed to update');
+      setWantToUse(prev => {
+        const next = new Set(prev);
+        if (data.wantToUse) next.add(operatorId);
+        else next.delete(operatorId);
+        return next;
+      });
+      if (data.wantToUse) {
+        setOwnedOperators(prev => new Set(prev).add(operatorId));
+      } else {
+        setOwnedOperators(prev => {
+          const next = new Set(prev);
+          next.delete(operatorId);
+          return next;
+        });
+      }
+    } catch (err: any) {
+      console.error('Quick add error:', err);
+      alert(err.message || t('allOperators.quickAddError'));
+    } finally {
+      setQuickAddLoading(null);
     }
   };
 
@@ -201,10 +241,12 @@ const AllOperatorsPage: React.FC = () => {
           filteredOperators.map((operator) => {
             const isOwned = ownedOperators.has(operator.id);
             const rarityClass = getRarityClass(operator.rarity);
+            const showAsUnowned = user && !isOwned;
+            const showAsNonGlobal = user && !operator.global && !isOwned;
             return (
             <div
               key={operator.id}
-              className={`operator-card ${!operator.global && !isOwned ? 'non-global' : ''} ${rarityClass} ${!isOwned ? 'unowned' : ''}`}
+              className={`operator-card ${showAsNonGlobal ? 'non-global' : ''} ${rarityClass} ${showAsUnowned ? 'unowned' : ''}`}
             >
               <Link to={`/operator/${operator.id}`} className="operator-image-link">
                 <div className="operator-image-container">
@@ -228,6 +270,17 @@ const AllOperatorsPage: React.FC = () => {
               <div className="operator-class">
                 {translateClass(operator.class)} • {operator.rarity}{vocab('star')}
               </div>
+              {user && (
+                <button
+                  type="button"
+                  className={`quick-add-btn ${wantToUse.has(operator.id) ? 'raised' : ''}`}
+                  onClick={(e) => handleQuickAdd(e, operator.id)}
+                  disabled={quickAddLoading === operator.id}
+                  title={wantToUse.has(operator.id) ? t('profile.operatorIsRaisedTitle') : t('profile.markAsRaisedTitle')}
+                >
+                  {quickAddLoading === operator.id ? t('allOperators.quickAddLoading') : wantToUse.has(operator.id) ? t('profile.raisedLabel') : t('allOperators.quickAdd')}
+                </button>
+              )}
               {operator.niches && operator.niches.length > 0 && (
                 <div className="ranked-badge">{vocab('ranked')}</div>
               )}

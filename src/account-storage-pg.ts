@@ -165,14 +165,27 @@ export async function toggleWantToUse(identifier: string, operatorId: string): P
   if (!safeId) return false;
   const account = await findAccountByUsername(identifier);
   if (!account) return false;
-  const wantToUse = account.wantToUse ?? [];
+  const wantToUse = [...(account.wantToUse ?? [])];
+  const owned = [...(account.ownedOperators ?? [])];
   const idx = wantToUse.indexOf(safeId);
-  if (idx > -1) wantToUse.splice(idx, 1);
-  else wantToUse.push(safeId);
-  await getPool().query(
-    `UPDATE accounts SET want_to_use = $1 WHERE id = $2`,
-    [JSON.stringify(wantToUse), account.id]
-  );
+  if (idx > -1) {
+    // Removing from wantToUse (second click): remove from both wantToUse and owned
+    wantToUse.splice(idx, 1);
+    const ownedIdx = owned.indexOf(safeId);
+    if (ownedIdx > -1) owned.splice(ownedIdx, 1);
+    await getPool().query(
+      `UPDATE accounts SET owned_operators = $1, want_to_use = $2 WHERE id = $3`,
+      [JSON.stringify(owned), JSON.stringify(wantToUse), account.id]
+    );
+  } else {
+    // Adding to wantToUse (e.g. quick add): ensure operator is in owned first
+    if (!owned.includes(safeId)) owned.push(safeId);
+    wantToUse.push(safeId);
+    await getPool().query(
+      `UPDATE accounts SET owned_operators = $1, want_to_use = $2 WHERE id = $3`,
+      [JSON.stringify(owned), JSON.stringify(wantToUse), account.id]
+    );
+  }
   return true;
 }
 

@@ -1,0 +1,2 @@
+# Collectibles images are written here by the scrape-collectibles workflow (npm run scrape:collectibles).
+# Do not remove this folder; the Vite preserve-images plugin keeps all of public/images during build.

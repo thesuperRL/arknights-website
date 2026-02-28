@@ -17,6 +17,7 @@
     "scrape": "ts-node src/scraper.ts",
     "scrape:all": "ts-node src/scrape-all.ts",
     "scrape:modules": "ts-node src/scrape-modules.ts",
+    "scrape:collectibles": "ts-node src/scrape-collectibles.ts",
     "validate:niches": "ts-node src/validate-niche-lists.ts",
     "fix:global": "ts-node src/fix-global-status.ts",
     "rename:internalname": "ts-node src/rename-characters-to-internalname.ts",

@@ -14,7 +14,7 @@ import { Rating } from './niche-list-types';
 import { keepPeakEntriesOnly, keepPeakInstanceOnly } from './peak-level-utils';
 import { loadAllSynergies, loadSynergy } from './synergy-utils';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
-import { createAccount, findAccountByUsername, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse, initializeDbConnection } from './account-storage';
+import { createAccount, findAccountByUsername, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse, getWantToUse, initializeDbConnection } from './account-storage';
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
 import {
   getAccountTeamData,
@@ -806,10 +806,47 @@ app.post('/api/auth/register', async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    const rawUsername = typeof username === 'string' ? username.trim() : '';
+    const rawPassword = typeof password === 'string' ? password : '';
+
+    if (!rawUsername) {
+      res.status(400).json({ error: 'Username is required', code: 'username_required' });
+      return;
+    }
+    if (rawUsername.length < 2) {
+      res.status(400).json({ error: 'Username must be at least 2 characters', code: 'username_too_short' });
+      return;
+    }
+    if (rawUsername.length > 64) {
+      res.status(400).json({ error: 'Username must be at most 64 characters', code: 'username_too_long' });
+      return;
+    }
+    if (!/^[a-zA-Z0-9_-]+$/.test(rawUsername)) {
+      res.status(400).json({ error: 'Username may only contain letters, numbers, underscores and hyphens', code: 'username_invalid_characters' });
+      return;
+    }
+
+    if (!rawPassword) {
+      res.status(400).json({ error: 'Password is required', code: 'password_required' });
+      return;
+    }
+    if (rawPassword.length < 8) {
+      res.status(400).json({ error: 'Password must be at least 8 characters', code: 'password_too_short' });
+      return;
+    }
+    if (rawPassword.length > 128) {
+      res.status(400).json({ error: 'Password must be at most 128 characters', code: 'password_too_long' });
+      return;
+    }
+    if (/[\x00-\x1F\x7F]/.test(rawPassword)) {
+      res.status(400).json({ error: 'Password must not contain control characters', code: 'password_invalid_characters' });
+      return;
+    }
+
     const sanitizedUsername = sanitizeUsername(username);
     const validPassword = validatePassword(password);
     if (!sanitizedUsername || !validPassword) {
-      res.status(400).json({ error: 'Username and password are required (password 8–128 chars, no control characters)' });
+      res.status(400).json({ error: 'Invalid username or password', code: 'validation_failed' });
       return;
     }
 
@@ -833,7 +870,12 @@ app.post('/api/auth/register', async (req, res) => {
     });
   } catch (error: any) {
     console.error('Error registering account:', error);
-    res.status(500).json({ error: sanitizeErrorMessage(error) || 'Registration failed' });
+    const msg = sanitizeErrorMessage(error) || 'Registration failed';
+    if (msg.toLowerCase().includes('already taken')) {
+      res.status(409).json({ error: msg, code: 'username_taken' });
+      return;
+    }
+    res.status(500).json({ error: msg });
   }
 });
 
@@ -1112,6 +1154,15 @@ app.post('/api/team/build', async (req, res) => {
 
     const preferences: TeamPreferences = req.body.preferences || getDefaultPreferences();
     const lockedOperatorIds: string[] = sanitizeOperatorIdList(req.body.lockedOperatorIds);
+    const raisedIds = await getWantToUse(session.email);
+    if (raisedIds.length < 12) {
+      res.status(400).json({
+        error: 'You don\'t have enough operators added to team. Add at least 12 raised operators in Profile.',
+        code: 'not_enough_raised',
+        raisedCount: raisedIds.length,
+      });
+      return;
+    }
     const result = await buildTeam(session.email, preferences, lockedOperatorIds);
 
     if (useTeamDataDb()) {

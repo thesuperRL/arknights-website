@@ -115,16 +115,47 @@
     max-width: 100%;
 }
 
-/* Ranked/Unranked badges (All-Operators only) */
+.quick-add-btn {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid rgba(90, 238, 144, 0.5);
+    background: rgba(90, 238, 144, 0.12);
+    color: #5aee90;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.quick-add-btn:hover:not(:disabled) {
+    background: rgba(90, 238, 144, 0.25);
+    border-color: rgba(90, 238, 144, 0.7);
+}
+
+.quick-add-btn.raised {
+    background: rgba(90, 238, 144, 0.25);
+    border-color: rgba(90, 238, 144, 0.6);
+    color: #7affaa;
+}
+
+.quick-add-btn:disabled {
+    opacity: 0.8;
+    cursor: wait;
+}
+
+/* Ranked/Unranked badges (All-Operators only) – distinct from quick-add green */
 .all-operators-page .ranked-badge,
 .ranked-badge {
     font-size: 0.65rem;
     padding: 0.125rem 0.375rem;
     border-radius: 3px;
     display: inline-block;
-    background: rgba(90, 238, 144, 0.2);
-    color: #5aee90;
-    border: 1px solid rgba(90, 238, 144, 0.4);
+    background: rgba(100, 149, 237, 0.25);
+    color: #7eb3ff;
+    border: 1px solid rgba(100, 149, 237, 0.5);
     margin-top: 0.0625rem;
 }
 

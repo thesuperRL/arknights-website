@@ -53,7 +53,7 @@ interface Operator {
 const TeamBuilderPage: React.FC = () => {
   const { user } = useAuth();
   const { language } = useLanguage();
-  const { t, getNicheName, translateClass } = useTranslation();
+  const { t, getNicheName, translateClass, interpolate } = useTranslation();
   const [preferences, setPreferences] = useState<TeamPreferences | null>(null);
   const [allNiches, setAllNiches] = useState<Array<{filename: string; displayName: string}>>([]);
   const [nicheFilenameMap, setNicheFilenameMap] = useState<Record<string, string>>({});
@@ -476,11 +476,18 @@ const TeamBuilderPage: React.FC = () => {
         body: JSON.stringify({ preferences, lockedOperatorIds }),
       });
       
-      if (!response.ok) {
-        throw new Error(t('teamBuilder.failedBuildTeam'));
-      }
-      
       const data = await response.json();
+
+      if (!response.ok) {
+        if (data?.code === 'not_enough_raised') {
+          setError(interpolate(t('teamBuilder.notEnoughOperatorsAdded'), { count: data.raisedCount ?? 0 }));
+        } else {
+          setError(data?.error || t('teamBuilder.failedBuildTeam'));
+        }
+        setLoading(false);
+        return;
+      }
+
       setTeamResult(data);
       setOriginalTeam([...data.team]); // Store original generated team
       setModifiedTeam(null); // Reset modified team when building new team
@@ -490,6 +497,8 @@ const TeamBuilderPage: React.FC = () => {
       setShowPreferences(false);
     } catch (err: any) {
       setError(err.message || t('teamBuilder.failedBuildTeam'));
+      setLoading(false);
+      return;
     } finally {
       setLoading(false);
     }
