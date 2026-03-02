@@ -135,7 +135,8 @@ function extractCollectiblePage($: cheerio.CheerioAPI, _pageUrl: string, slug: s
     });
   }
 
-  const description = $('.quote.desc').first().text().trim() || $('.druid-desc, [class*="desc"]').first().text().trim() || '';
+  let description = $('.quote.desc').first().text().trim() || $('.druid-desc, [class*="desc"]').first().text().trim() || '';
+  if (description.startsWith('Item description')) description = description.slice('Item description'.length).trim();
 
   return { name, description, isVersions, imageUrl };
 }
