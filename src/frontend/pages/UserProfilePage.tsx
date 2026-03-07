@@ -606,6 +606,7 @@ const UserProfilePage: React.FC = () => {
             ) : (
               <>
                 <p className="profile-import-desc">{t('profile.importDesc')}</p>
+                <p className="profile-import-note">{t('profile.importKroosterNote')}</p>
                 <div className="profile-import-row">
                   <input
                     type="email"
