@@ -7,6 +7,9 @@ import bcrypt from 'bcrypt';
 import { getPool, closePool } from './pg-pool';
 import { sanitizeIdentifier, sanitizeOperatorId } from './sql-sanitize';
 
+/** Per-operator progression: elite (0–2), optional level, optional module id -> level */
+export type RosterOperatorData = { elite: number; level?: number; modules?: Record<string, number> };
+
 export interface LocalAccount {
   id: number;
   username: string;
@@ -16,6 +19,8 @@ export interface LocalAccount {
   lastLogin?: string;
   ownedOperators?: string[];
   wantToUse?: string[];
+  /** Operator id -> { elite, level?, modules? } from game import */
+  rosterData?: Record<string, RosterOperatorData>;
 }
 
 function parseJsonArray(val: unknown): string[] {
@@ -32,6 +37,20 @@ function parseJsonArray(val: unknown): string[] {
   return [];
 }
 
+function parseRosterData(val: unknown): Record<string, RosterOperatorData> | undefined {
+  if (val == null) return undefined;
+  if (typeof val === 'object' && val !== null && !Array.isArray(val)) return val as Record<string, RosterOperatorData>;
+  if (typeof val === 'string') {
+    try {
+      const parsed = JSON.parse(val);
+      return typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed) ? parsed : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+  return undefined;
+}
+
 function rowToAccount(row: {
   id: number;
   username: string;
@@ -41,6 +60,7 @@ function rowToAccount(row: {
   last_login: Date | null;
   owned_operators: unknown;
   want_to_use: unknown;
+  roster_data?: unknown;
 }): LocalAccount {
   return {
     id: row.id,
@@ -51,6 +71,7 @@ function rowToAccount(row: {
     lastLogin: row.last_login ? new Date(row.last_login).toISOString() : undefined,
     ownedOperators: parseJsonArray(row.owned_operators),
     wantToUse: parseJsonArray(row.want_to_use),
+    rosterData: parseRosterData(row.roster_data),
   };
 }
 
@@ -63,7 +84,7 @@ export async function findAccountByUsername(identifier: string): Promise<LocalAc
   const normalized = sanitizeIdentifier(identifier);
   if (!normalized) return null;
   const res = await getPool().query(
-    `SELECT id, username, email, password_hash, created_at, last_login, owned_operators, want_to_use
+    `SELECT id, username, email, password_hash, created_at, last_login, owned_operators, want_to_use, roster_data
      FROM accounts
      WHERE LOWER(username) = $1 OR (email IS NOT NULL AND LOWER(email) = $1)`,
     [normalized]
@@ -203,7 +224,7 @@ export async function deleteAccount(identifier: string): Promise<boolean> {
 
 export async function loadAccounts(): Promise<Record<string, LocalAccount>> {
   const res = await getPool().query(
-    `SELECT id, username, email, password_hash, created_at, last_login, owned_operators, want_to_use FROM accounts`
+    `SELECT id, username, email, password_hash, created_at, last_login, owned_operators, want_to_use, roster_data FROM accounts`
   );
   const out: Record<string, LocalAccount> = {};
   for (const row of res.rows) {
@@ -238,6 +259,46 @@ BEGIN
 END $$;
 `;
 
+const MIGRATE_ROSTER_DATA_SQL = `
+ALTER TABLE accounts ADD COLUMN IF NOT EXISTS roster_data JSONB NULL;
+`;
+
+/** Set owned operators and roster data (elite/modules) after import. Merges with existing owned and rosterData. */
+export async function setAccountRoster(
+  identifier: string,
+  ownedOperatorIds: string[],
+  rosterData: Record<string, RosterOperatorData>
+): Promise<boolean> {
+  const account = await findAccountByUsername(identifier);
+  if (!account) return false;
+  const mergedOwned = [...new Set([...(account.ownedOperators ?? []), ...ownedOperatorIds])];
+  const mergedRoster: Record<string, RosterOperatorData> = { ...(account.rosterData ?? {}) };
+  for (const [opId, data] of Object.entries(rosterData)) {
+    mergedRoster[opId] = data;
+  }
+  await getPool().query(
+    `UPDATE accounts SET owned_operators = $1, roster_data = $2 WHERE id = $3`,
+    [JSON.stringify(mergedOwned), JSON.stringify(mergedRoster), account.id]
+  );
+  return true;
+}
+
+/** Replace owned, wantToUse, and rosterData entirely (used after user confirms import). */
+export async function replaceAccountRoster(
+  identifier: string,
+  ownedOperatorIds: string[],
+  wantToUseIds: string[],
+  rosterData: Record<string, RosterOperatorData>
+): Promise<boolean> {
+  const account = await findAccountByUsername(identifier);
+  if (!account) return false;
+  await getPool().query(
+    `UPDATE accounts SET owned_operators = $1, want_to_use = $2, roster_data = $3 WHERE id = $4`,
+    [JSON.stringify(ownedOperatorIds), JSON.stringify(wantToUseIds), JSON.stringify(rosterData), account.id]
+  );
+  return true;
+}
+
 export async function initializeDbConnection(): Promise<void> {
   try {
     console.log('🔄 Initializing Heroku Postgres account storage...');
@@ -245,6 +306,7 @@ export async function initializeDbConnection(): Promise<void> {
     const p = getPool();
     await p.query(CREATE_TABLE_SQL);
     await p.query(MIGRATE_LEGACY_SQL);
+    await p.query(MIGRATE_ROSTER_DATA_SQL);
     await p.query('CREATE UNIQUE INDEX IF NOT EXISTS accounts_username_lower_idx ON accounts (LOWER(username))');
     const countRes = await p.query('SELECT COUNT(*)::int AS c FROM accounts');
     const count = countRes.rows[0]?.c ?? 0;

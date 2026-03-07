@@ -14,7 +14,10 @@ import { Rating } from './niche-list-types';
 import { keepPeakEntriesOnly, keepPeakInstanceOnly } from './peak-level-utils';
 import { loadAllSynergies, loadSynergy } from './synergy-utils';
 import { generateSessionId, setSession, getSession, deleteSession } from './auth-utils';
-import { createAccount, findAccountByUsername, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse, getWantToUse, initializeDbConnection } from './account-storage';
+import { createAccount, findAccountByUsername, verifyPassword, updateLastLogin, addOperatorToAccount, removeOperatorFromAccount, toggleWantToUse, getWantToUse, setAccountRoster, replaceAccountRoster, initializeDbConnection } from './account-storage';
+import type { RosterOperatorData } from './account-storage';
+import { sendTokenToMail, getGameData, getGameDataWithToken } from './yostar-auth';
+import type { YostarServer } from './arknights-api-types';
 import { buildTeam, getDefaultPreferences, TeamPreferences } from './team-builder';
 import {
   getAccountTeamData,
@@ -793,7 +796,8 @@ app.get('/api/auth/user', async (req, res) => {
       nickname: account.username,
       ownedOperators,
       raisedOperators, // wantToUse field contains raised operators
-      wantToUse
+      wantToUse,
+      rosterData: account.rosterData ?? {}
     });
   } catch (error: any) {
     console.error('Error getting user data:', error);
@@ -1134,6 +1138,243 @@ app.get('/api/profile/raise-recommendation', async (req, res) => {
   } catch (error: any) {
     console.error('Error getting raise recommendation:', error);
     return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to get recommendation' });
+  }
+});
+
+/** Build map from game charId (internalName or characters) and our short id -> our operator id for import. */
+function buildCharIdToOurIdMap(): Map<string, string> {
+  const operatorsData = getOperatorsData();
+  const map = new Map<string, string>();
+  for (const [id, op] of Object.entries(operatorsData)) {
+    if (op && typeof op === 'object') {
+      map.set(id, id);
+      const internal = (op as Record<string, unknown>).internalName;
+      if (typeof internal === 'string') map.set(internal, id);
+      // 3-star (and some other) operator JSON uses "characters" for the game charId instead of internalName
+      const characters = (op as Record<string, unknown>).characters;
+      if (typeof characters === 'string') map.set(characters, id);
+    }
+  }
+  return map;
+}
+
+/** Parse Krooster-style (troop.chars) or simple { operators: [...] } import payload into our format. */
+function parseImportPayload(
+  body: unknown,
+  charIdToOurId: Map<string, string>
+): { ownedIds: string[]; rosterData: Record<string, RosterOperatorData> } {
+  const rosterData: Record<string, RosterOperatorData> = {};
+  const ownedIds: string[] = [];
+
+  // Krooster / game format: { troop: { chars: { [instId]: { charId, evolvePhase, level, equip, tmpl?, ... } } } }
+  const troop = (body as Record<string, unknown>)?.troop as Record<string, unknown> | undefined;
+  const chars = troop?.chars as Record<string, Record<string, unknown>> | undefined;
+  if (chars && typeof chars === 'object') {
+    for (const _instId of Object.keys(chars)) {
+      const value = chars[_instId];
+      if (!value || typeof value !== 'object') continue;
+      const charId = value.charId as string | undefined;
+      const evolvePhase = typeof value.evolvePhase === 'number' ? value.evolvePhase : 0;
+      const level = typeof value.level === 'number' ? value.level : undefined;
+      const equip = value.equip as Record<string, { level?: number; locked?: number }> | undefined;
+      const modules: Record<string, number> = {};
+      if (equip && typeof equip === 'object') {
+        for (const [modKey, modVal] of Object.entries(equip)) {
+          if (modVal && typeof modVal === 'object' && modVal.locked === 0 && typeof modVal.level === 'number') {
+            modules[modKey] = modVal.level;
+          }
+        }
+      }
+      const ourId = charId ? charIdToOurId.get(charId) : undefined;
+      if (ourId) {
+        ownedIds.push(ourId);
+        rosterData[ourId] = { elite: evolvePhase, level, modules: Object.keys(modules).length ? modules : undefined };
+      }
+      // Amiya-style alts: value.tmpl[altKey] has same shape
+      const tmpl = value.tmpl as Record<string, Record<string, unknown>> | undefined;
+      if (tmpl && typeof tmpl === 'object') {
+        for (const altKey of Object.keys(tmpl)) {
+          const altValue = tmpl[altKey];
+          if (!altValue || typeof altValue !== 'object') continue;
+          const altEvolve = typeof altValue.evolvePhase === 'number' ? altValue.evolvePhase : 0;
+          const altLevel = typeof altValue.level === 'number' ? altValue.level : undefined;
+          const altEquip = altValue.equip as Record<string, { level?: number; locked?: number }> | undefined;
+          const altModules: Record<string, number> = {};
+          if (altEquip && typeof altEquip === 'object') {
+            for (const [modKey, modVal] of Object.entries(altEquip)) {
+              if (modVal && typeof modVal === 'object' && modVal.locked === 0 && typeof modVal.level === 'number') {
+                altModules[modKey] = modVal.level;
+              }
+            }
+          }
+          const altOurId = charIdToOurId.get(altKey);
+          if (altOurId) {
+            ownedIds.push(altOurId);
+            rosterData[altOurId] = { elite: altEvolve, level: altLevel, modules: Object.keys(altModules).length ? altModules : undefined };
+          }
+        }
+      }
+    }
+    return { ownedIds: [...new Set(ownedIds)], rosterData };
+  }
+
+  // Simple format: { operators: [ { id, elite, level?, modules? } ] }
+  const operators = (body as Record<string, unknown>)?.operators;
+  if (Array.isArray(operators)) {
+    for (const item of operators) {
+      if (!item || typeof item !== 'object') continue;
+      const rawId = (item as Record<string, unknown>).id as string | undefined;
+      const elite = typeof (item as Record<string, unknown>).elite === 'number' ? (item as Record<string, unknown>).elite as number : 0;
+      const level = typeof (item as Record<string, unknown>).level === 'number' ? (item as Record<string, unknown>).level as number : undefined;
+      const mods = (item as Record<string, unknown>).modules as Record<string, number> | undefined;
+      const ourId = rawId ? charIdToOurId.get(rawId) : undefined;
+      if (ourId) {
+        ownedIds.push(ourId);
+        rosterData[ourId] = {
+          elite: Math.min(2, Math.max(0, elite)),
+          level,
+          modules: mods && typeof mods === 'object' ? mods : undefined
+        };
+      }
+    }
+    return { ownedIds: [...new Set(ownedIds)], rosterData };
+  }
+
+  return { ownedIds: [], rosterData: {} };
+}
+
+// POST /api/arknights/send-code - Send 6-digit code to email (Yostar account bound in-game)
+app.post('/api/arknights/send-code', async (req, res) => {
+  try {
+    const mail = typeof req.body?.mail === 'string' ? req.body.mail.trim() : '';
+    const server = (req.body?.server === 'jp' || req.body?.server === 'kr' ? req.body.server : 'en') as YostarServer;
+    if (!mail) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+    const success = await sendTokenToMail(mail, server);
+    if (!success) {
+      return res.status(502).json({ error: 'Failed to send code. Check email is bound in Arknights User Center (Bind Email).' });
+    }
+    return res.json({ success: true });
+  } catch (error: any) {
+    console.error('Error sending Arknights auth code:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to send code' });
+  }
+});
+
+// POST /api/arknights/get-data - Exchange email+code (or saved token) for game data and merge into account
+app.post('/api/arknights/get-data', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) return res.status(401).json({ error: 'Not authenticated' });
+    const session = getSession(sessionId);
+    if (!session) return res.status(401).json({ error: 'Invalid session' });
+
+    const server = (req.body?.server === 'jp' || req.body?.server === 'kr' ? req.body.server : 'en') as YostarServer;
+    let userData: Awaited<ReturnType<typeof getGameData>> = null;
+
+    if (req.body?.token && typeof req.body.token === 'object' && req.body.token.uid && req.body.token.token && req.body.token.deviceId) {
+      userData = await getGameDataWithToken(
+        { deviceId: req.body.token.deviceId, token: { uid: req.body.token.uid, token: req.body.token.token, result: 0 } },
+        server
+      );
+    } else {
+      const mail = typeof req.body?.mail === 'string' ? req.body.mail.trim() : '';
+      const code = typeof req.body?.code === 'string' ? req.body.code.trim() : '';
+      if (!mail || !code) {
+        return res.status(400).json({ error: 'Email and code are required (or provide saved token)' });
+      }
+      userData = await getGameData(mail, code, server);
+    }
+
+    if (!userData) {
+      return res.status(502).json({ error: 'Failed to fetch game data. Wrong code or server?' });
+    }
+    if (userData.status?.level === 1) {
+      return res.status(400).json({
+        error: 'Level 1 account: this email was not bound in your main account. Bind Email in Arknights in-game User Center first.',
+        code: 'level1_account',
+      });
+    }
+
+    const charIdToOurId = buildCharIdToOurIdMap();
+    const { ownedIds, rosterData } = parseImportPayload(userData, charIdToOurId);
+    const operatorsData = getOperatorsData();
+    const proposedWantToUse = ownedIds.filter((id) => {
+      const elite = rosterData[id]?.elite ?? 0;
+      const level = rosterData[id]?.level ?? 0;
+      const op = operatorsData[id];
+      const rarity = op && typeof op === 'object' && typeof (op as Record<string, unknown>).rarity === 'number'
+        ? (op as Record<string, unknown>).rarity as number
+        : 0;
+      if (elite === 2) return true;
+      if (rarity === 3 && elite === 1 && level >= 55) return true;
+      return false;
+    });
+    return res.json({
+      success: true,
+      proposedOwned: ownedIds,
+      proposedWantToUse,
+      rosterData,
+      tokenData: (userData as { tokenData?: unknown }).tokenData ?? undefined,
+    });
+  } catch (error: any) {
+    console.error('Error fetching Arknights data:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to fetch game data' });
+  }
+});
+
+// POST /api/profile/apply-import-roster - Replace owned/wantToUse/rosterData with proposed import (after user confirms)
+app.post('/api/profile/apply-import-roster', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) return res.status(401).json({ error: 'Not authenticated' });
+    const session = getSession(sessionId);
+    if (!session) return res.status(401).json({ error: 'Invalid session' });
+    const body = req.body;
+    if (!body || typeof body !== 'object') {
+      return res.status(400).json({ error: 'Invalid body: expected { ownedIds, wantToUseIds, rosterData }' });
+    }
+    const ownedIds = Array.isArray(body.ownedIds) ? body.ownedIds.filter((id: unknown) => typeof id === 'string') : [];
+    const wantToUseIds = Array.isArray(body.wantToUseIds) ? body.wantToUseIds.filter((id: unknown) => typeof id === 'string') : [];
+    const rosterData = body.rosterData && typeof body.rosterData === 'object' ? body.rosterData as Record<string, RosterOperatorData> : {};
+    const ok = await replaceAccountRoster(session.email, ownedIds, wantToUseIds, rosterData);
+    if (!ok) return res.status(500).json({ error: 'Failed to apply import' });
+    return res.json({ success: true });
+  } catch (error: any) {
+    console.error('Error applying import roster:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to apply import' });
+  }
+});
+
+// POST /api/profile/import-roster - Import operators + elite/modules from game-style JSON (Krooster format or simple)
+app.post('/api/profile/import-roster', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    const session = getSession(sessionId);
+    if (!session) {
+      return res.status(401).json({ error: 'Invalid session' });
+    }
+    const body = req.body;
+    if (!body || typeof body !== 'object') {
+      return res.status(400).json({ error: 'Invalid body: expected JSON object (Krooster export or { operators: [...] })' });
+    }
+    const charIdToOurId = buildCharIdToOurIdMap();
+    const { ownedIds, rosterData } = parseImportPayload(body, charIdToOurId);
+    if (ownedIds.length === 0) {
+      return res.status(400).json({ error: 'No recognized operators in import data. Use Krooster-style export or { operators: [ { id: "char_xxx" or "shortId", elite: 0|1|2, modules?: {} } ] }' });
+    }
+    const ok = await setAccountRoster(session.email, ownedIds, rosterData);
+    if (!ok) {
+      return res.status(500).json({ error: 'Failed to save roster' });
+    }
+    return res.json({ success: true, imported: ownedIds.length, rosterData });
+  } catch (error: any) {
+    console.error('Error importing roster:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to import roster' });
   }
 });
 

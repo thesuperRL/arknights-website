@@ -192,6 +192,185 @@
     border-color: rgba(255, 107, 107, 0.6);
 }
 
+.profile-import-section {
+    margin-bottom: 2rem;
+    padding: 0 0.25rem;
+}
+
+.profile-import-toggle {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    background: rgba(100, 149, 237, 0.15);
+    border: 2px solid rgba(100, 149, 237, 0.4);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.profile-import-toggle:hover {
+    background: rgba(100, 149, 237, 0.25);
+    border-color: rgba(100, 149, 237, 0.6);
+}
+
+.profile-import-box {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.profile-import-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.profile-import-confirm-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.profile-import-diff {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.profile-import-diff p {
+    margin: 0.35rem 0;
+}
+
+.profile-import-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-import-input {
+    flex: 1;
+    min-width: 140px;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+}
+
+.profile-import-input:focus {
+    outline: none;
+    border-color: rgba(100, 149, 237, 0.5);
+}
+
+.profile-import-server {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.profile-import-send-code {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #7eb3ff;
+    background: rgba(100, 149, 237, 0.2);
+    border: 2px solid rgba(100, 149, 237, 0.5);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.profile-import-send-code:hover:not(:disabled) {
+    background: rgba(100, 149, 237, 0.35);
+}
+
+.profile-import-send-code:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.profile-import-remember {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.profile-import-remember input {
+    cursor: pointer;
+}
+
+.profile-import-l1 {
+    font-size: 0.9rem;
+    color: #ffb74d;
+    margin: 0.5rem 0;
+}
+
+.profile-import-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.profile-import-token-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.profile-import-token-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-light);
+}
+
+.profile-import-error {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-import-submit {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(100, 149, 237, 0.5);
+    border: 2px solid rgba(100, 149, 237, 0.7);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.profile-import-submit:hover:not(:disabled) {
+    background: rgba(100, 149, 237, 0.7);
+    border-color: rgba(100, 149, 237, 0.9);
+}
+
+.profile-import-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .filters {
     display: flex;
     flex-wrap: wrap;

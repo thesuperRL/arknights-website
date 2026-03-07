@@ -15,6 +15,7 @@ interface UserData {
   nickname: string;
   ownedOperators: string[];
   wantToUse?: string[];
+  rosterData?: Record<string, { elite: number; level?: number; modules?: Record<string, number> }>;
 }
 
 interface Operator {
@@ -47,6 +48,26 @@ const UserProfilePage: React.FC = () => {
   const [addSearchTerm, setAddSearchTerm] = useState('');
   const [addFilterRarity, setAddFilterRarity] = useState<number | null>(null);
   const [addFilterClass, setAddFilterClass] = useState<string | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importEmail, setImportEmail] = useState(() => {
+    if (typeof localStorage !== 'undefined') {
+      const saved = localStorage.getItem('arknights_import_email');
+      if (saved) return saved;
+    }
+    return '';
+  });
+  const [importCode, setImportCode] = useState('');
+  const [importServer, setImportServer] = useState<'en' | 'jp' | 'kr'>('en');
+  const [importing, setImporting] = useState(false);
+  const [sendingCode, setSendingCode] = useState(false);
+  const [importError, setImportError] = useState<string | null>(null);
+  const [importL1Warning, setImportL1Warning] = useState(false);
+  const [proposedImport, setProposedImport] = useState<{
+    proposedOwned: string[];
+    proposedWantToUse: string[];
+    rosterData: Record<string, { elite: number; level?: number; modules?: Record<string, number> }>;
+    tokenData?: unknown;
+  } | null>(null);
   type RaiseRecItem = {
     recommendedOperatorId: string;
     score: number;
@@ -155,6 +176,112 @@ const UserProfilePage: React.FC = () => {
     } catch (err) {
       console.error('Error logging out:', err);
     }
+  };
+
+  const handleSendCode = async () => {
+    setImportError(null);
+    setImportL1Warning(false);
+    const mail = importEmail.trim();
+    if (!mail) {
+      setImportError(t('profile.importEmailRequired'));
+      return;
+    }
+    setSendingCode(true);
+    try {
+      const response = await apiFetch('/api/arknights/send-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mail, server: importServer }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setImportError(data?.error || t('profile.importSendCodeFailed'));
+        return;
+      }
+      setImportError(null);
+    } catch (err: any) {
+      setImportError(err?.message || t('profile.importSendCodeFailed'));
+    } finally {
+      setSendingCode(false);
+    }
+  };
+
+  const handleLoginAndImport = async () => {
+    setImportError(null);
+    setImportL1Warning(false);
+    setImporting(true);
+    try {
+      const mail = importEmail.trim();
+      const code = importCode.trim();
+      if (!mail || !code) {
+        setImportError(t('profile.importEmailCodeRequired'));
+        setImporting(false);
+        return;
+      }
+      const response = await apiFetch('/api/arknights/get-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mail, code, server: importServer }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        if (data?.code === 'level1_account') setImportL1Warning(true);
+        setImportError(data?.error || t('profile.importFailed'));
+        setImporting(false);
+        return;
+      }
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('arknights_import_email', mail);
+      }
+      const proposedOwned = Array.isArray(data.proposedOwned) ? data.proposedOwned : [];
+      const proposedWantToUse = Array.isArray(data.proposedWantToUse) ? data.proposedWantToUse : [];
+      const rosterData = data.rosterData && typeof data.rosterData === 'object' ? data.rosterData as Record<string, { elite: number; level?: number; modules?: Record<string, number> }> : {};
+      setProposedImport({
+        proposedOwned,
+        proposedWantToUse,
+        rosterData,
+        tokenData: data.tokenData,
+      });
+      setImportCode('');
+    } catch (err: any) {
+      setImportError(err?.message || t('profile.importFailed'));
+    } finally {
+      setImporting(false);
+    }
+  };
+
+  const handleConfirmImport = async () => {
+    if (!proposedImport) return;
+    setImporting(true);
+    setImportError(null);
+    try {
+      const response = await apiFetch('/api/profile/apply-import-roster', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ownedIds: proposedImport.proposedOwned,
+          wantToUseIds: proposedImport.proposedWantToUse,
+          rosterData: proposedImport.rosterData,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setImportError(data?.error || t('profile.importFailed'));
+        return;
+      }
+      setProposedImport(null);
+      setImportOpen(false);
+      await loadUserData();
+    } catch (err: any) {
+      setImportError(err?.message || t('profile.importFailed'));
+    } finally {
+      setImporting(false);
+    }
+  };
+
+  const handleCancelImport = () => {
+    setProposedImport(null);
+    setImportError(null);
   };
 
   const getFilteredOperators = () => {
@@ -421,6 +548,116 @@ const UserProfilePage: React.FC = () => {
         <button onClick={handleLogout} className="logout-button">
           {t('profile.logout')}
         </button>
+      </div>
+
+      <div className="profile-import-section">
+        <button
+          type="button"
+          className="profile-import-toggle"
+          onClick={() => setImportOpen(!importOpen)}
+          aria-expanded={importOpen}
+        >
+          {importOpen ? '▼' : '▶'} {t('profile.importFromGame')}
+        </button>
+        {importOpen && (
+          <div className="profile-import-box">
+            {proposedImport ? (
+              <>
+                <h3 className="profile-import-confirm-title">{t('profile.importConfirmTitle')}</h3>
+                <p className="profile-import-desc">{t('profile.importConfirmDesc')}</p>
+                <div className="profile-import-diff">
+                  <p>
+                    {interpolate(t('profile.importDiffOwned'), {
+                      current: user.ownedOperators.length,
+                      proposed: proposedImport.proposedOwned.length,
+                      add: proposedImport.proposedOwned.filter((id) => !user.ownedOperators.includes(id)).length,
+                      remove: user.ownedOperators.filter((id) => !proposedImport.proposedOwned.includes(id)).length,
+                    })}
+                  </p>
+                  <p>
+                    {interpolate(t('profile.importDiffRaised'), {
+                      current: (user.wantToUse ?? []).length,
+                      proposed: proposedImport.proposedWantToUse.length,
+                      add: proposedImport.proposedWantToUse.filter((id) => !(user.wantToUse ?? []).includes(id)).length,
+                      remove: (user.wantToUse ?? []).filter((id) => !proposedImport.proposedWantToUse.includes(id)).length,
+                    })}
+                  </p>
+                </div>
+                {importError && <div className="profile-import-error">{importError}</div>}
+                <div className="profile-import-actions">
+                  <button
+                    type="button"
+                    className="profile-import-submit"
+                    onClick={handleConfirmImport}
+                    disabled={importing}
+                  >
+                    {importing ? t('profile.importing') : t('profile.importConfirmButton')}
+                  </button>
+                  <button
+                    type="button"
+                    className="profile-import-token-btn"
+                    onClick={handleCancelImport}
+                    disabled={importing}
+                  >
+                    {t('profile.importCancel')}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="profile-import-desc">{t('profile.importDesc')}</p>
+                <div className="profile-import-row">
+                  <input
+                    type="email"
+                    className="profile-import-input"
+                    placeholder={t('profile.importEmailPlaceholder')}
+                    value={importEmail}
+                    onChange={(e) => { setImportEmail(e.target.value); setImportError(null); }}
+                  />
+                  <select
+                    className="profile-import-server"
+                    value={importServer}
+                    onChange={(e) => setImportServer((e.target.value as 'en' | 'jp' | 'kr'))}
+                  >
+                    <option value="en">EN</option>
+                    <option value="jp">JP</option>
+                    <option value="kr">KR</option>
+                  </select>
+                  <button
+                    type="button"
+                    className="profile-import-send-code"
+                    onClick={handleSendCode}
+                    disabled={sendingCode || !importEmail.trim()}
+                  >
+                    {sendingCode ? t('profile.importSending') : t('profile.importSendCode')}
+                  </button>
+                </div>
+                <div className="profile-import-row">
+                  <input
+                    type="text"
+                    className="profile-import-input"
+                    placeholder={t('profile.importCodePlaceholder')}
+                    value={importCode}
+                    onChange={(e) => { setImportCode(e.target.value.replace(/\D/g, '').slice(0, 6)); setImportError(null); }}
+                    maxLength={6}
+                  />
+                </div>
+                {importL1Warning && <p className="profile-import-l1">{t('profile.importL1Warning')}</p>}
+                {importError && <div className="profile-import-error">{importError}</div>}
+                <div className="profile-import-actions">
+                  <button
+                    type="button"
+                    className="profile-import-submit"
+                    onClick={() => handleLoginAndImport()}
+                    disabled={importing || !importCode.trim()}
+                  >
+                    {importing ? t('profile.importing') : t('profile.importSubmit')}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="filters">

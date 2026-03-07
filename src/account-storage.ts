@@ -18,5 +18,7 @@ export {
   loadAccounts,
   initializeDbConnection,
   closeDbConnection,
+  setAccountRoster,
+  replaceAccountRoster,
 } from './account-storage-pg';
-export type { LocalAccount } from './account-storage-pg';
+export type { LocalAccount, RosterOperatorData } from './account-storage-pg';
