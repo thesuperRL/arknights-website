@@ -49,7 +49,7 @@ import {
   type HopeCostEdit
 } from './is-hope-cost-edits';
 import { computeTop12AvgByClass, recommendSquadForIS } from './squad-recommendation';
-import { computeOperatorISScoreStandalone } from './is-scoring';
+import { computeOperatorISScoreMarginal } from './is-scoring';
 import { getNichesForOperator } from './niche-list-utils';
 import { getOperatorTierInNiche } from './team-builder';
 import {
@@ -1088,7 +1088,7 @@ app.post('/api/auth/toggle-want-to-use', async (req, res) => {
   }
 });
 
-// GET /api/profile/raise-recommendation - Top 5 operators to raise next (owned but not in wantToUse, by score)
+// GET /api/profile/raise-recommendation - Top 5 operators to raise next (owned but not in wantToUse, by marginal niche coverage)
 app.get('/api/profile/raise-recommendation', async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
@@ -1104,7 +1104,8 @@ app.get('/api/profile/raise-recommendation', async (req, res) => {
       return res.status(401).json({ error: 'Invalid session' });
     }
     const owned = account.ownedOperators ?? [];
-    const wantToUseSet = new Set(account.wantToUse ?? []);
+    const raisedIds = account.wantToUse ?? [];
+    const wantToUseSet = new Set(raisedIds);
     const candidates = owned.filter((id: string) => !wantToUseSet.has(id));
     if (candidates.length === 0) {
       return res.json({ recommendations: [] });
@@ -1112,11 +1113,24 @@ app.get('/api/profile/raise-recommendation', async (req, res) => {
     const operatorsData = getOperatorsData();
     const weightPools = getIsNicheWeightPools();
     const getTier = (operatorId: string, niche: string) => getOperatorTierInNiche(operatorId, niche, true);
+    // Build best tier per niche among already-raised operators so we score candidates by marginal coverage
+    const allNicheLists = loadAllNicheLists();
+    const raisedCoverage = new Map<string, number>();
+    for (const niche of Object.keys(allNicheLists)) {
+      let best = 0;
+      for (const id of raisedIds) {
+        if (getNichesForOperator(id).includes(niche)) {
+          const t = getTier(id, niche);
+          if (t > best) best = t;
+        }
+      }
+      if (best > 0) raisedCoverage.set(niche, best);
+    }
     const scored: Array<{ id: string; score: number }> = [];
     for (const id of candidates) {
       const op = operatorsData[id];
       if (!op || typeof op !== 'object') continue;
-      const score = computeOperatorISScoreStandalone(id, false, weightPools, getNichesForOperator, getTier);
+      const score = computeOperatorISScoreMarginal(id, weightPools, getNichesForOperator, getTier, raisedCoverage);
       if (score > 0) scored.push({ id, score });
     }
     scored.sort((a, b) => b.score - a.score);

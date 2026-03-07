@@ -53,3 +53,32 @@ export function computeOperatorISScoreStandalone(
   if (wantToUse) score += WANT_TO_USE_BONUS;
   return score;
 }
+
+/**
+ * Score for one operator based on marginal niche coverage over an existing raised pool.
+ * For each niche the operator is in: score += max(0, operatorTier - bestRaisedTierInNiche) * rawScore.
+ * Prioritizes operators that fill gaps (uncovered or weakly covered niches).
+ * raisedCoverage: niche filename -> best tier among already-raised operators in that niche.
+ */
+export function computeOperatorISScoreMarginal(
+  operatorId: string,
+  weightPools: ISNicheWeightPools,
+  getNiches: (operatorId: string) => string[],
+  getTier: (operatorId: string, niche: string) => number,
+  raisedCoverage: Map<string, number>
+): number {
+  const niches = getNiches(operatorId);
+  let score = 0;
+  for (const niche of niches) {
+    if (niche === 'trash-operators') {
+      score -= TRASH_NICHE_PENALTY;
+      continue;
+    }
+    const tier = getTier(operatorId, niche);
+    const bestRaised = raisedCoverage.get(niche) ?? 0;
+    const marginalTier = Math.max(0, tier - bestRaised);
+    const rawScore = getPoolRawScore(niche, weightPools);
+    score += marginalTier * rawScore;
+  }
+  return score;
+}
