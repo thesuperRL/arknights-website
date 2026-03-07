@@ -1243,6 +1243,47 @@ function parseImportPayload(
   return { ownedIds: [], rosterData: {} };
 }
 
+// POST /api/arknights/parse-cn-payload - Parse CN (森空岛/Skland) roster payload and return proposed import (same flow as get-data confirm step)
+app.post('/api/arknights/parse-cn-payload', async (req, res) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) return res.status(401).json({ error: 'Not authenticated' });
+    const session = getSession(sessionId);
+    if (!session) return res.status(401).json({ error: 'Invalid session' });
+    let payload = req.body?.payload;
+    if (!payload || typeof payload !== 'object') {
+      return res.status(400).json({ error: 'Invalid body: expected { payload: object } (Skland/森空岛 data)' });
+    }
+    // Skland may return wrapped shape e.g. { data: { troop: { chars } } }; unwrap so parseImportPayload sees troop or operators at top level
+    if (payload.data && typeof payload.data === 'object' && (payload.data as Record<string, unknown>).troop) {
+      payload = (payload as { data: unknown }).data as Record<string, unknown>;
+    }
+    const charIdToOurId = buildCharIdToOurIdMap();
+    const { ownedIds, rosterData } = parseImportPayload(payload, charIdToOurId);
+    const operatorsData = getOperatorsData();
+    const proposedWantToUse = ownedIds.filter((id) => {
+      const elite = rosterData[id]?.elite ?? 0;
+      const level = rosterData[id]?.level ?? 0;
+      const op = operatorsData[id];
+      const rarity = op && typeof op === 'object' && typeof (op as Record<string, unknown>).rarity === 'number'
+        ? (op as Record<string, unknown>).rarity as number
+        : 0;
+      if (elite === 2) return true;
+      if (rarity === 3 && elite === 1 && level >= 55) return true;
+      return false;
+    });
+    return res.json({
+      success: true,
+      proposedOwned: ownedIds,
+      proposedWantToUse,
+      rosterData,
+    });
+  } catch (error: any) {
+    console.error('Error parsing CN payload:', error);
+    return res.status(500).json({ error: sanitizeErrorMessage(error) || 'Failed to parse roster data' });
+  }
+});
+
 // POST /api/arknights/send-code - Send 6-digit code to email (Yostar account bound in-game)
 app.post('/api/arknights/send-code', async (req, res) => {
   try {

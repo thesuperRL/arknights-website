@@ -49,6 +49,10 @@
     "aoe-physical-dps": {
       "min": 0,
       "max": 1
+    },
+    "fast-redeploy-operators": {
+      "min": 0,
+      "max": 1
     }
   },
   "allowDuplicates": false

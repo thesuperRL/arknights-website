@@ -57,7 +57,10 @@ const UserProfilePage: React.FC = () => {
     return '';
   });
   const [importCode, setImportCode] = useState('');
-  const [importServer, setImportServer] = useState<'en' | 'jp' | 'kr'>('en');
+  const [importServer, setImportServer] = useState<'en' | 'jp' | 'kr' | 'cn'>('en');
+  const sklandPopupRef = React.useRef<Window | null>(null);
+  const sklandMessageRef = React.useRef<((e: MessageEvent) => void) | null>(null);
+  const sklandCheckClosedRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
   const [importing, setImporting] = useState(false);
   const [sendingCode, setSendingCode] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
@@ -282,6 +285,69 @@ const UserProfilePage: React.FC = () => {
   const handleCancelImport = () => {
     setProposedImport(null);
     setImportError(null);
+  };
+
+  const handleSklandConnect = () => {
+    const SKLAND_URL = 'https://skland.xkcdn.win';
+    const appName = 'Arknights Tier Lists';
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    const scopes = 'chars,secretary';
+    const url = `${SKLAND_URL}/?appName=${encodeURIComponent(appName)}&origin=${encodeURIComponent(origin)}&scopes=${encodeURIComponent(scopes)}`;
+    setImportError(null);
+    setImporting(true);
+    const win = window.open(url, 'skland_import', 'width=500,height=600,scrollbars=yes');
+    sklandPopupRef.current = win;
+    const onMessage = async (e: MessageEvent) => {
+      if (e.origin !== SKLAND_URL || !e.data) return;
+      if (sklandCheckClosedRef.current) {
+        clearInterval(sklandCheckClosedRef.current);
+        sklandCheckClosedRef.current = null;
+      }
+      if (sklandMessageRef.current) {
+        window.removeEventListener('message', sklandMessageRef.current);
+        sklandMessageRef.current = null;
+      }
+      if (win && !win.closed) win.close();
+      sklandPopupRef.current = null;
+      try {
+        const response = await apiFetch('/api/arknights/parse-cn-payload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ payload: e.data }),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          setImportError(data?.error || t('profile.importFailed'));
+          setImporting(false);
+          return;
+        }
+        const proposedOwned = Array.isArray(data.proposedOwned) ? data.proposedOwned : [];
+        const proposedWantToUse = Array.isArray(data.proposedWantToUse) ? data.proposedWantToUse : [];
+        const rosterData = data.rosterData && typeof data.rosterData === 'object' ? data.rosterData as Record<string, { elite: number; level?: number; modules?: Record<string, number> }> : {};
+        setProposedImport({ proposedOwned, proposedWantToUse, rosterData });
+      } catch (err: any) {
+        setImportError(err?.message || t('profile.importFailed'));
+      } finally {
+        setImporting(false);
+      }
+    };
+    sklandMessageRef.current = onMessage;
+    window.addEventListener('message', onMessage);
+    // If popup is closed without sending a message, stop loading
+    sklandCheckClosedRef.current = setInterval(() => {
+      if (win?.closed) {
+        if (sklandCheckClosedRef.current) {
+          clearInterval(sklandCheckClosedRef.current);
+          sklandCheckClosedRef.current = null;
+        }
+        if (sklandMessageRef.current) {
+          window.removeEventListener('message', sklandMessageRef.current);
+          sklandMessageRef.current = null;
+        }
+        sklandPopupRef.current = null;
+        setImporting(false);
+      }
+    }, 500);
   };
 
   const getFilteredOperators = () => {
@@ -605,56 +671,79 @@ const UserProfilePage: React.FC = () => {
               </>
             ) : (
               <>
-                <p className="profile-import-desc">{t('profile.importDesc')}</p>
-                <p className="profile-import-note">{t('profile.importKroosterNote')}</p>
                 <div className="profile-import-row">
-                  <input
-                    type="email"
-                    className="profile-import-input"
-                    placeholder={t('profile.importEmailPlaceholder')}
-                    value={importEmail}
-                    onChange={(e) => { setImportEmail(e.target.value); setImportError(null); }}
-                  />
                   <select
                     className="profile-import-server"
                     value={importServer}
-                    onChange={(e) => setImportServer((e.target.value as 'en' | 'jp' | 'kr'))}
+                    onChange={(e) => { setImportServer((e.target.value as 'en' | 'jp' | 'kr' | 'cn')); setImportError(null); }}
                   >
                     <option value="en">EN</option>
                     <option value="jp">JP</option>
                     <option value="kr">KR</option>
+                    <option value="cn">CN</option>
                   </select>
-                  <button
-                    type="button"
-                    className="profile-import-send-code"
-                    onClick={handleSendCode}
-                    disabled={sendingCode || !importEmail.trim()}
-                  >
-                    {sendingCode ? t('profile.importSending') : t('profile.importSendCode')}
-                  </button>
                 </div>
-                <div className="profile-import-row">
-                  <input
-                    type="text"
-                    className="profile-import-input"
-                    placeholder={t('profile.importCodePlaceholder')}
-                    value={importCode}
-                    onChange={(e) => { setImportCode(e.target.value.replace(/\D/g, '').slice(0, 6)); setImportError(null); }}
-                    maxLength={6}
-                  />
-                </div>
-                {importL1Warning && <p className="profile-import-l1">{t('profile.importL1Warning')}</p>}
-                {importError && <div className="profile-import-error">{importError}</div>}
-                <div className="profile-import-actions">
-                  <button
-                    type="button"
-                    className="profile-import-submit"
-                    onClick={() => handleLoginAndImport()}
-                    disabled={importing || !importCode.trim()}
-                  >
-                    {importing ? t('profile.importing') : t('profile.importSubmit')}
-                  </button>
-                </div>
+                {importServer === 'cn' ? (
+                  <>
+                    <p className="profile-import-desc">{t('profile.importDescCn')}</p>
+                    <p className="profile-import-note">{t('profile.importSklandNote')}</p>
+                    {importError && <div className="profile-import-error">{importError}</div>}
+                    <div className="profile-import-actions">
+                      <button
+                        type="button"
+                        className="profile-import-submit"
+                        onClick={handleSklandConnect}
+                        disabled={importing}
+                      >
+                        {importing ? t('profile.importing') : t('profile.importSklandConnect')}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p className="profile-import-desc">{t('profile.importDesc')}</p>
+                    <p className="profile-import-note">{t('profile.importKroosterNote')}</p>
+                    <div className="profile-import-row">
+                      <input
+                        type="email"
+                        className="profile-import-input"
+                        placeholder={t('profile.importEmailPlaceholder')}
+                        value={importEmail}
+                        onChange={(e) => { setImportEmail(e.target.value); setImportError(null); }}
+                      />
+                      <button
+                        type="button"
+                        className="profile-import-send-code"
+                        onClick={handleSendCode}
+                        disabled={sendingCode || !importEmail.trim()}
+                      >
+                        {sendingCode ? t('profile.importSending') : t('profile.importSendCode')}
+                      </button>
+                    </div>
+                    <div className="profile-import-row">
+                      <input
+                        type="text"
+                        className="profile-import-input"
+                        placeholder={t('profile.importCodePlaceholder')}
+                        value={importCode}
+                        onChange={(e) => { setImportCode(e.target.value.replace(/\D/g, '').slice(0, 6)); setImportError(null); }}
+                        maxLength={6}
+                      />
+                    </div>
+                    {importL1Warning && <p className="profile-import-l1">{t('profile.importL1Warning')}</p>}
+                    {importError && <div className="profile-import-error">{importError}</div>}
+                    <div className="profile-import-actions">
+                      <button
+                        type="button"
+                        className="profile-import-submit"
+                        onClick={() => handleLoginAndImport()}
+                        disabled={importing || !importCode.trim()}
+                      >
+                        {importing ? t('profile.importing') : t('profile.importSubmit')}
+                      </button>
+                    </div>
+                  </>
+                )}
               </>
             )}
           </div>
