@@ -2176,7 +2176,7 @@
     "nicheInstances": {
       "dp-generation": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ]
@@ -4282,7 +4282,7 @@
       ],
       "dp-generation": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ]
@@ -8449,7 +8449,7 @@
     "nicheInstances": {
       "dp-generation": [
         {
-          "tier": "SS",
+          "tier": "S",
           "level": ""
         }
       ]
@@ -10563,6 +10563,7 @@
     "global": true,
     "profileImage": "/images/operators/goldenglow.png",
     "niches": [
+      "aoe-arts-dps",
       "arts-dps",
       "global-range"
     ],
@@ -10580,6 +10581,12 @@
       }
     },
     "nicheInstances": {
+      "aoe-arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
       "arts-dps": [
         {
           "tier": "S",
@@ -11327,6 +11334,7 @@
     "global": true,
     "profileImage": "/images/operators/lemuen.png",
     "niches": [
+      "aoe-physical-dps",
       "boss-killing",
       "global-range",
       "physical-dps"
@@ -11345,6 +11353,12 @@
       }
     },
     "nicheInstances": {
+      "aoe-physical-dps": [
+        {
+          "tier": "SS",
+          "level": "E2"
+        }
+      ],
       "boss-killing": [
         {
           "tier": "SS",
@@ -11357,7 +11371,7 @@
       ],
       "physical-dps": [
         {
-          "tier": "S",
+          "tier": "SS",
           "level": ""
         }
       ],
@@ -11539,6 +11553,10 @@
         {
           "tier": "SS",
           "level": "E2"
+        },
+        {
+          "tier": "S",
+          "level": ""
         }
       ],
       "res-shred": [
@@ -13303,7 +13321,7 @@
     "nicheInstances": {
       "aoe-physical-dps": [
         {
-          "tier": "S",
+          "tier": "A",
           "level": "E2"
         }
       ],
@@ -13936,7 +13954,8 @@
     "profileImage": "/images/operators/typhon.png",
     "niches": [
       "boss-killing",
-      "physical-dps"
+      "physical-dps",
+      "stalling"
     ],
     "cnName": "提丰",
     "twName": "提豐",
@@ -13957,6 +13976,12 @@
       "physical-dps": [
         {
           "tier": "S",
+          "level": ""
+        }
+      ],
+      "stalling": [
+        {
+          "tier": "A",
           "level": ""
         }
       ]
@@ -14396,6 +14421,10 @@
         {
           "tier": "SS",
           "level": "E2"
+        },
+        {
+          "tier": "A",
+          "level": ""
         }
       ],
       "elemental_damage_healers": [
