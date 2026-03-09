@@ -1172,16 +1172,45 @@ function buildCharIdToOurIdMap(): Map<string, string> {
   return map;
 }
 
-/** Parse Krooster-style (troop.chars) or simple { operators: [...] } import payload into our format. */
+/** Parse Krooster-style (troop.chars), CN cultivate.characters, or simple { operators: [...] } import payload into our format. */
 function parseImportPayload(
   body: unknown,
   charIdToOurId: Map<string, string>
 ): { ownedIds: string[]; rosterData: Record<string, RosterOperatorData> } {
   const rosterData: Record<string, RosterOperatorData> = {};
   const ownedIds: string[] = [];
+  const raw = body as Record<string, unknown>;
+
+  // CN instant upload: cultivate.characters[] with id, level, evolvePhase, equips[]
+  const cultivate = raw?.cultivate as Record<string, unknown> | undefined;
+  const cultivateChars = cultivate?.characters;
+  if (Array.isArray(cultivateChars)) {
+    for (const item of cultivateChars) {
+      if (!item || typeof item !== 'object') continue;
+      const rec = item as Record<string, unknown>;
+      const charId = (rec.id ?? rec.charId) as string | undefined;
+      const evolvePhase = typeof rec.evolvePhase === 'number' ? rec.evolvePhase : 0;
+      const level = typeof rec.level === 'number' ? rec.level : undefined;
+      const equips = rec.equips as Array<{ id?: string; level?: number }> | undefined;
+      const modules: Record<string, number> = {};
+      if (Array.isArray(equips)) {
+        for (const e of equips) {
+          if (e && typeof e === 'object' && typeof e.id === 'string' && typeof e.level === 'number' && e.level > 0) {
+            modules[e.id] = e.level;
+          }
+        }
+      }
+      const ourId = charId ? charIdToOurId.get(charId) : undefined;
+      if (ourId) {
+        ownedIds.push(ourId);
+        rosterData[ourId] = { elite: evolvePhase, level, modules: Object.keys(modules).length ? modules : undefined };
+      }
+    }
+    return { ownedIds: [...new Set(ownedIds)], rosterData };
+  }
 
   // Krooster / game format: { troop: { chars: { [instId]: { charId, evolvePhase, level, equip, tmpl?, ... } } } }
-  const troop = (body as Record<string, unknown>)?.troop as Record<string, unknown> | undefined;
+  const troop = raw?.troop as Record<string, unknown> | undefined;
   const chars = troop?.chars as Record<string, Record<string, unknown>> | undefined;
   if (chars && typeof chars === 'object') {
     for (const _instId of Object.keys(chars)) {
