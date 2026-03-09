@@ -1195,6 +1195,34 @@ function parseImportPayload(
       const modules: Record<string, number> = {};
       if (Array.isArray(equips)) {
         for (const e of equips) {
+          if (e && typeof e === 'object' && typeof e.id === 'string') {
+            const lvl = typeof e.level === 'number' ? e.level : 0;
+            modules[e.id] = lvl;
+          }
+        }
+      }
+      const ourId = charId ? charIdToOurId.get(charId) : undefined;
+      if (ourId) {
+        ownedIds.push(ourId);
+        rosterData[ourId] = { elite: evolvePhase, level, modules: Object.keys(modules).length ? modules : undefined };
+      }
+    }
+    return { ownedIds: [...new Set(ownedIds)], rosterData };
+  }
+
+  // CN game / view.json top-level chars[]: each has charId, evolvePhase, level, equip: [{ id, level, locked }]
+  const charsArray = raw?.chars;
+  if (Array.isArray(charsArray)) {
+    for (const item of charsArray) {
+      if (!item || typeof item !== 'object') continue;
+      const rec = item as Record<string, unknown>;
+      const charId = rec.charId as string | undefined;
+      const evolvePhase = typeof rec.evolvePhase === 'number' ? rec.evolvePhase : 0;
+      const level = typeof rec.level === 'number' ? rec.level : undefined;
+      const equipList = rec.equip as Array<{ id?: string; level?: number; locked?: boolean }> | undefined;
+      const modules: Record<string, number> = {};
+      if (Array.isArray(equipList)) {
+        for (const e of equipList) {
           if (e && typeof e === 'object' && typeof e.id === 'string' && typeof e.level === 'number' && e.level > 0) {
             modules[e.id] = e.level;
           }
@@ -1297,9 +1325,13 @@ app.post('/api/arknights/parse-cn-payload', async (req, res) => {
     if (!payload || typeof payload !== 'object') {
       return res.status(400).json({ error: 'Invalid body: expected { payload: object } (Skland/森空岛 data)' });
     }
-    // Skland may return wrapped shape e.g. { data: { troop: { chars } } }; unwrap so parseImportPayload sees troop or operators at top level
-    if (payload.data && typeof payload.data === 'object' && (payload.data as Record<string, unknown>).troop) {
-      payload = (payload as { data: unknown }).data as Record<string, unknown>;
+    // Skland may return wrapped shape e.g. { data: { troop | cultivate | chars } }; unwrap so parseImportPayload sees roster at top level
+    const data = payload.data;
+    if (data && typeof data === 'object') {
+      const d = data as Record<string, unknown>;
+      if (d.troop || d.cultivate || (Array.isArray(d.chars) && d.chars.length > 0)) {
+        payload = d;
+      }
     }
     const charIdToOurId = buildCharIdToOurIdMap();
     const { ownedIds, rosterData } = parseImportPayload(payload, charIdToOurId);
