@@ -187,7 +187,7 @@ app.get('/api/config/is-hope-costs', (_req, res) => {
   }
 });
 
-const ALLOWED_ADMIN_EMAIL = (process.env.ALLOWED_ADMIN_EMAIL || 'ryanli1366@gmail.com').toLowerCase();
+const ALLOWED_ADMIN_EMAIL = (process.env.ADMIN_EMAIL || '').toLowerCase();
 
 function isAdminSession(sessionId: string | undefined): boolean {
   if (!sessionId) return false;
