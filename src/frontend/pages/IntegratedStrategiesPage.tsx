@@ -445,6 +445,15 @@ type IsHopeCostsConfig = Record<string, Record<string, Record<string, Record<str
 const DEFAULT_HOPE_BY_RARITY: Record<number, number> = { 6: 6, 5: 3, 4: 0, 3: 0, 2: 0, 1: 0 };
 /** IS6 Pathfinder: subtract this from recruit hope cost when active (min 0). */
 const PATHFINDER_HOPE_DISCOUNT = 2;
+/** Per-IS operator with inherent -2 recruit hope cost (min 0). */
+const IS_INHERENT_RECRUIT_DISCOUNT_OPERATORS: Record<string, string> = {
+  IS2: 'shalem',
+  IS3: 'highmore',
+  IS4: 'valarqvin',
+  IS5: 'tin_man',
+  IS6: 'raidian'
+};
+const INHERENT_RECRUIT_DISCOUNT = 2;
 
 async function getIntegratedStrategiesRecommendation(
   allOperators: Record<string, Operator>,
@@ -460,6 +469,8 @@ async function getIntegratedStrategiesRecommendation(
   weightPools: ISNicheWeightPools = DEFAULT_WEIGHT_POOLS,
   allSynergies: SynergyForIS[] = [],
   i18n?: I18nRecommendation,
+  /** When fetching multiple recommendations, pass IDs already recommended so they are excluded from the pool (including fallback 3-stars). */
+  excludedOperatorIds?: Set<string>,
   hopeCostConfig?: {
     config: IsHopeCostsConfig | null;
     isId: string;
@@ -484,12 +495,14 @@ async function getIntegratedStrategiesRecommendation(
 
   const getBaseRecruitCostForOperator = (operator: Operator): number => {
     const r = operator.rarity ?? 1;
+    // 3-star and below always cost 0 hope for recruitment (don't use 4★ config key)
+    if (r <= 3) return hopeCosts?.[r] ?? DEFAULT_HOPE_BY_RARITY[r] ?? 0;
     if (hopeCostConfig?.config && hopeCostConfig.isId && hopeCostConfig.config[hopeCostConfig.isId]) {
       const bySquad = hopeCostConfig.config[hopeCostConfig.isId];
       const squadKey = hopeCostConfig.squadId ?? 'default';
       const byRarity = bySquad[squadKey] ?? bySquad['default'];
       if (byRarity) {
-        const rarityKey = r >= 4 ? String(r) : '4';
+        const rarityKey = String(r);
         const byClass = byRarity[rarityKey] as Record<string, number> | undefined;
         if (byClass && typeof byClass === 'object') {
           const hope = byClass[operator.class ?? ''];
@@ -530,6 +543,10 @@ async function getIntegratedStrategiesRecommendation(
     if (hopeCostConfig?.isId === 'IS6' && hopeCostConfig?.pathfinderActive) {
       cost = Math.max(0, cost - PATHFINDER_HOPE_DISCOUNT);
     }
+    const inherentOp = hopeCostConfig?.isId && IS_INHERENT_RECRUIT_DISCOUNT_OPERATORS[hopeCostConfig.isId];
+    if (inherentOp && operator.id === inherentOp) {
+      cost = Math.max(0, cost - INHERENT_RECRUIT_DISCOUNT);
+    }
     return cost;
   };
 
@@ -555,8 +572,8 @@ async function getIntegratedStrategiesRecommendation(
     }
   }
 
-  // ONLY use raised operators (user's deployable collection)
-  let availableOperatorIds = effectiveRaisedOperators.filter(id => allOperators[id]);
+  // ONLY use raised operators (user's deployable collection); exclude any already recommended when fetching multiple
+  let availableOperatorIds = effectiveRaisedOperators.filter(id => allOperators[id] && !excludedOperatorIds?.has(id));
 
   // Optionally restrict to globally released operators only
   if (onlyGlobalOperators) {
@@ -607,6 +624,43 @@ async function getIntegratedStrategiesRecommendation(
       const hopeCost = getHopeCostForOperator(operator);
       return currentHope >= hopeCost;
     });
+
+    // When hope doesn't allow 4★+, include 3-star and below from full roster so they can be recommended
+    if (availableOperators.length === 0) {
+      const teamIds = new Set(currentTeamOperators.map(t => t.operatorId));
+      for (const id of Object.keys(allOperators)) {
+        if (teamIds.has(id)) continue;
+        if (excludedOperatorIds?.has(id)) continue;
+        const operator = allOperators[id];
+        if (!operator || !requiredClasses.includes(operator.class ?? '')) continue;
+        if (onlyGlobalOperators && !operator.global) continue;
+        const hopeCost = getHopeCostForOperator(operator);
+        if (currentHope >= hopeCost && !effectiveRaisedOperators.includes(id)) {
+          availableOperatorIds.push(id);
+        }
+      }
+      availableOperators = availableOperatorIds
+        .filter(id => requiredClasses.includes(allOperators[id].class))
+        .filter(id => {
+          const selectionCount = selectionCounts.get(id) || 0;
+          if (selectionCount === 0) return true;
+          if (selectionCount === 1) {
+            const operator = allOperators[id];
+            if (!operator || !operator.niches) return false;
+            const actualPromotionCost = getPromotionCostForOperator(operator);
+            if (currentHope !== undefined && currentHope < actualPromotionCost) return false;
+            return hasOperatorPromotionLevels(id, operator.niches, operator);
+          }
+          return false;
+        })
+        .filter(id => {
+          const selectionCount = selectionCounts.get(id) || 0;
+          if (selectionCount === 1) return true;
+          if (temporaryRecruitment === id) return true;
+          const operator = allOperators[id];
+          return currentHope! >= getHopeCostForOperator(operator);
+        });
+    }
   }
 
   if (availableOperators.length === 0) {
@@ -707,6 +761,12 @@ async function getIntegratedStrategiesRecommendation(
     'low-rarity' // Include low-rarity even though it's not in the niches folder
   ].filter(niche => !isExcludedNiches.has(niche)));
 
+  // Lowest rawScore across pools: over-covered niches use this so they're still considered, not excluded
+  const importantPool = weightPools.important ?? { rawScore: 1.5, niches: [] };
+  const optionalPool = weightPools.optional ?? { rawScore: 1, niches: [] };
+  const goodPool = weightPools.good ?? { rawScore: 0.5, niches: [] };
+  const lowestPoolRawScore = Math.min(importantPool.rawScore, optionalPool.rawScore, goodPool.rawScore);
+
   // Score each available operator
   const autoPromoteClasses = hopeCostConfig?.autoPromoteClasses ?? [];
   const operatorScores: Array<{ operatorId: string; score: number; reasoning: string[]; isPromotion: boolean; isAutoPromoteOnRecruit: boolean }> = [];
@@ -758,6 +818,7 @@ async function getIntegratedStrategiesRecommendation(
         const requiredRange = defaultPreferences.requiredNiches[niche];
         const preferredRange = defaultPreferences.preferredNiches[niche];
         let coverageFactor = 1;
+        let effectiveRawScore = rawScore;
         let labelKey = 'isTeamBuilder.providesNicheVariety';
         if (requiredRange) {
           if (currentCount < requiredRange.min) {
@@ -767,7 +828,9 @@ async function getIntegratedStrategiesRecommendation(
             coverageFactor = 0.5;
             labelKey = isPromotion ? 'isTeamBuilder.enhancesCapability' : 'isTeamBuilder.strengthensRequiredNiche';
           } else {
-            coverageFactor = 0.25;
+            // Over-covered: still consider niche, use lowest multiplier (no exclusion)
+            effectiveRawScore = lowestPoolRawScore;
+            coverageFactor = 1;
             labelKey = isPromotion ? 'isTeamBuilder.addsOverSpecialization' : 'isTeamBuilder.overSpecializesIn';
           }
         } else if (preferredRange) {
@@ -778,11 +841,13 @@ async function getIntegratedStrategiesRecommendation(
             coverageFactor = 0.5;
             labelKey = isPromotion ? 'isTeamBuilder.enhancesCapability' : 'isTeamBuilder.strengthensPreferredNiche';
           } else {
-            coverageFactor = 0.25;
+            // Over-covered: still consider niche, use lowest multiplier (no exclusion)
+            effectiveRawScore = lowestPoolRawScore;
+            coverageFactor = 1;
             labelKey = isPromotion ? 'isTeamBuilder.addsOverSpecialization' : 'isTeamBuilder.overSpecializesIn';
           }
         }
-        const bonus = tierPoints * rawScore * coverageFactor;
+        const bonus = tierPoints * effectiveRawScore * coverageFactor;
         score += bonus;
         if (tier > 0) {
           reasoning.push(interpolate(t('isTeamBuilder.reasoningLineFormat'), {
@@ -797,7 +862,7 @@ async function getIntegratedStrategiesRecommendation(
         if (!isPromotion && !isAutoPromoteOnRecruit && firstRecruitPotentialMultiplier > 0) {
           const fullPotentialTier = await getOperatorBestTierAtPromotionLevel(operatorId, niche);
           if (fullPotentialTier > 0) {
-            totalPotentialBonus += fullPotentialTier * rawScore * coverageFactor * firstRecruitPotentialMultiplier;
+            totalPotentialBonus += fullPotentialTier * effectiveRawScore * coverageFactor * firstRecruitPotentialMultiplier;
           }
         }
       }
@@ -1053,6 +1118,10 @@ interface RecommendationResult {
   score: number;
   isPromotion?: boolean; // True if this is a promotion (second selection)
   isAutoPromoteOnRecruit?: boolean; // True if this class is auto-promoted on first recruitment (scored at max potential)
+  /** IS6 only: when true, this is the "conserve this voucher" suggestion (save for Pathfinder later). */
+  conserveVoucher?: boolean;
+  /** IS6 only when Pathfinder on: when true, this is the "recruit later" suggestion (same score 100). */
+  recruitLater?: boolean;
 }
 
 const CLASS_OPTIONS = [
@@ -1117,15 +1186,16 @@ const IntegratedStrategiesPage: React.FC = () => {
     recommendedSquad: { isId: string; squadId: string; reason: string } | null;
   } | null>(null);
 
-  /** Base recruit hope cost from config (per class, rarity, squad). No user delta. */
+  /** Base recruit hope cost from config (per class, rarity, squad). No user delta. 3★ and below = 0. */
   const getBaseRecruitCostForOperator = (operator: Operator): number => {
     const r = operator.rarity ?? 1;
+    if (r <= 3) return DEFAULT_HOPE_BY_RARITY[r] ?? 0;
     if (isHopeCostsConfig && selectedISTitleId && isHopeCostsConfig[selectedISTitleId]) {
       const bySquad = isHopeCostsConfig[selectedISTitleId];
       const squadKey = selectedSquadId ?? 'default';
       const byRarity = bySquad[squadKey] ?? bySquad['default'];
       if (byRarity) {
-        const rarityKey = r >= 4 ? String(r) : '4';
+        const rarityKey = String(r);
         const byClass = byRarity[rarityKey] as Record<string, number> | undefined;
         if (byClass && typeof byClass === 'object') {
           const hope = byClass[operator.class ?? ''];
@@ -1159,7 +1229,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     return 3;
   };
 
-  /** Effective recruit cost = config cost (per class/rarity/squad) + user delta for that rarity. IS6 Pathfinder subtracts 2 when on. */
+  /** Effective recruit cost = config cost (per class/rarity/squad) + user delta for that rarity. IS6 Pathfinder subtracts 2 when on. Per-IS inherent -2 for one operator (shalem/highmore/valarqvin/tin_man/raidian). */
   const getHopeCostForOperator = (operator: Operator): number => {
     const r = operator.rarity ?? 1;
     const base = getBaseRecruitCostForOperator(operator);
@@ -1167,6 +1237,10 @@ const IntegratedStrategiesPage: React.FC = () => {
     let cost = Math.max(0, base + delta);
     if (selectedISTitleId === 'IS6' && pathfinderActive) {
       cost = Math.max(0, cost - PATHFINDER_HOPE_DISCOUNT);
+    }
+    const inherentOp = selectedISTitleId && IS_INHERENT_RECRUIT_DISCOUNT_OPERATORS[selectedISTitleId];
+    if (inherentOp && operator.id === inherentOp) {
+      cost = Math.max(0, cost - INHERENT_RECRUIT_DISCOUNT);
     }
     return cost;
   };
@@ -1326,7 +1400,7 @@ const IntegratedStrategiesPage: React.FC = () => {
     if (user && Object.keys(allOperators).length > 0 && !isInitialLoad) {
       saveISTeamState();
     }
-  }, [selectedOperators, currentHope, teamSize, recruitHopeCostOverrides, promotionHopeCostOverrides, pathfinderActive, selectedISTitleId, user, allOperators, isInitialLoad]);
+  }, [selectedOperators, currentHope, teamSize, selectedISTitleId, selectedSquadId, recruitHopeCostOverrides, promotionHopeCostOverrides, pathfinderActive, user, allOperators, isInitialLoad]);
 
   // Fetch squad recommendation when user is logged in and IS has squads (one request per IS; minimal backend load)
   // Use user?.email so we don't refetch when the user object reference changes (e.g. auth context re-render)
@@ -1474,6 +1548,17 @@ const IntegratedStrategiesPage: React.FC = () => {
             setPromotionHopeCostOverrides(data.promotionHopeCostOverrides);
           }
           if (data.pathfinderActive === true) setPathfinderActive(true);
+          
+          // Restore IS and squad
+          const validTitleIds = IS_TITLES.map(t => t.id);
+          if (data.selectedISTitleId && validTitleIds.includes(data.selectedISTitleId)) {
+            setSelectedISTitleId(data.selectedISTitleId);
+          }
+          if (data.selectedISTitleId && data.selectedSquadId != null && IS_SQUADS_BY_TITLE[data.selectedISTitleId]?.some(s => s.id === data.selectedSquadId)) {
+            setSelectedSquadId(data.selectedSquadId);
+          } else {
+            setSelectedSquadId(null);
+          }
           
           // Restore team size
           if (data.teamSize !== undefined) {
@@ -1836,6 +1921,8 @@ const IntegratedStrategiesPage: React.FC = () => {
         })),
         currentHope,
         teamSize,
+        selectedISTitleId,
+        selectedSquadId: selectedSquadId ?? undefined,
         // Cache cost edits with the IS team so they persist and restore with the team
         recruitHopeCostOverrides: Object.keys(recruitHopeCostOverrides).length > 0 ? recruitHopeCostOverrides : undefined,
         promotionHopeCostOverrides: Object.keys(promotionHopeCostOverrides).length > 0 ? promotionHopeCostOverrides : undefined,
@@ -1867,9 +1954,11 @@ const IntegratedStrategiesPage: React.FC = () => {
         method: 'DELETE'
       });
       
-      // Reset local state to defaults (including cost edits and Pathfinder)
+      // Reset local state to defaults (including cost edits, Pathfinder, IS and squad)
       setSelectedOperators([]);
       setCurrentHope(6);
+      setSelectedISTitleId(IS_TITLES[0].id);
+      setSelectedSquadId(null);
       setRecruitHopeCostOverrides({});
       setPromotionHopeCostOverrides({});
       setPathfinderActive(false);
@@ -2078,6 +2167,7 @@ const IntegratedStrategiesPage: React.FC = () => {
           weightPoolsConfig,
           allSynergies,
           { t, interpolate, translateClass, getNicheName },
+          excludedOperators,
           {
             config: isHopeCostsConfig,
             isId: selectedISTitleId,
@@ -2096,6 +2186,25 @@ const IntegratedStrategiesPage: React.FC = () => {
         } else {
           // No more valid recommendations
           break;
+        }
+      }
+
+      // IS6 only: prepend synthetic option (score 100) — "conserve this voucher" when Pathfinder off, "recruit later" when Pathfinder on
+      if (selectedISTitleId === 'IS6') {
+        if (pathfinderActive) {
+          recommendations.unshift({
+            recommendedOperator: null,
+            reasoning: t('isTeamBuilder.recruitLaterReasoning'),
+            score: 100,
+            recruitLater: true
+          });
+        } else {
+          recommendations.unshift({
+            recommendedOperator: null,
+            reasoning: t('isTeamBuilder.conserveVoucherReasoning'),
+            score: 100,
+            conserveVoucher: true
+          });
         }
       }
 
@@ -2724,7 +2833,57 @@ const IntegratedStrategiesPage: React.FC = () => {
               )}
             </div>
 
-            {recommendation.recommendedOperator ? (
+            {recommendation.conserveVoucher ? (
+              <>
+                <div className="recommended-operator-card conserve-voucher-card">
+                  <div className="conserve-voucher-icon" aria-hidden>
+                    <img src={getImageUrl('/images/conserve.png')} alt="" />
+                  </div>
+                  <div className="operator-info">
+                    <div className="operator-name">{t('isTeamBuilder.conserveVoucherTitle')}</div>
+                    <div className="recommendation-score">{t('isTeamBuilder.score')}: {recommendation.score.toFixed(0)}</div>
+                    <p className="conserve-voucher-message">{recommendation.reasoning}</p>
+                  </div>
+                </div>
+                <div className="recommendation-actions">
+                  <button
+                    onClick={() => {
+                      setRecommendation(null);
+                      setAllRecommendations([]);
+                      setCurrentRecommendationIndex(0);
+                    }}
+                    className="add-recommended-btn primary"
+                  >
+                    {t('isTeamBuilder.conserveVoucherDismiss')}
+                  </button>
+                </div>
+              </>
+            ) : recommendation.recruitLater ? (
+              <>
+                <div className="recommended-operator-card conserve-voucher-card recruit-later-card">
+                  <div className="conserve-voucher-icon" aria-hidden>
+                    <img src={getImageUrl('/images/conserve.png')} alt="" />
+                  </div>
+                  <div className="operator-info">
+                    <div className="operator-name">{t('isTeamBuilder.recruitLaterTitle')}</div>
+                    <div className="recommendation-score">{t('isTeamBuilder.score')}: {recommendation.score.toFixed(0)}</div>
+                    <p className="conserve-voucher-message">{recommendation.reasoning}</p>
+                  </div>
+                </div>
+                <div className="recommendation-actions">
+                  <button
+                    onClick={() => {
+                      setRecommendation(null);
+                      setAllRecommendations([]);
+                      setCurrentRecommendationIndex(0);
+                    }}
+                    className="add-recommended-btn primary"
+                  >
+                    {t('isTeamBuilder.conserveVoucherDismiss')}
+                  </button>
+                </div>
+              </>
+            ) : recommendation.recommendedOperator ? (
               <>
                 <div className="recommended-operator-card">
                   <img
@@ -2779,7 +2938,7 @@ const IntegratedStrategiesPage: React.FC = () => {
               </div>
             )}
 
-            {recommendation.recommendedOperator && (
+            {recommendation.recommendedOperator && !recommendation.conserveVoucher && !recommendation.recruitLater && (
               <div className="recommendation-reasoning">
                 <h4>{t('isTeamBuilder.reasoning')}</h4>
                 <FormattedReasoning text={recommendation.reasoning} />

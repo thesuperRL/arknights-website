@@ -1177,6 +1177,45 @@
   font-weight: 600;
 }
 
+.recommended-operator-card.conserve-voucher-card {
+  background: rgba(234, 179, 8, 0.12);
+  border-color: rgba(234, 179, 8, 0.35);
+}
+
+.conserve-voucher-card .conserve-voucher-icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(234, 179, 8, 0.2);
+  border-radius: 8px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.conserve-voucher-card .conserve-voucher-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.conserve-voucher-card .conserve-voucher-message {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.recommended-operator-card.recruit-later-card {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+.recruit-later-card .conserve-voucher-icon {
+  background: rgba(34, 197, 94, 0.2);
+}
+
 .no-recommendation {
   padding: 1rem;
   background: rgba(239, 68, 68, 0.1);
