@@ -5647,5 +5647,19 @@
         ]
       }
     }
+  },
+  "bellone": {
+    "id": "bellone",
+    "name": "Bellone",
+    "rarity": 6,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/bellone.png",
+    "niches": [],
+    "cnName": "贝洛内",
+    "twName": "貝洛內",
+    "jpName": "ベッローネ",
+    "krName": "벨로네",
+    "internalName": "char_4037_demetr"
   }
 }

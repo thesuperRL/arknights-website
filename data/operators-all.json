@@ -9026,6 +9026,17 @@
     },
     "synergies": {}
   },
+  "ripresa": {
+    "id": "ripresa",
+    "name": "Ripresa",
+    "rarity": 5,
+    "class": "Caster",
+    "global": false,
+    "profileImage": "/images/operators/ripresa.png",
+    "niches": [],
+    "cnName": "复奏",
+    "internalName": "char_4031_liesel"
+  },
   "aak": {
     "id": "aak",
     "name": "Aak",
@@ -14674,5 +14685,19 @@
         ]
       }
     }
+  },
+  "bellone": {
+    "id": "bellone",
+    "name": "Bellone",
+    "rarity": 6,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/bellone.png",
+    "niches": [],
+    "cnName": "贝洛内",
+    "twName": "貝洛內",
+    "jpName": "ベッローネ",
+    "krName": "벨로네",
+    "internalName": "char_4037_demetr"
   }
 }
