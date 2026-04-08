@@ -5661,5 +5661,15 @@
     "jpName": "ベッローネ",
     "krName": "벨로네",
     "internalName": "char_4037_demetr"
+  },
+  "zima_the_raging_tide": {
+    "id": "zima_the_raging_tide",
+    "name": "Zima the Raging Tide",
+    "rarity": 6,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/zima_the_raging_tide.png",
+    "niches": [],
+    "cnName": "怒潮凛冬"
   }
 }

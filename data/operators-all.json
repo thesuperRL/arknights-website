@@ -9037,6 +9037,27 @@
     "cnName": "复奏",
     "internalName": "char_4031_liesel"
   },
+  "botani": {
+    "id": "botani",
+    "name": "Botani",
+    "rarity": 5,
+    "class": "Supporter",
+    "global": false,
+    "profileImage": "/images/operators/botani.png",
+    "niches": [],
+    "cnName": "伯塔尼",
+    "internalName": "char_4223_botany"
+  },
+  "ukusik": {
+    "id": "ukusik",
+    "name": "Ukusik",
+    "rarity": 5,
+    "class": "Medic",
+    "global": false,
+    "profileImage": "/images/operators/ukusik.png",
+    "niches": [],
+    "cnName": "乌啾"
+  },
   "aak": {
     "id": "aak",
     "name": "Aak",
@@ -14699,5 +14720,15 @@
     "jpName": "ベッローネ",
     "krName": "벨로네",
     "internalName": "char_4037_demetr"
+  },
+  "zima_the_raging_tide": {
+    "id": "zima_the_raging_tide",
+    "name": "Zima the Raging Tide",
+    "rarity": 6,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/zima_the_raging_tide.png",
+    "niches": [],
+    "cnName": "怒潮凛冬"
   }
 }
