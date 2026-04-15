@@ -82,15 +82,26 @@
   {
     "id": "antiquated-sheet-music",
     "name": "Antiquated Sheet Music",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Hope +4A tattered piece of sheet music. The notes can no longer be clearly read. No one knows for certain what story this piece was meant to tell.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
+    "imagePath": "images/collectibles/Antiquated_Sheet_Music.png"
   },
   {
     "id": "antique-casting",
     "name": "Antique Casting",
-    "description": "",
-    "isVersions": [],
+    "description": "Immediately Promote 3 Operators (Does not require Hope)\"Harken the forge of the sky Awaits five earthborn metals\" ...Even though it can be used for all kinds of work, nobody understands its exact mechanism.",
+    "isVersions": [
+      "Ceobe's Fungimist",
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
     "imagePath": ""
   },
   {
@@ -368,8 +379,14 @@
   {
     "id": "blunt-claws---mastery",
     "name": "Blunt Claws - Mastery",
-    "description": "",
-    "isVersions": [],
+    "description": "Vanguard Operators have +50% ATK and DEF\"When the darkly-clad enemies rushed towards me, there were only four words on my mind — they are done for.\"",
+    "isVersions": [
+      "Ceobe's Fungimist",
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
     "imagePath": ""
   },
   {
@@ -463,9 +480,12 @@
   {
     "id": "broken-wand---harmony",
     "name": "Broken Wand - Harmony",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "For every Caster Operator on the field, all allies deal +12% Arts damage (stacks up to 8 times)The solos have their merits, but a chorus can destroy everything.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
+    "imagePath": "images/collectibles/Broken_Wand_-_Harmony.png"
   },
   {
     "id": "broken-wand---malediction",
@@ -483,8 +503,14 @@
   {
     "id": "broken-wand---training",
     "name": "Broken Wand - Training",
-    "description": "",
-    "isVersions": [],
+    "description": "Immediately Promote a Caster Operator (Does not require Hope)\"After watching the 'performance' of certain casters, I decided to quietly put away the Leithanian textbook.\"",
+    "isVersions": [
+      "Ceobe's Fungimist",
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
     "imagePath": ""
   },
   {
@@ -574,7 +600,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Church_Alms_Meal_Voucher.png"
   },
@@ -594,9 +621,13 @@
   {
     "id": "coffee-plains-coffee-candy",
     "name": "Coffee Plains Coffee Candy",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "+2 Squad Size Limit, all friendly units gain +2 ASPDDossoles' famous coffee-flavored candy product. Has real caffeine added, to keep you wide awake from clock-in to overtime.",
+    "isVersions": [
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
+    "imagePath": "images/collectibles/Coffee_Plains_Coffee_Candy.png"
   },
   {
     "id": "coin-operated-toy",
@@ -628,7 +659,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Conch_of_Divine_Whispers.png"
   },
@@ -645,9 +677,12 @@
   {
     "id": "convalescence-experience-card",
     "name": "Convalescence Experience Card",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "All Operators gain +40 ASPD for 10 seconds after deploymentA special service from the Convalescent Garden![sic] Each Operator is entitled to one physiotherapy session from the Convalescent Garden before each of their field operations. Non-transferrable.",
+    "isVersions": [
+      "Mizuki & Caerula Arbor",
+      "Sarkaz's Furnaceside Fables"
+    ],
+    "imagePath": "images/collectibles/Convalescence_Experience_Card.png"
   },
   {
     "id": "convalescence-prime-membership",
@@ -1060,9 +1095,14 @@
   {
     "id": "fowlbeast-liver-pate",
     "name": "Fowlbeast Liver Pate",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Increases the SP regen rate of Auto Recovery skills by +0.35/sA small jar of fowlbeast liver pâté. Bright and vividly colorful, it is eaten only by nobles.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
+    "imagePath": "images/collectibles/Fowlbeast_Liver_Pate.png"
   },
   {
     "id": "friston.p",
@@ -1701,7 +1741,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Night-Whispers_in_the_Forest.png"
   },
@@ -1819,7 +1860,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Pried_Open_Toolbox.png"
   },
@@ -2125,19 +2167,6 @@
     "imagePath": ""
   },
   {
-    "id": "rusted-blade---training",
-    "name": "Rusted Blade - Training",
-    "description": "Immediately Promote a Specialist Operator (Does not require Hope)When conducting live combat drills with Specialist Operators, please be prepared to be \"beaten up thoroughly before you are prepared.\"",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": ""
-  },
-  {
     "id": "rusted-iron-hammer",
     "name": "Rusted Iron Hammer",
     "description": "Shop vendors charge -50% Originium Ingots for their goods\"Change is necessary, and we must do all we can to hasten the oncoming storm.\"",
@@ -2176,8 +2205,14 @@
   {
     "id": "sabotage-co-op---suppression",
     "name": "Sabotage Co-op - Suppression",
-    "description": "",
-    "isVersions": [],
+    "description": "Increases the ASPD of Caster and Specialist Operators by +6 for each Caster or Specialist Operator in the combat squadDon't worry about your accuracy. Take enough shots, and you're guaranteed to land something!",
+    "isVersions": [
+      "Ceobe's Fungimist",
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
     "imagePath": ""
   },
   {
@@ -2332,8 +2367,14 @@
   {
     "id": "stalwart-aid---advancement",
     "name": "Stalwart Aid - Advancement",
-    "description": "",
-    "isVersions": [],
+    "description": "Supporter Operators have -2 DP Cost and +60% Max HPWhenever you're \"almost done\" with a task, what you need at that moment is someone to help you with the \"almost\" part.",
+    "isVersions": [
+      "Ceobe's Fungimist",
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
     "imagePath": ""
   },
   {
@@ -2421,9 +2462,14 @@
   {
     "id": "stone-gargoyle",
     "name": "Stone Gargoyle",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Immediately gain +6 Life Points.A palm-sized sculpture. Supposedly they are handmade gifts given out by the Gargoyles as a sign of friendship.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
+    "imagePath": "images/collectibles/Stone_Gargoyle.png"
   },
   {
     "id": "string-puppet",
@@ -2610,7 +2656,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Topographical_Map.png"
   },
@@ -2737,9 +2784,14 @@
   {
     "id": "weird-flute",
     "name": "Weird Flute",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Hope +4, Squad Size Limit +1A weird-looking flute. Someone plays it day in and day out.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables"
+    ],
+    "imagePath": "images/collectibles/Weird_Flute.png"
   },
   {
     "id": "white-flower-crown",
