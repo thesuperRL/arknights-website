@@ -19,7 +19,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Acahuallan_Bowl.png"
   },
@@ -46,6 +47,16 @@
       "Sarkaz's Furnaceside Fables"
     ],
     "imagePath": "images/collectibles/Actor_s_Perfume.png"
+  },
+  {
+    "id": "ancient-fresco",
+    "name": "Ancient Fresco",
+    "description": "When an enemy enters or is freed from Levitation and/or Weightless, they take 1000 Arts damage and are Silenced for 10 secondsWalk out of the cave, and raise your head. This has never been right, even since antiquity.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Ancient_Fresco.png"
   },
   {
     "id": "ancient-gaulish-silver-coin",
@@ -87,7 +98,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Antiquated_Sheet_Music.png"
   },
@@ -100,7 +112,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -113,7 +126,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -125,7 +139,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Arts_Killer.png"
   },
@@ -182,7 +197,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Avenger__Collectible_.png"
   },
@@ -194,7 +210,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Bank_of_Gaul_Check.png"
   },
@@ -206,7 +223,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Banshee_s_Kiss.png"
   },
@@ -229,7 +247,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -242,7 +261,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -263,7 +283,8 @@
     "description": "For every Guard Operator on the field, all allies gain ATK +8% (stacks up to 8 times)Combat is also a group activity. The more people there are, the more confident they get, and the more powerful they become with weapons in hand.",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Bend_Spears_-_Battlecry.png"
   },
@@ -290,7 +311,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -303,7 +325,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -314,9 +337,20 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Black_Tulip.png"
+  },
+  {
+    "id": "blademace",
+    "name": "\"Blademace\"",
+    "description": "All Operators have +5 DP Cost, but gain +10% ATK, DEF, and Max HPA sword lodged in a stone. Was someone bored enough to do this?",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Blademace.png"
   },
   {
     "id": "blue-silk-scarf",
@@ -326,7 +360,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Blue_Silk_Scarf.png"
   },
@@ -339,7 +374,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -352,7 +388,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -362,7 +399,8 @@
     "description": "For every Vanguard Operator on the field, gain 1 DP every 3 seconds (stacks up to 8 times)The flames turn more intense with each additional firewood added to the pile.",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Blunt_Claws_-_Fuel.png"
   },
@@ -385,20 +423,22 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
   {
     "id": "blunt-claws---proficiency",
     "name": "Blunt Claws - Proficiency",
-    "description": "The SP Cost of Vanguard Operators' skills is decreased by -35%As an operator who often enters the battlefield before anyone else, you cannot fathom what they have been through.",
+    "description": "The SP Cost of Vanguard Operators' skills is decreased by 35%As an operator who often enters the battlefield before anyone else, you cannot fathom what they have been through.",
     "isVersions": [
       "Ceobe's Fungimist",
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -411,7 +451,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -437,7 +478,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -450,7 +492,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -473,7 +516,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -483,7 +527,8 @@
     "description": "For every Caster Operator on the field, all allies deal +12% Arts damage (stacks up to 8 times)The solos have their merits, but a chorus can destroy everything.",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Broken_Wand_-_Harmony.png"
   },
@@ -496,7 +541,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -509,7 +555,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -519,7 +566,8 @@
     "description": "Gain 1 Hope whenever you buy an item at the Rogue Trader or make an exchange at Lost and FoundSome people are willing to do Cannot a favor, and some are worthy for Cannot to do a \"favor.\"",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Cannot_s_Mark.png"
   },
@@ -532,7 +580,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -556,9 +605,30 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Castle_s_Offspring.png"
+  },
+  {
+    "id": "celestial-dust",
+    "name": "Celestial Dust",
+    "description": "Ranged Operators Levitate all enemies within attack range for 2 seconds when a skill is manually activatedShe gently blows away the countless records of sunrises, moonsets, and the changing of the stars. Her life is blown away that easily.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Celestial_Dust.png"
+  },
+  {
+    "id": "children-of-the-walls",
+    "name": "Children of the Walls",
+    "description": "Operators deployed on the 8 tiles surrounding the Objective Point gain +2 Block and +50% Max HPThe Children of Soil and Stone carefully taught the ancient city of Kazdel how to toughen itself and protect its people behind its walls. With the advent of a protracted peace, it was broken into many little pieces and turned into amulets for adventurers heading into unexplored lands.",
+    "isVersions": [
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Children_of_the_Walls.png"
   },
   {
     "id": "children's-puppet",
@@ -568,7 +638,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Children_s_Puppet.png"
   },
@@ -614,7 +685,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -625,7 +697,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Coffee_Plains_Coffee_Candy.png"
   },
@@ -703,7 +776,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -726,7 +800,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Defender-2.png"
   },
@@ -738,9 +813,40 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Designer_s_Ruler.png"
+  },
+  {
+    "id": "devotion",
+    "name": "\"Devotion\"",
+    "description": "Ranged Operators deal 150 Arts damage to a random enemy within attack range with every attack or healSince antiquity, this tribe has believed that they hold a truth about Sami: Everything originally had a voice, until \"It\" spoke for all of them.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Devotion.png"
+  },
+  {
+    "id": "disaster's-origin",
+    "name": "Disaster's Origin",
+    "description": "All enemies take +20% Arts damage and +100% Elemental InjuryThe Sarkaz dug through the Targangils Prime Vein and Originium crystals spurted forth from Kazdel. Their fall was inevitable, so they wanted everything on this great land to be buried together with them.",
+    "isVersions": [
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Disaster_s_Origin.png"
+  },
+  {
+    "id": "distant-home's-guide",
+    "name": "Distant Home's Guide",
+    "description": "Designates one deployable tile at the beginning of battle; friendly units deployed on that tile will recover 1 SP per second and 3% Max HP per secondThis ancient ring is actually said to be a special navigation device, used to find emergency supplies that the Ægir once secretly stashed in various spots across the ocean. Follow the ocean's currents, be guided by wind; your homeland will always continue to bestow gifts upon you.",
+    "isVersions": [
+      "Mizuki & Caerula Arbor",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Distant_Home_s_Guide.png"
   },
   {
     "id": "doctor-silver-seal",
@@ -796,7 +902,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Dreaming_Essence.png"
   },
@@ -818,7 +925,8 @@
     "description": "Operators have increased ASPD proportional to how low their HP is, up to a maximum of +60 ASPD at 30% HPAn injection commonly used in Rim Billiton's local mines. Its strong active ingredient can stimulate the workers' senses and ensure their work efficiency in extreme environments. Life and engineering both have deadlines, and for them, this is simply a multiple-choice question.",
     "isVersions": [
       "Mizuki & Caerula Arbor",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Emergency_Active_Agent.png"
   },
@@ -842,7 +950,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Emperor_s_Favor.png"
   },
@@ -885,7 +994,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Extra-Pungent_Coffee_Beans.png"
   },
@@ -908,7 +1018,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -921,7 +1032,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -934,7 +1046,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -947,9 +1060,20 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
+  },
+  {
+    "id": "fatal-bolts---succession",
+    "name": "Fatal Bolts - Succession",
+    "description": "For every Sniper Operator on the field, all allies gain ASPD +12 (Stacks up to 8 times)Hear the sound of the first arrow, as the last pierces the torso.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Fatal_Bolts_-_Succession.png"
   },
   {
     "id": "fatal-bolts---synergy",
@@ -970,9 +1094,20 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
+  },
+  {
+    "id": "fearless-blade",
+    "name": "Fearless Blade",
+    "description": "When the battle begins, the Operator with the highest DP Cost gains +50% ATK and DEFBefore Kazdel's gates he stood, an impregnable bulwark. Gaulish artilleries, Leithanian casters, and Victorian Knights all took their shots at him. Yet, even when the gates fell and the coalition retreated, the Goliath did not yield an inch.",
+    "isVersions": [
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Fearless_Blade.png"
   },
   {
     "id": "featured-canned-meat",
@@ -1007,7 +1142,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Fissured_Restraints.png"
   },
@@ -1031,7 +1167,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Flawless_Jadestone.png"
   },
@@ -1088,7 +1225,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Four-Leaf_Clover_Fossil.png"
   },
@@ -1115,13 +1253,44 @@
     "imagePath": "images/collectibles/Friston.P.png"
   },
   {
+    "id": "frost-buck's-pauldron",
+    "name": "Frost Buck's Pauldron",
+    "description": "All allied units gain ATK +40% and DEF +40% for 30 seconds when blocking 2 or more enemiesThere are no signs of injuries on his body, only a pair of eyes drained of blood and tears.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Frost_Buck_s_Pauldron.png"
+  },
+  {
+    "id": "frozen-husk",
+    "name": "Frozen Husk",
+    "description": "Melee Operators gain ASPD +40 for 5 seconds after taking damageThe warriors of Sami stationed in the Fjal Vetrtonn are often inspired by an illusion: As their life flows toward the earth, their originally frozen bodies become lighter and lighter.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Frozen_Husk.png"
+  },
+  {
+    "id": "galleria-stellaria's-splendor",
+    "name": "Galleria Stellaria's Splendor",
+    "description": "When an enemy enters or is freed from Levitation and/or Weightless, they take 2000 Arts damage and take 30% more damage for 10 secondsAt that moment, the light of truth shone onto the earth.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Galleria_Stellaria_s_Splendor.png"
+  },
+  {
     "id": "game-room-admin-access-card",
     "name": "Game Room Admin Access Card",
     "description": "Immediately Promote an Operator (Does not require Hope)With this, you have become master over Rhodes Island's entertainment privileges. Please exercise caution when processing the various strange applications from the Operators... and remember to lock the door every day.",
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Game_Room_Admin_Access_Card.png"
   },
@@ -1133,7 +1302,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Gaulish_Toponym_Origins.png"
   },
@@ -1145,7 +1315,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Glass_Bird.png"
   },
@@ -1156,7 +1327,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Glorious_Kazimierz.png"
   },
@@ -1179,7 +1351,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1202,9 +1375,30 @@
     "isVersions": [
       "Phantom & Crimson Solitaire",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Golden_Chalice.png"
+  },
+  {
+    "id": "gravity-defying-machine",
+    "name": "Gravity Defying Machine",
+    "description": "All enemies have -2 WeightNasti Lunorey's magnum opus lifted the Sarkaz from the land that had tormented them for thousands of years. Now, though they float in ethereal clouds, they remain firmly rooted in the sky.",
+    "isVersions": [
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Gravity_Defying_Machine.png"
+  },
+  {
+    "id": "great-banshee's-veil",
+    "name": "Great Banshee's Veil",
+    "description": "All enemies take +10% Arts damage and +50% Elemental InjuryThe former Lord of the Banshees always seemed amicable, as if that were her only side... until she pulled out her bone pen, sang softly, and impaled agonizing wails into the minds of every intruder.",
+    "isVersions": [
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Great_Banshee_s_Veil.png"
   },
   {
     "id": "hand-of-buckler",
@@ -1322,7 +1516,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1345,7 +1540,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1358,7 +1554,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1371,9 +1568,20 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
+  },
+  {
+    "id": "healer's-path---wellspring",
+    "name": "Healer's Path - Wellspring",
+    "description": "For every Medic Operator on the field, all allies gain Redeployment Time -5% (Stacks up to 8 times)They are clear springs formed from flowing water, and they heal all that live.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Healer_s_Path_-_Wellspring.png"
   },
   {
     "id": "hot-water-kettle",
@@ -1406,7 +1614,8 @@
     "isVersions": [
       "Ceobe's Fungimist",
       "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor"
+      "Mizuki & Caerula Arbor",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1419,7 +1628,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1429,20 +1639,22 @@
     "description": "Defender Operators gain HP +40%, DEF +40%, and RES +20No matter how hard fate hits you, just take it in.",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Iron_Guard_-_Consolidation.png"
   },
   {
     "id": "iron-guard---impenetrable",
     "name": "Iron Guard - Impenetrable",
-    "description": "Defender Operators restore 2 SP after losing HP.Every blow they endure will turn into anger and be returned severalfold.",
+    "description": "Defender Operators restore 2 SP after being attackedEvery blow they endure will turn into anger and be returned severalfold.",
     "isVersions": [
       "Ceobe's Fungimist",
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1455,9 +1667,30 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
+  },
+  {
+    "id": "iron-guard---moving-fortress",
+    "name": "Iron Guard - Moving Fortress",
+    "description": "Defender Operators have +100% ATK, +100% DEF, and +1 Block for 15 seconds after deploymentNobody can break through their defenses, and even fewer are able to escape from their assault. If every combatant has a mission, then that mission is to change the situation on the battlefield the moment they enter the fray.",
+    "isVersions": [
+      "Mizuki & Caerula Arbor",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Iron_Guard_-_Moving_Fortress.png"
+  },
+  {
+    "id": "iron-guard---rampart",
+    "name": "Iron Guard - Rampart",
+    "description": "For every Defender Operator on the field, all allies take 10% less physical damage (Stacks up to 8 times)Gather sand to form a tower, and gaze upon enemies from above.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Iron_Guard_-_Rampart.png"
   },
   {
     "id": "iron-guard---training",
@@ -1468,7 +1701,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1563,7 +1797,8 @@
     "description": "Treasure Chests on the battlefield will drop more Originium IngotsDon't worry if your own strength isn't enough! Use these tiny levers to move more, and win more in every round! The grand prize is a holiday trip to Sami!",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Knight_Lance_Pro.png"
   },
@@ -1573,7 +1808,8 @@
     "description": "Objective Shield +1; all allied units gain Max HP +60% if you have any Objective Shield at the beginning of a battleThree decades ago, a child dropped his toy wooden shield into the lake. Three decades later, he bores through the frozen lake, retrieves his shield, and embarks on a hero's journey.",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Lakebed_Aegis.png"
   },
@@ -1595,7 +1831,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Letter_of_Termination_Contract.png"
   },
@@ -1618,7 +1855,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Live_Rose.png"
   },
@@ -1628,9 +1866,20 @@
     "description": "All allied melee units gain a Barrier equal to 50% of their Max HP on deploymentThe shamans know how trees will cling to survival, so they invite the trees to become armor for a warrior possessing a similar will.",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Living_Woodplate.png"
+  },
+  {
+    "id": "lost-key",
+    "name": "Lost Key",
+    "description": "Gain +20% Command EXP from battles; obtain 50 Originium Ingots upon reaching Command Level 10\"Fellas, this key can open the treasure trove lost within the royal city of Kazdel. Hey, green-haired Feline! Watch that hooded slave of yours and keep those hands away from my map!\"",
+    "isVersions": [
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Lost_Key.png"
   },
   {
     "id": "lucky-coin",
@@ -1672,7 +1921,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Military_Mirror_Armor.png"
   },
@@ -1706,7 +1956,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Miss.Christine_Petting_Ticket.png"
   },
@@ -1730,7 +1981,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1747,6 +1999,16 @@
     "imagePath": "images/collectibles/Night-Whispers_in_the_Forest.png"
   },
   {
+    "id": "northwind-construct",
+    "name": "Northwind Construct",
+    "description": "[Machine] and [Arts Creation] enemies will be immediately Frozen with their first attack for 15 secondsThough she often fails, she is still committed to helping those who would challenge their tragic fates.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Northwind_Construct.png"
+  },
+  {
     "id": "noxious-hemostatic-agent",
     "name": "Noxious Hemostatic Agent",
     "description": "All friendly units have +24% HP.\"After fermentation, the body fluids of this Originium slug can be used to stop bleeding.\" —\"Rhodes Island Wilderness Survival Guide\"",
@@ -1755,9 +2017,20 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Noxious_Hemostatic_Agent.png"
+  },
+  {
+    "id": "numbness-and-obscenity",
+    "name": "\"Numbness and Obscenity\"",
+    "description": "All friendly units have +5 RESA famous art piece and the final piece created by an insane Leithanian sculptor two hundred years ago. The sculptor was known for his extraordinary talent and his participation in multiple cruel homicides. However, historical records show that few people took notice of his work. He was instead known for his features and beauty.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Numbness_and_Obscenity.png"
   },
   {
     "id": "old-fan",
@@ -1777,7 +2050,8 @@
     "description": "Operators have increased ATK proportional to how high their HP is, up to a maximum of +30% ATK at 100% HPThis poor-tasting fortified nutritional supplement was originally a \"dietary supplement\" periodically provided to Columbian Pioneers, but after extensive marketing, it suddenly became a \"beauty product\" beloved by nobles.",
     "isVersions": [
       "Mizuki & Caerula Arbor",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Old_George_Nutritional_Paste.png"
   },
@@ -1790,7 +2064,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1801,7 +2076,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Orange_Storm.png"
   },
@@ -1813,7 +2089,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Originium_Iris.png"
   },
@@ -1853,6 +2130,16 @@
     "imagePath": "images/collectibles/Pitt_s_Assorted_Fruits.png"
   },
   {
+    "id": "polar-retrofit-package",
+    "name": "Polar Retrofit Package",
+    "description": "When used, Support items will also be used simultaneously on the adjacent 4 tilesProudly produced by the Volvort Kochinski Extreme Environment Equipment Testing Department. It can modify a variety of devices, adapting them for polar regions and increasing their effectiveness in cold environments.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Polar_Retrofit_Package.png"
+  },
+  {
     "id": "pried-open-toolbox",
     "name": "Pried Open Toolbox",
     "description": "Hope +4The tool box of the troupe's prop master. From nails to dummy props, it has everything.",
@@ -1874,7 +2161,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1886,7 +2174,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Proof_of_Longevity.png"
   },
@@ -1899,7 +2188,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -1911,7 +2201,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Pure_White_Dance_Shoes.png"
   },
@@ -1978,7 +2269,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Red_Bow_Tie.png"
   },
@@ -2002,20 +2294,32 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Rhodes_Island_Tactical_Transceiver.png"
   },
   {
     "id": "ribbon-of-honor",
     "name": "Ribbon of Honor",
-    "description": "All friendly units have +100% ATK when blocking only one enemyNumerous actors have played this character, yet none of them were able to save the character's dearest friend.",
+    "description": "All friendly units have +100% ATK when blocking only 1 enemyNumerous actors have played this character, yet none of them were able to save the character's dearest friend.",
     "isVersions": [
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Ribbon_of_Honor.png"
+  },
+  {
+    "id": "ring-of-thorns",
+    "name": "Ring of Thorns",
+    "description": "When Melee Operators are healed, they and Operators in the adjacent 4 tiles will recover 1 SPYou were able to steady yourself while in a distorted fear. There is blood left on the thorns, and you don't know if it was you or the Snowpriest who was pricked by them. They will use whatever means they have, without batting an eye.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Ring_of_Thorns.png"
   },
   {
     "id": "rock-horn",
@@ -2036,7 +2340,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -2046,7 +2351,8 @@
     "description": "There is a chance after battle to permanently increase all allied units' ATK and DEF by 5% (Can stack up to 10 times)Offer a sacrifice, and receive a reward. It is so convenient that the people never think about what they are directing their sacrifices to.",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Roundstone_Altar.png"
   },
@@ -2059,252 +2365,6 @@
       "Mizuki & Caerula Arbor"
     ],
     "imagePath": "images/collectibles/Royal_Alliance_Treaty.png"
-  },
-  {
-    "id": "royal-brooch",
-    "name": "Royal Brooch",
-    "description": "All allied units have RES +15, and gain one-time dodge after deploymentAn ornament worn by Gaulish royalty, made from gold and inlaid with expensive Originium crystals. They are more than decoration: many of these brooches hide Originium circuits loaded with defensive Arts.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor"
-    ],
-    "imagePath": "images/collectibles/Royal_Brooch.png"
-  },
-  {
-    "id": "royal-liqueur",
-    "name": "Royal Liqueur",
-    "description": "Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 1.5sThe fine wines of the extinct country, Gaul, have now become expensive, prime treasures for collectors. The place of production is now a part of Leithanien, but the technique has been lost.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "royal-rapier",
-    "name": "Royal Rapier",
-    "description": "All friendly melee units have +25% ATKA highly decorative rapier for nobles. Used by Gaulish nobles first and foremost, though perhaps a little fragile for a military weapon.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Royal_Rapier.png"
-  },
-  {
-    "id": "rusted-blade---advancement",
-    "name": "Rusted Blade - Advancement",
-    "description": "Specialist Operators have -2 DP Cost and +60% Max HPThere may be many means, but only one end.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "rusted-blade---disturbance",
-    "name": "Rusted Blade - Disturbance",
-    "description": "For every Specialist Operator on the field, all enemies have -5% Movement Speed (stacks up to 8 times)Delay the enemy bit by bit, just like slicing a sausage, and by the time they realize it there will be nothing they can do.",
-    "isVersions": [
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Rusted_Blade_-_Disturbance.png"
-  },
-  {
-    "id": "rusted-blade---execution",
-    "name": "Rusted Blade - Execution",
-    "description": "Specialist Operators have +30 ASPDProjekt Red has a knife. She has a knife.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "rusted-blade---isolation",
-    "name": "Rusted Blade - Isolation",
-    "description": "Specialist Operators have +40% ATK and DEFThe director of S.W.E.E.P. does not have any mission participation records. *None*.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "rusted-blade---no-man's-land",
-    "name": "Rusted Blade - No Man's Land",
-    "description": "The Redeployment Time of Specialist Operators is reduced by -35%Some operators have very peculiar combat methods. Don't make a fuss over how many times you see them, or how many of them you see.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "rusted-blade---overwhelm",
-    "name": "Rusted Blade - Overwhelm",
-    "description": "Specialist Operators have +2 shift strength.Terrain is one aspect of battle... That's all I can say.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "rusted-iron-hammer",
-    "name": "Rusted Iron Hammer",
-    "description": "Shop vendors charge -50% Originium Ingots for their goods\"Change is necessary, and we must do all we can to hasten the oncoming storm.\"",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Rusted_Iron_Hammer.png"
-  },
-  {
-    "id": "rusted-razor",
-    "name": "Rusted Razor",
-    "description": "All enemies take +15% Physical damageIf you cut yourself with this, you know what will happen.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Rusted_Razor.png"
-  },
-  {
-    "id": "sabotage-co-op---elimination",
-    "name": "Sabotage Co-op - Elimination",
-    "description": "Increases the ATK of Caster and Specialist Operators by +8% for each Caster or Specialist Operator in the combat squadExternal destruction, internal disintegration.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "sabotage-co-op---suppression",
-    "name": "Sabotage Co-op - Suppression",
-    "description": "Increases the ASPD of Caster and Specialist Operators by +6 for each Caster or Specialist Operator in the combat squadDon't worry about your accuracy. Take enough shots, and you're guaranteed to land something!",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "sabotage-co-op-expansion",
-    "name": "Sabotage Co-op Expansion",
-    "description": "Caster Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "sabotage-co-op-reinforcements",
-    "name": "Sabotage Co-op Reinforcements",
-    "description": "Specialist Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire"
-    ],
-    "imagePath": ""
-  },
-  {
-    "id": "scout's-scope",
-    "name": "Scout's Scope",
-    "description": "Enemies take increased damage from allied units as range increases (max 100%)[note 1]Lock on, aim, fire, and destroy the enemy's will to resist, all in the name of a better future that Scout will never see. Maybe you can do it for him.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Scout_s_Scope.png"
-  },
-  {
-    "id": "screaming-cherry",
-    "name": "Screaming Cherry",
-    "description": "+2 Squad Size Limit, all friendly units gain +2% ATKA Mama John's candy product. Though the niche vinegar-pickled cherry flavor can't compete with the best-sellers in popularity, there have always been a small group of loyal and dedicated consumers. Rumor has it that one of Mama John's directors loves this flavor.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Screaming_Cherry.png"
-  },
-  {
-    "id": "sea-terror-jerky",
-    "name": "Sea Terror Jerky",
-    "description": "All enemy units have -21% DEFOnce their desire to survive overwhelms their terror, the famished Iberians will devour this \"food,\" subsequently turning into Sea Terrors on some ordinary day.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Sea_Terror_Jerky.png"
-  },
-  {
-    "id": "seaweed-salad",
-    "name": "Seaweed Salad",
-    "description": "+1 Squad Size Limit, all friendly units gain +1 ASPDOnce a national delicacy of great pride to the Iberians, now gradually slipping away from memory as a result of the rampaging Seaborn.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Seaweed_Salad.png"
-  },
-  {
-    "id": "second-economic-reform-act",
-    "name": "\"Second Economic Reform Act\"",
-    "description": "All Operators start with +18 SPWith this bill as the starting point, Gaul formally began its path to become a hegemonic empire.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Second_Economic_Reform_Act.png"
-  },
-  {
-    "id": "secret-hr-letter",
-    "name": "Secret HR Letter",
-    "description": "6-star Operators cost -2 Hope to recruit\"■■■ gave this to you? Guess there's no problem then.\"",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": ""
   },
   {
     "id": "silent-squad",
@@ -2329,6 +2389,26 @@
     "imagePath": "images/collectibles/Silver_Forks.png"
   },
   {
+    "id": "slave-hunter",
+    "name": "Slave Hunter",
+    "description": "Units that become Levitated, Weightless, or are shifted will take 50% more damage for 10 secondsAfter obtaining Nasti's designs, the Sarkaz put them to use in war right away. They flew into the sky, dominating the Ancients with waves of wrath, and the never-ending war entered a new stage.",
+    "isVersions": [
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Slave_Hunter.png"
+  },
+  {
+    "id": "snow-doe's-glove",
+    "name": "Snow Doe's Glove",
+    "description": "All allied units gain ASPD +80 and obtain 50% Physical and Arts Dodge for 30s when blocking 3 or more enemiesShe shoots the last three arrows in her quiver at the Frozen Monstrosity, who used them to end her life.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Snow_Doe_s_Glove.png"
+  },
+  {
     "id": "solo-music-box",
     "name": "Solo Music Box",
     "description": "Hope +4, Deployment Limit +1An old music box. The music does not play when the box is opened, nor does the figure inside show any signs it is about to move. There is not a peep, and no one is breaking out in dance. Before she begins her performances with Phantom, the lead actress stares blankly into the music box.",
@@ -2336,7 +2416,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Solo_Music_Box.png"
   },
@@ -2348,7 +2429,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Special_Suppressor.png"
   },
@@ -2360,7 +2442,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Spinach_Pack.png"
   },
@@ -2373,7 +2456,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -2384,7 +2468,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Stalwart_Aid_-_Assistance.png"
   },
@@ -2397,7 +2482,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -2420,9 +2506,20 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
+  },
+  {
+    "id": "stalwart-aid---linkup",
+    "name": "Stalwart Aid - Linkup",
+    "description": "For every Supporter Operator on the field, increases the SP regen rate of Auto Recovery skills by +0.2/s (Stacks up to 8 times)Hand in hand, shoulder to shoulder, brace yourselves, and look straight ahead.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Stalwart_Aid_-_Linkup.png"
   },
   {
     "id": "stalwart-aid---secondary-front",
@@ -2443,7 +2540,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -2501,7 +2599,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Support_Escape_Crane.png"
   },
@@ -2511,7 +2610,8 @@
     "description": "Bring a Broken Fog Machine along to each battleAn emergency Fog Machine provided to field operators that appears to be broken.",
     "isVersions": [
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Support_Fog_Machine.png"
   },
@@ -2522,7 +2622,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Support_Landmine_Set.png"
   },
@@ -2533,7 +2634,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Support_Mr._Boom.png"
   },
@@ -2544,18 +2646,20 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Support_Replenishment_Station.png"
   },
   {
     "id": "support-riot-pile",
     "name": "Support Riot Pile",
-    "description": "Bring 2 Riot Piles[sic] along to each battleAn emergency set of Riot Piles provided to field operators.",
+    "description": "Bring 2 Riot Piles along to each battleAn emergency set of Riot Piles provided to field operators.",
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Support_Riot_Pile.png"
   },
@@ -2565,7 +2669,8 @@
     "description": "+50% Originium Ingot drops from battleIn Leithanian mythology, he who holds the ring enjoys the vast riches of the entire world, but greed will also be his undoing.",
     "isVersions": [
       "Phantom & Crimson Solitaire",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Supreme_Ring.png"
   },
@@ -2583,10 +2688,11 @@
   {
     "id": "survivor-contract",
     "name": "Survivor Contract",
-    "description": "At the start of battle, a random Operator gains +20% ATK and DEF, plus an additional +20% at the end of each battleA very long contract, in which every term and condition is the result of experience, leaving no room for chance or sentiment. Satisfy them all to be the final survivor.",
+    "description": "At the start of battle, a random Operator gains +20% ATK and DEF, plus an additional +20% at the end of each (victorious) battleA very long contract, in which every term and condition is the result of experience, leaving no room for chance or sentiment. Satisfy them all to be the final survivor.",
     "isVersions": [
       "Mizuki & Caerula Arbor",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Survivor_Contract.png"
   },
@@ -2597,7 +2703,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/The_Return.png"
   },
@@ -2610,7 +2717,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -2622,7 +2730,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Therapy_Tape.png"
   },
@@ -2633,7 +2742,8 @@
     "isVersions": [
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Three-Dimensional_Art_Display.png"
   },
@@ -2669,7 +2779,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Universal_Key.png"
   },
@@ -2681,7 +2792,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Unknown_Instrument.png"
   },
@@ -2716,7 +2828,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Vampire_s_Bed.png"
   },
@@ -2729,7 +2842,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
   },
@@ -2740,7 +2854,8 @@
     "isVersions": [
       "Phantom & Crimson Solitaire",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Victorian_Scrap_Medal.png"
   },
@@ -2752,7 +2867,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Victory_Horn.png"
   },
@@ -2764,9 +2880,20 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Vieux_Vanguard_s_Blade.png"
+  },
+  {
+    "id": "vinecreep-mortar-gunner",
+    "name": "Vinecreep Mortar Gunner",
+    "description": "Enemies defeated while airborne will deal 3000 physical damage to surrounding enemiesIt's no surprise such a fantastical weapon would appear when people from different cultures let down their guard and communicate with sincerity.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Vinecreep_Mortar_Gunner.png"
   },
   {
     "id": "water-of-life",
@@ -2777,9 +2904,30 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
+  },
+  {
+    "id": "weave-of-snow-and-soil",
+    "name": "Weave of Snow and Soil",
+    "description": "Designates one deployable tile at the beginning of battle; allied Operators deployed on that tile or its surrounding 8 tiles will grant 1 SP to another Operator within those tiles whenever they gain SP from Offensive or Defensive RecoveryThose within this ring receive the attention of the snow and earth.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Weave_of_Snow_and_Soil.png"
+  },
+  {
+    "id": "weave-of-thorns-and-leaves",
+    "name": "Weave of Thorns and Leaves",
+    "description": "Designates one deployable tile at the beginning of battle; allied units deployed on that tile or its surrounding 8 tiles will gain CamouflageThose within this ring receive the favor of the thorns and leaves.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Weave_of_Thorns_and_Leaves.png"
   },
   {
     "id": "weird-flute",
@@ -2789,7 +2937,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Weird_Flute.png"
   },
@@ -2801,7 +2950,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/White_Flower_Crown.png"
   },
@@ -2813,7 +2963,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Worn-out_Group_Photo.png"
   },
@@ -2825,7 +2976,8 @@
       "Phantom & Crimson Solitaire",
       "Mizuki & Caerula Arbor",
       "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
     "imagePath": "images/collectibles/Wrath_of_Siracusans.png"
   }
