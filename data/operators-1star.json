@@ -222,5 +222,16 @@
       ]
     },
     "synergies": {}
+  },
+  "gallus_": {
+    "id": "gallus_",
+    "name": "Gallus²",
+    "rarity": 1,
+    "class": "Caster",
+    "global": true,
+    "profileImage": "/images/operators/gallus_.png",
+    "niches": [],
+    "cnName": "GALLUS²",
+    "internalName": "char_4227_gallus"
   }
 }

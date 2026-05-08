@@ -6259,5 +6259,16 @@
     "profileImage": "/images/operators/ukusik.png",
     "niches": [],
     "cnName": "乌啾"
+  },
+  "crackborne": {
+    "id": "crackborne",
+    "name": "Crackborne",
+    "rarity": 5,
+    "class": "Defender",
+    "global": false,
+    "profileImage": "/images/operators/crackborne.png",
+    "niches": [],
+    "cnName": "裂响",
+    "internalName": "char_4225_tanya"
   }
 }
