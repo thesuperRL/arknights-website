@@ -1100,16 +1100,6 @@
     "imagePath": ""
   },
   {
-    "id": "fearless-blade",
-    "name": "Fearless Blade",
-    "description": "When the battle begins, the Operator with the highest DP Cost gains +50% ATK and DEFBefore Kazdel's gates he stood, an impregnable bulwark. Gaulish artilleries, Leithanian casters, and Victorian Knights all took their shots at him. Yet, even when the gates fell and the coalition retreated, the Goliath did not yield an inch.",
-    "isVersions": [
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Fearless_Blade.png"
-  },
-  {
     "id": "featured-canned-meat",
     "name": "Featured Canned Meat",
     "description": "+1 Squad Size Limit, all friendly units recover 3 HP per secondFor travelers on a long journey, the convenience of \"Ready to Eat\" is often more important than taste.",
@@ -2510,16 +2500,6 @@
       "Sui's Garden of Grotesqueries"
     ],
     "imagePath": ""
-  },
-  {
-    "id": "stalwart-aid---linkup",
-    "name": "Stalwart Aid - Linkup",
-    "description": "For every Supporter Operator on the field, increases the SP regen rate of Auto Recovery skills by +0.2/s (Stacks up to 8 times)Hand in hand, shoulder to shoulder, brace yourselves, and look straight ahead.",
-    "isVersions": [
-      "Expeditioner's Joklumarkar",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Stalwart_Aid_-_Linkup.png"
   },
   {
     "id": "stalwart-aid---secondary-front",
