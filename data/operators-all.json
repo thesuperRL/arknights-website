@@ -234,6 +234,17 @@
     "cnName": "GALLUS²",
     "internalName": "char_4227_gallus"
   },
+  "rhodes_island_recon": {
+    "id": "rhodes_island_recon",
+    "name": "Rhodes Island Recon",
+    "rarity": 1,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/rhodes_island_recon.png",
+    "niches": [],
+    "cnName": "罗德岛隐秘队",
+    "internalName": "char_4215_buddy"
+  },
   "12f": {
     "id": "12f",
     "name": "12F",
@@ -9080,6 +9091,17 @@
     "cnName": "裂响",
     "internalName": "char_4225_tanya"
   },
+  "zinogre_s_catapult": {
+    "id": "zinogre_s_catapult",
+    "name": "Zinogre S Catapult",
+    "rarity": 5,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/zinogre_s_catapult.png",
+    "niches": [],
+    "cnName": "雷狼龙S空爆",
+    "internalName": "char_1049_catap2"
+  },
   "aak": {
     "id": "aak",
     "name": "Aak",
@@ -14785,5 +14807,16 @@
     "niches": [],
     "cnName": "维伊",
     "internalName": "char_4226_veen"
+  },
+  "violet_mizutsune_orchid": {
+    "id": "violet_mizutsune_orchid",
+    "name": "Violet Mizutsune Orchid",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/violet_mizutsune_orchid.png",
+    "niches": [],
+    "cnName": "焰狐龙梓兰",
+    "internalName": "char_1048_orchd2"
   }
 }

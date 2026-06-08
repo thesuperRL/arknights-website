@@ -233,5 +233,16 @@
     "niches": [],
     "cnName": "GALLUS²",
     "internalName": "char_4227_gallus"
+  },
+  "rhodes_island_recon": {
+    "id": "rhodes_island_recon",
+    "name": "Rhodes Island Recon",
+    "rarity": 1,
+    "class": "Vanguard",
+    "global": true,
+    "profileImage": "/images/operators/rhodes_island_recon.png",
+    "niches": [],
+    "cnName": "罗德岛隐秘队",
+    "internalName": "char_4215_buddy"
   }
 }

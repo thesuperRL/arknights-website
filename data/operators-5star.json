@@ -6270,5 +6270,16 @@
     "niches": [],
     "cnName": "裂响",
     "internalName": "char_4225_tanya"
+  },
+  "zinogre_s_catapult": {
+    "id": "zinogre_s_catapult",
+    "name": "Zinogre S Catapult",
+    "rarity": 5,
+    "class": "Guard",
+    "global": false,
+    "profileImage": "/images/operators/zinogre_s_catapult.png",
+    "niches": [],
+    "cnName": "雷狼龙S空爆",
+    "internalName": "char_1049_catap2"
   }
 }

@@ -5704,5 +5704,16 @@
     "niches": [],
     "cnName": "维伊",
     "internalName": "char_4226_veen"
+  },
+  "violet_mizutsune_orchid": {
+    "id": "violet_mizutsune_orchid",
+    "name": "Violet Mizutsune Orchid",
+    "rarity": 6,
+    "class": "Sniper",
+    "global": false,
+    "profileImage": "/images/operators/violet_mizutsune_orchid.png",
+    "niches": [],
+    "cnName": "焰狐龙梓兰",
+    "internalName": "char_1048_orchd2"
   }
 }
