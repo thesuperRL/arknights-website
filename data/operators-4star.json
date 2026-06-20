@@ -28,7 +28,7 @@
     "name": "Akkord",
     "rarity": 4,
     "class": "Caster",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/akkord.png",
     "niches": [
       "aoe-arts-dps"
@@ -1708,7 +1708,7 @@
     "name": "Snegurochka",
     "rarity": 4,
     "class": "Vanguard",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/snegurochka.png",
     "niches": [
       "dp-generation",

@@ -214,7 +214,7 @@
     "name": "Astgenne the Lightchaser",
     "rarity": 6,
     "class": "Supporter",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/astgenne_the_lightchaser.png",
     "niches": [
       "aoe-arts-dps",
@@ -2607,7 +2607,7 @@
     "name": "Mantra",
     "rarity": 6,
     "class": "Caster",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/mantra.png",
     "niches": [
       "aoe-arts-dps",
@@ -3059,7 +3059,7 @@
     "name": "Nasti",
     "rarity": 6,
     "class": "Supporter",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/nasti.png",
     "niches": [
       "damage-buff",
@@ -3583,7 +3583,7 @@
     "name": "Pramanix the Prerita",
     "rarity": 6,
     "class": "Caster",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/pramanix_the_prerita.png",
     "niches": [
       "aoe-arts-dps",

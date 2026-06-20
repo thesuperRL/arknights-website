@@ -1,2 +1,37 @@
-All operators are ranked!
-Generated: 2026-03-10T00:10:22.142Z
+Unranked Operators (13 total)
+Generated: 2026-06-20T18:25:34.532Z
+
+=== GLOBAL OPERATORS ===
+
+--- Caster ---
+gallus_ (Gallus²)
+
+--- Vanguard ---
+rhodes_island_recon (Rhodes Island Recon)
+
+=== NON-GLOBAL OPERATORS ===
+
+--- Caster ---
+ripresa (Ripresa)
+viy (Viy)
+
+--- Defender ---
+crackborne (Crackborne)
+
+--- Guard ---
+bellone (Bellone)
+zima_the_raging_tide (Zima the Raging Tide)
+zinogre_s_catapult (Zinogre S Catapult)
+
+--- Medic ---
+kal_tsit_esperanta (Kal'tsit - Esperanta)
+ukusik (Ukusik)
+
+--- Sniper ---
+violet_mizutsune_orchid (Violet Mizutsune Orchid)
+
+--- Supporter ---
+botani (Botani)
+
+--- Vanguard ---
+closure (Closure)

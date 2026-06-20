@@ -10,7 +10,33 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1001_amiya2"
+    "internalName": "char_1001_amiya2",
+    "niches": [
+      "arts-dps",
+      "trash-operators",
+      "true_damage"
+    ],
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "C",
+          "level": ""
+        }
+      ],
+      "true_damage": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "trash-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "amiya_medic": {
     "id": "amiya_medic",
@@ -23,7 +49,33 @@
     "twName": "阿米婭",
     "jpName": "アーミヤ",
     "krName": "아미야",
-    "internalName": "char_1037_amiya3"
+    "internalName": "char_1037_amiya3",
+    "niches": [
+      "arts-dps",
+      "healing-operators",
+      "true_damage"
+    ],
+    "nicheInstances": {
+      "arts-dps": [
+        {
+          "tier": "B",
+          "level": ""
+        }
+      ],
+      "healing-operators": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ],
+      "true_damage": [
+        {
+          "tier": "A",
+          "level": ""
+        }
+      ]
+    },
+    "synergies": {}
   },
   "absinthe": {
     "id": "absinthe",
@@ -910,7 +962,7 @@
     "name": "Cairn",
     "rarity": 5,
     "class": "Defender",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/cairn.png",
     "niches": [
       "elemental-damage",
@@ -2153,7 +2205,7 @@
     "name": "Hadiya",
     "rarity": 5,
     "class": "Guard",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/hadiya.png",
     "niches": [
       "trash-operators"
@@ -4760,7 +4812,7 @@
     "name": "Skybox",
     "rarity": 5,
     "class": "Sniper",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/skybox.png",
     "niches": [
       "aoe-physical-dps",
@@ -4820,7 +4872,7 @@
     "name": "Snow Hunter",
     "rarity": 5,
     "class": "Sniper",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/snow_hunter.png",
     "niches": [
       "physical-dps"
@@ -5480,7 +5532,7 @@
     "name": "Vetochki",
     "rarity": 5,
     "class": "Defender",
-    "global": false,
+    "global": true,
     "profileImage": "/images/operators/vetochki.png",
     "niches": [
       "late-laneholder",
