@@ -37,6 +37,8 @@ jobs:
         env:
           # Set in repo Settings → Secrets and variables → Actions (e.g. https://your-backend.onrender.com)
           VITE_API_BASE: ${{ secrets.VITE_API_BASE }}
+          # Optional: custom randomizer subdomain (e.g. https://randomizer.yourdomain.com)
+          VITE_RANDOMIZER_URL: ${{ secrets.VITE_RANDOMIZER_URL }}
 
       - name: Add 404.html for client-side routing
         run: cp public/index.html public/404.html

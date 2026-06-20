@@ -4,6 +4,7 @@ import { animate, stagger } from 'animejs';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../translations';
 import { usePageAnimate } from '../hooks/usePageAnimate';
+import { getRandomizerUrl } from '../siteUrls';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
@@ -119,6 +120,10 @@ const HomePage: React.FC = () => {
             <h3>{t('allOperators.title')}</h3>
             <p>{t('home.allOperatorsDesc')}</p>
           </Link>
+          <a href={getRandomizerUrl()} className="quick-link-card" target="_blank" rel="noopener noreferrer">
+            <h3>{t('home.randomizer')}</h3>
+            <p>{t('home.randomizerDesc')}</p>
+          </a>
           {user && (
             <Link to="/profile" className="quick-link-card">
               <h3>{t('home.yourProfile')}</h3>

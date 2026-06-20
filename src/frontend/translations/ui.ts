@@ -17,6 +17,7 @@ export const ui: Record<UiLang, Record<string, unknown>> = {
       logout: 'Logout',
       login: 'Login',
       register: 'Register',
+      randomizer: 'Randomizer',
     },
     footer: {
       userGuide: 'User Guide',
@@ -66,6 +67,8 @@ export const ui: Record<UiLang, Record<string, unknown>> = {
       allOperatorsDesc: 'View and search all Arknights operators',
       yourProfile: 'Your Profile',
       yourProfileDesc: 'Manage your account and operator collection',
+      randomizer: 'Random Challenge',
+      randomizerDesc: 'Generate random stage and squad constraints for fun runs',
     },
     tierLists: {
       title: 'Arknights Operator Niche Lists',
@@ -556,6 +559,7 @@ export const ui: Record<UiLang, Record<string, unknown>> = {
       logout: '退出',
       login: '登录',
       register: '注册',
+      randomizer: '随机挑战',
     },
     footer: {
       userGuide: '使用指南',
@@ -605,6 +609,8 @@ export const ui: Record<UiLang, Record<string, unknown>> = {
       allOperatorsDesc: '查看与搜索全部干员',
       yourProfile: '我的',
       yourProfileDesc: '管理账号与干员收藏',
+      randomizer: '随机挑战',
+      randomizerDesc: '随机生成关卡与编队限制，增添趣味',
     },
     tierLists: {
       title: '明日方舟干员排行榜',
@@ -1095,6 +1101,7 @@ export const ui: Record<UiLang, Record<string, unknown>> = {
       logout: '登出',
       login: '登入',
       register: '註冊',
+      randomizer: '隨機挑戰',
     },
     footer: {
       userGuide: '使用指南',
@@ -1144,6 +1151,8 @@ export const ui: Record<UiLang, Record<string, unknown>> = {
       allOperatorsDesc: '查看與搜尋全部幹員',
       yourProfile: '我的角色',
       yourProfileDesc: '管理帳號與幹員收藏',
+      randomizer: '隨機挑戰',
+      randomizerDesc: '隨機生成關卡與編隊限制，增添趣味',
     },
     tierLists: {
       title: '明日方舟幹員排行榜',

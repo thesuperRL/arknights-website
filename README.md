@@ -80,6 +80,7 @@ The frontend can be hosted on GitHub Pages while the backend runs elsewhere (e.g
 
 - **Settings → Pages**: Source = **GitHub Actions**.
 - **Settings → Secrets and variables → Actions**: Add secret **VITE_API_BASE** = your backend URL (e.g. `https://your-app.onrender.com`) with no trailing slash. The frontend build uses this to call your API when served from GitHub Pages.
+- Optional: **VITE_RANDOMIZER_URL** = URL of the [arknights-randomizer](https://github.com/thesuperRL/arknights-randomizer) site (defaults to `https://thesuperrl.github.io/arknights-randomizer`). Set this when using a custom subdomain like `https://randomizer.yourdomain.com`.
 
 ### 3. Deploy
 
@@ -99,6 +100,22 @@ Login and accounts use **PostgreSQL** only. Set **DATABASE_URL** on the backend 
 - The app creates the `accounts` table automatically on startup. See [Connecting to Heroku Postgres](https://devcenter.heroku.com/articles/connecting-heroku-postgres) for connection details.
 
 **DATABASE_URL is required** for sign-up, login, and account features. To seed the database from a backup, use `npm run upload:accounts:pg` (expects a file at `data/accounts.json`; create it from a backup if needed).
+
+### 6. Randomizer subdomain
+
+The [arknights-randomizer](https://github.com/thesuperRL/arknights-randomizer) app is a separate static site, linked from the navbar and homepage.
+
+**Default (no custom domain):** `https://thesuperrl.github.io/arknights-randomizer/`
+
+**Custom subdomain** (e.g. `randomizer.yourdomain.com`):
+
+1. In **arknights-randomizer**: Settings → Pages → Custom domain → `randomizer.yourdomain.com`
+2. DNS: CNAME `randomizer` → `thesuperRL.github.io`
+3. In **arknights-website**: set Actions secret **VITE_RANDOMIZER_URL** to `https://randomizer.yourdomain.com`
+4. In **arknights-randomizer** `js/config/site.js`: set `MAIN_SITE_URL` to your main site URL
+5. Optionally set a custom domain on this repo too (e.g. `yourdomain.com`) and add it to backend **CORS_ORIGIN**
+
+See the randomizer repo README for full DNS steps.
 
 ## Project Structure
 

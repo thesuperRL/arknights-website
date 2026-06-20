@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../translations';
+import { getRandomizerUrl } from '../siteUrls';
 import './Navbar.css';
 
 const Navbar: React.FC = () => {
@@ -25,6 +26,9 @@ const Navbar: React.FC = () => {
           <Link to="/tier-lists">{t('nav.tierLists')}</Link>
           <Link to="/synergies">{t('nav.synergies')}</Link>
           <Link to="/all-operators">{t('nav.allOperators')}</Link>
+          <a href={getRandomizerUrl()} target="_blank" rel="noopener noreferrer">
+            {t('nav.randomizer')}
+          </a>
           {!loading && (
             <>
               {user ? (
