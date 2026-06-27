@@ -1,0 +1,3 @@
+[submodule "public/images/operators"]
+	path = public/images/operators
+	url = git@github.com:thesuperRL/arknights-pfp-dataset.git

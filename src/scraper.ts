@@ -1074,6 +1074,8 @@ async function main() {
     baseUrl: baseUrl,
     rarity: rarity,
     outputDir: path.join(__dirname, '../data'),
+    // ponytail: imagesDir points to a git submodule (arknights-pfp-dataset)
+    // Images are stored in a separate repo and pulled in as a submodule
     imagesDir: path.join(__dirname, '../public/images/operators')
   });
 
