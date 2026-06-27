@@ -155,7 +155,7 @@ const SynergyPage: React.FC = () => {
                             <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
                               <div className="operator-image-container">
                                 <img
-                                  src={getImageUrl(entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`)}
+                                  src={getImageUrl(entry.operator.profileImage || `/images/operators/default/${entry.operator.id || entry.operatorId}.png`)}
                                   alt={entry.operator.name}
                                   className="operator-image"
                                   onError={(e) => {
@@ -238,7 +238,7 @@ const SynergyPage: React.FC = () => {
                             <Link to={`/operator/${entry.operator.id}`} className="operator-image-link">
                               <div className="operator-image-container">
                                 <img
-                                  src={getImageUrl(entry.operator.profileImage || `/images/operators/${entry.operator.id || entry.operatorId}.png`)}
+                                  src={getImageUrl(entry.operator.profileImage || `/images/operators/default/${entry.operator.id || entry.operatorId}.png`)}
                                   alt={entry.operator.name}
                                   className="operator-image"
                                   onError={(e) => {

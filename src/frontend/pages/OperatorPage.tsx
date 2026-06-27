@@ -110,7 +110,7 @@ const OperatorPage: React.FC = () => {
       <div className="operator-header">
         <div className="operator-image-container">
           <img
-            src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
+            src={getImageUrl(operator.profileImage || `/images/operators/default/${operator.id}.png`)}
             alt={operator.name}
             className="operator-profile-image"
             onError={(e) => {

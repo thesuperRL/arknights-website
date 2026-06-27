@@ -270,7 +270,7 @@ class ArknightsScraper {
       console.log(`✅ Saved image: ${filePath}`);
       
       // Return relative path from public directory
-      return `/images/operators/${safeFilename}`;
+      return `/images/operators/default/${safeFilename}`;
     } catch (error) {
       console.error(`❌ Error downloading image ${imageUrl}:`, error);
       // Return original URL if download fails
@@ -898,7 +898,7 @@ class ArknightsScraper {
         // Process if it's a new operator or if it doesn't have a valid local image path
         const isNew = newOperators.some(newOp => newOp.id === op.id);
         const hasValidImage = op.profileImage && 
-                              op.profileImage.startsWith('/images/operators/') &&
+                              op.profileImage.startsWith('/images/operators/default/') &&
                               fs.existsSync(path.join(__dirname, '../public', op.profileImage));
         return isNew || !hasValidImage;
       });
@@ -910,7 +910,7 @@ class ArknightsScraper {
       for (let i = 0; i < operatorsToProcess.length; i++) {
         const operator = operatorsToProcess[i];
         // Check if profileImage is already a local path (from always-include)
-        if (operator.profileImage && operator.profileImage.startsWith('/images/operators/')) {
+        if (operator.profileImage && operator.profileImage.startsWith('/images/operators/default/')) {
           const imagePath = path.join(__dirname, '../public', operator.profileImage);
           if (fs.existsSync(imagePath)) {
             console.log(`⏭️  Skipping download for ${operator.name} (image already exists: ${operator.profileImage})`);
@@ -925,7 +925,7 @@ class ArknightsScraper {
           const imageUrl = operator.profileImage;
           
           // Skip if it's already a local path (shouldn't happen here, but safety check)
-          if (!imageUrl || imageUrl.startsWith('/images/operators/')) {
+          if (!imageUrl || imageUrl.startsWith('/images/operators/default/')) {
             console.log(`⏭️  Skipping download for ${operator.name} (already has local path)`);
             skippedCount++;
           } else {
@@ -934,7 +934,7 @@ class ArknightsScraper {
             const extension = path.extname(urlWithoutQuery) || '.png';
             const filename = this.sanitizeFilename(operator.name) + extension;
             const imagePath = path.join(this.config.imagesDir, filename);
-            const relativeImagePath = `/images/operators/${filename}`;
+            const relativeImagePath = `/images/operators/default/${filename}`;
             
             // Ensure images directory exists
             if (!fs.existsSync(this.config.imagesDir)) {

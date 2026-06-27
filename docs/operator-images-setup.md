@@ -15,10 +15,13 @@ This separation provides:
 ```
 arknights-website/
 ├── public/images/operators/  → git submodule (arknights-pfp-dataset)
-│   ├── silverash.png
-│   ├── amiya.png
-│   └── ... (420 operator images)
-└── src/scraper.ts           → Downloads images to submodule
+│   ├── default/             → Default image set
+│   │   ├── silverash.png
+│   │   ├── amiya.png
+│   │   └── ... (420 operator images)
+│   ├── scraper.ts           → Scraper lives in submodule
+│   └── package.json         → Scraper dependencies
+└── src/scraper.ts           → Deprecated (use submodule version)
 ```
 
 ## Working with Operator Images
@@ -44,7 +47,7 @@ arknights-website/
 
 4. **Commit and push new images:**
    ```bash
-   git add *.png
+   git add default/*.png
    git commit -m "Add new operator images"
    git push
    ```

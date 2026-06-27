@@ -251,7 +251,7 @@ const AllOperatorsPage: React.FC = () => {
               <Link to={`/operator/${operator.id}`} className="operator-image-link">
                 <div className="operator-image-container">
                   <img
-                    src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
+                    src={getImageUrl(operator.profileImage || `/images/operators/default/${operator.id}.png`)}
                     alt={operator.name}
                     className="operator-image"
                     onError={(e) => {

@@ -942,7 +942,7 @@ const TeamBuilderPage: React.FC = () => {
                   if (!op) return null;
                   return (
                     <div key={id} className="locked-operator-chip">
-                      <img src={getImageUrl(op.profileImage || '/images/operators/placeholder.png')} alt="" className="locked-operator-chip-img" />
+                      <img src={getImageUrl(op.profileImage || '/images/operators/default/placeholder.png')} alt="" className="locked-operator-chip-img" />
                       <span className="locked-operator-chip-name">{getOperatorName(op, language)}</span>
                       <button
                         type="button"
@@ -1183,7 +1183,7 @@ const TeamBuilderPage: React.FC = () => {
                           style={{ cursor: 'pointer' }}
                         >
                           <img
-                            src={getImageUrl(selectedOperator.profileImage || '/images/operators/placeholder.png')}
+                            src={getImageUrl(selectedOperator.profileImage || '/images/operators/default/placeholder.png')}
                             alt={getOperatorName(selectedOperator, language)}
                             className="operator-image"
                           />
@@ -1248,7 +1248,7 @@ const TeamBuilderPage: React.FC = () => {
                       style={{ cursor: 'pointer' }}
                     >
                       <img
-                        src={getImageUrl(member.operator.profileImage || '/images/operators/placeholder.png')}
+                        src={getImageUrl(member.operator.profileImage || '/images/operators/default/placeholder.png')}
                         alt={getOperatorName(member.operator, language)}
                         className="operator-image"
                       />
@@ -1416,7 +1416,7 @@ const TeamBuilderPage: React.FC = () => {
                         onClick={() => handleOperatorSelect(op.id)}
                       >
                         <img
-                          src={getImageUrl(op.profileImage || '/images/operators/placeholder.png')}
+                          src={getImageUrl(op.profileImage || '/images/operators/default/placeholder.png')}
                           alt={getOperatorName(op, language)}
                           className="operator-select-image"
                         />

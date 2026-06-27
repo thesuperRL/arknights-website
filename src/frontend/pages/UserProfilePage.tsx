@@ -586,7 +586,7 @@ const UserProfilePage: React.FC = () => {
               >
                 <span className="raise-recommendation-label">{t('profile.raiseRecommendation')}</span>
                 <img
-                  src={getImageUrl(currentRaiseRecommendation.operator.profileImage || `/images/operators/${currentRaiseRecommendation.operator.id}.png`)}
+                  src={getImageUrl(currentRaiseRecommendation.operator.profileImage || `/images/operators/default/${currentRaiseRecommendation.operator.id}.png`)}
                   alt={getOperatorName((operators[currentRaiseRecommendation.operator.id] ?? currentRaiseRecommendation.operator) as Operator, language)}
                   className="raise-recommendation-image"
                 />
@@ -836,7 +836,7 @@ const UserProfilePage: React.FC = () => {
                     style={{ textDecoration: 'none', color: 'inherit' }}
                   >
                     <img
-                      src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
+                      src={getImageUrl(operator.profileImage || `/images/operators/default/${operator.id}.png`)}
                       alt={operator.name}
                       className="operator-image"
                       onError={(e) => {
@@ -1054,7 +1054,7 @@ const UserProfilePage: React.FC = () => {
                     onClick={() => handleAddOperator(operator.id)}
                   >
                     <img
-                      src={getImageUrl(operator.profileImage || `/images/operators/${operator.id}.png`)}
+                      src={getImageUrl(operator.profileImage || `/images/operators/default/${operator.id}.png`)}
                       alt={operator.name}
                       className="operator-image"
                       onError={(e) => {

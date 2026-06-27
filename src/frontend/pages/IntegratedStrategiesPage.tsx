@@ -2390,7 +2390,7 @@ const IntegratedStrategiesPage: React.FC = () => {
               className={`selected-operator-card ${optimalTeam.has(selected.operatorId) ? 'optimal-team-member' : ''} ${selectionCount === 2 ? 'promoted' : ''}`}
             >
               <img
-                src={getImageUrl(selected.operator.profileImage || '/images/operators/placeholder.png')}
+                src={getImageUrl(selected.operator.profileImage || '/images/operators/default/placeholder.png')}
                 alt={getOperatorName(selected.operator, language)}
                 className="operator-image"
               />
@@ -2662,7 +2662,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                   {temporaryRecruitment ? (
                     <div className="selected-temp-operator-card">
                       <img
-                        src={getImageUrl(allOperators[temporaryRecruitment]?.profileImage || '/images/operators/placeholder.png')}
+                        src={getImageUrl(allOperators[temporaryRecruitment]?.profileImage || '/images/operators/default/placeholder.png')}
                         alt={getOperatorName(allOperators[temporaryRecruitment], language)}
                         className="temp-operator-image"
                       />
@@ -2887,7 +2887,7 @@ const IntegratedStrategiesPage: React.FC = () => {
               <>
                 <div className="recommended-operator-card">
                   <img
-                    src={getImageUrl(recommendation.recommendedOperator.profileImage || '/images/operators/placeholder.png')}
+                    src={getImageUrl(recommendation.recommendedOperator.profileImage || '/images/operators/default/placeholder.png')}
                     alt={getOperatorName(recommendation.recommendedOperator, language)}
                     className="operator-image"
                   />
@@ -3014,7 +3014,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                       }}
                     >
                       <img
-                        src={getImageUrl(op.profileImage || '/images/operators/placeholder.png')}
+                        src={getImageUrl(op.profileImage || '/images/operators/default/placeholder.png')}
                         alt={getOperatorName(op, language)}
                         className="operator-select-image"
                       />
@@ -3082,7 +3082,7 @@ const IntegratedStrategiesPage: React.FC = () => {
                       }}
                     >
                       <img
-                        src={getImageUrl(op.profileImage || '/images/operators/placeholder.png')}
+                        src={getImageUrl(op.profileImage || '/images/operators/default/placeholder.png')}
                         alt={getOperatorName(op, language)}
                         className="operator-select-image"
                       />
