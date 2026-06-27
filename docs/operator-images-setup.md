@@ -19,6 +19,12 @@ arknights-website/
 │   │   ├── silverash.png
 │   │   ├── amiya.png
 │   │   └── ... (420 operator images)
+│   ├── all/                 → All skins organized by operator (optional)
+│   │   ├── silverash/
+│   │   │   ├── default.png
+│   │   │   ├── winter-messenger.png
+│   │   │   └── ...
+│   │   └── ...
 │   ├── scraper.ts           → Scraper lives in submodule
 │   └── package.json         → Scraper dependencies
 └── src/scraper.ts           → Deprecated (use submodule version)
