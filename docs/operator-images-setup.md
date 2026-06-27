@@ -25,33 +25,62 @@ arknights-website/
 
 ### Running the Scraper
 
-The scraper automatically saves new operator images to the submodule:
+**The scraper now lives in the dataset repository.** To update images:
 
-```bash
-npm run scrape:6star  # or other rarity commands
-```
-
-Images are downloaded to `public/images/operators/` which is the git submodule.
-
-### Committing New Images
-
-When new images are added by the scraper:
-
-1. **Commit to the dataset repository:**
+1. **Navigate to the submodule:**
    ```bash
    cd public/images/operators
-   git add .
-   git commit -m "Add new operator images"
-   git push
-   cd ../../..
    ```
 
-2. **Update the submodule reference in website repo:**
+2. **Install dependencies (first time only):**
    ```bash
+   npm install
+   ```
+
+3. **Run the scraper:**
+   ```bash
+   npm run scrape:6star  # or other rarity: scrape:1star, scrape:2star, etc.
+   ```
+
+4. **Commit and push new images:**
+   ```bash
+   git add *.png
+   git commit -m "Add new operator images"
+   git push
+   ```
+
+5. **Update the submodule reference in website repo:**
+   ```bash
+   cd ../../..
    git add public/images/operators
    git commit -m "Update operator images submodule"
    git push
    ```
+
+### Alternative: Update from Dataset Repo Directly
+
+You can also work directly in a clone of the dataset repository:
+
+```bash
+# Clone the dataset repo separately
+git clone git@github.com:thesuperRL/arknights-pfp-dataset.git
+cd arknights-pfp-dataset
+
+# Install and run scraper
+npm install
+npm run scrape:6star
+
+# Commit and push
+git add *.png
+git commit -m "Add new operator images"
+git push
+
+# Then update the website submodule
+cd /path/to/arknights-website
+git submodule update --remote public/images/operators
+git add public/images/operators
+git commit -m "Update operator images to latest"
+```
 
 ### Cloning the Repository
 

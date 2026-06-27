@@ -1,6 +1,10 @@
 /**
  * Web scraper for Arknights Wiki to extract operator data
  * Crawls operator pages and downloads images
+ * 
+ * NOTE: This scraper has been moved to the arknights-pfp-dataset repository.
+ * This copy is kept for reference but should not be used for updating images.
+ * To update operator images, run the scraper from: public/images/operators/
  */
 
 import axios from 'axios';
