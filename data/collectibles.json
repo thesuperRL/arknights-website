@@ -27,26 +27,16 @@
   {
     "id": "actor's-jewelry-box",
     "name": "Actor's Jewelry Box",
-    "description": "Immediately gain/add +18 Originium IngotsA box containing all kinds of shattered jewelries. The young lead actor wore these jewelries and stepped onto the stage, in the end falling from its highest point.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Actor_s_Jewelry_Box.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "actor's-perfume",
     "name": "Actor's Perfume",
-    "description": "All friendly units recover 1% of Max HP per secondTroupe actors put this on before going onstage. Stable yet aromatic fragrances like this can help them ease pressure. That's how it seems on the surface, at least.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Actor_s_Perfume.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "ancient-fresco",
@@ -106,10 +96,8 @@
   {
     "id": "antique-casting",
     "name": "Antique Casting",
-    "description": "Immediately Promote 3 Operators (Does not require Hope)\"Harken the forge of the sky Awaits five earthborn metals\" ...Even though it can be used for all kinds of work, nobody understands its exact mechanism.",
-    "isVersions": [
-      "All themes"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -123,16 +111,10 @@
   },
   {
     "id": "arts-killer",
-    "name": "\"Arts Killer\"",
-    "description": "All friendly units have +15% Arts DodgeConsidering how Originium Arts and music go hand in hand in Leithanien, it's quite amazing someone came up with the bright idea of combating Arts with noise like this.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Arts_Killer.png"
+    "name": "Arts Killer",
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "assault-co-op---sharp-blade",
@@ -162,11 +144,8 @@
   {
     "id": "assault-co-op-expansion",
     "name": "Assault Co-op Expansion",
-    "description": "Vanguard Rec. Vouchers obtained from Shops or as a drop will be upgraded into Elite HR Dispatch Letters.It is difficult to gain the upper hand in frontline combat with only a single squad of Operators. Supplementing combat capabilities through Co-ops is an effective solution.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -181,16 +160,10 @@
   },
   {
     "id": "avenger-(collectible)",
-    "name": "\"Avenger\"",
-    "description": "All enemies take +35% Physical damageA gift from Theresis and set up by Theresa, this is the very first weapon that Ascalon received after her inaugural mission as part of the Military Council.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Avenger__Collectible_.png"
+    "name": "Avenger (Collectible)",
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "bank-of-gaul-check",
@@ -208,24 +181,15 @@
   {
     "id": "banshee's-kiss",
     "name": "Banshee's Kiss",
-    "description": "Hope +8Outsiders make extraordinary displays of bravery that far surpass their normal abilities. However, as one of the few male Banshees out there, this has become a far too common sight to Logos.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Banshee_s_Kiss.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "barrens-tequila",
     "name": "Barrens Tequila",
-    "description": "Increases the SP regen rate of Offensive and Defensive Recovery skills by 1 SP per 3.5s.A cheap distilled spirit originally produced in Bolívar. It has a strong taste and is widely praised by Columbia's explorers.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -271,10 +235,8 @@
   {
     "id": "bend-spears---bloodbath",
     "name": "Bend Spears - Bloodbath",
-    "description": "Guard Operators restore 2 SP after each attackSoldiers who get bolder as time passes are rare. Most need some form of psychological counseling to alleviate the trauma of war.",
-    "isVersions": [
-      "All themes"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -320,15 +282,9 @@
   {
     "id": "blue-silk-scarf",
     "name": "Blue Silk Scarf",
-    "description": "Hope +2, Squad Size Limit +1A lady's elegant scarf. Her appearance is a sign that it is safe here.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Blue_Silk_Scarf.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "blunt-claws---advancement",
@@ -412,17 +368,17 @@
   {
     "id": "broken-wand---advancement",
     "name": "Broken Wand - Advancement",
-    "description": "Caster Operators have -3 DP Cost and +60% Max HPLet Arts dance around your fingertips. Call the wind and rain, unravel reality, and achieve your grand goals.",
-    "isVersions": [
-      "All themes"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
     "id": "broken-wand---arts-weaving",
     "name": "Broken Wand - Arts Weaving",
-    "description": "",
-    "isVersions": [],
+    "description": "Caster Operators have +25% ATKThose who gaze up at the great spires in Leithanien often see some strange or even celestial phenomena.",
+    "isVersions": [
+      "All themes"
+    ],
     "imagePath": ""
   },
   {
@@ -586,11 +542,9 @@
   },
   {
     "id": "civilight-eterna-(collectible)",
-    "name": "\"Civilight Eterna\"",
-    "description": "All enemies take +150% True damage.A small, black crown.",
-    "isVersions": [
-      "All themes"
-    ],
+    "name": "Civilight Eterna (Collectible)",
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -706,15 +660,9 @@
   {
     "id": "designer's-ruler",
     "name": "Designer's Ruler",
-    "description": "All friendly units have +15% Physical DodgeCarefully measured with data and experience, those who wear this armor are known to be several magnitudes luckier.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Designer_s_Ruler.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "devotion",
@@ -739,12 +687,9 @@
   {
     "id": "distant-home's-guide",
     "name": "Distant Home's Guide",
-    "description": "Designates one deployable tile at the beginning of battle; friendly units deployed on that tile will recover 1 SP per second and 3% Max HP per secondThis ancient ring is actually said to be a special navigation device, used to find emergency supplies that the Ægir once secretly stashed in various spots across the ocean. Follow the ocean's currents, be guided by wind; your homeland will always continue to bestow gifts upon you.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Distant_Home_s_Guide.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "doctor-silver-seal",
@@ -759,14 +704,9 @@
   {
     "id": "doll-house",
     "name": "Doll House",
-    "description": "+10 Starting DPAll kids need at least one set.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Doll_House.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "draft-of-a-speech",
@@ -807,15 +747,10 @@
   },
   {
     "id": "durin-overground",
-    "name": "\"Durin Overground\"",
-    "description": "Gain 1 Temporary Life Point at the beginning of each battle.In this expedition account, we get a glimpse of how those who live underground see those who live on the surface.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Durin_Overground.png"
+    "name": "Durin Overground",
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "emergency-active-agent",
@@ -928,19 +863,15 @@
   {
     "id": "fatal-bolts---divine-speed",
     "name": "Fatal Bolts - Divine Speed",
-    "description": "Sniper Operators have +70 ASPDIt is said that the legendary archer of ancient Victoria can almost shoot a continuous stream of arrows.",
-    "isVersions": [
-      "All themes"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
     "id": "fatal-bolts---precision",
     "name": "Fatal Bolts - Precision",
-    "description": "Sniper Operators have +20% ATKIn an era when Originium Arts were not as robust as they are now, Yan had a saying, \"a pierced willow leaf from a hundred paces,\" to praise others for their mastery of archery.",
-    "isVersions": [
-      "All themes"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -975,12 +906,9 @@
   {
     "id": "fearless-blade",
     "name": "Fearless Blade",
-    "description": "When the battle begins, the Operator with the highest DP Cost gains +50% ATK and DEFBefore Kazdel's gates he stood, an impregnable bulwark. Gaulish artilleries, Leithanian casters, and Victorian Knights all took their shots at him. Yet, even when the gates fell and the coalition retreated, the Goliath did not yield an inch.",
-    "isVersions": [
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Fearless_Blade.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "featured-canned-meat",
@@ -1118,22 +1046,16 @@
   {
     "id": "friston.p",
     "name": "Friston.P",
-    "description": "All Allies permanently gain ASPD +5 for every Emergency Ops cleared (stacks up to 15 times)Friston would certainly not miss out on an opportunity to explore the secrets of another predecessor civilization. Oh, but Closure didn't even consider making backups, so DON'T tell her about this!",
-    "isVersions": [
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Friston.P.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "frost-buck's-pauldron",
     "name": "Frost Buck's Pauldron",
-    "description": "All allied units gain ATK +40% and DEF +40% for 30 seconds when blocking 2 or more enemiesThere are no signs of injuries on his body, only a pair of eyes drained of blood and tears.",
-    "isVersions": [
-      "Expeditioner's Joklumarkar",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Frost_Buck_s_Pauldron.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "frozen-husk",
@@ -1158,14 +1080,9 @@
   {
     "id": "game-room-admin-access-card",
     "name": "Game Room Admin Access Card",
-    "description": "Immediately Promote an Operator (Does not require Hope)With this, you have become master over Rhodes Island's entertainment privileges. Please exercise caution when processing the various strange applications from the Operators... and remember to lock the door every day.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Game_Room_Admin_Access_Card.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "gaulish-toponym-origins",
@@ -1218,23 +1135,16 @@
   {
     "id": "godmother's-token",
     "name": "Godmother's Token",
-    "description": "All enemy units have -17% ATKA laurel of bones, the token of a Sicilian noblewoman. This symbol of order will smooth the turbulance of all desires, for conflict is not allowed. Genuine or counterfeit, it still demands you to kneel.",
-    "isVersions": [
-      "All themes"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
     "id": "gold-plated-dice",
     "name": "Gold-Plated Dice",
-    "description": "All enemy units have -15% HPThe gold-plated die has one side representing life. As for the other nineteen sides...",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Gold-Plated_Dice.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "golden-chalice",
@@ -1294,12 +1204,8 @@
   {
     "id": "hand-of-diffusion",
     "name": "Hand of Diffusion",
-    "description": "Splash Caster, Chain Caster, and Blast Caster Operators recover 2 SP every time they attack an enemy unitThe more enemies you strike, the more power you take hold of.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -1315,12 +1221,9 @@
   {
     "id": "hand-of-predation",
     "name": "Hand of Predation",
-    "description": "Pioneer, Charger, and Tactician Operators gain +10% ATK and DEF on every skill activation (Stacks up to 10 times); If you have Blunt Claws - Predation, also increases their SP regen rate by +0.5/sHerds stir, flesh rend asunder.",
-    "isVersions": [
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Hand_of_Predation.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "hand-of-pulverization",
@@ -1335,12 +1238,9 @@
   {
     "id": "hand-of-purification",
     "name": "Hand of Purification",
-    "description": "Bard, Phalanx Caster, and Therapist Operators deal 50% ATK as Arts damage to all enemies in their attack rangeWhere it is, dust is not.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar"
-    ],
-    "imagePath": "images/collectibles/Hand_of_Purification.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "hand-of-snatcher",
@@ -1476,10 +1376,8 @@
   {
     "id": "iron-guard---advancement",
     "name": "Iron Guard - Advancement",
-    "description": "Defender Operators have -3 DP Cost and +40% Max HPThe shieldbearers formed a mountain range and became the earth. What they fight against are not enemies of flesh and blood. They fight against fate and injustice.",
-    "isVersions": [
-      "All themes"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -1543,24 +1441,16 @@
   {
     "id": "iron-guard---tranquility",
     "name": "Iron Guard - Tranquility",
-    "description": "Defender Operators have +25% DEF and +50% Max HP.\"Is there anyone who can remain in formation under a bombing of that scale?\" \"Standing in formation? He moved a few steps forward.\"",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
     "id": "jet-black-dance-shoes",
     "name": "Jet-Black Dance Shoes",
-    "description": "Can deploy Melee Operators on High Ground tilesThe Columbian dancer's steps are firm and strong, her taps reverberating loudly in the air as she strikes the ground.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Jet-Black_Dance_Shoes.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "king-of-sarkaz's-vessel",
@@ -1606,23 +1496,27 @@
   },
   {
     "id": "king's-crystal",
-    "name": "\"King's Crystal\"",
-    "description": "At the end of battle, -2 Life Points (will not go lower than 1), +1 Hope, +5 Originium IngotsThe Iberians' contact with the Seaborn goes back further than they can imagine, but they did not know what the Seaborn were back then.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar"
-    ],
-    "imagePath": "images/collectibles/King_s_Crystal.png"
+    "name": "King's Crystal",
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "king's-fellowship",
-    "name": "\"King's Fellowship\"",
-    "description": "+2 Objective Shield, coverts[sic] all Life Point into an equivalent amount of Objective Shield (Cannot be reduced below 1 by this effect)The Cultists of the Deep did not achieve success overnight; they lingered at the junction between the land and sea for ages, preparing for the calamity that would come to be known as the Profound Silence.",
+    "name": "King's Fellowship",
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
+  },
+  {
+    "id": "king's-legacy",
+    "name": "King's Legacy",
+    "description": "When Life Point is at 1, all Operators recover an additional 1 SP and 3% of Max HP every 2 secondsGrow up and face reality. Arm yourself with tenacity and confidence, while showing your friends tolerance and grace.",
     "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar"
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
     ],
-    "imagePath": "images/collectibles/King_s_Fellowship.png"
+    "imagePath": "images/collectibles/King_s_Legacy.png"
   },
   {
     "id": "king's-new-lance",
@@ -1706,26 +1600,16 @@
   {
     "id": "live-rose",
     "name": "Live Rose",
-    "description": "All friendly units have +20% healing effectivenessIs it you who nourish her, or is it her who protects you?",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Live_Rose.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "living-woodplate",
     "name": "Living Woodplate",
-    "description": "All allied melee units gain a Barrier equal to 50% of their Max HP on deploymentThe shamans know how trees will cling to survival, so they invite the trees to become armor for a warrior possessing a similar will.",
-    "isVersions": [
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Living_Woodplate.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "lost-key",
@@ -1760,14 +1644,10 @@
   },
   {
     "id": "memories-of-the-shard",
-    "name": "\"Memories of The Shard\"",
-    "description": "Deals 3000 True Damage on all enemy units every time an enemy unit enters the Protection Objective\"It has pierced Victoria's heart, and is watching the empire bleed.\"",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Memories_of_The_Shard.png"
+    "name": "Memories of The Shard",
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "military-mirror-armor",
@@ -1785,14 +1665,9 @@
   {
     "id": "miniature-stage-model",
     "name": "Miniature Stage Model",
-    "description": "+20 Starting DPThe red paint has not dried yet. Careful. Don't get that paint on your hand.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Miniature_Stage_Model.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "minoan-ode",
@@ -1831,23 +1706,16 @@
   {
     "id": "necklace-of-the-presence",
     "name": "Necklace of the Presence",
-    "description": "All friendly ranged units have +35% ATK.Faith hangs ten centimeters above your heart, spoken words flow into your blood, and bullets slide into your magazine.",
-    "isVersions": [
-      "All themes"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
     "id": "night-whispers-in-the-forest",
     "name": "Night-Whispers in the Forest",
-    "description": "+2 Deployment Limit, all friendly units gain +6% DEFA special aromatherapy set prepared for field operators by the Convalescent Garden, consisting of fifteen herbal extracts in 172 different combinations. When the wind wends into wooded vales, all creatures lower their voices, and one can find respite.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Night-Whispers_in_the_Forest.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "northwind-construct",
@@ -1925,27 +1793,16 @@
   {
     "id": "originium-iris",
     "name": "Originium Iris",
-    "description": "Hope +6, Squad Size Limit +2A most extravagant bouquet of flowers. The troupe leader has handed flowers like these to the leads during countless curtain calls.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Originium_Iris.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "oriron-round-shield",
     "name": "Oriron Round Shield",
-    "description": "All friendly units have +15% DEFBefore the use of Oriron became widespread in today's industrial sector, the material was frequently used to forge military weapons like this one.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Oriron_Round_Shield.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "painful-happiness",
@@ -1961,14 +1818,9 @@
   {
     "id": "pitt's-assorted-fruits",
     "name": "Pitt's Assorted Fruits",
-    "description": "+3 Squad Size Limit, all friendly units gain +3% ATK, DEF, and HPPitt's assorted fruit candies compete with Mama John's line of products in the sweets market with a rich taste and superb cost-effectiveness. Muelsyse's favorite.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Pitt_s_Assorted_Fruits.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "polar-retrofit-package",
@@ -2027,15 +1879,9 @@
   {
     "id": "pure-white-dance-shoes",
     "name": "Pure White Dance Shoes",
-    "description": "Can deploy Ranged Operators on Low Ground tilesThe Ursus dancer's steps are swift and elegant, her body moving as she wills.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Pure_White_Dance_Shoes.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "rainbow-jar",
@@ -2062,14 +1908,8 @@
   {
     "id": "ranged-co-op---remote-strike",
     "name": "Ranged Co-op - Remote Strike",
-    "description": "Increases the ATK of Medic and Sniper Operators by +8% for each Medic or Sniper Operator in the combat squadIf you can solve the problem from a reasonable distance, why do you have to literally butt heads?",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -2108,27 +1948,16 @@
   {
     "id": "regional-action-plan",
     "name": "Regional Action Plan",
-    "description": "4-star Operators cost -2 Hope to recruitRhodes Island has established dedicated offices in every important hub area. The messengers are doing what they can to weave a fragile web across this land.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
     "id": "rhodes-island-tactical-transceiver",
     "name": "Rhodes Island Tactical Transceiver",
-    "description": "Gain an additional choice when Recruitment Vouchers are dropped after battleHang in there, help's on the way.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Rhodes_Island_Tactical_Transceiver.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "ribbon-of-honor",
@@ -2154,13 +1983,10 @@
   },
   {
     "id": "silent-squad",
-    "name": "\"Silent Squad\"",
-    "description": "All friendly units have +35% ATK, +35% DEF, and +45% Max HPA set of exploration drones remotely controlled by the Rhodes Island Engineering Department. More efficient and safer than ever, they provide operators on field missions the omnidirectional support and defense they need.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor"
-    ],
-    "imagePath": "images/collectibles/Silent_Squad.png"
+    "name": "Silent Squad",
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "silver-forks",
@@ -2210,28 +2036,16 @@
   {
     "id": "special-suppressor",
     "name": "Special Suppressor",
-    "description": "Immediately gain +6 Life Points.An enhanced suppressor developed by Rhodes Island that can better keep the infected from losing control of their Originium Arts.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Special_Suppressor.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "spinach-pack",
     "name": "Spinach Pack",
-    "description": "All friendly units have +60% ATK for one second after their skill becomes activeMany Cautus out there believe that popping the contents of this can into their mouths will grant them immense strength. The marketing's effectiveness is a classic success story in the industry.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Spinach_Pack.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "stalwart-aid---advancement",
@@ -2266,11 +2080,8 @@
   {
     "id": "stalwart-aid---demoralize",
     "name": "Stalwart Aid - Demoralize",
-    "description": "Enemies within the attack range of Supporter Operators have -15% ATK.There are many ways to weaken an enemy's offensive capabilities: corroding their weapons, psychological warfare, increasing their weight, and... giving them a stomachache.",
-    "isVersions": [
-      "Ceobe's Fungimist",
-      "Phantom & Crimson Solitaire"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -2361,25 +2172,16 @@
   {
     "id": "support-escape-crane",
     "name": "Support Escape Crane",
-    "description": "Bring a Snowsant's Safe Escape Crane along to each battleAn emergency Snowsant's Safe Escape Crane provided to field operators.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Support_Escape_Crane.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "support-fog-machine",
     "name": "Support Fog Machine",
-    "description": "Bring a Broken Fog Machine along to each battleAn emergency Fog Machine provided to field operators that appears to be broken.",
-    "isVersions": [
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Support_Fog_Machine.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "support-landmine-set",
@@ -2443,24 +2245,16 @@
   {
     "id": "surging-feast",
     "name": "Surging Feast",
-    "description": "All allied units receive +30% healing effectiveness and take -30% Elemental InjuryWe've known how to indulge since birth. Do not resist your desires. Submit to them instead.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Sarkaz's Furnaceside Fables"
-    ],
-    "imagePath": "images/collectibles/Surging_Feast.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "survivor-contract",
     "name": "Survivor Contract",
-    "description": "At the start of battle, a random Operator gains +20% ATK and DEF, plus an additional +20% at the end of each (victorious) battleA very long contract, in which every term and condition is the result of experience, leaving no room for chance or sentiment. Satisfy them all to be the final survivor.",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Survivor_Contract.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "the-return",
@@ -2511,14 +2305,9 @@
   {
     "id": "timeworn-poetry-strips",
     "name": "Timeworn Poetry Strips",
-    "description": "Summons will no longer use Deployment slots\"Drunk far beyond all mounts that list the realm, all beings take on souls as they demand.\"",
-    "isVersions": [
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Timeworn_Poetry_Strips.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "topographical-map",
@@ -2535,15 +2324,9 @@
   {
     "id": "universal-key",
     "name": "Universal Key",
-    "description": "Hope +6An old, silver key. It can open any door. As the keeper, the troupe's butler naturally needs a key that unlocks all the secrets here.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Universal_Key.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "unknown-instrument",
@@ -2584,15 +2367,9 @@
   {
     "id": "vampire's-bed",
     "name": "Vampire's Bed",
-    "description": "Immediately gain +8 Life Points.A lavish-looking coffin that matches the castle's aesthetics well. However, Warfarin says this is merely a stereotype.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Vampire_s_Bed.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "vanilla-soda",
@@ -2605,15 +2382,10 @@
   },
   {
     "id": "victorian-scrap-medal",
-    "name": "Victorian \"Scrap\" Medal",
-    "description": "Gain +20% Command EXP from battlesA knight's medal that Siege threw together and awarded to Dagda on the spot. The materials used are pitiful, but it holds a lot of meaning to Dagda.",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Victorian_Scrap_Medal.png"
+    "name": "Victorian Scrap Medal",
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "victory-horn",
@@ -2709,15 +2481,9 @@
   {
     "id": "worn-out-group-photo",
     "name": "Worn-out Group Photo",
-    "description": "All enemy units have -12% DEFDo you know someone in the photo?",
-    "isVersions": [
-      "Phantom & Crimson Solitaire",
-      "Mizuki & Caerula Arbor",
-      "Expeditioner's Joklumarkar",
-      "Sarkaz's Furnaceside Fables",
-      "Sui's Garden of Grotesqueries"
-    ],
-    "imagePath": "images/collectibles/Worn-out_Group_Photo.png"
+    "description": "",
+    "isVersions": [],
+    "imagePath": ""
   },
   {
     "id": "wrath-of-siracusans",
