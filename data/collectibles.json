@@ -24,23 +24,35 @@
   {
     "id": "slave-hunter",
     "name": "Slave Hunter",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Units that become Levitated, Weightless, or are shifted will take 50% more damage for 10 secondsAfter obtaining Nasti's designs, the Sarkaz put them to use in war right away. They flew into the sky, dominating the Ancients with waves of wrath, and the never-ending war entered a new stage.",
+    "isVersions": [
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Slave_Hunter.png"
   },
   {
     "id": "snow-doe's-glove",
     "name": "Snow Doe's Glove",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "All allied units gain ASPD +80 and obtain 50% Physical and Arts Dodge for 30s when blocking 3 or more enemiesShe shoots the last three arrows in her quiver at the Frozen Monstrosity, who used them to end her life.",
+    "isVersions": [
+      "Expeditioner's Joklumarkar",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Snow_Doe_s_Glove.png"
   },
   {
     "id": "solo-music-box",
     "name": "Solo Music Box",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Hope +4, Deployment Limit +1An old music box. The music does not play when the box is opened, nor does the figure inside show any signs it is about to move. There is not a peep, and no one is breaking out in dance. Before she begins her performances with Phantom, the lead actress stares blankly into the music box.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Solo_Music_Box.png"
   },
   {
     "id": "special-suppressor",
@@ -71,16 +83,23 @@
   {
     "id": "stalwart-aid---advancement",
     "name": "Stalwart Aid - Advancement",
-    "description": "",
-    "isVersions": [],
+    "description": "Supporter Operators have -2 DP Cost and +60% Max HPWhenever you're \"almost done\" with a task, what you need at that moment is someone to help you with the \"almost\" part.",
+    "isVersions": [
+      "All themes"
+    ],
     "imagePath": ""
   },
   {
     "id": "stalwart-aid---assistance",
     "name": "Stalwart Aid - Assistance",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Friendly units within the attack range of Supporter Operators gain +20% ATKBringing meals, showing the right route to take, or even having a heart-to-heart. The key difference between victory and defeat often lies in these little things.",
+    "isVersions": [
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Stalwart_Aid_-_Assistance.png"
   },
   {
     "id": "stalwart-aid---counter-arts",
@@ -178,10 +197,13 @@
   },
   {
     "id": "sui's-wrath",
-    "name": "Sui's Wrath",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "name": "\"Sui's Wrath\"",
+    "description": "Whenever you deploy a unit, deal 3000 Arts damage to a random enemy and the area around itThe Feranmut lifts its head, heaven and earth cower in fear.",
+    "isVersions": [
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar"
+    ],
+    "imagePath": "images/collectibles/Sui_s_Wrath.png"
   },
   {
     "id": "support-escape-crane",
@@ -253,9 +275,13 @@
   {
     "id": "supreme-ring",
     "name": "Supreme Ring",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "+50% Originium Ingot drops from battleIn Leithanian mythology, he who holds the ring enjoys the vast riches of the entire world, but greed will also be his undoing.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Supreme_Ring.png"
   },
   {
     "id": "surging-feast",
@@ -316,16 +342,26 @@
   {
     "id": "three-dimensional-art-display",
     "name": "Three-Dimensional Art Display",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Restore 7 Life Point, restore an additional 1 Life Point after each battleThe impression that Rhine Lab often gives is akin to this work of art: inscrutable, multi-faceted, impossible to sift fact from fiction.",
+    "isVersions": [
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Three-Dimensional_Art_Display.png"
   },
   {
     "id": "timeworn-poetry-strips",
     "name": "Timeworn Poetry Strips",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Summons will no longer use Deployment slots\"Drunk far beyond all mounts that list the realm, all beings take on souls as they demand.\"",
+    "isVersions": [
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Timeworn_Poetry_Strips.png"
   },
   {
     "id": "topographical-map",
@@ -367,10 +403,16 @@
   },
   {
     "id": "unleashings",
-    "name": "Unleashings",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "name": "\"Unleashings\"",
+    "description": "All Operators recover 1 SP every time they take damage or Elemental InjuryAfter several attempts by Touch, nature briefly opens up to you.[note 1]",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Unleashings.png"
   },
   {
     "id": "ursus-big-bread",
@@ -398,10 +440,8 @@
   {
     "id": "vanilla-soda",
     "name": "Vanilla Soda",
-    "description": "Increases the SP regen rate of Auto Recovery skills by +0.2/sBolívar's cheap specialty drink dates back hundreds of years. It is mixed with a variety of spices, and is known for not being very good.",
-    "isVersions": [
-      "All themes"
-    ],
+    "description": "",
+    "isVersions": [],
     "imagePath": ""
   },
   {
@@ -432,9 +472,15 @@
   {
     "id": "vieux-vanguard's-blade",
     "name": "Vieux Vanguard's Blade",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "All friendly melee units have +35% ATKPrior to its downfall, Gaul first witnessed the sacrifices of its Vieux Vanguards.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Vieux_Vanguard_s_Blade.png"
   },
   {
     "id": "vinecreep-mortar-gunner",
@@ -478,16 +524,28 @@
   {
     "id": "weird-flute",
     "name": "Weird Flute",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "Hope +4, Squad Size Limit +1A weird-looking flute. Someone plays it day in and day out.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/Weird_Flute.png"
   },
   {
     "id": "white-flower-crown",
     "name": "White Flower Crown",
-    "description": "",
-    "isVersions": [],
-    "imagePath": ""
+    "description": "All friendly units have +30% healing effectivenessA floral veil used in Vampire rituals. Its once vibrant redness has been sucked empty, leaving nothing only a pale white color.",
+    "isVersions": [
+      "Phantom & Crimson Solitaire",
+      "Mizuki & Caerula Arbor",
+      "Expeditioner's Joklumarkar",
+      "Sarkaz's Furnaceside Fables",
+      "Sui's Garden of Grotesqueries"
+    ],
+    "imagePath": "images/collectibles/White_Flower_Crown.png"
   },
   {
     "id": "worn-out-group-photo",
